@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Search.Tests
                 Assert.Null(response.Results[i].Highlights);
             }
                 
-            SearchAssert.SequenceEqual(response.Results.Select(r => r.Document), Data.TestDocuments);
+            Assert.Equal(response.Results.Select(r => r.Document), Data.TestDocuments);
         }
 
         protected void TestCanSearchDynamicDocuments()
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Search.Tests
             {
                 Assert.Equal(1, response.Results[i].Score);
                 Assert.Null(response.Results[i].Highlights);
-                SearchAssert.DocumentsEqual(Data.TestDocuments[i].AsDocument(), response.Results[i].Document);
+                Assert.Equal(Data.TestDocuments[i].AsDocument(), response.Results[i].Document);
             }
         }
 
@@ -67,13 +67,10 @@ namespace Microsoft.Azure.Search.Tests
             SearchIndexClient client = GetClient();
 
             var invalidParameters = new SearchParameters() { Filter = "This is not a valid filter." };
-            CloudException e = 
-                Assert.Throws<CloudException>(() => client.Documents.Search("*", invalidParameters));
-
-            Assert.Equal(HttpStatusCode.BadRequest, e.Response.StatusCode);
-            Assert.Contains(
-                "Invalid expression: Syntax error at position 7 in 'This is not a valid filter.'",
-                e.Message);
+            SearchAssert.ThrowsCloudException(
+                () => client.Documents.Search("*", invalidParameters),
+                HttpStatusCode.BadRequest,
+                "Invalid expression: Syntax error at position 7 in 'This is not a valid filter.'");
         }
 
         protected void TestDefaultSearchModeIsAny()
@@ -158,14 +155,15 @@ namespace Microsoft.Azure.Search.Tests
             string categoryHighlight = highlights[Category].Single();
             Assert.Equal("<b>Luxury</b>", categoryHighlight);
 
-            string[] expectedDescriptionHighlights =
+            // Typed as IEnumerable so we get the right overload of Assert.Equals below.
+            IEnumerable<string> expectedDescriptionHighlights =
                 new[] 
                 { 
                     "Best <b>hotel</b> in town if you like <b>luxury</b> hotels.",
                     "We highly recommend this <b>hotel</b>."
                 };
 
-            SearchAssert.SequenceEqual(expectedDescriptionHighlights, highlights[Description]);
+            Assert.Equal(expectedDescriptionHighlights, highlights[Description]);
         }
 
         protected void TestOrderByProgressivelyBreaksTies()
@@ -739,7 +737,7 @@ namespace Microsoft.Azure.Search.Tests
             Assert.NotNull(response.Results);
 
             IEnumerable<string> actualKeys = response.Results.Select(r => r.Document.HotelId);
-            SearchAssert.SequenceEqual(expectedKeys, actualKeys);
+            Assert.Equal(expectedKeys, actualKeys);
         }
 
         private void AssertKeySequenceEqual(DocumentSearchResult response, params string[] expectedKeys)
@@ -747,7 +745,7 @@ namespace Microsoft.Azure.Search.Tests
             Assert.NotNull(response.Results);
 
             IEnumerable<string> actualKeys = response.Results.Select(r => (string)r.Document["hotelId"]);
-            SearchAssert.SequenceEqual(expectedKeys, actualKeys);
+            Assert.Equal(expectedKeys, actualKeys);
         }
 
         private void AssertContainsKeys(DocumentSearchResult<Hotel> response, params string[] expectedKeys)

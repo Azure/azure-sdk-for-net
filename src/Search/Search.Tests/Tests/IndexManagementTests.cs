@@ -80,13 +80,14 @@ namespace Microsoft.Azure.Search.Tests
                 Index index = CreateTestIndex();
                 index.Fields[0].IsKey = false;
 
-                CloudException e = Assert.Throws<CloudException>(() => searchClient.Indexes.Create(index));
                 const string ExpectedMessageFormat =
                     "The request is invalid. Details: index : Found 0 key fields in index '{0}'. " +
                     "Each index must have exactly one key field.";
 
-                Assert.Equal(HttpStatusCode.BadRequest, e.Response.StatusCode);
-                Assert.Contains(String.Format(ExpectedMessageFormat, index.Name), e.Message);
+                SearchAssert.ThrowsCloudException(
+                    () => searchClient.Indexes.Create(index),
+                    HttpStatusCode.BadRequest,
+                    String.Format(ExpectedMessageFormat, index.Name));
             });
         }
 
@@ -112,9 +113,7 @@ namespace Microsoft.Azure.Search.Tests
             Run(() =>
             {
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
-                CloudException e = 
-                    Assert.Throws<CloudException>(() => searchClient.Indexes.Get("thisindexdoesnotexist"));
-                Assert.Equal(HttpStatusCode.NotFound, e.Response.StatusCode);
+                SearchAssert.ThrowsCloudException(() => searchClient.Indexes.Get("thisindexdoesnotexist"), HttpStatusCode.NotFound);
             });
         }
 

@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
 
             bool IEqualityComparer.Equals(object x, object y)
             {
-                if (_type.CanBeNull() && x == null || y == null)
+                if (_type.CanBeNull() && (x == null || y == null))
                 {
                     return CompareNull(x, y);
                 }
