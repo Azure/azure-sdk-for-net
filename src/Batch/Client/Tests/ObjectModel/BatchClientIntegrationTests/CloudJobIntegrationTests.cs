@@ -607,7 +607,7 @@
         public async Task JobPatch()
         {
             string jobId = "TestPatchJob-" + TestUtilities.GetMyName();
-            await SynchronizationContextHelper.RunTestAsync(() => ChangeJobAsync(jobId, jobAction: job => job.CommitAsync()), TestTimeout);
+            await SynchronizationContextHelper.RunTestAsync(() => MutateJobAsync(jobId, jobAction: job => job.CommitAsync()), TestTimeout);
         }
 
         [Fact]
@@ -615,7 +615,7 @@
         public async Task JobUpdate()
         {
             string jobId = "TestUpdateJob-" + TestUtilities.GetMyName();
-            await SynchronizationContextHelper.RunTestAsync(() => ChangeJobAsync(jobId, jobAction: job => job.CommitChangesAsync()), TestTimeout);
+            await SynchronizationContextHelper.RunTestAsync(() => MutateJobAsync(jobId, jobAction: job => job.CommitChangesAsync()), TestTimeout);
         }
 
         [Fact]
@@ -868,7 +868,7 @@
             SynchronizationContextHelper.RunTest(test, LongTestTimeout);
         }
 
-        private static async Task ChangeJobAsync(string jobId, Func<CloudJob, Task> jobAction)
+        private static async Task MutateJobAsync(string jobId, Func<CloudJob, Task> jobAction)
         {
             using (BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false))
             {
@@ -878,10 +878,12 @@
                 TimeSpan newMaxWallClockTime = TimeSpan.FromDays(1);
                 try
                 {
-                    CloudJob job = batchCli.JobOperations.CreateJob(jobId, new PoolInformation()
-                    {
-                        PoolId = "Temp"
-                    });
+                    CloudJob job = batchCli.JobOperations.CreateJob(
+                        jobId,
+                        new PoolInformation()
+                        {
+                            PoolId = "Temp"
+                        });
 
                     await job.CommitAsync().ConfigureAwait(false);
                     await job.RefreshAsync().ConfigureAwait(false);
