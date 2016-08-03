@@ -33,22 +33,22 @@ namespace Microsoft.Azure.Search.Tests.Utilities
     /// </remarks>
     public class ModelComparer<T> : IEqualityComparer<T>
     {
-        private IEqualityComparer _comparer = new DynamicModelComparer(typeof(T));
+        private readonly IEqualityComparer _comparer = new DynamicModelComparer(typeof(T));
 
         public bool Equals(T x, T y) => _comparer.Equals(x, y);
 
-        public int GetHashCode(T obj) => obj.GetHashCode();
+        public int GetHashCode(T obj) => obj?.GetHashCode() ?? 0;
 
         private class DynamicModelComparer : IEqualityComparer
         {
-            private Type _type;
+            private readonly Type _type;
 
             public DynamicModelComparer(Type type)
             {
                 _type = type;
             }
 
-            int IEqualityComparer.GetHashCode(object obj) => obj.GetHashCode();
+            int IEqualityComparer.GetHashCode(object obj) => obj?.GetHashCode() ?? 0;
 
             bool IEqualityComparer.Equals(object x, object y)
             {
@@ -213,7 +213,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                     return x.Name == y.Name;
                 }
 
-                public int GetHashCode(PropertyInfo obj) => obj.Name.GetHashCode();
+                public int GetHashCode(PropertyInfo obj) => obj?.Name?.GetHashCode() ?? 0;
             }
         }
     }
