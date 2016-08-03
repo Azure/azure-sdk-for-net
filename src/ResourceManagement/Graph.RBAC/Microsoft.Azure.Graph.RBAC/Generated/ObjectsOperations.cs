@@ -280,9 +280,7 @@ namespace Microsoft.Azure.Graph.RBAC
             }
             if (_queryParameters.Count > 0)
             {
-                // Temporary hack for nextLink issue since nextLink already contains query param, a '?' is part of that. Remove this once the issue is fixed in AutoRest.                
-                _url += "&" + string.Join("&", _queryParameters);
-                // _url += "?" + string.Join("&", _queryParameters);
+                _url += "?" + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
             HttpRequestMessage _httpRequest = new HttpRequestMessage();

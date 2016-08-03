@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "171d0c28-0715-4a1d-b98d-20a56ba21532"
+          "24abbe76-15b0-46f2-b49c-31b86ea6ee4d"
         ],
         "accept-language": [
           "en-US"
@@ -31,7 +31,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 03 Aug 2016 02:56:36 GMT"
+          "Wed, 03 Aug 2016 06:30:15 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -40,19 +40,19 @@
           "Microsoft-IIS/8.5"
         ],
         "ocp-aad-diagnostics-server-name": [
-          "MZl/hA8XpttsVIldt7MY8/8xS+QCIPIdkqsWyJMNDKo="
+          "q1vj4XvvU5q+L2Gpz3K8+u73jHZTPgp2vwQVNeo/8kM="
         ],
         "request-id": [
-          "e45f9bf8-5e39-4dbb-9563-2cdc00555715"
+          "2a5fb296-289b-4e57-9c14-58776df72118"
         ],
         "client-request-id": [
-          "5a3d2c15-28f7-49d5-a00a-0d6f62ae61b7"
+          "d3b35912-82b7-4167-b32a-03c83c76ba25"
         ],
         "x-ms-dirapi-data-contract-version": [
           "1.6"
         ],
         "ocp-aad-session-key": [
-          "94mZxuFgf-2_n7W0wl9BooAzTA5wmAdGMN3JMwCB5Tj0UtjJKnV5P_MSP8ICas2igvhD2cYdO7NG_hOyow0NIsEEjGMQt0teV7N3m4df3mr2448OaANJ9laUgwfkAb_SARpWQtpjeAuofFzy9H7zpsib7iTY21xUVQhNPExNbTF0Xxw-ydOghdeeTxauhGKSzJpXS-HPr_0GTBbODQuUbw.KX8k11EBg5bOB8RBoeF2_5foWS_GkYNaT3K6Bl2MTJM"
+          "0j0mB5lToQQBEotkCxiMp-0UTPvebw6aeAS-zMp7q8E7n5LoxCvV1E5TE_CDySUZBEBj5wQ5hldqRIRBXrdKwhIa9gWvTAJMtx8SJeEUOxx2s14_qCP_rj6eGPWStcDezmW1MfolBIoK1-MTNdoc2KFE247X6U9_JqiD0GHQLbqOQV1ZG94CIv_WLfCl2WWcL6ffuuT8rAIvvnyFbbUUBw.0uW1z25lDGIrnxRFcxAUUTtM-apJK_vK5rTZQpIXeME"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -74,19 +74,19 @@
           "ASP.NET"
         ],
         "Duration": [
-          "1189466"
+          "1340372"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/1273adef-00a3-4086-a51a-dbcce1857d36/groups/2f8c5f43-d769-45d2-833a-b46a412469be?api-version=1.6",
-      "EncodedRequestUri": "LzEyNzNhZGVmLTAwYTMtNDA4Ni1hNTFhLWRiY2NlMTg1N2QzNi9ncm91cHMvMmY4YzVmNDMtZDc2OS00NWQyLTgzM2EtYjQ2YTQxMjQ2OWJlP2FwaS12ZXJzaW9uPTEuNg==",
+      "RequestUri": "/1273adef-00a3-4086-a51a-dbcce1857d36/groups/2447d261-fac2-4567-9453-e2566eee4314?api-version=1.6",
+      "EncodedRequestUri": "LzEyNzNhZGVmLTAwYTMtNDA4Ni1hNTFhLWRiY2NlMTg1N2QzNi9ncm91cHMvMjQ0N2QyNjEtZmFjMi00NTY3LTk0NTMtZTI1NjZlZWU0MzE0P2FwaS12ZXJzaW9uPTEuNg==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "24890e8f-d9e4-4033-9534-69cee73b479e"
+          "60f5b8d5-09d5-465a-8d83-4f9ad7cd779d"
         ],
         "accept-language": [
           "en-US"
@@ -95,10 +95,10 @@
           "Microsoft.Azure.Graph.RBAC.GraphRbacManagementClient/3.2.0-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"odata.metadata\": \"https://graph.windows.net/1273adef-00a3-4086-a51a-dbcce1857d36/$metadata#directoryObjects/Microsoft.DirectoryServices.Group/@Element\",\r\n  \"odata.type\": \"Microsoft.DirectoryServices.Group\",\r\n  \"objectType\": \"Group\",\r\n  \"objectId\": \"2f8c5f43-d769-45d2-833a-b46a412469be\",\r\n  \"deletionTimestamp\": null,\r\n  \"description\": \"RichardTestGroup\",\r\n  \"dirSyncEnabled\": null,\r\n  \"displayName\": \"RichardTestGroup\",\r\n  \"lastDirSyncTime\": null,\r\n  \"mail\": null,\r\n  \"mailNickname\": \"42c35796-cca3-4ed7-aafa-414cd504b3e5\",\r\n  \"mailEnabled\": false,\r\n  \"onPremisesSecurityIdentifier\": null,\r\n  \"provisioningErrors\": [],\r\n  \"proxyAddresses\": [],\r\n  \"securityEnabled\": true\r\n}",
+      "ResponseBody": "{\r\n  \"odata.metadata\": \"https://graph.windows.net/1273adef-00a3-4086-a51a-dbcce1857d36/$metadata#directoryObjects/Microsoft.DirectoryServices.Group/@Element\",\r\n  \"odata.type\": \"Microsoft.DirectoryServices.Group\",\r\n  \"objectType\": \"Group\",\r\n  \"objectId\": \"2447d261-fac2-4567-9453-e2566eee4314\",\r\n  \"deletionTimestamp\": null,\r\n  \"description\": null,\r\n  \"dirSyncEnabled\": null,\r\n  \"displayName\": \"testGroup7\",\r\n  \"lastDirSyncTime\": null,\r\n  \"mail\": null,\r\n  \"mailNickname\": \"testGroup7\",\r\n  \"mailEnabled\": false,\r\n  \"onPremisesSecurityIdentifier\": null,\r\n  \"provisioningErrors\": [],\r\n  \"proxyAddresses\": [],\r\n  \"securityEnabled\": true\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "598"
+          "552"
         ],
         "Content-Type": [
           "application/json; odata=minimalmetadata; streaming=true; charset=utf-8"
@@ -110,7 +110,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 03 Aug 2016 02:56:37 GMT"
+          "Wed, 03 Aug 2016 06:30:16 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -119,19 +119,19 @@
           "Microsoft-IIS/8.5"
         ],
         "ocp-aad-diagnostics-server-name": [
-          "MZl/hA8XpttsVIldt7MY8/8xS+QCIPIdkqsWyJMNDKo="
+          "q1vj4XvvU5q+L2Gpz3K8+u73jHZTPgp2vwQVNeo/8kM="
         ],
         "request-id": [
-          "e9c3f379-73b0-4e7f-bad9-5e6e2e580da4"
+          "af35a640-3215-44bb-88e0-2246003db3ec"
         ],
         "client-request-id": [
-          "2c2ba631-2f60-4aee-8e65-3a67189c1745"
+          "acb273d8-ca84-481a-9649-4e44f29e4795"
         ],
         "x-ms-dirapi-data-contract-version": [
           "1.6"
         ],
         "ocp-aad-session-key": [
-          "z5yoVZXcpF6eiUBj-51XLsvS3IDYBEzzaqClM0-c8VpmUxZADv3QP1p3B83q2JwyBt7-3drVTV7gHHHhvCgeJT550_sslM61dHR2FsJwahxobxKU4Yx8Ut9LaBZPxlHwsp9mEGYFfFpFGVfSxpF9Ot0y7XdWnlJOqvePA-LGp0MO4lbdPXr0gtfvX_ustIYbU0SYUZOq9-7gBGgZRtypcw.romBgFK0yGixOOoeqp2oUGlXZrpVuZg0hza2_xDBnF0"
+          "Ax6OMDAfNoYBNkSdl9ZwUjyXXziuLyHwabf0k_BYvB4G_r6Q2sQgkAKcZo5fWJ2hZAXwK5B6BzIftm8BIjj0n5CdT0bHvBa-jzkLCwLN8RnHHWAqCiC6vXDIQ8EQTaqFEFtu9uZiisXP_KqvsbRe9KimTg97wCEHxNKLXmQbSLQJsz_qhJr0pjQp32o2ocR9B_G_dQXNt0fXCdC8FikFSg.VsNNyZNe3kmanx_BdomQ1wUWK4LpGIFqMsc59UR5Gx0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -153,14 +153,14 @@
           "ASP.NET"
         ],
         "Duration": [
-          "1392930"
+          "1938380"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/1273adef-00a3-4086-a51a-dbcce1857d36/groups/2f8c5f43-d769-45d2-833a-b46a412469be/getMemberGroups?api-version=1.6",
-      "EncodedRequestUri": "LzEyNzNhZGVmLTAwYTMtNDA4Ni1hNTFhLWRiY2NlMTg1N2QzNi9ncm91cHMvMmY4YzVmNDMtZDc2OS00NWQyLTgzM2EtYjQ2YTQxMjQ2OWJlL2dldE1lbWJlckdyb3Vwcz9hcGktdmVyc2lvbj0xLjY=",
+      "RequestUri": "/1273adef-00a3-4086-a51a-dbcce1857d36/groups/2447d261-fac2-4567-9453-e2566eee4314/getMemberGroups?api-version=1.6",
+      "EncodedRequestUri": "LzEyNzNhZGVmLTAwYTMtNDA4Ni1hNTFhLWRiY2NlMTg1N2QzNi9ncm91cHMvMjQ0N2QyNjEtZmFjMi00NTY3LTk0NTMtZTI1NjZlZWU0MzE0L2dldE1lbWJlckdyb3Vwcz9hcGktdmVyc2lvbj0xLjY=",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"securityEnabledOnly\": false\r\n}",
       "RequestHeaders": {
@@ -171,7 +171,7 @@
           "36"
         ],
         "x-ms-client-request-id": [
-          "6c8fe50e-5e89-44f5-8ab6-d52466e5654e"
+          "77028aee-85df-4d38-93f1-b49527fb6e1c"
         ],
         "accept-language": [
           "en-US"
@@ -195,7 +195,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 03 Aug 2016 02:56:37 GMT"
+          "Wed, 03 Aug 2016 06:30:16 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -204,19 +204,19 @@
           "Microsoft-IIS/8.5"
         ],
         "ocp-aad-diagnostics-server-name": [
-          "MZl/hA8XpttsVIldt7MY8/8xS+QCIPIdkqsWyJMNDKo="
+          "q1vj4XvvU5q+L2Gpz3K8+u73jHZTPgp2vwQVNeo/8kM="
         ],
         "request-id": [
-          "b3434cae-a024-4899-852d-176263f44cef"
+          "65087e9f-32ec-4abb-af60-e70bb2644641"
         ],
         "client-request-id": [
-          "6b39866b-d58b-438b-9017-067d4d0782f9"
+          "2f1be98f-6b7e-4e5b-8945-099a0c19c555"
         ],
         "x-ms-dirapi-data-contract-version": [
           "1.6"
         ],
         "ocp-aad-session-key": [
-          "0BkWP3tu1_8bxVKyYiKWowYyfgSRtUKXPouHGkXqMIrx3evHPt037oJ4t2SeEbweyro16eNAKdojxbcoBPcDLhvGBjlHw1-HRE5mWDQ5eOuxZ6WatiKBFbGEMvjEv2_YKfCGCLUvfcqrG3Uo4BU9gDG4MnFPviDpTnH32IDu2NVp_ya08s718vIJep4uz9Jy3oozRVLjjYUymXZ-f_aMbg.5duXvnMTNFD2ALEVvwxETj9EQjUUxsnXAhi4AlIopNI"
+          "AD_hzfcxJG_ele8gz3Fh-67nXH0s52rtwkkMrooBDx0L1Hp7TVq93UU4GzrgQvsCxhLrGyRHhTRtkTTq3lxNuAn6u7vdnEQoNxSMPbX-Gsk9Ff_cv1ZapifH7ToTU3MhOPhXHy32JxghvvWX8CzntSWheZZICLJB0GnRhirr6F73s3gYSafTDigScLDC8I-AtxBwr8zM8HNL7F36Apj6lg.fUfPPwf9KFnQrkECETAMkvGzwPj0Wq93RJRxFIM1mP8"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -238,7 +238,7 @@
           "ASP.NET"
         ],
         "Duration": [
-          "1578523"
+          "1292103"
         ]
       },
       "StatusCode": 200
