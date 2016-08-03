@@ -134,6 +134,13 @@ namespace Microsoft.Azure.Management.KeyVault.Models
                 {
                     throw new ValidationException(ValidationRules.MaxItems, "AccessPolicies", 16);
                 }
+                foreach (var element in this.AccessPolicies)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }
