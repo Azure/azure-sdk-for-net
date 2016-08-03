@@ -465,7 +465,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='networkInterfaceName'>
             /// The name of the network interface.
             /// </param>
-            public static IPage<EffectiveRoute> GetEffectiveRouteTable(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName)
+            public static EffectiveRouteListResult GetEffectiveRouteTable(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName)
             {
                 return Task.Factory.StartNew(s => ((INetworkInterfacesOperations)s).GetEffectiveRouteTableAsync(resourceGroupName, networkInterfaceName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -486,7 +486,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<EffectiveRoute>> GetEffectiveRouteTableAsync(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<EffectiveRouteListResult> GetEffectiveRouteTableAsync(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetEffectiveRouteTableWithHttpMessagesAsync(resourceGroupName, networkInterfaceName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -507,7 +507,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='networkInterfaceName'>
             /// The name of the network interface.
             /// </param>
-            public static IPage<EffectiveRoute> BeginGetEffectiveRouteTable(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName)
+            public static EffectiveRouteListResult BeginGetEffectiveRouteTable(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName)
             {
                 return Task.Factory.StartNew(s => ((INetworkInterfacesOperations)s).BeginGetEffectiveRouteTableAsync(resourceGroupName, networkInterfaceName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -528,7 +528,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<EffectiveRoute>> BeginGetEffectiveRouteTableAsync(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<EffectiveRouteListResult> BeginGetEffectiveRouteTableAsync(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginGetEffectiveRouteTableWithHttpMessagesAsync(resourceGroupName, networkInterfaceName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -549,7 +549,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='networkInterfaceName'>
             /// The name of the network interface.
             /// </param>
-            public static IPage<EffectiveNetworkSecurityGroup> ListEffectiveNetworkSecurityGroups(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName)
+            public static EffectiveNetworkSecurityGroupListResult ListEffectiveNetworkSecurityGroups(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName)
             {
                 return Task.Factory.StartNew(s => ((INetworkInterfacesOperations)s).ListEffectiveNetworkSecurityGroupsAsync(resourceGroupName, networkInterfaceName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -570,7 +570,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<EffectiveNetworkSecurityGroup>> ListEffectiveNetworkSecurityGroupsAsync(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<EffectiveNetworkSecurityGroupListResult> ListEffectiveNetworkSecurityGroupsAsync(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListEffectiveNetworkSecurityGroupsWithHttpMessagesAsync(resourceGroupName, networkInterfaceName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -591,7 +591,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='networkInterfaceName'>
             /// The name of the network interface.
             /// </param>
-            public static IPage<EffectiveNetworkSecurityGroup> BeginListEffectiveNetworkSecurityGroups(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName)
+            public static EffectiveNetworkSecurityGroupListResult BeginListEffectiveNetworkSecurityGroups(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName)
             {
                 return Task.Factory.StartNew(s => ((INetworkInterfacesOperations)s).BeginListEffectiveNetworkSecurityGroupsAsync(resourceGroupName, networkInterfaceName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -612,7 +612,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<EffectiveNetworkSecurityGroup>> BeginListEffectiveNetworkSecurityGroupsAsync(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<EffectiveNetworkSecurityGroupListResult> BeginListEffectiveNetworkSecurityGroupsAsync(this INetworkInterfacesOperations operations, string resourceGroupName, string networkInterfaceName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginListEffectiveNetworkSecurityGroupsWithHttpMessagesAsync(resourceGroupName, networkInterfaceName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -759,150 +759,6 @@ namespace Microsoft.Azure.Management.Network
             public static async Task<IPage<NetworkInterface>> ListNextAsync(this INetworkInterfacesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// The get effective routetable operation retrieves all the route tables
-            /// applied on a networkInterface.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<EffectiveRoute> GetEffectiveRouteTableNext(this INetworkInterfacesOperations operations, string nextPageLink)
-            {
-                return Task.Factory.StartNew(s => ((INetworkInterfacesOperations)s).GetEffectiveRouteTableNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// The get effective routetable operation retrieves all the route tables
-            /// applied on a networkInterface.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<EffectiveRoute>> GetEffectiveRouteTableNextAsync(this INetworkInterfacesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetEffectiveRouteTableNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// The get effective routetable operation retrieves all the route tables
-            /// applied on a networkInterface.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<EffectiveRoute> BeginGetEffectiveRouteTableNext(this INetworkInterfacesOperations operations, string nextPageLink)
-            {
-                return Task.Factory.StartNew(s => ((INetworkInterfacesOperations)s).BeginGetEffectiveRouteTableNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// The get effective routetable operation retrieves all the route tables
-            /// applied on a networkInterface.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<EffectiveRoute>> BeginGetEffectiveRouteTableNextAsync(this INetworkInterfacesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginGetEffectiveRouteTableNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// The list effective network security group operation retrieves all the
-            /// network security groups applied on a networkInterface.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<EffectiveNetworkSecurityGroup> ListEffectiveNetworkSecurityGroupsNext(this INetworkInterfacesOperations operations, string nextPageLink)
-            {
-                return Task.Factory.StartNew(s => ((INetworkInterfacesOperations)s).ListEffectiveNetworkSecurityGroupsNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// The list effective network security group operation retrieves all the
-            /// network security groups applied on a networkInterface.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<EffectiveNetworkSecurityGroup>> ListEffectiveNetworkSecurityGroupsNextAsync(this INetworkInterfacesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListEffectiveNetworkSecurityGroupsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// The list effective network security group operation retrieves all the
-            /// network security groups applied on a networkInterface.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<EffectiveNetworkSecurityGroup> BeginListEffectiveNetworkSecurityGroupsNext(this INetworkInterfacesOperations operations, string nextPageLink)
-            {
-                return Task.Factory.StartNew(s => ((INetworkInterfacesOperations)s).BeginListEffectiveNetworkSecurityGroupsNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// The list effective network security group operation retrieves all the
-            /// network security groups applied on a networkInterface.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<EffectiveNetworkSecurityGroup>> BeginListEffectiveNetworkSecurityGroupsNextAsync(this INetworkInterfacesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginListEffectiveNetworkSecurityGroupsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

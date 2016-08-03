@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// <summary>
     /// Effective Route
     /// </summary>
-    public partial class EffectiveRoute : SubResource
+    public partial class EffectiveRoute
     {
         /// <summary>
         /// Initializes a new instance of the EffectiveRoute class.
@@ -29,8 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the EffectiveRoute class.
         /// </summary>
-        public EffectiveRoute(string id = default(string), string name = default(string), string source = default(string), string state = default(string), IList<string> addressPrefix = default(IList<string>), IList<string> nextHopIpAddress = default(IList<string>), string nextHopType = default(string))
-            : base(id)
+        public EffectiveRoute(string name = default(string), string source = default(string), string state = default(string), IList<string> addressPrefix = default(IList<string>), IList<string> nextHopIpAddress = default(IList<string>), string nextHopType = default(string))
         {
             Name = name;
             Source = source;

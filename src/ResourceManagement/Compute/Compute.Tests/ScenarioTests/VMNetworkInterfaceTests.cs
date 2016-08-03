@@ -123,7 +123,8 @@ namespace Compute.Tests
 
                     Subnet subnetResponse = CreateVNET(rgName);
 
-                    NetworkInterface nicResponse = CreateNIC(rgName, subnetResponse, null);
+                    NetworkSecurityGroup nsgResponse = CreateNsg(rgName);
+                    NetworkInterface nicResponse = CreateNIC(rgName, subnetResponse, null, null, nsgResponse);
 
                     string asetId = CreateAvailabilitySet(rgName, asName);
 
@@ -148,6 +149,17 @@ namespace Compute.Tests
                     Assert.NotNull(getNicResponse.MacAddress);
                     Assert.NotNull(getNicResponse.Primary);
                     Assert.True(getNicResponse.Primary != null && getNicResponse.Primary.Value);
+
+                    // Get Effective RouteTable
+                    var getEffectiveRouteTable = m_NrpClient.NetworkInterfaces.GetEffectiveRouteTable(rgName, nicResponse.Name);
+                    Assert.NotNull(getEffectiveRouteTable);
+                    Assert.NotEqual(0, getEffectiveRouteTable.Value.Count);
+                    Assert.Equal(getEffectiveRouteTable.Value[0].Source, EffectiveRouteSource.Default);
+                    Assert.Equal(getEffectiveRouteTable.Value[0].State, EffectiveRouteState.Active);
+
+                    // Get Effecting NSG
+                    var getEffectiveNSGresponse = m_NrpClient.NetworkInterfaces.ListEffectiveNetworkSecurityGroups(rgName, nicResponse.Name);
+                    Assert.NotNull(getEffectiveNSGresponse);                    
                 }
                 finally
                 {
