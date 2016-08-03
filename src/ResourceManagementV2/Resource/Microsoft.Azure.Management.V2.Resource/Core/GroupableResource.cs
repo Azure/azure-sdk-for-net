@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.V2.Resource
             ManagerT,
             IDefintionAfterRegion,
             IDefintionAfterResourceGroup>, IFluentResourceT
-        where ManagerT : ManagerBase
+        where ManagerT : IManagerBase
         where IFluentResourceT : class, IResource
         where InnerResourceBaseT: class
         where InnerResourceT : class, InnerResourceBaseT

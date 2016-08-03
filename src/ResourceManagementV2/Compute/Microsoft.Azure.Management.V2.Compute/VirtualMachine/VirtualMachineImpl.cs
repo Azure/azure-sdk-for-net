@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             Management.Compute.Models.VirtualMachineInner,
             Rest.Azure.Resource,
             VirtualMachineImpl,
-            ComputeManager,
+            IComputeManager,
             VirtualMachine.Definition.IWithGroup,
             VirtualMachine.Definition.IWithCreate>,
         IVirtualMachine,
@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         internal VirtualMachineImpl(string name,
         Management.Compute.Models.VirtualMachineInner innerObject,
         IVirtualMachinesOperations client,
-        ComputeManager manager) : base(name, innerObject, manager)
+        IComputeManager manager) : base(name, innerObject, manager)
         {
         }
 

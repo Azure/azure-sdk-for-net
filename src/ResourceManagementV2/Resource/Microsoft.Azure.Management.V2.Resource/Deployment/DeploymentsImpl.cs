@@ -15,9 +15,9 @@ namespace Microsoft.Azure.Management.V2.Resource
     {
         private IDeploymentsOperations client;
         private IDeploymentOperationsOperations deploymentOperationsClient;
-        private ResourceManager2 resourceManager;
+        private IResourceManager resourceManager;
 
-        internal DeploymentsImpl(IDeploymentsOperations client, IDeploymentOperationsOperations deploymentOperationsClient, ResourceManager2 resourceManager)
+        internal DeploymentsImpl(IDeploymentsOperations client, IDeploymentOperationsOperations deploymentOperationsClient, IResourceManager resourceManager)
         {
             this.client = client;
             this.deploymentOperationsClient = deploymentOperationsClient;

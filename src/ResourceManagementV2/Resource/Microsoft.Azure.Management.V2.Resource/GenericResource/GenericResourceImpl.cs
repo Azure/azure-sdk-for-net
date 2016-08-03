@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.V2.Resource
         GenericResourceInner,
         Rest.Azure.Resource,
         GenericResourceImpl,
-        ResourceManager2,
+        IResourceManager,
         IWithGroup,
         IWithResourceType>,
         IGenericResource,
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.V2.Resource
         internal GenericResourceImpl(string key,
             GenericResourceInner innerModel,
             IResourcesOperations client,
-            ResourceManager2 resourceManager) : base(key, innerModel, resourceManager)
+            IResourceManager resourceManager) : base(key, innerModel, resourceManager)
         {
             this.client = client;
         }

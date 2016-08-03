@@ -16,10 +16,10 @@ namespace Microsoft.Azure.Management.V2.Compute
                 VirtualMachineImpl,
                 VirtualMachineInner,
                 IVirtualMachinesOperations,
-                ComputeManager>,
+                IComputeManager>,
                 IVirtualMachines
     {
-        internal VirtulaMachinesImpl(IVirtualMachinesOperations innerCollection, ComputeManager manager) : base(innerCollection, manager)
+        internal VirtulaMachinesImpl(IVirtualMachinesOperations innerCollection, IComputeManager manager) : base(innerCollection, manager)
         { }
 
         public VirtualMachine.Definition.IBlank Define(string name)

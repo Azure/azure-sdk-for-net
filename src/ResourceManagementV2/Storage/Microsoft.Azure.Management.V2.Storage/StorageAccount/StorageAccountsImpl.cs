@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.V2.Storage
                 StorageAccountImpl,
                 Management.Storage.Models.StorageAccountInner,
                 IStorageAccountsOperations,
-                StorageManager>,
+                IStorageManager>,
         IStorageAccounts
     {
         PagedList<IStorageAccount> ISupportsListing<IStorageAccount>.List()
@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.V2.Storage
             throw new NotImplementedException();
         }
 
-        internal StorageAccountsImpl(IStorageAccountsOperations innerCollection, StorageManager manager) : base(innerCollection, manager)
+        internal StorageAccountsImpl(IStorageAccountsOperations innerCollection, IStorageManager manager) : base(innerCollection, manager)
         {}
 
         #region Implementation of ISupportsCreating interface

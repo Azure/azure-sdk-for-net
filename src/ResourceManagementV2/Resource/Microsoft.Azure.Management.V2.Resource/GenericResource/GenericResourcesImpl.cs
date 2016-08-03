@@ -12,12 +12,12 @@ using Microsoft.Rest.Azure;
 namespace Microsoft.Azure.Management.V2.Resource
 {
     internal class GenericResourcesImpl : 
-        GroupableResources<IGenericResource, GenericResourceImpl, GenericResourceInner, IResourcesOperations, ResourceManager2>,
+        GroupableResources<IGenericResource, GenericResourceImpl, GenericResourceInner, IResourcesOperations, IResourceManager>,
         IGenericResources
     {
         private ResourceManagementClient client;
 
-        internal GenericResourcesImpl(ResourceManagementClient client, ResourceManager2 resourceManager) : base(client.Resources, resourceManager)
+        internal GenericResourcesImpl(ResourceManagementClient client, IResourceManager resourceManager) : base(client.Resources, resourceManager)
         {
             this.client = client;
         }

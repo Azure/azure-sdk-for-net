@@ -20,14 +20,14 @@ namespace Microsoft.Azure.Management.V2.Resource
     {
         private IDeploymentsOperations client;
         private IDeploymentOperationsOperations deploymentOperationsClient;
-        private ResourceManager2 resourceManager;
+        private IResourceManager resourceManager;
         private string resourceGroupName;
         private ICreatable<IResourceGroup> creatableResourceGroup;
 
         internal DeploymentImpl(DeploymentExtendedInner innerModel,
             IDeploymentsOperations client,
             IDeploymentOperationsOperations deploymentOperationsClient,
-            ResourceManager2 resourceManager) : base(innerModel.Name, innerModel)
+            IResourceManager resourceManager) : base(innerModel.Name, innerModel)
         {
             this.client = client;
             this.deploymentOperationsClient = deploymentOperationsClient;

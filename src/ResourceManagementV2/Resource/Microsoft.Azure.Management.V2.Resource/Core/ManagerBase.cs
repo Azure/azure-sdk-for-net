@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Microsoft.Azure.Management.V2.Resource.Core
+﻿namespace Microsoft.Azure.Management.V2.Resource.Core
 {
-    public abstract class ManagerBase
+    public interface IManagerBase
+    {
+        IResourceManager ResourceManager { get; }
+    }
+
+    public abstract class ManagerBase : IManagerBase
     {
         public ManagerBase(RestClient restClient, string subscriptionId)
         {

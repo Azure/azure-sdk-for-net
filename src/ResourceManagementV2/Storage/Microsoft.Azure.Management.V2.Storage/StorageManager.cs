@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.V2.Storage
         #endregion
     }
 
-    public interface IStorageManager
+    public interface IStorageManager : IManagerBase
     {
         IStorageAccounts StorageAccounts { get; }
     }
