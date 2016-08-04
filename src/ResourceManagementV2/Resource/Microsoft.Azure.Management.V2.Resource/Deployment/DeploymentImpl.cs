@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.V2.Resource.Deployment.Definition;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace Microsoft.Azure.Management.V2.Resource
 {
@@ -109,12 +110,8 @@ namespace Microsoft.Azure.Management.V2.Resource
                 {
                     return null;
                 }
-                IList<IProvider> providers = new List<IProvider>();
-                foreach (var inner in Inner.Properties.Providers)
-                {
-                    providers.Add(new ProviderImpl(inner));
-                }
-                return providers;
+                return (from providerInner in Inner.Properties.Providers
+                        select new ProviderImpl(providerInner)).ToList<IProvider>();
             }
         }
 
@@ -413,9 +410,11 @@ namespace Microsoft.Azure.Management.V2.Resource
 
         #region Implementation of IRefreshable interface
 
-        public override Task<IDeployment> Refresh()
+        public async override Task<IDeployment> Refresh()
         {
-            return null;
+            DeploymentExtendedInner inner = await client.GetAsync(ResourceGroupName, Name);
+            SetInner(inner);
+            return this;
         }
 
         #endregion
@@ -432,7 +431,6 @@ namespace Microsoft.Azure.Management.V2.Resource
             return this;
         }
 
-
         public async new Task<IDeployment> CreateAsync(CancellationToken cancellationToken = default(CancellationToken), bool multiThreaded = true)
         {
             if (creatableResourceGroup != null)
@@ -441,7 +439,6 @@ namespace Microsoft.Azure.Management.V2.Resource
             }
             return await CreateResourceAsync(cancellationToken);
         }
-
 
         #endregion
 
