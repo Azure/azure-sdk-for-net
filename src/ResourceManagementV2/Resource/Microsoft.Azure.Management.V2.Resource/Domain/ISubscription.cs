@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.V2.Resource
         /// List the locations the subscription has access to.
         /// </summary>
         /// <returns>the lazy list of locations</returns>
-        PagedList<ILocation> ListLocations { get; }
+        PagedList<ILocation> ListLocations();
 
     }
 }

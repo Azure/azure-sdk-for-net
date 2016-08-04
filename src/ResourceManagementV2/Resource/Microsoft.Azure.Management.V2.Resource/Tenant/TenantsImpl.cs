@@ -18,11 +18,6 @@ namespace Microsoft.Azure.Management.V2.Resource
 
         PagedList<ITenant> ISupportsListing<ITenant>.List()
         {
-            throw new NotImplementedException();
-        }
-
-        public PagedList<ITenant> List()
-        {
             IPage<TenantIdDescription> firstPage = innerCollection.List();
             var innerList = new PagedList<TenantIdDescription>(firstPage, (string nextPageLink) =>
             {
