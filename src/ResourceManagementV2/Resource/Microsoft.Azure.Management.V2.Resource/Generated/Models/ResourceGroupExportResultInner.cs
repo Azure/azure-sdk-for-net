@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     public partial class ResourceGroupExportResultInner
     {
@@ -28,8 +22,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// Initializes a new instance of the ResourceGroupExportResultInner
         /// class.
         /// </summary>
-        /// <param name="template">Gets or sets the template content.</param>
-        /// <param name="error">Gets or sets the error.</param>
+        /// <param name="template">The template content.</param>
+        /// <param name="error">The error.</param>
         public ResourceGroupExportResultInner(object template = default(object), ResourceManagementErrorWithDetails error = default(ResourceManagementErrorWithDetails))
         {
             Template = template;
@@ -39,19 +33,19 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Gets or sets the template content.
         /// </summary>
-        [JsonProperty(PropertyName = "template")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "template")]
         public object Template { get; set; }
 
         /// <summary>
         /// Gets or sets the error.
         /// </summary>
-        [JsonProperty(PropertyName = "error")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "error")]
         public ResourceManagementErrorWithDetails Error { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

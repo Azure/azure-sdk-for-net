@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Describes a network profile.
@@ -30,7 +24,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Initializes a new instance of the NetworkProfile class.
         /// </summary>
         /// <param name="networkInterfaces">the network interfaces.</param>
-        public NetworkProfile(IList<NetworkInterfaceReference> networkInterfaces = default(IList<NetworkInterfaceReference>))
+        public NetworkProfile(System.Collections.Generic.IList<NetworkInterfaceReferenceInner> networkInterfaces = default(System.Collections.Generic.IList<NetworkInterfaceReferenceInner>))
         {
             NetworkInterfaces = networkInterfaces;
         }
@@ -38,8 +32,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the network interfaces.
         /// </summary>
-        [JsonProperty(PropertyName = "networkInterfaces")]
-        public IList<NetworkInterfaceReference> NetworkInterfaces { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "networkInterfaces")]
+        public System.Collections.Generic.IList<NetworkInterfaceReferenceInner> NetworkInterfaces { get; set; }
 
     }
 }

@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The List Usages operation response.
@@ -33,7 +27,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="nextLink">the uri to fetch the next page of Compute
         /// Resource Usages. Call ListNext() with this to fetch the next page
         /// of Compute Resource Usages.</param>
-        public ListUsagesResultInner(IList<Usage> value = default(IList<Usage>), string nextLink = default(string))
+        public ListUsagesResultInner(System.Collections.Generic.IList<Usage> value = default(System.Collections.Generic.IList<Usage>), string nextLink = default(string))
         {
             Value = value;
             NextLink = nextLink;
@@ -42,15 +36,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the list Compute Resource Usages.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<Usage> Value { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
+        public System.Collections.Generic.IList<Usage> Value { get; set; }
 
         /// <summary>
         /// Gets or sets the uri to fetch the next page of Compute Resource
         /// Usages. Call ListNext() with this to fetch the next page of
         /// Compute Resource Usages.
         /// </summary>
-        [JsonProperty(PropertyName = "nextLink")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "nextLink")]
         public string NextLink { get; set; }
 
     }

@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     public partial class HttpMessage
     {
@@ -26,7 +20,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the HttpMessage class.
         /// </summary>
-        /// <param name="content">Gets or sets HTTP message content.</param>
+        /// <param name="content">HTTP message content.</param>
         public HttpMessage(object content = default(object))
         {
             Content = content;
@@ -35,7 +29,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Gets or sets HTTP message content.
         /// </summary>
-        [JsonProperty(PropertyName = "content")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "content")]
         public object Content { get; set; }
 
     }

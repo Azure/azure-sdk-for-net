@@ -8,18 +8,12 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A common class for general resource information
     /// </summary>
-    [JsonTransformation]
+    [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class LocalNetworkGatewayInner : Resource
     {
         /// <summary>
@@ -56,40 +50,40 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets local network site Address space
         /// </summary>
-        [JsonProperty(PropertyName = "properties.localNetworkAddressSpace")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.localNetworkAddressSpace")]
         public AddressSpace LocalNetworkAddressSpace { get; set; }
 
         /// <summary>
         /// Gets or sets IP address of local network gateway.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.gatewayIpAddress")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.gatewayIpAddress")]
         public string GatewayIpAddress { get; set; }
 
         /// <summary>
         /// Gets or sets local network gateway's BGP speaker settings
         /// </summary>
-        [JsonProperty(PropertyName = "properties.bgpSettings")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.bgpSettings")]
         public BgpSettings BgpSettings { get; set; }
 
         /// <summary>
         /// Gets or sets resource guid property of the LocalNetworkGateway
         /// resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.resourceGuid")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.resourceGuid")]
         public string ResourceGuid { get; set; }
 
         /// <summary>
         /// Gets provisioning state of the LocalNetworkGateway resource
         /// Updating/Deleting/Failed
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource
         /// is updated
         /// </summary>
-        [JsonProperty(PropertyName = "etag")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
     }

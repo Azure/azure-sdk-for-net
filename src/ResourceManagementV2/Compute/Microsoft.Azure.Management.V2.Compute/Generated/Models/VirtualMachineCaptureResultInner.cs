@@ -8,18 +8,12 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Resource Id.
     /// </summary>
-    [JsonTransformation]
+    [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class VirtualMachineCaptureResultInner : SubResource
     {
         /// <summary>
@@ -42,7 +36,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets operation output data (raw JSON)
         /// </summary>
-        [JsonProperty(PropertyName = "properties.output")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.output")]
         public object Output { get; set; }
 
     }

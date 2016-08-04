@@ -8,18 +8,12 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// RouteTable resource
     /// </summary>
-    [JsonTransformation]
+    [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class RouteTableInner : Resource
     {
         /// <summary>
@@ -37,7 +31,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource Updating/Deleting/Failed</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated</param>
-        public RouteTableInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), IList<RouteInner> routes = default(IList<RouteInner>), IList<SubnetInner> subnets = default(IList<SubnetInner>), string provisioningState = default(string), string etag = default(string))
+        public RouteTableInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), System.Collections.Generic.IList<RouteInner> routes = default(System.Collections.Generic.IList<RouteInner>), System.Collections.Generic.IList<SubnetInner> subnets = default(System.Collections.Generic.IList<SubnetInner>), string provisioningState = default(string), string etag = default(string))
             : base(location, id, name, type, tags)
         {
             Routes = routes;
@@ -49,26 +43,26 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets Routes in a Route Table
         /// </summary>
-        [JsonProperty(PropertyName = "properties.routes")]
-        public IList<RouteInner> Routes { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.routes")]
+        public System.Collections.Generic.IList<RouteInner> Routes { get; set; }
 
         /// <summary>
         /// Gets collection of references to subnets
         /// </summary>
-        [JsonProperty(PropertyName = "properties.subnets")]
-        public IList<SubnetInner> Subnets { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.subnets")]
+        public System.Collections.Generic.IList<SubnetInner> Subnets { get; private set; }
 
         /// <summary>
         /// Gets provisioning state of the resource Updating/Deleting/Failed
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource
         /// is updated
         /// </summary>
-        [JsonProperty(PropertyName = "etag")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
     }

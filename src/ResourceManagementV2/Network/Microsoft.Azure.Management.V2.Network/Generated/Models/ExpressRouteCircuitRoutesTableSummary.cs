@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The routes table associated with the ExpressRouteCircuit
@@ -52,19 +46,19 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets neighbor.
         /// </summary>
-        [JsonProperty(PropertyName = "neighbor")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "neighbor")]
         public string Neighbor { get; set; }
 
         /// <summary>
         /// Gets or sets BGP version number spoken to the neighbor.
         /// </summary>
-        [JsonProperty(PropertyName = "v")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "v")]
         public int? V { get; set; }
 
         /// <summary>
         /// Gets or sets autonomous system number.
         /// </summary>
-        [JsonProperty(PropertyName = "as")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "as")]
         public int? AsProperty { get; set; }
 
         /// <summary>
@@ -72,14 +66,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// the Established state, or the current status if not in the
         /// Established state.
         /// </summary>
-        [JsonProperty(PropertyName = "upDown")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "upDown")]
         public string UpDown { get; set; }
 
         /// <summary>
         /// Gets or sets current state of the BGP session, and the number of
         /// prefixes that have been received from a neighbor or peer group.
         /// </summary>
-        [JsonProperty(PropertyName = "statePfxRcd")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "statePfxRcd")]
         public string StatePfxRcd { get; set; }
 
     }

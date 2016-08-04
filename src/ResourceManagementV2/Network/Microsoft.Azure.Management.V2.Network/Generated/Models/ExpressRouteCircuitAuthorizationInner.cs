@@ -8,18 +8,12 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Authorization in a ExpressRouteCircuit resource
     /// </summary>
-    [JsonTransformation]
+    [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class ExpressRouteCircuitAuthorizationInner : SubResource
     {
         /// <summary>
@@ -57,35 +51,35 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets the authorization key
         /// </summary>
-        [JsonProperty(PropertyName = "properties.authorizationKey")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.authorizationKey")]
         public string AuthorizationKey { get; set; }
 
         /// <summary>
         /// Gets or sets AuthorizationUseStatus. Possible values include:
         /// 'Available', 'InUse'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.authorizationUseStatus")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.authorizationUseStatus")]
         public string AuthorizationUseStatus { get; set; }
 
         /// <summary>
         /// Gets provisioning state of the PublicIP resource
         /// Updating/Deleting/Failed
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets name of the resource that is unique within a resource group.
         /// This name can be used to access the resource
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets a unique read-only string that changes whenever the
         /// resource is updated
         /// </summary>
-        [JsonProperty(PropertyName = "etag")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
     }

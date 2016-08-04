@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The List Availability Set operation response.
@@ -32,7 +26,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// class.
         /// </summary>
         /// <param name="value">the list of availability sets</param>
-        public AvailabilitySetListResultInner(IList<AvailabilitySetInner> value = default(IList<AvailabilitySetInner>))
+        public AvailabilitySetListResultInner(System.Collections.Generic.IList<AvailabilitySetInner> value = default(System.Collections.Generic.IList<AvailabilitySetInner>))
         {
             Value = value;
         }
@@ -40,8 +34,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the list of availability sets
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<AvailabilitySetInner> Value { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
+        public System.Collections.Generic.IList<AvailabilitySetInner> Value { get; set; }
 
     }
 }

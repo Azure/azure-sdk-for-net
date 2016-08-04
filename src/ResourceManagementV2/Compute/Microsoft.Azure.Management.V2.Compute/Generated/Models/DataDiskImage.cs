@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Contains the data disk images information.
@@ -43,7 +37,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// data disk image inside the VMImage therefore it must be unique
         /// for each data disk.The allowed character for the value is digit.
         /// </summary>
-        [JsonProperty(PropertyName = "lun")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "lun")]
         public int? Lun { get; private set; }
 
     }

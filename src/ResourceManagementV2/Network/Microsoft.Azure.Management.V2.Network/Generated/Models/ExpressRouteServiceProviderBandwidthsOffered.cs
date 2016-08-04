@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Contains Bandwidths offered in ExpressRouteServiceProviders
@@ -42,13 +36,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets the OfferName
         /// </summary>
-        [JsonProperty(PropertyName = "offerName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "offerName")]
         public string OfferName { get; set; }
 
         /// <summary>
         /// Gets the ValueInMbps.
         /// </summary>
-        [JsonProperty(PropertyName = "valueInMbps")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "valueInMbps")]
         public int? ValueInMbps { get; set; }
 
     }

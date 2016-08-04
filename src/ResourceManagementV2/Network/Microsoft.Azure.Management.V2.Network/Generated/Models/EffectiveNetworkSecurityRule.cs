@@ -8,27 +8,21 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Effective NetworkSecurityRules
     /// </summary>
-    public partial class EffectiveNetworkSecurityRules
+    public partial class EffectiveNetworkSecurityRule
     {
         /// <summary>
-        /// Initializes a new instance of the EffectiveNetworkSecurityRules
+        /// Initializes a new instance of the EffectiveNetworkSecurityRule
         /// class.
         /// </summary>
-        public EffectiveNetworkSecurityRules() { }
+        public EffectiveNetworkSecurityRule() { }
 
         /// <summary>
-        /// Initializes a new instance of the EffectiveNetworkSecurityRules
+        /// Initializes a new instance of the EffectiveNetworkSecurityRule
         /// class.
         /// </summary>
         /// <param name="name">Gets the name of the security rule specified by
@@ -51,7 +45,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="priority">Gets the priority of the rule</param>
         /// <param name="direction">Gets the direction of the rule. Possible
         /// values include: 'Inbound', 'Outbound'</param>
-        public EffectiveNetworkSecurityRules(string name = default(string), string protocol = default(string), string sourcePortRange = default(string), string destinationPortRange = default(string), string sourceAddressPrefix = default(string), string destinationAddressPrefix = default(string), IList<string> expandedSourceAddressPrefix = default(IList<string>), IList<string> expandedDestinationAddressPrefix = default(IList<string>), string access = default(string), int? priority = default(int?), string direction = default(string))
+        public EffectiveNetworkSecurityRule(string name = default(string), string protocol = default(string), string sourcePortRange = default(string), string destinationPortRange = default(string), string sourceAddressPrefix = default(string), string destinationAddressPrefix = default(string), System.Collections.Generic.IList<string> expandedSourceAddressPrefix = default(System.Collections.Generic.IList<string>), System.Collections.Generic.IList<string> expandedDestinationAddressPrefix = default(System.Collections.Generic.IList<string>), string access = default(string), int? priority = default(int?), string direction = default(string))
         {
             Name = name;
             Protocol = protocol;
@@ -70,70 +64,70 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets the name of the security rule specified by the user (if
         /// created by the user)
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets Network protocol this rule applies to. Possible values
         /// include: 'Tcp', 'Udp', '*'
         /// </summary>
-        [JsonProperty(PropertyName = "protocol")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "protocol")]
         public string Protocol { get; set; }
 
         /// <summary>
         /// Gets source port or range
         /// </summary>
-        [JsonProperty(PropertyName = "sourcePortRange")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "sourcePortRange")]
         public string SourcePortRange { get; set; }
 
         /// <summary>
         /// Gets destination port or range
         /// </summary>
-        [JsonProperty(PropertyName = "destinationPortRange")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "destinationPortRange")]
         public string DestinationPortRange { get; set; }
 
         /// <summary>
         /// Gets source address prefix
         /// </summary>
-        [JsonProperty(PropertyName = "sourceAddressPrefix")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "sourceAddressPrefix")]
         public string SourceAddressPrefix { get; set; }
 
         /// <summary>
         /// Gets destination address prefix
         /// </summary>
-        [JsonProperty(PropertyName = "destinationAddressPrefix")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "destinationAddressPrefix")]
         public string DestinationAddressPrefix { get; set; }
 
         /// <summary>
         /// Gets expanded source address prefix
         /// </summary>
-        [JsonProperty(PropertyName = "expandedSourceAddressPrefix")]
-        public IList<string> ExpandedSourceAddressPrefix { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "expandedSourceAddressPrefix")]
+        public System.Collections.Generic.IList<string> ExpandedSourceAddressPrefix { get; set; }
 
         /// <summary>
         /// Gets expanded destination address prefix
         /// </summary>
-        [JsonProperty(PropertyName = "expandedDestinationAddressPrefix")]
-        public IList<string> ExpandedDestinationAddressPrefix { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "expandedDestinationAddressPrefix")]
+        public System.Collections.Generic.IList<string> ExpandedDestinationAddressPrefix { get; set; }
 
         /// <summary>
         /// Gets network traffic is allowed or denied. Possible values
         /// include: 'Allow', 'Deny'
         /// </summary>
-        [JsonProperty(PropertyName = "access")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "access")]
         public string Access { get; set; }
 
         /// <summary>
         /// Gets the priority of the rule
         /// </summary>
-        [JsonProperty(PropertyName = "priority")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "priority")]
         public int? Priority { get; set; }
 
         /// <summary>
         /// Gets the direction of the rule. Possible values include:
         /// 'Inbound', 'Outbound'
         /// </summary>
-        [JsonProperty(PropertyName = "direction")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "direction")]
         public string Direction { get; set; }
 
     }

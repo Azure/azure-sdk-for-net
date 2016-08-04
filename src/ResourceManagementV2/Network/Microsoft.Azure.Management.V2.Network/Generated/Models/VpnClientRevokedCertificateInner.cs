@@ -8,28 +8,22 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// VPN client revoked certificate of virtual network gateway
     /// </summary>
-    [JsonTransformation]
-    public partial class VpnClientRevokedCertificate : SubResource
+    [Microsoft.Rest.Serialization.JsonTransformation]
+    public partial class VpnClientRevokedCertificateInner : SubResource
     {
         /// <summary>
-        /// Initializes a new instance of the VpnClientRevokedCertificate
+        /// Initializes a new instance of the VpnClientRevokedCertificateInner
         /// class.
         /// </summary>
-        public VpnClientRevokedCertificate() { }
+        public VpnClientRevokedCertificateInner() { }
 
         /// <summary>
-        /// Initializes a new instance of the VpnClientRevokedCertificate
+        /// Initializes a new instance of the VpnClientRevokedCertificateInner
         /// class.
         /// </summary>
         /// <param name="thumbprint">Gets or sets the revoked Vpn client
@@ -42,7 +36,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public VpnClientRevokedCertificate(String id = default(String), string thumbprint = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public VpnClientRevokedCertificateInner(String id = default(String), string thumbprint = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             Thumbprint = thumbprint;
@@ -54,28 +48,28 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets the revoked Vpn client certificate thumbprint
         /// </summary>
-        [JsonProperty(PropertyName = "properties.thumbprint")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.thumbprint")]
         public string Thumbprint { get; set; }
 
         /// <summary>
         /// Gets provisioning state of the VPN client revoked certificate
         /// resource Updating/Deleting/Failed
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets name of the resource that is unique within a resource group.
         /// This name can be used to access the resource
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets a unique read-only string that changes whenever the
         /// resource is updated
         /// </summary>
-        [JsonProperty(PropertyName = "etag")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
     }

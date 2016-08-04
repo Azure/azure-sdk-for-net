@@ -8,28 +8,22 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// ExpressRouteResourceProvider object
     /// </summary>
-    [JsonTransformation]
-    public partial class ExpressRouteServiceProvider : Resource
+    [Microsoft.Rest.Serialization.JsonTransformation]
+    public partial class ExpressRouteServiceProviderInner : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the ExpressRouteServiceProvider
+        /// Initializes a new instance of the ExpressRouteServiceProviderInner
         /// class.
         /// </summary>
-        public ExpressRouteServiceProvider() { }
+        public ExpressRouteServiceProviderInner() { }
 
         /// <summary>
-        /// Initializes a new instance of the ExpressRouteServiceProvider
+        /// Initializes a new instance of the ExpressRouteServiceProviderInner
         /// class.
         /// </summary>
         /// <param name="peeringLocations">Gets or list of peering
@@ -37,7 +31,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="bandwidthsOffered">Gets or bandwidths offered</param>
         /// <param name="provisioningState">Gets provisioning state of the
         /// resource </param>
-        public ExpressRouteServiceProvider(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), IList<string> peeringLocations = default(IList<string>), IList<ExpressRouteServiceProviderBandwidthsOffered> bandwidthsOffered = default(IList<ExpressRouteServiceProviderBandwidthsOffered>), string provisioningState = default(string))
+        public ExpressRouteServiceProviderInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), System.Collections.Generic.IList<string> peeringLocations = default(System.Collections.Generic.IList<string>), System.Collections.Generic.IList<ExpressRouteServiceProviderBandwidthsOffered> bandwidthsOffered = default(System.Collections.Generic.IList<ExpressRouteServiceProviderBandwidthsOffered>), string provisioningState = default(string))
             : base(location, id, name, type, tags)
         {
             PeeringLocations = peeringLocations;
@@ -48,19 +42,19 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or list of peering locations
         /// </summary>
-        [JsonProperty(PropertyName = "properties.peeringLocations")]
-        public IList<string> PeeringLocations { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.peeringLocations")]
+        public System.Collections.Generic.IList<string> PeeringLocations { get; set; }
 
         /// <summary>
         /// Gets or bandwidths offered
         /// </summary>
-        [JsonProperty(PropertyName = "properties.bandwidthsOffered")]
-        public IList<ExpressRouteServiceProviderBandwidthsOffered> BandwidthsOffered { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.bandwidthsOffered")]
+        public System.Collections.Generic.IList<ExpressRouteServiceProviderBandwidthsOffered> BandwidthsOffered { get; set; }
 
         /// <summary>
         /// Gets provisioning state of the resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
     }

@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Deployment operation parameters.
@@ -29,8 +23,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the DeploymentInner class.
         /// </summary>
-        /// <param name="properties">Gets or sets the deployment
-        /// properties.</param>
+        /// <param name="properties">The deployment properties.</param>
         public DeploymentInner(DeploymentProperties properties = default(DeploymentProperties))
         {
             Properties = properties;
@@ -39,13 +32,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Gets or sets the deployment properties.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties")]
         public DeploymentProperties Properties { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

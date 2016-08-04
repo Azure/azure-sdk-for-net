@@ -8,21 +8,18 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for DiskCreateOptionTypes.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum DiskCreateOptionTypes
     {
-        [EnumMember(Value = "fromImage")]
+        [System.Runtime.Serialization.EnumMember(Value = "fromImage")]
         FromImage,
-        [EnumMember(Value = "empty")]
+        [System.Runtime.Serialization.EnumMember(Value = "empty")]
         Empty,
-        [EnumMember(Value = "attach")]
+        [System.Runtime.Serialization.EnumMember(Value = "attach")]
         Attach
     }
 }

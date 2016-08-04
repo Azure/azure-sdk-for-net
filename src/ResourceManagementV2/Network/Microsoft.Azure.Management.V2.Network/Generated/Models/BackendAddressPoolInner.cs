@@ -8,27 +8,21 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Pool of backend IP addresseses
     /// </summary>
-    [JsonTransformation]
-    public partial class BackendAddressPool : SubResource
+    [Microsoft.Rest.Serialization.JsonTransformation]
+    public partial class BackendAddressPoolInner : SubResource
     {
         /// <summary>
-        /// Initializes a new instance of the BackendAddressPool class.
+        /// Initializes a new instance of the BackendAddressPoolInner class.
         /// </summary>
-        public BackendAddressPool() { }
+        public BackendAddressPoolInner() { }
 
         /// <summary>
-        /// Initializes a new instance of the BackendAddressPool class.
+        /// Initializes a new instance of the BackendAddressPoolInner class.
         /// </summary>
         /// <param name="backendIPConfigurations">Gets collection of
         /// references to IPs defined in NICs</param>
@@ -43,7 +37,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public BackendAddressPool(String id = default(String), IList<NetworkInterfaceIPConfiguration> backendIPConfigurations = default(IList<NetworkInterfaceIPConfiguration>), IList<SubResource> loadBalancingRules = default(IList<SubResource>), SubResource outboundNatRule = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public BackendAddressPoolInner(String id = default(String), System.Collections.Generic.IList<NetworkInterfaceIPConfigurationInner> backendIPConfigurations = default(System.Collections.Generic.IList<NetworkInterfaceIPConfigurationInner>), System.Collections.Generic.IList<SubResource> loadBalancingRules = default(System.Collections.Generic.IList<SubResource>), SubResource outboundNatRule = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             BackendIPConfigurations = backendIPConfigurations;
@@ -57,40 +51,40 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets collection of references to IPs defined in NICs
         /// </summary>
-        [JsonProperty(PropertyName = "properties.backendIPConfigurations")]
-        public IList<NetworkInterfaceIPConfiguration> BackendIPConfigurations { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.backendIPConfigurations")]
+        public System.Collections.Generic.IList<NetworkInterfaceIPConfigurationInner> BackendIPConfigurations { get; private set; }
 
         /// <summary>
         /// Gets Load Balancing rules that use this Backend Address Pool
         /// </summary>
-        [JsonProperty(PropertyName = "properties.loadBalancingRules")]
-        public IList<SubResource> LoadBalancingRules { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.loadBalancingRules")]
+        public System.Collections.Generic.IList<SubResource> LoadBalancingRules { get; private set; }
 
         /// <summary>
         /// Gets outbound rules that use this Backend Address Pool
         /// </summary>
-        [JsonProperty(PropertyName = "properties.outboundNatRule")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.outboundNatRule")]
         public SubResource OutboundNatRule { get; private set; }
 
         /// <summary>
         /// Gets or sets get provisioning state of the PublicIP resource
         /// Updating/Deleting/Failed
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets name of the resource that is unique within a resource group.
         /// This name can be used to access the resource
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets a unique read-only string that changes whenever the
         /// resource is updated
         /// </summary>
-        [JsonProperty(PropertyName = "etag")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
     }

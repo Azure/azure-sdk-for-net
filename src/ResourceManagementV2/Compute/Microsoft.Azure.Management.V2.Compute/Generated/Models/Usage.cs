@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Describes Compute Resource Usage.
@@ -49,38 +43,38 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the current value of the usage.
         /// </summary>
-        [JsonProperty(PropertyName = "currentValue")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "currentValue")]
         public int CurrentValue { get; set; }
 
         /// <summary>
         /// Gets or sets the limit of usage.
         /// </summary>
-        [JsonProperty(PropertyName = "limit")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "limit")]
         public long Limit { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the type of usage.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public UsageName Name { get; set; }
 
         /// <summary>
         /// an enum describing the unit of measurement.
         /// </summary>
-        [JsonProperty(PropertyName = "unit")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "unit")]
         public static string Unit { get; private set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (Name == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Name");
             }
         }
     }

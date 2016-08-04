@@ -8,18 +8,12 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Route resource
     /// </summary>
-    [JsonTransformation]
+    [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class RouteInner : SubResource
     {
         /// <summary>
@@ -60,7 +54,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets the destination CIDR to which the route applies.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.addressPrefix")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.addressPrefix")]
         public string AddressPrefix { get; set; }
 
         /// <summary>
@@ -68,7 +62,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Possible values include: 'VirtualNetworkGateway', 'VnetLocal',
         /// 'Internet', 'VirtualAppliance', 'None'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.nextHopType")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.nextHopType")]
         public string NextHopType { get; set; }
 
         /// <summary>
@@ -76,40 +70,40 @@ namespace Microsoft.Azure.Management.Network.Models
         /// hop values are only allowed in routes where the next hop type is
         /// VirtualAppliance.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.nextHopIpAddress")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.nextHopIpAddress")]
         public string NextHopIpAddress { get; set; }
 
         /// <summary>
         /// Gets provisioning state of the resource Updating/Deleting/Failed
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets name of the resource that is unique within a resource group.
         /// This name can be used to access the resource
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets a unique read-only string that changes whenever the
         /// resource is updated
         /// </summary>
-        [JsonProperty(PropertyName = "etag")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (NextHopType == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "NextHopType");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "NextHopType");
             }
         }
     }

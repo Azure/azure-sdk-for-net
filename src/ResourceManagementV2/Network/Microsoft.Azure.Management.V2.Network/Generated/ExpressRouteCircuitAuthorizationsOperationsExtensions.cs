@@ -8,14 +8,9 @@
 
 namespace Microsoft.Azure.Management.Network
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
-    using Models;
+   using Microsoft.Rest.Azure;
+   using Models;
 
     /// <summary>
     /// Extension methods for ExpressRouteCircuitAuthorizationsOperations.
@@ -40,7 +35,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void Delete(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName, string authorizationName)
             {
-                Task.Factory.StartNew(s => ((IExpressRouteCircuitAuthorizationsOperations)s).DeleteAsync(resourceGroupName, circuitName, authorizationName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IExpressRouteCircuitAuthorizationsOperations)s).DeleteAsync(resourceGroupName, circuitName, authorizationName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -62,7 +57,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName, string authorizationName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task DeleteAsync(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName, string authorizationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.DeleteWithHttpMessagesAsync(resourceGroupName, circuitName, authorizationName, null, cancellationToken).ConfigureAwait(false);
             }
@@ -85,7 +80,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void BeginDelete(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName, string authorizationName)
             {
-                Task.Factory.StartNew(s => ((IExpressRouteCircuitAuthorizationsOperations)s).BeginDeleteAsync(resourceGroupName, circuitName, authorizationName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IExpressRouteCircuitAuthorizationsOperations)s).BeginDeleteAsync(resourceGroupName, circuitName, authorizationName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -107,7 +102,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName, string authorizationName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task BeginDeleteAsync(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName, string authorizationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, circuitName, authorizationName, null, cancellationToken).ConfigureAwait(false);
             }
@@ -130,7 +125,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static ExpressRouteCircuitAuthorizationInner Get(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName, string authorizationName)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitAuthorizationsOperations)s).GetAsync(resourceGroupName, circuitName, authorizationName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IExpressRouteCircuitAuthorizationsOperations)s).GetAsync(resourceGroupName, circuitName, authorizationName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -152,7 +147,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ExpressRouteCircuitAuthorizationInner> GetAsync(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName, string authorizationName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<ExpressRouteCircuitAuthorizationInner> GetAsync(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName, string authorizationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, circuitName, authorizationName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -182,7 +177,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static ExpressRouteCircuitAuthorizationInner CreateOrUpdate(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName, string authorizationName, ExpressRouteCircuitAuthorizationInner authorizationParameters)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitAuthorizationsOperations)s).CreateOrUpdateAsync(resourceGroupName, circuitName, authorizationName, authorizationParameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IExpressRouteCircuitAuthorizationsOperations)s).CreateOrUpdateAsync(resourceGroupName, circuitName, authorizationName, authorizationParameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -208,7 +203,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ExpressRouteCircuitAuthorizationInner> CreateOrUpdateAsync(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName, string authorizationName, ExpressRouteCircuitAuthorizationInner authorizationParameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<ExpressRouteCircuitAuthorizationInner> CreateOrUpdateAsync(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName, string authorizationName, ExpressRouteCircuitAuthorizationInner authorizationParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, circuitName, authorizationName, authorizationParameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -238,7 +233,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static ExpressRouteCircuitAuthorizationInner BeginCreateOrUpdate(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName, string authorizationName, ExpressRouteCircuitAuthorizationInner authorizationParameters)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitAuthorizationsOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, circuitName, authorizationName, authorizationParameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IExpressRouteCircuitAuthorizationsOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, circuitName, authorizationName, authorizationParameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -264,7 +259,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ExpressRouteCircuitAuthorizationInner> BeginCreateOrUpdateAsync(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName, string authorizationName, ExpressRouteCircuitAuthorizationInner authorizationParameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<ExpressRouteCircuitAuthorizationInner> BeginCreateOrUpdateAsync(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName, string authorizationName, ExpressRouteCircuitAuthorizationInner authorizationParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, circuitName, authorizationName, authorizationParameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -285,9 +280,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='circuitName'>
             /// The name of the curcuit.
             /// </param>
-            public static IPage<ExpressRouteCircuitAuthorizationInner> List(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName)
+            public static Microsoft.Rest.Azure.IPage<ExpressRouteCircuitAuthorizationInner> List(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitAuthorizationsOperations)s).ListAsync(resourceGroupName, circuitName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IExpressRouteCircuitAuthorizationsOperations)s).ListAsync(resourceGroupName, circuitName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -306,7 +301,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ExpressRouteCircuitAuthorizationInner>> ListAsync(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<ExpressRouteCircuitAuthorizationInner>> ListAsync(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, circuitName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -324,9 +319,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ExpressRouteCircuitAuthorizationInner> ListNext(this IExpressRouteCircuitAuthorizationsOperations operations, string nextPageLink)
+            public static Microsoft.Rest.Azure.IPage<ExpressRouteCircuitAuthorizationInner> ListNext(this IExpressRouteCircuitAuthorizationsOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitAuthorizationsOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IExpressRouteCircuitAuthorizationsOperations)s).ListNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -342,7 +337,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ExpressRouteCircuitAuthorizationInner>> ListNextAsync(this IExpressRouteCircuitAuthorizationsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<ExpressRouteCircuitAuthorizationInner>> ListNextAsync(this IExpressRouteCircuitAuthorizationsOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

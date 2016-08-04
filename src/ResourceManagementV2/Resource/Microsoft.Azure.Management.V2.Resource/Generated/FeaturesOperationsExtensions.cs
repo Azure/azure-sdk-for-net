@@ -8,14 +8,9 @@
 
 namespace Microsoft.Azure.Management.ResourceManager
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
-    using Models;
+   using Microsoft.Rest.Azure;
+   using Models;
 
     /// <summary>
     /// Extension methods for FeaturesOperations.
@@ -29,9 +24,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<FeatureResultInner> ListAll(this IFeaturesOperations operations)
+            public static Microsoft.Rest.Azure.IPage<FeatureResultInner> ListAll(this IFeaturesOperations operations)
             {
-                return Task.Factory.StartNew(s => ((IFeaturesOperations)s).ListAllAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IFeaturesOperations)s).ListAllAsync(), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -44,7 +39,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<FeatureResultInner>> ListAllAsync(this IFeaturesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<FeatureResultInner>> ListAllAsync(this IFeaturesOperations operations, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListAllWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -61,9 +56,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='resourceProviderNamespace'>
             /// The namespace of the resource provider.
             /// </param>
-            public static IPage<FeatureResultInner> List(this IFeaturesOperations operations, string resourceProviderNamespace)
+            public static Microsoft.Rest.Azure.IPage<FeatureResultInner> List(this IFeaturesOperations operations, string resourceProviderNamespace)
             {
-                return Task.Factory.StartNew(s => ((IFeaturesOperations)s).ListAsync(resourceProviderNamespace), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IFeaturesOperations)s).ListAsync(resourceProviderNamespace), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -78,7 +73,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<FeatureResultInner>> ListAsync(this IFeaturesOperations operations, string resourceProviderNamespace, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<FeatureResultInner>> ListAsync(this IFeaturesOperations operations, string resourceProviderNamespace, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceProviderNamespace, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -100,7 +95,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </param>
             public static FeatureResultInner Get(this IFeaturesOperations operations, string resourceProviderNamespace, string featureName)
             {
-                return Task.Factory.StartNew(s => ((IFeaturesOperations)s).GetAsync(resourceProviderNamespace, featureName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IFeaturesOperations)s).GetAsync(resourceProviderNamespace, featureName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -118,7 +113,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FeatureResultInner> GetAsync(this IFeaturesOperations operations, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<FeatureResultInner> GetAsync(this IFeaturesOperations operations, string resourceProviderNamespace, string featureName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceProviderNamespace, featureName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -140,7 +135,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </param>
             public static FeatureResultInner Register(this IFeaturesOperations operations, string resourceProviderNamespace, string featureName)
             {
-                return Task.Factory.StartNew(s => ((IFeaturesOperations)s).RegisterAsync(resourceProviderNamespace, featureName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IFeaturesOperations)s).RegisterAsync(resourceProviderNamespace, featureName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -158,7 +153,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FeatureResultInner> RegisterAsync(this IFeaturesOperations operations, string resourceProviderNamespace, string featureName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<FeatureResultInner> RegisterAsync(this IFeaturesOperations operations, string resourceProviderNamespace, string featureName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.RegisterWithHttpMessagesAsync(resourceProviderNamespace, featureName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -176,9 +171,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<FeatureResultInner> ListAllNext(this IFeaturesOperations operations, string nextPageLink)
+            public static Microsoft.Rest.Azure.IPage<FeatureResultInner> ListAllNext(this IFeaturesOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IFeaturesOperations)s).ListAllNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IFeaturesOperations)s).ListAllNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -194,7 +189,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<FeatureResultInner>> ListAllNextAsync(this IFeaturesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<FeatureResultInner>> ListAllNextAsync(this IFeaturesOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListAllNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -211,9 +206,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<FeatureResultInner> ListNext(this IFeaturesOperations operations, string nextPageLink)
+            public static Microsoft.Rest.Azure.IPage<FeatureResultInner> ListNext(this IFeaturesOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IFeaturesOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IFeaturesOperations)s).ListNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -228,7 +223,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<FeatureResultInner>> ListNextAsync(this IFeaturesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<FeatureResultInner>> ListNextAsync(this IFeaturesOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

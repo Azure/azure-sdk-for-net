@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The List Usages operation response.
@@ -31,16 +25,24 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="value">Gets or sets the list Network Resource
         /// Usages.</param>
-        public UsagesListResultInner(IList<Usage> value = default(IList<Usage>))
+        /// <param name="nextLink">URL to get the next set of results.</param>
+        public UsagesListResultInner(System.Collections.Generic.IList<Usage> value = default(System.Collections.Generic.IList<Usage>), string nextLink = default(string))
         {
             Value = value;
+            NextLink = nextLink;
         }
 
         /// <summary>
         /// Gets or sets the list Network Resource Usages.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<Usage> Value { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
+        public System.Collections.Generic.IList<Usage> Value { get; set; }
+
+        /// <summary>
+        /// Gets or sets URL to get the next set of results.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "nextLink")]
+        public string NextLink { get; set; }
 
     }
 }

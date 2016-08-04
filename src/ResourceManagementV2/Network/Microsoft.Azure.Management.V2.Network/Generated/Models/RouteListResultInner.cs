@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Response for ListRoute Api servive call
@@ -32,7 +26,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="value">Gets List of Routes in a resource group</param>
         /// <param name="nextLink">Gets the URL to get the next set of
         /// results.</param>
-        public RouteListResultInner(IList<RouteInner> value = default(IList<RouteInner>), string nextLink = default(string))
+        public RouteListResultInner(System.Collections.Generic.IList<RouteInner> value = default(System.Collections.Generic.IList<RouteInner>), string nextLink = default(string))
         {
             Value = value;
             NextLink = nextLink;
@@ -41,13 +35,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets List of Routes in a resource group
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<RouteInner> Value { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
+        public System.Collections.Generic.IList<RouteInner> Value { get; set; }
 
         /// <summary>
         /// Gets the URL to get the next set of results.
         /// </summary>
-        [JsonProperty(PropertyName = "nextLink")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "nextLink")]
         public string NextLink { get; set; }
 
     }

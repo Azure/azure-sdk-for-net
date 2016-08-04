@@ -8,31 +8,27 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Describes a network interface reference.
     /// </summary>
-    [JsonTransformation]
-    public partial class NetworkInterfaceReference : SubResource
+    [Microsoft.Rest.Serialization.JsonTransformation]
+    public partial class NetworkInterfaceReferenceInner : SubResource
     {
         /// <summary>
-        /// Initializes a new instance of the NetworkInterfaceReference class.
+        /// Initializes a new instance of the NetworkInterfaceReferenceInner
+        /// class.
         /// </summary>
-        public NetworkInterfaceReference() { }
+        public NetworkInterfaceReferenceInner() { }
 
         /// <summary>
-        /// Initializes a new instance of the NetworkInterfaceReference class.
+        /// Initializes a new instance of the NetworkInterfaceReferenceInner
+        /// class.
         /// </summary>
         /// <param name="primary">whether this is a primary NIC on a virtual
         /// machine</param>
-        public NetworkInterfaceReference(String id = default(String), bool? primary = default(bool?))
+        public NetworkInterfaceReferenceInner(String id = default(String), bool? primary = default(bool?))
             : base(id)
         {
             Primary = primary;
@@ -41,7 +37,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets whether this is a primary NIC on a virtual machine
         /// </summary>
-        [JsonProperty(PropertyName = "properties.primary")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.primary")]
         public bool? Primary { get; set; }
 
     }

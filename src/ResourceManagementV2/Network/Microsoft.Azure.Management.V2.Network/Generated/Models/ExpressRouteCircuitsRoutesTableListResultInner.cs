@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Response for ListRoutesTable associated with the Express Route
@@ -35,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="value">Gets List of RoutesTable</param>
         /// <param name="nextLink">Gets the URL to get the next set of
         /// results.</param>
-        public ExpressRouteCircuitsRoutesTableListResultInner(IList<ExpressRouteCircuitRoutesTable> value = default(IList<ExpressRouteCircuitRoutesTable>), string nextLink = default(string))
+        public ExpressRouteCircuitsRoutesTableListResultInner(System.Collections.Generic.IList<ExpressRouteCircuitRoutesTable> value = default(System.Collections.Generic.IList<ExpressRouteCircuitRoutesTable>), string nextLink = default(string))
         {
             Value = value;
             NextLink = nextLink;
@@ -44,13 +38,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets List of RoutesTable
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<ExpressRouteCircuitRoutesTable> Value { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
+        public System.Collections.Generic.IList<ExpressRouteCircuitRoutesTable> Value { get; set; }
 
         /// <summary>
         /// Gets the URL to get the next set of results.
         /// </summary>
-        [JsonProperty(PropertyName = "nextLink")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "nextLink")]
         public string NextLink { get; set; }
 
     }

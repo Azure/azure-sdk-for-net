@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Describes Windows Remote Management configuration of the VM
@@ -31,7 +25,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="listeners">the list of Windows Remote Management
         /// listeners</param>
-        public WinRMConfiguration(IList<WinRMListener> listeners = default(IList<WinRMListener>))
+        public WinRMConfiguration(System.Collections.Generic.IList<WinRMListener> listeners = default(System.Collections.Generic.IList<WinRMListener>))
         {
             Listeners = listeners;
         }
@@ -39,8 +33,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the list of Windows Remote Management listeners
         /// </summary>
-        [JsonProperty(PropertyName = "listeners")]
-        public IList<WinRMListener> Listeners { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "listeners")]
+        public System.Collections.Generic.IList<WinRMListener> Listeners { get; set; }
 
     }
 }

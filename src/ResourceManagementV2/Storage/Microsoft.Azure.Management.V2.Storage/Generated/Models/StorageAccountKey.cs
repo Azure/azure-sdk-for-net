@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// An access key for the storage account.
@@ -43,20 +37,20 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Gets name of the key.
         /// </summary>
-        [JsonProperty(PropertyName = "keyName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "keyName")]
         public string KeyName { get; private set; }
 
         /// <summary>
         /// Gets base 64 encoded value of the key.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
         public string Value { get; private set; }
 
         /// <summary>
         /// Gets permissions for the key. Possible values include: 'READ',
         /// 'FULL'
         /// </summary>
-        [JsonProperty(PropertyName = "permissions")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "permissions")]
         public KeyPermission? Permissions { get; private set; }
 
     }

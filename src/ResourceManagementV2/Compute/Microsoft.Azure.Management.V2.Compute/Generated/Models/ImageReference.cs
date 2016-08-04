@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The image reference.
@@ -47,19 +41,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the image publisher.
         /// </summary>
-        [JsonProperty(PropertyName = "publisher")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "publisher")]
         public string Publisher { get; set; }
 
         /// <summary>
         /// Gets or sets the image offer.
         /// </summary>
-        [JsonProperty(PropertyName = "offer")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "offer")]
         public string Offer { get; set; }
 
         /// <summary>
         /// Gets or sets the image sku.
         /// </summary>
-        [JsonProperty(PropertyName = "sku")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "sku")]
         public string Sku { get; set; }
 
         /// <summary>
@@ -68,7 +62,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// decimal numbers. Specify 'latest' to use the latest version of
         /// image.
         /// </summary>
-        [JsonProperty(PropertyName = "version")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "version")]
         public string Version { get; set; }
 
     }

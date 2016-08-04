@@ -8,29 +8,23 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// IPConfiguration in a NetworkInterface
     /// </summary>
-    [JsonTransformation]
-    public partial class NetworkInterfaceIPConfiguration : SubResource
+    [Microsoft.Rest.Serialization.JsonTransformation]
+    public partial class NetworkInterfaceIPConfigurationInner : SubResource
     {
         /// <summary>
-        /// Initializes a new instance of the NetworkInterfaceIPConfiguration
-        /// class.
+        /// Initializes a new instance of the
+        /// NetworkInterfaceIPConfigurationInner class.
         /// </summary>
-        public NetworkInterfaceIPConfiguration() { }
+        public NetworkInterfaceIPConfigurationInner() { }
 
         /// <summary>
-        /// Initializes a new instance of the NetworkInterfaceIPConfiguration
-        /// class.
+        /// Initializes a new instance of the
+        /// NetworkInterfaceIPConfigurationInner class.
         /// </summary>
         /// <param name="applicationGatewayBackendAddressPools">Gets or sets
         /// the reference of ApplicationGatewayBackendAddressPool
@@ -52,7 +46,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public NetworkInterfaceIPConfiguration(String id = default(String), IList<ApplicationGatewayBackendAddressPool> applicationGatewayBackendAddressPools = default(IList<ApplicationGatewayBackendAddressPool>), IList<BackendAddressPool> loadBalancerBackendAddressPools = default(IList<BackendAddressPool>), IList<InboundNatRule> loadBalancerInboundNatRules = default(IList<InboundNatRule>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), string privateIPAddressVersion = default(string), SubnetInner subnet = default(SubnetInner), bool? primary = default(bool?), PublicIPAddressInner publicIPAddress = default(PublicIPAddressInner), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public NetworkInterfaceIPConfigurationInner(String id = default(String), System.Collections.Generic.IList<ApplicationGatewayBackendAddressPoolInner> applicationGatewayBackendAddressPools = default(System.Collections.Generic.IList<ApplicationGatewayBackendAddressPoolInner>), System.Collections.Generic.IList<BackendAddressPoolInner> loadBalancerBackendAddressPools = default(System.Collections.Generic.IList<BackendAddressPoolInner>), System.Collections.Generic.IList<InboundNatRuleInner> loadBalancerInboundNatRules = default(System.Collections.Generic.IList<InboundNatRuleInner>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), string privateIPAddressVersion = default(string), SubnetInner subnet = default(SubnetInner), bool? primary = default(bool?), PublicIPAddressInner publicIPAddress = default(PublicIPAddressInner), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             ApplicationGatewayBackendAddressPools = applicationGatewayBackendAddressPools;
@@ -73,74 +67,74 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets the reference of ApplicationGatewayBackendAddressPool
         /// resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.applicationGatewayBackendAddressPools")]
-        public IList<ApplicationGatewayBackendAddressPool> ApplicationGatewayBackendAddressPools { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.applicationGatewayBackendAddressPools")]
+        public System.Collections.Generic.IList<ApplicationGatewayBackendAddressPoolInner> ApplicationGatewayBackendAddressPools { get; set; }
 
         /// <summary>
         /// Gets or sets the reference of LoadBalancerBackendAddressPool
         /// resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.loadBalancerBackendAddressPools")]
-        public IList<BackendAddressPool> LoadBalancerBackendAddressPools { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.loadBalancerBackendAddressPools")]
+        public System.Collections.Generic.IList<BackendAddressPoolInner> LoadBalancerBackendAddressPools { get; set; }
 
         /// <summary>
         /// Gets or sets list of references of LoadBalancerInboundNatRules
         /// </summary>
-        [JsonProperty(PropertyName = "properties.loadBalancerInboundNatRules")]
-        public IList<InboundNatRule> LoadBalancerInboundNatRules { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.loadBalancerInboundNatRules")]
+        public System.Collections.Generic.IList<InboundNatRuleInner> LoadBalancerInboundNatRules { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "properties.privateIPAddress")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.privateIPAddress")]
         public string PrivateIPAddress { get; set; }
 
         /// <summary>
         /// Gets or sets PrivateIP allocation method. Possible values include:
         /// 'Static', 'Dynamic'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.privateIPAllocationMethod")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.privateIPAllocationMethod")]
         public string PrivateIPAllocationMethod { get; set; }
 
         /// <summary>
         /// Gets or sets PrivateIP address version (IPv4/IPv6). Possible
         /// values include: 'IPv4', 'IPv6'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.privateIPAddressVersion")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.privateIPAddressVersion")]
         public string PrivateIPAddressVersion { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "properties.subnet")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.subnet")]
         public SubnetInner Subnet { get; set; }
 
         /// <summary>
         /// Gets whether this is a primary customer address on the NIC
         /// </summary>
-        [JsonProperty(PropertyName = "properties.primary")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.primary")]
         public bool? Primary { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "properties.publicIPAddress")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.publicIPAddress")]
         public PublicIPAddressInner PublicIPAddress { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets name of the resource that is unique within a resource group.
         /// This name can be used to access the resource
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets a unique read-only string that changes whenever the
         /// resource is updated
         /// </summary>
-        [JsonProperty(PropertyName = "etag")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
     }

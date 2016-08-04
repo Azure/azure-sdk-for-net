@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The List Usages operation response.
@@ -31,7 +25,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         /// <param name="value">Gets or sets the list Storage Resource
         /// Usages.</param>
-        public UsageListResultInner(IList<UsageInner> value = default(IList<UsageInner>))
+        public UsageListResultInner(System.Collections.Generic.IList<Usage> value = default(System.Collections.Generic.IList<Usage>))
         {
             Value = value;
         }
@@ -39,8 +33,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Gets or sets the list Storage Resource Usages.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<UsageInner> Value { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
+        public System.Collections.Generic.IList<Usage> Value { get; set; }
 
     }
 }

@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The ListKeys operation response.
@@ -33,7 +27,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         /// <param name="keys">Gets the list of account keys and their
         /// properties.</param>
-        public StorageAccountListKeysResultInner(IList<StorageAccountKey> keys = default(IList<StorageAccountKey>))
+        public StorageAccountListKeysResultInner(System.Collections.Generic.IList<StorageAccountKey> keys = default(System.Collections.Generic.IList<StorageAccountKey>))
         {
             Keys = keys;
         }
@@ -41,8 +35,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Gets the list of account keys and their properties.
         /// </summary>
-        [JsonProperty(PropertyName = "keys")]
-        public IList<StorageAccountKey> Keys { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "keys")]
+        public System.Collections.Generic.IList<StorageAccountKey> Keys { get; private set; }
 
     }
 }

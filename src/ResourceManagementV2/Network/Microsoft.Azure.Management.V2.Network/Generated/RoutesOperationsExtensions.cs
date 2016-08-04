@@ -8,14 +8,9 @@
 
 namespace Microsoft.Azure.Management.Network
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
-    using Models;
+   using Microsoft.Rest.Azure;
+   using Models;
 
     /// <summary>
     /// Extension methods for RoutesOperations.
@@ -39,7 +34,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void Delete(this IRoutesOperations operations, string resourceGroupName, string routeTableName, string routeName)
             {
-                Task.Factory.StartNew(s => ((IRoutesOperations)s).DeleteAsync(resourceGroupName, routeTableName, routeName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IRoutesOperations)s).DeleteAsync(resourceGroupName, routeTableName, routeName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -60,7 +55,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IRoutesOperations operations, string resourceGroupName, string routeTableName, string routeName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task DeleteAsync(this IRoutesOperations operations, string resourceGroupName, string routeTableName, string routeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.DeleteWithHttpMessagesAsync(resourceGroupName, routeTableName, routeName, null, cancellationToken).ConfigureAwait(false);
             }
@@ -82,7 +77,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void BeginDelete(this IRoutesOperations operations, string resourceGroupName, string routeTableName, string routeName)
             {
-                Task.Factory.StartNew(s => ((IRoutesOperations)s).BeginDeleteAsync(resourceGroupName, routeTableName, routeName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IRoutesOperations)s).BeginDeleteAsync(resourceGroupName, routeTableName, routeName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -103,7 +98,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IRoutesOperations operations, string resourceGroupName, string routeTableName, string routeName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task BeginDeleteAsync(this IRoutesOperations operations, string resourceGroupName, string routeTableName, string routeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, routeTableName, routeName, null, cancellationToken).ConfigureAwait(false);
             }
@@ -126,7 +121,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static RouteInner Get(this IRoutesOperations operations, string resourceGroupName, string routeTableName, string routeName)
             {
-                return Task.Factory.StartNew(s => ((IRoutesOperations)s).GetAsync(resourceGroupName, routeTableName, routeName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRoutesOperations)s).GetAsync(resourceGroupName, routeTableName, routeName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -148,7 +143,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RouteInner> GetAsync(this IRoutesOperations operations, string resourceGroupName, string routeTableName, string routeName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<RouteInner> GetAsync(this IRoutesOperations operations, string resourceGroupName, string routeTableName, string routeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, routeTableName, routeName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -177,7 +172,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static RouteInner CreateOrUpdate(this IRoutesOperations operations, string resourceGroupName, string routeTableName, string routeName, RouteInner routeParameters)
             {
-                return Task.Factory.StartNew(s => ((IRoutesOperations)s).CreateOrUpdateAsync(resourceGroupName, routeTableName, routeName, routeParameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRoutesOperations)s).CreateOrUpdateAsync(resourceGroupName, routeTableName, routeName, routeParameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -202,7 +197,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RouteInner> CreateOrUpdateAsync(this IRoutesOperations operations, string resourceGroupName, string routeTableName, string routeName, RouteInner routeParameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<RouteInner> CreateOrUpdateAsync(this IRoutesOperations operations, string resourceGroupName, string routeTableName, string routeName, RouteInner routeParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, routeTableName, routeName, routeParameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -231,7 +226,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static RouteInner BeginCreateOrUpdate(this IRoutesOperations operations, string resourceGroupName, string routeTableName, string routeName, RouteInner routeParameters)
             {
-                return Task.Factory.StartNew(s => ((IRoutesOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, routeTableName, routeName, routeParameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRoutesOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, routeTableName, routeName, routeParameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -256,7 +251,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RouteInner> BeginCreateOrUpdateAsync(this IRoutesOperations operations, string resourceGroupName, string routeTableName, string routeName, RouteInner routeParameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<RouteInner> BeginCreateOrUpdateAsync(this IRoutesOperations operations, string resourceGroupName, string routeTableName, string routeName, RouteInner routeParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, routeTableName, routeName, routeParameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -277,9 +272,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='routeTableName'>
             /// The name of the route table.
             /// </param>
-            public static IPage<RouteInner> List(this IRoutesOperations operations, string resourceGroupName, string routeTableName)
+            public static Microsoft.Rest.Azure.IPage<RouteInner> List(this IRoutesOperations operations, string resourceGroupName, string routeTableName)
             {
-                return Task.Factory.StartNew(s => ((IRoutesOperations)s).ListAsync(resourceGroupName, routeTableName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRoutesOperations)s).ListAsync(resourceGroupName, routeTableName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -298,7 +293,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RouteInner>> ListAsync(this IRoutesOperations operations, string resourceGroupName, string routeTableName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<RouteInner>> ListAsync(this IRoutesOperations operations, string resourceGroupName, string routeTableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, routeTableName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -316,9 +311,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<RouteInner> ListNext(this IRoutesOperations operations, string nextPageLink)
+            public static Microsoft.Rest.Azure.IPage<RouteInner> ListNext(this IRoutesOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IRoutesOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRoutesOperations)s).ListNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -334,7 +329,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RouteInner>> ListNextAsync(this IRoutesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<RouteInner>> ListNextAsync(this IRoutesOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

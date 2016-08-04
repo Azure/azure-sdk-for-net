@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Specifies the list of virtual machine scale set instance IDs.
@@ -33,7 +27,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="instanceIds">the virtual machine scale set instance
         /// ids.</param>
-        public VirtualMachineScaleSetVMInstanceRequiredIDs(IList<string> instanceIds)
+        public VirtualMachineScaleSetVMInstanceRequiredIDs(System.Collections.Generic.IList<string> instanceIds)
         {
             InstanceIds = instanceIds;
         }
@@ -41,20 +35,20 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the virtual machine scale set instance ids.
         /// </summary>
-        [JsonProperty(PropertyName = "instanceIds")]
-        public IList<string> InstanceIds { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "instanceIds")]
+        public System.Collections.Generic.IList<string> InstanceIds { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (InstanceIds == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "InstanceIds");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "InstanceIds");
             }
         }
     }

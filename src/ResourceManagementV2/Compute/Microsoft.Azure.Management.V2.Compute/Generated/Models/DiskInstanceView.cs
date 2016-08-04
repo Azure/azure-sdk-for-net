@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The instance view of the disk.
@@ -31,7 +25,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="name">the disk name.</param>
         /// <param name="statuses">the resource status information.</param>
-        public DiskInstanceView(string name = default(string), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>))
+        public DiskInstanceView(string name = default(string), System.Collections.Generic.IList<InstanceViewStatus> statuses = default(System.Collections.Generic.IList<InstanceViewStatus>))
         {
             Name = name;
             Statuses = statuses;
@@ -40,14 +34,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the disk name.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the resource status information.
         /// </summary>
-        [JsonProperty(PropertyName = "statuses")]
-        public IList<InstanceViewStatus> Statuses { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "statuses")]
+        public System.Collections.Generic.IList<InstanceViewStatus> Statuses { get; set; }
 
     }
 }

@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     public partial class BgpSettings
     {
@@ -41,21 +35,21 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets this BGP speaker's ASN
         /// </summary>
-        [JsonProperty(PropertyName = "asn")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "asn")]
         public long? Asn { get; set; }
 
         /// <summary>
         /// Gets or sets the BGP peering address and BGP identifier of this
         /// BGP speaker
         /// </summary>
-        [JsonProperty(PropertyName = "bgpPeeringAddress")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "bgpPeeringAddress")]
         public string BgpPeeringAddress { get; set; }
 
         /// <summary>
         /// Gets or sets the weight added to routes learned from this BGP
         /// speaker
         /// </summary>
-        [JsonProperty(PropertyName = "peerWeight")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "peerWeight")]
         public int? PeerWeight { get; set; }
 
     }

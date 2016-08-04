@@ -8,14 +8,9 @@
 
 namespace Microsoft.Azure.Management.Compute
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
-    using Models;
+   using Microsoft.Rest.Azure;
+   using Models;
 
     /// <summary>
     /// Extension methods for VirtualMachineSizesOperations.
@@ -31,9 +26,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='location'>
             /// The location upon which virtual-machine-sizes is queried.
             /// </param>
-            public static IEnumerable<VirtualMachineSize> List(this IVirtualMachineSizesOperations operations, string location)
+            public static System.Collections.Generic.IEnumerable<VirtualMachineSize> List(this IVirtualMachineSizesOperations operations, string location)
             {
-                return Task.Factory.StartNew(s => ((IVirtualMachineSizesOperations)s).ListAsync(location), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachineSizesOperations)s).ListAsync(location), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -48,7 +43,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IEnumerable<VirtualMachineSize>> ListAsync(this IVirtualMachineSizesOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<System.Collections.Generic.IEnumerable<VirtualMachineSize>> ListAsync(this IVirtualMachineSizesOperations operations, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false))
                 {

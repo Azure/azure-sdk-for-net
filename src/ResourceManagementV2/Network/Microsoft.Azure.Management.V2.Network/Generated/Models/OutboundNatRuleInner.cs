@@ -8,27 +8,21 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Outbound NAT pool of the loadbalancer
     /// </summary>
-    [JsonTransformation]
-    public partial class OutboundNatRule : SubResource
+    [Microsoft.Rest.Serialization.JsonTransformation]
+    public partial class OutboundNatRuleInner : SubResource
     {
         /// <summary>
-        /// Initializes a new instance of the OutboundNatRule class.
+        /// Initializes a new instance of the OutboundNatRuleInner class.
         /// </summary>
-        public OutboundNatRule() { }
+        public OutboundNatRuleInner() { }
 
         /// <summary>
-        /// Initializes a new instance of the OutboundNatRule class.
+        /// Initializes a new instance of the OutboundNatRuleInner class.
         /// </summary>
         /// <param name="backendAddressPool">Gets or sets a reference to a
         /// pool of DIPs. Outbound traffic is randomly load balanced across
@@ -44,7 +38,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public OutboundNatRule(SubResource backendAddressPool, String id = default(String), int? allocatedOutboundPorts = default(int?), IList<SubResource> frontendIPConfigurations = default(IList<SubResource>), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public OutboundNatRuleInner(SubResource backendAddressPool, String id = default(String), int? allocatedOutboundPorts = default(int?), System.Collections.Generic.IList<SubResource> frontendIPConfigurations = default(System.Collections.Generic.IList<SubResource>), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             AllocatedOutboundPorts = allocatedOutboundPorts;
@@ -58,54 +52,54 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets the number of outbound ports to be used for SNAT
         /// </summary>
-        [JsonProperty(PropertyName = "properties.allocatedOutboundPorts")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.allocatedOutboundPorts")]
         public int? AllocatedOutboundPorts { get; set; }
 
         /// <summary>
         /// Gets or sets Frontend IP addresses of the load balancer
         /// </summary>
-        [JsonProperty(PropertyName = "properties.frontendIPConfigurations")]
-        public IList<SubResource> FrontendIPConfigurations { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.frontendIPConfigurations")]
+        public System.Collections.Generic.IList<SubResource> FrontendIPConfigurations { get; set; }
 
         /// <summary>
         /// Gets or sets a reference to a pool of DIPs. Outbound traffic is
         /// randomly load balanced across IPs in the backend IPs
         /// </summary>
-        [JsonProperty(PropertyName = "properties.backendAddressPool")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.backendAddressPool")]
         public SubResource BackendAddressPool { get; set; }
 
         /// <summary>
         /// Gets provisioning state of the PublicIP resource
         /// Updating/Deleting/Failed
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets name of the resource that is unique within a resource group.
         /// This name can be used to access the resource
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets a unique read-only string that changes whenever the
         /// resource is updated
         /// </summary>
-        [JsonProperty(PropertyName = "etag")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (BackendAddressPool == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "BackendAddressPool");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "BackendAddressPool");
             }
         }
     }

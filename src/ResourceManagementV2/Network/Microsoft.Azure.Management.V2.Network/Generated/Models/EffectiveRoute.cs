@@ -8,18 +8,12 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Effective Route
     /// </summary>
-    public partial class EffectiveRoute : SubResource
+    public partial class EffectiveRoute
     {
         /// <summary>
         /// Initializes a new instance of the EffectiveRoute class.
@@ -29,8 +23,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the EffectiveRoute class.
         /// </summary>
-        /// <param name="userDefinedRoute">Gets the Id of the effective route.
-        /// This is optional, only user defined routes have the name.</param>
+        /// <param name="name">Gets the name of the user defined route. This
+        /// is optional.</param>
         /// <param name="source">Gets who created the route. Possible values
         /// include: 'Unknown', 'User', 'VirtualNetworkGateway',
         /// 'Default'</param>
@@ -44,10 +38,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// packet should be sent to. Possible values include:
         /// 'VirtualNetworkGateway', 'VnetLocal', 'Internet',
         /// 'VirtualAppliance', 'None'</param>
-        public EffectiveRoute(String id = default(String), SubResource userDefinedRoute = default(SubResource), string source = default(string), string state = default(string), IList<string> addressPrefix = default(IList<string>), IList<string> nextHopIpAddress = default(IList<string>), string nextHopType = default(string))
-            : base(id)
+        public EffectiveRoute(string name = default(string), string source = default(string), string state = default(string), System.Collections.Generic.IList<string> addressPrefix = default(System.Collections.Generic.IList<string>), System.Collections.Generic.IList<string> nextHopIpAddress = default(System.Collections.Generic.IList<string>), string nextHopType = default(string))
         {
-            UserDefinedRoute = userDefinedRoute;
+            Name = name;
             Source = source;
             State = state;
             AddressPrefix = addressPrefix;
@@ -56,44 +49,43 @@ namespace Microsoft.Azure.Management.Network.Models
         }
 
         /// <summary>
-        /// Gets the Id of the effective route. This is optional, only user
-        /// defined routes have the name.
+        /// Gets the name of the user defined route. This is optional.
         /// </summary>
-        [JsonProperty(PropertyName = "userDefinedRoute")]
-        public SubResource UserDefinedRoute { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets who created the route. Possible values include: 'Unknown',
         /// 'User', 'VirtualNetworkGateway', 'Default'
         /// </summary>
-        [JsonProperty(PropertyName = "source")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "source")]
         public string Source { get; set; }
 
         /// <summary>
         /// Gets value of effective route. Possible values include: 'Active',
         /// 'Invalid'
         /// </summary>
-        [JsonProperty(PropertyName = "state")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "state")]
         public string State { get; set; }
 
         /// <summary>
         /// Gets address prefixes of the effective routes in CIDR notation.
         /// </summary>
-        [JsonProperty(PropertyName = "addressPrefix")]
-        public IList<string> AddressPrefix { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "addressPrefix")]
+        public System.Collections.Generic.IList<string> AddressPrefix { get; set; }
 
         /// <summary>
         /// Gets the IP address of the next hop of the effective route
         /// </summary>
-        [JsonProperty(PropertyName = "nextHopIpAddress")]
-        public IList<string> NextHopIpAddress { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "nextHopIpAddress")]
+        public System.Collections.Generic.IList<string> NextHopIpAddress { get; set; }
 
         /// <summary>
         /// Gets or sets the type of Azure hop the packet should be sent to.
         /// Possible values include: 'VirtualNetworkGateway', 'VnetLocal',
         /// 'Internet', 'VirtualAppliance', 'None'
         /// </summary>
-        [JsonProperty(PropertyName = "nextHopType")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "nextHopType")]
         public string NextHopType { get; set; }
 
     }

@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Inner error details.
@@ -41,13 +35,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the exception type.
         /// </summary>
-        [JsonProperty(PropertyName = "exceptiontype")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "exceptiontype")]
         public string Exceptiontype { get; set; }
 
         /// <summary>
         /// Gets or sets the internal error message or exception dump.
         /// </summary>
-        [JsonProperty(PropertyName = "errordetail")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "errordetail")]
         public string Errordetail { get; set; }
 
     }

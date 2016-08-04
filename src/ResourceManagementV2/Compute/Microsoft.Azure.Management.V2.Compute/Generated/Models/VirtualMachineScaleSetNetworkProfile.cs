@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Describes a virtual machine scale set network profile.
@@ -33,7 +27,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="networkInterfaceConfigurations">the list of network
         /// configurations.</param>
-        public VirtualMachineScaleSetNetworkProfile(IList<VirtualMachineScaleSetNetworkConfiguration> networkInterfaceConfigurations = default(IList<VirtualMachineScaleSetNetworkConfiguration>))
+        public VirtualMachineScaleSetNetworkProfile(System.Collections.Generic.IList<VirtualMachineScaleSetNetworkConfigurationInner> networkInterfaceConfigurations = default(System.Collections.Generic.IList<VirtualMachineScaleSetNetworkConfigurationInner>))
         {
             NetworkInterfaceConfigurations = networkInterfaceConfigurations;
         }
@@ -41,8 +35,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the list of network configurations.
         /// </summary>
-        [JsonProperty(PropertyName = "networkInterfaceConfigurations")]
-        public IList<VirtualMachineScaleSetNetworkConfiguration> NetworkInterfaceConfigurations { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "networkInterfaceConfigurations")]
+        public System.Collections.Generic.IList<VirtualMachineScaleSetNetworkConfigurationInner> NetworkInterfaceConfigurations { get; set; }
 
     }
 }

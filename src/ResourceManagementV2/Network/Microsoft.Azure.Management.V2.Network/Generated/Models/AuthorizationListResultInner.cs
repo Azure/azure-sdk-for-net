@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Response for ListAuthorizations Api service callRetrieves all
@@ -36,7 +30,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Circuit</param>
         /// <param name="nextLink">Gets the URL to get the next set of
         /// results.</param>
-        public AuthorizationListResultInner(IList<ExpressRouteCircuitAuthorizationInner> value = default(IList<ExpressRouteCircuitAuthorizationInner>), string nextLink = default(string))
+        public AuthorizationListResultInner(System.Collections.Generic.IList<ExpressRouteCircuitAuthorizationInner> value = default(System.Collections.Generic.IList<ExpressRouteCircuitAuthorizationInner>), string nextLink = default(string))
         {
             Value = value;
             NextLink = nextLink;
@@ -45,13 +39,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets the authorizations in an ExpressRoute Circuit
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<ExpressRouteCircuitAuthorizationInner> Value { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
+        public System.Collections.Generic.IList<ExpressRouteCircuitAuthorizationInner> Value { get; set; }
 
         /// <summary>
         /// Gets the URL to get the next set of results.
         /// </summary>
-        [JsonProperty(PropertyName = "nextLink")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "nextLink")]
         public string NextLink { get; set; }
 
     }

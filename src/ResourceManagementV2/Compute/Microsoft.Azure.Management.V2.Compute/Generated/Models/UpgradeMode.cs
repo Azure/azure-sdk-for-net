@@ -8,19 +8,16 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for UpgradeMode.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum UpgradeMode
     {
-        [EnumMember(Value = "Automatic")]
+        [System.Runtime.Serialization.EnumMember(Value = "Automatic")]
         Automatic,
-        [EnumMember(Value = "Manual")]
+        [System.Runtime.Serialization.EnumMember(Value = "Manual")]
         Manual
     }
 }

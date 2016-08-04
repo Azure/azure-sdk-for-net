@@ -8,27 +8,21 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Inbound NAT pool of the loadbalancer
     /// </summary>
-    [JsonTransformation]
-    public partial class InboundNatPool : SubResource
+    [Microsoft.Rest.Serialization.JsonTransformation]
+    public partial class InboundNatPoolInner : SubResource
     {
         /// <summary>
-        /// Initializes a new instance of the InboundNatPool class.
+        /// Initializes a new instance of the InboundNatPoolInner class.
         /// </summary>
-        public InboundNatPool() { }
+        public InboundNatPoolInner() { }
 
         /// <summary>
-        /// Initializes a new instance of the InboundNatPool class.
+        /// Initializes a new instance of the InboundNatPoolInner class.
         /// </summary>
         /// <param name="protocol">Gets or sets the transport potocol for the
         /// endpoint. Possible values are Udp or Tcp. Possible values
@@ -61,7 +55,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public InboundNatPool(string protocol, int frontendPortRangeStart, int frontendPortRangeEnd, int backendPort, String id = default(String), SubResource frontendIPConfiguration = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public InboundNatPoolInner(string protocol, int frontendPortRangeStart, int frontendPortRangeEnd, int backendPort, String id = default(String), SubResource frontendIPConfiguration = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             FrontendIPConfiguration = frontendIPConfiguration;
@@ -77,14 +71,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets a reference to frontend IP Addresses
         /// </summary>
-        [JsonProperty(PropertyName = "properties.frontendIPConfiguration")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.frontendIPConfiguration")]
         public SubResource FrontendIPConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets the transport potocol for the endpoint. Possible
         /// values are Udp or Tcp. Possible values include: 'Udp', 'Tcp'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.protocol")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.protocol")]
         public string Protocol { get; set; }
 
         /// <summary>
@@ -93,7 +87,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// for each role in the service must be unique. Possible values
         /// range between 1 and 65535, inclusive
         /// </summary>
-        [JsonProperty(PropertyName = "properties.frontendPortRangeStart")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.frontendPortRangeStart")]
         public int FrontendPortRangeStart { get; set; }
 
         /// <summary>
@@ -102,7 +96,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// for each role in the service must be unique. Possible values
         /// range between 1 and 65535, inclusive
         /// </summary>
-        [JsonProperty(PropertyName = "properties.frontendPortRangeEnd")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.frontendPortRangeEnd")]
         public int FrontendPortRangeEnd { get; set; }
 
         /// <summary>
@@ -116,41 +110,41 @@ namespace Microsoft.Azure.Management.Network.Models
         /// assign an unallocated port that is discoverable using the runtime
         /// API
         /// </summary>
-        [JsonProperty(PropertyName = "properties.backendPort")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.backendPort")]
         public int BackendPort { get; set; }
 
         /// <summary>
         /// Gets provisioning state of the PublicIP resource
         /// Updating/Deleting/Failed
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets name of the resource that is unique within a resource group.
         /// This name can be used to access the resource
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets a unique read-only string that changes whenever the
         /// resource is updated
         /// </summary>
-        [JsonProperty(PropertyName = "etag")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (Protocol == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Protocol");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Protocol");
             }
         }
     }

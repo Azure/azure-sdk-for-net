@@ -8,18 +8,12 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Virtual Network resource
     /// </summary>
-    [JsonTransformation]
+    [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class VirtualNetworkInner : Resource
     {
         /// <summary>
@@ -45,7 +39,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// PublicIP resource Updating/Deleting/Failed</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated</param>
-        public VirtualNetworkInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), AddressSpace addressSpace = default(AddressSpace), DhcpOptions dhcpOptions = default(DhcpOptions), IList<SubnetInner> subnets = default(IList<SubnetInner>), IList<VirtualNetworkPeeringInner> virtualNetworkPeerings = default(IList<VirtualNetworkPeeringInner>), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        public VirtualNetworkInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), AddressSpace addressSpace = default(AddressSpace), DhcpOptions dhcpOptions = default(DhcpOptions), System.Collections.Generic.IList<SubnetInner> subnets = default(System.Collections.Generic.IList<SubnetInner>), System.Collections.Generic.IList<VirtualNetworkPeeringInner> virtualNetworkPeerings = default(System.Collections.Generic.IList<VirtualNetworkPeeringInner>), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
             : base(location, id, name, type, tags)
         {
             AddressSpace = addressSpace;
@@ -61,46 +55,46 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets AddressSpace that contains an array of IP address
         /// ranges that can be used by subnets
         /// </summary>
-        [JsonProperty(PropertyName = "properties.addressSpace")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.addressSpace")]
         public AddressSpace AddressSpace { get; set; }
 
         /// <summary>
         /// Gets or sets DHCPOptions that contains an array of DNS servers
         /// available to VMs deployed in the virtual network
         /// </summary>
-        [JsonProperty(PropertyName = "properties.dhcpOptions")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.dhcpOptions")]
         public DhcpOptions DhcpOptions { get; set; }
 
         /// <summary>
         /// Gets or sets list of subnets in a VirtualNetwork
         /// </summary>
-        [JsonProperty(PropertyName = "properties.subnets")]
-        public IList<SubnetInner> Subnets { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.subnets")]
+        public System.Collections.Generic.IList<SubnetInner> Subnets { get; set; }
 
         /// <summary>
         /// Gets or sets list of peerings in a VirtualNetwork
         /// </summary>
-        [JsonProperty(PropertyName = "properties.VirtualNetworkPeerings")]
-        public IList<VirtualNetworkPeeringInner> VirtualNetworkPeerings { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.VirtualNetworkPeerings")]
+        public System.Collections.Generic.IList<VirtualNetworkPeeringInner> VirtualNetworkPeerings { get; set; }
 
         /// <summary>
         /// Gets or sets resource guid property of the VirtualNetwork resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.resourceGuid")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.resourceGuid")]
         public string ResourceGuid { get; set; }
 
         /// <summary>
         /// Gets provisioning state of the PublicIP resource
         /// Updating/Deleting/Failed
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource
         /// is updated
         /// </summary>
-        [JsonProperty(PropertyName = "etag")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
     }

@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Describes a storage profile.
@@ -32,7 +26,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="imageReference">the image reference.</param>
         /// <param name="osDisk">the OS disk.</param>
         /// <param name="dataDisks">the data disks.</param>
-        public StorageProfile(ImageReference imageReference = default(ImageReference), OSDisk osDisk = default(OSDisk), IList<DataDisk> dataDisks = default(IList<DataDisk>))
+        public StorageProfile(ImageReference imageReference = default(ImageReference), OSDisk osDisk = default(OSDisk), System.Collections.Generic.IList<DataDisk> dataDisks = default(System.Collections.Generic.IList<DataDisk>))
         {
             ImageReference = imageReference;
             OsDisk = osDisk;
@@ -42,25 +36,25 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the image reference.
         /// </summary>
-        [JsonProperty(PropertyName = "imageReference")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "imageReference")]
         public ImageReference ImageReference { get; set; }
 
         /// <summary>
         /// Gets or sets the OS disk.
         /// </summary>
-        [JsonProperty(PropertyName = "osDisk")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "osDisk")]
         public OSDisk OsDisk { get; set; }
 
         /// <summary>
         /// Gets or sets the data disks.
         /// </summary>
-        [JsonProperty(PropertyName = "dataDisks")]
-        public IList<DataDisk> DataDisks { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "dataDisks")]
+        public System.Collections.Generic.IList<DataDisk> DataDisks { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

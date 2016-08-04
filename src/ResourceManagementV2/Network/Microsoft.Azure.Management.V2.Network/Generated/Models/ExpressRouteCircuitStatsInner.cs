@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Contains Stats associated with the peering
@@ -47,25 +41,25 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets BytesIn of the peering.
         /// </summary>
-        [JsonProperty(PropertyName = "primarybytesIn")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "primarybytesIn")]
         public long? PrimarybytesIn { get; set; }
 
         /// <summary>
         /// Gets BytesOut of the peering.
         /// </summary>
-        [JsonProperty(PropertyName = "primarybytesOut")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "primarybytesOut")]
         public long? PrimarybytesOut { get; set; }
 
         /// <summary>
         /// Gets BytesIn of the peering.
         /// </summary>
-        [JsonProperty(PropertyName = "secondarybytesIn")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "secondarybytesIn")]
         public long? SecondarybytesIn { get; set; }
 
         /// <summary>
         /// Gets BytesOut of the peering.
         /// </summary>
-        [JsonProperty(PropertyName = "secondarybytesOut")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "secondarybytesOut")]
         public long? SecondarybytesOut { get; set; }
 
     }

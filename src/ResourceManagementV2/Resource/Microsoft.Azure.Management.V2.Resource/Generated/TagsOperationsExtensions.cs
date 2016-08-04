@@ -8,14 +8,9 @@
 
 namespace Microsoft.Azure.Management.ResourceManager
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
-    using Models;
+   using Microsoft.Rest.Azure;
+   using Models;
 
     /// <summary>
     /// Extension methods for TagsOperations.
@@ -36,7 +31,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </param>
             public static void DeleteValue(this ITagsOperations operations, string tagName, string tagValue)
             {
-                Task.Factory.StartNew(s => ((ITagsOperations)s).DeleteValueAsync(tagName, tagValue), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((ITagsOperations)s).DeleteValueAsync(tagName, tagValue), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -54,7 +49,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteValueAsync(this ITagsOperations operations, string tagName, string tagValue, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task DeleteValueAsync(this ITagsOperations operations, string tagName, string tagValue, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.DeleteValueWithHttpMessagesAsync(tagName, tagValue, null, cancellationToken).ConfigureAwait(false);
             }
@@ -73,7 +68,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </param>
             public static TagValueInner CreateOrUpdateValue(this ITagsOperations operations, string tagName, string tagValue)
             {
-                return Task.Factory.StartNew(s => ((ITagsOperations)s).CreateOrUpdateValueAsync(tagName, tagValue), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ITagsOperations)s).CreateOrUpdateValueAsync(tagName, tagValue), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -91,7 +86,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TagValueInner> CreateOrUpdateValueAsync(this ITagsOperations operations, string tagName, string tagValue, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<TagValueInner> CreateOrUpdateValueAsync(this ITagsOperations operations, string tagName, string tagValue, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateValueWithHttpMessagesAsync(tagName, tagValue, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -110,7 +105,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </param>
             public static TagDetailsInner CreateOrUpdate(this ITagsOperations operations, string tagName)
             {
-                return Task.Factory.StartNew(s => ((ITagsOperations)s).CreateOrUpdateAsync(tagName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ITagsOperations)s).CreateOrUpdateAsync(tagName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -125,7 +120,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TagDetailsInner> CreateOrUpdateAsync(this ITagsOperations operations, string tagName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<TagDetailsInner> CreateOrUpdateAsync(this ITagsOperations operations, string tagName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(tagName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -144,7 +139,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </param>
             public static void Delete(this ITagsOperations operations, string tagName)
             {
-                Task.Factory.StartNew(s => ((ITagsOperations)s).DeleteAsync(tagName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((ITagsOperations)s).DeleteAsync(tagName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -159,7 +154,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this ITagsOperations operations, string tagName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task DeleteAsync(this ITagsOperations operations, string tagName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.DeleteWithHttpMessagesAsync(tagName, null, cancellationToken).ConfigureAwait(false);
             }
@@ -170,9 +165,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<TagDetailsInner> List(this ITagsOperations operations)
+            public static Microsoft.Rest.Azure.IPage<TagDetailsInner> List(this ITagsOperations operations)
             {
-                return Task.Factory.StartNew(s => ((ITagsOperations)s).ListAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ITagsOperations)s).ListAsync(), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -184,7 +179,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<TagDetailsInner>> ListAsync(this ITagsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<TagDetailsInner>> ListAsync(this ITagsOperations operations, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -201,9 +196,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<TagDetailsInner> ListNext(this ITagsOperations operations, string nextPageLink)
+            public static Microsoft.Rest.Azure.IPage<TagDetailsInner> ListNext(this ITagsOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ITagsOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ITagsOperations)s).ListNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -218,7 +213,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<TagDetailsInner>> ListNextAsync(this ITagsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<TagDetailsInner>> ListNextAsync(this ITagsOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

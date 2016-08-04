@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Effective NetworkSecurityGroup association
@@ -43,13 +37,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets the id of subnet if assigned
         /// </summary>
-        [JsonProperty(PropertyName = "subnet")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "subnet")]
         public SubResource Subnet { get; set; }
 
         /// <summary>
         /// Gets the id of network interface if assigned
         /// </summary>
-        [JsonProperty(PropertyName = "networkInterface")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "networkInterface")]
         public SubResource NetworkInterface { get; set; }
 
     }

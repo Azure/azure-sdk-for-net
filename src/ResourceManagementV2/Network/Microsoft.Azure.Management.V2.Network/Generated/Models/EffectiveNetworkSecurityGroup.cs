@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Effective NetworkSecurityGroup
@@ -35,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// group that is applied</param>
         /// <param name="effectiveSecurityRules">Gets collection of effective
         /// security rules</param>
-        public EffectiveNetworkSecurityGroup(SubResource networkSecurityGroup = default(SubResource), EffectiveNetworkSecurityGroupAssociation association = default(EffectiveNetworkSecurityGroupAssociation), IList<EffectiveNetworkSecurityRules> effectiveSecurityRules = default(IList<EffectiveNetworkSecurityRules>))
+        public EffectiveNetworkSecurityGroup(SubResource networkSecurityGroup = default(SubResource), EffectiveNetworkSecurityGroupAssociation association = default(EffectiveNetworkSecurityGroupAssociation), System.Collections.Generic.IList<EffectiveNetworkSecurityRule> effectiveSecurityRules = default(System.Collections.Generic.IList<EffectiveNetworkSecurityRule>))
         {
             NetworkSecurityGroup = networkSecurityGroup;
             Association = association;
@@ -45,19 +39,19 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets the id of network security group that is applied
         /// </summary>
-        [JsonProperty(PropertyName = "networkSecurityGroup")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "networkSecurityGroup")]
         public SubResource NetworkSecurityGroup { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "association")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "association")]
         public EffectiveNetworkSecurityGroupAssociation Association { get; set; }
 
         /// <summary>
         /// Gets collection of effective security rules
         /// </summary>
-        [JsonProperty(PropertyName = "effectiveSecurityRules")]
-        public IList<EffectiveNetworkSecurityRules> EffectiveSecurityRules { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "effectiveSecurityRules")]
+        public System.Collections.Generic.IList<EffectiveNetworkSecurityRule> EffectiveSecurityRules { get; set; }
 
     }
 }

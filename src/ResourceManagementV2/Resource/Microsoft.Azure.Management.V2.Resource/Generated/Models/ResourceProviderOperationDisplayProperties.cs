@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Resource provider operation's display properties.
@@ -31,12 +25,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// Initializes a new instance of the
         /// ResourceProviderOperationDisplayProperties class.
         /// </summary>
-        /// <param name="publisher">Gets or sets operation description.</param>
-        /// <param name="provider">Gets or sets operation provider.</param>
-        /// <param name="resource">Gets or sets operation resource.</param>
-        /// <param name="operation">Gets or sets operation.</param>
-        /// <param name="description">Gets or sets operation
-        /// description.</param>
+        /// <param name="publisher">Operation description.</param>
+        /// <param name="provider">Operation provider.</param>
+        /// <param name="resource">Operation resource.</param>
+        /// <param name="operation">Operation.</param>
+        /// <param name="description">Operation description.</param>
         public ResourceProviderOperationDisplayProperties(string publisher = default(string), string provider = default(string), string resource = default(string), string operation = default(string), string description = default(string))
         {
             Publisher = publisher;
@@ -49,31 +42,31 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Gets or sets operation description.
         /// </summary>
-        [JsonProperty(PropertyName = "publisher")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "publisher")]
         public string Publisher { get; set; }
 
         /// <summary>
         /// Gets or sets operation provider.
         /// </summary>
-        [JsonProperty(PropertyName = "provider")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "provider")]
         public string Provider { get; set; }
 
         /// <summary>
         /// Gets or sets operation resource.
         /// </summary>
-        [JsonProperty(PropertyName = "resource")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "resource")]
         public string Resource { get; set; }
 
         /// <summary>
         /// Gets or sets operation.
         /// </summary>
-        [JsonProperty(PropertyName = "operation")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "operation")]
         public string Operation { get; set; }
 
         /// <summary>
         /// Gets or sets operation description.
         /// </summary>
-        [JsonProperty(PropertyName = "description")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "description")]
         public string Description { get; set; }
 
     }

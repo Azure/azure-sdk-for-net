@@ -8,27 +8,24 @@
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for UsageUnit.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum UsageUnit
     {
-        [EnumMember(Value = "Count")]
+        [System.Runtime.Serialization.EnumMember(Value = "Count")]
         Count,
-        [EnumMember(Value = "Bytes")]
+        [System.Runtime.Serialization.EnumMember(Value = "Bytes")]
         Bytes,
-        [EnumMember(Value = "Seconds")]
+        [System.Runtime.Serialization.EnumMember(Value = "Seconds")]
         Seconds,
-        [EnumMember(Value = "Percent")]
+        [System.Runtime.Serialization.EnumMember(Value = "Percent")]
         Percent,
-        [EnumMember(Value = "CountsPerSecond")]
+        [System.Runtime.Serialization.EnumMember(Value = "CountsPerSecond")]
         CountsPerSecond,
-        [EnumMember(Value = "BytesPerSecond")]
+        [System.Runtime.Serialization.EnumMember(Value = "BytesPerSecond")]
         BytesPerSecond
     }
 }

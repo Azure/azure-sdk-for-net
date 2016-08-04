@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The arp table associated with the ExpressRouteCircuit
@@ -46,25 +40,25 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets age.
         /// </summary>
-        [JsonProperty(PropertyName = "age")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "age")]
         public int? Age { get; set; }
 
         /// <summary>
         /// Gets or sets interface.
         /// </summary>
-        [JsonProperty(PropertyName = "interface")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "interface")]
         public string InterfaceProperty { get; set; }
 
         /// <summary>
         /// Gets ipAddress.
         /// </summary>
-        [JsonProperty(PropertyName = "ipAddress")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "ipAddress")]
         public string IpAddress { get; set; }
 
         /// <summary>
         /// Gets macAddress.
         /// </summary>
-        [JsonProperty(PropertyName = "macAddress")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "macAddress")]
         public string MacAddress { get; set; }
 
     }

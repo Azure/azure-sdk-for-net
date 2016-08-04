@@ -8,30 +8,24 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// IPConfiguration
+    /// IpConfiguration for Virtual network gateway
     /// </summary>
-    [JsonTransformation]
-    public partial class IPConfiguration : SubResource
+    [Microsoft.Rest.Serialization.JsonTransformation]
+    public partial class VirtualNetworkGatewayIPConfigurationInner : SubResource
     {
         /// <summary>
-        /// Initializes a new instance of the IPConfiguration class.
+        /// Initializes a new instance of the
+        /// VirtualNetworkGatewayIPConfigurationInner class.
         /// </summary>
-        public IPConfiguration() { }
+        public VirtualNetworkGatewayIPConfigurationInner() { }
 
         /// <summary>
-        /// Initializes a new instance of the IPConfiguration class.
+        /// Initializes a new instance of the
+        /// VirtualNetworkGatewayIPConfigurationInner class.
         /// </summary>
-        /// <param name="privateIPAddress">Gets or sets the privateIPAddress
-        /// of the IP Configuration</param>
         /// <param name="privateIPAllocationMethod">Gets or sets PrivateIP
         /// allocation method. Possible values include: 'Static',
         /// 'Dynamic'</param>
@@ -46,10 +40,9 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public IPConfiguration(String id = default(String), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), SubnetInner subnet = default(SubnetInner), PublicIPAddressInner publicIPAddress = default(PublicIPAddressInner), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public VirtualNetworkGatewayIPConfigurationInner(String id = default(String), string privateIPAllocationMethod = default(string), SubResource subnet = default(SubResource), SubResource publicIPAddress = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
-            PrivateIPAddress = privateIPAddress;
             PrivateIPAllocationMethod = privateIPAllocationMethod;
             Subnet = subnet;
             PublicIPAddress = publicIPAddress;
@@ -59,49 +52,43 @@ namespace Microsoft.Azure.Management.Network.Models
         }
 
         /// <summary>
-        /// Gets or sets the privateIPAddress of the IP Configuration
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.privateIPAddress")]
-        public string PrivateIPAddress { get; set; }
-
-        /// <summary>
         /// Gets or sets PrivateIP allocation method. Possible values include:
         /// 'Static', 'Dynamic'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.privateIPAllocationMethod")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.privateIPAllocationMethod")]
         public string PrivateIPAllocationMethod { get; set; }
 
         /// <summary>
         /// Gets or sets the reference of the subnet resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.subnet")]
-        public SubnetInner Subnet { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.subnet")]
+        public SubResource Subnet { get; set; }
 
         /// <summary>
         /// Gets or sets the reference of the PublicIP resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.publicIPAddress")]
-        public PublicIPAddressInner PublicIPAddress { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.publicIPAddress")]
+        public SubResource PublicIPAddress { get; set; }
 
         /// <summary>
         /// Gets provisioning state of the PublicIP resource
         /// Updating/Deleting/Failed
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets name of the resource that is unique within a resource group.
         /// This name can be used to access the resource
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets a unique read-only string that changes whenever the
         /// resource is updated
         /// </summary>
-        [JsonProperty(PropertyName = "etag")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
     }

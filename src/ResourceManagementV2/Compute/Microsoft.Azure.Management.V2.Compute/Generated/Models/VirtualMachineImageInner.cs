@@ -8,18 +8,12 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Describes a Virtual Machine Image.
     /// </summary>
-    [JsonTransformation]
+    [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class VirtualMachineImageInner : VirtualMachineImageResourceInner
     {
         /// <summary>
@@ -33,7 +27,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="name">the name of the resource.</param>
         /// <param name="location">the location of the resource.</param>
         /// <param name="tags">the tags attached to the resource.</param>
-        public VirtualMachineImageInner(string name, string location, String id = default(String), IDictionary<string, string> tags = default(IDictionary<string, string>), PurchasePlan plan = default(PurchasePlan), OSDiskImage osDiskImage = default(OSDiskImage), IList<DataDiskImage> dataDiskImages = default(IList<DataDiskImage>))
+        public VirtualMachineImageInner(string name, string location, String id = default(String), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), PurchasePlan plan = default(PurchasePlan), OSDiskImage osDiskImage = default(OSDiskImage), System.Collections.Generic.IList<DataDiskImage> dataDiskImages = default(System.Collections.Generic.IList<DataDiskImage>))
             : base(name, location, id, tags)
         {
             Plan = plan;
@@ -43,23 +37,23 @@ namespace Microsoft.Azure.Management.Compute.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "properties.plan")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.plan")]
         public PurchasePlan Plan { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "properties.osDiskImage")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.osDiskImage")]
         public OSDiskImage OsDiskImage { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "properties.dataDiskImages")]
-        public IList<DataDiskImage> DataDiskImages { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.dataDiskImages")]
+        public System.Collections.Generic.IList<DataDiskImage> DataDiskImages { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public override void Validate()

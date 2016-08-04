@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Describes a Encryption Settings for a Disk
@@ -45,26 +39,26 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the disk encryption key which is a KeyVault Secret.
         /// </summary>
-        [JsonProperty(PropertyName = "diskEncryptionKey")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "diskEncryptionKey")]
         public KeyVaultSecretReference DiskEncryptionKey { get; set; }
 
         /// <summary>
         /// Gets or sets the key encryption key which is KeyVault Key.
         /// </summary>
-        [JsonProperty(PropertyName = "keyEncryptionKey")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "keyEncryptionKey")]
         public KeyVaultKeyReference KeyEncryptionKey { get; set; }
 
         /// <summary>
         /// Gets or sets whether disk encryption should be enabled on the
         /// Virtual Machine.
         /// </summary>
-        [JsonProperty(PropertyName = "enabled")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

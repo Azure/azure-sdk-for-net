@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Resource group filter.
@@ -29,8 +23,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the ResourceGroupFilterInner class.
         /// </summary>
-        /// <param name="tagName">Gets or sets the tag name.</param>
-        /// <param name="tagValue">Gets or sets the tag value.</param>
+        /// <param name="tagName">The tag name.</param>
+        /// <param name="tagValue">The tag value.</param>
         public ResourceGroupFilterInner(string tagName = default(string), string tagValue = default(string))
         {
             TagName = tagName;
@@ -40,13 +34,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Gets or sets the tag name.
         /// </summary>
-        [JsonProperty(PropertyName = "tagName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "tagName")]
         public string TagName { get; set; }
 
         /// <summary>
         /// Gets or sets the tag value.
         /// </summary>
-        [JsonProperty(PropertyName = "tagValue")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "tagValue")]
         public string TagValue { get; set; }
 
     }

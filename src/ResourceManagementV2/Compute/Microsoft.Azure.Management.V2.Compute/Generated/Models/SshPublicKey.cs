@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Contains information about SSH certificate public key and the path on
@@ -47,7 +41,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// is stored. If the file already exists, the specified key is
         /// appended to the file.
         /// </summary>
-        [JsonProperty(PropertyName = "path")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "path")]
         public string Path { get; set; }
 
         /// <summary>
@@ -55,7 +49,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// through SSH.The certificate must be in Pem format with or without
         /// headers.
         /// </summary>
-        [JsonProperty(PropertyName = "keyData")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "keyData")]
         public string KeyData { get; set; }
 
     }

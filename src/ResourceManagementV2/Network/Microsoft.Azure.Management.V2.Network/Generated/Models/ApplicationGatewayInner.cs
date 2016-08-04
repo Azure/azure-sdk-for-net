@@ -8,18 +8,12 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// ApplicationGateways resource
     /// </summary>
-    [JsonTransformation]
+    [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class ApplicationGatewayInner : Resource
     {
         /// <summary>
@@ -30,43 +24,47 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the ApplicationGatewayInner class.
         /// </summary>
-        /// <param name="sku">Gets or sets sku of application gateway
+        /// <param name="sku">Sku of application gateway resource</param>
+        /// <param name="sslPolicy">SSL policy of application gateway
         /// resource</param>
-        /// <param name="operationalState">Gets operational state of
-        /// application gateway resource. Possible values include: 'Stopped',
-        /// 'Starting', 'Running', 'Stopping'</param>
-        /// <param name="gatewayIPConfigurations">Gets or sets subnets of
-        /// application gateway resource</param>
-        /// <param name="sslCertificates">Gets or sets ssl certificates of
-        /// application gateway resource</param>
-        /// <param name="frontendIPConfigurations">Gets or sets frontend IP
-        /// addresses of application gateway resource</param>
-        /// <param name="frontendPorts">Gets or sets frontend ports of
-        /// application gateway resource</param>
-        /// <param name="probes">Gets or sets probes of application gateway
-        /// resource</param>
-        /// <param name="backendAddressPools">Gets or sets backend address
-        /// pool of application gateway resource</param>
-        /// <param name="backendHttpSettingsCollection">Gets or sets backend
-        /// http settings of application gateway resource</param>
-        /// <param name="httpListeners">Gets or sets HTTP listeners of
-        /// application gateway resource</param>
-        /// <param name="urlPathMaps">Gets or sets URL path map of application
+        /// <param name="operationalState">Operational state of application
+        /// gateway resource. Possible values include: 'Stopped', 'Starting',
+        /// 'Running', 'Stopping'</param>
+        /// <param name="gatewayIPConfigurations">Subnets of application
         /// gateway resource</param>
-        /// <param name="requestRoutingRules">Gets or sets request routing
-        /// rules of application gateway resource</param>
-        /// <param name="resourceGuid">Gets or sets resource guid property of
-        /// the ApplicationGateway resource</param>
-        /// <param name="provisioningState">Gets provisioning state of the
+        /// <param name="authenticationCertificates">Authentication
+        /// certificates of application gateway resource</param>
+        /// <param name="sslCertificates">SSL certificates of application
+        /// gateway resource</param>
+        /// <param name="frontendIPConfigurations">Frontend IP addresses of
+        /// application gateway resource</param>
+        /// <param name="frontendPorts">Frontend ports of application gateway
+        /// resource</param>
+        /// <param name="probes">Probes of application gateway resource</param>
+        /// <param name="backendAddressPools">Backend address pool of
+        /// application gateway resource</param>
+        /// <param name="backendHttpSettingsCollection">Backend http settings
+        /// of application gateway resource</param>
+        /// <param name="httpListeners">HTTP listeners of application gateway
+        /// resource</param>
+        /// <param name="urlPathMaps">URL path map of application gateway
+        /// resource</param>
+        /// <param name="requestRoutingRules">Request routing rules of
+        /// application gateway resource</param>
+        /// <param name="resourceGuid">Resource guid property of the
+        /// ApplicationGateway resource</param>
+        /// <param name="provisioningState">Provisioning state of the
         /// ApplicationGateway resource Updating/Deleting/Failed</param>
-        /// <param name="etag">Gets a unique read-only string that changes
-        /// whenever the resource is updated</param>
-        public ApplicationGatewayInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), ApplicationGatewaySku sku = default(ApplicationGatewaySku), string operationalState = default(string), IList<ApplicationGatewayIPConfiguration> gatewayIPConfigurations = default(IList<ApplicationGatewayIPConfiguration>), IList<ApplicationGatewaySslCertificate> sslCertificates = default(IList<ApplicationGatewaySslCertificate>), IList<ApplicationGatewayFrontendIPConfiguration> frontendIPConfigurations = default(IList<ApplicationGatewayFrontendIPConfiguration>), IList<ApplicationGatewayFrontendPort> frontendPorts = default(IList<ApplicationGatewayFrontendPort>), IList<ApplicationGatewayProbe> probes = default(IList<ApplicationGatewayProbe>), IList<ApplicationGatewayBackendAddressPool> backendAddressPools = default(IList<ApplicationGatewayBackendAddressPool>), IList<ApplicationGatewayBackendHttpSettings> backendHttpSettingsCollection = default(IList<ApplicationGatewayBackendHttpSettings>), IList<ApplicationGatewayHttpListener> httpListeners = default(IList<ApplicationGatewayHttpListener>), IList<ApplicationGatewayUrlPathMap> urlPathMaps = default(IList<ApplicationGatewayUrlPathMap>), IList<ApplicationGatewayRequestRoutingRule> requestRoutingRules = default(IList<ApplicationGatewayRequestRoutingRule>), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        /// <param name="etag">A unique read-only string that changes whenever
+        /// the resource is updated</param>
+        public ApplicationGatewayInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), ApplicationGatewaySku sku = default(ApplicationGatewaySku), ApplicationGatewaySslPolicy sslPolicy = default(ApplicationGatewaySslPolicy), string operationalState = default(string), System.Collections.Generic.IList<ApplicationGatewayIPConfigurationInner> gatewayIPConfigurations = default(System.Collections.Generic.IList<ApplicationGatewayIPConfigurationInner>), System.Collections.Generic.IList<ApplicationGatewayAuthenticationCertificateInner> authenticationCertificates = default(System.Collections.Generic.IList<ApplicationGatewayAuthenticationCertificateInner>), System.Collections.Generic.IList<ApplicationGatewaySslCertificateInner> sslCertificates = default(System.Collections.Generic.IList<ApplicationGatewaySslCertificateInner>), System.Collections.Generic.IList<ApplicationGatewayFrontendIPConfigurationInner> frontendIPConfigurations = default(System.Collections.Generic.IList<ApplicationGatewayFrontendIPConfigurationInner>), System.Collections.Generic.IList<ApplicationGatewayFrontendPortInner> frontendPorts = default(System.Collections.Generic.IList<ApplicationGatewayFrontendPortInner>), System.Collections.Generic.IList<ApplicationGatewayProbeInner> probes = default(System.Collections.Generic.IList<ApplicationGatewayProbeInner>), System.Collections.Generic.IList<ApplicationGatewayBackendAddressPoolInner> backendAddressPools = default(System.Collections.Generic.IList<ApplicationGatewayBackendAddressPoolInner>), System.Collections.Generic.IList<ApplicationGatewayBackendHttpSettingsInner> backendHttpSettingsCollection = default(System.Collections.Generic.IList<ApplicationGatewayBackendHttpSettingsInner>), System.Collections.Generic.IList<ApplicationGatewayHttpListenerInner> httpListeners = default(System.Collections.Generic.IList<ApplicationGatewayHttpListenerInner>), System.Collections.Generic.IList<ApplicationGatewayUrlPathMapInner> urlPathMaps = default(System.Collections.Generic.IList<ApplicationGatewayUrlPathMapInner>), System.Collections.Generic.IList<ApplicationGatewayRequestRoutingRuleInner> requestRoutingRules = default(System.Collections.Generic.IList<ApplicationGatewayRequestRoutingRuleInner>), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
+            SslPolicy = sslPolicy;
             OperationalState = operationalState;
             GatewayIPConfigurations = gatewayIPConfigurations;
+            AuthenticationCertificates = authenticationCertificates;
             SslCertificates = sslCertificates;
             FrontendIPConfigurations = frontendIPConfigurations;
             FrontendPorts = frontendPorts;
@@ -84,95 +82,108 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets sku of application gateway resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.sku")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.sku")]
         public ApplicationGatewaySku Sku { get; set; }
+
+        /// <summary>
+        /// Gets or sets SSL policy of application gateway resource
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.sslPolicy")]
+        public ApplicationGatewaySslPolicy SslPolicy { get; set; }
 
         /// <summary>
         /// Gets operational state of application gateway resource. Possible
         /// values include: 'Stopped', 'Starting', 'Running', 'Stopping'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.operationalState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.operationalState")]
         public string OperationalState { get; private set; }
 
         /// <summary>
         /// Gets or sets subnets of application gateway resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.gatewayIPConfigurations")]
-        public IList<ApplicationGatewayIPConfiguration> GatewayIPConfigurations { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.gatewayIPConfigurations")]
+        public System.Collections.Generic.IList<ApplicationGatewayIPConfigurationInner> GatewayIPConfigurations { get; set; }
 
         /// <summary>
-        /// Gets or sets ssl certificates of application gateway resource
+        /// Gets or sets authentication certificates of application gateway
+        /// resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.sslCertificates")]
-        public IList<ApplicationGatewaySslCertificate> SslCertificates { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.authenticationCertificates")]
+        public System.Collections.Generic.IList<ApplicationGatewayAuthenticationCertificateInner> AuthenticationCertificates { get; set; }
+
+        /// <summary>
+        /// Gets or sets SSL certificates of application gateway resource
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.sslCertificates")]
+        public System.Collections.Generic.IList<ApplicationGatewaySslCertificateInner> SslCertificates { get; set; }
 
         /// <summary>
         /// Gets or sets frontend IP addresses of application gateway resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.frontendIPConfigurations")]
-        public IList<ApplicationGatewayFrontendIPConfiguration> FrontendIPConfigurations { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.frontendIPConfigurations")]
+        public System.Collections.Generic.IList<ApplicationGatewayFrontendIPConfigurationInner> FrontendIPConfigurations { get; set; }
 
         /// <summary>
         /// Gets or sets frontend ports of application gateway resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.frontendPorts")]
-        public IList<ApplicationGatewayFrontendPort> FrontendPorts { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.frontendPorts")]
+        public System.Collections.Generic.IList<ApplicationGatewayFrontendPortInner> FrontendPorts { get; set; }
 
         /// <summary>
         /// Gets or sets probes of application gateway resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.probes")]
-        public IList<ApplicationGatewayProbe> Probes { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.probes")]
+        public System.Collections.Generic.IList<ApplicationGatewayProbeInner> Probes { get; set; }
 
         /// <summary>
         /// Gets or sets backend address pool of application gateway resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.backendAddressPools")]
-        public IList<ApplicationGatewayBackendAddressPool> BackendAddressPools { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.backendAddressPools")]
+        public System.Collections.Generic.IList<ApplicationGatewayBackendAddressPoolInner> BackendAddressPools { get; set; }
 
         /// <summary>
         /// Gets or sets backend http settings of application gateway resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.backendHttpSettingsCollection")]
-        public IList<ApplicationGatewayBackendHttpSettings> BackendHttpSettingsCollection { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.backendHttpSettingsCollection")]
+        public System.Collections.Generic.IList<ApplicationGatewayBackendHttpSettingsInner> BackendHttpSettingsCollection { get; set; }
 
         /// <summary>
         /// Gets or sets HTTP listeners of application gateway resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.httpListeners")]
-        public IList<ApplicationGatewayHttpListener> HttpListeners { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.httpListeners")]
+        public System.Collections.Generic.IList<ApplicationGatewayHttpListenerInner> HttpListeners { get; set; }
 
         /// <summary>
         /// Gets or sets URL path map of application gateway resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.urlPathMaps")]
-        public IList<ApplicationGatewayUrlPathMap> UrlPathMaps { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.urlPathMaps")]
+        public System.Collections.Generic.IList<ApplicationGatewayUrlPathMapInner> UrlPathMaps { get; set; }
 
         /// <summary>
         /// Gets or sets request routing rules of application gateway resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.requestRoutingRules")]
-        public IList<ApplicationGatewayRequestRoutingRule> RequestRoutingRules { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.requestRoutingRules")]
+        public System.Collections.Generic.IList<ApplicationGatewayRequestRoutingRuleInner> RequestRoutingRules { get; set; }
 
         /// <summary>
         /// Gets or sets resource guid property of the ApplicationGateway
         /// resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.resourceGuid")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.resourceGuid")]
         public string ResourceGuid { get; set; }
 
         /// <summary>
-        /// Gets provisioning state of the ApplicationGateway resource
+        /// Gets or sets provisioning state of the ApplicationGateway resource
         /// Updating/Deleting/Failed
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
-        /// Gets a unique read-only string that changes whenever the resource
-        /// is updated
+        /// Gets or sets a unique read-only string that changes whenever the
+        /// resource is updated
         /// </summary>
-        [JsonProperty(PropertyName = "etag")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
     }

@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Location information.
@@ -54,37 +48,37 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// Gets or sets the ID of the resource
         /// (/subscriptions/SubscriptionId).
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets the subscription Id.
         /// </summary>
-        [JsonProperty(PropertyName = "subscriptionId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "subscriptionId")]
         public string SubscriptionId { get; set; }
 
         /// <summary>
         /// Gets or sets the location name
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the display name of the location
         /// </summary>
-        [JsonProperty(PropertyName = "displayName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
         /// Gets or sets the latitude of the location
         /// </summary>
-        [JsonProperty(PropertyName = "latitude")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "latitude")]
         public string Latitude { get; set; }
 
         /// <summary>
         /// Gets or sets the longitude of the location
         /// </summary>
-        [JsonProperty(PropertyName = "longitude")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "longitude")]
         public string Longitude { get; set; }
 
     }

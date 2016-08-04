@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Resource information.
@@ -29,15 +23,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the GenericResourceInner class.
         /// </summary>
-        /// <param name="plan">Gets or sets the plan of the resource.</param>
-        /// <param name="properties">Gets or sets the resource
-        /// properties.</param>
-        /// <param name="kind">Gets or sets the kind of the resource.</param>
-        /// <param name="managedBy">Gets or sets the managedBy property of the
+        /// <param name="plan">The plan of the resource.</param>
+        /// <param name="properties">The resource properties.</param>
+        /// <param name="kind">The kind of the resource.</param>
+        /// <param name="managedBy">The managedBy property of the
         /// resource.</param>
-        /// <param name="sku">Gets or sets the sku of the resource.</param>
-        /// <param name="identity">Gets or sets the identity of the
-        /// resource.</param>
+        /// <param name="sku">The sku of the resource.</param>
+        /// <param name="identity">The identity of the resource.</param>
         public GenericResourceInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), Plan plan = default(Plan), object properties = default(object), string kind = default(string), string managedBy = default(string), Sku sku = default(Sku), Identity identity = default(Identity))
             : base(location, id, name, type, tags)
         {
@@ -52,37 +44,37 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Gets or sets the plan of the resource.
         /// </summary>
-        [JsonProperty(PropertyName = "plan")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "plan")]
         public Plan Plan { get; set; }
 
         /// <summary>
         /// Gets or sets the resource properties.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties")]
         public object Properties { get; set; }
 
         /// <summary>
         /// Gets or sets the kind of the resource.
         /// </summary>
-        [JsonProperty(PropertyName = "kind")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "kind")]
         public string Kind { get; set; }
 
         /// <summary>
         /// Gets or sets the managedBy property of the resource.
         /// </summary>
-        [JsonProperty(PropertyName = "managedBy")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "managedBy")]
         public string ManagedBy { get; set; }
 
         /// <summary>
         /// Gets or sets the sku of the resource.
         /// </summary>
-        [JsonProperty(PropertyName = "sku")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; set; }
 
         /// <summary>
         /// Gets or sets the identity of the resource.
         /// </summary>
-        [JsonProperty(PropertyName = "identity")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "identity")]
         public Identity Identity { get; set; }
 
     }

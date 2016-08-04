@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The encryption settings on the account.
@@ -46,14 +40,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Gets the services which are encrypted.
         /// </summary>
-        [JsonProperty(PropertyName = "services")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "services")]
         public EncryptionServices Services { get; set; }
 
         /// <summary>
         /// Gets the encryption keySource(provider). Possible values
         /// (case-insensitive):  Microsoft.Storage
         /// </summary>
-        [JsonProperty(PropertyName = "keySource")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "keySource")]
         public static string KeySource { get; private set; }
 
     }

@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Location list operation response.
@@ -30,7 +24,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// Initializes a new instance of the LocationListResultInner class.
         /// </summary>
         /// <param name="value">Gets the locations.</param>
-        public LocationListResultInner(IList<Location> value = default(IList<Location>))
+        public LocationListResultInner(System.Collections.Generic.IList<Location> value = default(System.Collections.Generic.IList<Location>))
         {
             Value = value;
         }
@@ -38,8 +32,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Gets the locations.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<Location> Value { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
+        public System.Collections.Generic.IList<Location> Value { get; set; }
 
     }
 }

@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// DHCPOptions contains an array of DNS servers available to VMs deployed
@@ -33,7 +27,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="dnsServers">Gets or sets list of DNS servers IP
         /// addresses</param>
-        public DhcpOptions(IList<string> dnsServers = default(IList<string>))
+        public DhcpOptions(System.Collections.Generic.IList<string> dnsServers = default(System.Collections.Generic.IList<string>))
         {
             DnsServers = dnsServers;
         }
@@ -41,8 +35,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets list of DNS servers IP addresses
         /// </summary>
-        [JsonProperty(PropertyName = "dnsServers")]
-        public IList<string> DnsServers { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "dnsServers")]
+        public System.Collections.Generic.IList<string> DnsServers { get; set; }
 
     }
 }

@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Resource filter.
@@ -29,41 +23,33 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the GenericResourceFilterInner class.
         /// </summary>
-        /// <param name="resourceType">Gets or sets the resource type.</param>
-        /// <param name="tagname">Gets or sets the tag name.</param>
-        /// <param name="tagvalue">Gets or sets the tag value.</param>
-        /// <param name="expand">Gets or sets the expand value.</param>
-        public GenericResourceFilterInner(string resourceType = default(string), string tagname = default(string), string tagvalue = default(string), string expand = default(string))
+        /// <param name="resourceType">The resource type.</param>
+        /// <param name="tagname">The tag name.</param>
+        /// <param name="tagvalue">The tag value.</param>
+        public GenericResourceFilterInner(string resourceType = default(string), string tagname = default(string), string tagvalue = default(string))
         {
             ResourceType = resourceType;
             Tagname = tagname;
             Tagvalue = tagvalue;
-            Expand = expand;
         }
 
         /// <summary>
         /// Gets or sets the resource type.
         /// </summary>
-        [JsonProperty(PropertyName = "resourceType")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "resourceType")]
         public string ResourceType { get; set; }
 
         /// <summary>
         /// Gets or sets the tag name.
         /// </summary>
-        [JsonProperty(PropertyName = "tagname")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "tagname")]
         public string Tagname { get; set; }
 
         /// <summary>
         /// Gets or sets the tag value.
         /// </summary>
-        [JsonProperty(PropertyName = "tagvalue")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "tagvalue")]
         public string Tagvalue { get; set; }
-
-        /// <summary>
-        /// Gets or sets the expand value.
-        /// </summary>
-        [JsonProperty(PropertyName = "expand")]
-        public string Expand { get; set; }
 
     }
 }

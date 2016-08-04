@@ -8,18 +8,12 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Describes a virtual machine scale set virtual machine.
     /// </summary>
-    [JsonTransformation]
+    [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class VirtualMachineScaleSetVMInner : Resource
     {
         /// <summary>
@@ -53,7 +47,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// machine from VM Marketplace images.</param>
         /// <param name="resources">the virtual machine child extension
         /// resources.</param>
-        public VirtualMachineScaleSetVMInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), string instanceId = default(string), Sku sku = default(Sku), bool? latestModelApplied = default(bool?), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), string provisioningState = default(string), string licenseType = default(string), Plan plan = default(Plan), IList<VirtualMachineExtensionInner> resources = default(IList<VirtualMachineExtensionInner>))
+        public VirtualMachineScaleSetVMInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), string instanceId = default(string), Sku sku = default(Sku), bool? latestModelApplied = default(bool?), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), SubResource availabilitySet = default(SubResource), string provisioningState = default(string), string licenseType = default(string), Plan plan = default(Plan), System.Collections.Generic.IList<VirtualMachineExtensionInner> resources = default(System.Collections.Generic.IList<VirtualMachineExtensionInner>))
             : base(location, id, name, type, tags)
         {
             InstanceId = instanceId;
@@ -75,95 +69,95 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets the virtual machine instance id.
         /// </summary>
-        [JsonProperty(PropertyName = "instanceId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "instanceId")]
         public string InstanceId { get; private set; }
 
         /// <summary>
         /// Gets the virtual machine sku.
         /// </summary>
-        [JsonProperty(PropertyName = "sku")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; private set; }
 
         /// <summary>
         /// Gets specifies whether the latest model has been applied to the
         /// virtual machine.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.latestModelApplied")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.latestModelApplied")]
         public bool? LatestModelApplied { get; private set; }
 
         /// <summary>
         /// Gets the virtual machine instance view.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.instanceView")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.instanceView")]
         public VirtualMachineInstanceView InstanceView { get; private set; }
 
         /// <summary>
         /// Gets or sets the hardware profile.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.hardwareProfile")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.hardwareProfile")]
         public HardwareProfile HardwareProfile { get; set; }
 
         /// <summary>
         /// Gets or sets the storage profile.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.storageProfile")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.storageProfile")]
         public StorageProfile StorageProfile { get; set; }
 
         /// <summary>
         /// Gets or sets the OS profile.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.osProfile")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.osProfile")]
         public OSProfile OsProfile { get; set; }
 
         /// <summary>
         /// Gets or sets the network profile.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.networkProfile")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.networkProfile")]
         public NetworkProfile NetworkProfile { get; set; }
 
         /// <summary>
         /// Gets or sets the diagnostics profile.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.diagnosticsProfile")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.diagnosticsProfile")]
         public DiagnosticsProfile DiagnosticsProfile { get; set; }
 
         /// <summary>
         /// Gets or sets the reference Id of the availability set to which
         /// this virtual machine belongs.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.availabilitySet")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.availabilitySet")]
         public SubResource AvailabilitySet { get; set; }
 
         /// <summary>
         /// Gets the provisioning state, which only appears in the response.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets the license type, which is for bring your own license
         /// scenario.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.licenseType")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.licenseType")]
         public string LicenseType { get; set; }
 
         /// <summary>
         /// Gets or sets the purchase plan when deploying virtual machine from
         /// VM Marketplace images.
         /// </summary>
-        [JsonProperty(PropertyName = "plan")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "plan")]
         public Plan Plan { get; set; }
 
         /// <summary>
         /// Gets the virtual machine child extension resources.
         /// </summary>
-        [JsonProperty(PropertyName = "resources")]
-        public IList<VirtualMachineExtensionInner> Resources { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "resources")]
+        public System.Collections.Generic.IList<VirtualMachineExtensionInner> Resources { get; private set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

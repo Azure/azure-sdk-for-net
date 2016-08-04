@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Describes a virtual machine scale set sku.
@@ -42,19 +36,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the sku name.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the sku tier.
         /// </summary>
-        [JsonProperty(PropertyName = "tier")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "tier")]
         public string Tier { get; set; }
 
         /// <summary>
         /// Gets or sets the sku capacity.
         /// </summary>
-        [JsonProperty(PropertyName = "capacity")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "capacity")]
         public long? Capacity { get; set; }
 
     }

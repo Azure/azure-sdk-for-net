@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The status code and count of the virtual machine scale set instance
@@ -44,13 +38,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets the instance view status code.
         /// </summary>
-        [JsonProperty(PropertyName = "code")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "code")]
         public string Code { get; private set; }
 
         /// <summary>
         /// Gets the number of instances having a particular status code.
         /// </summary>
-        [JsonProperty(PropertyName = "count")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "count")]
         public int? Count { get; private set; }
 
     }

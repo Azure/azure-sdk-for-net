@@ -8,30 +8,24 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Describes a virtual machine scale set network profile's IP
     /// configuration.
     /// </summary>
-    [JsonTransformation]
-    public partial class VirtualMachineScaleSetIPConfiguration : SubResource
+    [Microsoft.Rest.Serialization.JsonTransformation]
+    public partial class VirtualMachineScaleSetIPConfigurationInner : SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// VirtualMachineScaleSetIPConfiguration class.
+        /// VirtualMachineScaleSetIPConfigurationInner class.
         /// </summary>
-        public VirtualMachineScaleSetIPConfiguration() { }
+        public VirtualMachineScaleSetIPConfigurationInner() { }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// VirtualMachineScaleSetIPConfiguration class.
+        /// VirtualMachineScaleSetIPConfigurationInner class.
         /// </summary>
         /// <param name="name">the IP configuration name.</param>
         /// <param name="subnet">the subnet.</param>
@@ -41,7 +35,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// backend address pools.</param>
         /// <param name="loadBalancerInboundNatPools">the load balancer
         /// inbound nat pools.</param>
-        public VirtualMachineScaleSetIPConfiguration(string name, ApiEntityReference subnet, String id = default(String), IList<SubResource> applicationGatewayBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerBackendAddressPools = default(IList<SubResource>), IList<SubResource> loadBalancerInboundNatPools = default(IList<SubResource>))
+        public VirtualMachineScaleSetIPConfigurationInner(string name, ApiEntityReference subnet, String id = default(String), System.Collections.Generic.IList<SubResource> applicationGatewayBackendAddressPools = default(System.Collections.Generic.IList<SubResource>), System.Collections.Generic.IList<SubResource> loadBalancerBackendAddressPools = default(System.Collections.Generic.IList<SubResource>), System.Collections.Generic.IList<SubResource> loadBalancerInboundNatPools = default(System.Collections.Generic.IList<SubResource>))
             : base(id)
         {
             Name = name;
@@ -54,48 +48,48 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the IP configuration name.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the subnet.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.subnet")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.subnet")]
         public ApiEntityReference Subnet { get; set; }
 
         /// <summary>
         /// Gets or sets the application gateway backend address pools.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.applicationGatewayBackendAddressPools")]
-        public IList<SubResource> ApplicationGatewayBackendAddressPools { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.applicationGatewayBackendAddressPools")]
+        public System.Collections.Generic.IList<SubResource> ApplicationGatewayBackendAddressPools { get; set; }
 
         /// <summary>
         /// Gets or sets the load balancer backend address pools.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.loadBalancerBackendAddressPools")]
-        public IList<SubResource> LoadBalancerBackendAddressPools { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.loadBalancerBackendAddressPools")]
+        public System.Collections.Generic.IList<SubResource> LoadBalancerBackendAddressPools { get; set; }
 
         /// <summary>
         /// Gets or sets the load balancer inbound nat pools.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.loadBalancerInboundNatPools")]
-        public IList<SubResource> LoadBalancerInboundNatPools { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.loadBalancerInboundNatPools")]
+        public System.Collections.Generic.IList<SubResource> LoadBalancerInboundNatPools { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (Name == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Name");
             }
             if (Subnet == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Subnet");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Subnet");
             }
         }
     }

@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// List of resource providers.
@@ -29,11 +23,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the ProviderListResultInner class.
         /// </summary>
-        /// <param name="value">Gets or sets the list of resource
-        /// providers.</param>
-        /// <param name="nextLink">Gets or sets the URL to get the next set of
+        /// <param name="value">The list of resource providers.</param>
+        /// <param name="nextLink">The URL to get the next set of
         /// results.</param>
-        public ProviderListResultInner(IList<ProviderInner> value = default(IList<ProviderInner>), string nextLink = default(string))
+        public ProviderListResultInner(System.Collections.Generic.IList<ProviderInner> value = default(System.Collections.Generic.IList<ProviderInner>), string nextLink = default(string))
         {
             Value = value;
             NextLink = nextLink;
@@ -42,13 +35,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Gets or sets the list of resource providers.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<ProviderInner> Value { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
+        public System.Collections.Generic.IList<ProviderInner> Value { get; set; }
 
         /// <summary>
         /// Gets or sets the URL to get the next set of results.
         /// </summary>
-        [JsonProperty(PropertyName = "nextLink")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "nextLink")]
         public string NextLink { get; set; }
 
     }

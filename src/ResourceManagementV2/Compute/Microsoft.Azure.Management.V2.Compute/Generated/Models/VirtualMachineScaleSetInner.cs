@@ -8,18 +8,12 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Describes a Virtual Machine Scale Set.
     /// </summary>
-    [JsonTransformation]
+    [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class VirtualMachineScaleSetInner : Resource
     {
         /// <summary>
@@ -53,38 +47,38 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the virtual machine scale set sku.
         /// </summary>
-        [JsonProperty(PropertyName = "sku")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; set; }
 
         /// <summary>
         /// Gets or sets the upgrade policy.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.upgradePolicy")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.upgradePolicy")]
         public UpgradePolicy UpgradePolicy { get; set; }
 
         /// <summary>
         /// Gets or sets the virtual machine profile.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.virtualMachineProfile")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.virtualMachineProfile")]
         public VirtualMachineScaleSetVMProfile VirtualMachineProfile { get; set; }
 
         /// <summary>
         /// Gets the provisioning state, which only appears in the response.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets specifies whether the Virtual Machine Scale Set
         /// should be overprovisioned.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.overProvision")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.overProvision")]
         public bool? OverProvision { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

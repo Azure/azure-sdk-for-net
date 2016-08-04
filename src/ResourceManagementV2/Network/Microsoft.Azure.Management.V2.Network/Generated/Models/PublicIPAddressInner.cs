@@ -8,18 +8,12 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// PublicIPAddress resource
     /// </summary>
-    [JsonTransformation]
+    [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class PublicIPAddressInner : Resource
     {
         /// <summary>
@@ -46,7 +40,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// PublicIP resource Updating/Deleting/Failed</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated</param>
-        public PublicIPAddressInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), string publicIPAllocationMethod = default(string), string publicIPAddressVersion = default(string), IPConfiguration ipConfiguration = default(IPConfiguration), PublicIPAddressDnsSettings dnsSettings = default(PublicIPAddressDnsSettings), string ipAddress = default(string), int? idleTimeoutInMinutes = default(int?), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        public PublicIPAddressInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), string publicIPAllocationMethod = default(string), string publicIPAddressVersion = default(string), IPConfigurationInner ipConfiguration = default(IPConfigurationInner), PublicIPAddressDnsSettings dnsSettings = default(PublicIPAddressDnsSettings), string ipAddress = default(string), int? idleTimeoutInMinutes = default(int?), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
             : base(location, id, name, type, tags)
         {
             PublicIPAllocationMethod = publicIPAllocationMethod;
@@ -64,57 +58,57 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets PublicIP allocation method (Static/Dynamic). Possible
         /// values include: 'Static', 'Dynamic'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.publicIPAllocationMethod")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.publicIPAllocationMethod")]
         public string PublicIPAllocationMethod { get; set; }
 
         /// <summary>
         /// Gets or sets PublicIP address version (IPv4/IPv6). Possible values
         /// include: 'IPv4', 'IPv6'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.publicIPAddressVersion")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.publicIPAddressVersion")]
         public string PublicIPAddressVersion { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "properties.ipConfiguration")]
-        public IPConfiguration IpConfiguration { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.ipConfiguration")]
+        public IPConfigurationInner IpConfiguration { get; private set; }
 
         /// <summary>
         /// Gets or sets FQDN of the DNS record associated with the public IP
         /// address
         /// </summary>
-        [JsonProperty(PropertyName = "properties.dnsSettings")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.dnsSettings")]
         public PublicIPAddressDnsSettings DnsSettings { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "properties.ipAddress")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.ipAddress")]
         public string IpAddress { get; set; }
 
         /// <summary>
         /// Gets or sets the Idletimeout of the public IP address
         /// </summary>
-        [JsonProperty(PropertyName = "properties.idleTimeoutInMinutes")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.idleTimeoutInMinutes")]
         public int? IdleTimeoutInMinutes { get; set; }
 
         /// <summary>
         /// Gets or sets resource guid property of the PublicIP resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.resourceGuid")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.resourceGuid")]
         public string ResourceGuid { get; set; }
 
         /// <summary>
         /// Gets provisioning state of the PublicIP resource
         /// Updating/Deleting/Failed
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource
         /// is updated
         /// </summary>
-        [JsonProperty(PropertyName = "etag")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
     }

@@ -8,19 +8,16 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for VirtualMachineScaleSetSkuScaleType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum VirtualMachineScaleSetSkuScaleType
     {
-        [EnumMember(Value = "Automatic")]
+        [System.Runtime.Serialization.EnumMember(Value = "Automatic")]
         Automatic,
-        [EnumMember(Value = "None")]
+        [System.Runtime.Serialization.EnumMember(Value = "None")]
         None
     }
 }

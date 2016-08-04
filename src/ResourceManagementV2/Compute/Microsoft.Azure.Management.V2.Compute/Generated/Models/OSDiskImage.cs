@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Contains the os disk image information.
@@ -40,13 +34,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets the operating system of the osDiskImage. Possible
         /// values include: 'Windows', 'Linux'
         /// </summary>
-        [JsonProperty(PropertyName = "operatingSystem")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "operatingSystem")]
         public OperatingSystemTypes? OperatingSystem { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

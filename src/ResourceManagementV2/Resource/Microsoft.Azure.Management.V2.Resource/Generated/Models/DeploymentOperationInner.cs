@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Deployment operation information.
@@ -29,11 +23,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the DeploymentOperationInner class.
         /// </summary>
-        /// <param name="id">Gets or sets full deployment operation id.</param>
-        /// <param name="operationId">Gets or sets deployment operation
-        /// id.</param>
-        /// <param name="properties">Gets or sets deployment
-        /// properties.</param>
+        /// <param name="id">Full deployment operation id.</param>
+        /// <param name="operationId">Deployment operation id.</param>
+        /// <param name="properties">Deployment properties.</param>
         public DeploymentOperationInner(string id = default(string), string operationId = default(string), DeploymentOperationProperties properties = default(DeploymentOperationProperties))
         {
             Id = id;
@@ -44,19 +36,19 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Gets or sets full deployment operation id.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets deployment operation id.
         /// </summary>
-        [JsonProperty(PropertyName = "operationId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "operationId")]
         public string OperationId { get; set; }
 
         /// <summary>
         /// Gets or sets deployment properties.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties")]
         public DeploymentOperationProperties Properties { get; set; }
 
     }

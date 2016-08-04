@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Deployment properties.
@@ -29,17 +23,19 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the DeploymentProperties class.
         /// </summary>
-        /// <param name="mode">Gets or sets the deployment mode. Possible
-        /// values include: 'Incremental', 'Complete'</param>
-        /// <param name="template">Gets or sets the template content. Use only
-        /// one of Template or TemplateLink.</param>
-        /// <param name="templateLink">Gets or sets the URI referencing the
-        /// template. Use only one of Template or TemplateLink.</param>
-        /// <param name="parameters">Deployment parameters. Use only one of
+        /// <param name="mode">The deployment mode. Possible values include:
+        /// 'Incremental', 'Complete'</param>
+        /// <param name="template">The template content. It can be a JObject
+        /// or a well formed JSON string. Use only one of Template or
+        /// TemplateLink.</param>
+        /// <param name="templateLink">The template URI. Use only one of
+        /// Template or TemplateLink.</param>
+        /// <param name="parameters">Deployment parameters. It can be a
+        /// JObject or a well formed JSON string. Use only one of Parameters
+        /// or ParametersLink.</param>
+        /// <param name="parametersLink">The parameters URI. Use only one of
         /// Parameters or ParametersLink.</param>
-        /// <param name="parametersLink">Gets or sets the URI referencing the
-        /// parameters. Use only one of Parameters or ParametersLink.</param>
-        /// <param name="debugSetting">Gets or sets the debug setting of the
+        /// <param name="debugSetting">The debug setting of the
         /// deployment.</param>
         public DeploymentProperties(DeploymentMode? mode, object template = default(object), TemplateLink templateLink = default(TemplateLink), object parameters = default(object), ParametersLink parametersLink = default(ParametersLink), DebugSetting debugSetting = default(DebugSetting))
         {
@@ -52,50 +48,50 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets the template content. Use only one of Template or
-        /// TemplateLink.
+        /// Gets or sets the template content. It can be a JObject or a well
+        /// formed JSON string. Use only one of Template or TemplateLink.
         /// </summary>
-        [JsonProperty(PropertyName = "template")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "template")]
         public object Template { get; set; }
 
         /// <summary>
-        /// Gets or sets the URI referencing the template. Use only one of
-        /// Template or TemplateLink.
+        /// Gets or sets the template URI. Use only one of Template or
+        /// TemplateLink.
         /// </summary>
-        [JsonProperty(PropertyName = "templateLink")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "templateLink")]
         public TemplateLink TemplateLink { get; set; }
 
         /// <summary>
-        /// Gets or sets deployment parameters. Use only one of Parameters or
-        /// ParametersLink.
+        /// Gets or sets deployment parameters. It can be a JObject or a well
+        /// formed JSON string. Use only one of Parameters or ParametersLink.
         /// </summary>
-        [JsonProperty(PropertyName = "parameters")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "parameters")]
         public object Parameters { get; set; }
 
         /// <summary>
-        /// Gets or sets the URI referencing the parameters. Use only one of
-        /// Parameters or ParametersLink.
+        /// Gets or sets the parameters URI. Use only one of Parameters or
+        /// ParametersLink.
         /// </summary>
-        [JsonProperty(PropertyName = "parametersLink")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "parametersLink")]
         public ParametersLink ParametersLink { get; set; }
 
         /// <summary>
         /// Gets or sets the deployment mode. Possible values include:
         /// 'Incremental', 'Complete'
         /// </summary>
-        [JsonProperty(PropertyName = "mode")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "mode")]
         public DeploymentMode? Mode { get; set; }
 
         /// <summary>
         /// Gets or sets the debug setting of the deployment.
         /// </summary>
-        [JsonProperty(PropertyName = "debugSetting")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "debugSetting")]
         public DebugSetting DebugSetting { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

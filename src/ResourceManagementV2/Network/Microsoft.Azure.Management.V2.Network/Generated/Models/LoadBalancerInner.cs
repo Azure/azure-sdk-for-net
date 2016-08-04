@@ -8,18 +8,12 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// LoadBalancer resource
     /// </summary>
-    [JsonTransformation]
+    [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class LoadBalancerInner : Resource
     {
         /// <summary>
@@ -50,7 +44,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// PublicIP resource Updating/Deleting/Failed</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated</param>
-        public LoadBalancerInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), IList<FrontendIPConfiguration> frontendIPConfigurations = default(IList<FrontendIPConfiguration>), IList<BackendAddressPool> backendAddressPools = default(IList<BackendAddressPool>), IList<LoadBalancingRule> loadBalancingRules = default(IList<LoadBalancingRule>), IList<Probe> probes = default(IList<Probe>), IList<InboundNatRule> inboundNatRules = default(IList<InboundNatRule>), IList<InboundNatPool> inboundNatPools = default(IList<InboundNatPool>), IList<OutboundNatRule> outboundNatRules = default(IList<OutboundNatRule>), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        public LoadBalancerInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), System.Collections.Generic.IList<FrontendIPConfigurationInner> frontendIPConfigurations = default(System.Collections.Generic.IList<FrontendIPConfigurationInner>), System.Collections.Generic.IList<BackendAddressPoolInner> backendAddressPools = default(System.Collections.Generic.IList<BackendAddressPoolInner>), System.Collections.Generic.IList<LoadBalancingRuleInner> loadBalancingRules = default(System.Collections.Generic.IList<LoadBalancingRuleInner>), System.Collections.Generic.IList<ProbeInner> probes = default(System.Collections.Generic.IList<ProbeInner>), System.Collections.Generic.IList<InboundNatRuleInner> inboundNatRules = default(System.Collections.Generic.IList<InboundNatRuleInner>), System.Collections.Generic.IList<InboundNatPoolInner> inboundNatPools = default(System.Collections.Generic.IList<InboundNatPoolInner>), System.Collections.Generic.IList<OutboundNatRuleInner> outboundNatRules = default(System.Collections.Generic.IList<OutboundNatRuleInner>), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
             : base(location, id, name, type, tags)
         {
             FrontendIPConfigurations = frontendIPConfigurations;
@@ -68,63 +62,63 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets frontend IP addresses of the load balancer
         /// </summary>
-        [JsonProperty(PropertyName = "properties.frontendIPConfigurations")]
-        public IList<FrontendIPConfiguration> FrontendIPConfigurations { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.frontendIPConfigurations")]
+        public System.Collections.Generic.IList<FrontendIPConfigurationInner> FrontendIPConfigurations { get; set; }
 
         /// <summary>
         /// Gets or sets Pools of backend IP addresseses
         /// </summary>
-        [JsonProperty(PropertyName = "properties.backendAddressPools")]
-        public IList<BackendAddressPool> BackendAddressPools { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.backendAddressPools")]
+        public System.Collections.Generic.IList<BackendAddressPoolInner> BackendAddressPools { get; set; }
 
         /// <summary>
         /// Gets or sets loadbalancing rules
         /// </summary>
-        [JsonProperty(PropertyName = "properties.loadBalancingRules")]
-        public IList<LoadBalancingRule> LoadBalancingRules { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.loadBalancingRules")]
+        public System.Collections.Generic.IList<LoadBalancingRuleInner> LoadBalancingRules { get; set; }
 
         /// <summary>
         /// Gets or sets list of Load balancer probes
         /// </summary>
-        [JsonProperty(PropertyName = "properties.probes")]
-        public IList<Probe> Probes { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.probes")]
+        public System.Collections.Generic.IList<ProbeInner> Probes { get; set; }
 
         /// <summary>
         /// Gets or sets list of inbound rules
         /// </summary>
-        [JsonProperty(PropertyName = "properties.inboundNatRules")]
-        public IList<InboundNatRule> InboundNatRules { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.inboundNatRules")]
+        public System.Collections.Generic.IList<InboundNatRuleInner> InboundNatRules { get; set; }
 
         /// <summary>
         /// Gets or sets inbound NAT pools
         /// </summary>
-        [JsonProperty(PropertyName = "properties.inboundNatPools")]
-        public IList<InboundNatPool> InboundNatPools { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.inboundNatPools")]
+        public System.Collections.Generic.IList<InboundNatPoolInner> InboundNatPools { get; set; }
 
         /// <summary>
         /// Gets or sets outbound NAT rules
         /// </summary>
-        [JsonProperty(PropertyName = "properties.outboundNatRules")]
-        public IList<OutboundNatRule> OutboundNatRules { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.outboundNatRules")]
+        public System.Collections.Generic.IList<OutboundNatRuleInner> OutboundNatRules { get; set; }
 
         /// <summary>
         /// Gets or sets resource guid property of the Load balancer resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.resourceGuid")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.resourceGuid")]
         public string ResourceGuid { get; set; }
 
         /// <summary>
         /// Gets provisioning state of the PublicIP resource
         /// Updating/Deleting/Failed
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource
         /// is updated
         /// </summary>
-        [JsonProperty(PropertyName = "etag")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
     }

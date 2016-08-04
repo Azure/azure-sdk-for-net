@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Deployment operation properties.
@@ -31,23 +25,17 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// Initializes a new instance of the DeploymentOperationProperties
         /// class.
         /// </summary>
-        /// <param name="provisioningState">Gets or sets the state of the
+        /// <param name="provisioningState">The state of the
         /// provisioning.</param>
-        /// <param name="timestamp">Gets or sets the date and time of the
-        /// operation.</param>
-        /// <param name="serviceRequestId">Gets or sets deployment operation
-        /// service request id.</param>
-        /// <param name="statusCode">Gets or sets operation status
-        /// code.</param>
-        /// <param name="statusMessage">Gets or sets operation status
-        /// message.</param>
-        /// <param name="targetResource">Gets or sets the target
-        /// resource.</param>
-        /// <param name="request">Gets or sets the HTTP request
-        /// message.</param>
-        /// <param name="response">Gets or sets the HTTP response
-        /// message.</param>
-        public DeploymentOperationProperties(string provisioningState = default(string), DateTime? timestamp = default(DateTime?), string serviceRequestId = default(string), string statusCode = default(string), object statusMessage = default(object), TargetResource targetResource = default(TargetResource), HttpMessage request = default(HttpMessage), HttpMessage response = default(HttpMessage))
+        /// <param name="timestamp">The date and time of the operation.</param>
+        /// <param name="serviceRequestId">Deployment operation service
+        /// request id.</param>
+        /// <param name="statusCode">Operation status code.</param>
+        /// <param name="statusMessage">Operation status message.</param>
+        /// <param name="targetResource">The target resource.</param>
+        /// <param name="request">The HTTP request message.</param>
+        /// <param name="response">The HTTP response message.</param>
+        public DeploymentOperationProperties(string provisioningState = default(string), System.DateTime? timestamp = default(System.DateTime?), string serviceRequestId = default(string), string statusCode = default(string), object statusMessage = default(object), TargetResource targetResource = default(TargetResource), HttpMessage request = default(HttpMessage), HttpMessage response = default(HttpMessage))
         {
             ProvisioningState = provisioningState;
             Timestamp = timestamp;
@@ -62,49 +50,49 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Gets or sets the state of the provisioning.
         /// </summary>
-        [JsonProperty(PropertyName = "provisioningState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets or sets the date and time of the operation.
         /// </summary>
-        [JsonProperty(PropertyName = "timestamp")]
-        public DateTime? Timestamp { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "timestamp")]
+        public System.DateTime? Timestamp { get; set; }
 
         /// <summary>
         /// Gets or sets deployment operation service request id.
         /// </summary>
-        [JsonProperty(PropertyName = "serviceRequestId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "serviceRequestId")]
         public string ServiceRequestId { get; set; }
 
         /// <summary>
         /// Gets or sets operation status code.
         /// </summary>
-        [JsonProperty(PropertyName = "statusCode")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "statusCode")]
         public string StatusCode { get; set; }
 
         /// <summary>
         /// Gets or sets operation status message.
         /// </summary>
-        [JsonProperty(PropertyName = "statusMessage")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "statusMessage")]
         public object StatusMessage { get; set; }
 
         /// <summary>
         /// Gets or sets the target resource.
         /// </summary>
-        [JsonProperty(PropertyName = "targetResource")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "targetResource")]
         public TargetResource TargetResource { get; set; }
 
         /// <summary>
         /// Gets or sets the HTTP request message.
         /// </summary>
-        [JsonProperty(PropertyName = "request")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "request")]
         public HttpMessage Request { get; set; }
 
         /// <summary>
         /// Gets or sets the HTTP response message.
         /// </summary>
-        [JsonProperty(PropertyName = "response")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "response")]
         public HttpMessage Response { get; set; }
 
     }

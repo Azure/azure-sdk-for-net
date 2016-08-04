@@ -8,18 +8,12 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Subnet in a VirtualNework resource
     /// </summary>
-    [JsonTransformation]
+    [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class SubnetInner : SubResource
     {
         /// <summary>
@@ -45,7 +39,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// the resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public SubnetInner(String id = default(String), string addressPrefix = default(string), NetworkSecurityGroupInner networkSecurityGroup = default(NetworkSecurityGroupInner), RouteTableInner routeTable = default(RouteTableInner), IList<IPConfiguration> ipConfigurations = default(IList<IPConfiguration>), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public SubnetInner(String id = default(String), string addressPrefix = default(string), NetworkSecurityGroupInner networkSecurityGroup = default(NetworkSecurityGroupInner), RouteTableInner routeTable = default(RouteTableInner), System.Collections.Generic.IList<IPConfigurationInner> ipConfigurations = default(System.Collections.Generic.IList<IPConfigurationInner>), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             AddressPrefix = addressPrefix;
@@ -60,46 +54,46 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets Address prefix for the subnet.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.addressPrefix")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.addressPrefix")]
         public string AddressPrefix { get; set; }
 
         /// <summary>
         /// Gets or sets the reference of the NetworkSecurityGroup resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.networkSecurityGroup")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.networkSecurityGroup")]
         public NetworkSecurityGroupInner NetworkSecurityGroup { get; set; }
 
         /// <summary>
         /// Gets or sets the reference of the RouteTable resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.routeTable")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.routeTable")]
         public RouteTableInner RouteTable { get; set; }
 
         /// <summary>
         /// Gets array of references to the network interface IP
         /// configurations using subnet
         /// </summary>
-        [JsonProperty(PropertyName = "properties.ipConfigurations")]
-        public IList<IPConfiguration> IpConfigurations { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.ipConfigurations")]
+        public System.Collections.Generic.IList<IPConfigurationInner> IpConfigurations { get; private set; }
 
         /// <summary>
         /// Gets provisioning state of the resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the resource that is unique within a
         /// resource group. This name can be used to access the resource
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets a unique read-only string that changes whenever the
         /// resource is updated
         /// </summary>
-        [JsonProperty(PropertyName = "etag")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
     }

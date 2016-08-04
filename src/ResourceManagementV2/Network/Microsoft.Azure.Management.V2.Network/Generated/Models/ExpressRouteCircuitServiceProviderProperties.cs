@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Contains ServiceProviderProperties in an ExpressRouteCircuit
@@ -46,19 +40,19 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets serviceProviderName.
         /// </summary>
-        [JsonProperty(PropertyName = "serviceProviderName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "serviceProviderName")]
         public string ServiceProviderName { get; set; }
 
         /// <summary>
         /// Gets or sets peering location.
         /// </summary>
-        [JsonProperty(PropertyName = "peeringLocation")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "peeringLocation")]
         public string PeeringLocation { get; set; }
 
         /// <summary>
         /// Gets or sets BandwidthInMbps.
         /// </summary>
-        [JsonProperty(PropertyName = "bandwidthInMbps")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "bandwidthInMbps")]
         public int? BandwidthInMbps { get; set; }
 
     }

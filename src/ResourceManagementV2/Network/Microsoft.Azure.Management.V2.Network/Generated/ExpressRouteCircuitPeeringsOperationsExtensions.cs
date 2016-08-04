@@ -8,14 +8,9 @@
 
 namespace Microsoft.Azure.Management.Network
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
-    using Models;
+   using Microsoft.Rest.Azure;
+   using Models;
 
     /// <summary>
     /// Extension methods for ExpressRouteCircuitPeeringsOperations.
@@ -40,7 +35,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void Delete(this IExpressRouteCircuitPeeringsOperations operations, string resourceGroupName, string circuitName, string peeringName)
             {
-                Task.Factory.StartNew(s => ((IExpressRouteCircuitPeeringsOperations)s).DeleteAsync(resourceGroupName, circuitName, peeringName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IExpressRouteCircuitPeeringsOperations)s).DeleteAsync(resourceGroupName, circuitName, peeringName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -62,7 +57,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IExpressRouteCircuitPeeringsOperations operations, string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task DeleteAsync(this IExpressRouteCircuitPeeringsOperations operations, string resourceGroupName, string circuitName, string peeringName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.DeleteWithHttpMessagesAsync(resourceGroupName, circuitName, peeringName, null, cancellationToken).ConfigureAwait(false);
             }
@@ -85,7 +80,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static void BeginDelete(this IExpressRouteCircuitPeeringsOperations operations, string resourceGroupName, string circuitName, string peeringName)
             {
-                Task.Factory.StartNew(s => ((IExpressRouteCircuitPeeringsOperations)s).BeginDeleteAsync(resourceGroupName, circuitName, peeringName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IExpressRouteCircuitPeeringsOperations)s).BeginDeleteAsync(resourceGroupName, circuitName, peeringName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -107,7 +102,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IExpressRouteCircuitPeeringsOperations operations, string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task BeginDeleteAsync(this IExpressRouteCircuitPeeringsOperations operations, string resourceGroupName, string circuitName, string peeringName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, circuitName, peeringName, null, cancellationToken).ConfigureAwait(false);
             }
@@ -130,7 +125,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static ExpressRouteCircuitPeeringInner Get(this IExpressRouteCircuitPeeringsOperations operations, string resourceGroupName, string circuitName, string peeringName)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitPeeringsOperations)s).GetAsync(resourceGroupName, circuitName, peeringName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IExpressRouteCircuitPeeringsOperations)s).GetAsync(resourceGroupName, circuitName, peeringName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -152,7 +147,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ExpressRouteCircuitPeeringInner> GetAsync(this IExpressRouteCircuitPeeringsOperations operations, string resourceGroupName, string circuitName, string peeringName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<ExpressRouteCircuitPeeringInner> GetAsync(this IExpressRouteCircuitPeeringsOperations operations, string resourceGroupName, string circuitName, string peeringName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, circuitName, peeringName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -182,7 +177,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static ExpressRouteCircuitPeeringInner CreateOrUpdate(this IExpressRouteCircuitPeeringsOperations operations, string resourceGroupName, string circuitName, string peeringName, ExpressRouteCircuitPeeringInner peeringParameters)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitPeeringsOperations)s).CreateOrUpdateAsync(resourceGroupName, circuitName, peeringName, peeringParameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IExpressRouteCircuitPeeringsOperations)s).CreateOrUpdateAsync(resourceGroupName, circuitName, peeringName, peeringParameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -208,7 +203,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ExpressRouteCircuitPeeringInner> CreateOrUpdateAsync(this IExpressRouteCircuitPeeringsOperations operations, string resourceGroupName, string circuitName, string peeringName, ExpressRouteCircuitPeeringInner peeringParameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<ExpressRouteCircuitPeeringInner> CreateOrUpdateAsync(this IExpressRouteCircuitPeeringsOperations operations, string resourceGroupName, string circuitName, string peeringName, ExpressRouteCircuitPeeringInner peeringParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, circuitName, peeringName, peeringParameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -238,7 +233,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static ExpressRouteCircuitPeeringInner BeginCreateOrUpdate(this IExpressRouteCircuitPeeringsOperations operations, string resourceGroupName, string circuitName, string peeringName, ExpressRouteCircuitPeeringInner peeringParameters)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitPeeringsOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, circuitName, peeringName, peeringParameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IExpressRouteCircuitPeeringsOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, circuitName, peeringName, peeringParameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -264,7 +259,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ExpressRouteCircuitPeeringInner> BeginCreateOrUpdateAsync(this IExpressRouteCircuitPeeringsOperations operations, string resourceGroupName, string circuitName, string peeringName, ExpressRouteCircuitPeeringInner peeringParameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<ExpressRouteCircuitPeeringInner> BeginCreateOrUpdateAsync(this IExpressRouteCircuitPeeringsOperations operations, string resourceGroupName, string circuitName, string peeringName, ExpressRouteCircuitPeeringInner peeringParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, circuitName, peeringName, peeringParameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -285,9 +280,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='circuitName'>
             /// The name of the curcuit.
             /// </param>
-            public static IPage<ExpressRouteCircuitPeeringInner> List(this IExpressRouteCircuitPeeringsOperations operations, string resourceGroupName, string circuitName)
+            public static Microsoft.Rest.Azure.IPage<ExpressRouteCircuitPeeringInner> List(this IExpressRouteCircuitPeeringsOperations operations, string resourceGroupName, string circuitName)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitPeeringsOperations)s).ListAsync(resourceGroupName, circuitName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IExpressRouteCircuitPeeringsOperations)s).ListAsync(resourceGroupName, circuitName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -306,7 +301,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ExpressRouteCircuitPeeringInner>> ListAsync(this IExpressRouteCircuitPeeringsOperations operations, string resourceGroupName, string circuitName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<ExpressRouteCircuitPeeringInner>> ListAsync(this IExpressRouteCircuitPeeringsOperations operations, string resourceGroupName, string circuitName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, circuitName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -324,9 +319,9 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ExpressRouteCircuitPeeringInner> ListNext(this IExpressRouteCircuitPeeringsOperations operations, string nextPageLink)
+            public static Microsoft.Rest.Azure.IPage<ExpressRouteCircuitPeeringInner> ListNext(this IExpressRouteCircuitPeeringsOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IExpressRouteCircuitPeeringsOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IExpressRouteCircuitPeeringsOperations)s).ListNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -342,7 +337,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ExpressRouteCircuitPeeringInner>> ListNextAsync(this IExpressRouteCircuitPeeringsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<ExpressRouteCircuitPeeringInner>> ListNextAsync(this IExpressRouteCircuitPeeringsOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

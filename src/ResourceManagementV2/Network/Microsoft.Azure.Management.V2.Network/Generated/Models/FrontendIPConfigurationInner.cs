@@ -8,27 +8,23 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Frontend IP address of the load balancer
     /// </summary>
-    [JsonTransformation]
-    public partial class FrontendIPConfiguration : SubResource
+    [Microsoft.Rest.Serialization.JsonTransformation]
+    public partial class FrontendIPConfigurationInner : SubResource
     {
         /// <summary>
-        /// Initializes a new instance of the FrontendIPConfiguration class.
+        /// Initializes a new instance of the FrontendIPConfigurationInner
+        /// class.
         /// </summary>
-        public FrontendIPConfiguration() { }
+        public FrontendIPConfigurationInner() { }
 
         /// <summary>
-        /// Initializes a new instance of the FrontendIPConfiguration class.
+        /// Initializes a new instance of the FrontendIPConfigurationInner
+        /// class.
         /// </summary>
         /// <param name="inboundNatRules">Read only. Inbound rules URIs that
         /// use this frontend IP</param>
@@ -54,7 +50,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public FrontendIPConfiguration(String id = default(String), IList<SubResource> inboundNatRules = default(IList<SubResource>), IList<SubResource> inboundNatPools = default(IList<SubResource>), IList<SubResource> outboundNatRules = default(IList<SubResource>), IList<SubResource> loadBalancingRules = default(IList<SubResource>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), SubnetInner subnet = default(SubnetInner), PublicIPAddressInner publicIPAddress = default(PublicIPAddressInner), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public FrontendIPConfigurationInner(String id = default(String), System.Collections.Generic.IList<SubResource> inboundNatRules = default(System.Collections.Generic.IList<SubResource>), System.Collections.Generic.IList<SubResource> inboundNatPools = default(System.Collections.Generic.IList<SubResource>), System.Collections.Generic.IList<SubResource> outboundNatRules = default(System.Collections.Generic.IList<SubResource>), System.Collections.Generic.IList<SubResource> loadBalancingRules = default(System.Collections.Generic.IList<SubResource>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), SubnetInner subnet = default(SubnetInner), PublicIPAddressInner publicIPAddress = default(PublicIPAddressInner), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             InboundNatRules = inboundNatRules;
@@ -73,71 +69,71 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets read only. Inbound rules URIs that use this frontend IP
         /// </summary>
-        [JsonProperty(PropertyName = "properties.inboundNatRules")]
-        public IList<SubResource> InboundNatRules { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.inboundNatRules")]
+        public System.Collections.Generic.IList<SubResource> InboundNatRules { get; private set; }
 
         /// <summary>
         /// Gets read only. Inbound pools URIs that use this frontend IP
         /// </summary>
-        [JsonProperty(PropertyName = "properties.inboundNatPools")]
-        public IList<SubResource> InboundNatPools { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.inboundNatPools")]
+        public System.Collections.Generic.IList<SubResource> InboundNatPools { get; private set; }
 
         /// <summary>
         /// Gets read only. Outbound rules URIs that use this frontend IP
         /// </summary>
-        [JsonProperty(PropertyName = "properties.outboundNatRules")]
-        public IList<SubResource> OutboundNatRules { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.outboundNatRules")]
+        public System.Collections.Generic.IList<SubResource> OutboundNatRules { get; private set; }
 
         /// <summary>
         /// Gets Load Balancing rules URIs that use this frontend IP
         /// </summary>
-        [JsonProperty(PropertyName = "properties.loadBalancingRules")]
-        public IList<SubResource> LoadBalancingRules { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.loadBalancingRules")]
+        public System.Collections.Generic.IList<SubResource> LoadBalancingRules { get; private set; }
 
         /// <summary>
         /// Gets or sets the privateIPAddress of the IP Configuration
         /// </summary>
-        [JsonProperty(PropertyName = "properties.privateIPAddress")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.privateIPAddress")]
         public string PrivateIPAddress { get; set; }
 
         /// <summary>
         /// Gets or sets PrivateIP allocation method. Possible values include:
         /// 'Static', 'Dynamic'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.privateIPAllocationMethod")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.privateIPAllocationMethod")]
         public string PrivateIPAllocationMethod { get; set; }
 
         /// <summary>
         /// Gets or sets the reference of the subnet resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.subnet")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.subnet")]
         public SubnetInner Subnet { get; set; }
 
         /// <summary>
         /// Gets or sets the reference of the PublicIP resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.publicIPAddress")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.publicIPAddress")]
         public PublicIPAddressInner PublicIPAddress { get; set; }
 
         /// <summary>
         /// Gets provisioning state of the PublicIP resource
         /// Updating/Deleting/Failed
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets name of the resource that is unique within a resource group.
         /// This name can be used to access the resource
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets a unique read-only string that changes whenever the
         /// resource is updated
         /// </summary>
-        [JsonProperty(PropertyName = "etag")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
     }

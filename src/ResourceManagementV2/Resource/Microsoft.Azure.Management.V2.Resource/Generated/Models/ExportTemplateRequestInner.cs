@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Export resource group template request parameters.
@@ -29,13 +23,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the ExportTemplateRequestInner class.
         /// </summary>
-        /// <param name="resources">Gets or sets the ids of the resources. The
-        /// only supported string currently is '*' (all resources). Future
-        /// api updates will support exporting specific resources.</param>
+        /// <param name="resources">The ids of the resources. The only
+        /// supported string currently is '*' (all resources). Future api
+        /// updates will support exporting specific resources.</param>
         /// <param name="options">The export template options. Supported
         /// values include 'IncludeParameterDefaultValue', 'IncludeComments'
         /// or 'IncludeParameterDefaultValue, IncludeComments</param>
-        public ExportTemplateRequestInner(IList<string> resources = default(IList<string>), string options = default(string))
+        public ExportTemplateRequestInner(System.Collections.Generic.IList<string> resources = default(System.Collections.Generic.IList<string>), string options = default(string))
         {
             Resources = resources;
             Options = options;
@@ -46,15 +40,15 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// currently is '*' (all resources). Future api updates will support
         /// exporting specific resources.
         /// </summary>
-        [JsonProperty(PropertyName = "resources")]
-        public IList<string> Resources { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "resources")]
+        public System.Collections.Generic.IList<string> Resources { get; set; }
 
         /// <summary>
         /// Gets or sets the export template options. Supported values include
         /// 'IncludeParameterDefaultValue', 'IncludeComments' or
         /// 'IncludeParameterDefaultValue, IncludeComments
         /// </summary>
-        [JsonProperty(PropertyName = "options")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "options")]
         public string Options { get; set; }
 
     }
