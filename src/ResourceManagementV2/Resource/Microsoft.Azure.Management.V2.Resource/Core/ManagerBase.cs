@@ -18,7 +18,7 @@
         }
 
         public IResourceManager ResourceManager {
-            get; private set;
+            get; protected set;
         }
     }
 }

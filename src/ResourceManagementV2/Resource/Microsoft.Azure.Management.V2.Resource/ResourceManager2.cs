@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.V2.Resource
 
         #region ctrs
 
-        private ResourceManager2(RestClient restClient, string subscriptionId) : base(restClient, subscriptionId)
+        private ResourceManager2(RestClient restClient, string subscriptionId) : base(null, subscriptionId)
         {
             resourceManagementClient = new ResourceManager.ResourceManagementClient(new Uri(restClient.BaseUri),
                 restClient.Credentials,
@@ -27,6 +27,7 @@ namespace Microsoft.Azure.Management.V2.Resource
                 restClient.RootHttpHandler,
                 restClient.Handlers.ToArray());
             featureClient.SubscriptionId = subscriptionId;
+            ResourceManager = this;
         }
 
         #endregion
@@ -199,7 +200,7 @@ namespace Microsoft.Azure.Management.V2.Resource
         {
             get
             {
-                if (deployments != null)
+                if (deployments == null)
                 {
                     deployments = new DeploymentsImpl(resourceManagementClient.Deployments,
                         resourceManagementClient.DeploymentOperations,
