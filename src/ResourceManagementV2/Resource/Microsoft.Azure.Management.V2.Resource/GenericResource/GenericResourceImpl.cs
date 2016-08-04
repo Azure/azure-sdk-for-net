@@ -257,7 +257,7 @@ namespace Microsoft.Azure.Management.V2.Resource
 
         IGenericResource ICreatable<IGenericResource>.Create()
         {
-            this.CreateAsync(CancellationToken.None, true);
+           var created = CreateAsync(CancellationToken.None, true).Result;
             return this;
         }
 

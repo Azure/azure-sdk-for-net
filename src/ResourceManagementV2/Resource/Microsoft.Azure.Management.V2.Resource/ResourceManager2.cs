@@ -187,7 +187,7 @@ namespace Microsoft.Azure.Management.V2.Resource
         {
             get
             {
-                if (genericResources != null)
+                if (genericResources == null)
                 {
                     genericResources = new GenericResourcesImpl(resourceManagementClient, this);
 

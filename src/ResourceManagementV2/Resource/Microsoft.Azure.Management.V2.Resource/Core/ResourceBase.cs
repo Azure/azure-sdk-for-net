@@ -45,11 +45,16 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
             }
         }
 
-        public string Name
+        public new string Name
         {
             get
             {
-                return GetStringValue("Name");
+                string name = GetStringValue("Name");
+                if (name != null)
+                {
+                    return name;
+                }
+                return base.Name;
             }
         }
 
