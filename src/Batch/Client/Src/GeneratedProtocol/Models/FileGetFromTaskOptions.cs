@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <param name="clientRequestId">The caller-generated request identity, in the form of a GUID with no decoration such as curly braces, e.g. 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.</param>
         /// <param name="returnClientRequestId">Whether the server should return the client-request-id identifier in the response.</param>
         /// <param name="ocpDate">The time the request was issued. If not specified, this header will be automatically populated with the current system clock time.</param>
-        /// <param name="ocpRange">The byte range to be retrieved. The default is to retrieve the entire file. The format is startRange-endRange.</param>
+        /// <param name="ocpRange">The byte range to be retrieved. The default is to retrieve the entire file. The format is bytes=startRange-endRange.</param>
         /// <param name="ifModifiedSince">Specify this header to perform the operation only if the resource has been modified since the specified date/time.</param>
         /// <param name="ifUnmodifiedSince">Specify this header to perform the operation only if the resource has not been modified since the specified date/time.</param>
         public FileGetFromTaskOptions(int? timeout = default(int?), string clientRequestId = default(string), bool? returnClientRequestId = default(bool?), DateTime? ocpDate = default(DateTime?), string ocpRange = default(string), DateTime? ifModifiedSince = default(DateTime?), DateTime? ifUnmodifiedSince = default(DateTime?))
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
 
         /// <summary>
         /// Gets or sets the byte range to be retrieved. The default is to
-        /// retrieve the entire file. The format is startRange-endRange.
+        /// retrieve the entire file. The format is bytes=startRange-endRange.
         /// </summary>
         [JsonProperty(PropertyName = "")]
         public string OcpRange { get; set; }
