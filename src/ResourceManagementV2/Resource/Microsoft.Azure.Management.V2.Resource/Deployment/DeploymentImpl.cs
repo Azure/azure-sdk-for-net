@@ -380,30 +380,26 @@ namespace Microsoft.Azure.Management.V2.Resource
         {
             get
             {
-                DeploymentExportResultInner inner = client.ExportTemplate(resourceGroupName, Name);
+                DeploymentExportResultInner inner = client.ExportTemplate(ResourceGroupName, Name);
                 return new DeploymentExportResultImpl(inner);
             }
         }
 
-        public IDeployment BeginCreate
+        public IDeployment BeginCreate()
         {
-            get
+            DeploymentInner inner = new DeploymentInner()
             {
-                DeploymentInner inner = new DeploymentInner()
+                Properties = new DeploymentProperties
                 {
-                    Properties = new DeploymentProperties
-                    {
-                        Mode = Mode,
-                        Template = Template,
-                        TemplateLink = TemplateLink,
-                        Parameters = Parameters,
-                        ParametersLink = ParametersLink
-                    }
-                };
-                
-                client.BeginCreateOrUpdate(resourceGroupName, Name, inner);
-                return this;
-            }
+                    Mode = Mode,
+                    Template = Template,
+                    TemplateLink = TemplateLink,
+                    Parameters = Parameters,
+                    ParametersLink = ParametersLink
+                }
+            };
+            client.BeginCreateOrUpdate(resourceGroupName, Name, inner);
+            return this;
         }
 
         #endregion
