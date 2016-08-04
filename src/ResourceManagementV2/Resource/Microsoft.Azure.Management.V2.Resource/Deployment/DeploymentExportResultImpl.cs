@@ -1,6 +1,7 @@
 ﻿using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.V2.Resource.Core;
 using Newtonsoft.Json;
+using System;
 
 namespace Microsoft.Azure.Management.V2.Resource
 {
