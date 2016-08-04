@@ -49,18 +49,11 @@ namespace Microsoft.Azure.Management.V2.Resource
             }
         }
 
-        PagedList<ILocation> ISubscription.ListLocations
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        public PagedList<Location> ListLocations()
+        public PagedList<ILocation> ListLocations()
         {
             IEnumerable<Location> firstPage = innerCollection.ListLocations(this.SubscriptionId);
-            return new PagedList<Location>(firstPage);
+            throw new NotImplementedException("GeneratedSDKIssue: Generated SDK is not using LocationInner");
+            //return new PagedList<ILocation>(firstPage);
         }
     }
 }
