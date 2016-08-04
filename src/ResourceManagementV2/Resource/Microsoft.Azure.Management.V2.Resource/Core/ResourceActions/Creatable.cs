@@ -19,8 +19,11 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
         where IFluentResourceT : class, IResourceT
         where IResourceT : class
     {
+        protected string Name { get; private set; }
+
         protected Creatable(string name, InnerResourceT innerObject) : base(name, innerObject)
         {
+            Name = name;
             IResourceCreator<IResourceT> creator =this as IResourceCreator<IResourceT>;
             CreatorTaskGroup = new CreatorTaskGroup<IResourceT>(name, creator);
         }
