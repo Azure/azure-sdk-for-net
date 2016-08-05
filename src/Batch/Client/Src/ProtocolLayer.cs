@@ -397,7 +397,7 @@
         public Task<AzureOperationHeaderResponse<Models.JobUpdateHeaders>> UpdateJob(
             string jobId,
             int? priority,
-            Models.OnAllTasksComplete onAllTasksComplete,
+            Models.OnAllTasksComplete? onAllTasksComplete,
             Models.PoolInformation poolInfo,
             Models.JobConstraints constraints,
             IList<Models.MetadataItem> metadata,
@@ -422,7 +422,7 @@
         public Task<AzureOperationHeaderResponse<Models.JobPatchHeaders>> PatchJob(
             string jobId,
             int? priority,
-            Models.OnAllTasksComplete onAllTasksComplete,
+            Models.OnAllTasksComplete? onAllTasksComplete,
             Models.PoolInformation poolInfo,
             Models.JobConstraints constraints,
             IList<Models.MetadataItem> metadata,
@@ -461,7 +461,7 @@
 
         public Task<AzureOperationHeaderResponse<Models.JobDisableHeaders>> DisableJob(string jobId, Common.DisableJobOption disableJobOption, BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
-            var parameter = UtilitiesInternal.MapEnum<Protocol.Models.DisableJobOption>(disableJobOption);
+            var parameter = UtilitiesInternal.MapEnum<Common.DisableJobOption, Protocol.Models.DisableJobOption>(disableJobOption);
             var request = new JobDisableBatchRequest(this._client, parameter, cancellationToken);
 
             request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Job.DisableWithHttpMessagesAsync(
@@ -893,7 +893,7 @@
             var parameters = new Models.PoolResizeParameter(
                 targetDedicated,
                 resizeTimeout,
-                UtilitiesInternal.MapNullableEnum<Protocol.Models.ComputeNodeDeallocationOption>(deallocationOption));
+                UtilitiesInternal.MapNullableEnum<Common.ComputeNodeDeallocationOption, Protocol.Models.ComputeNodeDeallocationOption>(deallocationOption));
 
             var request = new PoolResizeBatchRequest(this._client, parameters, cancellationToken);
 
@@ -1026,7 +1026,7 @@
             var parameters = new Models.NodeRemoveParameter(
                 computeNodeIdList,
                 resizeTimeout,
-                UtilitiesInternal.MapNullableEnum<Protocol.Models.ComputeNodeDeallocationOption>(deallocationOption));
+                UtilitiesInternal.MapNullableEnum<Common.ComputeNodeDeallocationOption, Protocol.Models.ComputeNodeDeallocationOption>(deallocationOption));
 
             var request = new PoolRemoveNodesBatchRequest(this._client, parameters, cancellationToken);
 
@@ -1150,7 +1150,7 @@
 
         public Task<AzureOperationHeaderResponse<Models.ComputeNodeRebootHeaders>> RebootComputeNode(string poolId, string computeNodeId, Common.ComputeNodeRebootOption? rebootOption, BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
-            var parameters = UtilitiesInternal.MapNullableEnum<Protocol.Models.ComputeNodeRebootOption>(rebootOption);
+            var parameters = UtilitiesInternal.MapNullableEnum<Common.ComputeNodeRebootOption, Protocol.Models.ComputeNodeRebootOption>(rebootOption);
             var request = new ComputeNodeRebootBatchRequest(this._client, parameters, cancellationToken);
 
             request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.ComputeNode.RebootWithHttpMessagesAsync(
@@ -1168,7 +1168,7 @@
 
         public Task<AzureOperationHeaderResponse<Models.ComputeNodeReimageHeaders>> ReimageComputeNode(string poolId, string computeNodeId, Common.ComputeNodeReimageOption? reimageOption, BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
-            var parameters = UtilitiesInternal.MapNullableEnum<Protocol.Models.ComputeNodeReimageOption>(reimageOption);
+            var parameters = UtilitiesInternal.MapNullableEnum<Common.ComputeNodeReimageOption, Protocol.Models.ComputeNodeReimageOption>(reimageOption);
             var request = new ComputeNodeReimageBatchRequest(this._client, parameters, cancellationToken);
 
             request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.ComputeNode.ReimageWithHttpMessagesAsync(
@@ -1253,7 +1253,7 @@
 
         public Task<AzureOperationHeaderResponse<Models.ComputeNodeDisableSchedulingHeaders>> DisableComputeNodeScheduling(string poolId, string computeNodeId, Common.DisableComputeNodeSchedulingOption? disableComputeNodeSchedulingOption, BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
-            var parameters = UtilitiesInternal.MapNullableEnum<Models.DisableComputeNodeSchedulingOption>(disableComputeNodeSchedulingOption);
+            var parameters = UtilitiesInternal.MapNullableEnum<Common.DisableComputeNodeSchedulingOption, Models.DisableComputeNodeSchedulingOption>(disableComputeNodeSchedulingOption);
 
             var request = new ComputeNodeDisableSchedulingBatchRequest(this._client, parameters, cancellationToken);
 

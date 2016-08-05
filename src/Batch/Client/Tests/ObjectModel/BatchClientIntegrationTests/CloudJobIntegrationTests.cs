@@ -606,52 +606,16 @@
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
         public async Task JobPatch()
         {
-            Func<Task> test = async () =>
-            {
-                using (BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false))
-                {
-                    string jobId = "TestPatchJob-" + TestUtilities.GetMyName();
-                    const string newPoolId = "Bar";
-                    const string metadataKey = "Foo";
-                    const string metadataValue = "Bar";
-                    TimeSpan newMaxWallClockTime = TimeSpan.FromDays(1);
-                    try
-                    {
-                        CloudJob job = batchCli.JobOperations.CreateJob(jobId, new PoolInformation()
-                            {
-                                PoolId = "Temp"
-                            });
+            string jobId = "TestPatchJob-" + TestUtilities.GetMyName();
+            await SynchronizationContextHelper.RunTestAsync(() => MutateJobAsync(jobId, jobAction: job => job.CommitAsync()), TestTimeout);
+        }
 
-                        await job.CommitAsync().ConfigureAwait(false);
-                        await job.RefreshAsync().ConfigureAwait(false);
-
-                        //Disable the job so that we can update the pool info
-                        await job.DisableAsync(DisableJobOption.Requeue).ConfigureAwait(false);
-
-                        job.Constraints = new JobConstraints(maxWallClockTime: newMaxWallClockTime);
-                        job.Metadata = new List<MetadataItem>()
-                            {
-                                new MetadataItem(metadataKey, metadataValue)
-                            };
-                        job.PoolInformation.PoolId = newPoolId;
-
-                        await job.CommitChangesAsync().ConfigureAwait(false);
-
-                        await job.RefreshAsync().ConfigureAwait(false);
-
-                        Assert.Equal(newMaxWallClockTime, job.Constraints.MaxWallClockTime);
-                        Assert.Equal(newPoolId, job.PoolInformation.PoolId);
-                        Assert.Equal(metadataKey, job.Metadata.Single().Name);
-                        Assert.Equal(metadataValue, job.Metadata.Single().Value);
-                    }
-                    finally
-                    {
-                        await TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).ConfigureAwait(false);
-                    }
-                }
-            };
-
-            await SynchronizationContextHelper.RunTestAsync(test, TestTimeout);
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
+        public async Task JobUpdate()
+        {
+            string jobId = "TestUpdateJob-" + TestUtilities.GetMyName();
+            await SynchronizationContextHelper.RunTestAsync(() => MutateJobAsync(jobId, jobAction: job => job.CommitChangesAsync()), TestTimeout);
         }
 
         [Fact]
@@ -902,6 +866,52 @@
             };
 
             SynchronizationContextHelper.RunTest(test, LongTestTimeout);
+        }
+
+        private static async Task MutateJobAsync(string jobId, Func<CloudJob, Task> jobAction)
+        {
+            using (BatchClient batchCli = await TestUtilities.OpenBatchClientFromEnvironmentAsync().ConfigureAwait(false))
+            {
+                const string newPoolId = "Bar";
+                const string metadataKey = "Foo";
+                const string metadataValue = "Bar";
+                TimeSpan newMaxWallClockTime = TimeSpan.FromDays(1);
+                try
+                {
+                    CloudJob job = batchCli.JobOperations.CreateJob(
+                        jobId,
+                        new PoolInformation()
+                        {
+                            PoolId = "Temp"
+                        });
+
+                    await job.CommitAsync().ConfigureAwait(false);
+                    await job.RefreshAsync().ConfigureAwait(false);
+
+                    //Disable the job so that we can update the pool info
+                    await job.DisableAsync(DisableJobOption.Requeue).ConfigureAwait(false);
+
+                    job.Constraints = new JobConstraints(maxWallClockTime: newMaxWallClockTime);
+                    job.Metadata = new List<MetadataItem>()
+                            {
+                                new MetadataItem(metadataKey, metadataValue)
+                            };
+                    job.PoolInformation.PoolId = newPoolId;
+
+                    await jobAction(job).ConfigureAwait(false);
+
+                    await job.RefreshAsync().ConfigureAwait(false);
+
+                    Assert.Equal(newMaxWallClockTime, job.Constraints.MaxWallClockTime);
+                    Assert.Equal(newPoolId, job.PoolInformation.PoolId);
+                    Assert.Equal(metadataKey, job.Metadata.Single().Name);
+                    Assert.Equal(metadataValue, job.Metadata.Single().Value);
+                }
+                finally
+                {
+                    await TestUtilities.DeleteJobIfExistsAsync(batchCli, jobId).ConfigureAwait(false);
+                }
+            }
         }
     }
 }

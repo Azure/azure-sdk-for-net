@@ -26,27 +26,26 @@
 
     internal static class UtilitiesInternal
     {
-        internal static T MapEnum<T>(Enum otherEnum) where T : struct 
+        internal static TTo MapEnum<TFrom, TTo>(TFrom otherEnum)
+            where TTo : struct
+            where TFrom : struct
         {
-            if (otherEnum == null)
-            {
-                throw new ArgumentNullException("otherEnum");
-            }
-
-            T result = (T)Enum.Parse(typeof (T), otherEnum.ToString(), ignoreCase: true);
+            TTo result = (TTo)Enum.Parse(typeof(TTo), otherEnum.ToString(), ignoreCase: true);
             return result;
         }
 
-        internal static T? MapNullableEnum<T>(Enum otherEnum) where T : struct
+        internal static TTo? MapNullableEnum<TFrom, TTo>(TFrom? otherEnum)
+            where TTo : struct
+            where TFrom : struct
         {
             if (otherEnum == null)
             {
                 return null;
             }
 
-            return UtilitiesInternal.MapEnum<T>(otherEnum);
+            return UtilitiesInternal.MapEnum<TFrom, TTo>(otherEnum.Value);
         }
-        
+
         /// <summary>
         /// Convert an enum of type CertificateVisibility to a List of Protocol.Models.CertificateVisibility.
         /// </summary>
@@ -70,7 +69,7 @@
                 {
                     if (value.Value.HasFlag(enumValue))
                     {
-                        Protocol.Models.CertificateVisibility protoEnumValue = UtilitiesInternal.MapEnum<Protocol.Models.CertificateVisibility>(enumValue);
+                        Protocol.Models.CertificateVisibility protoEnumValue = UtilitiesInternal.MapEnum<Common.CertificateVisibility, Protocol.Models.CertificateVisibility>(enumValue);
                         result.Add(protoEnumValue);
                     }
                 }
@@ -99,14 +98,14 @@
 
             foreach (Protocol.Models.CertificateVisibility? visibility in value)
             {
-                Common.CertificateVisibility? convertedEnum = UtilitiesInternal.MapNullableEnum<Common.CertificateVisibility>(visibility);
-                
+                Common.CertificateVisibility? convertedEnum = UtilitiesInternal.MapNullableEnum<Protocol.Models.CertificateVisibility, Common.CertificateVisibility>(visibility);
+
                 if (convertedEnum.HasValue)
                 {
                     flags |= convertedEnum.Value;
                 }
             }
-        
+
             return flags;
         }
         

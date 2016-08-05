@@ -14,6 +14,7 @@
 
 ﻿namespace Azure.Batch.Unit.Tests.TestUtilities
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -93,7 +94,22 @@
                 Protocol.Models.TaskListHeaders>(tasksToReturn);
         }
 
-        public static IEnumerable<Protocol.RequestInterceptor> CreateAddRequestInterceptor<TBody, TOptions, TResponse>()
+        public static IEnumerable<Protocol.RequestInterceptor> CreateAddTaskCollectionInterceptor(IEnumerable<Protocol.Models.TaskAddResult> resultsToReturn)
+        {
+            return CreateAddRequestInterceptor<
+                IList<Protocol.Models.TaskAddParameter>,
+                Protocol.Models.TaskAddCollectionOptions,
+                AzureOperationResponse<Protocol.Models.TaskAddCollectionResult, Protocol.Models.TaskAddCollectionHeaders>>(
+                    responseFactory: () => new AzureOperationResponse<Protocol.Models.TaskAddCollectionResult, Protocol.Models.TaskAddCollectionHeaders>()
+                        {
+                            Body = new Protocol.Models.TaskAddCollectionResult()
+                                {
+                                    Value = resultsToReturn.ToList()
+                                }
+                        });
+        }
+
+        public static IEnumerable<Protocol.RequestInterceptor> CreateAddRequestInterceptor<TBody, TOptions, TResponse>(Func<TResponse> responseFactory = null)
             where TOptions : Protocol.Models.IOptions, new()
             where TResponse : IAzureOperationResponse, new()
         {
@@ -103,7 +119,7 @@
 
                     requestType.ServiceRequestFunc = ct =>
                         {
-                            return Task.FromResult(new TResponse());
+                            return Task.FromResult(responseFactory == null ? new TResponse() : responseFactory());
                         };
                 });
         }

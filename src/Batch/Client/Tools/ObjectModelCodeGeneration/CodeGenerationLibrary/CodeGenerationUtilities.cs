@@ -197,20 +197,22 @@
             if (isLhsNullable && isRhsNullable)
             {
                 string lhsNonNullableType = RemoveNullableQuestionmark(lhsEnum.Type);
-                return "UtilitiesInternal.MapNullableEnum<" + lhsNonNullableType + ">(" + rhsGetter + ")";
+                string rhsNonNullableType = RemoveNullableQuestionmark(rhsEnum.Type);
+
+                return string.Format("UtilitiesInternal.MapNullableEnum<{0}, {1}>({2})", rhsNonNullableType, lhsNonNullableType, rhsGetter);
             }
             else if (!isLhsNullable && isRhsNullable)
             {
-                return "UtilitiesInternal.MapNullableEnumToNonNullableEnum<" + lhsEnum.Type + ">(" + rhsGetter + ")";
+                throw new InvalidOperationException("Nullable enum to non-nullable enum mapping not supported");
             }
             else if (isLhsNullable && !isRhsNullable)
             {
                 string lhsNonNullableType = RemoveNullableQuestionmark(lhsEnum.Type);
-                return "UtilitiesInternal.MapEnum<" + lhsNonNullableType + ">(" + rhsGetter + ")";
+                return string.Format("UtilitiesInternal.MapEnum<{0}, {1}>({2})", rhsEnum.Type, lhsNonNullableType, rhsGetter);
             }
             else
             {
-                return "UtilitiesInternal.MapEnum<" + lhsEnum.Type + ">(" + rhsGetter + ")";
+                return string.Format("UtilitiesInternal.MapEnum<{0}, {1}>({2})", rhsEnum.Type, lhsEnum.Type, rhsGetter);
             }
         }
 

@@ -594,7 +594,7 @@
             //The original data should be on the protocol specification
             Assert.Equal(idPrefix, protoAutoPoolSpecification.AutoPoolIdPrefix);
             Assert.Equal(keepAlive, protoAutoPoolSpecification.KeepAlive);
-            Assert.Equal(poolLifetimeOption, UtilitiesInternal.MapEnum<PoolLifetimeOption>(protoAutoPoolSpecification.PoolLifetimeOption));
+            Assert.Equal(poolLifetimeOption, UtilitiesInternal.MapEnum<Protocol.Models.PoolLifetimeOption, PoolLifetimeOption>(protoAutoPoolSpecification.PoolLifetimeOption));
         }
 
         [Fact]
@@ -623,7 +623,7 @@
             //Assert that the wrapped properties are equal as we expect
             Assert.Equal(protoAutoPoolSpecification.AutoPoolIdPrefix, autoPoolSpecification.AutoPoolIdPrefix);
             Assert.Equal(protoAutoPoolSpecification.KeepAlive, autoPoolSpecification.KeepAlive);
-            Assert.Equal(UtilitiesInternal.MapEnum<PoolLifetimeOption>(protoAutoPoolSpecification.PoolLifetimeOption), autoPoolSpecification.PoolLifetimeOption);
+            Assert.Equal(UtilitiesInternal.MapEnum<Protocol.Models.PoolLifetimeOption, PoolLifetimeOption>(protoAutoPoolSpecification.PoolLifetimeOption), autoPoolSpecification.PoolLifetimeOption);
 
             Assert.NotNull(autoPoolSpecification.PoolSpecification);
             Assert.NotNull(protoAutoPoolSpecification.Pool.CloudServiceConfiguration);

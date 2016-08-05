@@ -71,7 +71,7 @@
                 asyncTask = this.parentBatchClient.ProtocolLayer.UpdateJob(
                     this.Id,
                     this.Priority,
-                    UtilitiesInternal.MapEnum<Models.OnAllTasksComplete>(this.OnAllTasksComplete),
+                    UtilitiesInternal.MapNullableEnum<Common.OnAllTasksComplete, Models.OnAllTasksComplete>(this.OnAllTasksComplete),
                     modelPoolInformation,
                     modelJobConstraints,
                     modelMetadata,
@@ -138,7 +138,7 @@
             Task asyncTask = this.parentBatchClient.ProtocolLayer.PatchJob(
                 this.Id,
                 priority,
-                UtilitiesInternal.MapEnum<Models.OnAllTasksComplete>(this.OnAllTasksComplete),
+                UtilitiesInternal.MapNullableEnum<Common.OnAllTasksComplete, Models.OnAllTasksComplete>(this.OnAllTasksComplete),
                 modelPoolInformation,
                 modelJobConstraints,
                 modelMetadata,

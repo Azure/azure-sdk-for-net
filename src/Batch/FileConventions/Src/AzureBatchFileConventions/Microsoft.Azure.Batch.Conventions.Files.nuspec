@@ -17,12 +17,12 @@ by task and job id and the type of output.
     </description>
     <summary>A .NET implementation of file storage conventions for the Microsoft Azure Batch service.</summary>
     <releaseNotes>
-This version of the file conventions library works with version 4.0.1 of the Azure Batch SDK for .NET.
+This version of the file conventions library works with version 5.0.0 of the Azure Batch SDK for .NET.
     </releaseNotes>
     <tags>Microsoft, Azure, Batch, windowsazureofficial</tags>
     <dependencies>
       <group targetFramework=".NETFramework4.5">
-        <dependency id="Azure.Batch" version="4.0.1" />
+        <dependency id="Azure.Batch" version="5.0.0" />
         <dependency id="WindowsAzure.Storage" version="6.2.0" />
       </group>
     </dependencies>
