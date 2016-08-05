@@ -3,9 +3,7 @@ using Microsoft.Azure.Management.V2.Resource;
 using Microsoft.Azure.Management.V2.Resource.Core;
 using Microsoft.Rest;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.V2.Storage
 {
@@ -13,10 +11,6 @@ namespace Microsoft.Azure.Management.V2.Storage
     {
         #region SDK clients
         private StorageManagementClient storageManagementClient;
-        #endregion
-
-        #region Fluent private collections
-        private IStorageAccounts storageAccounts;
         #endregion
 
         #region ctrs
@@ -34,6 +28,12 @@ namespace Microsoft.Azure.Management.V2.Storage
 
         #region StorageManager builder
 
+        /// <summary>
+        /// Creates an instance of StorageManager that exposes storage resource management API entry points.
+        /// </summary>
+        /// <param name="serviceClientCredentials">the credentials to use</param>
+        /// <param name="subscriptionId">the subscription UUID</param>
+        /// <returns>the StorageManager</returns>
         public static IStorageManager Authenticate(ServiceClientCredentials serviceClientCredentials, string subscriptionId)
         {
             return new StorageManager(RestClient.Configure()
@@ -42,11 +42,21 @@ namespace Microsoft.Azure.Management.V2.Storage
                     .build(), subscriptionId);
         }
 
+        /// <summary>
+        /// Creates an instance of StorageManager that exposes storage resource management API entry points.
+        /// </summary>
+        /// <param name="restClient">the RestClient to be used for API calls.</param>
+        /// <param name="subscriptionId">the subscription UUID</param>
+        /// <returns>the StorageManager</returns>
         public static IStorageManager Authenticate(RestClient restClient, string subscriptionId)
         {
             return new StorageManager(restClient, subscriptionId);
         }
 
+        /// <summary>
+        /// Get a Configurable instance that can be used to create StorageManager with optional configuration.
+        /// </summary>
+        /// <returns>the instance allowing configurations</returns>
         public static IConfigurable Configure()
         {
             return new Configurable();
@@ -57,6 +67,9 @@ namespace Microsoft.Azure.Management.V2.Storage
 
         #region IConfigurable and it's implementation
 
+        /// <summary>
+        /// The inteface allowing configurations to be set.
+        /// </summary>
         public interface IConfigurable : IAzureConfigurable<IConfigurable>
         {
             IStorageManager Authenticate(ServiceClientCredentials serviceClientCredentials, string subscriptionId);
@@ -66,6 +79,12 @@ namespace Microsoft.Azure.Management.V2.Storage
             AzureConfigurable<IConfigurable>,
             IConfigurable
         {
+            /// <summary>
+            /// Creates an instance of StorageManager that exposes storage management API entry points.
+            /// </summary>
+            /// <param name="credentials">credentials the credentials to use</param>
+            /// <param name="subscriptionId">The subscription UUID</param>
+            /// <return>the interface exposing storage management API entry points that work in a subscription</returns>
             public IStorageManager Authenticate(ServiceClientCredentials credentials, string subscriptionId)
             {
                 return new StorageManager(BuildRestClient(credentials), subscriptionId);
@@ -75,6 +94,8 @@ namespace Microsoft.Azure.Management.V2.Storage
         #endregion
 
         #region IStorageManager implementation 
+
+        private IStorageAccounts storageAccounts;
 
         public IStorageAccounts StorageAccounts
         {
@@ -91,8 +112,14 @@ namespace Microsoft.Azure.Management.V2.Storage
         #endregion
     }
 
+    /// <summary>
+    /// Entry point to Azure storage resource management.
+    /// </summary>
     public interface IStorageManager : IManagerBase
     {
+        /// <summary>
+        /// Gets the storage resource management API entry point.
+        /// </summary>
         IStorageAccounts StorageAccounts { get; }
     }
 }
