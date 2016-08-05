@@ -96,6 +96,7 @@ namespace Microsoft.Azure.Management.V2.Storage
         #region IStorageManager implementation 
 
         private IStorageAccounts storageAccounts;
+        private IUsages usages;
 
         public IStorageAccounts StorageAccounts
         {
@@ -106,6 +107,17 @@ namespace Microsoft.Azure.Management.V2.Storage
                     storageAccounts = new StorageAccountsImpl(storageManagementClient.StorageAccounts, this);
                 }
                 return storageAccounts;
+            }
+        }
+
+        public IUsages Usages {
+            get
+            {
+                if (usages == null)
+                {
+                    usages = new UsagesImpl(storageManagementClient.Usage);
+                }
+                return usages;
             }
         }
 
@@ -121,5 +133,10 @@ namespace Microsoft.Azure.Management.V2.Storage
         /// Gets the storage resource management API entry point.
         /// </summary>
         IStorageAccounts StorageAccounts { get; }
+
+        /// <summary>
+        /// Gets the storage resource usage management API entry point.
+        /// </summary>
+        IUsages Usages { get; }
     }
 }
