@@ -8,7 +8,6 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Microsoft.Azure.Batch</RootNamespace>
     <AssemblyName>Microsoft.Azure.Batch</AssemblyName>
-    <AssemblyVersion>4.0.1.0</AssemblyVersion>
     <DocumentationFile>$(ProjectDir)$(OutputPath)$(AssemblyName).xml</DocumentationFile>
     <AutoRestProjects>true</AutoRestProjects>
   </PropertyGroup>

@@ -71,7 +71,7 @@
         /// </para>
         /// <para>
         /// This method runs asynchronously.
-        /// <para>
+        /// </para>
         /// </remarks>
         /// <param name="tasksToMonitor">The collection of tasks to monitor.</param>
         /// <param name="desiredState">The target state of the tasks. The method will exit when all tasks have reached this state at least once.</param>
@@ -124,7 +124,7 @@
         /// </para>
         /// <para>
         /// This method runs asynchronously.
-        /// <para>
+        /// </para>
         /// </remarks>
         /// <param name="tasksToMonitor">The collection of tasks to monitor.</param>
         /// <param name="desiredState">The target state of the tasks. The method will exit when all tasks have reached this state at least once.</param>
@@ -161,7 +161,7 @@
         /// <para>
         /// This is a blocking operation. For a non-blocking equivalent, see
         /// <see cref="WhenAll(System.Collections.Generic.IEnumerable{Microsoft.Azure.Batch.CloudTask},Microsoft.Azure.Batch.Common.TaskState,System.TimeSpan,Microsoft.Azure.Batch.ODATAMonitorControl,System.Collections.Generic.IEnumerable{Microsoft.Azure.Batch.BatchClientBehavior})"/>.
-        /// <para>
+        /// </para>
         /// </remarks>
         /// <param name="tasksToMonitor">The collection of tasks to monitor.</param>
         /// <param name="desiredState">The target state of the tasks. The method will exit when all tasks have reached this state at least once.</param>
