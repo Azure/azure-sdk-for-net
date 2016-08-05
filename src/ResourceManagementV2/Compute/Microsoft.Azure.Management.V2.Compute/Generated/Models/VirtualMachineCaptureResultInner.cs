@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// Resource Id.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class VirtualMachineCaptureResultInner : SubResource
+    public partial class VirtualMachineCaptureResultInner : Microsoft.Rest.Azure.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the VirtualMachineCaptureResultInner
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// class.
         /// </summary>
         /// <param name="output">Operation output data (raw JSON)</param>
-        public VirtualMachineCaptureResultInner(String id = default(String), object output = default(object))
+        public VirtualMachineCaptureResultInner(string id = default(string), object output = default(object))
             : base(id)
         {
             Output = output;

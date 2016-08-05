@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// Backend Address Pool of application gateway
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class ApplicationGatewayBackendAddressPoolInner : SubResource
+    public partial class ApplicationGatewayBackendAddressPoolInner : Microsoft.Rest.Azure.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// group. This name can be used to access the resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public ApplicationGatewayBackendAddressPoolInner(String id = default(String), System.Collections.Generic.IList<NetworkInterfaceIPConfigurationInner> backendIPConfigurations = default(System.Collections.Generic.IList<NetworkInterfaceIPConfigurationInner>), System.Collections.Generic.IList<ApplicationGatewayBackendAddress> backendAddresses = default(System.Collections.Generic.IList<ApplicationGatewayBackendAddress>), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public ApplicationGatewayBackendAddressPoolInner(string id = default(string), System.Collections.Generic.IList<NetworkInterfaceIPConfigurationInner> backendIPConfigurations = default(System.Collections.Generic.IList<NetworkInterfaceIPConfigurationInner>), System.Collections.Generic.IList<ApplicationGatewayBackendAddress> backendAddresses = default(System.Collections.Generic.IList<ApplicationGatewayBackendAddress>), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             BackendIPConfigurations = backendIPConfigurations;

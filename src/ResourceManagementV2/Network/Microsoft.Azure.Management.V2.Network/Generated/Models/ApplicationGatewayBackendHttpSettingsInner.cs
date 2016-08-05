@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// Backend address pool settings of application gateway
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class ApplicationGatewayBackendHttpSettingsInner : SubResource
+    public partial class ApplicationGatewayBackendHttpSettingsInner : Microsoft.Rest.Azure.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public ApplicationGatewayBackendHttpSettingsInner(String id = default(String), int? port = default(int?), string protocol = default(string), string cookieBasedAffinity = default(string), int? requestTimeout = default(int?), SubResource probe = default(SubResource), System.Collections.Generic.IList<SubResource> authenticationCertificates = default(System.Collections.Generic.IList<SubResource>), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public ApplicationGatewayBackendHttpSettingsInner(string id = default(string), int? port = default(int?), string protocol = default(string), string cookieBasedAffinity = default(string), int? requestTimeout = default(int?), Microsoft.Rest.Azure.SubResource probe = default(Microsoft.Rest.Azure.SubResource), System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource> authenticationCertificates = default(System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource>), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             Port = port;
@@ -85,14 +85,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets probe resource of application gateway
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.probe")]
-        public SubResource Probe { get; set; }
+        public Microsoft.Rest.Azure.SubResource Probe { get; set; }
 
         /// <summary>
         /// Gets or sets array of references to Application Gateway
         /// Authentication Certificates
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.authenticationCertificates")]
-        public System.Collections.Generic.IList<SubResource> AuthenticationCertificates { get; set; }
+        public System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource> AuthenticationCertificates { get; set; }
 
         /// <summary>
         /// Gets or sets provisioning state of the backend http settings

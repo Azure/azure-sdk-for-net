@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// A common class for general resource information
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class VirtualNetworkGatewayConnectionInner : Resource
+    public partial class VirtualNetworkGatewayConnectionInner : Microsoft.Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Updating/Deleting/Failed</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated</param>
-        public VirtualNetworkGatewayConnectionInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), string authorizationKey = default(string), VirtualNetworkGatewayInner virtualNetworkGateway1 = default(VirtualNetworkGatewayInner), VirtualNetworkGatewayInner virtualNetworkGateway2 = default(VirtualNetworkGatewayInner), LocalNetworkGatewayInner localNetworkGateway2 = default(LocalNetworkGatewayInner), string connectionType = default(string), int? routingWeight = default(int?), string sharedKey = default(string), string connectionStatus = default(string), long? egressBytesTransferred = default(long?), long? ingressBytesTransferred = default(long?), SubResource peer = default(SubResource), bool? enableBgp = default(bool?), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        public VirtualNetworkGatewayConnectionInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string authorizationKey = default(string), VirtualNetworkGatewayInner virtualNetworkGateway1 = default(VirtualNetworkGatewayInner), VirtualNetworkGatewayInner virtualNetworkGateway2 = default(VirtualNetworkGatewayInner), LocalNetworkGatewayInner localNetworkGateway2 = default(LocalNetworkGatewayInner), string connectionType = default(string), int? routingWeight = default(int?), string sharedKey = default(string), string connectionStatus = default(string), long? egressBytesTransferred = default(long?), long? ingressBytesTransferred = default(long?), Microsoft.Rest.Azure.SubResource peer = default(Microsoft.Rest.Azure.SubResource), bool? enableBgp = default(bool?), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
             : base(location, id, name, type, tags)
         {
             AuthorizationKey = authorizationKey;
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets the reference to peerings resource.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.peer")]
-        public SubResource Peer { get; set; }
+        public Microsoft.Rest.Azure.SubResource Peer { get; set; }
 
         /// <summary>
         /// Gets or sets enableBgp Flag

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// PublicIPAddress resource
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class PublicIPAddressInner : Resource
+    public partial class PublicIPAddressInner : Microsoft.Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the PublicIPAddressInner class.
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// PublicIP resource Updating/Deleting/Failed</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated</param>
-        public PublicIPAddressInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), string publicIPAllocationMethod = default(string), string publicIPAddressVersion = default(string), IPConfigurationInner ipConfiguration = default(IPConfigurationInner), PublicIPAddressDnsSettings dnsSettings = default(PublicIPAddressDnsSettings), string ipAddress = default(string), int? idleTimeoutInMinutes = default(int?), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        public PublicIPAddressInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string publicIPAllocationMethod = default(string), string publicIPAddressVersion = default(string), IPConfigurationInner ipConfiguration = default(IPConfigurationInner), PublicIPAddressDnsSettings dnsSettings = default(PublicIPAddressDnsSettings), string ipAddress = default(string), int? idleTimeoutInMinutes = default(int?), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
             : base(location, id, name, type, tags)
         {
             PublicIPAllocationMethod = publicIPAllocationMethod;

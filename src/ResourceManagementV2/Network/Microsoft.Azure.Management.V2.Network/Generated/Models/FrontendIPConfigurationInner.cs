@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// Frontend IP address of the load balancer
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class FrontendIPConfigurationInner : SubResource
+    public partial class FrontendIPConfigurationInner : Microsoft.Rest.Azure.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the FrontendIPConfigurationInner
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public FrontendIPConfigurationInner(String id = default(String), System.Collections.Generic.IList<SubResource> inboundNatRules = default(System.Collections.Generic.IList<SubResource>), System.Collections.Generic.IList<SubResource> inboundNatPools = default(System.Collections.Generic.IList<SubResource>), System.Collections.Generic.IList<SubResource> outboundNatRules = default(System.Collections.Generic.IList<SubResource>), System.Collections.Generic.IList<SubResource> loadBalancingRules = default(System.Collections.Generic.IList<SubResource>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), SubnetInner subnet = default(SubnetInner), PublicIPAddressInner publicIPAddress = default(PublicIPAddressInner), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public FrontendIPConfigurationInner(string id = default(string), System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource> inboundNatRules = default(System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource>), System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource> inboundNatPools = default(System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource>), System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource> outboundNatRules = default(System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource>), System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource> loadBalancingRules = default(System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), SubnetInner subnet = default(SubnetInner), PublicIPAddressInner publicIPAddress = default(PublicIPAddressInner), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             InboundNatRules = inboundNatRules;
@@ -70,25 +70,25 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets read only. Inbound rules URIs that use this frontend IP
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.inboundNatRules")]
-        public System.Collections.Generic.IList<SubResource> InboundNatRules { get; private set; }
+        public System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource> InboundNatRules { get; private set; }
 
         /// <summary>
         /// Gets read only. Inbound pools URIs that use this frontend IP
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.inboundNatPools")]
-        public System.Collections.Generic.IList<SubResource> InboundNatPools { get; private set; }
+        public System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource> InboundNatPools { get; private set; }
 
         /// <summary>
         /// Gets read only. Outbound rules URIs that use this frontend IP
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.outboundNatRules")]
-        public System.Collections.Generic.IList<SubResource> OutboundNatRules { get; private set; }
+        public System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource> OutboundNatRules { get; private set; }
 
         /// <summary>
         /// Gets Load Balancing rules URIs that use this frontend IP
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.loadBalancingRules")]
-        public System.Collections.Generic.IList<SubResource> LoadBalancingRules { get; private set; }
+        public System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource> LoadBalancingRules { get; private set; }
 
         /// <summary>
         /// Gets or sets the privateIPAddress of the IP Configuration

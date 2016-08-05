@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// Subnet in a VirtualNework resource
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class SubnetInner : SubResource
+    public partial class SubnetInner : Microsoft.Rest.Azure.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the SubnetInner class.
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// the resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public SubnetInner(String id = default(String), string addressPrefix = default(string), NetworkSecurityGroupInner networkSecurityGroup = default(NetworkSecurityGroupInner), RouteTableInner routeTable = default(RouteTableInner), System.Collections.Generic.IList<IPConfigurationInner> ipConfigurations = default(System.Collections.Generic.IList<IPConfigurationInner>), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public SubnetInner(string id = default(string), string addressPrefix = default(string), NetworkSecurityGroupInner networkSecurityGroup = default(NetworkSecurityGroupInner), RouteTableInner routeTable = default(RouteTableInner), System.Collections.Generic.IList<IPConfigurationInner> ipConfigurations = default(System.Collections.Generic.IList<IPConfigurationInner>), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             AddressPrefix = addressPrefix;

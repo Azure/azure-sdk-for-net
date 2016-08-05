@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// IPConfiguration in a NetworkInterface
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class NetworkInterfaceIPConfigurationInner : SubResource
+    public partial class NetworkInterfaceIPConfigurationInner : Microsoft.Rest.Azure.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public NetworkInterfaceIPConfigurationInner(String id = default(String), System.Collections.Generic.IList<ApplicationGatewayBackendAddressPoolInner> applicationGatewayBackendAddressPools = default(System.Collections.Generic.IList<ApplicationGatewayBackendAddressPoolInner>), System.Collections.Generic.IList<BackendAddressPoolInner> loadBalancerBackendAddressPools = default(System.Collections.Generic.IList<BackendAddressPoolInner>), System.Collections.Generic.IList<InboundNatRuleInner> loadBalancerInboundNatRules = default(System.Collections.Generic.IList<InboundNatRuleInner>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), string privateIPAddressVersion = default(string), SubnetInner subnet = default(SubnetInner), bool? primary = default(bool?), PublicIPAddressInner publicIPAddress = default(PublicIPAddressInner), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public NetworkInterfaceIPConfigurationInner(string id = default(string), System.Collections.Generic.IList<ApplicationGatewayBackendAddressPoolInner> applicationGatewayBackendAddressPools = default(System.Collections.Generic.IList<ApplicationGatewayBackendAddressPoolInner>), System.Collections.Generic.IList<BackendAddressPoolInner> loadBalancerBackendAddressPools = default(System.Collections.Generic.IList<BackendAddressPoolInner>), System.Collections.Generic.IList<InboundNatRuleInner> loadBalancerInboundNatRules = default(System.Collections.Generic.IList<InboundNatRuleInner>), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), string privateIPAddressVersion = default(string), SubnetInner subnet = default(SubnetInner), bool? primary = default(bool?), PublicIPAddressInner publicIPAddress = default(PublicIPAddressInner), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             ApplicationGatewayBackendAddressPools = applicationGatewayBackendAddressPools;

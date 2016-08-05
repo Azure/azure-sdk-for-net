@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// containing all of the certificates in VaultCertificates.</param>
         /// <param name="vaultCertificates">the list of key vault references
         /// in SourceVault which contain certificates</param>
-        public VaultSecretGroup(SubResource sourceVault = default(SubResource), System.Collections.Generic.IList<VaultCertificate> vaultCertificates = default(System.Collections.Generic.IList<VaultCertificate>))
+        public VaultSecretGroup(Microsoft.Rest.Azure.SubResource sourceVault = default(Microsoft.Rest.Azure.SubResource), System.Collections.Generic.IList<VaultCertificate> vaultCertificates = default(System.Collections.Generic.IList<VaultCertificate>))
         {
             SourceVault = sourceVault;
             VaultCertificates = vaultCertificates;
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// the certificates in VaultCertificates.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "sourceVault")]
-        public SubResource SourceVault { get; set; }
+        public Microsoft.Rest.Azure.SubResource SourceVault { get; set; }
 
         /// <summary>
         /// Gets or sets the list of key vault references in SourceVault which

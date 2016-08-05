@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// RouteTable resource
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class RouteTableInner : Resource
+    public partial class RouteTableInner : Microsoft.Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the RouteTableInner class.
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource Updating/Deleting/Failed</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated</param>
-        public RouteTableInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), System.Collections.Generic.IList<RouteInner> routes = default(System.Collections.Generic.IList<RouteInner>), System.Collections.Generic.IList<SubnetInner> subnets = default(System.Collections.Generic.IList<SubnetInner>), string provisioningState = default(string), string etag = default(string))
+        public RouteTableInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), System.Collections.Generic.IList<RouteInner> routes = default(System.Collections.Generic.IList<RouteInner>), System.Collections.Generic.IList<SubnetInner> subnets = default(System.Collections.Generic.IList<SubnetInner>), string provisioningState = default(string), string etag = default(string))
             : base(location, id, name, type, tags)
         {
             Routes = routes;

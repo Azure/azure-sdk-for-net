@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// Describes a Virtual Machine Extension Image.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class VirtualMachineExtensionImageInner : Resource
+    public partial class VirtualMachineExtensionImageInner : Microsoft.Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// not VMSS.</param>
         /// <param name="supportsMultipleExtensions">whether the handler can
         /// support multiple extensions.</param>
-        public VirtualMachineExtensionImageInner(string operatingSystem, string computeRole, string handlerSchema, String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), bool? vmScaleSetEnabled = default(bool?), bool? supportsMultipleExtensions = default(bool?))
+        public VirtualMachineExtensionImageInner(string operatingSystem, string computeRole, string handlerSchema, string location = default(string), string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), bool? vmScaleSetEnabled = default(bool?), bool? supportsMultipleExtensions = default(bool?))
             : base(location, id, name, type, tags)
         {
             OperatingSystem = operatingSystem;

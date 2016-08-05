@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// Path rule of URL path map of application gateway
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class ApplicationGatewayPathRuleInner : SubResource
+    public partial class ApplicationGatewayPathRuleInner : Microsoft.Rest.Azure.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the ApplicationGatewayPathRuleInner
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public ApplicationGatewayPathRuleInner(String id = default(String), System.Collections.Generic.IList<string> paths = default(System.Collections.Generic.IList<string>), SubResource backendAddressPool = default(SubResource), SubResource backendHttpSettings = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public ApplicationGatewayPathRuleInner(string id = default(string), System.Collections.Generic.IList<string> paths = default(System.Collections.Generic.IList<string>), Microsoft.Rest.Azure.SubResource backendAddressPool = default(Microsoft.Rest.Azure.SubResource), Microsoft.Rest.Azure.SubResource backendHttpSettings = default(Microsoft.Rest.Azure.SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             Paths = paths;
@@ -59,13 +59,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets backend address pool resource of URL path map
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.backendAddressPool")]
-        public SubResource BackendAddressPool { get; set; }
+        public Microsoft.Rest.Azure.SubResource BackendAddressPool { get; set; }
 
         /// <summary>
         /// Gets or sets backend http settings resource of URL path map
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.backendHttpSettings")]
-        public SubResource BackendHttpSettings { get; set; }
+        public Microsoft.Rest.Azure.SubResource BackendHttpSettings { get; set; }
 
         /// <summary>
         /// Gets or sets path rule of URL path map resource

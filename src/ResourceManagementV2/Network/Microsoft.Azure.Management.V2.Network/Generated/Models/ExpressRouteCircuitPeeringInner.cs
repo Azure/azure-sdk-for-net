@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// Peering in a ExpressRouteCircuit resource
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class ExpressRouteCircuitPeeringInner : SubResource
+    public partial class ExpressRouteCircuitPeeringInner : Microsoft.Rest.Azure.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the ExpressRouteCircuitPeeringInner
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public ExpressRouteCircuitPeeringInner(String id = default(String), string peeringType = default(string), string state = default(string), int? azureASN = default(int?), int? peerASN = default(int?), string primaryPeerAddressPrefix = default(string), string secondaryPeerAddressPrefix = default(string), string primaryAzurePort = default(string), string secondaryAzurePort = default(string), string sharedKey = default(string), int? vlanId = default(int?), ExpressRouteCircuitPeeringConfig microsoftPeeringConfig = default(ExpressRouteCircuitPeeringConfig), ExpressRouteCircuitStatsInner stats = default(ExpressRouteCircuitStatsInner), string provisioningState = default(string), string gatewayManagerEtag = default(string), string lastModifiedBy = default(string), string name = default(string), string etag = default(string))
+        public ExpressRouteCircuitPeeringInner(string id = default(string), string peeringType = default(string), string state = default(string), int? azureASN = default(int?), int? peerASN = default(int?), string primaryPeerAddressPrefix = default(string), string secondaryPeerAddressPrefix = default(string), string primaryAzurePort = default(string), string secondaryAzurePort = default(string), string sharedKey = default(string), int? vlanId = default(int?), ExpressRouteCircuitPeeringConfig microsoftPeeringConfig = default(ExpressRouteCircuitPeeringConfig), ExpressRouteCircuitStatsInner stats = default(ExpressRouteCircuitStatsInner), string provisioningState = default(string), string gatewayManagerEtag = default(string), string lastModifiedBy = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             PeeringType = peeringType;

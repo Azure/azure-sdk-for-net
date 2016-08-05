@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="name">the name of the resource.</param>
         /// <param name="location">the location of the resource.</param>
         /// <param name="tags">the tags attached to the resource.</param>
-        public VirtualMachineImageInner(string name, string location, String id = default(String), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), PurchasePlan plan = default(PurchasePlan), OSDiskImage osDiskImage = default(OSDiskImage), System.Collections.Generic.IList<DataDiskImage> dataDiskImages = default(System.Collections.Generic.IList<DataDiskImage>))
+        public VirtualMachineImageInner(string name, string location, string id = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), PurchasePlan plan = default(PurchasePlan), OSDiskImage osDiskImage = default(OSDiskImage), System.Collections.Generic.IList<DataDiskImage> dataDiskImages = default(System.Collections.Generic.IList<DataDiskImage>))
             : base(name, location, id, tags)
         {
             Plan = plan;

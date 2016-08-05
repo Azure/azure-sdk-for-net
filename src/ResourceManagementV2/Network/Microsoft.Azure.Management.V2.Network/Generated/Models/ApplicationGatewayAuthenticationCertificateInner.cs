@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// Authentication certificates of application gateway
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class ApplicationGatewayAuthenticationCertificateInner : SubResource
+    public partial class ApplicationGatewayAuthenticationCertificateInner : Microsoft.Rest.Azure.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public ApplicationGatewayAuthenticationCertificateInner(String id = default(String), string data = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public ApplicationGatewayAuthenticationCertificateInner(string id = default(string), string data = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             Data = data;

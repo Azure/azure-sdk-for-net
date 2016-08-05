@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// Outbound NAT pool of the loadbalancer
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class OutboundNatRuleInner : SubResource
+    public partial class OutboundNatRuleInner : Microsoft.Rest.Azure.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the OutboundNatRuleInner class.
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public OutboundNatRuleInner(SubResource backendAddressPool, String id = default(String), int? allocatedOutboundPorts = default(int?), System.Collections.Generic.IList<SubResource> frontendIPConfigurations = default(System.Collections.Generic.IList<SubResource>), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public OutboundNatRuleInner(Microsoft.Rest.Azure.SubResource backendAddressPool, string id = default(string), int? allocatedOutboundPorts = default(int?), System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource> frontendIPConfigurations = default(System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource>), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             AllocatedOutboundPorts = allocatedOutboundPorts;
@@ -59,14 +59,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets Frontend IP addresses of the load balancer
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.frontendIPConfigurations")]
-        public System.Collections.Generic.IList<SubResource> FrontendIPConfigurations { get; set; }
+        public System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource> FrontendIPConfigurations { get; set; }
 
         /// <summary>
         /// Gets or sets a reference to a pool of DIPs. Outbound traffic is
         /// randomly load balanced across IPs in the backend IPs
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.backendAddressPool")]
-        public SubResource BackendAddressPool { get; set; }
+        public Microsoft.Rest.Azure.SubResource BackendAddressPool { get; set; }
 
         /// <summary>
         /// Gets provisioning state of the PublicIP resource

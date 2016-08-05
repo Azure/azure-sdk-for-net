@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// IPConfiguration
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class IPConfigurationInner : SubResource
+    public partial class IPConfigurationInner : Microsoft.Rest.Azure.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the IPConfigurationInner class.
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public IPConfigurationInner(String id = default(String), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), SubnetInner subnet = default(SubnetInner), PublicIPAddressInner publicIPAddress = default(PublicIPAddressInner), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public IPConfigurationInner(string id = default(string), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), SubnetInner subnet = default(SubnetInner), PublicIPAddressInner publicIPAddress = default(PublicIPAddressInner), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             PrivateIPAddress = privateIPAddress;

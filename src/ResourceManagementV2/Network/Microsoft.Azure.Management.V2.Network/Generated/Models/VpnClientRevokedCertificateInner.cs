@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// VPN client revoked certificate of virtual network gateway
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class VpnClientRevokedCertificateInner : SubResource
+    public partial class VpnClientRevokedCertificateInner : Microsoft.Rest.Azure.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the VpnClientRevokedCertificateInner
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public VpnClientRevokedCertificateInner(String id = default(String), string thumbprint = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public VpnClientRevokedCertificateInner(string id = default(string), string thumbprint = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             Thumbprint = thumbprint;

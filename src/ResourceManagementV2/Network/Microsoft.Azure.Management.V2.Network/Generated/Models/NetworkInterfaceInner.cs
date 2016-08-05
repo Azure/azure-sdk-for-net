@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// A NetworkInterface in a resource group
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class NetworkInterfaceInner : Resource
+    public partial class NetworkInterfaceInner : Microsoft.Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the NetworkInterfaceInner class.
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// PublicIP resource Updating/Deleting/Failed</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated</param>
-        public NetworkInterfaceInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), SubResource virtualMachine = default(SubResource), NetworkSecurityGroupInner networkSecurityGroup = default(NetworkSecurityGroupInner), System.Collections.Generic.IList<NetworkInterfaceIPConfigurationInner> ipConfigurations = default(System.Collections.Generic.IList<NetworkInterfaceIPConfigurationInner>), NetworkInterfaceDnsSettings dnsSettings = default(NetworkInterfaceDnsSettings), string macAddress = default(string), bool? primary = default(bool?), bool? enableIPForwarding = default(bool?), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        public NetworkInterfaceInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), Microsoft.Rest.Azure.SubResource virtualMachine = default(Microsoft.Rest.Azure.SubResource), NetworkSecurityGroupInner networkSecurityGroup = default(NetworkSecurityGroupInner), System.Collections.Generic.IList<NetworkInterfaceIPConfigurationInner> ipConfigurations = default(System.Collections.Generic.IList<NetworkInterfaceIPConfigurationInner>), NetworkInterfaceDnsSettings dnsSettings = default(NetworkInterfaceDnsSettings), string macAddress = default(string), bool? primary = default(bool?), bool? enableIPForwarding = default(bool?), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
             : base(location, id, name, type, tags)
         {
             VirtualMachine = virtualMachine;
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets the reference of a VirtualMachine
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.virtualMachine")]
-        public SubResource VirtualMachine { get; set; }
+        public Microsoft.Rest.Azure.SubResource VirtualMachine { get; set; }
 
         /// <summary>
         /// Gets or sets the reference of the NetworkSecurityGroup resource

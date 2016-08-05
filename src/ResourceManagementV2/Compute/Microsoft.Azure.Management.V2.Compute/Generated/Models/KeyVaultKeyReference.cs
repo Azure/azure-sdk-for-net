@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Vault.</param>
         /// <param name="sourceVault">the Relative URL of the Key Vault
         /// containing the key</param>
-        public KeyVaultKeyReference(string keyUrl, SubResource sourceVault)
+        public KeyVaultKeyReference(string keyUrl, Microsoft.Rest.Azure.SubResource sourceVault)
         {
             KeyUrl = keyUrl;
             SourceVault = sourceVault;
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets the Relative URL of the Key Vault containing the key
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "sourceVault")]
-        public SubResource SourceVault { get; set; }
+        public Microsoft.Rest.Azure.SubResource SourceVault { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// ExpressRouteResourceProvider object
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class ExpressRouteServiceProviderInner : Resource
+    public partial class ExpressRouteServiceProviderInner : Microsoft.Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the ExpressRouteServiceProviderInner
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="bandwidthsOffered">Gets or bandwidths offered</param>
         /// <param name="provisioningState">Gets provisioning state of the
         /// resource </param>
-        public ExpressRouteServiceProviderInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), System.Collections.Generic.IList<string> peeringLocations = default(System.Collections.Generic.IList<string>), System.Collections.Generic.IList<ExpressRouteServiceProviderBandwidthsOffered> bandwidthsOffered = default(System.Collections.Generic.IList<ExpressRouteServiceProviderBandwidthsOffered>), string provisioningState = default(string))
+        public ExpressRouteServiceProviderInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), System.Collections.Generic.IList<string> peeringLocations = default(System.Collections.Generic.IList<string>), System.Collections.Generic.IList<ExpressRouteServiceProviderBandwidthsOffered> bandwidthsOffered = default(System.Collections.Generic.IList<ExpressRouteServiceProviderBandwidthsOffered>), string provisioningState = default(string))
             : base(location, id, name, type, tags)
         {
             PeeringLocations = peeringLocations;

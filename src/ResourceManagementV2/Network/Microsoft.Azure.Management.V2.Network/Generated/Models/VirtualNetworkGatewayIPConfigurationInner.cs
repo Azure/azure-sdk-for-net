@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// IpConfiguration for Virtual network gateway
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class VirtualNetworkGatewayIPConfigurationInner : SubResource
+    public partial class VirtualNetworkGatewayIPConfigurationInner : Microsoft.Rest.Azure.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public VirtualNetworkGatewayIPConfigurationInner(String id = default(String), string privateIPAllocationMethod = default(string), SubResource subnet = default(SubResource), SubResource publicIPAddress = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public VirtualNetworkGatewayIPConfigurationInner(string id = default(string), string privateIPAllocationMethod = default(string), Microsoft.Rest.Azure.SubResource subnet = default(Microsoft.Rest.Azure.SubResource), Microsoft.Rest.Azure.SubResource publicIPAddress = default(Microsoft.Rest.Azure.SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             PrivateIPAllocationMethod = privateIPAllocationMethod;
@@ -62,13 +62,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets the reference of the subnet resource
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.subnet")]
-        public SubResource Subnet { get; set; }
+        public Microsoft.Rest.Azure.SubResource Subnet { get; set; }
 
         /// <summary>
         /// Gets or sets the reference of the PublicIP resource
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.publicIPAddress")]
-        public SubResource PublicIPAddress { get; set; }
+        public Microsoft.Rest.Azure.SubResource PublicIPAddress { get; set; }
 
         /// <summary>
         /// Gets provisioning state of the PublicIP resource

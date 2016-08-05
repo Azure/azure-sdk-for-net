@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// IP configuration of application gateway
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class ApplicationGatewayIPConfigurationInner : SubResource
+    public partial class ApplicationGatewayIPConfigurationInner : Microsoft.Rest.Azure.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public ApplicationGatewayIPConfigurationInner(String id = default(String), SubResource subnet = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public ApplicationGatewayIPConfigurationInner(string id = default(string), Microsoft.Rest.Azure.SubResource subnet = default(Microsoft.Rest.Azure.SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             Subnet = subnet;
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// appliation gateway gets its private address
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.subnet")]
-        public SubResource Subnet { get; set; }
+        public Microsoft.Rest.Azure.SubResource Subnet { get; set; }
 
         /// <summary>
         /// Gets or sets provisioning state of the application gateway subnet

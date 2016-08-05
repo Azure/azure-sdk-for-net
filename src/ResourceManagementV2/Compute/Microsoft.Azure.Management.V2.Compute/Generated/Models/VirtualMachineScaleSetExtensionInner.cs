@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// Describes a Virtual Machine Scale Set Extension.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class VirtualMachineScaleSetExtensionInner : SubResource
+    public partial class VirtualMachineScaleSetExtensionInner : Microsoft.Rest.Azure.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// for the extension.</param>
         /// <param name="provisioningState">the provisioning state, which only
         /// appears in the response.</param>
-        public VirtualMachineScaleSetExtensionInner(String id = default(String), string name = default(string), string publisher = default(string), string type = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string))
+        public VirtualMachineScaleSetExtensionInner(string id = default(string), string name = default(string), string publisher = default(string), string type = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string))
             : base(id)
         {
             Name = name;

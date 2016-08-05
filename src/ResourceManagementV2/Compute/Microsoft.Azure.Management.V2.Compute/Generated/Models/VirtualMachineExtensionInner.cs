@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// Describes a Virtual Machine Extension.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class VirtualMachineExtensionInner : Resource
+    public partial class VirtualMachineExtensionInner : Microsoft.Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the VirtualMachineExtensionInner
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// appears in the response.</param>
         /// <param name="instanceView">the virtual machine extension instance
         /// view.</param>
-        public VirtualMachineExtensionInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), string forceUpdateTag = default(string), string publisher = default(string), string virtualMachineExtensionType = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string), VirtualMachineExtensionInstanceView instanceView = default(VirtualMachineExtensionInstanceView))
+        public VirtualMachineExtensionInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string forceUpdateTag = default(string), string publisher = default(string), string virtualMachineExtensionType = default(string), string typeHandlerVersion = default(string), bool? autoUpgradeMinorVersion = default(bool?), object settings = default(object), object protectedSettings = default(object), string provisioningState = default(string), VirtualMachineExtensionInstanceView instanceView = default(VirtualMachineExtensionInstanceView))
             : base(location, id, name, type, tags)
         {
             ForceUpdateTag = forceUpdateTag;

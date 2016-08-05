@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// Frontend IP configuration of application gateway
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class ApplicationGatewayFrontendIPConfigurationInner : SubResource
+    public partial class ApplicationGatewayFrontendIPConfigurationInner : Microsoft.Rest.Azure.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public ApplicationGatewayFrontendIPConfigurationInner(String id = default(String), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), SubResource subnet = default(SubResource), SubResource publicIPAddress = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public ApplicationGatewayFrontendIPConfigurationInner(string id = default(string), string privateIPAddress = default(string), string privateIPAllocationMethod = default(string), Microsoft.Rest.Azure.SubResource subnet = default(Microsoft.Rest.Azure.SubResource), Microsoft.Rest.Azure.SubResource publicIPAddress = default(Microsoft.Rest.Azure.SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             PrivateIPAddress = privateIPAddress;
@@ -71,13 +71,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets reference of the subnet resource
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.subnet")]
-        public SubResource Subnet { get; set; }
+        public Microsoft.Rest.Azure.SubResource Subnet { get; set; }
 
         /// <summary>
         /// Gets or sets reference of the PublicIP resource
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.publicIPAddress")]
-        public SubResource PublicIPAddress { get; set; }
+        public Microsoft.Rest.Azure.SubResource PublicIPAddress { get; set; }
 
         /// <summary>
         /// Gets or sets provisioning state of the PublicIP resource

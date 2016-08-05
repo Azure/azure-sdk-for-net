@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// Frontend Port of application gateway
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class ApplicationGatewayFrontendPortInner : SubResource
+    public partial class ApplicationGatewayFrontendPortInner : Microsoft.Rest.Azure.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public ApplicationGatewayFrontendPortInner(String id = default(String), int? port = default(int?), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public ApplicationGatewayFrontendPortInner(string id = default(string), int? port = default(int?), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             Port = port;

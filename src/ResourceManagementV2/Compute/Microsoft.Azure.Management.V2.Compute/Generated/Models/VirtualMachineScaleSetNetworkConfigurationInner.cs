@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// configurations.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class VirtualMachineScaleSetNetworkConfigurationInner : SubResource
+    public partial class VirtualMachineScaleSetNetworkConfigurationInner : Microsoft.Rest.Azure.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Configuration.</param>
         /// <param name="primary">whether this is a primary NIC on a virtual
         /// machine.</param>
-        public VirtualMachineScaleSetNetworkConfigurationInner(string name, System.Collections.Generic.IList<VirtualMachineScaleSetIPConfigurationInner> ipConfigurations, String id = default(String), bool? primary = default(bool?))
+        public VirtualMachineScaleSetNetworkConfigurationInner(string name, System.Collections.Generic.IList<VirtualMachineScaleSetIPConfigurationInner> ipConfigurations, string id = default(string), bool? primary = default(bool?))
             : base(id)
         {
             Name = name;

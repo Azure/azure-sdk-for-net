@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// <summary>
     /// Virtual machine image resource information.
     /// </summary>
-    public partial class VirtualMachineImageResourceInner : SubResource
+    public partial class VirtualMachineImageResourceInner : Microsoft.Rest.Azure.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the VirtualMachineImageResourceInner
@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="name">the name of the resource.</param>
         /// <param name="location">the location of the resource.</param>
         /// <param name="tags">the tags attached to the resource.</param>
-        public VirtualMachineImageResourceInner(string name, string location, String id = default(String), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>))
+        public VirtualMachineImageResourceInner(string name, string location, string id = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>))
             : base(id)
         {
             Name = name;

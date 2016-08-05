@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// ExpressRouteCircuit resource
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class ExpressRouteCircuitInner : Resource
+    public partial class ExpressRouteCircuitInner : Microsoft.Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the ExpressRouteCircuitInner class.
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Etag</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated</param>
-        public ExpressRouteCircuitInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), ExpressRouteCircuitSku sku = default(ExpressRouteCircuitSku), bool? allowClassicOperations = default(bool?), string circuitProvisioningState = default(string), string serviceProviderProvisioningState = default(string), System.Collections.Generic.IList<ExpressRouteCircuitAuthorizationInner> authorizations = default(System.Collections.Generic.IList<ExpressRouteCircuitAuthorizationInner>), System.Collections.Generic.IList<ExpressRouteCircuitPeeringInner> peerings = default(System.Collections.Generic.IList<ExpressRouteCircuitPeeringInner>), string serviceKey = default(string), string serviceProviderNotes = default(string), ExpressRouteCircuitServiceProviderProperties serviceProviderProperties = default(ExpressRouteCircuitServiceProviderProperties), string provisioningState = default(string), string gatewayManagerEtag = default(string), string etag = default(string))
+        public ExpressRouteCircuitInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), ExpressRouteCircuitSku sku = default(ExpressRouteCircuitSku), bool? allowClassicOperations = default(bool?), string circuitProvisioningState = default(string), string serviceProviderProvisioningState = default(string), System.Collections.Generic.IList<ExpressRouteCircuitAuthorizationInner> authorizations = default(System.Collections.Generic.IList<ExpressRouteCircuitAuthorizationInner>), System.Collections.Generic.IList<ExpressRouteCircuitPeeringInner> peerings = default(System.Collections.Generic.IList<ExpressRouteCircuitPeeringInner>), string serviceKey = default(string), string serviceProviderNotes = default(string), ExpressRouteCircuitServiceProviderProperties serviceProviderProperties = default(ExpressRouteCircuitServiceProviderProperties), string provisioningState = default(string), string gatewayManagerEtag = default(string), string etag = default(string))
             : base(location, id, name, type, tags)
         {
             Sku = sku;

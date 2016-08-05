@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// Probe of application gateway
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class ApplicationGatewayProbeInner : SubResource
+    public partial class ApplicationGatewayProbeInner : Microsoft.Rest.Azure.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the ApplicationGatewayProbeInner
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public ApplicationGatewayProbeInner(String id = default(String), string protocol = default(string), string host = default(string), string path = default(string), int? interval = default(int?), int? timeout = default(int?), int? unhealthyThreshold = default(int?), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public ApplicationGatewayProbeInner(string id = default(string), string protocol = default(string), string host = default(string), string path = default(string), int? interval = default(int?), int? timeout = default(int?), int? unhealthyThreshold = default(int?), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             Protocol = protocol;

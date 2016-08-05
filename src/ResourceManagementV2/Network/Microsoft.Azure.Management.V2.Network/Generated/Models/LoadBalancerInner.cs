@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// LoadBalancer resource
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class LoadBalancerInner : Resource
+    public partial class LoadBalancerInner : Microsoft.Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the LoadBalancerInner class.
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// PublicIP resource Updating/Deleting/Failed</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated</param>
-        public LoadBalancerInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), System.Collections.Generic.IList<FrontendIPConfigurationInner> frontendIPConfigurations = default(System.Collections.Generic.IList<FrontendIPConfigurationInner>), System.Collections.Generic.IList<BackendAddressPoolInner> backendAddressPools = default(System.Collections.Generic.IList<BackendAddressPoolInner>), System.Collections.Generic.IList<LoadBalancingRuleInner> loadBalancingRules = default(System.Collections.Generic.IList<LoadBalancingRuleInner>), System.Collections.Generic.IList<ProbeInner> probes = default(System.Collections.Generic.IList<ProbeInner>), System.Collections.Generic.IList<InboundNatRuleInner> inboundNatRules = default(System.Collections.Generic.IList<InboundNatRuleInner>), System.Collections.Generic.IList<InboundNatPoolInner> inboundNatPools = default(System.Collections.Generic.IList<InboundNatPoolInner>), System.Collections.Generic.IList<OutboundNatRuleInner> outboundNatRules = default(System.Collections.Generic.IList<OutboundNatRuleInner>), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        public LoadBalancerInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), System.Collections.Generic.IList<FrontendIPConfigurationInner> frontendIPConfigurations = default(System.Collections.Generic.IList<FrontendIPConfigurationInner>), System.Collections.Generic.IList<BackendAddressPoolInner> backendAddressPools = default(System.Collections.Generic.IList<BackendAddressPoolInner>), System.Collections.Generic.IList<LoadBalancingRuleInner> loadBalancingRules = default(System.Collections.Generic.IList<LoadBalancingRuleInner>), System.Collections.Generic.IList<ProbeInner> probes = default(System.Collections.Generic.IList<ProbeInner>), System.Collections.Generic.IList<InboundNatRuleInner> inboundNatRules = default(System.Collections.Generic.IList<InboundNatRuleInner>), System.Collections.Generic.IList<InboundNatPoolInner> inboundNatPools = default(System.Collections.Generic.IList<InboundNatPoolInner>), System.Collections.Generic.IList<OutboundNatRuleInner> outboundNatRules = default(System.Collections.Generic.IList<OutboundNatRuleInner>), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
             : base(location, id, name, type, tags)
         {
             FrontendIPConfigurations = frontendIPConfigurations;

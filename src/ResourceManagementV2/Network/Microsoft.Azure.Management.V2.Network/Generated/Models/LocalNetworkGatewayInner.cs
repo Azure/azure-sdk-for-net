@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// A common class for general resource information
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class LocalNetworkGatewayInner : Resource
+    public partial class LocalNetworkGatewayInner : Microsoft.Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the LocalNetworkGatewayInner class.
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// LocalNetworkGateway resource Updating/Deleting/Failed</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated</param>
-        public LocalNetworkGatewayInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), AddressSpace localNetworkAddressSpace = default(AddressSpace), string gatewayIpAddress = default(string), BgpSettings bgpSettings = default(BgpSettings), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        public LocalNetworkGatewayInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), AddressSpace localNetworkAddressSpace = default(AddressSpace), string gatewayIpAddress = default(string), BgpSettings bgpSettings = default(BgpSettings), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
             : base(location, id, name, type, tags)
         {
             LocalNetworkAddressSpace = localNetworkAddressSpace;

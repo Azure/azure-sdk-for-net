@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// Virtual Network resource
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class VirtualNetworkInner : Resource
+    public partial class VirtualNetworkInner : Microsoft.Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the VirtualNetworkInner class.
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// PublicIP resource Updating/Deleting/Failed</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated</param>
-        public VirtualNetworkInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), AddressSpace addressSpace = default(AddressSpace), DhcpOptions dhcpOptions = default(DhcpOptions), System.Collections.Generic.IList<SubnetInner> subnets = default(System.Collections.Generic.IList<SubnetInner>), System.Collections.Generic.IList<VirtualNetworkPeeringInner> virtualNetworkPeerings = default(System.Collections.Generic.IList<VirtualNetworkPeeringInner>), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        public VirtualNetworkInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), AddressSpace addressSpace = default(AddressSpace), DhcpOptions dhcpOptions = default(DhcpOptions), System.Collections.Generic.IList<SubnetInner> subnets = default(System.Collections.Generic.IList<SubnetInner>), System.Collections.Generic.IList<VirtualNetworkPeeringInner> virtualNetworkPeerings = default(System.Collections.Generic.IList<VirtualNetworkPeeringInner>), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
             : base(location, id, name, type, tags)
         {
             AddressSpace = addressSpace;

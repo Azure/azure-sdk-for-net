@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// Describes a network interface reference.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class NetworkInterfaceReferenceInner : SubResource
+    public partial class NetworkInterfaceReferenceInner : Microsoft.Rest.Azure.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the NetworkInterfaceReferenceInner
@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="primary">whether this is a primary NIC on a virtual
         /// machine</param>
-        public NetworkInterfaceReferenceInner(String id = default(String), bool? primary = default(bool?))
+        public NetworkInterfaceReferenceInner(string id = default(string), bool? primary = default(bool?))
             : base(id)
         {
             Primary = primary;

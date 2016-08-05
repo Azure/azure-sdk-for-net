@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// Inbound NAT rule of the loadbalancer
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class InboundNatRuleInner : SubResource
+    public partial class InboundNatRuleInner : Microsoft.Rest.Azure.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the InboundNatRuleInner class.
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public InboundNatRuleInner(String id = default(String), SubResource frontendIPConfiguration = default(SubResource), NetworkInterfaceIPConfigurationInner backendIPConfiguration = default(NetworkInterfaceIPConfigurationInner), string protocol = default(string), int? frontendPort = default(int?), int? backendPort = default(int?), int? idleTimeoutInMinutes = default(int?), bool? enableFloatingIP = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public InboundNatRuleInner(string id = default(string), Microsoft.Rest.Azure.SubResource frontendIPConfiguration = default(Microsoft.Rest.Azure.SubResource), NetworkInterfaceIPConfigurationInner backendIPConfiguration = default(NetworkInterfaceIPConfigurationInner), string protocol = default(string), int? frontendPort = default(int?), int? backendPort = default(int?), int? idleTimeoutInMinutes = default(int?), bool? enableFloatingIP = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             FrontendIPConfiguration = frontendIPConfiguration;
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets a reference to frontend IP Addresses
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.frontendIPConfiguration")]
-        public SubResource FrontendIPConfiguration { get; set; }
+        public Microsoft.Rest.Azure.SubResource FrontendIPConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets a reference to a private ip address defined on a

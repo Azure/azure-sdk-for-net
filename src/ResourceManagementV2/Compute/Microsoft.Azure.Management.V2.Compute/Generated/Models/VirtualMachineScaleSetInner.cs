@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Compute.Models
     /// Describes a Virtual Machine Scale Set.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class VirtualMachineScaleSetInner : Resource
+    public partial class VirtualMachineScaleSetInner : Microsoft.Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the VirtualMachineScaleSetInner
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// appears in the response.</param>
         /// <param name="overProvision">Specifies whether the Virtual Machine
         /// Scale Set should be overprovisioned.</param>
-        public VirtualMachineScaleSetInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), Sku sku = default(Sku), UpgradePolicy upgradePolicy = default(UpgradePolicy), VirtualMachineScaleSetVMProfile virtualMachineProfile = default(VirtualMachineScaleSetVMProfile), string provisioningState = default(string), bool? overProvision = default(bool?))
+        public VirtualMachineScaleSetInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), Sku sku = default(Sku), UpgradePolicy upgradePolicy = default(UpgradePolicy), VirtualMachineScaleSetVMProfile virtualMachineProfile = default(VirtualMachineScaleSetVMProfile), string provisioningState = default(string), bool? overProvision = default(bool?))
             : base(location, id, name, type, tags)
         {
             Sku = sku;

@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     /// <summary>
     /// Resource information.
     /// </summary>
-    public partial class GenericResourceInner : Resource
+    public partial class GenericResourceInner : Microsoft.Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the GenericResourceInner class.
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// resource.</param>
         /// <param name="sku">The sku of the resource.</param>
         /// <param name="identity">The identity of the resource.</param>
-        public GenericResourceInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), Plan plan = default(Plan), object properties = default(object), string kind = default(string), string managedBy = default(string), Sku sku = default(Sku), Identity identity = default(Identity))
+        public GenericResourceInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), Plan plan = default(Plan), object properties = default(object), string kind = default(string), string managedBy = default(string), Sku sku = default(Sku), Identity identity = default(Identity))
             : base(location, id, name, type, tags)
         {
             Plan = plan;

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Models
     /// VPN client root certificate of virtual network gateway
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class VpnClientRootCertificateInner : SubResource
+    public partial class VpnClientRootCertificateInner : Microsoft.Rest.Azure.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the VpnClientRootCertificateInner
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public VpnClientRootCertificateInner(String id = default(String), string publicCertData = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public VpnClientRootCertificateInner(string id = default(string), string publicCertData = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             PublicCertData = publicCertData;
