@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         /// <param name="value">Gets or sets the list Storage Resource
         /// Usages.</param>
-        public UsageListResultInner(IList<Usage> value = default(IList<Usage>))
+        public UsageListResultInner(IList<UsageInner> value = default(IList<UsageInner>))
         {
             Value = value;
         }
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Gets or sets the list Storage Resource Usages.
         /// </summary>
         [JsonProperty(PropertyName = "value")]
-        public IList<Usage> Value { get; set; }
+        public IList<UsageInner> Value { get; set; }
 
     }
 }
