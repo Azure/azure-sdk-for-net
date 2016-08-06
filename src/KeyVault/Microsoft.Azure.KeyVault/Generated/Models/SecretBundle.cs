@@ -31,13 +31,15 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <param name="attributes">The secret management attributes</param>
         /// <param name="tags">Application-specific metadata in the form of
         /// key-value pairs</param>
-        public SecretBundle(string value = default(string), string id = default(string), string contentType = default(string), SecretAttributes attributes = default(SecretAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="kid">The key id for certificate.</param>
+        public SecretBundle(string value = default(string), string id = default(string), string contentType = default(string), SecretAttributes attributes = default(SecretAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), string kid = default(string))
         {
             Value = value;
             Id = id;
             ContentType = contentType;
             Attributes = attributes;
             Tags = tags;
+            Kid = kid;
         }
 
         /// <summary>
@@ -70,6 +72,12 @@ namespace Microsoft.Azure.KeyVault.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the key id for certificate.
+        /// </summary>
+        [JsonProperty(PropertyName = "kid")]
+        public string Kid { get; set; }
 
     }
 }

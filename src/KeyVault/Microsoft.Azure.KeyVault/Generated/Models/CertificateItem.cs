@@ -30,13 +30,13 @@ namespace Microsoft.Azure.KeyVault.Models
         /// attributes</param>
         /// <param name="tags">Application-specific metadata in the form of
         /// key-value pairs</param>
-        /// <param name="x5T">Thumbprint of the certificate.</param>
-        public CertificateItem(string id = default(string), CertificateAttributes attributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), byte[] x5T = default(byte[]))
+        /// <param name="x509Thumbprint">Thumbprint of the certificate.</param>
+        public CertificateItem(string id = default(string), CertificateAttributes attributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), byte[] x509Thumbprint = default(byte[]))
         {
             Id = id;
             Attributes = attributes;
             Tags = tags;
-            X5T = x5T;
+            X509Thumbprint = x509Thumbprint;
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.KeyVault.Models
         /// </summary>
         [JsonConverter(typeof(Base64UrlJsonConverter))]
         [JsonProperty(PropertyName = "x5t")]
-        public byte[] X5T { get; set; }
+        public byte[] X509Thumbprint { get; set; }
 
     }
 }

@@ -24,10 +24,6 @@
         "System.Security.Cryptography.X509Certificates": "4.1.0",
         "System.Diagnostics.Tracing": "4.1.0"
       }
-    },
-    "net451": {
-      "dependencies": {
-      }
     }
   },
   "dependencies": {

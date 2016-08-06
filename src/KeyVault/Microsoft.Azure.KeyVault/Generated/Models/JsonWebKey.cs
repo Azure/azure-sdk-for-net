@@ -26,7 +26,8 @@ namespace Microsoft.Azure.KeyVault.Models
         /// Initializes a new instance of the JsonWebKey class.
         /// </summary>
         /// <param name="kid">Key Identifier</param>
-        /// <param name="kty">Key type, usually RSA</param>
+        /// <param name="kty">Key type, usually RSA. Possible values include:
+        /// 'EC', 'RSA', 'RSA-HSM', 'oct'</param>
         /// <param name="n">RSA modulus</param>
         /// <param name="e">RSA public exponent</param>
         /// <param name="d">RSA private exponent</param>
@@ -61,7 +62,8 @@ namespace Microsoft.Azure.KeyVault.Models
         public string Kid { get; set; }
 
         /// <summary>
-        /// Gets or sets key type, usually RSA
+        /// Gets or sets key type, usually RSA. Possible values include: 'EC',
+        /// 'RSA', 'RSA-HSM', 'oct'
         /// </summary>
         [JsonProperty(PropertyName = "kty")]
         public string Kty { get; set; }

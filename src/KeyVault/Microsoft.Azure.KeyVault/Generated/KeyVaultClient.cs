@@ -22,8 +22,8 @@ namespace Microsoft.Azure.KeyVault
     using Models;
 
     /// <summary>
-    /// Client class to perform cryptographic key operations and vault
-    /// operations against the Key Vault service.
+    /// Performs cryptographic key operations and vault operations against the
+    /// Key Vault service.
     /// </summary>
     public partial class KeyVaultClient : ServiceClient<KeyVaultClient>, IKeyVaultClient, IAzureClient
     {
@@ -199,10 +199,11 @@ namespace Microsoft.Azure.KeyVault
         /// The name of the key
         /// </param>
         /// <param name='kty'>
-        /// The type of key to create. For valid key types, see WebKeyTypes.
+        /// The type of key to create. Valid key types, see JsonWebKeyType. Possible
+        /// values include: 'EC', 'RSA', 'RSA-HSM', 'oct'
         /// </param>
         /// <param name='keySize'>
-        /// Size of the key
+        /// The key size in bytes. e.g. 1024 or 2048.
         /// </param>
         /// <param name='keyOps'>
         /// </param>
@@ -1948,8 +1949,8 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Encrypts a single block of data. The amount of data that may be encrypted
-        /// is determined
+        /// Encrypts an arbitrary sequence of bytes using an encryption key that is
+        /// stored in Azure Key Vault.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, e.g. https://myvault.vault.azure.net
@@ -1961,7 +1962,7 @@ namespace Microsoft.Azure.KeyVault
         /// The version of the key
         /// </param>
         /// <param name='algorithm'>
-        /// algorithm identifier
+        /// algorithm identifier. Possible values include: 'RSA-OAEP', 'RSA1_5'
         /// </param>
         /// <param name='value'>
         /// </param>
@@ -2184,7 +2185,7 @@ namespace Microsoft.Azure.KeyVault
         /// The version of the key
         /// </param>
         /// <param name='algorithm'>
-        /// algorithm identifier
+        /// algorithm identifier. Possible values include: 'RSA-OAEP', 'RSA1_5'
         /// </param>
         /// <param name='value'>
         /// </param>
@@ -2407,7 +2408,9 @@ namespace Microsoft.Azure.KeyVault
         /// The version of the key
         /// </param>
         /// <param name='algorithm'>
-        /// algorithm identifier
+        /// The signing/verification algorithm identifier. For more information on
+        /// possible algorithm types, see JsonWebKeySignatureAlgorithm. Possible
+        /// values include: 'RS256', 'RS384', 'RS512', 'RSNULL'
         /// </param>
         /// <param name='value'>
         /// </param>
@@ -2462,7 +2465,7 @@ namespace Microsoft.Azure.KeyVault
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "value");
             }
-            KeyOperationsParameters parameters = new KeyOperationsParameters();
+            KeySignParameters parameters = new KeySignParameters();
             if (algorithm != null || value != null)
             {
                 parameters.Algorithm = algorithm;
@@ -2631,7 +2634,8 @@ namespace Microsoft.Azure.KeyVault
         /// </param>
         /// <param name='algorithm'>
         /// The signing/verification algorithm. For more information on possible
-        /// algorithm types, see JsonWebKeySignatureAlgorithm.
+        /// algorithm types, see JsonWebKeySignatureAlgorithm. Possible values
+        /// include: 'RS256', 'RS384', 'RS512', 'RSNULL'
         /// </param>
         /// <param name='digest'>
         /// The digest used for signing
@@ -2863,7 +2867,7 @@ namespace Microsoft.Azure.KeyVault
         /// The version of the key
         /// </param>
         /// <param name='algorithm'>
-        /// algorithm identifier
+        /// algorithm identifier. Possible values include: 'RSA-OAEP', 'RSA1_5'
         /// </param>
         /// <param name='value'>
         /// </param>
@@ -3087,7 +3091,7 @@ namespace Microsoft.Azure.KeyVault
         /// The version of the key
         /// </param>
         /// <param name='algorithm'>
-        /// algorithm identifier
+        /// algorithm identifier. Possible values include: 'RSA-OAEP', 'RSA1_5'
         /// </param>
         /// <param name='value'>
         /// </param>
@@ -5534,7 +5538,7 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Sets the certificate contacts for the specified vault.
+        /// Sets the specified certificate issuer.
         /// </summary>
         /// <param name='vaultBaseUrl'>
         /// The vault name, e.g. https://myvault.vault.azure.net

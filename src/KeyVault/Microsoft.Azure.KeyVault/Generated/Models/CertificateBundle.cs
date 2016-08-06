@@ -29,19 +29,19 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <param name="id">The certificate id</param>
         /// <param name="kid">The key id</param>
         /// <param name="sid">The secret id</param>
-        /// <param name="x5t">Thumbprint of the certificate.</param>
+        /// <param name="x509Thumbprint">Thumbprint of the certificate.</param>
         /// <param name="policy">The management policy.</param>
         /// <param name="cer">CER contents of x509 certificate.</param>
         /// <param name="contentType">The content type of the secret</param>
         /// <param name="attributes">The certificate attributes.</param>
         /// <param name="tags">Application-specific metadata in the form of
         /// key-value pairs</param>
-        public CertificateBundle(string id = default(string), string kid = default(string), string sid = default(string), byte[] x5t = default(byte[]), CertificatePolicy policy = default(CertificatePolicy), byte[] cer = default(byte[]), string contentType = default(string), CertificateAttributes attributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public CertificateBundle(string id = default(string), string kid = default(string), string sid = default(string), byte[] x509Thumbprint = default(byte[]), CertificatePolicy policy = default(CertificatePolicy), byte[] cer = default(byte[]), string contentType = default(string), CertificateAttributes attributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Id = id;
             Kid = kid;
             Sid = sid;
-            X5t = x5t;
+            X509Thumbprint = x509Thumbprint;
             Policy = policy;
             Cer = cer;
             ContentType = contentType;
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.KeyVault.Models
         /// </summary>
         [JsonConverter(typeof(Base64UrlJsonConverter))]
         [JsonProperty(PropertyName = "x5t")]
-        public byte[] X5t { get; private set; }
+        public byte[] X509Thumbprint { get; private set; }
 
         /// <summary>
         /// Gets the management policy.

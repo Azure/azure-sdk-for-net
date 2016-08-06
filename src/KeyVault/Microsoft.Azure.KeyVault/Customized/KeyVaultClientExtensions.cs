@@ -478,7 +478,11 @@ namespace Microsoft.Azure.KeyVault
             if (x509Certificates == null || x509Certificates.Count == 0)
                 throw new ArgumentException("x509Certificates");
 
-            var X5C = new List<byte[]> { x509Certificates.Export(X509ContentType.Cert) };
+            var X5C = new List<byte[]>();
+            foreach (var cert in x509Certificates)
+            {
+                X5C.Add(cert.Export(X509ContentType.Cert));
+            }
 
             using (var _result = await operations.MergeCertificateWithHttpMessagesAsync(vaultBaseUrl, certificateName, X5C, certificateAttributes, tags, null, cancellationToken))
             {

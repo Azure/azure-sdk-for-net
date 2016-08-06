@@ -25,9 +25,11 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the KeyCreateParameters class.
         /// </summary>
-        /// <param name="kty">The type of key to create. For valid key types,
-        /// see WebKeyTypes.</param>
-        /// <param name="keySize">Size of the key</param>
+        /// <param name="kty">The type of key to create. Valid key types, see
+        /// JsonWebKeyType. Possible values include: 'EC', 'RSA', 'RSA-HSM',
+        /// 'oct'</param>
+        /// <param name="keySize">The key size in bytes. e.g. 1024 or
+        /// 2048.</param>
         /// <param name="tags">Application-specific metadata in the form of
         /// key-value pairs</param>
         public KeyCreateParameters(string kty, int? keySize = default(int?), IList<string> keyOps = default(IList<string>), KeyAttributes keyAttributes = default(KeyAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>))
@@ -40,14 +42,15 @@ namespace Microsoft.Azure.KeyVault.Models
         }
 
         /// <summary>
-        /// Gets or sets the type of key to create. For valid key types, see
-        /// WebKeyTypes.
+        /// Gets or sets the type of key to create. Valid key types, see
+        /// JsonWebKeyType. Possible values include: 'EC', 'RSA', 'RSA-HSM',
+        /// 'oct'
         /// </summary>
         [JsonProperty(PropertyName = "kty")]
         public string Kty { get; set; }
 
         /// <summary>
-        /// Gets or sets size of the key
+        /// Gets or sets the key size in bytes. e.g. 1024 or 2048.
         /// </summary>
         [JsonProperty(PropertyName = "key_size")]
         public int? KeySize { get; set; }

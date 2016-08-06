@@ -22,10 +22,6 @@
         "System.Diagnostics.TraceSource": "4.0.0",
         "System.Security.Cryptography.Algorithms": "4.2.0"
       }
-    },
-    "net451": {
-      "frameworkAssemblies": { "System.Net.Http.WebRequest": "" },
-      "dependencies": {      }
     }
   },
   "dependencies": {

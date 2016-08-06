@@ -13,34 +13,31 @@ namespace Microsoft.Azure.KeyVault.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// The key verify parameters
+    /// The key operations parameters
     /// </summary>
-    public partial class KeyVerifyParameters
+    public partial class KeySignParameters
     {
         /// <summary>
-        /// Initializes a new instance of the KeyVerifyParameters class.
+        /// Initializes a new instance of the KeySignParameters class.
         /// </summary>
-        public KeyVerifyParameters() { }
+        public KeySignParameters() { }
 
         /// <summary>
-        /// Initializes a new instance of the KeyVerifyParameters class.
+        /// Initializes a new instance of the KeySignParameters class.
         /// </summary>
-        /// <param name="algorithm">The signing/verification algorithm. For
-        /// more information on possible algorithm types, see
+        /// <param name="algorithm">The signing/verification algorithm
+        /// identifier. For more information on possible algorithm types, see
         /// JsonWebKeySignatureAlgorithm. Possible values include: 'RS256',
         /// 'RS384', 'RS512', 'RSNULL'</param>
-        /// <param name="digest">The digest used for signing</param>
-        /// <param name="signature">The signature to be verified</param>
-        public KeyVerifyParameters(string algorithm, byte[] digest, byte[] signature)
+        public KeySignParameters(string algorithm, byte[] value)
         {
             Algorithm = algorithm;
-            Digest = digest;
-            Signature = signature;
+            Value = value;
         }
 
         /// <summary>
-        /// Gets or sets the signing/verification algorithm. For more
-        /// information on possible algorithm types, see
+        /// Gets or sets the signing/verification algorithm identifier. For
+        /// more information on possible algorithm types, see
         /// JsonWebKeySignatureAlgorithm. Possible values include: 'RS256',
         /// 'RS384', 'RS512', 'RSNULL'
         /// </summary>
@@ -48,18 +45,10 @@ namespace Microsoft.Azure.KeyVault.Models
         public string Algorithm { get; set; }
 
         /// <summary>
-        /// Gets or sets the digest used for signing
-        /// </summary>
-        [JsonConverter(typeof(Base64UrlJsonConverter))]
-        [JsonProperty(PropertyName = "digest")]
-        public byte[] Digest { get; set; }
-
-        /// <summary>
-        /// Gets or sets the signature to be verified
         /// </summary>
         [JsonConverter(typeof(Base64UrlJsonConverter))]
         [JsonProperty(PropertyName = "value")]
-        public byte[] Signature { get; set; }
+        public byte[] Value { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -73,13 +62,9 @@ namespace Microsoft.Azure.KeyVault.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Algorithm");
             }
-            if (Digest == null)
+            if (Value == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Digest");
-            }
-            if (Signature == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Signature");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Value");
             }
             if (this.Algorithm != null)
             {

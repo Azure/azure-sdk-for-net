@@ -866,9 +866,9 @@ namespace KeyVault.Tests
                 Assert.NotNull(createdCertificateBundle);
                 Assert.NotNull(createdCertificateBundle.SecretIdentifier);
                 Assert.NotNull(createdCertificateBundle.KeyIdentifier);
-                Assert.NotNull(createdCertificateBundle.X5t);
+                Assert.NotNull(createdCertificateBundle.X509Thumbprint);
                 Assert.NotNull(createdCertificateBundle.Policy);
-                Assert.True(0 == string.CompareOrdinal(myCertificate.Thumbprint, ToHexString(createdCertificateBundle.X5t)));
+                Assert.True(0 == string.CompareOrdinal(myCertificate.Thumbprint, ToHexString(createdCertificateBundle.X509Thumbprint)));
 
                 Assert.NotNull(createdCertificateBundle.Cer);
                 var publicCer = new X509Certificate2(createdCertificateBundle.Cer);
@@ -884,9 +884,9 @@ namespace KeyVault.Tests
                     Assert.NotNull(certificateBundleLatest);
                     Assert.NotNull(certificateBundleLatest.SecretIdentifier);
                     Assert.NotNull(certificateBundleLatest.KeyIdentifier);
-                    Assert.NotNull(certificateBundleLatest.X5t);
+                    Assert.NotNull(certificateBundleLatest.X509Thumbprint);
                     Assert.NotNull(createdCertificateBundle.Policy);
-                    Assert.True(0 == string.CompareOrdinal(myCertificate.Thumbprint, ToHexString(createdCertificateBundle.X5t)));
+                    Assert.True(0 == string.CompareOrdinal(myCertificate.Thumbprint, ToHexString(createdCertificateBundle.X509Thumbprint)));
 
                     Assert.NotNull(certificateBundleLatest.Cer);
                     publicCer = new X509Certificate2(certificateBundleLatest.Cer);
@@ -900,8 +900,8 @@ namespace KeyVault.Tests
                     Assert.NotNull(certificateBundleVersion);
                     Assert.NotNull(certificateBundleVersion.SecretIdentifier);
                     Assert.NotNull(certificateBundleVersion.KeyIdentifier);
-                    Assert.NotNull(certificateBundleVersion.X5t);
-                    Assert.True(0 == string.CompareOrdinal(myCertificate.Thumbprint, ToHexString(createdCertificateBundle.X5t)));
+                    Assert.NotNull(certificateBundleVersion.X509Thumbprint);
+                    Assert.True(0 == string.CompareOrdinal(myCertificate.Thumbprint, ToHexString(createdCertificateBundle.X509Thumbprint)));
 
                     Assert.NotNull(certificateBundleVersion.Cer);
                     publicCer = new X509Certificate2(certificateBundleVersion.Cer);
@@ -978,9 +978,9 @@ namespace KeyVault.Tests
                 Assert.NotNull(createdCertificateBundle);
                 Assert.NotNull(createdCertificateBundle.SecretIdentifier);
                 Assert.NotNull(createdCertificateBundle.KeyIdentifier);
-                Assert.NotNull(createdCertificateBundle.X5t);
+                Assert.NotNull(createdCertificateBundle.X509Thumbprint);
                 Assert.NotNull(createdCertificateBundle.Policy);
-                Assert.True(0 == string.CompareOrdinal(myCertificateCollection[privateKeyCertificateIndex].Thumbprint, ToHexString(createdCertificateBundle.X5t)));
+                Assert.True(0 == string.CompareOrdinal(myCertificateCollection[privateKeyCertificateIndex].Thumbprint, ToHexString(createdCertificateBundle.X509Thumbprint)));
 
                 Assert.NotNull(createdCertificateBundle.Cer);
                 var publicCer = new X509Certificate2(createdCertificateBundle.Cer);
@@ -996,9 +996,9 @@ namespace KeyVault.Tests
                     Assert.NotNull(certificateBundleLatest);
                     Assert.NotNull(certificateBundleLatest.SecretIdentifier);
                     Assert.NotNull(certificateBundleLatest.KeyIdentifier);
-                    Assert.NotNull(certificateBundleLatest.X5t);
+                    Assert.NotNull(certificateBundleLatest.X509Thumbprint);
                     Assert.NotNull(createdCertificateBundle.Policy);
-                    Assert.True(0 == string.CompareOrdinal(myCertificateCollection[privateKeyCertificateIndex].Thumbprint, ToHexString(createdCertificateBundle.X5t)));
+                    Assert.True(0 == string.CompareOrdinal(myCertificateCollection[privateKeyCertificateIndex].Thumbprint, ToHexString(createdCertificateBundle.X509Thumbprint)));
 
                     Assert.NotNull(certificateBundleLatest.Cer);
                     publicCer = new X509Certificate2(certificateBundleLatest.Cer);
@@ -1012,8 +1012,8 @@ namespace KeyVault.Tests
                     Assert.NotNull(certificateBundleVersion);
                     Assert.NotNull(certificateBundleVersion.SecretIdentifier);
                     Assert.NotNull(certificateBundleVersion.KeyIdentifier);
-                    Assert.NotNull(certificateBundleVersion.X5t);
-                    Assert.True(0 == string.CompareOrdinal(myCertificateCollection[privateKeyCertificateIndex].Thumbprint, ToHexString(createdCertificateBundle.X5t)));
+                    Assert.NotNull(certificateBundleVersion.X509Thumbprint);
+                    Assert.True(0 == string.CompareOrdinal(myCertificateCollection[privateKeyCertificateIndex].Thumbprint, ToHexString(createdCertificateBundle.X509Thumbprint)));
 
                     Assert.NotNull(certificateBundleVersion.Cer);
                     publicCer = new X509Certificate2(certificateBundleVersion.Cer);
@@ -1090,9 +1090,9 @@ namespace KeyVault.Tests
                 Assert.NotNull(createdCertificateBundle);
                 Assert.NotNull(createdCertificateBundle.SecretIdentifier);
                 Assert.NotNull(createdCertificateBundle.KeyIdentifier);
-                Assert.NotNull(createdCertificateBundle.X5t);
+                Assert.NotNull(createdCertificateBundle.X509Thumbprint);
                 Assert.NotNull(createdCertificateBundle.Policy);
-                Assert.True(0 == string.CompareOrdinal(myCertificateCollection[privateKeyCertificateIndex].Thumbprint, ToHexString(createdCertificateBundle.X5t)));
+                Assert.True(0 == string.CompareOrdinal(myCertificateCollection[privateKeyCertificateIndex].Thumbprint, ToHexString(createdCertificateBundle.X509Thumbprint)));
 
                 Assert.NotNull(createdCertificateBundle.Cer);
                 var publicCer = new X509Certificate2(createdCertificateBundle.Cer);
@@ -1108,9 +1108,9 @@ namespace KeyVault.Tests
                     Assert.NotNull(certificateBundleLatest);
                     Assert.NotNull(certificateBundleLatest.SecretIdentifier);
                     Assert.NotNull(certificateBundleLatest.KeyIdentifier);
-                    Assert.NotNull(certificateBundleLatest.X5t);
+                    Assert.NotNull(certificateBundleLatest.X509Thumbprint);
                     Assert.NotNull(createdCertificateBundle.Policy);
-                    Assert.True(0 == string.CompareOrdinal(myCertificateCollection[privateKeyCertificateIndex].Thumbprint, ToHexString(createdCertificateBundle.X5t)));
+                    Assert.True(0 == string.CompareOrdinal(myCertificateCollection[privateKeyCertificateIndex].Thumbprint, ToHexString(createdCertificateBundle.X509Thumbprint)));
 
                     Assert.NotNull(certificateBundleLatest.Cer);
                     publicCer = new X509Certificate2(certificateBundleLatest.Cer);
@@ -1124,8 +1124,8 @@ namespace KeyVault.Tests
                     Assert.NotNull(certificateBundleVersion);
                     Assert.NotNull(certificateBundleVersion.SecretIdentifier);
                     Assert.NotNull(certificateBundleVersion.KeyIdentifier);
-                    Assert.NotNull(certificateBundleVersion.X5t);
-                    Assert.True(0 == string.CompareOrdinal(myCertificateCollection[privateKeyCertificateIndex].Thumbprint, ToHexString(createdCertificateBundle.X5t)));
+                    Assert.NotNull(certificateBundleVersion.X509Thumbprint);
+                    Assert.True(0 == string.CompareOrdinal(myCertificateCollection[privateKeyCertificateIndex].Thumbprint, ToHexString(createdCertificateBundle.X509Thumbprint)));
 
                     Assert.NotNull(certificateBundleVersion.Cer);
                     publicCer = new X509Certificate2(certificateBundleVersion.Cer);
@@ -1189,9 +1189,9 @@ namespace KeyVault.Tests
                 Assert.NotNull(createdCertificateBundle01);
                 Assert.NotNull(createdCertificateBundle01.SecretIdentifier);
                 Assert.NotNull(createdCertificateBundle01.KeyIdentifier);
-                Assert.NotNull(createdCertificateBundle01.X5t);
+                Assert.NotNull(createdCertificateBundle01.X509Thumbprint);
                 Assert.NotNull(createdCertificateBundle01.Policy);
-                Assert.True(0 == string.CompareOrdinal(certificate01.Thumbprint, ToHexString(createdCertificateBundle01.X5t)));
+                Assert.True(0 == string.CompareOrdinal(certificate01.Thumbprint, ToHexString(createdCertificateBundle01.X509Thumbprint)));
 
                 Assert.NotNull(createdCertificateBundle01.Cer);
                 var publicCer = new X509Certificate2(createdCertificateBundle01.Cer);
@@ -1225,9 +1225,9 @@ namespace KeyVault.Tests
                 Assert.NotNull(createdCertificateBundle02);
                 Assert.NotNull(createdCertificateBundle02.SecretIdentifier);
                 Assert.NotNull(createdCertificateBundle02.KeyIdentifier);
-                Assert.NotNull(createdCertificateBundle02.X5t);
+                Assert.NotNull(createdCertificateBundle02.X509Thumbprint);
                 Assert.NotNull(createdCertificateBundle02.Policy);
-                Assert.True(0 == string.CompareOrdinal(certificate02.Thumbprint, ToHexString(createdCertificateBundle02.X5t)));
+                Assert.True(0 == string.CompareOrdinal(certificate02.Thumbprint, ToHexString(createdCertificateBundle02.X509Thumbprint)));
 
                 Assert.NotNull(createdCertificateBundle02.Cer);
                 publicCer = new X509Certificate2(createdCertificateBundle02.Cer);
@@ -1239,8 +1239,8 @@ namespace KeyVault.Tests
                     var certList = client.GetCertificatesAsync(_vaultAddress).GetAwaiter().GetResult();
                     Assert.NotNull(certList);
                     Assert.True(certList.Count() >= 2);
-                    Assert.True(certList.Any(s => 0 == string.CompareOrdinal(ToHexString(s.X5T), ToHexString(createdCertificateBundle01.X5t))));
-                    Assert.True(certList.Any(s => 0 == string.CompareOrdinal(ToHexString(s.X5T), ToHexString(createdCertificateBundle02.X5t))));
+                    Assert.True(certList.Any(s => 0 == string.CompareOrdinal(ToHexString(s.X509Thumbprint), ToHexString(createdCertificateBundle01.X509Thumbprint))));
+                    Assert.True(certList.Any(s => 0 == string.CompareOrdinal(ToHexString(s.X509Thumbprint), ToHexString(createdCertificateBundle02.X509Thumbprint))));
                 }
                 finally
                 {
@@ -1292,9 +1292,9 @@ namespace KeyVault.Tests
                 Assert.NotNull(createdCertificateBundle01);
                 Assert.NotNull(createdCertificateBundle01.SecretIdentifier);
                 Assert.NotNull(createdCertificateBundle01.KeyIdentifier);
-                Assert.NotNull(createdCertificateBundle01.X5t);
+                Assert.NotNull(createdCertificateBundle01.X509Thumbprint);
                 Assert.NotNull(createdCertificateBundle01.Policy);
-                Assert.True(0 == string.CompareOrdinal(version01.Thumbprint, ToHexString(createdCertificateBundle01.X5t)));
+                Assert.True(0 == string.CompareOrdinal(version01.Thumbprint, ToHexString(createdCertificateBundle01.X509Thumbprint)));
 
                 Assert.NotNull(createdCertificateBundle01.Cer);
                 var publicCer = new X509Certificate2(createdCertificateBundle01.Cer);
@@ -1325,9 +1325,9 @@ namespace KeyVault.Tests
                 Assert.NotNull(createdCertificateBundle02);
                 Assert.NotNull(createdCertificateBundle02.SecretIdentifier);
                 Assert.NotNull(createdCertificateBundle02.KeyIdentifier);
-                Assert.NotNull(createdCertificateBundle02.X5t);
+                Assert.NotNull(createdCertificateBundle02.X509Thumbprint);
                 Assert.NotNull(createdCertificateBundle02.Policy);
-                Assert.True(0 == string.CompareOrdinal(version02.Thumbprint, ToHexString(createdCertificateBundle02.X5t)));
+                Assert.True(0 == string.CompareOrdinal(version02.Thumbprint, ToHexString(createdCertificateBundle02.X509Thumbprint)));
 
                 Assert.NotNull(createdCertificateBundle02.Cer);
                 publicCer = new X509Certificate2(createdCertificateBundle02.Cer);
@@ -1339,8 +1339,8 @@ namespace KeyVault.Tests
                     var certList = client.GetCertificateVersionsAsync(_vaultAddress, certificateName).GetAwaiter().GetResult();
                     Assert.NotNull(certList);
                     Assert.True(2 == certList.Count());
-                    Assert.True(certList.Any(s => s.X5T.SequenceEqual(createdCertificateBundle01.X5t)));
-                    Assert.True(certList.Any(s => s.X5T.SequenceEqual(createdCertificateBundle02.X5t)));
+                    Assert.True(certList.Any(s => s.X509Thumbprint.SequenceEqual(createdCertificateBundle01.X509Thumbprint)));
+                    Assert.True(certList.Any(s => s.X509Thumbprint.SequenceEqual(createdCertificateBundle02.X509Thumbprint)));
                 }
                 finally
                 {
@@ -1401,7 +1401,7 @@ namespace KeyVault.Tests
                     Assert.NotNull(createdCertificateBundle);
                     Assert.NotNull(createdCertificateBundle.SecretIdentifier);
                     Assert.NotNull(createdCertificateBundle.KeyIdentifier);
-                    Assert.NotNull(createdCertificateBundle.X5t);
+                    Assert.NotNull(createdCertificateBundle.X509Thumbprint);
                     Assert.NotNull(createdCertificateBundle.Policy);
 
                     Assert.NotNull(createdCertificateBundle.Cer);
@@ -1479,7 +1479,7 @@ namespace KeyVault.Tests
                 Assert.NotNull(createdCertificateBundle);
                 Assert.NotNull(createdCertificateBundle.SecretIdentifier);
                 Assert.NotNull(createdCertificateBundle.KeyIdentifier);
-                Assert.NotNull(createdCertificateBundle.X5t);
+                Assert.NotNull(createdCertificateBundle.X509Thumbprint);
                 Assert.NotNull(createdCertificateBundle.Policy);
 
                 try
@@ -1573,7 +1573,7 @@ namespace KeyVault.Tests
                     Assert.NotNull(createdCertificateBundle.Policy);
                     Assert.NotNull(createdCertificateBundle.SecretIdentifier);
                     Assert.NotNull(createdCertificateBundle.KeyIdentifier);
-                    Assert.NotNull(createdCertificateBundle.X5t);
+                    Assert.NotNull(createdCertificateBundle.X509Thumbprint);
 
                     // Get the certificate as a secret
                     var retrievedSecret = client.GetSecretAsync(createdCertificateBundle.SecretIdentifier.Identifier).GetAwaiter().GetResult();
@@ -1799,9 +1799,9 @@ namespace KeyVault.Tests
                 Assert.NotNull(createdCertificateBundle);
                 Assert.NotNull(createdCertificateBundle.SecretIdentifier);
                 Assert.NotNull(createdCertificateBundle.KeyIdentifier);
-                Assert.NotNull(createdCertificateBundle.X5t);
+                Assert.NotNull(createdCertificateBundle.X509Thumbprint);
                 Assert.NotNull(createdCertificateBundle.Policy);
-                Assert.True(0 == string.CompareOrdinal(myCertificate.Thumbprint, ToHexString(createdCertificateBundle.X5t)));
+                Assert.True(0 == string.CompareOrdinal(myCertificate.Thumbprint, ToHexString(createdCertificateBundle.X509Thumbprint)));
 
                 try
                 {
@@ -1811,9 +1811,9 @@ namespace KeyVault.Tests
                     Assert.NotNull(certificateBundleLatest);
                     Assert.NotNull(certificateBundleLatest.SecretIdentifier);
                     Assert.NotNull(certificateBundleLatest.KeyIdentifier);
-                    Assert.NotNull(certificateBundleLatest.X5t);
+                    Assert.NotNull(certificateBundleLatest.X509Thumbprint);
                     Assert.NotNull(certificateBundleLatest.Policy);
-                    Assert.True(0 == string.CompareOrdinal(myCertificate.Thumbprint, ToHexString(createdCertificateBundle.X5t)));
+                    Assert.True(0 == string.CompareOrdinal(myCertificate.Thumbprint, ToHexString(createdCertificateBundle.X509Thumbprint)));
 
                     // Update certificate bundle
                     var tags = certificateBundleLatest.Tags ?? new Dictionary<string, string>();
@@ -1826,10 +1826,10 @@ namespace KeyVault.Tests
                     Assert.NotNull(certificateBundleUpdatedResponse);
                     Assert.NotNull(certificateBundleUpdatedResponse.SecretIdentifier);
                     Assert.NotNull(certificateBundleUpdatedResponse.KeyIdentifier);
-                    Assert.NotNull(certificateBundleUpdatedResponse.X5t);
+                    Assert.NotNull(certificateBundleUpdatedResponse.X509Thumbprint);
                     Assert.True(certificateBundleUpdatedResponse.Tags.ContainsKey("department"));
                     Assert.True(0 == string.CompareOrdinal(certificateBundleUpdatedResponse.Tags["department"], "KeyVaultTest"));
-                    Assert.True(0 == string.CompareOrdinal(myCertificate.Thumbprint, ToHexString(certificateBundleUpdatedResponse.X5t)));
+                    Assert.True(0 == string.CompareOrdinal(myCertificate.Thumbprint, ToHexString(certificateBundleUpdatedResponse.X509Thumbprint)));
 
                     // Get the update certificate bundle
                     var certificateBundleUpdated = client.GetCertificateAsync(_vaultAddress, certificateName).GetAwaiter().GetResult();
@@ -1837,11 +1837,11 @@ namespace KeyVault.Tests
                     Assert.NotNull(certificateBundleUpdated);
                     Assert.NotNull(certificateBundleUpdated.SecretIdentifier);
                     Assert.NotNull(certificateBundleUpdated.KeyIdentifier);
-                    Assert.NotNull(certificateBundleUpdated.X5t);
+                    Assert.NotNull(certificateBundleUpdated.X509Thumbprint);
                     Assert.NotNull(certificateBundleUpdated.Policy);
                     Assert.True(certificateBundleUpdated.Tags.ContainsKey("department"));
                     Assert.True(0 == string.CompareOrdinal(certificateBundleUpdated.Tags["department"], "KeyVaultTest"));
-                    Assert.True(0 == string.CompareOrdinal(myCertificate.Thumbprint, ToHexString(certificateBundleUpdated.X5t)));
+                    Assert.True(0 == string.CompareOrdinal(myCertificate.Thumbprint, ToHexString(certificateBundleUpdated.X509Thumbprint)));
                 }
                 finally
                 {
@@ -1887,9 +1887,9 @@ namespace KeyVault.Tests
                 Assert.NotNull(createdCertificateBundle);
                 Assert.NotNull(createdCertificateBundle.SecretIdentifier);
                 Assert.NotNull(createdCertificateBundle.KeyIdentifier);
-                Assert.NotNull(createdCertificateBundle.X5t);
+                Assert.NotNull(createdCertificateBundle.X509Thumbprint);
                 Assert.NotNull(createdCertificateBundle.Policy);
-                Assert.True(0 == string.CompareOrdinal(myCertificate.Thumbprint, ToHexString(createdCertificateBundle.X5t)));
+                Assert.True(0 == string.CompareOrdinal(myCertificate.Thumbprint, ToHexString(createdCertificateBundle.X509Thumbprint)));
 
                 try
                 {
