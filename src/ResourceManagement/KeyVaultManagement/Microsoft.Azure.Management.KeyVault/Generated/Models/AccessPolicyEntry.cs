@@ -35,13 +35,13 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// should be used for authenticating requests to the key
         /// vault.</param>
         /// <param name="objectId">The object ID of a user or service
-        /// principal in the Azure Active Directory tenant for the vault.
-        /// </param>
-        /// <param name="applicationId"> Application ID of the client making
-        /// request on behalf of a principal</param>
+        /// principal in the Azure Active Directory tenant for the vault. The
+        /// object ID must be unique for the list of access policies.</param>
         /// <param name="permissions">Permissions the identity has for keys
         /// and secrets</param>
-        public AccessPolicyEntry(Guid? tenantId = default(Guid?), Guid? objectId = default(Guid?), Guid? applicationId = default(Guid?), Permissions permissions = default(Permissions))
+        /// <param name="applicationId"> Application ID of the client making
+        /// request on behalf of a principal</param>
+        public AccessPolicyEntry(Guid tenantId, Guid objectId, Permissions permissions, Guid? applicationId = default(Guid?))
         {
             TenantId = tenantId;
             ObjectId = objectId;
@@ -54,14 +54,15 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// used for authenticating requests to the key vault.
         /// </summary>
         [JsonProperty(PropertyName = "tenantId")]
-        public Guid? TenantId { get; set; }
+        public Guid TenantId { get; set; }
 
         /// <summary>
         /// Gets or sets the object ID of a user or service principal in the
-        /// Azure Active Directory tenant for the vault.
+        /// Azure Active Directory tenant for the vault. The object ID must
+        /// be unique for the list of access policies.
         /// </summary>
         [JsonProperty(PropertyName = "objectId")]
-        public Guid? ObjectId { get; set; }
+        public Guid ObjectId { get; set; }
 
         /// <summary>
         /// Gets or sets  Application ID of the client making request on
@@ -76,5 +77,18 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         [JsonProperty(PropertyName = "permissions")]
         public Permissions Permissions { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Permissions == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Permissions");
+            }
+        }
     }
 }
