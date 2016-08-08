@@ -754,7 +754,7 @@
                 {
                     string poolId = "TestPoolVNet" + TestUtilities.GetMyName();
                     const int targetDedicated = 0;
-                    string dummySubnetId = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Network/virtualNetworks/vnet1/subnets/subnet1",
+                    string dummySubnetId = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.ClassicNetwork/virtualNetworks/vnet1/subnets/subnet1",
                         TestCommon.Configuration.BatchSubscription,
                         TestCommon.Configuration.BatchAccountResourceGroup);
                     try
