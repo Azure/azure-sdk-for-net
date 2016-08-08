@@ -41,6 +41,19 @@ namespace Microsoft.Azure.KeyVault.Models
         public KeyVaultError Body { get; set; }
 
         /// <summary>
+        /// Return the service message if available, otherwise returns the general message
+        /// </summary>
+        public override string Message
+        {
+            get
+            {
+                if(Body != null && Body.Error != null && !string.IsNullOrWhiteSpace(Body.Error.Message))
+                    return Body.Error.Message;
+                return base.Message;
+            }
+        }
+
+        /// <summary>
         /// Initializes a new instance of the KeyVaultErrorException class.
         /// </summary>
         public KeyVaultErrorException()

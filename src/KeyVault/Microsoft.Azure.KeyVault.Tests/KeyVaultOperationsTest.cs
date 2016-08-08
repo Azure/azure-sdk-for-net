@@ -230,6 +230,17 @@ namespace KeyVault.Tests
 
                     VerifyKeyAttributesAreEqual(deletedKey.Attributes, createdKey.Attributes);
                     VerifyWebKeysAreEqual(deletedKey.Key, createdKey.Key);
+
+                    //verify the key is deleted
+                    try
+                    {
+                        client.GetKeyAsync(_vaultAddress, "CreateSoftKeyTest").GetAwaiter().GetResult();
+                    }
+                    catch (KeyVaultErrorException ex)
+                    {
+                        if (ex.Response.StatusCode != HttpStatusCode.NotFound || ex.Body.Error.Message != ex.Message)
+                            throw ex;
+                    }
                 }
             }
         }
@@ -270,35 +281,6 @@ namespace KeyVault.Tests
                 }
             }
         }
-
-        //[Fact]
-        //public void KeyVaultImportHsmByoKeyTest()
-        //{
-        //    if (_standardVaultOnly) return;
-
-        //    using (MockContext context = MockContext.Start(this.GetType().FullName))
-        //    {
-
-        //        var client = GetKeyVaultClient();
-
-        //        var request = GetImportKeyBundle(keyType: JsonWebKeyType.RsaHsm, keyToken: Resource.Key);
-
-        //        var importedKey =
-        //            client.ImportKeyAsync(_vaultAddress, "ImportHsmKeyTest", request).GetAwaiter().GetResult();
-
-        //        VerifyKeyAttributesAreEqual(request.Attributes, importedKey.Attributes);
-        //        Assert.Equal(request.Key.Kty, importedKey.Key.Kty);
-
-        //        var retrievedKey = client.GetKeyAsync(importedKey.Key.Kid).GetAwaiter().GetResult();
-
-        //        // Delete the key
-        //        var identifier = new KeyIdentifier(importedKey.Key.Kid);
-        //        client.DeleteKeyAsync(identifier.Vault, identifier.Name).Wait();
-
-        //        VerifyKeyAttributesAreEqual(importedKey.Attributes, retrievedKey.Attributes);
-        //        VerifyWebKeysAreEqual(importedKey.Key, retrievedKey.Key);
-        //    }
-        //}
 
         [Fact]
         public void KeyVaultImportSoftKeyTest()
@@ -628,9 +610,18 @@ namespace KeyVault.Tests
                 {
                     // Delete the secret
                     var deletedSecret = client.DeleteSecretAsync(_vaultAddress, secretName).GetAwaiter().GetResult();
-                }
-                Assert.Throws<KeyVaultErrorException>(() => { client.GetSecretAsync(_vaultAddress, secretName).GetAwaiter().GetResult(); });
 
+                    //verify the secret is deleted
+                    try
+                    {
+                        client.GetSecretAsync(_vaultAddress, secretName).GetAwaiter().GetResult();
+                    }
+                    catch (KeyVaultErrorException ex)
+                    {
+                        if (ex.Response.StatusCode != HttpStatusCode.NotFound || ex.Body.Error.Message != ex.Message)
+                            throw ex;
+                    }
+                }
             }
         }
 
@@ -1761,6 +1752,17 @@ namespace KeyVault.Tests
                         client.DeleteCertificateAsync(_vaultAddress, certificateName).GetAwaiter().GetResult();
 
                     Assert.NotNull(certificateBundleDeleted);
+
+                    //verify the certificate is deleted
+                    try
+                    {
+                        client.GetCertificateAsync(_vaultAddress, certificateName).GetAwaiter().GetResult();
+                    }
+                    catch (KeyVaultErrorException ex)
+                    {
+                        if (ex.Response.StatusCode != HttpStatusCode.NotFound || ex.Body.Error.Message != ex.Message)
+                            throw ex;
+                    }
                 }
             }
         }
@@ -2452,7 +2454,8 @@ namespace KeyVault.Tests
                 var pendingCertificateResponse = client.GetCertificateOperationAsync(_vaultAddress, pendingCertificate.CertificateOperationIdentifier.Name).GetAwaiter().GetResult();
                 if (0 == string.Compare(pendingCertificateResponse.Status, "InProgress", true))
                 {
-                    Thread.Sleep(TimeSpan.FromSeconds(20));
+                    if(HttpMockServer.Mode == HttpRecorderMode.Record)
+                        Thread.Sleep(TimeSpan.FromSeconds(20));
                     pendingPollCount += 1;
                     continue;
                 }

@@ -73,58 +73,12 @@ namespace KeyVault.Tests
         public void Initialize(string className)
         {
             HttpMockServer.FileSystemUtilsObject = new FileSystemUtils();
-            HttpMockServer.Initialize(className, "InitialCreation");
+            HttpMockServer.Initialize(className, "InitialCreation", HttpRecorderMode.Record);
             HttpMockServer.CreateInstance();
 
             if (HttpMockServer.Mode == HttpRecorderMode.Record)
             {
                 fromConfig = FromConfiguration();
-
-                if (!fromConfig)
-                {
-                    throw new Exception("Please provide the test data in the appsettings.json configuration.\n"+
-                        "Graph SDK has a bug for creating applications: https://github.com/Azure/azure-sdk-for-net/issues/1934; so the application cannot be created.");
-
-                    var testEnv = TestEnvironmentFactory.GetTestEnvironment();
-                    var context = new MockContext();
-
-                    var secret = Guid.NewGuid().ToString();
-                    var mgmtClient = context.GetServiceClient<KeyVaultManagementClient>();
-                    var resourcesClient = context.GetServiceClient<ResourceManagementClient>();
-                    var tenantId = testEnv.Tenant;
-                    var graphClient = context.GetServiceClient<GraphRbacManagementClient>();
-                    graphClient.TenantID = testEnv.Tenant;
-                    graphClient.BaseUri = new Uri("https://graph.windows.net");
-
-                    var appDisplayName = TestUtilities.GenerateName("sdktestapp");
-
-                    //Setup things in AAD
-
-                    //Create an application
-                    var app = CreateApplication(graphClient, appDisplayName, secret);
-                    appObjectId = app.ObjectId;
-
-                    //Create a corresponding service principal
-                    var servicePrincipal = CreateServicePrincipal(app, graphClient);
-
-                    //Figure out which locations are available for Key Vault
-                    var location = GetKeyVaultLocation(resourcesClient);
-
-                    //Create a resource group in that location
-                    vaultName = TestUtilities.GenerateName("sdktestvault");
-                    rgName = TestUtilities.GenerateName("sdktestrg");
-
-                    resourcesClient.ResourceGroups.CreateOrUpdate(rgName, new ResourceGroup { Location = location });
-
-                    //Create a key vault in that resource group
-                    var createdVault = CreateVault(mgmtClient, location, tenantId, servicePrincipal);
-
-                    vaultAddress = createdVault.Properties.VaultUri;
-                    clientCredential = new ClientCredential(app.AppId, secret);
-
-                    //Wait a few seconds before trying to authenticate
-                    TestUtilities.Wait(TimeSpan.FromSeconds(30));
-                }
             }
         }
         private Vault CreateVault(KeyVaultManagementClient mgmtClient, string location, string tenantId, ServicePrincipal servicePrincipal)
