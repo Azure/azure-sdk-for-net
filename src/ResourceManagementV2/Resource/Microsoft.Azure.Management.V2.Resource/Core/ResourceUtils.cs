@@ -6,6 +6,11 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
     {
         public static string ExtractFromResourceId(string id, string identifier)
         {
+            if (id == null || identifier == null)
+            {
+                return null;
+            }
+
             identifier = identifier.ToLower();
             return id.Split('/')
                 .SkipWhile(part => !part.ToLower().Equals(identifier))

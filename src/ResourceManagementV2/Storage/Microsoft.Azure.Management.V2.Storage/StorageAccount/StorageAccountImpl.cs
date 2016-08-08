@@ -15,11 +15,7 @@ using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
 namespace Microsoft.Azure.Management.V2.Storage
 {
     internal class StorageAccountImpl :
-        GroupableResource<IStorageAccount,
-            Management.Storage.Models.StorageAccountInner,
-            Rest.Azure.Resource, 
-            StorageAccountImpl,
-            StorageManager,
+        GroupableResource<IStorageAccount, StorageAccountInner, Rest.Azure.Resource, StorageAccountImpl, IStorageManager,
             StorageAccount.Definition.IWithGroup,
             StorageAccount.Definition.IWithCreate>,
         IStorageAccount,
@@ -29,6 +25,7 @@ namespace Microsoft.Azure.Management.V2.Storage
         private string name;
         private StorageAccountCreateParametersInner createParameters;
         private StorageAccountUpdateParametersInner updateParameters;
+        private IList<StorageAccountKey> cachedAccountKeys;
 
         private IStorageAccountsOperations client;
 
@@ -36,7 +33,7 @@ namespace Microsoft.Azure.Management.V2.Storage
         internal StorageAccountImpl(string name,
             Management.Storage.Models.StorageAccountInner innerObject,
             IStorageAccountsOperations client,
-            StorageManager manager) : base(name, innerObject, manager)
+            IStorageManager manager) : base(name, innerObject, manager)
         {
             this.name = name;
             createParameters = new StorageAccountCreateParametersInner();
@@ -126,6 +123,18 @@ namespace Microsoft.Azure.Management.V2.Storage
             }
         }
 
+        public IList<StorageAccountKey> Keys
+        {
+            get
+            {
+                if (cachedAccountKeys == null)
+                {
+                    cachedAccountKeys = RefreshKeys();
+                }
+                return cachedAccountKeys;
+            }
+        }
+
         #endregion
 
         #region Fluent setters 
@@ -153,7 +162,14 @@ namespace Microsoft.Azure.Management.V2.Storage
             return this;
         }
 
-        public StorageAccount.Definition.IWithCreate WithCustomDomain(string name)
+        public IWithCreate WithGeneralPurposeAccountKind()
+        {
+            createParameters.Kind = Management.Storage.Models.Kind.Storage;
+            return this;
+        }
+
+
+        public IWithCreate WithCustomDomain(string name)
         {
             createParameters.CustomDomain = new CustomDomain(name);
             return this;
@@ -180,9 +196,9 @@ namespace Microsoft.Azure.Management.V2.Storage
             return this;
         }
 
-        public IWithCreate WithGeneralPurposeAccountKind()
+        IWithCreate IDefinitionWithTags<IWithCreate>.WithTag(string key, string value)
         {
-            createParameters.Kind = Management.Storage.Models.Kind.Storage;
+            base.WithTag(key, value);
             return this;
         }
 
@@ -192,17 +208,11 @@ namespace Microsoft.Azure.Management.V2.Storage
             return this;
         }
 
-        IWithCreate IDefinitionWithTags<IWithCreate>.WithTag(string key, string value)
-        {
-            base.WithTag(key, value);
-            return this;
-        }
-
         #endregion
 
         #region Update setters
 
-        IUpdate StorageAccount.Update.IWithAccessTier.WithAccessTier(AccessTier accessTier)
+        IUpdate IWithAccessTier.WithAccessTier(AccessTier accessTier)
         {
             if (Inner.Kind != Management.Storage.Models.Kind.BlobStorage)
             {
@@ -218,7 +228,7 @@ namespace Microsoft.Azure.Management.V2.Storage
             return this;
         }
 
-        StorageAccount.Update.IUpdate StorageAccount.Update.IWithCustomDomain.WithCustomDomain(CustomDomain customDomain)
+        IUpdate StorageAccount.Update.IWithCustomDomain.WithCustomDomain(CustomDomain customDomain)
         {
             updateParameters.CustomDomain = customDomain;
             return this;
@@ -234,12 +244,27 @@ namespace Microsoft.Azure.Management.V2.Storage
             return this;
         }
 
+        IUpdate StorageAccount.Update.IWithCustomDomain.WithoutCustomDomain()
+        {
+            updateParameters.CustomDomain = new CustomDomain
+            {
+                Name = ""
+            };
+            return this;
+        }
+
         IUpdate StorageAccount.Update.IWithSku.WithSku(SkuName skuName)
         {
             updateParameters.Sku = new Sku()
             {
                 Name = skuName
             };
+            return this;
+        }
+
+        IUpdate StorageAccount.Update.IWithEncryption.WithEncryption(Encryption encryption)
+        {
+            updateParameters.Encryption = encryption;
             return this;
         }
 
@@ -265,11 +290,29 @@ namespace Microsoft.Azure.Management.V2.Storage
 
         #endregion
 
+        #region Actions 
+
+        public IList<StorageAccountKey> RefreshKeys()
+        {
+            var storageAccountListKeysResultInner = client.ListKeys(ResourceGroupName, Name);
+            cachedAccountKeys = storageAccountListKeysResultInner.Keys;
+            return cachedAccountKeys;
+        }
+
+        public IList<StorageAccountKey> RegenerateKey(string keyName)
+        {
+            var storageAccountListKeysResultInner = client.RegenerateKey(ResourceGroupName, Name, keyName);
+            cachedAccountKeys = storageAccountListKeysResultInner.Keys;
+            return cachedAccountKeys;
+        }
+
+        #endregion
+
         #region Implementation of IRefreshable interface
 
         public override async Task<IStorageAccount> Refresh()
         {
-            var response = await client.GetPropertiesAsync(ResourceGroupName, this.name);
+            var response = await client.GetPropertiesAsync(ResourceGroupName, Name);
             SetInner(response);
             return this;
         }

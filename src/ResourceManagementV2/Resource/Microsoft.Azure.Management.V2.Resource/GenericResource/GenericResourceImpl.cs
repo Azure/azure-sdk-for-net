@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.V2.Resource
         GenericResourceInner,
         Rest.Azure.Resource,
         GenericResourceImpl,
-        ResourceManager2,
+        IResourceManager,
         IWithGroup,
         IWithResourceType>,
         IGenericResource,
@@ -26,11 +26,11 @@ namespace Microsoft.Azure.Management.V2.Resource
         GenericResource.Update.IUpdate,
         GenericResource.Update.IWithApiVersion
     {
-        private ResourcesOperations client;
-        private string resourceProviderNamespace;
-        private string parentResourceId;
-        private string resourceType;
-        private string apiVersion;
+        private IResourcesOperations client;
+        internal string resourceProviderNamespace;
+        internal string parentResourceId;
+        internal string resourceType;
+        internal string apiVersion;
 
         #region Getters
 
@@ -82,28 +82,12 @@ namespace Microsoft.Azure.Management.V2.Resource
             }
         }
 
-        public GenericResource.Definition.IWithApiVersion WithoutPlan
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        IUpdate GenericResource.Update.IWithPlan.WithoutPlan
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
-
         #endregion
 
         internal GenericResourceImpl(string key,
             GenericResourceInner innerModel,
-            ResourcesOperations client,
-            ResourceManager2 resourceManager) : base(key, innerModel, resourceManager)
+            IResourcesOperations client,
+            IResourceManager resourceManager) : base(key, innerModel, resourceManager)
         {
             this.client = client;
         }
@@ -170,7 +154,7 @@ namespace Microsoft.Azure.Management.V2.Resource
             return this;
         }
 
-        public GenericResource.Definition.IWithPlan WithParentResource(string parentResourceId)
+        public GenericResource.Definition.IWithCreate WithParentResource(string parentResourceId)
         {
             this.parentResourceId = parentResourceId;
             return this;
@@ -185,6 +169,12 @@ namespace Microsoft.Azure.Management.V2.Resource
                 Product = product,
                 PromotionCode = promotionCode
             };
+            return this;
+        }
+
+        public GenericResource.Definition.IWithApiVersion WithoutPlan()
+        {
+            Inner.Plan = null;
             return this;
         }
 
@@ -235,6 +225,12 @@ namespace Microsoft.Azure.Management.V2.Resource
             return this;
         }
 
+        IUpdate GenericResource.Update.IWithPlan.WithoutPlan()
+        {
+            Inner.Plan = null;
+            return this;
+        }
+
         IUpdate IUpdateWithTags<IUpdate>.WithTags(IDictionary<string, string> tags)
         {
             WithTags(tags);
@@ -261,7 +257,7 @@ namespace Microsoft.Azure.Management.V2.Resource
 
         IGenericResource ICreatable<IGenericResource>.Create()
         {
-            this.CreateAsync(CancellationToken.None, true);
+           var created = CreateAsync(CancellationToken.None, true).Result;
             return this;
         }
 

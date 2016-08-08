@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Deployment.Definition
     public interface IWithCreate  :
         ICreatable<IDeployment>
     {
-        IDeployment BeginCreate { get; }
+        IDeployment BeginCreate();
 
     }
     /// <summary>

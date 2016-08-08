@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Storage.Models;
 using Microsoft.Azure.Management.V2.Resource.Core;
-using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
 
 namespace Microsoft.Azure.Management.V2.Storage
 {
@@ -15,16 +14,21 @@ namespace Microsoft.Azure.Management.V2.Storage
                 StorageAccountImpl,
                 Management.Storage.Models.StorageAccountInner,
                 IStorageAccountsOperations,
-                StorageManager>,
+                IStorageManager>,
         IStorageAccounts
     {
-        PagedList<IStorageAccount> ISupportsListing<IStorageAccount>.List()
+        internal StorageAccountsImpl(IStorageAccountsOperations innerCollection, IStorageManager manager) : base(innerCollection, manager)
+        {}
+
+        #region Actions
+
+        public CheckNameAvailabilityResult CheckNameAvailability(string name)
         {
-            throw new NotImplementedException();
+            return new CheckNameAvailabilityResult(InnerCollection.CheckNameAvailability(name));
         }
 
-        internal StorageAccountsImpl(IStorageAccountsOperations innerCollection, StorageManager manager) : base(innerCollection, manager)
-        {}
+        #endregion
+
 
         #region Implementation of ISupportsCreating interface
 
@@ -42,8 +46,8 @@ namespace Microsoft.Azure.Management.V2.Storage
 
         public PagedList<IStorageAccount> List()
         {
-            IEnumerable<Management.Storage.Models.StorageAccountInner> storageAccounts = InnerCollection.List();
-            var pagedList = new PagedList<Management.Storage.Models.StorageAccountInner>(storageAccounts);
+            IEnumerable<StorageAccountInner> storageAccounts = InnerCollection.List();
+            var pagedList = new PagedList<StorageAccountInner>(storageAccounts);
             return WrapList(pagedList);
         }
 
@@ -53,9 +57,14 @@ namespace Microsoft.Azure.Management.V2.Storage
 
         public PagedList<IStorageAccount> ListByGroup(string groupName)
         {
-            IEnumerable<Management.Storage.Models.StorageAccountInner> storageAccounts = InnerCollection.ListByResourceGroup(groupName);
-            var pagedList = new PagedList<Management.Storage.Models.StorageAccountInner>(storageAccounts);
+            IEnumerable<StorageAccountInner> storageAccounts = InnerCollection.ListByResourceGroup(groupName);
+            var pagedList = new PagedList<StorageAccountInner>(storageAccounts);
             return WrapList(pagedList);
+        }
+
+        public Task<PagedList<IStorageAccount>> ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            throw new NotSupportedException();
         }
 
         #endregion
@@ -72,35 +81,35 @@ namespace Microsoft.Azure.Management.V2.Storage
 
         #region Implementation of ISupportsDeleting interface
 
-        public Task DeleteAsync(string id)
-        {
-            return DeleteAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
-        }
-
         public void Delete(string id)
         {
             DeleteAsync(id).Wait();
+        }
+
+        public Task DeleteAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return DeleteAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id), cancellationToken);
         }
 
         #endregion
 
         #region Implementation of ISupportsDeletingByGroup interface
 
-        public Task DeleteAsync(string resourceGroupName, string name)
-        {
-            return InnerCollection.DeleteAsync(resourceGroupName, name);
-        }
-
         public void Delete(string resourceGroupName, string name)
         {
             DeleteAsync(resourceGroupName, name).Wait();
+        }
+
+        public Task DeleteAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return InnerCollection.DeleteAsync(resourceGroupName, name, cancellationToken);
         }
 
         #endregion
 
         #region Implementation of CreatableWrappers::WrapModel abstract method
 
-        protected override IStorageAccount WrapModel(Management.Storage.Models.StorageAccountInner inner)
+        protected override IStorageAccount WrapModel(StorageAccountInner inner)
         {
             return new StorageAccountImpl(inner.Name,
                 inner,
@@ -114,27 +123,12 @@ namespace Microsoft.Azure.Management.V2.Storage
 
         protected override StorageAccountImpl WrapModel(string name)
         {
-            Management.Storage.Models.StorageAccountInner innerObject = new Management.Storage.Models.StorageAccountInner();
+            Management.Storage.Models.StorageAccountInner innerObject = new StorageAccountInner();
             return new StorageAccountImpl(name,
                 innerObject,
                 InnerCollection,
                 MyManager
             );
-        }
-
-        public Task<PagedList<IStorageAccount>> ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            throw new NotImplementedException();
         }
 
         #endregion

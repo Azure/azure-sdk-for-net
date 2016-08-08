@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         #endregion
     }
 
-    public interface IComputeManager
+    public interface IComputeManager : IManagerBase
     {
         IVirtualMachines VirtualMachines { get; }
     }

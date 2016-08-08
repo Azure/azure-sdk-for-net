@@ -16,9 +16,9 @@ namespace Microsoft.Azure.Management.V2.Resource
         private string resourceGroupName;
         private string deploymentName;
 
-        private DeploymentOperationsOperations client;
+        private IDeploymentOperationsOperations client;
 
-        internal DeploymentOperationImpl(DeploymentOperationInner innerModel, DeploymentOperationsOperations client) : base(innerModel.Id, innerModel)
+        internal DeploymentOperationImpl(DeploymentOperationInner innerModel, IDeploymentOperationsOperations client) : base(innerModel.Id, innerModel)
         {
             this.client = client;
             resourceGroupName = ResourceUtils.GroupFromResourceId(innerModel.Id);

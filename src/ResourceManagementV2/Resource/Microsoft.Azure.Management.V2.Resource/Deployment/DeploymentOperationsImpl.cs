@@ -10,10 +10,10 @@ namespace Microsoft.Azure.Management.V2.Resource
     internal class DeploymentOperationsImpl :
         IDeploymentOperations
     {
-        private DeploymentOperationsOperations client;
+        private IDeploymentOperationsOperations client;
         private IDeployment deployment;
 
-        internal DeploymentOperationsImpl(DeploymentOperationsOperations client, IDeployment deployment)
+        internal DeploymentOperationsImpl(IDeploymentOperationsOperations client, IDeployment deployment)
         {
             this.client = client;
             this.deployment = deployment;
@@ -54,6 +54,5 @@ namespace Microsoft.Azure.Management.V2.Resource
         {
             return new DeploymentOperationImpl(deploymentOperationInner, client);
         }
-
     }
 }

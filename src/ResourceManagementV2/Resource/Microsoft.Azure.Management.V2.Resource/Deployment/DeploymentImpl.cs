@@ -9,6 +9,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.V2.Resource.Deployment.Definition;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace Microsoft.Azure.Management.V2.Resource
 {
@@ -18,16 +19,16 @@ namespace Microsoft.Azure.Management.V2.Resource
         Deployment.Definition.IDefinition,
         Deployment.Update.IUpdate
     {
-        private DeploymentsOperations client;
-        private DeploymentOperationsOperations deploymentOperationsClient;
-        private ResourceManager2 resourceManager;
+        private IDeploymentsOperations client;
+        private IDeploymentOperationsOperations deploymentOperationsClient;
+        private IResourceManager resourceManager;
         private string resourceGroupName;
         private ICreatable<IResourceGroup> creatableResourceGroup;
 
         internal DeploymentImpl(DeploymentExtendedInner innerModel,
-            DeploymentsOperations client,
-            DeploymentOperationsOperations deploymentOperationsClient,
-            ResourceManager2 resourceManager) : base(innerModel.Name, innerModel)
+            IDeploymentsOperations client,
+            IDeploymentOperationsOperations deploymentOperationsClient,
+            IResourceManager resourceManager) : base(innerModel.Name, innerModel)
         {
             this.client = client;
             this.deploymentOperationsClient = deploymentOperationsClient;
@@ -109,12 +110,8 @@ namespace Microsoft.Azure.Management.V2.Resource
                 {
                     return null;
                 }
-                IList<IProvider> providers = new List<IProvider>();
-                foreach (var inner in Inner.Properties.Providers)
-                {
-                    providers.Add(new ProviderImpl(inner));
-                }
-                return providers;
+                return (from providerInner in Inner.Properties.Providers
+                        select new ProviderImpl(providerInner)).ToList<IProvider>();
             }
         }
 
@@ -383,39 +380,37 @@ namespace Microsoft.Azure.Management.V2.Resource
         {
             get
             {
-                DeploymentExportResultInner inner = client.ExportTemplate(resourceGroupName, Name);
+                DeploymentExportResultInner inner = client.ExportTemplate(ResourceGroupName, Name);
                 return new DeploymentExportResultImpl(inner);
             }
         }
 
-        public IDeployment BeginCreate
+        public IDeployment BeginCreate()
         {
-            get
+            DeploymentInner inner = new DeploymentInner()
             {
-                DeploymentInner inner = new DeploymentInner()
+                Properties = new DeploymentProperties
                 {
-                    Properties = new DeploymentProperties
-                    {
-                        Mode = Mode,
-                        Template = Template,
-                        TemplateLink = TemplateLink,
-                        Parameters = Parameters,
-                        ParametersLink = ParametersLink
-                    }
-                };
-                
-                client.BeginCreateOrUpdate(resourceGroupName, Name, inner);
-                return this;
-            }
+                    Mode = Mode,
+                    Template = Template,
+                    TemplateLink = TemplateLink,
+                    Parameters = Parameters,
+                    ParametersLink = ParametersLink
+                }
+            };
+            client.BeginCreateOrUpdate(resourceGroupName, Name, inner);
+            return this;
         }
 
         #endregion
 
         #region Implementation of IRefreshable interface
 
-        public override Task<IDeployment> Refresh()
+        public async override Task<IDeployment> Refresh()
         {
-            return null;
+            DeploymentExtendedInner inner = await client.GetAsync(ResourceGroupName, Name);
+            SetInner(inner);
+            return this;
         }
 
         #endregion
@@ -432,7 +427,6 @@ namespace Microsoft.Azure.Management.V2.Resource
             return this;
         }
 
-
         public async new Task<IDeployment> CreateAsync(CancellationToken cancellationToken = default(CancellationToken), bool multiThreaded = true)
         {
             if (creatableResourceGroup != null)
@@ -441,7 +435,6 @@ namespace Microsoft.Azure.Management.V2.Resource
             }
             return await CreateResourceAsync(cancellationToken);
         }
-
 
         #endregion
 

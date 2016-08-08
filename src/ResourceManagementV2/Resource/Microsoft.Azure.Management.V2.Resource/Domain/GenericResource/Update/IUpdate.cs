@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.V2.Resource.GenericResource.Update
         /// Specifies the plan of the resource.
         /// </summary>
         /// <returns>the next stage of the generic resource update</returns>
-        IUpdate WithoutPlan { get; }
+        IUpdate WithoutPlan();
 
     }
     /// <summary>

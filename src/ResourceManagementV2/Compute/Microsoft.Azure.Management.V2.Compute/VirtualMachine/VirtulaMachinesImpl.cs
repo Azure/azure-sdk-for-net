@@ -16,10 +16,10 @@ namespace Microsoft.Azure.Management.V2.Compute
                 VirtualMachineImpl,
                 VirtualMachineInner,
                 IVirtualMachinesOperations,
-                ComputeManager>,
+                IComputeManager>,
                 IVirtualMachines
     {
-        internal VirtulaMachinesImpl(IVirtualMachinesOperations innerCollection, ComputeManager manager) : base(innerCollection, manager)
+        internal VirtulaMachinesImpl(IVirtualMachinesOperations innerCollection, IComputeManager manager) : base(innerCollection, manager)
         { }
 
         public VirtualMachine.Definition.IBlank Define(string name)
@@ -34,7 +34,6 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         public PagedList<IVirtualMachine> List()
         {
-
             IPage<Management.Compute.Models.VirtualMachineInner> firstPage = InnerCollection.ListAll();
             var pagedList = new PagedList<Management.Compute.Models.VirtualMachineInner>(firstPage, (string nextPageLink) =>
             {
