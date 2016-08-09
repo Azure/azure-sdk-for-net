@@ -54,10 +54,9 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Provisioning state of the ResourceNavigationLink resource
-        /// Updating/Deleting/Failed
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Name of the resource that is unique within a resource group. This
@@ -71,7 +70,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// updated
         /// </summary>
         [JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
+        public string Etag { get; private set; }
 
     }
 }
