@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         /// <param name="value">Gets or sets the list Storage Resource
         /// Usages.</param>
-        public UsageListResultInner(System.Collections.Generic.IList<Usage> value = default(System.Collections.Generic.IList<Usage>))
+        public UsageListResultInner(System.Collections.Generic.IList<UsageInner> value = default(System.Collections.Generic.IList<UsageInner>))
         {
             Value = value;
         }
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Gets or sets the list Storage Resource Usages.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
-        public System.Collections.Generic.IList<Usage> Value { get; set; }
+        public System.Collections.Generic.IList<UsageInner> Value { get; set; }
 
     }
 }

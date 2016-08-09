@@ -17,12 +17,12 @@ namespace Microsoft.Azure.Management.V2.Storage
 
         public PagedList<IStorageUsage> List()
         {
-            if (client.List() == null || client.List().Value == null)
+            if (client.List() == null)
             {
                 return PagedList<UsageInner>.EmptyPagedList<IStorageUsage>();
             }
 
-            IEnumerable<UsageInner> usages = client.List().Value;
+            IEnumerable<UsageInner> usages = client.List();
             var pagedList = new PagedList<UsageInner>(usages);
             return WrapList(pagedList);
         }
