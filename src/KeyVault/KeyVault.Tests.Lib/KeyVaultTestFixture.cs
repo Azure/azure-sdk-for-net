@@ -26,8 +26,6 @@ using Microsoft.Azure.KeyVault;
 using Microsoft.Azure.KeyVault.Internal;
 using Microsoft.Azure.KeyVault.Models;
 using Microsoft.Azure.KeyVault.WebKey;
-using Microsoft.Azure.Management.KeyVault;
-using Microsoft.Azure.Management.KeyVault.Models;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
@@ -47,7 +45,7 @@ namespace KeyVault.Tests
         public ClientCredential clientCredential;
 
         // Required for cleaning up at the end of the test
-        private string rgName = "", vaultName = "", appObjectId = "";
+        private string rgName = "", appObjectId = "";
         private bool fromConfig;
         private TokenCache tokenCache;
 
@@ -55,7 +53,7 @@ namespace KeyVault.Tests
         {
             Initialize(string.Empty);
 
-            if (HttpMockServer.Mode == HttpRecorderMode.Record)
+            if (vaultAddress != null && HttpMockServer.Mode == HttpRecorderMode.Record)
             { 
                 //Create one key to use for testing. Key creation is expensive.
                 var myClient = new KeyVaultClient(new TestKeyVaultCredential(GetAccessToken), GetHandlers());
@@ -80,38 +78,6 @@ namespace KeyVault.Tests
             {
                 fromConfig = FromConfiguration();
             }
-        }
-        private Vault CreateVault(KeyVaultManagementClient mgmtClient, string location, string tenantId, ServicePrincipal servicePrincipal)
-        {
-            var createResponse = mgmtClient.Vaults.CreateOrUpdate(
-                resourceGroupName: rgName,
-                vaultName: vaultName,
-                parameters: new VaultCreateOrUpdateParameters
-                {
-                    Location = location,
-                    Tags = new Dictionary<string, string>(),
-                    Properties = new VaultProperties
-                    {
-                        EnabledForDeployment = true,
-                        Sku = new Microsoft.Azure.Management.KeyVault.Models.Sku { Family = "A", Name = SkuName.Premium },
-                        TenantId = Guid.Parse(tenantId),
-                        VaultUri = "",
-                        AccessPolicies = new[]
-                        {
-                            new AccessPolicyEntry
-                            {
-                                TenantId = Guid.Parse(tenantId),
-                                ObjectId = Guid.Parse(servicePrincipal.ObjectId),
-                                Permissions = new Permissions {
-                                    Keys = new string[]{"all"},
-                                    Secrets = new string[]{"all"}
-                                }
-                            }
-                        }
-                    }
-                }
-                );
-            return createResponse;
         }
 
         private static string GetKeyVaultLocation(ResourceManagementClient resourcesClient)
@@ -211,14 +177,12 @@ namespace KeyVault.Tests
             {
                 var testEnv = TestEnvironmentFactory.GetTestEnvironment();
                 var context = new MockContext();
-
-                var mgmtClient = context.GetServiceClient<KeyVaultManagementClient>();
+                
                 var resourcesClient = context.GetServiceClient<ResourceManagementClient>();
                 var graphClient = context.GetServiceClient<GraphRbacManagementClient>();
                 graphClient.TenantID = testEnv.Tenant;
                 graphClient.BaseUri = new Uri("https://graph.windows.net");
-
-                mgmtClient.Vaults.Delete(rgName, vaultName);
+                
                 graphClient.Application.Delete(appObjectId);
                 resourcesClient.ResourceGroups.Delete(rgName);
             }
