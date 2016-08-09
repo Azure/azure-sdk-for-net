@@ -200,15 +200,15 @@ namespace Networks.Tests
                 var putNicResponse = networkManagementClient.NetworkInterfaces.CreateOrUpdate(resourceGroupName, nicName, nicParameters);
 
                 // Check Ip Address availability API
-                var responseAvailable = networkManagementClient.CheckIpAddressAvailability(resourceGroupName, vnetName, "10.0.1.10");
+                var responseAvailable = networkManagementClient.VirtualNetworks.CheckIPAddressAvailability(resourceGroupName, vnetName, "10.0.1.10");
 
                 Assert.True(responseAvailable.Available);
-                Assert.Null(responseAvailable.AvailableIpAddresses);
+                Assert.Null(responseAvailable.AvailableIPAddresses);
 
-                var responseTaken = networkManagementClient.CheckIpAddressAvailability(resourceGroupName, vnetName, "10.0.1.9");
+                var responseTaken = networkManagementClient.VirtualNetworks.CheckIPAddressAvailability(resourceGroupName, vnetName, "10.0.1.9");
 
                 Assert.False(responseTaken.Available);
-                Assert.Equal(5, responseTaken.AvailableIpAddresses.Count);
+                Assert.Equal(5, responseTaken.AvailableIPAddresses.Count);
 
                 networkManagementClient.NetworkInterfaces.Delete(resourceGroupName, nicName);
                 networkManagementClient.VirtualNetworks.Delete(resourceGroupName, vnetName);

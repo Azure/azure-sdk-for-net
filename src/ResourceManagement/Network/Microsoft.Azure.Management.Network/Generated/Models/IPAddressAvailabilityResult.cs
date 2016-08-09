@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Response for CheckIpAddressAvailability Api servive call
+    /// Response for CheckIPAddressAvailability Api service call
     /// </summary>
     public partial class IPAddressAvailabilityResult
     {
@@ -31,24 +31,24 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the IPAddressAvailabilityResult
         /// class.
         /// </summary>
-        public IPAddressAvailabilityResult(bool? available = default(bool?), IList<string> availableIpAddresses = default(IList<string>))
+        public IPAddressAvailabilityResult(bool? available = default(bool?), IList<string> availableIPAddresses = default(IList<string>))
         {
             Available = available;
-            AvailableIpAddresses = availableIpAddresses;
+            AvailableIPAddresses = availableIPAddresses;
         }
 
         /// <summary>
-        /// Private Ip address availability (True/False)
+        /// Private IP address availability
         /// </summary>
         [JsonProperty(PropertyName = "available")]
         public bool? Available { get; set; }
 
         /// <summary>
-        /// Other available private Ip addresses if the asked for address is
-        /// taken
+        /// Contains other available private IP addresses if the asked for
+        /// address is taken
         /// </summary>
-        [JsonProperty(PropertyName = "availableIpAddresses")]
-        public IList<string> AvailableIpAddresses { get; set; }
+        [JsonProperty(PropertyName = "availableIPAddresses")]
+        public IList<string> AvailableIPAddresses { get; set; }
 
     }
 }
