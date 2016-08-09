@@ -191,5 +191,25 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<DnsNameAvailabilityResult>> CheckDnsNameAvailabilityWithHttpMessagesAsync(string location, string domainNameLabel = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <summary>
+        /// Checks whether a private Ip address is available for use.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='virtualNetworkName'>
+        /// The name of the virtual network.
+        /// </param>
+        /// <param name='ipAddress'>
+        /// The private Ip address to be verified.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPAddressAvailabilityResult>> CheckIpAddressAvailabilityWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, string ipAddress = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
     }
 }

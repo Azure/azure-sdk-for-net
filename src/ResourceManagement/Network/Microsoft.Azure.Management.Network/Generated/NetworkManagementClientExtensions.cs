@@ -64,5 +64,51 @@ namespace Microsoft.Azure.Management.Network
                 }
             }
 
+            /// <summary>
+            /// Checks whether a private Ip address is available for use.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkName'>
+            /// The name of the virtual network.
+            /// </param>
+            /// <param name='ipAddress'>
+            /// The private Ip address to be verified.
+            /// </param>
+            public static IPAddressAvailabilityResult CheckIpAddressAvailability(this INetworkManagementClient operations, string resourceGroupName, string virtualNetworkName, string ipAddress = default(string))
+            {
+                return Task.Factory.StartNew(s => ((INetworkManagementClient)s).CheckIpAddressAvailabilityAsync(resourceGroupName, virtualNetworkName, ipAddress), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Checks whether a private Ip address is available for use.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='virtualNetworkName'>
+            /// The name of the virtual network.
+            /// </param>
+            /// <param name='ipAddress'>
+            /// The private Ip address to be verified.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPAddressAvailabilityResult> CheckIpAddressAvailabilityAsync(this INetworkManagementClient operations, string resourceGroupName, string virtualNetworkName, string ipAddress = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CheckIpAddressAvailabilityWithHttpMessagesAsync(resourceGroupName, virtualNetworkName, ipAddress, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }
