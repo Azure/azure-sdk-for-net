@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// VpnClientConfiguration for P2S client
@@ -37,7 +31,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param
         /// name="vpnClientRevokedCertificates">VpnClientRevokedCertificate
         /// for Virtual network gateway.</param>
-        public VpnClientConfiguration(AddressSpace vpnClientAddressPool = default(AddressSpace), IList<VpnClientRootCertificate> vpnClientRootCertificates = default(IList<VpnClientRootCertificate>), IList<VpnClientRevokedCertificate> vpnClientRevokedCertificates = default(IList<VpnClientRevokedCertificate>))
+        public VpnClientConfiguration(AddressSpace vpnClientAddressPool = default(AddressSpace), System.Collections.Generic.IList<VpnClientRootCertificateInner> vpnClientRootCertificates = default(System.Collections.Generic.IList<VpnClientRootCertificateInner>), System.Collections.Generic.IList<VpnClientRevokedCertificateInner> vpnClientRevokedCertificates = default(System.Collections.Generic.IList<VpnClientRevokedCertificateInner>))
         {
             VpnClientAddressPool = vpnClientAddressPool;
             VpnClientRootCertificates = vpnClientRootCertificates;
@@ -48,21 +42,21 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets the reference of the Address space resource which
         /// represents Address space for P2S VpnClient.
         /// </summary>
-        [JsonProperty(PropertyName = "vpnClientAddressPool")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "vpnClientAddressPool")]
         public AddressSpace VpnClientAddressPool { get; set; }
 
         /// <summary>
         /// Gets or sets vpnClientRootCertificate for Virtual network gateway.
         /// </summary>
-        [JsonProperty(PropertyName = "vpnClientRootCertificates")]
-        public IList<VpnClientRootCertificate> VpnClientRootCertificates { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "vpnClientRootCertificates")]
+        public System.Collections.Generic.IList<VpnClientRootCertificateInner> VpnClientRootCertificates { get; set; }
 
         /// <summary>
         /// Gets or sets vpnClientRevokedCertificate for Virtual network
         /// gateway.
         /// </summary>
-        [JsonProperty(PropertyName = "vpnClientRevokedCertificates")]
-        public IList<VpnClientRevokedCertificate> VpnClientRevokedCertificates { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "vpnClientRevokedCertificates")]
+        public System.Collections.Generic.IList<VpnClientRevokedCertificateInner> VpnClientRevokedCertificates { get; set; }
 
     }
 }

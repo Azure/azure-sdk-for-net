@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Tag information.
@@ -29,9 +23,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the TagValueInner class.
         /// </summary>
-        /// <param name="id">Gets or sets the tag ID.</param>
-        /// <param name="tagValueProperty">Gets or sets the tag value.</param>
-        /// <param name="count">Gets or sets the tag value count.</param>
+        /// <param name="id">The tag ID.</param>
+        /// <param name="tagValueProperty">The tag value.</param>
+        /// <param name="count">The tag value count.</param>
         public TagValueInner(string id = default(string), string tagValueProperty = default(string), TagCount count = default(TagCount))
         {
             Id = id;
@@ -42,19 +36,19 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Gets or sets the tag ID.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets the tag value.
         /// </summary>
-        [JsonProperty(PropertyName = "tagValue")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "tagValue")]
         public string TagValueProperty { get; set; }
 
         /// <summary>
         /// Gets or sets the tag value count.
         /// </summary>
-        [JsonProperty(PropertyName = "count")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "count")]
         public TagCount Count { get; set; }
 
     }

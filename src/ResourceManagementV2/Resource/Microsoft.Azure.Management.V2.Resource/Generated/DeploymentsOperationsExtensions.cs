@@ -8,15 +8,9 @@
 
 namespace Microsoft.Azure.Management.ResourceManager
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure.OData;
-    using Microsoft.Rest.Azure;
-    using Models;
+   using Microsoft.Rest.Azure;
+   using Models;
 
     /// <summary>
     /// Extension methods for DeploymentsOperations.
@@ -37,7 +31,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </param>
             public static void Delete(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName)
             {
-                Task.Factory.StartNew(s => ((IDeploymentsOperations)s).DeleteAsync(resourceGroupName, deploymentName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IDeploymentsOperations)s).DeleteAsync(resourceGroupName, deploymentName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -55,7 +49,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task DeleteAsync(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.DeleteWithHttpMessagesAsync(resourceGroupName, deploymentName, null, cancellationToken).ConfigureAwait(false);
             }
@@ -74,7 +68,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </param>
             public static void BeginDelete(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName)
             {
-                Task.Factory.StartNew(s => ((IDeploymentsOperations)s).BeginDeleteAsync(resourceGroupName, deploymentName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IDeploymentsOperations)s).BeginDeleteAsync(resourceGroupName, deploymentName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -92,7 +86,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginDeleteAsync(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task BeginDeleteAsync(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, deploymentName, null, cancellationToken).ConfigureAwait(false);
             }
@@ -111,7 +105,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </param>
             public static bool CheckExistence(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName)
             {
-                return Task.Factory.StartNew(s => ((IDeploymentsOperations)s).CheckExistenceAsync(resourceGroupName, deploymentName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IDeploymentsOperations)s).CheckExistenceAsync(resourceGroupName, deploymentName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -129,7 +123,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<bool> CheckExistenceAsync(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<bool> CheckExistenceAsync(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.CheckExistenceWithHttpMessagesAsync(resourceGroupName, deploymentName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -154,7 +148,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </param>
             public static DeploymentExtendedInner CreateOrUpdate(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, DeploymentInner parameters)
             {
-                return Task.Factory.StartNew(s => ((IDeploymentsOperations)s).CreateOrUpdateAsync(resourceGroupName, deploymentName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IDeploymentsOperations)s).CreateOrUpdateAsync(resourceGroupName, deploymentName, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -175,7 +169,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DeploymentExtendedInner> CreateOrUpdateAsync(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, DeploymentInner parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<DeploymentExtendedInner> CreateOrUpdateAsync(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, DeploymentInner parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, deploymentName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -200,7 +194,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </param>
             public static DeploymentExtendedInner BeginCreateOrUpdate(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, DeploymentInner parameters)
             {
-                return Task.Factory.StartNew(s => ((IDeploymentsOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, deploymentName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IDeploymentsOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, deploymentName, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -221,7 +215,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DeploymentExtendedInner> BeginCreateOrUpdateAsync(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, DeploymentInner parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<DeploymentExtendedInner> BeginCreateOrUpdateAsync(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, DeploymentInner parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, deploymentName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -243,7 +237,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </param>
             public static DeploymentExtendedInner Get(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName)
             {
-                return Task.Factory.StartNew(s => ((IDeploymentsOperations)s).GetAsync(resourceGroupName, deploymentName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IDeploymentsOperations)s).GetAsync(resourceGroupName, deploymentName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -261,7 +255,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DeploymentExtendedInner> GetAsync(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<DeploymentExtendedInner> GetAsync(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, deploymentName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -283,7 +277,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </param>
             public static void Cancel(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName)
             {
-                Task.Factory.StartNew(s => ((IDeploymentsOperations)s).CancelAsync(resourceGroupName, deploymentName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IDeploymentsOperations)s).CancelAsync(resourceGroupName, deploymentName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -301,7 +295,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CancelAsync(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task CancelAsync(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.CancelWithHttpMessagesAsync(resourceGroupName, deploymentName, null, cancellationToken).ConfigureAwait(false);
             }
@@ -323,7 +317,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </param>
             public static DeploymentValidateResultInner Validate(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, DeploymentInner parameters)
             {
-                return Task.Factory.StartNew(s => ((IDeploymentsOperations)s).ValidateAsync(resourceGroupName, deploymentName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IDeploymentsOperations)s).ValidateAsync(resourceGroupName, deploymentName, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -344,7 +338,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DeploymentValidateResultInner> ValidateAsync(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, DeploymentInner parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<DeploymentValidateResultInner> ValidateAsync(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, DeploymentInner parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ValidateWithHttpMessagesAsync(resourceGroupName, deploymentName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -366,7 +360,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </param>
             public static DeploymentExportResultInner ExportTemplate(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName)
             {
-                return Task.Factory.StartNew(s => ((IDeploymentsOperations)s).ExportTemplateAsync(resourceGroupName, deploymentName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IDeploymentsOperations)s).ExportTemplateAsync(resourceGroupName, deploymentName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -384,7 +378,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DeploymentExportResultInner> ExportTemplateAsync(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<DeploymentExportResultInner> ExportTemplateAsync(this IDeploymentsOperations operations, string resourceGroupName, string deploymentName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ExportTemplateWithHttpMessagesAsync(resourceGroupName, deploymentName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -404,9 +398,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<DeploymentExtendedInner> List(this IDeploymentsOperations operations, string resourceGroupName, ODataQuery<DeploymentExtendedFilterInner> odataQuery = default(ODataQuery<DeploymentExtendedFilterInner>))
+            public static Microsoft.Rest.Azure.IPage<DeploymentExtendedInner> List(this IDeploymentsOperations operations, string resourceGroupName, Microsoft.Rest.Azure.OData.ODataQuery<DeploymentExtendedFilterInner> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<DeploymentExtendedFilterInner>))
             {
-                return Task.Factory.StartNew(s => ((IDeploymentsOperations)s).ListAsync(resourceGroupName, odataQuery), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IDeploymentsOperations)s).ListAsync(resourceGroupName, odataQuery), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -424,7 +418,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<DeploymentExtendedInner>> ListAsync(this IDeploymentsOperations operations, string resourceGroupName, ODataQuery<DeploymentExtendedFilterInner> odataQuery = default(ODataQuery<DeploymentExtendedFilterInner>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<DeploymentExtendedInner>> ListAsync(this IDeploymentsOperations operations, string resourceGroupName, Microsoft.Rest.Azure.OData.ODataQuery<DeploymentExtendedFilterInner> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<DeploymentExtendedFilterInner>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -441,9 +435,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<DeploymentExtendedInner> ListNext(this IDeploymentsOperations operations, string nextPageLink)
+            public static Microsoft.Rest.Azure.IPage<DeploymentExtendedInner> ListNext(this IDeploymentsOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IDeploymentsOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IDeploymentsOperations)s).ListNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -458,7 +452,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<DeploymentExtendedInner>> ListNextAsync(this IDeploymentsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<DeploymentExtendedInner>> ListNextAsync(this IDeploymentsOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Describes an upgrade policy - automatic or manual.
@@ -40,7 +34,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets the upgrade mode. Possible values include:
         /// 'Automatic', 'Manual'
         /// </summary>
-        [JsonProperty(PropertyName = "mode")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "mode")]
         public UpgradeMode? Mode { get; set; }
 
     }

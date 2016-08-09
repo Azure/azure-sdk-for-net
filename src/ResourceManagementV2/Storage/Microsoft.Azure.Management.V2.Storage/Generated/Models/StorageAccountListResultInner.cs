@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The list storage accounts operation response.
@@ -33,7 +27,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// </summary>
         /// <param name="value">Gets the list of storage accounts and their
         /// properties.</param>
-        public StorageAccountListResultInner(IList<StorageAccountInner> value = default(IList<StorageAccountInner>))
+        public StorageAccountListResultInner(System.Collections.Generic.IList<StorageAccountInner> value = default(System.Collections.Generic.IList<StorageAccountInner>))
         {
             Value = value;
         }
@@ -41,8 +35,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Gets the list of storage accounts and their properties.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<StorageAccountInner> Value { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
+        public System.Collections.Generic.IList<StorageAccountInner> Value { get; private set; }
 
     }
 }

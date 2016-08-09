@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The SKU of the storage account.
@@ -48,20 +42,20 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// accountType. Possible values include: 'Standard_LRS',
         /// 'Standard_GRS', 'Standard_RAGRS', 'Standard_ZRS', 'Premium_LRS'
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public SkuName Name { get; set; }
 
         /// <summary>
         /// Gets the sku tier. This is based on the SKU name. Possible values
         /// include: 'Standard', 'Premium'
         /// </summary>
-        [JsonProperty(PropertyName = "tier")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "tier")]
         public SkuTier? Tier { get; private set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

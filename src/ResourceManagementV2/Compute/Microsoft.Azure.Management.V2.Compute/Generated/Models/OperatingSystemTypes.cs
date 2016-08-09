@@ -8,19 +8,16 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for OperatingSystemTypes.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum OperatingSystemTypes
     {
-        [EnumMember(Value = "Windows")]
+        [System.Runtime.Serialization.EnumMember(Value = "Windows")]
         Windows,
-        [EnumMember(Value = "Linux")]
+        [System.Runtime.Serialization.EnumMember(Value = "Linux")]
         Linux
     }
 }

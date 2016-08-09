@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Dns settings of a network interface
@@ -40,7 +34,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="internalFqdn">Gets or sets the internal fqdn.</param>
         /// <param name="internalDomainNameSuffix">Gets or sets internal
         /// domain name suffix of the NIC.</param>
-        public NetworkInterfaceDnsSettings(IList<string> dnsServers = default(IList<string>), IList<string> appliedDnsServers = default(IList<string>), string internalDnsNameLabel = default(string), string internalFqdn = default(string), string internalDomainNameSuffix = default(string))
+        public NetworkInterfaceDnsSettings(System.Collections.Generic.IList<string> dnsServers = default(System.Collections.Generic.IList<string>), System.Collections.Generic.IList<string> appliedDnsServers = default(System.Collections.Generic.IList<string>), string internalDnsNameLabel = default(string), string internalFqdn = default(string), string internalDomainNameSuffix = default(string))
         {
             DnsServers = dnsServers;
             AppliedDnsServers = appliedDnsServers;
@@ -52,31 +46,31 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets list of DNS servers IP addresses
         /// </summary>
-        [JsonProperty(PropertyName = "dnsServers")]
-        public IList<string> DnsServers { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "dnsServers")]
+        public System.Collections.Generic.IList<string> DnsServers { get; set; }
 
         /// <summary>
         /// Gets or sets list of Applied DNS servers IP addresses
         /// </summary>
-        [JsonProperty(PropertyName = "appliedDnsServers")]
-        public IList<string> AppliedDnsServers { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "appliedDnsServers")]
+        public System.Collections.Generic.IList<string> AppliedDnsServers { get; set; }
 
         /// <summary>
         /// Gets or sets the internal DNS name
         /// </summary>
-        [JsonProperty(PropertyName = "internalDnsNameLabel")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "internalDnsNameLabel")]
         public string InternalDnsNameLabel { get; set; }
 
         /// <summary>
         /// Gets or sets the internal fqdn.
         /// </summary>
-        [JsonProperty(PropertyName = "internalFqdn")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "internalFqdn")]
         public string InternalFqdn { get; set; }
 
         /// <summary>
         /// Gets or sets internal domain name suffix of the NIC.
         /// </summary>
-        [JsonProperty(PropertyName = "internalDomainNameSuffix")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "internalDomainNameSuffix")]
         public string InternalDomainNameSuffix { get; set; }
 
     }

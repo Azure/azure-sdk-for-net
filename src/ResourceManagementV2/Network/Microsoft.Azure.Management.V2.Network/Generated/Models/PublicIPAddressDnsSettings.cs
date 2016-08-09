@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Contains FQDN of the DNS record associated with the public IP address
@@ -58,7 +52,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// domain name label is specified, an A DNS record is created for
         /// the public IP in the Microsoft Azure DNS system.
         /// </summary>
-        [JsonProperty(PropertyName = "domainNameLabel")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "domainNameLabel")]
         public string DomainNameLabel { get; set; }
 
         /// <summary>
@@ -66,7 +60,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// associated with the public IP. This is the concatenation of the
         /// domainNameLabel and the regionalized DNS zone.
         /// </summary>
-        [JsonProperty(PropertyName = "fqdn")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "fqdn")]
         public string Fqdn { get; set; }
 
         /// <summary>
@@ -76,7 +70,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// pointing from the IP address in the in-addr.arpa domain to the
         /// reverse FQDN.
         /// </summary>
-        [JsonProperty(PropertyName = "reverseFqdn")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "reverseFqdn")]
         public string ReverseFqdn { get; set; }
 
     }

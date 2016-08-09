@@ -8,17 +8,14 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for PassNames.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum PassNames
     {
-        [EnumMember(Value = "oobeSystem")]
+        [System.Runtime.Serialization.EnumMember(Value = "oobeSystem")]
         OobeSystem
     }
 }

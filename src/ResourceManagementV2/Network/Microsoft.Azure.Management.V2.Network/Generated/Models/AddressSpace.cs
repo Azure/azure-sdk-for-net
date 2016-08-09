@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// AddressSpace contains an array of IP address ranges that can be used
@@ -32,7 +26,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         /// <param name="addressPrefixes">Gets or sets list of address blocks
         /// reserved for this virtual network in CIDR notation</param>
-        public AddressSpace(IList<string> addressPrefixes = default(IList<string>))
+        public AddressSpace(System.Collections.Generic.IList<string> addressPrefixes = default(System.Collections.Generic.IList<string>))
         {
             AddressPrefixes = addressPrefixes;
         }
@@ -41,8 +35,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets list of address blocks reserved for this virtual
         /// network in CIDR notation
         /// </summary>
-        [JsonProperty(PropertyName = "addressPrefixes")]
-        public IList<string> AddressPrefixes { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "addressPrefixes")]
+        public System.Collections.Generic.IList<string> AddressPrefixes { get; set; }
 
     }
 }

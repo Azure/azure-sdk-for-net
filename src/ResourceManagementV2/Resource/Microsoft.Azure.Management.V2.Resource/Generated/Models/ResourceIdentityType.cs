@@ -8,17 +8,14 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ResourceIdentityType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum ResourceIdentityType
     {
-        [EnumMember(Value = "SystemAssigned")]
+        [System.Runtime.Serialization.EnumMember(Value = "SystemAssigned")]
         SystemAssigned
     }
 }

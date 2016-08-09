@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The routes table associated with the ExpressRouteCircuit
@@ -48,31 +42,31 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets network.
         /// </summary>
-        [JsonProperty(PropertyName = "network")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "network")]
         public string Network { get; set; }
 
         /// <summary>
         /// Gets or sets nextHop
         /// </summary>
-        [JsonProperty(PropertyName = "nextHop")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "nextHop")]
         public string NextHop { get; set; }
 
         /// <summary>
         /// Gets or sets locPrf.
         /// </summary>
-        [JsonProperty(PropertyName = "locPrf")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "locPrf")]
         public string LocPrf { get; set; }
 
         /// <summary>
         /// Gets or sets weight.
         /// </summary>
-        [JsonProperty(PropertyName = "weight")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "weight")]
         public int? Weight { get; set; }
 
         /// <summary>
         /// Gets or sets path .
         /// </summary>
-        [JsonProperty(PropertyName = "path")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "path")]
         public string Path { get; set; }
 
     }

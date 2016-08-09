@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Response for ListVirtualNetworks Api servive call
@@ -35,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// group</param>
         /// <param name="nextLink">Gets the URL to get the next set of
         /// results.</param>
-        public VirtualNetworkListResultInner(IList<VirtualNetworkInner> value = default(IList<VirtualNetworkInner>), string nextLink = default(string))
+        public VirtualNetworkListResultInner(System.Collections.Generic.IList<VirtualNetworkInner> value = default(System.Collections.Generic.IList<VirtualNetworkInner>), string nextLink = default(string))
         {
             Value = value;
             NextLink = nextLink;
@@ -44,13 +38,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets list of VirtualNetworks in a resource group
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<VirtualNetworkInner> Value { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
+        public System.Collections.Generic.IList<VirtualNetworkInner> Value { get; set; }
 
         /// <summary>
         /// Gets the URL to get the next set of results.
         /// </summary>
-        [JsonProperty(PropertyName = "nextLink")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "nextLink")]
         public string NextLink { get; set; }
 
     }

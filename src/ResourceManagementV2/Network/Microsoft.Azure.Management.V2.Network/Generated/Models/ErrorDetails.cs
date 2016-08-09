@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     public partial class ErrorDetails
     {
@@ -35,17 +29,17 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "code")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "code")]
         public string Code { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "target")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "target")]
         public string Target { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "message")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "message")]
         public string Message { get; set; }
 
     }

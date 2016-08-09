@@ -8,23 +8,17 @@
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Describes Storage Resource Usage.
     /// </summary>
-    public partial class UsageInner
+    public partial class Usage
     {
         /// <summary>
         /// Initializes a new instance of the Usage class.
         /// </summary>
-        public UsageInner() { }
+        public Usage() { }
 
         /// <summary>
         /// Initializes a new instance of the Usage class.
@@ -37,7 +31,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="limit">Gets the maximum count of the resources that
         /// can be allocated in the subscription.</param>
         /// <param name="name">Gets the name of the type of usage.</param>
-        public UsageInner(UsageUnit? unit = default(UsageUnit?), int? currentValue = default(int?), int? limit = default(int?), UsageName name = default(UsageName))
+        public Usage(UsageUnit? unit = default(UsageUnit?), int? currentValue = default(int?), int? limit = default(int?), UsageName name = default(UsageName))
         {
             Unit = unit;
             CurrentValue = currentValue;
@@ -49,27 +43,27 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Gets the unit of measurement. Possible values include: 'Count',
         /// 'Bytes', 'Seconds', 'Percent', 'CountsPerSecond', 'BytesPerSecond'
         /// </summary>
-        [JsonProperty(PropertyName = "unit")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "unit")]
         public UsageUnit? Unit { get; private set; }
 
         /// <summary>
         /// Gets the current count of the allocated resources in the
         /// subscription.
         /// </summary>
-        [JsonProperty(PropertyName = "currentValue")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "currentValue")]
         public int? CurrentValue { get; private set; }
 
         /// <summary>
         /// Gets the maximum count of the resources that can be allocated in
         /// the subscription.
         /// </summary>
-        [JsonProperty(PropertyName = "limit")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "limit")]
         public int? Limit { get; private set; }
 
         /// <summary>
         /// Gets the name of the type of usage.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public UsageName Name { get; private set; }
 
     }

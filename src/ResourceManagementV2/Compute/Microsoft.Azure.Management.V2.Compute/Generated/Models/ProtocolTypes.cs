@@ -8,19 +8,16 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ProtocolTypes.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum ProtocolTypes
     {
-        [EnumMember(Value = "Http")]
+        [System.Runtime.Serialization.EnumMember(Value = "Http")]
         Http,
-        [EnumMember(Value = "Https")]
+        [System.Runtime.Serialization.EnumMember(Value = "Https")]
         Https
     }
 }

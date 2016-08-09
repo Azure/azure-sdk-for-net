@@ -8,19 +8,16 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for DeploymentMode.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum DeploymentMode
     {
-        [EnumMember(Value = "Incremental")]
+        [System.Runtime.Serialization.EnumMember(Value = "Incremental")]
         Incremental,
-        [EnumMember(Value = "Complete")]
+        [System.Runtime.Serialization.EnumMember(Value = "Complete")]
         Complete
     }
 }

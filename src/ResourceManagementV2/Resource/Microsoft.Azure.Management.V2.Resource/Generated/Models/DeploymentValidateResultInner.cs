@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Information from validate template deployment response.
@@ -31,8 +25,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// Initializes a new instance of the DeploymentValidateResultInner
         /// class.
         /// </summary>
-        /// <param name="error">Gets or sets validation error.</param>
-        /// <param name="properties">Gets or sets the template deployment
+        /// <param name="error">Validation error.</param>
+        /// <param name="properties">The template deployment
         /// properties.</param>
         public DeploymentValidateResultInner(ResourceManagementErrorWithDetails error = default(ResourceManagementErrorWithDetails), DeploymentPropertiesExtended properties = default(DeploymentPropertiesExtended))
         {
@@ -43,19 +37,19 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Gets or sets validation error.
         /// </summary>
-        [JsonProperty(PropertyName = "error")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "error")]
         public ResourceManagementErrorWithDetails Error { get; set; }
 
         /// <summary>
         /// Gets or sets the template deployment properties.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties")]
         public DeploymentPropertiesExtended Properties { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

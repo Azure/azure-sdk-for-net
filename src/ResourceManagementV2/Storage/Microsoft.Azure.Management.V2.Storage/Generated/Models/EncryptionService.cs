@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// An encrypted service.
@@ -37,7 +31,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// unencrypted blobs which were written after this time. This time
         /// is just to give a rough estimate of when encryption was
         /// enabled.</param>
-        public EncryptionService(bool? enabled = default(bool?), DateTime? lastEnabledTime = default(DateTime?))
+        public EncryptionService(bool? enabled = default(bool?), System.DateTime? lastEnabledTime = default(System.DateTime?))
         {
             Enabled = enabled;
             LastEnabledTime = lastEnabledTime;
@@ -47,7 +41,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Gets or sets a boolean indicating whether or not the service is
         /// encrypted.
         /// </summary>
-        [JsonProperty(PropertyName = "enabled")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary>
@@ -57,8 +51,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// after this time. This time is just to give a rough estimate of
         /// when encryption was enabled.
         /// </summary>
-        [JsonProperty(PropertyName = "lastEnabledTime")]
-        public DateTime? LastEnabledTime { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "lastEnabledTime")]
+        public System.DateTime? LastEnabledTime { get; private set; }
 
     }
 }

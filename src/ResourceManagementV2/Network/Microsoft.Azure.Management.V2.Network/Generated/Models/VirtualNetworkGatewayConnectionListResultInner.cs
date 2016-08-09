@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Response for ListVirtualNetworkGatewayConnections Api service call
@@ -35,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// that exists in a resource group</param>
         /// <param name="nextLink">Gets the URL to get the next set of
         /// results.</param>
-        public VirtualNetworkGatewayConnectionListResultInner(IList<VirtualNetworkGatewayConnectionInner> value = default(IList<VirtualNetworkGatewayConnectionInner>), string nextLink = default(string))
+        public VirtualNetworkGatewayConnectionListResultInner(System.Collections.Generic.IList<VirtualNetworkGatewayConnectionInner> value = default(System.Collections.Generic.IList<VirtualNetworkGatewayConnectionInner>), string nextLink = default(string))
         {
             Value = value;
             NextLink = nextLink;
@@ -45,13 +39,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets List of VirtualNetworkGatewayConnections that exists in a
         /// resource group
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<VirtualNetworkGatewayConnectionInner> Value { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
+        public System.Collections.Generic.IList<VirtualNetworkGatewayConnectionInner> Value { get; set; }
 
         /// <summary>
         /// Gets the URL to get the next set of results.
         /// </summary>
-        [JsonProperty(PropertyName = "nextLink")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "nextLink")]
         public string NextLink { get; set; }
 
     }

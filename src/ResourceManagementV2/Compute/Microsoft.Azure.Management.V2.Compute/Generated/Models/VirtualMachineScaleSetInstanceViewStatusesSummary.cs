@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Instance view statuses summary for virtual machines of a virtual
@@ -33,7 +27,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// VirtualMachineScaleSetInstanceViewStatusesSummary class.
         /// </summary>
         /// <param name="statusesSummary">the extensions information.</param>
-        public VirtualMachineScaleSetInstanceViewStatusesSummary(IList<VirtualMachineStatusCodeCount> statusesSummary = default(IList<VirtualMachineStatusCodeCount>))
+        public VirtualMachineScaleSetInstanceViewStatusesSummary(System.Collections.Generic.IList<VirtualMachineStatusCodeCount> statusesSummary = default(System.Collections.Generic.IList<VirtualMachineStatusCodeCount>))
         {
             StatusesSummary = statusesSummary;
         }
@@ -41,8 +35,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets the extensions information.
         /// </summary>
-        [JsonProperty(PropertyName = "statusesSummary")]
-        public IList<VirtualMachineStatusCodeCount> StatusesSummary { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "statusesSummary")]
+        public System.Collections.Generic.IList<VirtualMachineStatusCodeCount> StatusesSummary { get; private set; }
 
     }
 }

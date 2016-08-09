@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The instance view of a virtual machine scale set.
@@ -35,7 +29,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// the virtual machine scale set.</param>
         /// <param name="extensions">the extensions information.</param>
         /// <param name="statuses">the resource status information.</param>
-        public VirtualMachineScaleSetInstanceViewInner(VirtualMachineScaleSetInstanceViewStatusesSummary virtualMachine = default(VirtualMachineScaleSetInstanceViewStatusesSummary), IList<VirtualMachineScaleSetVMExtensionsSummary> extensions = default(IList<VirtualMachineScaleSetVMExtensionsSummary>), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>))
+        public VirtualMachineScaleSetInstanceViewInner(VirtualMachineScaleSetInstanceViewStatusesSummary virtualMachine = default(VirtualMachineScaleSetInstanceViewStatusesSummary), System.Collections.Generic.IList<VirtualMachineScaleSetVMExtensionsSummary> extensions = default(System.Collections.Generic.IList<VirtualMachineScaleSetVMExtensionsSummary>), System.Collections.Generic.IList<InstanceViewStatus> statuses = default(System.Collections.Generic.IList<InstanceViewStatus>))
         {
             VirtualMachine = virtualMachine;
             Extensions = extensions;
@@ -46,20 +40,20 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets the instance view status summary for the virtual machine
         /// scale set.
         /// </summary>
-        [JsonProperty(PropertyName = "virtualMachine")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "virtualMachine")]
         public VirtualMachineScaleSetInstanceViewStatusesSummary VirtualMachine { get; private set; }
 
         /// <summary>
         /// Gets the extensions information.
         /// </summary>
-        [JsonProperty(PropertyName = "extensions")]
-        public IList<VirtualMachineScaleSetVMExtensionsSummary> Extensions { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "extensions")]
+        public System.Collections.Generic.IList<VirtualMachineScaleSetVMExtensionsSummary> Extensions { get; private set; }
 
         /// <summary>
         /// Gets or sets the resource status information.
         /// </summary>
-        [JsonProperty(PropertyName = "statuses")]
-        public IList<InstanceViewStatus> Statuses { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "statuses")]
+        public System.Collections.Generic.IList<InstanceViewStatus> Statuses { get; set; }
 
     }
 }

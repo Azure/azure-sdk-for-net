@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     public partial class ResourceManagementErrorWithDetails
     {
@@ -28,13 +22,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// Initializes a new instance of the
         /// ResourceManagementErrorWithDetails class.
         /// </summary>
-        /// <param name="code">Gets or sets the error code returned from the
+        /// <param name="code">The error code returned from the server.</param>
+        /// <param name="message">The error message returned from the
         /// server.</param>
-        /// <param name="message">Gets or sets the error message returned from
-        /// the server.</param>
-        /// <param name="target">Gets or sets the target of the error.</param>
-        /// <param name="details">Gets or sets validation error.</param>
-        public ResourceManagementErrorWithDetails(string code, string message, string target = default(string), IList<ResourceManagementErrorWithDetails> details = default(IList<ResourceManagementErrorWithDetails>))
+        /// <param name="target">The target of the error.</param>
+        /// <param name="details">Validation error.</param>
+        public ResourceManagementErrorWithDetails(string code, string message, string target = default(string), System.Collections.Generic.IList<ResourceManagementErrorWithDetails> details = default(System.Collections.Generic.IList<ResourceManagementErrorWithDetails>))
         {
             Code = code;
             Message = message;
@@ -45,42 +38,42 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Gets or sets the error code returned from the server.
         /// </summary>
-        [JsonProperty(PropertyName = "code")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "code")]
         public string Code { get; set; }
 
         /// <summary>
         /// Gets or sets the error message returned from the server.
         /// </summary>
-        [JsonProperty(PropertyName = "message")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "message")]
         public string Message { get; set; }
 
         /// <summary>
         /// Gets or sets the target of the error.
         /// </summary>
-        [JsonProperty(PropertyName = "target")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "target")]
         public string Target { get; set; }
 
         /// <summary>
         /// Gets or sets validation error.
         /// </summary>
-        [JsonProperty(PropertyName = "details")]
-        public IList<ResourceManagementErrorWithDetails> Details { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "details")]
+        public System.Collections.Generic.IList<ResourceManagementErrorWithDetails> Details { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (Code == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Code");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Code");
             }
             if (Message == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Message");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Message");
             }
             if (this.Details != null)
             {

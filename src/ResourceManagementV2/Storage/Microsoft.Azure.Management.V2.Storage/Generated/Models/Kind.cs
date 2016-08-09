@@ -8,19 +8,16 @@
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for Kind.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum Kind
     {
-        [EnumMember(Value = "Storage")]
+        [System.Runtime.Serialization.EnumMember(Value = "Storage")]
         Storage,
-        [EnumMember(Value = "BlobStorage")]
+        [System.Runtime.Serialization.EnumMember(Value = "BlobStorage")]
         BlobStorage
     }
 }

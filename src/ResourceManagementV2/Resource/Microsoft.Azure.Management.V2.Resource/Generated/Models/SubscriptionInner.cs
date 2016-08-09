@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Subscription information.
@@ -51,31 +45,31 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// Gets or sets the ID of the resource
         /// (/subscriptions/SubscriptionId).
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets the subscription Id.
         /// </summary>
-        [JsonProperty(PropertyName = "subscriptionId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "subscriptionId")]
         public string SubscriptionId { get; set; }
 
         /// <summary>
         /// Gets or sets the subscription display name
         /// </summary>
-        [JsonProperty(PropertyName = "displayName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
         /// Gets or sets the subscription state
         /// </summary>
-        [JsonProperty(PropertyName = "state")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "state")]
         public string State { get; set; }
 
         /// <summary>
         /// Gets or sets the subscription policies.
         /// </summary>
-        [JsonProperty(PropertyName = "subscriptionPolicies")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "subscriptionPolicies")]
         public SubscriptionPolicies SubscriptionPolicies { get; set; }
 
     }

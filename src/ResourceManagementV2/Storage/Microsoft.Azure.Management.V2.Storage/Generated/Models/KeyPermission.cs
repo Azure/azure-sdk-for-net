@@ -8,19 +8,16 @@
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for KeyPermission.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum KeyPermission
     {
-        [EnumMember(Value = "READ")]
+        [System.Runtime.Serialization.EnumMember(Value = "READ")]
         READ,
-        [EnumMember(Value = "FULL")]
+        [System.Runtime.Serialization.EnumMember(Value = "FULL")]
         FULL
     }
 }

@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Entity representing the reference to the template.
@@ -41,27 +35,27 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Gets or sets URI referencing the template.
         /// </summary>
-        [JsonProperty(PropertyName = "uri")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "uri")]
         public string Uri { get; set; }
 
         /// <summary>
         /// Gets or sets if included it must match the ContentVersion in the
         /// template.
         /// </summary>
-        [JsonProperty(PropertyName = "contentVersion")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "contentVersion")]
         public string ContentVersion { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (Uri == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Uri");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Uri");
             }
         }
     }

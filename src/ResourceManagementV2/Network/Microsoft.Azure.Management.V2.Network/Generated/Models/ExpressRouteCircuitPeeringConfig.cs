@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Specfies the peering config
@@ -41,7 +35,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// peering.</param>
         /// <param name="routingRegistryName">Gets or Sets RoutingRegistryName
         /// of the config.</param>
-        public ExpressRouteCircuitPeeringConfig(IList<string> advertisedPublicPrefixes = default(IList<string>), string advertisedPublicPrefixesState = default(string), int? customerASN = default(int?), string routingRegistryName = default(string))
+        public ExpressRouteCircuitPeeringConfig(System.Collections.Generic.IList<string> advertisedPublicPrefixes = default(System.Collections.Generic.IList<string>), string advertisedPublicPrefixesState = default(string), int? customerASN = default(int?), string routingRegistryName = default(string))
         {
             AdvertisedPublicPrefixes = advertisedPublicPrefixes;
             AdvertisedPublicPrefixesState = advertisedPublicPrefixesState;
@@ -52,27 +46,27 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets the reference of AdvertisedPublicPrefixes
         /// </summary>
-        [JsonProperty(PropertyName = "advertisedPublicPrefixes")]
-        public IList<string> AdvertisedPublicPrefixes { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "advertisedPublicPrefixes")]
+        public System.Collections.Generic.IList<string> AdvertisedPublicPrefixes { get; set; }
 
         /// <summary>
         /// Gets or sets AdvertisedPublicPrefixState of the Peering resource .
         /// Possible values include: 'NotConfigured', 'Configuring',
         /// 'Configured', 'ValidationNeeded'
         /// </summary>
-        [JsonProperty(PropertyName = "advertisedPublicPrefixesState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "advertisedPublicPrefixesState")]
         public string AdvertisedPublicPrefixesState { get; set; }
 
         /// <summary>
         /// Gets or Sets CustomerAsn of the peering.
         /// </summary>
-        [JsonProperty(PropertyName = "customerASN")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "customerASN")]
         public int? CustomerASN { get; set; }
 
         /// <summary>
         /// Gets or Sets RoutingRegistryName of the config.
         /// </summary>
-        [JsonProperty(PropertyName = "routingRegistryName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "routingRegistryName")]
         public string RoutingRegistryName { get; set; }
 
     }

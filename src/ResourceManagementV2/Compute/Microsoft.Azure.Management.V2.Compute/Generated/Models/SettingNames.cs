@@ -8,19 +8,16 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for SettingNames.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum SettingNames
     {
-        [EnumMember(Value = "AutoLogon")]
+        [System.Runtime.Serialization.EnumMember(Value = "AutoLogon")]
         AutoLogon,
-        [EnumMember(Value = "FirstLogonCommands")]
+        [System.Runtime.Serialization.EnumMember(Value = "FirstLogonCommands")]
         FirstLogonCommands
     }
 }

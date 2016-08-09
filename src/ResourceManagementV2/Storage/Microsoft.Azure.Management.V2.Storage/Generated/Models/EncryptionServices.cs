@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The encrypted services.
@@ -38,7 +32,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Gets or sets the blob service.
         /// </summary>
-        [JsonProperty(PropertyName = "blob")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "blob")]
         public EncryptionService Blob { get; set; }
 
     }

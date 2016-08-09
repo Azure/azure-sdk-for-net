@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Describes a diagnostics profile.
@@ -38,7 +32,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the boot diagnostics.
         /// </summary>
-        [JsonProperty(PropertyName = "bootDiagnostics")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "bootDiagnostics")]
         public BootDiagnostics BootDiagnostics { get; set; }
 
     }

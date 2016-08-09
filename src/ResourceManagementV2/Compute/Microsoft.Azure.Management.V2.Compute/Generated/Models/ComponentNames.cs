@@ -8,17 +8,14 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ComponentNames.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum ComponentNames
     {
-        [EnumMember(Value = "Microsoft-Windows-Shell-Setup")]
+        [System.Runtime.Serialization.EnumMember(Value = "Microsoft-Windows-Shell-Setup")]
         MicrosoftWindowsShellSetup
     }
 }

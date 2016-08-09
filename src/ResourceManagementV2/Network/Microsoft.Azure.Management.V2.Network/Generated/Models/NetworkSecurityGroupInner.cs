@@ -8,19 +8,13 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// NetworkSecurityGroup resource
     /// </summary>
-    [JsonTransformation]
-    public partial class NetworkSecurityGroupInner : Resource
+    [Microsoft.Rest.Serialization.JsonTransformation]
+    public partial class NetworkSecurityGroupInner : Microsoft.Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the NetworkSecurityGroupInner class.
@@ -44,7 +38,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// PublicIP resource Updating/Deleting/Failed</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated</param>
-        public NetworkSecurityGroupInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), IList<SecurityRuleInner> securityRules = default(IList<SecurityRuleInner>), IList<SecurityRuleInner> defaultSecurityRules = default(IList<SecurityRuleInner>), IList<NetworkInterfaceInner> networkInterfaces = default(IList<NetworkInterfaceInner>), IList<SubnetInner> subnets = default(IList<SubnetInner>), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        public NetworkSecurityGroupInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), System.Collections.Generic.IList<SecurityRuleInner> securityRules = default(System.Collections.Generic.IList<SecurityRuleInner>), System.Collections.Generic.IList<SecurityRuleInner> defaultSecurityRules = default(System.Collections.Generic.IList<SecurityRuleInner>), System.Collections.Generic.IList<NetworkInterfaceInner> networkInterfaces = default(System.Collections.Generic.IList<NetworkInterfaceInner>), System.Collections.Generic.IList<SubnetInner> subnets = default(System.Collections.Generic.IList<SubnetInner>), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
             : base(location, id, name, type, tags)
         {
             SecurityRules = securityRules;
@@ -59,46 +53,46 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets security rules of network security group
         /// </summary>
-        [JsonProperty(PropertyName = "properties.securityRules")]
-        public IList<SecurityRuleInner> SecurityRules { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.securityRules")]
+        public System.Collections.Generic.IList<SecurityRuleInner> SecurityRules { get; set; }
 
         /// <summary>
         /// Gets or default security rules of network security group
         /// </summary>
-        [JsonProperty(PropertyName = "properties.defaultSecurityRules")]
-        public IList<SecurityRuleInner> DefaultSecurityRules { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.defaultSecurityRules")]
+        public System.Collections.Generic.IList<SecurityRuleInner> DefaultSecurityRules { get; set; }
 
         /// <summary>
         /// Gets collection of references to Network Interfaces
         /// </summary>
-        [JsonProperty(PropertyName = "properties.networkInterfaces")]
-        public IList<NetworkInterfaceInner> NetworkInterfaces { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.networkInterfaces")]
+        public System.Collections.Generic.IList<NetworkInterfaceInner> NetworkInterfaces { get; private set; }
 
         /// <summary>
         /// Gets collection of references to subnets
         /// </summary>
-        [JsonProperty(PropertyName = "properties.subnets")]
-        public IList<SubnetInner> Subnets { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.subnets")]
+        public System.Collections.Generic.IList<SubnetInner> Subnets { get; private set; }
 
         /// <summary>
         /// Gets or sets resource guid property of the network security group
         /// resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.resourceGuid")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.resourceGuid")]
         public string ResourceGuid { get; set; }
 
         /// <summary>
         /// Gets provisioning state of the PublicIP resource
         /// Updating/Deleting/Failed
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource
         /// is updated
         /// </summary>
-        [JsonProperty(PropertyName = "etag")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
     }

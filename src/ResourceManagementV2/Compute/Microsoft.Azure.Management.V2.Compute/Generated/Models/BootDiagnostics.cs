@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Describes Boot Diagnostics.
@@ -43,14 +37,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets whether boot diagnostics should be enabled on the
         /// Virtual Machine.
         /// </summary>
-        [JsonProperty(PropertyName = "enabled")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "enabled")]
         public bool? Enabled { get; set; }
 
         /// <summary>
         /// Gets or sets the boot diagnostics storage Uri. It should be a
         /// valid Uri
         /// </summary>
-        [JsonProperty(PropertyName = "storageUri")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "storageUri")]
         public string StorageUri { get; set; }
 
     }

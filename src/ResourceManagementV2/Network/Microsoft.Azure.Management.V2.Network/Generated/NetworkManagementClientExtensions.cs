@@ -8,14 +8,9 @@
 
 namespace Microsoft.Azure.Management.Network
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
-    using Models;
+   using Microsoft.Rest.Azure;
+   using Models;
 
     /// <summary>
     /// Extension methods for NetworkManagementClient.
@@ -37,7 +32,7 @@ namespace Microsoft.Azure.Management.Network
             /// </param>
             public static DnsNameAvailabilityResultInner CheckDnsNameAvailability(this INetworkManagementClient operations, string location, string domainNameLabel = default(string))
             {
-                return Task.Factory.StartNew(s => ((INetworkManagementClient)s).CheckDnsNameAvailabilityAsync(location, domainNameLabel), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((INetworkManagementClient)s).CheckDnsNameAvailabilityAsync(location, domainNameLabel), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -56,7 +51,7 @@ namespace Microsoft.Azure.Management.Network
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DnsNameAvailabilityResultInner> CheckDnsNameAvailabilityAsync(this INetworkManagementClient operations, string location, string domainNameLabel = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<DnsNameAvailabilityResultInner> CheckDnsNameAvailabilityAsync(this INetworkManagementClient operations, string location, string domainNameLabel = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.CheckDnsNameAvailabilityWithHttpMessagesAsync(location, domainNameLabel, null, cancellationToken).ConfigureAwait(false))
                 {

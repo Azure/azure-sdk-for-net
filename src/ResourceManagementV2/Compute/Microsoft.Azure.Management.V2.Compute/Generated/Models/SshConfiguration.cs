@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// SSH configuration for Linux based VMs running on Azure
@@ -31,7 +25,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="publicKeys">the list of SSH public keys used to
         /// authenticate with linux based VMs</param>
-        public SshConfiguration(IList<SshPublicKey> publicKeys = default(IList<SshPublicKey>))
+        public SshConfiguration(System.Collections.Generic.IList<SshPublicKey> publicKeys = default(System.Collections.Generic.IList<SshPublicKey>))
         {
             PublicKeys = publicKeys;
         }
@@ -40,8 +34,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets the list of SSH public keys used to authenticate with
         /// linux based VMs
         /// </summary>
-        [JsonProperty(PropertyName = "publicKeys")]
-        public IList<SshPublicKey> PublicKeys { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "publicKeys")]
+        public System.Collections.Generic.IList<SshPublicKey> PublicKeys { get; set; }
 
     }
 }

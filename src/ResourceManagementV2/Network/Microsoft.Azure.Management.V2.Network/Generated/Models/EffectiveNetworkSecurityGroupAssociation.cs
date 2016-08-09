@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Effective NetworkSecurityGroup association
@@ -34,7 +28,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <param name="subnet">Gets the id of subnet if assigned</param>
         /// <param name="networkInterface">Gets the id of network interface if
         /// assigned</param>
-        public EffectiveNetworkSecurityGroupAssociation(SubResource subnet = default(SubResource), SubResource networkInterface = default(SubResource))
+        public EffectiveNetworkSecurityGroupAssociation(Microsoft.Rest.Azure.SubResource subnet = default(Microsoft.Rest.Azure.SubResource), Microsoft.Rest.Azure.SubResource networkInterface = default(Microsoft.Rest.Azure.SubResource))
         {
             Subnet = subnet;
             NetworkInterface = networkInterface;
@@ -43,14 +37,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets the id of subnet if assigned
         /// </summary>
-        [JsonProperty(PropertyName = "subnet")]
-        public SubResource Subnet { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "subnet")]
+        public Microsoft.Rest.Azure.SubResource Subnet { get; set; }
 
         /// <summary>
         /// Gets the id of network interface if assigned
         /// </summary>
-        [JsonProperty(PropertyName = "networkInterface")]
-        public SubResource NetworkInterface { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "networkInterface")]
+        public Microsoft.Rest.Azure.SubResource NetworkInterface { get; set; }
 
     }
 }

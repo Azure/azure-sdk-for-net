@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Response for ListPeering Api service callRetrieves all Peerings that
@@ -36,7 +30,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// circuit</param>
         /// <param name="nextLink">Gets the URL to get the next set of
         /// results.</param>
-        public ExpressRouteCircuitPeeringListResultInner(IList<ExpressRouteCircuitPeeringInner> value = default(IList<ExpressRouteCircuitPeeringInner>), string nextLink = default(string))
+        public ExpressRouteCircuitPeeringListResultInner(System.Collections.Generic.IList<ExpressRouteCircuitPeeringInner> value = default(System.Collections.Generic.IList<ExpressRouteCircuitPeeringInner>), string nextLink = default(string))
         {
             Value = value;
             NextLink = nextLink;
@@ -45,13 +39,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets the peerings in an express route circuit
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<ExpressRouteCircuitPeeringInner> Value { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
+        public System.Collections.Generic.IList<ExpressRouteCircuitPeeringInner> Value { get; set; }
 
         /// <summary>
         /// Gets the URL to get the next set of results.
         /// </summary>
-        [JsonProperty(PropertyName = "nextLink")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "nextLink")]
         public string NextLink { get; set; }
 
     }

@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Parameters of move resources.
@@ -29,11 +23,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the ResourcesMoveInfoInner class.
         /// </summary>
-        /// <param name="resources">Gets or sets the ids of the
-        /// resources.</param>
+        /// <param name="resources">The ids of the resources.</param>
         /// <param name="targetResourceGroup">The target resource
         /// group.</param>
-        public ResourcesMoveInfoInner(IList<string> resources = default(IList<string>), string targetResourceGroup = default(string))
+        public ResourcesMoveInfoInner(System.Collections.Generic.IList<string> resources = default(System.Collections.Generic.IList<string>), string targetResourceGroup = default(string))
         {
             Resources = resources;
             TargetResourceGroup = targetResourceGroup;
@@ -42,13 +35,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Gets or sets the ids of the resources.
         /// </summary>
-        [JsonProperty(PropertyName = "resources")]
-        public IList<string> Resources { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "resources")]
+        public System.Collections.Generic.IList<string> Resources { get; set; }
 
         /// <summary>
         /// Gets or sets the target resource group.
         /// </summary>
-        [JsonProperty(PropertyName = "targetResourceGroup")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "targetResourceGroup")]
         public string TargetResourceGroup { get; set; }
 
     }

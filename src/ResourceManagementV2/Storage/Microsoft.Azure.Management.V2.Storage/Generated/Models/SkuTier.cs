@@ -8,19 +8,16 @@
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for SkuTier.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum SkuTier
     {
-        [EnumMember(Value = "Standard")]
+        [System.Runtime.Serialization.EnumMember(Value = "Standard")]
         Standard,
-        [EnumMember(Value = "Premium")]
+        [System.Runtime.Serialization.EnumMember(Value = "Premium")]
         Premium
     }
 }

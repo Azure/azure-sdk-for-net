@@ -8,16 +8,10 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Response for ListLoadBalancers Api service call
+    /// Response for ListApplicationGateways Api service call
     /// </summary>
     public partial class ApplicationGatewayListResultInner
     {
@@ -31,26 +25,25 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the
         /// ApplicationGatewayListResultInner class.
         /// </summary>
-        /// <param name="value">Gets a list of ApplicationGateways in a
-        /// resource group</param>
-        /// <param name="nextLink">Gets the URL to get the next set of
-        /// results.</param>
-        public ApplicationGatewayListResultInner(IList<ApplicationGatewayInner> value = default(IList<ApplicationGatewayInner>), string nextLink = default(string))
+        /// <param name="value">List of ApplicationGateways in a resource
+        /// group</param>
+        /// <param name="nextLink">URL to get the next set of results.</param>
+        public ApplicationGatewayListResultInner(System.Collections.Generic.IList<ApplicationGatewayInner> value = default(System.Collections.Generic.IList<ApplicationGatewayInner>), string nextLink = default(string))
         {
             Value = value;
             NextLink = nextLink;
         }
 
         /// <summary>
-        /// Gets a list of ApplicationGateways in a resource group
+        /// Gets or sets list of ApplicationGateways in a resource group
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<ApplicationGatewayInner> Value { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
+        public System.Collections.Generic.IList<ApplicationGatewayInner> Value { get; set; }
 
         /// <summary>
-        /// Gets the URL to get the next set of results.
+        /// Gets or sets URL to get the next set of results.
         /// </summary>
-        [JsonProperty(PropertyName = "nextLink")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "nextLink")]
         public string NextLink { get; set; }
 
     }

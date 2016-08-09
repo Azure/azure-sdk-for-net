@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Describes a virtual machine scale set storage profile.
@@ -42,19 +36,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the image reference.
         /// </summary>
-        [JsonProperty(PropertyName = "imageReference")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "imageReference")]
         public ImageReference ImageReference { get; set; }
 
         /// <summary>
         /// Gets or sets the OS disk.
         /// </summary>
-        [JsonProperty(PropertyName = "osDisk")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "osDisk")]
         public VirtualMachineScaleSetOSDisk OsDisk { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Contains sku in an ExpressRouteCircuit
@@ -44,21 +38,21 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets name of the sku.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets tier of the sku. Possible values include: 'Standard',
         /// 'Premium'
         /// </summary>
-        [JsonProperty(PropertyName = "tier")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "tier")]
         public string Tier { get; set; }
 
         /// <summary>
         /// Gets or sets family of the sku. Possible values include:
         /// 'UnlimitedData', 'MeteredData'
         /// </summary>
-        [JsonProperty(PropertyName = "family")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "family")]
         public string Family { get; set; }
 
     }

@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// VpnClientParameters
@@ -41,7 +35,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets VPN client Processor Architecture -Amd64/X86.
         /// Possible values include: 'Amd64', 'X86'
         /// </summary>
-        [JsonProperty(PropertyName = "ProcessorArchitecture")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "ProcessorArchitecture")]
         public string ProcessorArchitecture { get; set; }
 
     }

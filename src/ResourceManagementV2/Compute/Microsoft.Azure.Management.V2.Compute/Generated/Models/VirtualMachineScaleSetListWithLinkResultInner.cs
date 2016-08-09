@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The List Virtual Machine operation response.
@@ -35,7 +29,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="nextLink">the uri to fetch the next page of Virtual
         /// Machine Scale Sets. Call ListNext() with this to fetch the next
         /// page of Virtual Machine Scale Sets.</param>
-        public VirtualMachineScaleSetListWithLinkResultInner(IList<VirtualMachineScaleSetInner> value = default(IList<VirtualMachineScaleSetInner>), string nextLink = default(string))
+        public VirtualMachineScaleSetListWithLinkResultInner(System.Collections.Generic.IList<VirtualMachineScaleSetInner> value = default(System.Collections.Generic.IList<VirtualMachineScaleSetInner>), string nextLink = default(string))
         {
             Value = value;
             NextLink = nextLink;
@@ -44,15 +38,15 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the list of virtual machine scale sets.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<VirtualMachineScaleSetInner> Value { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
+        public System.Collections.Generic.IList<VirtualMachineScaleSetInner> Value { get; set; }
 
         /// <summary>
         /// Gets or sets the uri to fetch the next page of Virtual Machine
         /// Scale Sets. Call ListNext() with this to fetch the next page of
         /// Virtual Machine Scale Sets.
         /// </summary>
-        [JsonProperty(PropertyName = "nextLink")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "nextLink")]
         public string NextLink { get; set; }
 
     }

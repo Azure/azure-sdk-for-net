@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Target resource.
@@ -29,11 +23,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the TargetResource class.
         /// </summary>
-        /// <param name="id">Gets or sets the ID of the resource.</param>
-        /// <param name="resourceName">Gets or sets the name of the
-        /// resource.</param>
-        /// <param name="resourceType">Gets or sets the type of the
-        /// resource.</param>
+        /// <param name="id">The ID of the resource.</param>
+        /// <param name="resourceName">The name of the resource.</param>
+        /// <param name="resourceType">The type of the resource.</param>
         public TargetResource(string id = default(string), string resourceName = default(string), string resourceType = default(string))
         {
             Id = id;
@@ -44,19 +36,19 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Gets or sets the ID of the resource.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the resource.
         /// </summary>
-        [JsonProperty(PropertyName = "resourceName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "resourceName")]
         public string ResourceName { get; set; }
 
         /// <summary>
         /// Gets or sets the type of the resource.
         /// </summary>
-        [JsonProperty(PropertyName = "resourceType")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "resourceType")]
         public string ResourceType { get; set; }
 
     }

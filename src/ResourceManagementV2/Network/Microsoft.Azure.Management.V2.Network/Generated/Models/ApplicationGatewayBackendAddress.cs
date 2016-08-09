@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Backend Address of application gateway
@@ -31,8 +25,8 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the ApplicationGatewayBackendAddress
         /// class.
         /// </summary>
-        /// <param name="fqdn">Gets or sets the dns name</param>
-        /// <param name="ipAddress">Gets or sets the ip address</param>
+        /// <param name="fqdn">Dns name</param>
+        /// <param name="ipAddress">Ip address</param>
         public ApplicationGatewayBackendAddress(string fqdn = default(string), string ipAddress = default(string))
         {
             Fqdn = fqdn;
@@ -40,15 +34,15 @@ namespace Microsoft.Azure.Management.Network.Models
         }
 
         /// <summary>
-        /// Gets or sets the dns name
+        /// Gets or sets dns name
         /// </summary>
-        [JsonProperty(PropertyName = "fqdn")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "fqdn")]
         public string Fqdn { get; set; }
 
         /// <summary>
-        /// Gets or sets the ip address
+        /// Gets or sets ip address
         /// </summary>
-        [JsonProperty(PropertyName = "ipAddress")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "ipAddress")]
         public string IpAddress { get; set; }
 
     }

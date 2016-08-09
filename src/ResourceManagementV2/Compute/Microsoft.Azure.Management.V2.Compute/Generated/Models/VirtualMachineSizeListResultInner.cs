@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The List Virtual Machine operation response.
@@ -32,7 +26,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// VirtualMachineSizeListResultInner class.
         /// </summary>
         /// <param name="value">the list of virtual machine sizes.</param>
-        public VirtualMachineSizeListResultInner(IList<VirtualMachineSize> value = default(IList<VirtualMachineSize>))
+        public VirtualMachineSizeListResultInner(System.Collections.Generic.IList<VirtualMachineSize> value = default(System.Collections.Generic.IList<VirtualMachineSize>))
         {
             Value = value;
         }
@@ -40,8 +34,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the list of virtual machine sizes.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<VirtualMachineSize> Value { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
+        public System.Collections.Generic.IList<VirtualMachineSize> Value { get; set; }
 
     }
 }

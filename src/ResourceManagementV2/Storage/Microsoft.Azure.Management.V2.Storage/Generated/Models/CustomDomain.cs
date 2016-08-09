@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The custom domain assigned to this storage account. This can be set
@@ -44,7 +38,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Gets or sets the custom domain name. Name is the CNAME source.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
@@ -52,20 +46,20 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// enabled. Default value is false. This should only be set on
         /// updates
         /// </summary>
-        [JsonProperty(PropertyName = "useSubDomain")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "useSubDomain")]
         public bool? UseSubDomain { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (Name == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Name");
             }
         }
     }

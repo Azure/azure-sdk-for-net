@@ -8,15 +8,9 @@
 
 namespace Microsoft.Azure.Management.Compute
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure.OData;
-    using Microsoft.Rest.Azure;
-    using Models;
+   using Microsoft.Rest.Azure;
+   using Models;
 
     /// <summary>
     /// Extension methods for VirtualMachineImagesOperations.
@@ -41,7 +35,7 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             public static VirtualMachineImageInner Get(this IVirtualMachineImagesOperations operations, string location, string publisherName, string offer, string skus, string version)
             {
-                return Task.Factory.StartNew(s => ((IVirtualMachineImagesOperations)s).GetAsync(location, publisherName, offer, skus, version), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachineImagesOperations)s).GetAsync(location, publisherName, offer, skus, version), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -63,7 +57,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualMachineImageInner> GetAsync(this IVirtualMachineImagesOperations operations, string location, string publisherName, string offer, string skus, string version, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<VirtualMachineImageInner> GetAsync(this IVirtualMachineImagesOperations operations, string location, string publisherName, string offer, string skus, string version, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(location, publisherName, offer, skus, version, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -88,9 +82,9 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IList<VirtualMachineImageResourceInner> List(this IVirtualMachineImagesOperations operations, string location, string publisherName, string offer, string skus, ODataQuery<VirtualMachineImageResourceInner> odataQuery = default(ODataQuery<VirtualMachineImageResourceInner>))
+            public static System.Collections.Generic.IList<VirtualMachineImageResourceInner> List(this IVirtualMachineImagesOperations operations, string location, string publisherName, string offer, string skus, Microsoft.Rest.Azure.OData.ODataQuery<VirtualMachineImageResourceInner> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<VirtualMachineImageResourceInner>))
             {
-                return Task.Factory.StartNew(s => ((IVirtualMachineImagesOperations)s).ListAsync(location, publisherName, offer, skus, odataQuery), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachineImagesOperations)s).ListAsync(location, publisherName, offer, skus, odataQuery), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -113,7 +107,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<VirtualMachineImageResourceInner>> ListAsync(this IVirtualMachineImagesOperations operations, string location, string publisherName, string offer, string skus, ODataQuery<VirtualMachineImageResourceInner> odataQuery = default(ODataQuery<VirtualMachineImageResourceInner>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<System.Collections.Generic.IList<VirtualMachineImageResourceInner>> ListAsync(this IVirtualMachineImagesOperations operations, string location, string publisherName, string offer, string skus, Microsoft.Rest.Azure.OData.ODataQuery<VirtualMachineImageResourceInner> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<VirtualMachineImageResourceInner>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(location, publisherName, offer, skus, odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -131,9 +125,9 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             /// <param name='publisherName'>
             /// </param>
-            public static IList<VirtualMachineImageResourceInner> ListOffers(this IVirtualMachineImagesOperations operations, string location, string publisherName)
+            public static System.Collections.Generic.IList<VirtualMachineImageResourceInner> ListOffers(this IVirtualMachineImagesOperations operations, string location, string publisherName)
             {
-                return Task.Factory.StartNew(s => ((IVirtualMachineImagesOperations)s).ListOffersAsync(location, publisherName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachineImagesOperations)s).ListOffersAsync(location, publisherName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -149,7 +143,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<VirtualMachineImageResourceInner>> ListOffersAsync(this IVirtualMachineImagesOperations operations, string location, string publisherName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<System.Collections.Generic.IList<VirtualMachineImageResourceInner>> ListOffersAsync(this IVirtualMachineImagesOperations operations, string location, string publisherName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListOffersWithHttpMessagesAsync(location, publisherName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -165,9 +159,9 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             /// <param name='location'>
             /// </param>
-            public static IList<VirtualMachineImageResourceInner> ListPublishers(this IVirtualMachineImagesOperations operations, string location)
+            public static System.Collections.Generic.IList<VirtualMachineImageResourceInner> ListPublishers(this IVirtualMachineImagesOperations operations, string location)
             {
-                return Task.Factory.StartNew(s => ((IVirtualMachineImagesOperations)s).ListPublishersAsync(location), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachineImagesOperations)s).ListPublishersAsync(location), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -181,7 +175,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<VirtualMachineImageResourceInner>> ListPublishersAsync(this IVirtualMachineImagesOperations operations, string location, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<System.Collections.Generic.IList<VirtualMachineImageResourceInner>> ListPublishersAsync(this IVirtualMachineImagesOperations operations, string location, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListPublishersWithHttpMessagesAsync(location, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -201,9 +195,9 @@ namespace Microsoft.Azure.Management.Compute
             /// </param>
             /// <param name='offer'>
             /// </param>
-            public static IList<VirtualMachineImageResourceInner> ListSkus(this IVirtualMachineImagesOperations operations, string location, string publisherName, string offer)
+            public static System.Collections.Generic.IList<VirtualMachineImageResourceInner> ListSkus(this IVirtualMachineImagesOperations operations, string location, string publisherName, string offer)
             {
-                return Task.Factory.StartNew(s => ((IVirtualMachineImagesOperations)s).ListSkusAsync(location, publisherName, offer), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IVirtualMachineImagesOperations)s).ListSkusAsync(location, publisherName, offer), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -221,7 +215,7 @@ namespace Microsoft.Azure.Management.Compute
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<VirtualMachineImageResourceInner>> ListSkusAsync(this IVirtualMachineImagesOperations operations, string location, string publisherName, string offer, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<System.Collections.Generic.IList<VirtualMachineImageResourceInner>> ListSkusAsync(this IVirtualMachineImagesOperations operations, string location, string publisherName, string offer, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListSkusWithHttpMessagesAsync(location, publisherName, offer, null, cancellationToken).ConfigureAwait(false))
                 {

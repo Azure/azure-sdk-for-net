@@ -8,21 +8,18 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for CachingTypes.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum CachingTypes
     {
-        [EnumMember(Value = "None")]
+        [System.Runtime.Serialization.EnumMember(Value = "None")]
         None,
-        [EnumMember(Value = "ReadOnly")]
+        [System.Runtime.Serialization.EnumMember(Value = "ReadOnly")]
         ReadOnly,
-        [EnumMember(Value = "ReadWrite")]
+        [System.Runtime.Serialization.EnumMember(Value = "ReadWrite")]
         ReadWrite
     }
 }
