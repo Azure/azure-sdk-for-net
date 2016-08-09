@@ -30,55 +30,49 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <summary>
         /// Initializes a new instance of the SubscriptionResource class.
         /// </summary>
-        public SubscriptionResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DateTime? accessedAt = default(DateTime?), TimeSpan? autoDeleteOnIdle = default(TimeSpan?), AvailabilityStatus? availabilityStatus = default(AvailabilityStatus?), DateTime? createdAt = default(DateTime?), TimeSpan? defaultMessageTimeToLive = default(TimeSpan?), bool? enableBatchedOperations = default(bool?), bool? enableDeadLetteringOnFilterEvaluationExceptions = default(bool?), bool? enableDeadLetteringOnMessageExpiration = default(bool?), string forwardDeadLetteredMessagesTo = default(string), string forwardTo = default(string), bool? isReadOnly = default(bool?), TimeSpan? lockDuration = default(TimeSpan?), int? maxDeliveryCount = default(int?), long? messageCount = default(long?), MessageCountDetails messageCountDetails = default(MessageCountDetails), bool? requiresSession = default(bool?), EntityStatus? status = default(EntityStatus?), string topicPath = default(string), DateTime? updatedAt = default(DateTime?), string userMetadata = default(string))
+        public SubscriptionResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DateTime? accessedAt = default(DateTime?), TimeSpan? autoDeleteOnIdle = default(TimeSpan?), MessageCountDetails countDetails = default(MessageCountDetails), DateTime? createdAt = default(DateTime?), TimeSpan? defaultMessageTimeToLive = default(TimeSpan?), bool? deadLetteringOnFilterEvaluationExceptions = default(bool?), bool? deadLetteringOnMessageExpiration = default(bool?), bool? enableBatchedOperations = default(bool?), EntityAvailabilityStatus? entityAvailabilityStatus = default(EntityAvailabilityStatus?), bool? isReadOnly = default(bool?), TimeSpan? lockDuration = default(TimeSpan?), int? maxDeliveryCount = default(int?), long? messageCount = default(long?), bool? requiresSession = default(bool?), EntityStatus? status = default(EntityStatus?), DateTime? updatedAt = default(DateTime?))
             : base(id, name, type, location, tags)
         {
             AccessedAt = accessedAt;
             AutoDeleteOnIdle = autoDeleteOnIdle;
-            AvailabilityStatus = availabilityStatus;
+            CountDetails = countDetails;
             CreatedAt = createdAt;
             DefaultMessageTimeToLive = defaultMessageTimeToLive;
+            DeadLetteringOnFilterEvaluationExceptions = deadLetteringOnFilterEvaluationExceptions;
+            DeadLetteringOnMessageExpiration = deadLetteringOnMessageExpiration;
             EnableBatchedOperations = enableBatchedOperations;
-            EnableDeadLetteringOnFilterEvaluationExceptions = enableDeadLetteringOnFilterEvaluationExceptions;
-            EnableDeadLetteringOnMessageExpiration = enableDeadLetteringOnMessageExpiration;
-            ForwardDeadLetteredMessagesTo = forwardDeadLetteredMessagesTo;
-            ForwardTo = forwardTo;
+            EntityAvailabilityStatus = entityAvailabilityStatus;
             IsReadOnly = isReadOnly;
             LockDuration = lockDuration;
             MaxDeliveryCount = maxDeliveryCount;
             MessageCount = messageCount;
-            MessageCountDetails = messageCountDetails;
             RequiresSession = requiresSession;
             Status = status;
-            TopicPath = topicPath;
             UpdatedAt = updatedAt;
-            UserMetadata = userMetadata;
         }
 
         /// <summary>
         /// Last time a there was a receive request to this subscription.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.AccessedAt")]
+        [JsonProperty(PropertyName = "properties.accessedAt")]
         public DateTime? AccessedAt { get; set; }
 
         /// <summary>
         /// TimeSpan idle interval after which the topic is automatically
         /// deleted. The minimum duration is 5 minutes.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.AutoDeleteOnIdle")]
+        [JsonProperty(PropertyName = "properties.autoDeleteOnIdle")]
         public TimeSpan? AutoDeleteOnIdle { get; set; }
 
         /// <summary>
-        /// Entity availability status for the topic. Possible values include:
-        /// 'Available', 'Limited', 'Renaming', 'Restoring', 'Unknown'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.AvailabilityStatus ")]
-        public AvailabilityStatus? AvailabilityStatus { get; set; }
+        [JsonProperty(PropertyName = "properties.countDetails")]
+        public MessageCountDetails CountDetails { get; set; }
 
         /// <summary>
         /// Exact time the message was created.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.CreatedAt")]
+        [JsonProperty(PropertyName = "properties.createdAt")]
         public DateTime? CreatedAt { get; set; }
 
         /// <summary>
@@ -87,76 +81,65 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// to Service Bus. This is the default value used when TimeToLive is
         /// not set on a message itself.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.DefaultMessageTimeToLive")]
+        [JsonProperty(PropertyName = "properties.defaultMessageTimeToLive")]
         public TimeSpan? DefaultMessageTimeToLive { get; set; }
-
-        /// <summary>
-        /// Value that indicates whether server-side batched operations are
-        /// enabled..
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.EnableBatchedOperations")]
-        public bool? EnableBatchedOperations { get; set; }
 
         /// <summary>
         /// Value that indicates if a subscription has dead letter support on
         /// Filter evaluation exceptions.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.EnableDeadLetteringOnFilterEvaluationExceptions")]
-        public bool? EnableDeadLetteringOnFilterEvaluationExceptions { get; set; }
+        [JsonProperty(PropertyName = "properties.deadLetteringOnFilterEvaluationExceptions")]
+        public bool? DeadLetteringOnFilterEvaluationExceptions { get; set; }
 
         /// <summary>
         /// Value that indicates if a subscription has dead letter support
         /// when a message expires.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.EnableDeadLetteringOnMessageExpiration")]
-        public bool? EnableDeadLetteringOnMessageExpiration { get; set; }
+        [JsonProperty(PropertyName = "properties.deadLetteringOnMessageExpiration")]
+        public bool? DeadLetteringOnMessageExpiration { get; set; }
 
         /// <summary>
-        /// Path to the recipient to which the dead lettered messages are
-        /// forwarded.
+        /// Value that indicates whether server-side batched operations are
+        /// enabled..
         /// </summary>
-        [JsonProperty(PropertyName = "properties.ForwardDeadLetteredMessagesTo")]
-        public string ForwardDeadLetteredMessagesTo { get; set; }
+        [JsonProperty(PropertyName = "properties.enableBatchedOperations")]
+        public bool? EnableBatchedOperations { get; set; }
 
         /// <summary>
-        /// Path to the recipient to which the message is forwarded.
+        /// Entity availability status for the topic. Possible values include:
+        /// 'Available', 'Limited', 'Renaming', 'Restoring', 'Unknown'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.ForwardTo")]
-        public string ForwardTo { get; set; }
+        [JsonProperty(PropertyName = "properties.entityAvailabilityStatus")]
+        public EntityAvailabilityStatus? EntityAvailabilityStatus { get; set; }
 
         /// <summary>
         /// Value that indicates whether the entity description is read-only.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.IsReadOnly")]
+        [JsonProperty(PropertyName = "properties.isReadOnly")]
         public bool? IsReadOnly { get; set; }
 
         /// <summary>
         /// The lock duration time span for the subscription.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.LockDuration")]
+        [JsonProperty(PropertyName = "properties.lockDuration")]
         public TimeSpan? LockDuration { get; set; }
 
         /// <summary>
         /// Number of maximum deliveries.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.MaxDeliveryCount")]
+        [JsonProperty(PropertyName = "properties.maxDeliveryCount")]
         public int? MaxDeliveryCount { get; set; }
 
         /// <summary>
         /// Number of messages.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.MessageCount")]
+        [JsonProperty(PropertyName = "properties.messageCount")]
         public long? MessageCount { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.MessageCountDetails")]
-        public MessageCountDetails MessageCountDetails { get; set; }
 
         /// <summary>
         /// Value indicating if a subscription supports the concept of session.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.RequiresSession")]
+        [JsonProperty(PropertyName = "properties.requiresSession")]
         public bool? RequiresSession { get; set; }
 
         /// <summary>
@@ -165,26 +148,14 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// 'Deleting', 'Disabled', 'ReceiveDisabled', 'Renaming',
         /// 'Restoring', 'SendDisabled', 'Unknown'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.Status")]
+        [JsonProperty(PropertyName = "properties.status")]
         public EntityStatus? Status { get; set; }
-
-        /// <summary>
-        /// Path of the topic that this subscription description belongs to.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.TopicPath")]
-        public string TopicPath { get; set; }
 
         /// <summary>
         /// The exact time the message has been updated.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.UpdatedAt")]
+        [JsonProperty(PropertyName = "properties.updatedAt")]
         public DateTime? UpdatedAt { get; set; }
-
-        /// <summary>
-        /// Represents the metadata description of the Subscription.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.UserMetadata")]
-        public string UserMetadata { get; set; }
 
     }
 }

@@ -13,10 +13,10 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for AvailabilityStatus.
+    /// Defines values for EntityAvailabilityStatus.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum AvailabilityStatus
+    public enum EntityAvailabilityStatus
     {
         [EnumMember(Value = "Available")]
         Available,

@@ -35,12 +35,13 @@ namespace NotificationHubs.Tests.ScenarioTests
                 InitializeClients(context);
 
                 var location = NotificationHubsManagementHelper.DefaultLocation;
-                var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
-                if (string.IsNullOrWhiteSpace(resourceGroup))
-                {
-                    resourceGroup = TestUtilities.GenerateName(NotificationHubsManagementHelper.ResourceGroupPrefix);
-                    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
-                }
+                var resourceGroup = "Default-ServiceBus-CentralUS";
+                //var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
+                //if (string.IsNullOrWhiteSpace(resourceGroup))
+                //{
+                //    resourceGroup = TestUtilities.GenerateName(NotificationHubsManagementHelper.ResourceGroupPrefix);
+                //    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
+                //}
 
                 var namespaceName = TestUtilities.GenerateName(NotificationHubsManagementHelper.NamespacePrefix);
 
@@ -79,10 +80,10 @@ namespace NotificationHubs.Tests.ScenarioTests
                 Assert.True(getAllNamespacesResponse.All(ns => ns.Id.Contains(resourceGroup)));
 
                 //Get all namespaces created within the subscription irrespective of the resourceGroup
-                getAllNamespacesResponse = NotificationHubsManagementClient.Namespaces.ListAll();
-                Assert.NotNull(getAllNamespacesResponse);
-                Assert.True(getAllNamespacesResponse.Count() >= 1);
-                Assert.True(getAllNamespacesResponse.Any(ns => ns.Name == namespaceName));
+                //getAllNamespacesResponse = NotificationHubsManagementClient.Namespaces.ListAll();
+                //Assert.NotNull(getAllNamespacesResponse);
+                //Assert.True(getAllNamespacesResponse.Count() >= 1);
+                //Assert.True(getAllNamespacesResponse.Any(ns => ns.Name == namespaceName));
 
                 //Update namespace tags and make the namespace critical
                 var updateNamespaceParameter = new NamespaceCreateOrUpdateParameters()
@@ -106,12 +107,12 @@ namespace NotificationHubs.Tests.ScenarioTests
                     updateNamespaceResponse.Properties.ProvisioningState.Equals("Succeeded", StringComparison.CurrentCultureIgnoreCase));
                 Assert.Equal(namespaceName, updateNamespaceResponse.Name);
                 //Regression in the service . uncomment after the fix goes out 
-                //Assert.Equal(updateNamespaceResponse.Tags.Count, 4);
-                //foreach (var tag in updateNamespaceParameter.Tags)
-                //{
-                //    Assert.True(updateNamespaceResponse.Tags.Any(t => t.Key.Equals(tag.Key)));
-                //    Assert.True(updateNamespaceResponse.Tags.Any(t => t.Value.Equals(tag.Value)));
-                //}
+                Assert.Equal(updateNamespaceResponse.Tags.Count, 4);
+                foreach (var tag in updateNamespaceParameter.Tags)
+                {
+                    Assert.True(updateNamespaceResponse.Tags.Any(t => t.Key.Equals(tag.Key)));
+                    Assert.True(updateNamespaceResponse.Tags.Any(t => t.Value.Equals(tag.Value)));
+                }
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
