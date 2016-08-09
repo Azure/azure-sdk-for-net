@@ -30,45 +30,38 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the ResourceNavigationLink class.
         /// </summary>
-        public ResourceNavigationLink(string id = default(string), string linkedResourceType = default(string), string link = default(string), string parentResourceGuid = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public ResourceNavigationLink(string id = default(string), string linkedResourceType = default(string), string link = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             LinkedResourceType = linkedResourceType;
             Link = link;
-            ParentResourceGuid = parentResourceGuid;
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
         }
 
         /// <summary>
-        /// Gets or sets the resource type of the linked resource
+        /// Resource type of the linked resource
         /// </summary>
         [JsonProperty(PropertyName = "properties.linkedResourceType")]
         public string LinkedResourceType { get; set; }
 
         /// <summary>
-        /// Gets or sets the link to the external resource
+        /// Link to the external resource
         /// </summary>
         [JsonProperty(PropertyName = "properties.link")]
         public string Link { get; set; }
 
         /// <summary>
-        /// Gets or sets the link to the external resource
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.parentResourceGuid")]
-        public string ParentResourceGuid { get; set; }
-
-        /// <summary>
-        /// Gets or sets Provisioning state of the ResourceNavigationLink
-        /// resource Updating/Deleting/Failed
+        /// Provisioning state of the ResourceNavigationLink resource
+        /// Updating/Deleting/Failed
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
-        /// Gets name of the resource that is unique within a resource group.
-        /// This name can be used to access the resource
+        /// Name of the resource that is unique within a resource group. This
+        /// name can be used to access the resource
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
