@@ -20,9 +20,8 @@
     using System.Net;
     using System.Threading;
     using System.Threading.Tasks;
-
     using BatchTestCommon;
-
+    using IntegrationTestCommon;
     using Microsoft.Azure.Batch.Protocol;
     using Microsoft.Azure.Batch.Protocol.Models;
     using Microsoft.Azure.Management.Batch;
@@ -416,7 +415,7 @@
 
         public void Dispose()
         {
-            using (var mgmtClient = TestCommon.OpenBatchManagementClient())
+            using (var mgmtClient = IntegrationTestCommon.OpenBatchManagementClient())
             {
                 string accountName = TestCommon.Configuration.BatchAccountName;
                 string resourceGroupName = TestCommon.Configuration.BatchAccountResourceGroup;

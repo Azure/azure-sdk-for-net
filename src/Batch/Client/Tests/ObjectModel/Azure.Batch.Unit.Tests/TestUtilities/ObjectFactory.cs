@@ -41,12 +41,12 @@
 
         public object GenerateNew(Type objectType)
         {
-            if (objectType.IsGenericType && objectType.GetGenericTypeDefinition() == typeof(Nullable<>))
+            if (objectType.GetTypeInfo().IsGenericType && objectType.GetGenericTypeDefinition() == typeof(Nullable<>))
             {
                 Type wrappedType = objectType.GetGenericArguments()[0];
                 return this.GenerateNew(wrappedType);
             }
-            else if (objectType.IsGenericType &&
+            else if (objectType.GetTypeInfo().IsGenericType &&
                 (objectType.GetGenericTypeDefinition() == typeof(IEnumerable<>) ||
                 objectType.GetGenericTypeDefinition() == typeof(IList<>)))
             {
@@ -81,7 +81,7 @@
 
                 return timeSpan;
             }
-            else if (objectType.IsEnum)
+            else if (objectType.GetTypeInfo().IsEnum)
             {
                 Array enumValues = Enum.GetValues(objectType);
                 int enumIndex = this.random.Next(enumValues.Length);

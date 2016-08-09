@@ -16,6 +16,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using System.IO;
     using BatchTestCommon;
     using TestUtilities;
     using Xunit;
@@ -35,8 +36,8 @@
         {
             this.testOutputHelper = testOutputHelper;
 
-            this.sourceLocation = @"..\..\..\..\..\src";
-            this.proxySourceLocation = @"..\..\..\..\..\src\" + GeneratedProtocolFolder;
+            this.sourceLocation = @"..\..\..\src\Azure.Batch";
+            this.proxySourceLocation = Path.Combine(this.sourceLocation, GeneratedProtocolFolder);
         }
 
         [Fact]
@@ -77,7 +78,7 @@
                                                                  "ValidationException",
                                                                  "SerializationException"
                                                              };
-            Assert.Equal(expectedExceptions, exceptionSet);
+            Assert.Equal((IEnumerable<string>)expectedExceptions, exceptionSet);
         }
 
         [Fact]

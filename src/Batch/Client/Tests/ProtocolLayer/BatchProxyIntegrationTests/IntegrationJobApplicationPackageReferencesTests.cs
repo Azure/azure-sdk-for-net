@@ -21,6 +21,7 @@
     using System.Threading;
     using System.Threading.Tasks;
     using BatchTestCommon;
+    using IntegrationTestCommon;
     using Microsoft.Azure.Batch.Protocol;
     using Microsoft.Azure.Batch.Protocol.Models;
     using Microsoft.Azure.Management.Batch;
@@ -43,7 +44,7 @@
         {
             this.output = output;
 
-            TestCommon.EnableAutoStorageAsync().Wait();
+            IntegrationTestCommon.EnableAutoStorageAsync().Wait();
 
             ApplicationPackageCommon.UploadTestApplicationPackageIfNotAlreadyUploadedAsync(AppPackageName, Version).Wait();
             ApplicationPackageCommon.UpdateApplicationPackageAsync(AppPackageName, Version, "My First App", false).Wait();
@@ -183,7 +184,7 @@
 
         public void Dispose()
         {
-            BatchManagementClient mgmtClient = TestCommon.OpenBatchManagementClient();
+            BatchManagementClient mgmtClient = IntegrationTestCommon.OpenBatchManagementClient();
             string accountName = TestCommon.Configuration.BatchAccountName;
             string resourceGroupName = TestCommon.Configuration.BatchAccountResourceGroup;
 

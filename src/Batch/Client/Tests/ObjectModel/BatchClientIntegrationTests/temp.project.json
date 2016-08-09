@@ -1,0 +1,35 @@
+{
+  "version": "1.0.0",
+  "description": "Azure Batch Integration tests class library",
+  "authors": [ "Microsoft Corporation" ],
+
+  "packOptions": {
+    "tags": [ "" ],
+    "projectUrl": "",
+    "licenseUrl": ""
+  },
+
+  "buildOptions": {
+  },
+  "frameworks": {
+    "net45": {
+      "buildOptions": { "warningsAsErrors": true },
+      "dependencies": {
+        "xunit": "2.1.0",
+        "xunit.runner.visualstudio": "2.1.0",
+        "Azure.Batch": {
+          "target": "project",
+          "version": "6.0.0"
+        },
+        "IntegrationTestCommon": "1.0.0"
+      },
+      "frameworkAssemblies": {
+        "System.Runtime": "",
+        "WindowsBase": "",
+        "System.Threading.Tasks": ""
+      }
+    }
+  },
+  "dependencies": {
+  }
+}

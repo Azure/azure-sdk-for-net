@@ -21,6 +21,7 @@
     using System.IO.Compression;
     using System.Text;
     using BatchTestCommon;
+    using IntegrationTestCommon;
     using Microsoft.Azure.Management.Batch;
     using Microsoft.Azure.Management.Batch.Models;
     using Microsoft.WindowsAzure.Storage.Blob;
@@ -33,7 +34,7 @@
             string accountName = TestCommon.Configuration.BatchAccountName;
             string resourceGroupName = TestCommon.Configuration.BatchAccountResourceGroup;
 
-            BatchManagementClient mgmtClient = TestCommon.OpenBatchManagementClient();
+            BatchManagementClient mgmtClient = IntegrationTestCommon.OpenBatchManagementClient();
 
             if (hasDefaultVersion)
             {
@@ -58,7 +59,7 @@
             string accountName = TestCommon.Configuration.BatchAccountName;
             string resourceGroupName = TestCommon.Configuration.BatchAccountResourceGroup;
 
-            using (BatchManagementClient mgmtClient = TestCommon.OpenBatchManagementClient())
+            using (BatchManagementClient mgmtClient = IntegrationTestCommon.OpenBatchManagementClient())
             {
                 var applicationSummaries = await mgmtClient.Application.ListAsync(resourceGroupName, accountName);
 
@@ -77,13 +78,13 @@
         {
             const string format = "zip";
 
-            using (BatchManagementClient mgmtClient = TestCommon.OpenBatchManagementClient())
+            using (BatchManagementClient mgmtClient = IntegrationTestCommon.OpenBatchManagementClient())
             {
                 var addResponse = await mgmtClient.ApplicationPackage.CreateAsync(resourceGroupName, accountName, appPackageName, applicationVersion).ConfigureAwait(false);
 
                 var storageUrl = addResponse.StorageUrl;
 
-                await TestCommon.UploadTestApplicationAsync(storageUrl).ConfigureAwait(false);
+                await IntegrationTestCommon.UploadTestApplicationAsync(storageUrl).ConfigureAwait(false);
 
                 await mgmtClient.ApplicationPackage.ActivateAsync(resourceGroupName, accountName, appPackageName, applicationVersion, format).ConfigureAwait(false);
             }
