@@ -1441,5 +1441,44 @@ namespace DataFactory.Tests.Framework.JsonSamples
     }
 }
 ";
+        [JsonSample]
+        public const string CopyCassandraToBlob = @"{
+    ""name"": ""Pipeline"",
+    ""properties"": {
+        ""hubName"": ""hdis-jsontest-hub"",
+        ""activities"": [
+            {
+                ""name"": ""blob-table"",
+                ""type"": ""Copy"",
+                ""inputs"": [
+                    {
+                        ""name"": ""Table-Blob""
+                    }
+                ],
+                ""outputs"": [
+                    {
+                        ""name"": ""Table-AzureTable""
+                    }
+                ],
+                ""policy"": {
+                    ""concurrency"": 1
+                },
+                ""typeProperties"": {
+                    ""source"": {
+                        ""type"": ""CassandraSource"",
+                        ""query"":""select * from table"",
+                        ""consistencyLevel"":""TWO"",
+                    },
+                    ""sink"": {
+                        ""type"": ""AzureTableSink"",
+                        ""writeBatchSize"": 1000000,
+                        ""azureTableDefaultPartitionKeyValue"": ""defaultParitionKey""
+                    },
+                }
+            }
+        ]
+    }
+}
+";
     }
 }
