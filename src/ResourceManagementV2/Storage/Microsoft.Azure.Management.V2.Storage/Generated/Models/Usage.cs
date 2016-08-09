@@ -13,12 +13,12 @@ namespace Microsoft.Azure.Management.Storage.Models
     /// <summary>
     /// Describes Storage Resource Usage.
     /// </summary>
-    public partial class Usage
+    public partial class UsageInner
     {
         /// <summary>
         /// Initializes a new instance of the Usage class.
         /// </summary>
-        public Usage() { }
+        public UsageInner() { }
 
         /// <summary>
         /// Initializes a new instance of the Usage class.
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <param name="limit">Gets the maximum count of the resources that
         /// can be allocated in the subscription.</param>
         /// <param name="name">Gets the name of the type of usage.</param>
-        public Usage(UsageUnit? unit = default(UsageUnit?), int? currentValue = default(int?), int? limit = default(int?), UsageName name = default(UsageName))
+        public UsageInner(UsageUnit? unit = default(UsageUnit?), int? currentValue = default(int?), int? limit = default(int?), UsageName name = default(UsageName))
         {
             Unit = unit;
             CurrentValue = currentValue;
