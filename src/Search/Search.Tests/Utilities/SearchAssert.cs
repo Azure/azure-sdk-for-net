@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Search.Tests
     {
         public static CloudException ThrowsCloudException(Action action, HttpStatusCode expectedStatusCode, string expectedMessage = null)
         {
-            return ThrowsCloudException(action, e => Assert.Equal(expectedStatusCode, e.Response.StatusCode));
+            return ThrowsCloudException(action, e => Assert.Equal(expectedStatusCode, e.Response.StatusCode), expectedMessage);
         }
 
         public static CloudException ThrowsCloudException(Action action, Func<CloudException, bool> checkException, string expectedMessage = null)

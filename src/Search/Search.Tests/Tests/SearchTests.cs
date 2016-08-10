@@ -241,6 +241,52 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Equal(expectedDoc, response.Results.First().Document);
         }
 
+        protected void TestCanSearchWithRegex()
+        {
+            SearchIndexClient client = GetClientForQuery();
+
+            var searchParameters =
+                new SearchParameters()
+                {
+                    QueryType = QueryType.Full,
+                    Select = new[] { "hotelName", "baseRate" }
+                };
+
+            DocumentSearchResult<Hotel> response =
+                client.Documents.Search<Hotel>(@"hotelName:/.*oach.*\/?/", searchParameters);
+
+            var expectedDoc = new Hotel() { HotelName = "Roach Motel", BaseRate = 79.99 };
+
+            Assert.NotNull(response.Results);
+            Assert.Equal(1, response.Results.Count);
+            Assert.Equal(expectedDoc, response.Results.First().Document);
+        }
+
+        protected void TestCanSearchWithEscapedSpecialCharsInRegex()
+        {
+            SearchIndexClient client = GetClientForQuery();
+
+            var searchParameters = new SearchParameters() { QueryType = QueryType.Full };
+
+            DocumentSearchResult response =
+                client.Documents.Search(@"/\+\-\&\|\!\(\)\{\}\[\]\^\""\\~\*\?\:\\\//", searchParameters);
+
+            Assert.NotNull(response.Results);
+            Assert.Equal(0, response.Results.Count);
+        }
+
+        protected void TestSearchThrowsWhenSpecialCharInRegexIsUnescaped()
+        {
+            SearchIndexClient client = GetClient();
+
+            var searchParameters = new SearchParameters() { QueryType = QueryType.Full };
+
+            SearchAssert.ThrowsCloudException(
+                () => client.Documents.Search(@"/.*/.*/", searchParameters),
+                HttpStatusCode.BadRequest,
+                "Failed to parse query string at line 1, column 8.");
+        }
+
         protected void TestCanUseTopAndSkipForClientSidePaging()
         {
             SearchIndexClient client = GetClientForQuery();
