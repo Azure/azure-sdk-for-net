@@ -123,9 +123,9 @@ namespace Microsoft.Azure.Management.Redis
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected RedisManagementClient(Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
+        protected RedisManagementClient(Uri baseUri, int testCount, params DelegatingHandler[] handlers) : this(handlers)
         {
-            if (baseUri == null)
+            if (baseUri == null && testCount != 0)
             {
                 throw new ArgumentNullException("baseUri");
             }
