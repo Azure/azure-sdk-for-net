@@ -339,8 +339,9 @@ namespace KeyVault.Tests
 
                     // Update the current version
                     attributes.Enabled = true;
-                    attributes.NotBefore = new DateTime(1980, 1, 1).ToUniversalTime();
-                    attributes.Expires = new DateTime(1981, 1, 1).ToUniversalTime();
+                    //use a constant to avoid time difference failures
+                    attributes.NotBefore = UnixTimeJsonConverter.EpochDate.AddSeconds(315561600); 
+                    attributes.Expires = UnixTimeJsonConverter.EpochDate.AddSeconds(347184000);
 
                     var updatedKey =
                         client.UpdateKeyAsync(_vaultAddress, keyName, operations, attributes)
@@ -357,8 +358,8 @@ namespace KeyVault.Tests
 
                     // Update the original version
                     attributes.Enabled = false;
-                    attributes.NotBefore = new DateTime(1990, 1, 1).ToUniversalTime();
-                    attributes.Expires = new DateTime(1991, 1, 1).ToUniversalTime();
+                    attributes.NotBefore = UnixTimeJsonConverter.EpochDate.AddSeconds(631180800);
+                    attributes.Expires = UnixTimeJsonConverter.EpochDate.AddSeconds(662716800);
 
                     updatedKey =
                         client.UpdateKeyAsync(createdKey.Key.Kid, operations, attributes).GetAwaiter().GetResult();
