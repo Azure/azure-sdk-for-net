@@ -84,9 +84,9 @@ namespace Microsoft.Azure.Management.V2.Compute
             {
                 if (virtualMachines == null)
                 {
-                    virtualMachines = new VirtulaMachinesImpl(client.VirtualMachines, this);
+                    //virtualMachines = new VirtulaMachinesImpl(client.VirtualMachines, this);
                 }
-                return virtualMachines;
+                return null;
             }
         }
 
