@@ -1,4 +1,9 @@
-﻿using System.Linq;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
+// 
+
+using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;
@@ -51,7 +56,7 @@ namespace KeyVault.Management.Tests
                             EnabledForDeployment = true,
                             EnabledForDiskEncryption = true,
                             EnabledForTemplateDeployment = true,
-                            Sku = new Microsoft.Azure.Management.KeyVault.Models.Sku { Family = "A", Name = SkuName.Standard },
+                            Sku = new Microsoft.Azure.Management.KeyVault.Models.Sku { Name = SkuName.Standard },
                             TenantId = tenantIdGuid,
                             VaultUri = "",
                             AccessPolicies = new[]
@@ -127,7 +132,7 @@ namespace KeyVault.Management.Tests
                     tags);
 
                 // Delete
-                var deletedVault = client.Vaults.Delete(
+                client.Vaults.Delete(
                     resourceGroupName: rgName,
                     vaultName: vaultName);
 
@@ -180,7 +185,7 @@ namespace KeyVault.Management.Tests
                             EnabledForDeployment = true,
                             EnabledForDiskEncryption = true,
                             EnabledForTemplateDeployment = true,
-                            Sku = new Microsoft.Azure.Management.KeyVault.Models.Sku { Family = "A", Name = SkuName.Standard },
+                            Sku = new Microsoft.Azure.Management.KeyVault.Models.Sku { Name = SkuName.Standard },
                             TenantId = tenantIdGuid,
                             VaultUri = "",
                             AccessPolicies = new[]
@@ -226,7 +231,7 @@ namespace KeyVault.Management.Tests
 
 
                 // Delete
-                var deleteVault = client.Vaults.Delete(
+                client.Vaults.Delete(
                     resourceGroupName: rgName,
                     vaultName: vaultName);
 
@@ -263,7 +268,6 @@ namespace KeyVault.Management.Tests
             Assert.Equal(expectedResourceId, vault.Id);
             Assert.Equal(expectedLocation, vault.Location);
             Assert.Equal(expectedTenantId, vault.Properties.TenantId);
-            Assert.Equal(expectedSkuFamily, vault.Properties.Sku.Family);
             Assert.Equal(expectedSku, vault.Properties.Sku.Name);
             Assert.Equal(expectedVaultName, vault.Name);
             Assert.Equal(expectedEnabledForDeployment, vault.Properties.EnabledForDeployment);
@@ -344,7 +348,7 @@ namespace KeyVault.Management.Tests
                                 EnabledForDeployment = true,
                                 EnabledForDiskEncryption = true,
                                 EnabledForTemplateDeployment = true,
-                                Sku = new Microsoft.Azure.Management.KeyVault.Models.Sku { Family = "A", Name = SkuName.Standard },
+                                Sku = new Microsoft.Azure.Management.KeyVault.Models.Sku { Name = SkuName.Standard },
                                 TenantId = tenantIdGuid,
                                 VaultUri = "",
                                 AccessPolicies = new[]

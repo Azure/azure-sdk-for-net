@@ -7,6 +7,7 @@
   "packOptions": {
     "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
     "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+    "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
     "tags": [ "Microsoft Azure key vault management", "Key Vault", "REST HTTP client", "azureofficial", "windowsazureofficial" ],
     "requireLicenseAcceptance": true,
     "releaseNotes": "This is a preview release of the Azure Key Vault .NET SDK, based on version 2015-06-01 of the Azure Key Vault REST API."
@@ -14,6 +15,7 @@
 
   "buildOptions": {
     "delaySign": true,
+    "publicSign": false,
     "keyFile": "../../../../tools/MSSharedLibKey.snk"
   },
 
@@ -39,7 +41,7 @@
       }
     },
     "netstandard1.1": {
-      "imports": ["dnxcore50"],
+      "imports": [ "dnxcore50" ],
       "dependencies": {
         "System.Runtime.Serialization.Primitives": "4.1.1"
       }
