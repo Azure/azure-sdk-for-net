@@ -31,8 +31,9 @@ using System.Security.Cryptography.X509Certificates;
 using System.Net;
 using System.Globalization;
 using System.Threading;
+using KeyVault.TestFramework;
 
-namespace KeyVault.Tests
+namespace Microsoft.Azure.KeyVault.Tests
 {
     public class KeyVaultOperationsTest : IClassFixture<KeyVaultTestFixture>
     {

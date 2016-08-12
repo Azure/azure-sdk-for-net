@@ -26,7 +26,7 @@ using Moq;
 using Xunit;
 using Xunit.Sdk;
 
-namespace KeyVault.Extensions.Tests
+namespace Microsoft.Azure.KeyVault.Extensions.Tests
 {
     public class CachingKeyResolverTests
     {

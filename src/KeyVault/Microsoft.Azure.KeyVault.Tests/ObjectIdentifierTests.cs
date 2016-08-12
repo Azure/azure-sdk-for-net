@@ -18,7 +18,7 @@
 using Microsoft.Azure.KeyVault;
 using Xunit;
 
-namespace KeyVault.ObjectIdentifier.Tests
+namespace Microsoft.Azure.KeyVault.Tests
 {
     public class ObjectIdentifierTests
     {

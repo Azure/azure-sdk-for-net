@@ -28,10 +28,10 @@ using Microsoft.Azure.Test;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Xunit;
-using KeyVault.Tests;
+using KeyVault.TestFramework;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
-namespace KeyVault.Extensions.Tests
+namespace Microsoft.Azure.KeyVault.Extensions.Tests
 {
 
     /// <summary>

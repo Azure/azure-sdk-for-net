@@ -23,7 +23,7 @@ using System.Threading.Tasks;
 using  System.Net.Http;
 using System.Threading;
 
-namespace KeyVault.Tests
+namespace KeyVault.TestFramework
 {
     public class TestHttpMessageHandler : DelegatingHandler
     {

@@ -21,7 +21,7 @@ using Microsoft.Azure.KeyVault;
 using Microsoft.Azure.KeyVault.Cryptography.Algorithms;
 using Xunit;
 
-namespace KeyVault.Cryptography.Tests
+namespace Microsoft.Azure.KeyVault.Cryptography.Tests
 {
 
     /// <summary>

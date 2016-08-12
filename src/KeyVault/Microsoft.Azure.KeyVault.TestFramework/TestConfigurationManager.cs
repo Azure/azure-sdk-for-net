@@ -20,7 +20,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 using System.IO;
 
-namespace KeyVault.Tests
+namespace KeyVault.TestFramework
 {
     public class TestConfigurationManager
     {

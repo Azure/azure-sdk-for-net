@@ -17,7 +17,7 @@
 
 using System;
 
-namespace KeyVault.Cryptography.Tests
+namespace Microsoft.Azure.KeyVault.Cryptography.Tests
 {
     public class TestFixture : IDisposable
     {

@@ -18,9 +18,10 @@
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Azure.KeyVault;
 using Microsoft.Azure.Test.HttpRecorder;
 
-namespace Microsoft.Azure.KeyVault.Internal
+namespace KeyVault.TestFramework
 {
     public class TestKeyVaultCredential : KeyVaultCredential
     {

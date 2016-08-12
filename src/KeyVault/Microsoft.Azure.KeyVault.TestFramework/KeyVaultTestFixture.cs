@@ -23,7 +23,6 @@ using System.Threading.Tasks;
 using Microsoft.Azure.Graph.RBAC;
 using Microsoft.Azure.Graph.RBAC.Models;
 using Microsoft.Azure.KeyVault;
-using Microsoft.Azure.KeyVault.Internal;
 using Microsoft.Azure.KeyVault.Models;
 using Microsoft.Azure.KeyVault.WebKey;
 using Microsoft.Azure.Test.HttpRecorder;
@@ -32,7 +31,7 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Management.ResourceManager;
 
-namespace KeyVault.Tests
+namespace KeyVault.TestFramework
 {
     public class KeyVaultTestFixture : IDisposable
     {
