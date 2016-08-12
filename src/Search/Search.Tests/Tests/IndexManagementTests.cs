@@ -8,7 +8,6 @@ namespace Microsoft.Azure.Search.Tests
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
-    using System.Reflection;
     using Microsoft.Azure.Search.Models;
     using Microsoft.Azure.Search.Tests.Utilities;
     using Microsoft.Rest.Azure;
@@ -17,6 +16,115 @@ namespace Microsoft.Azure.Search.Tests
 
     public sealed class IndexManagementTests : SearchTestBase<SearchServiceFixture>
     {
+        public static Index CreateTestIndex()
+        {
+            string indexName = SearchTestUtilities.GenerateName();
+
+            var index = new Index()
+            {
+                Name = indexName,
+                Fields = new[]
+                {
+                    new Field("hotelId", DataType.String) { IsKey = true, IsSearchable = false, IsFilterable = true, IsSortable = true, IsFacetable = true },
+                    new Field("baseRate", DataType.Double) { IsKey = false, IsSearchable = false, IsFilterable = true, IsSortable = true, IsFacetable = true },
+                    new Field("description", DataType.String) { IsKey = false, IsSearchable = true, IsFilterable = false, IsSortable = false, IsFacetable = false },
+                    new Field("description_fr", AnalyzerName.FrLucene) { IsFilterable = false, IsSortable = false, IsFacetable = false },
+                    new Field("hotelName", DataType.String) { IsSearchable = true, IsFilterable = true, IsSortable = true, IsFacetable = true },
+                    new Field("category", DataType.String) { IsSearchable = true, IsFilterable = true, IsSortable = true, IsFacetable = true },
+                    new Field("tags", DataType.Collection(DataType.String)) { IsSearchable = true, IsFilterable = true, IsSortable = false, IsFacetable = true },
+                    new Field("parkingIncluded", DataType.Boolean) { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                    new Field("smokingAllowed", DataType.Boolean) { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                    new Field("lastRenovationDate", DataType.DateTimeOffset) { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                    new Field("rating", DataType.Int32) { IsFilterable = true, IsSortable = true, IsFacetable = true },
+                    new Field("location", DataType.GeographyPoint) { IsFilterable = true, IsSortable = true, IsFacetable = false, IsRetrievable = true },
+                    new Field("totalGuests", DataType.Int64) { IsFilterable = true, IsSortable = true, IsFacetable = true, IsRetrievable = false },
+                    new Field("profitMargin", DataType.Double)
+                },
+                ScoringProfiles = new[]
+                {
+                    new ScoringProfile("MyProfile")
+                    {
+                        FunctionAggregation = ScoringFunctionAggregation.Average,
+                        Functions = new ScoringFunction[]
+                        {
+                            new MagnitudeScoringFunction(
+                                "rating",
+                                boost: 2.0,
+                                boostingRangeStart: 1,
+                                boostingRangeEnd: 4,
+                                shouldBoostBeyondRangeByConstant: true,
+                                interpolation: ScoringFunctionInterpolation.Constant),
+                            new DistanceScoringFunction(
+                                "location",
+                                boost: 1.5,
+                                referencePointParameter: "loc",
+                                boostingDistance: 5,
+                                interpolation: ScoringFunctionInterpolation.Linear),
+                            new FreshnessScoringFunction(
+                                "lastRenovationDate",
+                                boost: 1.1,
+                                boostingDuration: TimeSpan.FromDays(365),   //aka.ms/sre-codescan/disable
+                                interpolation: ScoringFunctionInterpolation.Logarithmic)
+                        },
+                        TextWeights = new TextWeights()
+                        {
+                            Weights = new Dictionary<string, double>() { { "description", 1.5 }, { "category", 2.0 } }
+                        }
+                    },
+                    new ScoringProfile("ProfileTwo")
+                    {
+                        FunctionAggregation = ScoringFunctionAggregation.Maximum,
+                        Functions = new[]
+                        {
+                            new TagScoringFunction(
+                                "tags",
+                                boost: 1.5,
+                                tagsParameter: "mytags",
+                                interpolation: ScoringFunctionInterpolation.Linear)
+                        }
+                    },
+                    new ScoringProfile("ProfileThree")
+                    {
+                        FunctionAggregation = ScoringFunctionAggregation.Minimum,
+                        Functions = new[]
+                        {
+                            // Set ShouldBoostBeyondRangeByConstant explicitly to false. The API returns the default (false) if you pass in null, so we
+                            // need to do this to ensure that comparisons work after round trips.
+                            new MagnitudeScoringFunction("rating", 3.0, new MagnitudeScoringParameters(0, 10) { ShouldBoostBeyondRangeByConstant = false })
+                            {
+                                Interpolation = ScoringFunctionInterpolation.Quadratic
+                            }
+                        }
+                    },
+                    new ScoringProfile("ProfileFour")
+                    {
+                        FunctionAggregation = ScoringFunctionAggregation.FirstMatching,
+                        Functions = new[]
+                        {
+                            // Set ShouldBoostBeyondRangeByConstant explicitly to false. The API returns the default (false) if you pass in null, so we
+                            // need to do this to ensure that comparisons work after round trips.
+                            new MagnitudeScoringFunction("rating", 3.14, new MagnitudeScoringParameters(1, 5) { ShouldBoostBeyondRangeByConstant = false })
+                            {
+                                Interpolation = ScoringFunctionInterpolation.Constant
+                            }
+                        }
+                    }
+                },
+                DefaultScoringProfile = "MyProfile",
+                CorsOptions = new CorsOptions()
+                {
+                    AllowedOrigins = new[] { "http://tempuri.org", "http://localhost:80" },
+                    MaxAgeInSeconds = 60
+                },
+                Suggesters = new[]
+                {
+                    new Suggester("FancySuggester", SuggesterSearchMode.AnalyzingInfixMatching, "hotelName")
+                }
+            };
+
+            return index;
+        }
+
         [Fact]
         public void CreateIndexReturnsCorrectDefinition()
         {
@@ -347,242 +455,10 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        [Fact]
-        public void CanUseAllAnalyzerNamesInIndexDefinition()
-        {
-            Run(() =>
-            {
-                SearchServiceClient client = Data.GetSearchServiceClient();
-
-                Index index = 
-                    new Index() 
-                    { 
-                        Name = SearchTestUtilities.GenerateName(),
-                        Fields = new[] { new Field("id", DataType.String) { IsKey = true } }.ToList()
-                    };
-
-                AnalyzerName[] allAnalyzers =
-                    (from field in typeof(AnalyzerName).GetFields()
-                    where field.FieldType == typeof(AnalyzerName) && field.IsStatic
-                    select field.GetValue(null)).Cast<AnalyzerName>().ToArray();
-
-                for (int i = 0; i < allAnalyzers.Length; i++)
-                {
-                    string fieldName = String.Format("field{0}", i);
-
-                    DataType fieldType = (i % 2 == 0) ? DataType.String : DataType.Collection(DataType.String);
-                    index.Fields.Add(new Field(fieldName, fieldType, allAnalyzers[i]));
-                }
-
-                client.Indexes.Create(index);
-            });
-        }
-
-        [Fact]
-        public void CanAnalyze()
-        {
-            Run(() =>
-            {
-                SearchServiceClient client = Data.GetSearchServiceClient();
-
-                Index index = CreateTestIndex();
-                client.Indexes.Create(index);
-
-                var request = new AnalyzeRequest()
-                {
-                    Text = "One two",
-                    Analyzer = AnalyzerName.Whitespace
-                };
-
-                AnalyzeResult result = client.Indexes.Analyze(index.Name, request);
-
-                Assert.Equal(2, result.Tokens.Count);
-                AssertTokenInfoEqual("One", expectedStartOffset: 0, expectedEndOffset: 3, expectedPosition: 0, actual: result.Tokens[0]);
-                AssertTokenInfoEqual("two", expectedStartOffset: 4, expectedEndOffset: 7, expectedPosition: 1, actual: result.Tokens[1]);
-
-                request = new AnalyzeRequest()
-                {
-                    Text = "One's <two/>",
-                    Tokenizer = TokenizerName.Whitespace,
-                    TokenFilters = new[] { TokenFilterName.Apostrophe },
-                    CharFilters = new[] { CharFilterName.HtmlStrip }
-                };
-
-                result = client.Indexes.Analyze(index.Name, request);
-
-                Assert.Equal(1, result.Tokens.Count);
-
-                // End offset is based on the original token, not the one emitted by the filters.
-                AssertTokenInfoEqual("One", expectedStartOffset: 0, expectedEndOffset: 5, expectedPosition: 0, actual: result.Tokens[0]);
-            });
-        }
-
-        [Fact]
-        public void AddingCustomAnalyzerThrowsCloudExceptionByDefault()
-        {
-            Run(() =>
-            {
-                SearchServiceClient client = Data.GetSearchServiceClient();
-
-                Index index = CreateTestIndex();
-                index.Analyzers = new List<Analyzer>() { new WhitespaceAnalyzer("my_whitespace_analyzer") };
-
-                client.Indexes.Create(index);
-
-                index.Analyzers.Add(new KeywordAnalyzer("my_keyword_analyzer"));
-
-                SearchAssert.ThrowsCloudException(() => client.Indexes.CreateOrUpdate(index), HttpStatusCode.BadRequest);
-            });
-        }
-
-        [Fact]
-        public void CanAddCustomAnalyzerWithIndexDowntime()
-        {
-            Run(() =>
-            {
-                SearchServiceClient client = Data.GetSearchServiceClient();
-
-                Index index = CreateTestIndex();
-                index.Analyzers = new List<Analyzer>() { new WhitespaceAnalyzer("my_whitespace_analyzer") };
-
-                client.Indexes.Create(index);
-
-                index.Analyzers.Add(new KeywordAnalyzer("my_keyword_analyzer"));
-
-                Index updatedIndex = client.Indexes.CreateOrUpdate(index, allowIndexDowntime: true);
-
-                AssertIndexesEqual(index, updatedIndex);
-            });
-        }
-
-        private static Index CreateTestIndex()
-        {
-            string indexName = SearchTestUtilities.GenerateName();
-
-            var index = new Index()
-            {
-                Name = indexName,
-                Fields = new[]
-                {
-                    new Field("hotelId", DataType.String) { IsKey = true, IsSearchable = false, IsFilterable = true, IsSortable = true, IsFacetable = true },
-                    new Field("baseRate", DataType.Double) { IsKey = false, IsSearchable = false, IsFilterable = true, IsSortable = true, IsFacetable = true },
-                    new Field("description", DataType.String) { IsKey = false, IsSearchable = true, IsFilterable = false, IsSortable = false, IsFacetable = false },
-                    new Field("description_fr", AnalyzerName.FrLucene) { IsFilterable = false, IsSortable = false, IsFacetable = false },
-                    new Field("hotelName", DataType.String) { IsSearchable = true, IsFilterable = true, IsSortable = true, IsFacetable = true },
-                    new Field("category", DataType.String) { IsSearchable = true, IsFilterable = true, IsSortable = true, IsFacetable = true },
-                    new Field("tags", DataType.Collection(DataType.String)) { IsSearchable = true, IsFilterable = true, IsSortable = false, IsFacetable = true },
-                    new Field("parkingIncluded", DataType.Boolean) { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                    new Field("smokingAllowed", DataType.Boolean) { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                    new Field("lastRenovationDate", DataType.DateTimeOffset) { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                    new Field("rating", DataType.Int32) { IsFilterable = true, IsSortable = true, IsFacetable = true },
-                    new Field("location", DataType.GeographyPoint) { IsFilterable = true, IsSortable = true, IsFacetable = false, IsRetrievable = true },
-                    new Field("totalGuests", DataType.Int64) { IsFilterable = true, IsSortable = true, IsFacetable = true, IsRetrievable = false },
-                    new Field("profitMargin", DataType.Double)
-                },
-                ScoringProfiles = new[]
-                {
-                    new ScoringProfile("MyProfile")
-                    {
-                        FunctionAggregation = ScoringFunctionAggregation.Average,
-                        Functions = new ScoringFunction[]
-                        {
-                            new MagnitudeScoringFunction(
-                                "rating", 
-                                boost: 2.0, 
-                                boostingRangeStart: 1, 
-                                boostingRangeEnd: 4, 
-                                shouldBoostBeyondRangeByConstant: true, 
-                                interpolation: ScoringFunctionInterpolation.Constant),
-                            new DistanceScoringFunction(
-                                "location", 
-                                boost: 1.5, 
-                                referencePointParameter: "loc", 
-                                boostingDistance: 5, 
-                                interpolation: ScoringFunctionInterpolation.Linear),
-                            new FreshnessScoringFunction(
-                                "lastRenovationDate", 
-                                boost: 1.1, 
-                                boostingDuration: TimeSpan.FromDays(365),   //aka.ms/sre-codescan/disable
-                                interpolation: ScoringFunctionInterpolation.Logarithmic)
-                        },
-                        TextWeights = new TextWeights()
-                        {
-                            Weights = new Dictionary<string, double>() { { "description", 1.5 }, { "category", 2.0 } }
-                        }
-                    },
-                    new ScoringProfile("ProfileTwo")
-                    {
-                        FunctionAggregation = ScoringFunctionAggregation.Maximum,
-                        Functions = new[]
-                        {
-                            new TagScoringFunction(
-                                "tags", 
-                                boost: 1.5, 
-                                tagsParameter: "mytags", 
-                                interpolation: ScoringFunctionInterpolation.Linear)
-                        }
-                    },
-                    new ScoringProfile("ProfileThree")
-                    {
-                        FunctionAggregation = ScoringFunctionAggregation.Minimum,
-                        Functions = new[]
-                        {
-                            // Set ShouldBoostBeyondRangeByConstant explicitly to false. The API returns the default (false) if you pass in null, so we
-                            // need to do this to ensure that comparisons work after round trips.
-                            new MagnitudeScoringFunction("rating", 3.0, new MagnitudeScoringParameters(0, 10) { ShouldBoostBeyondRangeByConstant = false })
-                            {
-                                Interpolation = ScoringFunctionInterpolation.Quadratic
-                            }
-                        }
-                    },
-                    new ScoringProfile("ProfileFour")
-                    {
-                        FunctionAggregation = ScoringFunctionAggregation.FirstMatching,
-                        Functions = new[]
-                        {
-                            // Set ShouldBoostBeyondRangeByConstant explicitly to false. The API returns the default (false) if you pass in null, so we
-                            // need to do this to ensure that comparisons work after round trips.
-                            new MagnitudeScoringFunction("rating", 3.14, new MagnitudeScoringParameters(1, 5) { ShouldBoostBeyondRangeByConstant = false })
-                            {
-                                Interpolation = ScoringFunctionInterpolation.Constant
-                            }
-                        }
-                    }
-                },
-                DefaultScoringProfile = "MyProfile",
-                CorsOptions = new CorsOptions()
-                {
-                    AllowedOrigins = new[] { "http://tempuri.org", "http://localhost:80" },
-                    MaxAgeInSeconds = 60
-                },
-                Suggesters = new[]
-                {
-                    new Suggester("FancySuggester", SuggesterSearchMode.AnalyzingInfixMatching, "hotelName")
-                }
-            };
-
-            return index;
-        }
-
         private static Index MutateIndex(Index index)
         {
             index.CorsOptions.AllowedOrigins = new[] { "*" };
             return index;
-        }
-
-        private static void AssertTokenInfoEqual(
-            string expectedToken, 
-            int expectedStartOffset, 
-            int expectedEndOffset, 
-            int expectedPosition, 
-            TokenInfo actual)
-        {
-            Assert.NotNull(actual);
-
-            Assert.Equal(expectedToken, actual.Token);
-            Assert.Equal(expectedStartOffset, actual.StartOffset);
-            Assert.Equal(expectedEndOffset, actual.EndOffset);
-            Assert.Equal(expectedPosition, actual.Position);
         }
 
         private static void AssertIndexesEqual(Index expected, Index actual)
@@ -590,9 +466,7 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Equal(expected, actual, new ModelComparer<Index>());
         }
 
-        private Index CreateOrUpdateIndex(Index index, SearchRequestOptions options, AccessCondition condition)
-        {
-            return Data.GetSearchServiceClient().Indexes.CreateOrUpdate(index, null, options, condition);
-        }
+        private Index CreateOrUpdateIndex(Index index, SearchRequestOptions options, AccessCondition condition) =>
+            Data.GetSearchServiceClient().Indexes.CreateOrUpdate(index, null, options, condition);
     }
 }

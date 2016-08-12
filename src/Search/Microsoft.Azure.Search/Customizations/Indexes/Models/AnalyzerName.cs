@@ -456,6 +456,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Standard ASCII Folding Lucene analyzer.
+        /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt605304.aspx#Analyzers" /> 
         /// </summary>
         public static readonly AnalyzerName StandardAsciiFoldingLucene =
             new AnalyzerName("standardasciifolding.lucene");
@@ -463,27 +464,31 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Treats the entire content of a field as a single token. This is useful
         /// for data like zip codes, ids, and some product names.
+        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/KeywordAnalyzer.html" />
         /// </summary>
         public static readonly AnalyzerName Keyword = new AnalyzerName("keyword");
 
         /// <summary>
         /// Flexibly separates text into terms via a regular expression pattern.
+        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/miscellaneous/PatternAnalyzer.html" />
         /// </summary>
         public static readonly AnalyzerName Pattern = new AnalyzerName("pattern");
 
         /// <summary>
         /// Divides text at non-letters and converts them to lower case.
+        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/SimpleAnalyzer.html" />
         /// </summary>
         public static readonly AnalyzerName Simple = new AnalyzerName("simple");
 
         /// <summary>
-        /// Divides text at non-letters; Applies the lowercase and stopword token
-        /// filters.
+        /// Divides text at non-letters; Applies the lowercase and stopword token filters.
+        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/StopAnalyzer.html" />
         /// </summary>
         public static readonly AnalyzerName Stop = new AnalyzerName("stop");
 
         /// <summary>
         /// An analyzer that uses the whitespace tokenizer.
+        /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/core/WhitespaceAnalyzer.html" />
         /// </summary>
         public static readonly AnalyzerName Whitespace = new AnalyzerName("whitespace");
 

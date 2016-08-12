@@ -19,25 +19,9 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// A character filter that attempts to strip out HTML constructs.
+        /// <see href="https://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/charfilter/HTMLStripCharFilter.html" />
         /// </summary>
         public static readonly CharFilterName HtmlStrip = new CharFilterName("html_strip");
-
-        /// <summary>
-        /// A character filter that applies mappings defined with the mappings
-        /// option. Matching is greedy (longest pattern matching at a given point
-        /// wins). Replacement is allowed to be the empty string.
-        /// </summary>
-        public static readonly CharFilterName Mapping = new CharFilterName("mapping");
-
-        /// <summary>
-        /// A character filter that replaces characters in the input string. It
-        /// uses a regular expression to identify character sequences to preserve
-        /// and a replacement pattern to identify characters to replace. For
-        /// example, given the input text "aa bb aa bb", pattern
-        /// "(aa)\s+(bb)", and replacement "$1#$2", the result would be
-        /// "aa#bb aa#bb".
-        /// </summary>
-        public static readonly CharFilterName PatternReplace = new CharFilterName("pattern_replace");
 
         private CharFilterName(string name) : base(name)
         {

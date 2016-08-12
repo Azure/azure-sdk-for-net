@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the StopwordsTokenFilter class.
         /// </summary>
-        public StopwordsTokenFilter(string name, IList<string> stopwords = default(IList<string>), string stopwordsList = default(string), bool? ignoreCase = default(bool?), bool? removeTrailingStopWords = default(bool?))
+        public StopwordsTokenFilter(string name, IList<string> stopwords = default(IList<string>), StopwordsList? stopwordsList = default(StopwordsList?), bool? ignoreCase = default(bool?), bool? removeTrailingStopWords = default(bool?))
             : base(name)
         {
             Stopwords = stopwords;
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets the list of stopwords. This property and the
-        /// stopwords_list property cannot both be set.
+        /// stopwords list property cannot both be set.
         /// </summary>
         [JsonProperty(PropertyName = "stopwords")]
         public IList<string> Stopwords { get; set; }
@@ -51,10 +51,15 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Gets or sets a predefined list of stopwords to use. This property
         /// and the stopwords property cannot both be set. Default is
-        /// "_english_".
+        /// English. Possible values include: 'arabic', 'armenian', 'basque',
+        /// 'brazilian', 'bulgarian', 'catalan', 'czech', 'danish', 'dutch',
+        /// 'english', 'finnish', 'french', 'galician', 'german', 'greek',
+        /// 'hindi', 'hungarian', 'indonesian', 'irish', 'italian',
+        /// 'latvian', 'norwegian', 'persian', 'portuguese', 'romanian',
+        /// 'russian', 'sorani', 'spanish', 'swedish', 'thai', 'turkish'
         /// </summary>
-        [JsonProperty(PropertyName = "stopwords_list")]
-        public string StopwordsList { get; set; }
+        [JsonProperty(PropertyName = "stopwordsList")]
+        public StopwordsList? StopwordsList { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to ignore case. If true,

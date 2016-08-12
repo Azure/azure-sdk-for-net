@@ -114,21 +114,29 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                     return true;
                 }
 
+                object notNull = (x != null) ? x : y;
+                Type type = notNull.GetType();
+
                 // ASSUMPTION: ModelComparer is used to compare model classes that map to OData JSON payloads. In OData, the default value of
                 // a collection is an empty collection, not null. However, in .NET, missing JSON properties are modeled as null. To compensate
                 // for this semantic gap, we will consider null and empty enumerables to be equivalent.
-                object notNull = (x != null) ? x : y;
-
-                if (!notNull.GetType().IsIEnumerable())
+                if (type.IsIEnumerable())
                 {
-                    return false;
-
+                    IEnumerator enumerator = ((IEnumerable)notNull).GetEnumerator();
+                    enumerator.Reset();
+                    bool isEmpty = !enumerator.MoveNext();
+                    return isEmpty;
                 }
 
-                IEnumerator enumerator = ((IEnumerable)notNull).GetEnumerator();
-                enumerator.Reset();
-                bool isEmpty = !enumerator.MoveNext();
-                return isEmpty;
+                // For value types, we go by the rule that null is equal to default(T). This works for cases where a client omits a property in
+                // a request, and the property comes back with its default value in the response.
+                if (type.GetTypeInfo().IsValueType)
+                {
+                    object defaultInstance = Activator.CreateInstance(type);
+                    return notNull.Equals(defaultInstance);
+                }
+
+                return false;
             }
 
             private static bool CompareEnumerables(Type enumerable, object x, object y)

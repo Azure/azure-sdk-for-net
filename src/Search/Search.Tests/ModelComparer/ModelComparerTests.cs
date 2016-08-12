@@ -90,6 +90,28 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
+        public void NullEqualsDefault()
+        {
+            int? maybeZero = 0;
+            int? maybeFive = 5;
+            int? nullNumber = null;
+
+            bool? maybeFalse = false;
+            bool? maybeTrue = true;
+            bool? nullBool = null;
+
+            Assert.Equal(maybeZero, nullNumber, new ModelComparer<int?>());
+            Assert.Equal(nullNumber, maybeZero, new ModelComparer<int?>());
+            Assert.Equal(maybeFalse, nullBool, new ModelComparer<bool?>());
+            Assert.Equal(nullBool, maybeFalse, new ModelComparer<bool?>());
+
+            Assert.NotEqual(maybeFive, nullNumber, new ModelComparer<int?>());
+            Assert.NotEqual(nullNumber, maybeFive, new ModelComparer<int?>());
+            Assert.NotEqual(maybeTrue, nullBool, new ModelComparer<bool?>());
+            Assert.NotEqual(nullBool, maybeTrue, new ModelComparer<bool?>());
+        }
+
+        [Fact]
         public void CanCompareCollections()
         {
             var ints = new[] { 1, 2, 3 };

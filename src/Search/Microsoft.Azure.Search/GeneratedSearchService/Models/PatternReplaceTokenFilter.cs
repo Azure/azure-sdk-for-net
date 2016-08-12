@@ -17,9 +17,12 @@ namespace Microsoft.Azure.Search.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// A token filter which applies a pattern to each token in the stream,
-    /// replacing match occurrences with the specified replacement string.
-    /// This token filter is implemented using Apache Lucene.
+    /// A character filter that replaces characters in the input string. It
+    /// uses a regular expression to identify character sequences to preserve
+    /// and a replacement pattern to identify characters to replace. For
+    /// example, given the input text "aa bb aa bb", pattern "(aa)\s+(bb)",
+    /// and replacement "$1#$2", the result would be "aa#bb aa#bb". This
+    /// token filter is implemented using Apache Lucene.
     /// <see href="http://lucene.apache.org/core/4_10_3/analyzers-common/org/apache/lucene/analysis/pattern/PatternReplaceFilter.html" />
     /// </summary>
     [JsonObject("#Microsoft.Azure.Search.PatternReplaceTokenFilter")]

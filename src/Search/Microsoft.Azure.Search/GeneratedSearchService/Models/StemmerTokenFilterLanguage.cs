@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Search.Models
         Irish,
         [EnumMember(Value = "italian")]
         Italian,
-        [EnumMember(Value = "lightItalian")]
+        [EnumMember(Value = "light_italian")]
         LightItalian,
         [EnumMember(Value = "sorani")]
         Sorani,
