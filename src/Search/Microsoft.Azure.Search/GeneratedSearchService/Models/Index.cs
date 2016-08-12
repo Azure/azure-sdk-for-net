@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the Index class.
         /// </summary>
-        public Index(string name, IList<Field> fields, IList<ScoringProfile> scoringProfiles = default(IList<ScoringProfile>), string defaultScoringProfile = default(string), CorsOptions corsOptions = default(CorsOptions), IList<Suggester> suggesters = default(IList<Suggester>), string eTag = default(string))
+        public Index(string name, IList<Field> fields, IList<ScoringProfile> scoringProfiles = default(IList<ScoringProfile>), string defaultScoringProfile = default(string), CorsOptions corsOptions = default(CorsOptions), IList<Suggester> suggesters = default(IList<Suggester>), IList<Analyzer> analyzers = default(IList<Analyzer>), IList<Tokenizer> tokenizers = default(IList<Tokenizer>), IList<TokenFilter> tokenFilters = default(IList<TokenFilter>), IList<CharFilter> charFilters = default(IList<CharFilter>), string eTag = default(string))
         {
             Name = name;
             Fields = fields;
@@ -38,6 +38,10 @@ namespace Microsoft.Azure.Search.Models
             DefaultScoringProfile = defaultScoringProfile;
             CorsOptions = corsOptions;
             Suggesters = suggesters;
+            Analyzers = analyzers;
+            Tokenizers = tokenizers;
+            TokenFilters = tokenFilters;
+            CharFilters = charFilters;
             ETag = eTag;
         }
 
@@ -80,6 +84,30 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         [JsonProperty(PropertyName = "suggesters")]
         public IList<Suggester> Suggesters { get; set; }
+
+        /// <summary>
+        /// Gets or sets the analyzers for the index.
+        /// </summary>
+        [JsonProperty(PropertyName = "analyzers")]
+        public IList<Analyzer> Analyzers { get; set; }
+
+        /// <summary>
+        /// Gets or sets the tokenizers for the index.
+        /// </summary>
+        [JsonProperty(PropertyName = "tokenizers")]
+        public IList<Tokenizer> Tokenizers { get; set; }
+
+        /// <summary>
+        /// Gets or sets the token filters for the index.
+        /// </summary>
+        [JsonProperty(PropertyName = "tokenFilters")]
+        public IList<TokenFilter> TokenFilters { get; set; }
+
+        /// <summary>
+        /// Gets or sets the character filters for the index.
+        /// </summary>
+        [JsonProperty(PropertyName = "charFilters")]
+        public IList<CharFilter> CharFilters { get; set; }
 
         /// <summary>
         /// Gets or sets the ETag of the index.
@@ -134,6 +162,46 @@ namespace Microsoft.Azure.Search.Models
                     if (element2 != null)
                     {
                         element2.Validate();
+                    }
+                }
+            }
+            if (this.Analyzers != null)
+            {
+                foreach (var element3 in this.Analyzers)
+                {
+                    if (element3 != null)
+                    {
+                        element3.Validate();
+                    }
+                }
+            }
+            if (this.Tokenizers != null)
+            {
+                foreach (var element4 in this.Tokenizers)
+                {
+                    if (element4 != null)
+                    {
+                        element4.Validate();
+                    }
+                }
+            }
+            if (this.TokenFilters != null)
+            {
+                foreach (var element5 in this.TokenFilters)
+                {
+                    if (element5 != null)
+                    {
+                        element5.Validate();
+                    }
+                }
+            }
+            if (this.CharFilters != null)
+            {
+                foreach (var element6 in this.CharFilters)
+                {
+                    if (element6 != null)
+                    {
+                        element6.Validate();
                     }
                 }
             }

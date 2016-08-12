@@ -17,7 +17,9 @@
   "buildOptions": {
     "delaySign": true,
     "publicSign": false,
-    "keyFile": "../../../tools/MSSharedLibKey.snk"
+    "keyFile": "../../../tools/MSSharedLibKey.snk",
+    "xmlDoc": true,
+    "nowarn": [ "1591" ]
   },
   "dependencies": {
     "Microsoft.Spatial": "[6.15.0,7.0)"

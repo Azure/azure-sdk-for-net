@@ -36,6 +36,9 @@ namespace Microsoft.Azure.Search.Tests
 
                 Indexer actualIndexer = searchClient.Indexers.Create(expectedIndexer);
 
+                expectedIndexer.Parameters.Configuration = new Dictionary<string, object>();    // Get returns empty dictionary.
+                ExpectSameStartTime(expectedIndexer, actualIndexer);
+
                 AssertIndexersEqual(expectedIndexer, actualIndexer);
             });
         }
@@ -50,9 +53,10 @@ namespace Microsoft.Azure.Search.Tests
                 Indexer indexer = Data.CreateTestIndexer();
                 indexer.DataSourceName = "thisdatasourcedoesnotexist";
 
-                CloudException e = Assert.Throws<CloudException>(() => searchClient.Indexers.Create(indexer));
-                Assert.Equal(HttpStatusCode.BadRequest, e.Response.StatusCode);
-                Assert.Equal("This indexer refers to a data source 'thisdatasourcedoesnotexist' that doesn't exist", e.Body.Message);
+                SearchAssert.ThrowsCloudException(
+                    () => searchClient.Indexers.Create(indexer),
+                    HttpStatusCode.BadRequest,
+                    "This indexer refers to a data source 'thisdatasourcedoesnotexist' that doesn't exist");
             });
         }
 
@@ -62,9 +66,7 @@ namespace Microsoft.Azure.Search.Tests
             Run(() =>
             {
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
-
-                CloudException e = Assert.Throws<CloudException>(() => searchClient.Indexers.Get("thisindexerdoesnotexist"));
-                Assert.Equal(HttpStatusCode.NotFound, e.Response.StatusCode);
+                SearchAssert.ThrowsCloudException(() => searchClient.Indexers.Get("thisindexerdoesnotexist"), HttpStatusCode.NotFound);
             });
         }
 
@@ -83,6 +85,7 @@ namespace Microsoft.Azure.Search.Tests
                 updatedExpected.Description = "somethingdifferent";
 
                 Indexer updateResponse = searchClient.Indexers.CreateOrUpdate(updatedExpected);
+                ExpectSameStartTime(updatedExpected, updateResponse);
 
                 AssertIndexersEqual(updatedExpected, updateResponse);
             });
@@ -190,9 +193,7 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
-        // TODO,seansaleh: Enable this test once the server side bug is fixed
-        [Fact(Skip = "There is a bug in Azure Search that 404's before checking the ETag. "
-           + "This test exposes this bug and thus is disabled until the server side issue is fixed")]
+        [Fact]
         public void DeleteIndexerIfExistsWorksOnlyWhenResourceExists()
         {
             Run(() =>
@@ -374,6 +375,7 @@ namespace Microsoft.Azure.Search.Tests
                     .ParseDelimitedTextFiles("a", "b", "c");
 
                 Indexer actualIndexer = searchClient.Indexers.Create(expectedIndexer);
+                ExpectSameStartTime(expectedIndexer, actualIndexer);
 
                 AssertIndexersEqual(expectedIndexer, actualIndexer);
             });
@@ -387,102 +389,16 @@ namespace Microsoft.Azure.Search.Tests
             Assert.NotEqual(new DateTimeOffset(), result.EndTime.Value);
         }
 
-        private void AssertIndexersEqual(Indexer expected, Indexer actual)
+        private static void AssertIndexersEqual(Indexer expected, Indexer actual)
         {
-            Assert.Equal(expected.Name, actual.Name);
-            Assert.Equal(expected.Description, actual.Description);
-            Assert.Equal(expected.DataSourceName, actual.DataSourceName);
-            Assert.Equal(expected.TargetIndexName, actual.TargetIndexName);
-            Assert.Equal(expected.IsDisabled, actual.IsDisabled);
-
-            AssertSchedulesEqual(expected.Schedule, actual.Schedule);
-            AssertParametersEqual(expected.Parameters, actual.Parameters);
-            SearchAssert.SequenceEqual(expected.FieldMappings, actual.FieldMappings, AssertFieldMappingsEqual);
+            Assert.Equal(expected, actual, new ModelComparer<Indexer>());
         }
 
-        private void AssertFieldMappingsEqual(FieldMapping expected, FieldMapping actual)
+        private static void ExpectSameStartTime(Indexer expected, Indexer actual)
         {
-            if (expected == null)
-            {
-                Assert.Null(actual);
-            }
-            else
-            {
-                Assert.NotNull(actual);
-                Assert.Equal(expected.SourceFieldName, actual.SourceFieldName);
-                Assert.Equal(expected.TargetFieldName, actual.TargetFieldName);
-                AssertFieldMappingFunctionsEqual(expected.MappingFunction, actual.MappingFunction);
-            }
-        }
-
-        private void AssertFieldMappingFunctionsEqual(FieldMappingFunction expected, FieldMappingFunction actual)
-        {
-            if (expected == null)
-            {
-                Assert.Null(actual);
-            }
-            else
-            {
-                Assert.NotNull(actual);
-                Assert.Equal(expected.Name, actual.Name);
-
-                if (expected.Parameters != null)
-                {
-                    SearchAssert.DictionariesEqual(expected.Parameters, actual.Parameters);
-                }
-                else if (actual.Parameters != null)
-                {
-                    SearchAssert.DictionariesEqual(new Dictionary<string, object>(), actual.Parameters);
-                }
-            }
-        }
-
-        private void AssertParametersEqual(IndexingParameters expected, IndexingParameters actual)
-        {
-            if (expected == null)
-            {
-                Assert.Null(actual);
-            }
-            else
-            {
-                Assert.NotNull(actual);
-                Assert.Equal(expected.BatchSize, actual.BatchSize);
-                Assert.Equal(expected.MaxFailedItems, actual.MaxFailedItems);
-                Assert.Equal(expected.MaxFailedItemsPerBatch, actual.MaxFailedItemsPerBatch);
-
-                if (expected.Configuration != null)
-                {
-                    SearchAssert.DictionariesEqual(expected.Configuration, actual.Configuration);
-                }
-                else
-                {
-                    SearchAssert.DictionariesEqual(new Dictionary<string, object>(), actual.Configuration);
-                }
-            }
-        }
-
-        private void AssertSchedulesEqual(IndexingSchedule expected, IndexingSchedule actual)
-        {
-            if (expected == null)
-            {
-                Assert.Null(actual);
-            }
-            else
-            {
-                Assert.NotNull(actual);
-                Assert.Equal(expected.Interval, actual.Interval);
-
-                if (expected.StartTime.HasValue)
-                {
-                    Assert.Equal(expected.StartTime, actual.StartTime);
-                }
-                else
-                {
-                    // There ought to be a start time in the response; We just can't know what it is because it would
-                    // make the test timing-dependent.
-                    Assert.True(actual.StartTime.HasValue);
-                }
-            }
+            // There ought to be a start time in the response; We just can't know what it is because it would
+            // make the test timing-dependent.
+            expected.Schedule.StartTime = actual.Schedule.StartTime;
         }
 
         private class MockStatusDelegatingHandler : DelegatingHandler

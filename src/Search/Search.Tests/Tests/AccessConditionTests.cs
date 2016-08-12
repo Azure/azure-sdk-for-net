@@ -6,9 +6,8 @@ namespace Microsoft.Azure.Search.Tests
 {
     using System;
     using Microsoft.Azure.Search.Models;
-    using Xunit;
     using Rest.Azure;
-    using System.Net;
+    using Xunit;
 
     public sealed class AccessConditionTests
     {
@@ -130,7 +129,7 @@ namespace Microsoft.Azure.Search.Tests
 
             SearchAssert.ThrowsCloudException(
                 () => createOrUpdate(mutatedResource, AccessCondition.GenerateIfNotExistsCondition()),
-                HttpStatusCode.PreconditionFailed);
+                e => e.IsAccessConditionFailed());
         }
 
         public static void CreateOrUpdateIfNotExistsSucceedsOnNoResource<T>(
@@ -172,7 +171,7 @@ namespace Microsoft.Azure.Search.Tests
 
             SearchAssert.ThrowsCloudException(
                 () => createOrUpdate(resource, AccessCondition.GenerateIfExistsCondition()),
-                HttpStatusCode.PreconditionFailed);
+                e => e.IsAccessConditionFailed());
 
             // The resource should never have been created on the server, and thus it should not have an ETag
             Assert.Null(resource.ETag);
@@ -208,7 +207,7 @@ namespace Microsoft.Azure.Search.Tests
 
             SearchAssert.ThrowsCloudException(
                 () => createOrUpdate(updatedResource, AccessCondition.IfNotChanged(createdResource)),
-                HttpStatusCode.PreconditionFailed);
+                e => e.IsAccessConditionFailed());
 
             Assert.NotEmpty(createdResource.ETag);
             Assert.NotEmpty(updatedResource.ETag);
@@ -228,7 +227,7 @@ namespace Microsoft.Azure.Search.Tests
 
             SearchAssert.ThrowsCloudException(
                 () => delete(resourceName, AccessCondition.IfNotChanged(staleResource)),
-                HttpStatusCode.PreconditionFailed);
+                e => e.IsAccessConditionFailed());
             delete(resourceName, AccessCondition.IfNotChanged(currentResource));
         }
 
@@ -244,7 +243,7 @@ namespace Microsoft.Azure.Search.Tests
             delete(resourceName, AccessCondition.GenerateIfExistsCondition());
             SearchAssert.ThrowsCloudException(
                 () => delete(resourceName, AccessCondition.GenerateIfExistsCondition()),
-                HttpStatusCode.PreconditionFailed);
+                e => e.IsAccessConditionFailed());
         }
 
         private class AResourceWithETag : IResourceWithETag
