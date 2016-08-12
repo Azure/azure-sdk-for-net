@@ -123,15 +123,22 @@ namespace Microsoft.Azure.Search
             /// <param name='index'>
             /// The definition of the index to create or update.
             /// </param>
+            /// <param name='allowIndexDowntime'>
+            /// Allows new analyzers, tokenizers, token filters, or char filters to be
+            /// added to an index by taking the index offline for at least a few seconds.
+            /// This temporarily causes indexing and query requests to fail. Performance
+            /// and write availability of the index can be impaired for several minutes
+            /// after the index is updated, or longer for very large indexes.
+            /// </param>
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
             /// <param name='accessCondition'>
             /// Additional parameters for the operation
             /// </param>
-            public static Index CreateOrUpdate(this IIndexesOperations operations, string indexName, Index index, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition))
+            public static Index CreateOrUpdate(this IIndexesOperations operations, string indexName, Index index, bool? allowIndexDowntime = default(bool?), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition))
             {
-                return Task.Factory.StartNew(s => ((IIndexesOperations)s).CreateOrUpdateAsync(indexName, index, searchRequestOptions, accessCondition), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IIndexesOperations)s).CreateOrUpdateAsync(indexName, index, allowIndexDowntime, searchRequestOptions, accessCondition), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -147,6 +154,13 @@ namespace Microsoft.Azure.Search
             /// <param name='index'>
             /// The definition of the index to create or update.
             /// </param>
+            /// <param name='allowIndexDowntime'>
+            /// Allows new analyzers, tokenizers, token filters, or char filters to be
+            /// added to an index by taking the index offline for at least a few seconds.
+            /// This temporarily causes indexing and query requests to fail. Performance
+            /// and write availability of the index can be impaired for several minutes
+            /// after the index is updated, or longer for very large indexes.
+            /// </param>
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
@@ -156,9 +170,9 @@ namespace Microsoft.Azure.Search
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Index> CreateOrUpdateAsync(this IIndexesOperations operations, string indexName, Index index, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Index> CreateOrUpdateAsync(this IIndexesOperations operations, string indexName, Index index, bool? allowIndexDowntime = default(bool?), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(indexName, index, searchRequestOptions, accessCondition, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(indexName, index, allowIndexDowntime, searchRequestOptions, accessCondition, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -290,6 +304,54 @@ namespace Microsoft.Azure.Search
             public static async Task<IndexGetStatisticsResult> GetStatisticsAsync(this IIndexesOperations operations, string indexName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetStatisticsWithHttpMessagesAsync(indexName, searchRequestOptions, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Shows how an analyzer breaks text into tokens.
+            /// <see href="https://azure.microsoft.com/en-us/documentation/articles/search-api-2015-02-28-preview/#TestAnalyzer" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='indexName'>
+            /// The name of the index for which to test an analyzer.
+            /// </param>
+            /// <param name='request'>
+            /// The text and analyzer or analysis components to test.
+            /// </param>
+            /// <param name='searchRequestOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            public static AnalyzeResult Analyze(this IIndexesOperations operations, string indexName, AnalyzeRequest request, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
+            {
+                return Task.Factory.StartNew(s => ((IIndexesOperations)s).AnalyzeAsync(indexName, request, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Shows how an analyzer breaks text into tokens.
+            /// <see href="https://azure.microsoft.com/en-us/documentation/articles/search-api-2015-02-28-preview/#TestAnalyzer" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='indexName'>
+            /// The name of the index for which to test an analyzer.
+            /// </param>
+            /// <param name='request'>
+            /// The text and analyzer or analysis components to test.
+            /// </param>
+            /// <param name='searchRequestOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AnalyzeResult> AnalyzeAsync(this IIndexesOperations operations, string indexName, AnalyzeRequest request, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.AnalyzeWithHttpMessagesAsync(indexName, request, searchRequestOptions, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
