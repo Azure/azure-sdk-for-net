@@ -1,5 +1,5 @@
 ﻿{
-    "version": "1.0.2-preview",
+    "version": "1.0.3-preview",
     "description": "Microsoft.Rest.ClientRuntime.Azure.TestFramework",
     "authors": [ "Microsoft Corporation" ],
     "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
@@ -11,7 +11,7 @@
     "frameworks": {
         "net45": {
             "dependencies": {
-                "Microsoft.Rest.ClientRuntime.Azure.Authentication": "0.11.2"
+                "Microsoft.Rest.ClientRuntime.Azure.Authentication": "0.11.3"
             },
             "frameworkAssemblies": {
                 "System.Net.Http": "",
