@@ -265,8 +265,8 @@ namespace Microsoft.Azure.Search.Tests
                         language: MicrosoftTokenizerLanguage.Thai),
                     new PathHierarchyTokenizer(
                         SearchTestUtilities.GenerateName(), 
-                        delimiter: ":", 
-                        replacement: "_", 
+                        delimiter: ':', 
+                        replacement: '_', 
                         bufferSize: 100, 
                         reverseTokenOrder: true, 
                         numberOfTokensToSkip: 2),
@@ -425,7 +425,7 @@ namespace Microsoft.Azure.Search.Tests
                     new KeywordTokenizer(generateSimpleName(i++), bufferSize: 256),
                     new MicrosoftLanguageStemmingTokenizer(generateSimpleName(i++), maxTokenLength: 255),
                     new MicrosoftLanguageTokenizer(generateSimpleName(i++), maxTokenLength: 255),
-                    new PathHierarchyTokenizer(generateSimpleName(i++), delimiter: "/", replacement: "/", bufferSize: 1024),
+                    new PathHierarchyTokenizer(generateSimpleName(i++), delimiter: '/', replacement: '/', bufferSize: 1024),
                     new PatternTokenizer(generateSimpleName(i++), pattern: @"\W+", group: -1),
                     new StandardTokenizer(generateSimpleName(i++), maxTokenLength: 255),
                     new UaxUrlEmailTokenizer(generateSimpleName(i++), maxTokenLength: 255)
