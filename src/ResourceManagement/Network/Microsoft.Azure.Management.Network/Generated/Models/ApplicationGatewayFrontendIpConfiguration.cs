@@ -45,41 +45,40 @@ namespace Microsoft.Azure.Management.Network.Models
         }
 
         /// <summary>
-        /// Gets or sets the privateIPAddress of the Network Interface IP
-        /// Configuration
+        /// PrivateIPAddress of the Network Interface IP Configuration
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateIPAddress")]
         public string PrivateIPAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets PrivateIP allocation method (Static/Dynamic).
-        /// Possible values include: 'Static', 'Dynamic'
+        /// PrivateIP allocation method (Static/Dynamic). Possible values
+        /// include: 'Static', 'Dynamic'
         /// </summary>
         [JsonProperty(PropertyName = "properties.privateIPAllocationMethod")]
         public string PrivateIPAllocationMethod { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of the subnet resource
+        /// Reference of the subnet resource
         /// </summary>
         [JsonProperty(PropertyName = "properties.subnet")]
         public SubResource Subnet { get; set; }
 
         /// <summary>
-        /// Gets or sets the reference of the PublicIP resource
+        /// Reference of the PublicIP resource
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicIPAddress")]
         public SubResource PublicIPAddress { get; set; }
 
         /// <summary>
-        /// Gets or sets Provisioning state of the PublicIP resource
+        /// Provisioning state of the PublicIP resource
         /// Updating/Deleting/Failed
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
-        /// Gets name of the resource that is unique within a resource group.
-        /// This name can be used to access the resource
+        /// Name of the resource that is unique within a resource group. This
+        /// name can be used to access the resource
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

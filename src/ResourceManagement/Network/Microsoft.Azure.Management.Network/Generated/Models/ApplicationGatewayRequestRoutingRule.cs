@@ -46,46 +46,45 @@ namespace Microsoft.Azure.Management.Network.Models
         }
 
         /// <summary>
-        /// Gets or sets the rule type. Possible values include: 'Basic',
-        /// 'PathBasedRouting'
+        /// Rule type. Possible values include: 'Basic', 'PathBasedRouting'
         /// </summary>
         [JsonProperty(PropertyName = "properties.ruleType")]
         public string RuleType { get; set; }
 
         /// <summary>
-        /// Gets or sets backend address pool resource of application gateway
+        /// Backend address pool resource of application gateway
         /// </summary>
         [JsonProperty(PropertyName = "properties.backendAddressPool")]
         public SubResource BackendAddressPool { get; set; }
 
         /// <summary>
-        /// Gets or sets frontend port resource of application gateway
+        /// Frontend port resource of application gateway
         /// </summary>
         [JsonProperty(PropertyName = "properties.backendHttpSettings")]
         public SubResource BackendHttpSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets http listener resource of application gateway
+        /// Http listener resource of application gateway
         /// </summary>
         [JsonProperty(PropertyName = "properties.httpListener")]
         public SubResource HttpListener { get; set; }
 
         /// <summary>
-        /// Gets or sets url path map resource of application gateway
+        /// Url path map resource of application gateway
         /// </summary>
         [JsonProperty(PropertyName = "properties.urlPathMap")]
         public SubResource UrlPathMap { get; set; }
 
         /// <summary>
-        /// Gets provisioning state of the request routing rule resource
+        /// Provisioning state of the request routing rule resource
         /// Updating/Deleting/Failed
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
-        /// Gets name of the resource that is unique within a resource group.
-        /// This name can be used to access the resource
+        /// Name of the resource that is unique within a resource group. This
+        /// name can be used to access the resource
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

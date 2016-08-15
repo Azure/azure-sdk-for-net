@@ -31,16 +31,20 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// Initializes a new instance of the ServicePrincipalCreateParameters
         /// class.
         /// </summary>
-        /// <param name="appId">Gets or sets application Id</param>
+        /// <param name="appId">application Id</param>
         /// <param name="accountEnabled">Specifies if the account is enabled</param>
-        public ServicePrincipalCreateParameters(string appId, bool accountEnabled)
+        /// <param name="keyCredentials">the list of KeyCredential objects</param>
+        /// <param name="passwordCredentials">the list of PasswordCredential objects</param>
+        public ServicePrincipalCreateParameters(string appId, bool accountEnabled, IList<KeyCredential> keyCredentials = default(IList<KeyCredential>), IList<PasswordCredential> passwordCredentials = default(IList<PasswordCredential>))
         {
             AppId = appId;
             AccountEnabled = accountEnabled;
+            KeyCredentials = keyCredentials;
+            PasswordCredentials = passwordCredentials;
         }
 
         /// <summary>
-        /// Gets or sets gets or sets application Id
+        /// Gets or sets application Id
         /// </summary>
         [JsonProperty(PropertyName = "appId")]
         public string AppId { get; set; }
@@ -50,6 +54,18 @@ namespace Microsoft.Azure.Graph.RBAC.Models
         /// </summary>
         [JsonProperty(PropertyName = "accountEnabled")]
         public bool AccountEnabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of KeyCredential objects
+        /// </summary>
+        [JsonProperty(PropertyName = "keyCredentials")]
+        public IList<KeyCredential> KeyCredentials { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of PasswordCredential objects
+        /// </summary>
+        [JsonProperty(PropertyName = "passwordCredentials")]
+        public IList<PasswordCredential> PasswordCredentials { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Graph.RBAC
         public ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Gets or sets the tenant Id.
+        /// the tenant Id.
         /// </summary>
         public string TenantID { get; set; }
 
@@ -320,6 +320,7 @@ namespace Microsoft.Azure.Graph.RBAC
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings = new JsonSerializerSettings
             {
                 DateFormatHandling = DateFormatHandling.IsoDateFormat,
@@ -333,6 +334,7 @@ namespace Microsoft.Azure.Graph.RBAC
                     }
             };
             CustomInitialize();
+            DeserializationSettings.Converters.Add(new TransformationJsonConverter());
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter()); 
         }    
     }

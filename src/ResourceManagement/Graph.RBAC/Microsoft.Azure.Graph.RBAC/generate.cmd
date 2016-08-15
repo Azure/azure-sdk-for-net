@@ -6,7 +6,7 @@
 @echo off
 set autoRestVersion=0.17.0-Nightly20160704
 if  "%1" == "" (
-    set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-graphrbac/1.42-previewInternal/swagger/graphrbac.json"
+		set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-graphrbac/compositeGraphRbacManagementClient.json"
 ) else (
     set specFile="%1"
 )

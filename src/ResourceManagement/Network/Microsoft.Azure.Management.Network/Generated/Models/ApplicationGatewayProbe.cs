@@ -45,51 +45,51 @@ namespace Microsoft.Azure.Management.Network.Models
         }
 
         /// <summary>
-        /// Gets or sets the protocol. Possible values include: 'Http', 'Https'
+        /// Protocol. Possible values include: 'Http', 'Https'
         /// </summary>
         [JsonProperty(PropertyName = "properties.protocol")]
         public string Protocol { get; set; }
 
         /// <summary>
-        /// Gets or sets the host to send probe to
+        /// Host to send probe to
         /// </summary>
         [JsonProperty(PropertyName = "properties.host")]
         public string Host { get; set; }
 
         /// <summary>
-        /// Gets or sets the relative path of probe
+        /// Relative path of probe
         /// </summary>
         [JsonProperty(PropertyName = "properties.path")]
         public string Path { get; set; }
 
         /// <summary>
-        /// Gets or sets probing interval in seconds
+        /// Probing interval in seconds
         /// </summary>
         [JsonProperty(PropertyName = "properties.interval")]
         public int? Interval { get; set; }
 
         /// <summary>
-        /// Gets or sets probing timeout in seconds
+        /// Probing timeout in seconds
         /// </summary>
         [JsonProperty(PropertyName = "properties.timeout")]
         public int? Timeout { get; set; }
 
         /// <summary>
-        /// Gets or sets probing unhealthy threshold
+        /// Probing unhealthy threshold
         /// </summary>
         [JsonProperty(PropertyName = "properties.unhealthyThreshold")]
         public int? UnhealthyThreshold { get; set; }
 
         /// <summary>
-        /// Gets or sets Provisioning state of the backend http settings
-        /// resource Updating/Deleting/Failed
+        /// Provisioning state of the backend http settings resource
+        /// Updating/Deleting/Failed
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
-        /// Gets name of the resource that is unique within a resource group.
-        /// This name can be used to access the resource
+        /// Name of the resource that is unique within a resource group. This
+        /// name can be used to access the resource
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

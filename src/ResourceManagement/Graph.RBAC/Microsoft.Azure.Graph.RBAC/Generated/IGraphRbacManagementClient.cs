@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Graph.RBAC
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Gets or sets the tenant Id.
+        /// the tenant Id.
         /// </summary>
         string TenantID { get; set; }
 

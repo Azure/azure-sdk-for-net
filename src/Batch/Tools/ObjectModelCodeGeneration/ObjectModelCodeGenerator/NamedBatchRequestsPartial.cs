@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ConvenienceLayerCodeGenerationTest
+﻿namespace ObjectModelCodeGenerator
 {
-    using RoslynParser;
+    using System.Collections.Generic;
+    using ProxyLayerParser;
 
     public partial class NamedBatchRequests
     {
-        public NamedBatchRequests(Dictionary<string, IEnumerable<BatchRequestTemplate>> batchRequests)
+        public NamedBatchRequests(IEnumerable<BatchRequestGroup> batchRequests)
         {
             this._batchRequestsField = batchRequests;
         }
