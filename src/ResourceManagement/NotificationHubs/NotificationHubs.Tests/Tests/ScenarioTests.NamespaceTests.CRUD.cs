@@ -35,13 +35,12 @@ namespace NotificationHubs.Tests.ScenarioTests
                 InitializeClients(context);
 
                 var location = NotificationHubsManagementHelper.DefaultLocation;
-                var resourceGroup = "Default-ServiceBus-CentralUS";
-                //var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
-                //if (string.IsNullOrWhiteSpace(resourceGroup))
-                //{
-                //    resourceGroup = TestUtilities.GenerateName(NotificationHubsManagementHelper.ResourceGroupPrefix);
-                //    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
-                //}
+                var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
+                if (string.IsNullOrWhiteSpace(resourceGroup))
+                {
+                    resourceGroup = TestUtilities.GenerateName(NotificationHubsManagementHelper.ResourceGroupPrefix);
+                    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
+                }
 
                 var namespaceName = TestUtilities.GenerateName(NotificationHubsManagementHelper.NamespacePrefix);
 
@@ -80,10 +79,10 @@ namespace NotificationHubs.Tests.ScenarioTests
                 Assert.True(getAllNamespacesResponse.All(ns => ns.Id.Contains(resourceGroup)));
 
                 //Get all namespaces created within the subscription irrespective of the resourceGroup
-                //getAllNamespacesResponse = NotificationHubsManagementClient.Namespaces.ListAll();
-                //Assert.NotNull(getAllNamespacesResponse);
-                //Assert.True(getAllNamespacesResponse.Count() >= 1);
-                //Assert.True(getAllNamespacesResponse.Any(ns => ns.Name == namespaceName));
+                getAllNamespacesResponse = NotificationHubsManagementClient.Namespaces.ListAll();
+                Assert.NotNull(getAllNamespacesResponse);
+                Assert.True(getAllNamespacesResponse.Count() >= 1);
+                Assert.True(getAllNamespacesResponse.Any(ns => ns.Name == namespaceName));
 
                 //Update namespace tags and make the namespace critical
                 var updateNamespaceParameter = new NamespaceCreateOrUpdateParameters()
