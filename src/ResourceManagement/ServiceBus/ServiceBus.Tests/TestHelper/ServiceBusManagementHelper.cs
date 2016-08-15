@@ -35,6 +35,9 @@ namespace ServiceBus.Tests.TestHelper
         internal const string NamespacePrefix = "sdk-Namespace";
         internal const string AuthorizationRulesPrefix = "sdk-Authrules";
         internal const string DefaultNamespaceAuthorizationRule = "RootManageSharedAccessKey";
+        internal const string QueuesPrefix = "sdk-Queues";
+        internal const string TopicPrefix = "sdk-Topics";
+        internal const string SubscritpitonPrefix = "sdk-Subscriptions";
 
         public static ServiceBusManagementClient GetServiceBusManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
