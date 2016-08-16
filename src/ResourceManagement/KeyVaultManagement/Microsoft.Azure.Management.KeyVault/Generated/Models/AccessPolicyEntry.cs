@@ -37,8 +37,8 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <param name="objectId">The object ID of a user or service
         /// principal in the Azure Active Directory tenant for the vault. The
         /// object ID must be unique for the list of access policies.</param>
-        /// <param name="permissions">Permissions the identity has for keys
-        /// and secrets</param>
+        /// <param name="permissions">Permissions the identity has for keys,
+        /// secrets and certificates.</param>
         /// <param name="applicationId"> Application ID of the client making
         /// request on behalf of a principal</param>
         public AccessPolicyEntry(Guid tenantId, Guid objectId, Permissions permissions, Guid? applicationId = default(Guid?))
@@ -72,7 +72,8 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         public Guid? ApplicationId { get; set; }
 
         /// <summary>
-        /// Gets or sets permissions the identity has for keys and secrets
+        /// Gets or sets permissions the identity has for keys, secrets and
+        /// certificates.
         /// </summary>
         [JsonProperty(PropertyName = "permissions")]
         public Permissions Permissions { get; set; }

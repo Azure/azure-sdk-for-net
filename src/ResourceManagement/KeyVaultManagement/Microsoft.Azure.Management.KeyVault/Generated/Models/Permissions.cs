@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.KeyVault.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Permissions the identity has for keys and secrets
+    /// Permissions the identity has for keys, secrets and certificates.
     /// </summary>
     public partial class Permissions
     {
@@ -31,10 +31,12 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// </summary>
         /// <param name="keys">Permissions to keys</param>
         /// <param name="secrets">Permissions to secrets</param>
-        public Permissions(IList<string> keys = default(IList<string>), IList<string> secrets = default(IList<string>))
+        /// <param name="certificates">Permissions to certificates</param>
+        public Permissions(IList<string> keys = default(IList<string>), IList<string> secrets = default(IList<string>), IList<string> certificates = default(IList<string>))
         {
             Keys = keys;
             Secrets = secrets;
+            Certificates = certificates;
         }
 
         /// <summary>
@@ -48,6 +50,12 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// </summary>
         [JsonProperty(PropertyName = "secrets")]
         public IList<string> Secrets { get; set; }
+
+        /// <summary>
+        /// Gets or sets permissions to certificates
+        /// </summary>
+        [JsonProperty(PropertyName = "certificates")]
+        public IList<string> Certificates { get; set; }
 
     }
 }

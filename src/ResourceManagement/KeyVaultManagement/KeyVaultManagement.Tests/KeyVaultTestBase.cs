@@ -35,7 +35,7 @@ namespace KeyVault.Management.Tests
 
             this.client = context.GetServiceClient<KeyVaultManagementClient>();
             this.resourcesClient = context.GetServiceClient<ResourceManagementClient>();
-            
+
             if (HttpMockServer.Mode == HttpRecorderMode.Record)
             {
                 this.tenantId = testEnv.Tenant;
@@ -44,7 +44,7 @@ namespace KeyVault.Management.Tests
                 graphClient.TenantID = this.tenantId;
                 graphClient.BaseUri = new Uri("https://graph.windows.net");
                 this.objectId = graphClient.User.Get(testEnv.UserName).ObjectId;
-                this.applicationId = Guid.NewGuid().ToString();                
+                this.applicationId = Guid.NewGuid().ToString();
                 HttpMockServer.Variables[TenantIdKey] = tenantId;
                 HttpMockServer.Variables[ObjectIdKey] = objectId;
                 HttpMockServer.Variables[SubIdKey] = subscriptionId;

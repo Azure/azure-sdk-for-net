@@ -1,0 +1,37 @@
+{
+  "version": "2.0.0-preview",
+  "title": "Microsoft Azure Key Vault Core",
+  "description": "Microsoft Azure Key Vault Core Class Library",
+  "authors": [ "Microsoft" ],
+
+  "packOptions": {
+    "summary": "Microsoft Azure Key Vault Core Class Library",
+    "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+    "tags": [ "Microsoft Azure key vault core" ],
+    "requireLicenseAcceptance": true,
+    "releaseNotes": "This is a preview release of the Azure Key Vault Core .NET SDK."
+  },
+  "buildOptions": {
+    "delaySign": true,
+    "publicSign": false,
+    "keyFile": "../../../tools/MSSharedLibKey.snk"
+  },
+  "frameworks": {
+    "net45": {
+      "frameworkAssemblies": {
+        "System.Threading.Tasks": { "type": "build" }
+      },
+      "dependencies": {
+      }
+    },
+    "netstandard1.5": {
+      "buildOptions": { "define": [ "PORTABLE" ] },
+      "imports": [ "dnxcore50" ],
+      "dependencies": {
+        "System.Runtime": "4.1.0",
+        "System.Threading.Tasks": "4.0.11"
+      }
+    }
+  }
+}

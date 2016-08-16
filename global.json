@@ -1,5 +1,6 @@
 {
   "projects": [
+    "src/KeyVault",
     "src/TestFramework/Microsoft.Azure.Test.HttpRecorder",
     "src/TestFramework/Microsoft.Rest.ClientRuntime.Azure.TestFramework",
     "src/Search/Microsoft.Azure.Search",
