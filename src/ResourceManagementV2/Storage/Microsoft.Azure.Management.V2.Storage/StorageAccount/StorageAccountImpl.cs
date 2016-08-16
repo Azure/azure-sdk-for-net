@@ -17,7 +17,9 @@ namespace Microsoft.Azure.Management.V2.Storage
     internal class StorageAccountImpl :
         GroupableResource<IStorageAccount, StorageAccountInner, Rest.Azure.Resource, StorageAccountImpl, IStorageManager,
             StorageAccount.Definition.IWithGroup,
-            StorageAccount.Definition.IWithCreate>,
+            StorageAccount.Definition.IWithCreate,
+            StorageAccount.Definition.IWithCreate,
+            StorageAccount.Update.IUpdate>,
         IStorageAccount,
         StorageAccount.Definition.IDefinition,
         StorageAccount.Update.IUpdate
@@ -196,17 +198,6 @@ namespace Microsoft.Azure.Management.V2.Storage
             return this;
         }
 
-        IWithCreate IDefinitionWithTags<IWithCreate>.WithTag(string key, string value)
-        {
-            base.WithTag(key, value);
-            return this;
-        }
-
-        IWithCreate IDefinitionWithTags<IWithCreate>.WithTags(IDictionary<string, string> tags)
-        {
-            base.WithTags(tags);
-            return this;
-        }
 
         #endregion
 
@@ -268,24 +259,6 @@ namespace Microsoft.Azure.Management.V2.Storage
             return this;
         }
 
-        IUpdate IUpdateWithTags<IUpdate>.WithTag(string key, string value)
-        {
-            base.WithTag(key, value);
-            return this;
-        }
-
-        IUpdate IUpdateWithTags<IUpdate>.WithTags(IDictionary<string, string> tags)
-        {
-            base.WithTags(tags);
-            return this;
-        }
-
-        IUpdate IUpdateWithTags<IUpdate>.WithoutTag(string key)
-        {
-            base.WithoutTag(key);
-            return this;
-        }
-
         #endregion
 
         #endregion
@@ -321,7 +294,7 @@ namespace Microsoft.Azure.Management.V2.Storage
 
         #region Implementation of IUpdatable interface
 
-        public IUpdate Update()
+        public override IUpdate Update()
         {
             updateParameters = new StorageAccountUpdateParametersInner();
             return this;
@@ -329,26 +302,16 @@ namespace Microsoft.Azure.Management.V2.Storage
 
         #endregion
 
-        #region Implementation of ICreatable interface 
-
-        IStorageAccount ICreatable<IStorageAccount>.Create()
-        {
-            Create();
-            return this;
-        }
-
-        async Task<IStorageAccount> ICreatable<IStorageAccount>.CreateAsync(CancellationToken cancellationToken, bool multiThreaded)
-        {
-            await CreateAsync(cancellationToken, multiThreaded);
-            return this;
-        }
-
-        #endregion
 
         #region Implementation of IResourceCreator interface
 
-        public override async Task<IResource> CreateResourceAsync(CancellationToken cancellationToken)
+        public override async Task<IStorageAccount> CreateResourceAsync(CancellationToken cancellationToken)
         {
+            if (this.newGroup != null)
+            {
+                IResource rg = this.CreatedResource(newGroup.Key);
+            }
+
             createParameters.Location = RegionName;
             createParameters.Tags = Inner.Tags;
             var response = await client.CreateAsync(ResourceGroupName, this.name, createParameters, cancellationToken);
@@ -356,26 +319,12 @@ namespace Microsoft.Azure.Management.V2.Storage
             return this;
         }
 
-        public override IResource CreateResource()
-        {
-            return CreateResourceAsync(CancellationToken.None).Result;
-        }
-
-        #endregion
-
-        #region Implementation of IApplicable interface
-
-        public async Task<IStorageAccount> ApplyAsync(CancellationToken cancellationToken = default(CancellationToken), bool multiThreaded = true)
+        public override async Task<IStorageAccount> ApplyAsync(CancellationToken cancellationToken = default(CancellationToken), bool multiThreaded = true)
         {
             // overriding the base.ApplyAsync here since the parameter for update is different from the  one for create.
             var response = await client.UpdateAsync(ResourceGroupName, this.name, updateParameters, cancellationToken);
             SetInner(response);
             return this;
-        }
-
-        public IStorageAccount Apply()
-        {
-            return ApplyAsync(CancellationToken.None, true).Result;
         }
 
         #endregion

@@ -33,10 +33,10 @@ namespace Microsoft.Azure.Management.V2.Network
         string ReverseFqdn { get; }
 
         /// <returns>the IP address allocation method (Static/Dynamic)</returns>
-        IPAllocationMethod IpAllocationMethod { get; }
+        string IpAllocationMethod { get; }
 
         /// <returns>the idle connection timeout setting (in minutes)</returns>
-        int IdleTimeoutInMinutes { get; }
+        int? IdleTimeoutInMinutes { get; }
 
     }
 }
