@@ -45,15 +45,19 @@ namespace Microsoft.Azure.Search.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets a query that is applied to this data container. Only
-        /// supported by DocumentDb datasources.
+        /// Gets or sets a query that is applied to this data container. The
+        /// syntax and meaning of this parameter is datasource-specific. Not
+        /// supported by Azure SQL datasources.
         /// </summary>
         [JsonProperty(PropertyName = "query")]
         public string Query { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public virtual void Validate()
         {
             if (Name == null)

@@ -45,6 +45,61 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
+        public void CanChangeIndexAfterConstructionWithoutServiceName()
+        {
+            Run(() =>
+            {
+                SearchServiceClient serviceClient = Data.GetSearchServiceClient();
+                Index index = serviceClient.Indexes.Get(Data.IndexName);
+
+                // Make sure first index works.
+                SearchIndexClient indexClient = Data.GetSearchIndexClient();
+                indexClient.Documents.Count();
+
+                // Delete the first index so we know we're not accidentally using it below.
+                serviceClient.Indexes.Delete(Data.IndexName);
+
+                // Create a second index.
+                string newIndexName = index.Name + "2";
+                index.Name = newIndexName;
+
+                serviceClient.Indexes.Create(index);
+
+                // Target the second index and make sure it works too.
+                indexClient.TargetDifferentIndex(newIndexName);
+                indexClient.Documents.Count();
+            });
+        }
+
+        [Fact]
+        public void CanChangeIndexAfterConstructionWithServiceName()
+        {
+            const string ExpectedUrl = "https://azs-test.search.windows.net/indexes('test2')/";
+
+            var client = new SearchIndexClient("azs-test", "test", new SearchCredentials("abc"));
+            client.TargetDifferentIndex("test2");
+            Assert.Equal(ExpectedUrl, client.BaseUri.AbsoluteUri);
+
+            client = new SearchIndexClient("azs-test", "test", new SearchCredentials("abc"), new HttpClientHandler());
+            client.TargetDifferentIndex("test2");
+            Assert.Equal(ExpectedUrl, client.BaseUri.AbsoluteUri);
+        }
+
+        [Fact]
+        public void CanChangeIndexWithCustomBaseUri()
+        {
+            const string ExpectedUrl = "https://localhost/indexes('test2')/";
+
+            var client = new SearchIndexClient(new SearchCredentials("abc"));
+            client.TargetDifferentIndex("test2");
+            Assert.Equal(ExpectedUrl, client.BaseUri.AbsoluteUri);
+
+            client.BaseUri = new Uri("https://localhost/indexes('test')/");
+            client.TargetDifferentIndex("test2");
+            Assert.Equal(ExpectedUrl, client.BaseUri.AbsoluteUri);
+        }
+
+        [Fact]
         public void ConstructorThrowsForBadParameters()
         {
             var creds = new SearchCredentials("abc");

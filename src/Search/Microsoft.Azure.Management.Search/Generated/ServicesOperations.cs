@@ -35,6 +35,9 @@ namespace Microsoft.Azure.Management.Search
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         internal ServicesOperations(SearchManagementClient client)
         {
             if (client == null) 
@@ -53,6 +56,7 @@ namespace Microsoft.Azure.Management.Search
         /// Creates or updates a Search service in the given resource group. If the
         /// Search service already exists, all properties will be updated with the
         /// given values.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn832687.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the current subscription.
@@ -69,6 +73,15 @@ namespace Microsoft.Azure.Management.Search
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
@@ -268,6 +281,7 @@ namespace Microsoft.Azure.Management.Search
         /// <summary>
         /// Deletes a Search service in the given resource group, along with its
         /// associated resources.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn832692.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the current subscription.
@@ -281,6 +295,12 @@ namespace Microsoft.Azure.Management.Search
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
@@ -384,7 +404,12 @@ namespace Microsoft.Azure.Management.Search
             if ((int)_statusCode != 200 && (int)_statusCode != 404 && (int)_statusCode != 204)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                if (_httpResponse.Content != null) {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                }
+                else {
+                    _responseContent = string.Empty;
+                }
                 ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -419,6 +444,7 @@ namespace Microsoft.Azure.Management.Search
 
         /// <summary>
         /// Returns a list of all Search services in the given resource group.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn832688.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the current subscription.
@@ -429,6 +455,15 @@ namespace Microsoft.Azure.Management.Search
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>

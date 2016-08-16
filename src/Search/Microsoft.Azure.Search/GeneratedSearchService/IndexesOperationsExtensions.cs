@@ -24,6 +24,7 @@ namespace Microsoft.Azure.Search
     {
             /// <summary>
             /// Creates a new Azure Search index.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn798941.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -41,6 +42,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Creates a new Azure Search index.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn798941.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -64,6 +66,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Lists all indexes available for an Azure Search service.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn798923.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -83,6 +86,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Lists all indexes available for an Azure Search service.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn798923.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -108,6 +112,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Creates a new Azure Search index or updates an index if it already exists.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn800964.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -117,17 +122,28 @@ namespace Microsoft.Azure.Search
             /// </param>
             /// <param name='index'>
             /// The definition of the index to create or update.
+            /// </param>
+            /// <param name='allowIndexDowntime'>
+            /// Allows new analyzers, tokenizers, token filters, or char filters to be
+            /// added to an index by taking the index offline for at least a few seconds.
+            /// This temporarily causes indexing and query requests to fail. Performance
+            /// and write availability of the index can be impaired for several minutes
+            /// after the index is updated, or longer for very large indexes.
             /// </param>
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static Index CreateOrUpdate(this IIndexesOperations operations, string indexName, Index index, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
+            /// <param name='accessCondition'>
+            /// Additional parameters for the operation
+            /// </param>
+            public static Index CreateOrUpdate(this IIndexesOperations operations, string indexName, Index index, bool? allowIndexDowntime = default(bool?), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition))
             {
-                return Task.Factory.StartNew(s => ((IIndexesOperations)s).CreateOrUpdateAsync(indexName, index, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IIndexesOperations)s).CreateOrUpdateAsync(indexName, index, allowIndexDowntime, searchRequestOptions, accessCondition), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Creates a new Azure Search index or updates an index if it already exists.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn800964.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -138,15 +154,25 @@ namespace Microsoft.Azure.Search
             /// <param name='index'>
             /// The definition of the index to create or update.
             /// </param>
+            /// <param name='allowIndexDowntime'>
+            /// Allows new analyzers, tokenizers, token filters, or char filters to be
+            /// added to an index by taking the index offline for at least a few seconds.
+            /// This temporarily causes indexing and query requests to fail. Performance
+            /// and write availability of the index can be impaired for several minutes
+            /// after the index is updated, or longer for very large indexes.
+            /// </param>
             /// <param name='searchRequestOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            /// <param name='accessCondition'>
             /// Additional parameters for the operation
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Index> CreateOrUpdateAsync(this IIndexesOperations operations, string indexName, Index index, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Index> CreateOrUpdateAsync(this IIndexesOperations operations, string indexName, Index index, bool? allowIndexDowntime = default(bool?), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(indexName, index, searchRequestOptions, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(indexName, index, allowIndexDowntime, searchRequestOptions, accessCondition, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -154,6 +180,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Deletes an Azure Search index and all the documents it contains.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn798926.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -164,13 +191,17 @@ namespace Microsoft.Azure.Search
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static void Delete(this IIndexesOperations operations, string indexName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
+            /// <param name='accessCondition'>
+            /// Additional parameters for the operation
+            /// </param>
+            public static void Delete(this IIndexesOperations operations, string indexName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition))
             {
-                Task.Factory.StartNew(s => ((IIndexesOperations)s).DeleteAsync(indexName, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IIndexesOperations)s).DeleteAsync(indexName, searchRequestOptions, accessCondition), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Deletes an Azure Search index and all the documents it contains.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn798926.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -179,18 +210,22 @@ namespace Microsoft.Azure.Search
             /// The name of the index to delete.
             /// </param>
             /// <param name='searchRequestOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            /// <param name='accessCondition'>
             /// Additional parameters for the operation
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IIndexesOperations operations, string indexName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IIndexesOperations operations, string indexName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteWithHttpMessagesAsync(indexName, searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteWithHttpMessagesAsync(indexName, searchRequestOptions, accessCondition, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
             /// Retrieves an index definition from Azure Search.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn798939.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -208,6 +243,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Retrieves an index definition from Azure Search.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn798939.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -232,6 +268,7 @@ namespace Microsoft.Azure.Search
             /// <summary>
             /// Returns statistics for the given index, including a document count and
             /// storage usage.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn798942.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -250,6 +287,7 @@ namespace Microsoft.Azure.Search
             /// <summary>
             /// Returns statistics for the given index, including a document count and
             /// storage usage.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn798942.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -266,6 +304,54 @@ namespace Microsoft.Azure.Search
             public static async Task<IndexGetStatisticsResult> GetStatisticsAsync(this IIndexesOperations operations, string indexName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetStatisticsWithHttpMessagesAsync(indexName, searchRequestOptions, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Shows how an analyzer breaks text into tokens.
+            /// <see href="https://azure.microsoft.com/en-us/documentation/articles/search-api-2015-02-28-preview/#TestAnalyzer" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='indexName'>
+            /// The name of the index for which to test an analyzer.
+            /// </param>
+            /// <param name='request'>
+            /// The text and analyzer or analysis components to test.
+            /// </param>
+            /// <param name='searchRequestOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            public static AnalyzeResult Analyze(this IIndexesOperations operations, string indexName, AnalyzeRequest request, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
+            {
+                return Task.Factory.StartNew(s => ((IIndexesOperations)s).AnalyzeAsync(indexName, request, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Shows how an analyzer breaks text into tokens.
+            /// <see href="https://azure.microsoft.com/en-us/documentation/articles/search-api-2015-02-28-preview/#TestAnalyzer" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='indexName'>
+            /// The name of the index for which to test an analyzer.
+            /// </param>
+            /// <param name='request'>
+            /// The text and analyzer or analysis components to test.
+            /// </param>
+            /// <param name='searchRequestOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<AnalyzeResult> AnalyzeAsync(this IIndexesOperations operations, string indexName, AnalyzeRequest request, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.AnalyzeWithHttpMessagesAsync(indexName, request, searchRequestOptions, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

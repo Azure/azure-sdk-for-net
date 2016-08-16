@@ -6,7 +6,7 @@
   "packOptions": {
     "tags": [ "" ],
     "projectUrl": "",
-    "licenseUrl": "",
+    "licenseUrl": ""
   },
 
   "buildOptions": {
@@ -20,7 +20,7 @@
   "frameworks": {
     "netcoreapp1.0": {
       "buildOptions": { "define": [ "PORTABLE" ] },
-      "imports": ["dnxcore50", "portable-net45+win8"]
+      "imports": [ "dnxcore50", "portable-net45+win8" ]
     }
   },
   "dependencies": {
