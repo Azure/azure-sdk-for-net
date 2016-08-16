@@ -343,6 +343,36 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
+        /// Service operation for automation watcher actions.  (see
+        /// http://aka.ms/azureautomationsdk/watcheractionoperations for more
+        /// information)
+        /// </summary>
+        IWatcherActionOperations WatcherActions
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Service operation for automation watchers.  (see
+        /// http://aka.ms/azureautomationsdk/watcheroperations for more
+        /// information)
+        /// </summary>
+        IWatcherOperations Watchers
+        {
+            get; 
+        }
+        
+        /// <summary>
+        /// Service operation for automation watcher streams.  (see
+        /// http://aka.ms/azureautomationsdk/watcherstreamoperations for more
+        /// information)
+        /// </summary>
+        IWatcherStreamOperations WatcherStreams
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Service operation for automation webhook.  (see
         /// http://aka.ms/azureautomationsdk/webhookoperations for more
         /// information)
