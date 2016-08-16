@@ -414,6 +414,42 @@ namespace Microsoft.Azure.Management.Automation
             get { return this._variables; }
         }
         
+        private IWatcherActionOperations _watcherActions;
+        
+        /// <summary>
+        /// Service operation for automation watcher actions.  (see
+        /// http://aka.ms/azureautomationsdk/watcheractionoperations for more
+        /// information)
+        /// </summary>
+        public virtual IWatcherActionOperations WatcherActions
+        {
+            get { return this._watcherActions; }
+        }
+        
+        private IWatcherOperations _watchers;
+        
+        /// <summary>
+        /// Service operation for automation watchers.  (see
+        /// http://aka.ms/azureautomationsdk/watcheroperations for more
+        /// information)
+        /// </summary>
+        public virtual IWatcherOperations Watchers
+        {
+            get { return this._watchers; }
+        }
+        
+        private IWatcherStreamOperations _watcherStreams;
+        
+        /// <summary>
+        /// Service operation for automation watcher streams.  (see
+        /// http://aka.ms/azureautomationsdk/watcherstreamoperations for more
+        /// information)
+        /// </summary>
+        public virtual IWatcherStreamOperations WatcherStreams
+        {
+            get { return this._watcherStreams; }
+        }
+        
         private IWebhookOperations _webhooks;
         
         /// <summary>
@@ -458,6 +494,9 @@ namespace Microsoft.Azure.Management.Automation
             this._typeFields = new TypeFieldOperations(this);
             this._usages = new UsageOperations(this);
             this._variables = new VariableOperations(this);
+            this._watcherActions = new WatcherActionOperations(this);
+            this._watchers = new WatcherOperations(this);
+            this._watcherStreams = new WatcherStreamOperations(this);
             this._webhooks = new WebhookOperations(this);
             this._resourceNamespace = "Microsoft.Automation";
             this._apiVersion = "2014-06-01";
@@ -551,6 +590,9 @@ namespace Microsoft.Azure.Management.Automation
             this._typeFields = new TypeFieldOperations(this);
             this._usages = new UsageOperations(this);
             this._variables = new VariableOperations(this);
+            this._watcherActions = new WatcherActionOperations(this);
+            this._watchers = new WatcherOperations(this);
+            this._watcherStreams = new WatcherStreamOperations(this);
             this._webhooks = new WebhookOperations(this);
             this._resourceNamespace = "Microsoft.Automation";
             this._apiVersion = "2014-06-01";
@@ -730,11 +772,11 @@ namespace Microsoft.Azure.Management.Automation
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.NotFound)
+                    if (statusCode == HttpStatusCode.BadRequest)
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.BadRequest)
+                    if (statusCode == HttpStatusCode.NotFound)
                     {
                         result.Status = OperationStatus.Failed;
                     }
