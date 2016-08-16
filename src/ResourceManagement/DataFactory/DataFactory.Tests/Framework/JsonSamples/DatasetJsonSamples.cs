@@ -570,5 +570,23 @@ namespace DataFactory.Tests.Framework.JsonSamples
         }
     }
 }";
+        [JsonSample]
+        public const string OnpremieseCassandraDataset = @"
+{ 
+    name: ""CassandraTable"", 
+    properties: { 
+        type: ""CassandraTable"", 
+        linkedServiceName: ""ls"",
+        typeProperties: { 
+            tableName: ""fake table"",
+            keyspace: ""fake key space"" 
+        }, 
+        availability: { 
+            frequency: ""Hour"", 
+            interval: ""1"" 
+        } 
+    } 
+} 
+";
     }
 }
