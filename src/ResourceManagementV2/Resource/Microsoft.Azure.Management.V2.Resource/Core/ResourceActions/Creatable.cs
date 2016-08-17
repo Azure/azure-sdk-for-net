@@ -72,9 +72,9 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
         }
 
 
-        protected IFluentResourceT CreatedResource(string key)
+        protected IResourceT CreatedResource(string key)
         {
-            return CreatorTaskGroup.TaskResult(key) as IFluentResourceT;
+            return CreatorTaskGroup.TaskResult(key);
         }
 
         public CreatorTaskGroup<IResourceT> CreatorTaskGroup { get; private set; }
