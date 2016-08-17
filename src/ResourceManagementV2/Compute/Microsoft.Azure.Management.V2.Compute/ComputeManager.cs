@@ -20,6 +20,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         #region Fluent private collections
         private IVirtualMachines virtualMachines;
         private IVirtualMachineImages virtualMachineImages;
+        private IAvailabilitySets availabilitySets;
         #endregion
 
         #region ctrs
@@ -103,6 +104,18 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
 
+
+        public IAvailabilitySets AvailabilitySets
+        {
+            get
+            {
+                if (availabilitySets == null)
+                {
+                    availabilitySets = new AvailabilitySetsImpl(client.AvailabilitySets, this);
+                }
+                return availabilitySets;
+            }
+        }
         #endregion
     }
 
@@ -110,5 +123,6 @@ namespace Microsoft.Azure.Management.V2.Compute
     {
         IVirtualMachines VirtualMachines { get; }
         IVirtualMachineImages VirtualMachineImages { get; }
+        IAvailabilitySets AvailabilitySets { get; }
     }
 }
