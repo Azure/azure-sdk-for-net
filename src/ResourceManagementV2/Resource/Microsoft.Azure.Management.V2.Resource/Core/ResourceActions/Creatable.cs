@@ -88,14 +88,19 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
 
         Task<IResourceT> IResourceCreator<IResourceT>.CreateResourceAsync(CancellationToken cancellationToken)
         {
-            var task = new Task<IResourceT>(() =>
+            TaskCompletionSource<IResourceT> taskCompletionSource = new TaskCompletionSource<IResourceT>();
+            this.CreateResourceAsync(cancellationToken).ContinueWith(task =>
             {
-                var result = this.CreateResourceAsync(cancellationToken).Result as IResourceT;
-                return result;
+                if (task.Exception != null)
+                {
+                    taskCompletionSource.SetException(task.Exception);
+                }
+                else
+                {
+                    taskCompletionSource.SetResult(task.Result);
+                }
             });
-
-            task.Start();
-            return task;
+            return taskCompletionSource.Task;
         }
 
         IResourceT IResourceCreator<IResourceT>.CreateResource()
