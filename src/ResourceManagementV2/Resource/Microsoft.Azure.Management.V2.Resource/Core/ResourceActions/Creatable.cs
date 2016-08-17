@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
         protected Creatable(string name, InnerResourceT innerObject) : base(name, innerObject)
         {
             Name = name;
-            IResourceCreator<IResourceT> creator =this as IResourceCreator<IResourceT>;
+            IResourceCreator<IResourceT> creator = this as IResourceCreator<IResourceT>;
             CreatorTaskGroup = new CreatorTaskGroup<IResourceT>(name, creator);
         }
 
@@ -33,14 +33,14 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
             creatableResource.CreatorTaskGroup.Merge(CreatorTaskGroup);
         }
 
-        public IResourceT Create()
+        public IFluentResourceT Create()
         {
             return CreateAsync(CancellationToken.None).Result;
         }
 
-        public Task<IResourceT> CreateAsync(CancellationToken cancellationToken, bool multiThreaded = true)
+        public Task<IFluentResourceT> CreateAsync(CancellationToken cancellationToken, bool multiThreaded = true)
         {
-            TaskCompletionSource<IResourceT> taskCompletionSource = new TaskCompletionSource<IResourceT>();
+            TaskCompletionSource<IFluentResourceT> taskCompletionSource = new TaskCompletionSource<IFluentResourceT>();
             if (CreatorTaskGroup.IsPreparer)
             {
                 CreatorTaskGroup.Prepare();
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
                     }
                     else
                     {
-                        IResourceT thisResource = this as IResourceT;
+                        IFluentResourceT thisResource = this as IFluentResourceT;
                         if (thisResource == null)
                         {
                             taskCompletionSource.SetException(new InvalidOperationException("Interal Error: Expected 'of type' '" + typeof(IFluentResourceT) + "', but got '" + this.GetType().Namespace + "'"));
@@ -77,21 +77,37 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
             return CreatorTaskGroup.TaskResult(key);
         }
 
-        #region Implementation of IResourceCreator
-
         public CreatorTaskGroup<IResourceT> CreatorTaskGroup { get; private set; }
 
-        public abstract Task<IResourceT> CreateResourceAsync(CancellationToken cancellationToken);
+        public abstract Task<IFluentResourceT> CreateResourceAsync(CancellationToken cancellationToken);
 
-        public abstract IResourceT CreateResource();
+        public virtual IFluentResourceT CreateResource()
+        {
+            return this.CreateResourceAsync(CancellationToken.None).Result;
+        }
 
-        #endregion
+        Task<IResourceT> IResourceCreator<IResourceT>.CreateResourceAsync(CancellationToken cancellationToken)
+        {
+            var task = new Task<IResourceT>(() =>
+            {
+                var result = this.CreateResourceAsync(cancellationToken).Result as IResourceT;
+                return result;
+            });
+
+            task.Start();
+            return task;
+        }
+
+        IResourceT IResourceCreator<IResourceT>.CreateResource()
+        {
+            return this.Create() as IResourceT;
+        }
     }
 
     public interface IResourceCreator<IResourceT>
     {
+        CreatorTaskGroup<IResourceT> CreatorTaskGroup { get; }
         Task<IResourceT> CreateResourceAsync(CancellationToken cancellationToken);
         IResourceT CreateResource();
-        CreatorTaskGroup<IResourceT> CreatorTaskGroup { get; }
     }
 }

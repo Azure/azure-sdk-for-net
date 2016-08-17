@@ -20,7 +20,9 @@ namespace Microsoft.Azure.Management.V2.Resource
         GenericResourceImpl,
         IResourceManager,
         IWithGroup,
-        IWithResourceType>,
+        IWithResourceType,
+        GenericResource.Definition.IWithCreate,
+        GenericResource.Update.IUpdate>,
         IGenericResource,
         GenericResource.Definition.IDefintion,
         GenericResource.Update.IUpdate,
@@ -94,12 +96,7 @@ namespace Microsoft.Azure.Management.V2.Resource
 
         #region Implementation of IResourceCreator interface
 
-        public override IResource CreateResource()
-        {
-            return CreateResourceAsync(CancellationToken.None).Result;
-        }
-
-        public override async Task<IResource> CreateResourceAsync(CancellationToken cancellationToken)
+        public override async Task<IGenericResource> CreateResourceAsync(CancellationToken cancellationToken)
         {
             GenericResourceInner inner = await client.CreateOrUpdateAsync(ResourceGroupName,
                 resourceProviderNamespace,
@@ -178,18 +175,6 @@ namespace Microsoft.Azure.Management.V2.Resource
             return this;
         }
 
-        IWithCreate IDefinitionWithTags<IWithCreate>.WithTags(IDictionary<string, string> tags)
-        {
-            base.WithTags(tags);
-            return this;
-        }
-
-        IWithCreate IDefinitionWithTags<IWithCreate>.WithTag(string key, string value)
-        {
-            base.WithTag(key, value);
-            return this;
-        }
-
         #endregion
 
         #region Update setters
@@ -231,57 +216,7 @@ namespace Microsoft.Azure.Management.V2.Resource
             return this;
         }
 
-        IUpdate IUpdateWithTags<IUpdate>.WithTags(IDictionary<string, string> tags)
-        {
-            WithTags(tags);
-            return this;
-        }
-
-        IUpdate IUpdateWithTags<IUpdate>.WithTag(string key, string value)
-        {
-            WithTag(key, value);
-            return this;
-        }
-
-        IUpdate IUpdateWithTags<IUpdate>.WithoutTag(string key)
-        {
-            WithoutTag(key);
-            return this;
-        }
-
         #endregion
-
-        #endregion
-
-        #region Implementation of ICreatable resource
-
-        IGenericResource ICreatable<IGenericResource>.Create()
-        {
-           var created = CreateAsync(CancellationToken.None, true).Result;
-            return this;
-        }
-
-        async Task<IGenericResource> ICreatable<IGenericResource>.CreateAsync(CancellationToken cancellationToken, bool multiThreaded)
-        {
-            await CreateAsync(cancellationToken, multiThreaded);
-            return this;
-        }
-
-        #endregion
-
-        #region Implementation of IUpdatable interface
-
-        public IGenericResource Apply()
-        {
-            this.Create();
-            return this;
-        }
-
-        public async Task<IGenericResource> ApplyAsync(CancellationToken cancellationToken = default(CancellationToken), bool multiThreaded = true)
-        {
-            await CreateAsync(cancellationToken, multiThreaded);
-            return this;
-        }
 
         #endregion
     }

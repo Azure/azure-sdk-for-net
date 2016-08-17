@@ -3,6 +3,10 @@ using Microsoft.Azure.Management.ResourceManager.Models;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Microsoft.Azure.Management.V2.Resource.Core.Resource.Definition;
+using Microsoft.Azure.Management.V2.Resource.Core.Resource.Update;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.V2.Resource.Core
 {
@@ -13,14 +17,16 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
     /// <typeparam name="InnerResourceT">The autorest generated resource</typeparam>
     /// <typeparam name="InnerResourceBaseT">The autorest generated base class from which <InnerResourceT @ref="InnerResourceT" /> inherits</typeparam>
     /// <typeparam name="FluentResourceT">The implementation for fluent wrapper interface</typeparam>
-    public abstract class ResourceBase<IFluentResourceT, InnerResourceT, InnerResourceBaseT, FluentResourceT, IDefintionAfterRegion> : 
-        CreatableUpdatable<IFluentResourceT, InnerResourceT, FluentResourceT, IResource>,
-        IResource
-        where FluentResourceT : ResourceBase<IFluentResourceT, InnerResourceT, InnerResourceBaseT, FluentResourceT, IDefintionAfterRegion>, IFluentResourceT
+    public abstract class ResourceBase<IFluentResourceT, InnerResourceT, InnerResourceBaseT, FluentResourceT, IDefintionAfterRegion, DefTypeWithTags, UTypeWithTags> : 
+        CreatableUpdatable<IFluentResourceT, InnerResourceT, FluentResourceT, IResource, UTypeWithTags>,
+        IResource, IDefinitionWithTags<DefTypeWithTags>, IUpdateWithTags<UTypeWithTags>
+        where FluentResourceT : ResourceBase<IFluentResourceT, InnerResourceT, InnerResourceBaseT, FluentResourceT, IDefintionAfterRegion, DefTypeWithTags, UTypeWithTags>, IFluentResourceT
         where IFluentResourceT : class, IResource
         where InnerResourceBaseT : class
         where InnerResourceT : class, InnerResourceBaseT
         where IDefintionAfterRegion: class
+        where DefTypeWithTags : class
+        where UTypeWithTags : class
     {
 
         private TypeInfo resourceTypeInfo;
@@ -148,6 +154,37 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
                 SetValue("Tags", tags);
             }
             return this as FluentResourceT;
+        }
+
+        DefTypeWithTags IDefinitionWithTags<DefTypeWithTags>.WithTag(string key, string value)
+        {
+            this.WithTag(key, value);
+            return this as DefTypeWithTags;
+        }
+
+        DefTypeWithTags IDefinitionWithTags<DefTypeWithTags>.WithTags(IDictionary<string, string> tags)
+        {
+            this.WithTags(tags);
+            return this as DefTypeWithTags;
+        }
+
+
+        UTypeWithTags IUpdateWithTags<UTypeWithTags>.WithTag(string key, string value)
+        {
+            this.WithTag(key, value);
+            return this as UTypeWithTags;
+        }
+
+        UTypeWithTags IUpdateWithTags<UTypeWithTags>.WithTags(IDictionary<string, string> tags)
+        {
+            this.WithTags(tags);
+            return this as UTypeWithTags;
+        }
+
+        UTypeWithTags IUpdateWithTags<UTypeWithTags>.WithoutTag(string key)
+        {
+            this.WithoutTag(key);
+            return this as UTypeWithTags;
         }
 
         #endregion

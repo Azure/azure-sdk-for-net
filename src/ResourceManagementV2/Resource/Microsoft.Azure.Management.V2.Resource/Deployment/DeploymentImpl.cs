@@ -14,7 +14,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.V2.Resource
 {
     internal class DeploymentImpl :
-        CreatableUpdatable<IDeployment, DeploymentExtendedInner, DeploymentImpl, IDeployment>,
+        CreatableUpdatable<IDeployment, DeploymentExtendedInner, DeploymentImpl, IDeployment, Deployment.Update.IUpdate>,
         IDeployment,
         Deployment.Definition.IDefinition,
         Deployment.Update.IUpdate
@@ -476,27 +476,5 @@ namespace Microsoft.Azure.Management.V2.Resource
 
         #endregion
 
-        #region Implementation of IApplicable
-
-        public IDeployment Apply()
-        {
-            return Create();
-        }
-
-        public async Task<IDeployment> ApplyAsync(CancellationToken cancellationToken = default(CancellationToken), bool multiThreaded = true)
-        {
-            return await CreateAsync(cancellationToken, multiThreaded);
-        }
-
-        #endregion
-
-        #region Implementation of IUpdatable 
-
-        public IUpdate Update()
-        {
-            return this;
-        }
-
-        #endregion
     }
 }

@@ -12,7 +12,7 @@ using Microsoft.Azure.Management.ResourceManager.Models;
 namespace Microsoft.Azure.Management.V2.Resource
 {
     internal class ResourceGroupImpl : 
-            CreatableUpdatable<IResourceGroup, ResourceGroupInner, ResourceGroupImpl, IResource>,
+            CreatableUpdatable<IResourceGroup, ResourceGroupInner, ResourceGroupImpl, IResource, ResourceGroup.Update.IUpdate>,
             IResourceGroup,
             ResourceGroup.Definition.IDefinition,
             ResourceGroup.Update.IUpdate
@@ -176,35 +176,7 @@ namespace Microsoft.Azure.Management.V2.Resource
 
         #endregion
 
-        #region Implementation of IUpdatable interface
-
-        public ResourceGroup.Update.IUpdate Update()
-        {
-            return this;
-        }
-
-        #endregion
-
-        #region Implementation of ICreatable interface 
-
-        IResourceGroup ICreatable<IResourceGroup>.Create()
-        {
-            Create();
-            return this;
-        }
-
-        async Task<IResourceGroup> ICreatable<IResourceGroup>.CreateAsync(CancellationToken cancellationToken, bool multiThreaded)
-        {
-            await CreateAsync(cancellationToken, multiThreaded);
-            return this;
-        }
-
-        #endregion
-
-
-        #region Implementation of IResourceCreator interface
-
-        public override async Task<IResource> CreateResourceAsync(CancellationToken cancellationToken)
+        public override async Task<IResourceGroup> CreateResourceAsync(CancellationToken cancellationToken)
         {
             ResourceGroupInner param = new ResourceGroupInner();
             param.Location = Inner.Location;
@@ -214,26 +186,9 @@ namespace Microsoft.Azure.Management.V2.Resource
             return this;
         }
 
-        public override IResource CreateResource()
+        public override IResourceGroup CreateResource()
         {
             return CreateResourceAsync(CancellationToken.None).Result;
         }
-
-        #endregion
-
-        #region Implementation of IApplicable interface
-
-        public async Task<IResourceGroup> ApplyAsync(CancellationToken cancellationToken = default(CancellationToken), bool multiThreaded = true)
-        {
-            await CreateAsync(cancellationToken, multiThreaded);
-            return this;
-        }
-
-        public IResourceGroup Apply()
-        {
-            return ApplyAsync(CancellationToken.None, true).Result;
-        }
-
-        #endregion
     }
 }

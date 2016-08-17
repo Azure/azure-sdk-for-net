@@ -22,8 +22,10 @@ namespace Microsoft.Azure.Management.V2.Resource
         FluentResourceT,
         ManagerT,
         IDefintionAfterRegion,
-        IDefintionAfterResourceGroup> :
-        ResourceBase<IFluentResourceT, InnerResourceT, InnerResourceBaseT, FluentResourceT, IDefintionAfterRegion>,
+        IDefintionAfterResourceGroup,
+        DefTypeWithTags,
+        UTypeWithTags> :
+        ResourceBase<IFluentResourceT, InnerResourceT, InnerResourceBaseT, FluentResourceT, IDefintionAfterRegion, DefTypeWithTags, UTypeWithTags>,
         IGroupableResource
         where FluentResourceT : GroupableResource<IFluentResourceT,
             InnerResourceT,
@@ -31,13 +33,17 @@ namespace Microsoft.Azure.Management.V2.Resource
             FluentResourceT,
             ManagerT,
             IDefintionAfterRegion,
-            IDefintionAfterResourceGroup>, IFluentResourceT
+            IDefintionAfterResourceGroup,
+            DefTypeWithTags, 
+            UTypeWithTags>, IFluentResourceT
         where ManagerT : IManagerBase
         where IFluentResourceT : class, IResource
         where InnerResourceBaseT: class
         where InnerResourceT : class, InnerResourceBaseT
         where IDefintionAfterRegion : class
         where IDefintionAfterResourceGroup : class
+        where DefTypeWithTags : class
+        where UTypeWithTags : class
     {
         protected ICreatable<IResourceGroup> newGroup;
         private string groupName;
