@@ -79,6 +79,15 @@
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2AdvisorScenarioTests\UpdateStatusOfServerAdvisor.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2BlobAuditScenarioTest\DatabaseBlobAuditingPolicyLifecycleTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2BlobAuditScenarioTest\ServerBlobAuditingPolicyLifecycleTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2BackupScenarioTest\GeoBackupPolicyTest.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ImportExportScenarioTests\ExportDatabaseTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -214,6 +223,7 @@
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2SecureConnectionScenarioTest\SecureConnectionPolicyLifecycleTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2SecurityAlertScenarioTests\ServerSecurityAlertPolicyLifecycleTest.json" />
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2ServerAdministratorScenarioTests\ServerAdministratorCRUDTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
