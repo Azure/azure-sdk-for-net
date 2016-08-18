@@ -13,19 +13,9 @@
 // limitations under the License.
 //
 
-using Hyak.Common;
-using Microsoft.Azure;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Management.Sql;
 using Microsoft.Azure.Management.Sql.Models;
 using Microsoft.Azure.Test;
-using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using Xunit;
 
 namespace Sql2.Tests.ScenarioTests
@@ -39,43 +29,88 @@ namespace Sql2.Tests.ScenarioTests
         /// The non-boilerplated test code of the APIs for managing the lifecycle of a given database's security alert policy. It is meant to be called with a name of an already existing database (and therefore already existing 
         /// server and resource group). This test does not create these resources and does not remove them.
         /// </summary>
-        private void TestDatabaseSecurityAlertAPIs(SqlManagementClient sqlClient, string resourceGroupName, Server server, Database database)
+        private static void TestDatabaseSecurityAlertApis(SqlManagementClient sqlClient, string resourceGroupName, Server server, Database database)
         {
-            DatabaseSecurityAlertPolicyGetResponse getDefaultDatabaseSecurityAlertPolicyResponse = sqlClient.SecurityAlertPolicy.GetDatabaseSecurityAlertPolicy(resourceGroupName, server.Name, database.Name);
-            DatabaseSecurityAlertPolicyProperties properties = getDefaultDatabaseSecurityAlertPolicyResponse.SecurityAlertPolicy.Properties;
+            var getDefaultDatabaseSecurityAlertPolicyResponse = sqlClient.SecurityAlertPolicy.GetDatabaseSecurityAlertPolicy(resourceGroupName, server.Name, database.Name);
+            var properties = getDefaultDatabaseSecurityAlertPolicyResponse.SecurityAlertPolicy.Properties;
 
             // Verify that the initial Get request contains the default policy.
-            TestUtilities.ValidateOperationResponse(getDefaultDatabaseSecurityAlertPolicyResponse, HttpStatusCode.OK);
-            VerifyDatabaseSecurityAlertPolicyInformation(GetDefaultDatabaseSecurityAlertProperties(), properties);
+            TestUtilities.ValidateOperationResponse(getDefaultDatabaseSecurityAlertPolicyResponse);
+            VerifySecurityAlertPolicyInformation(GetDefaultDatabaseSecurityAlertProperties(), properties);
 
             // Modify the policy properties, send and receive, see it its still ok
-            ChangeDataBaseSecurityAlertPolicy(properties);
-            DatabaseSecurityAlertPolicyCreateOrUpdateParameters updateParams =
-                new DatabaseSecurityAlertPolicyCreateOrUpdateParameters { Properties = properties };
+            ChangeSecurityAlertPolicy(properties);
+            var updateParams = new DatabaseSecurityAlertPolicyCreateOrUpdateParameters { Properties = properties };
 
             var updateResponse = sqlClient.SecurityAlertPolicy.CreateOrUpdateDatabaseSecurityAlertPolicy(resourceGroupName, server.Name, database.Name, updateParams);
 
             // Verify that the initial Get request contains the default policy.
-            TestUtilities.ValidateOperationResponse(updateResponse, HttpStatusCode.OK);
+            TestUtilities.ValidateOperationResponse(updateResponse);
 
-            DatabaseSecurityAlertPolicyGetResponse getUpdatedPolicyResponse = sqlClient.SecurityAlertPolicy.GetDatabaseSecurityAlertPolicy(resourceGroupName, server.Name, database.Name);
-            DatabaseSecurityAlertPolicyProperties updatedProperties = getUpdatedPolicyResponse.SecurityAlertPolicy.Properties;
+            var getUpdatedPolicyResponse = sqlClient.SecurityAlertPolicy.GetDatabaseSecurityAlertPolicy(resourceGroupName, server.Name, database.Name);
+            var updatedProperties = getUpdatedPolicyResponse.SecurityAlertPolicy.Properties;
 
             // Verify that the Get request contains the updated policy.
-            TestUtilities.ValidateOperationResponse(getUpdatedPolicyResponse, HttpStatusCode.OK);
-            VerifyDatabaseSecurityAlertPolicyInformation(properties, updatedProperties);
+            TestUtilities.ValidateOperationResponse(getUpdatedPolicyResponse);
+            VerifySecurityAlertPolicyInformation(properties, updatedProperties);
+        }
+
+        /// <summary>
+        /// The non-boilerplated test code of the APIs for managing the lifecycle of a given database's security alert policy. It is meant to be called with a name of an already existing database (and therefore already existing 
+        /// server and resource group). This test does not create these resources and does not remove them.
+        /// </summary>
+        private static void TestServerSecurityAlertApis(SqlManagementClient sqlClient, string resourceGroupName, Server server)
+        {
+            var getDefaultDatabaseSecurityAlertPolicyResponse = sqlClient.SecurityAlertPolicy.GetServerSecurityAlertPolicy(resourceGroupName, server.Name);
+            var properties = getDefaultDatabaseSecurityAlertPolicyResponse.SecurityAlertPolicy.Properties;
+
+            // Verify that the initial Get request contains the default policy.
+            TestUtilities.ValidateOperationResponse(getDefaultDatabaseSecurityAlertPolicyResponse);
+            VerifySecurityAlertPolicyInformation(GetDefaultServerSecurityAlertProperties(), properties);
+
+            // Modify the policy properties, send and receive, see it its still ok
+            ChangeSecurityAlertPolicy(properties);
+            var updateParams = new ServerSecurityAlertPolicyCreateOrUpdateParameters { Properties = properties };
+
+            /*var updateResponse = */sqlClient.SecurityAlertPolicy.CreateOrUpdateServerSecurityAlertPolicy(resourceGroupName, server.Name, updateParams);
+
+            // Verify that the initial Get request contains the default policy.
+          //  TestUtilities.ValidateOperationResponse(updateResponse);
+
+            var getUpdatedPolicyResponse = sqlClient.SecurityAlertPolicy.GetServerSecurityAlertPolicy(resourceGroupName, server.Name);
+            var updatedProperties = getUpdatedPolicyResponse.SecurityAlertPolicy.Properties;
+
+            // Verify that the Get request contains the updated policy.
+            TestUtilities.ValidateOperationResponse(getUpdatedPolicyResponse);
+            VerifySecurityAlertPolicyInformation(properties, updatedProperties);
         }
 
         /// <summary>
         /// Creates and returns a DatabaseSecurityAlertPolicyProperties object that holds the default settings for a database security alert policy
         /// </summary>
         /// <returns>A DatabaseSecurityAlertPolicyProperties object with the default security alert policy settings</returns>
-        private DatabaseSecurityAlertPolicyProperties GetDefaultDatabaseSecurityAlertProperties()
+        private static DatabaseSecurityAlertPolicyProperties GetDefaultDatabaseSecurityAlertProperties()
         {
-            DatabaseSecurityAlertPolicyProperties props = new DatabaseSecurityAlertPolicyProperties
+            var props = new DatabaseSecurityAlertPolicyProperties
             {
                 State = "New",
-                DisabledAlerts = string.Empty,
+                DisabledAlerts = "Preview",
+                EmailAddresses = string.Empty,
+                EmailAccountAdmins = "Enabled"
+            };
+            return props;
+        }
+
+        /// <summary>
+        /// Creates and returns a DatabaseSecurityAlertPolicyProperties object that holds the default settings for a server security alert policy
+        /// </summary>
+        /// <returns>A DatabaseSecurityAlertPolicyProperties object with the default security alert policy settings</returns>
+        private static ServerSecurityAlertPolicyProperties GetDefaultServerSecurityAlertProperties()
+        {
+            var props = new ServerSecurityAlertPolicyProperties
+            {
+                State = "New",
+                DisabledAlerts = "Preview",
                 EmailAddresses = string.Empty,
                 EmailAccountAdmins = "Enabled"
             };
@@ -87,7 +122,7 @@ namespace Sql2.Tests.ScenarioTests
         /// </summary>
         /// <param name="expected">The expected value of the properties object</param>
         /// <param name="actual">The properties object that needs to be checked</param>
-        private static void VerifyDatabaseSecurityAlertPolicyInformation(DatabaseSecurityAlertPolicyProperties expected, DatabaseSecurityAlertPolicyProperties actual)
+        private static void VerifySecurityAlertPolicyInformation(BaseSecurityAlertPolicyProperties expected, BaseSecurityAlertPolicyProperties actual)
         {
             Assert.Equal(expected.State, actual.State);
             Assert.Equal(expected.DisabledAlerts, actual.DisabledAlerts);
@@ -98,9 +133,9 @@ namespace Sql2.Tests.ScenarioTests
         /// <summary>
         /// Changes the database security alert policy with new values
         /// </summary>
-        private void ChangeDataBaseSecurityAlertPolicy(DatabaseSecurityAlertPolicyProperties properties)
+        private static void ChangeSecurityAlertPolicy(BaseSecurityAlertPolicyProperties properties)
         {
-            properties.State = "Enabled";
+            properties.State = "Disabled";
             properties.DisabledAlerts = "DisableAlert1";
             properties.EmailAddresses = "email1@email.com;email2@email.com";
             properties.EmailAccountAdmins = "Disabled";
@@ -112,10 +147,23 @@ namespace Sql2.Tests.ScenarioTests
         [Fact]
         public void DatabaseSecurityAlertPolicyLifecycleTest()
         {
-            using (UndoContext context = UndoContext.Current)
+            using (var context = UndoContext.Current)
             {
                 context.Start();
-                Sql2ScenarioHelper.RunDatabaseTestInEnvironment(new BasicDelegatingHandler(), "12.0", TestDatabaseSecurityAlertAPIs);
+                Sql2ScenarioHelper.RunDatabaseTestInEnvironment(new BasicDelegatingHandler(), "12.0", TestDatabaseSecurityAlertApis);
+            }
+        }
+
+        /// <summary>
+        /// Test for the Security alert policy lifecycle
+        /// </summary>
+        [Fact]
+        public void ServerSecurityAlertPolicyLifecycleTest()
+        {
+            using (var context = UndoContext.Current)
+            {
+                context.Start();
+                Sql2ScenarioHelper.RunServerTestInEnvironment(new BasicDelegatingHandler(), "12.0", TestServerSecurityAlertApis);
             }
         }
     }
