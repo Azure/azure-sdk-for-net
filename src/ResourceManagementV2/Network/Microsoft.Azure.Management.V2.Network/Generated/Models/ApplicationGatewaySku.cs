@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// SKU of application gateway
@@ -29,13 +23,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the ApplicationGatewaySku class.
         /// </summary>
-        /// <param name="name">Gets or sets name of application gateway SKU.
-        /// Possible values include: 'Standard_Small', 'Standard_Medium',
+        /// <param name="name">Name of application gateway SKU. Possible
+        /// values include: 'Standard_Small', 'Standard_Medium',
         /// 'Standard_Large'</param>
-        /// <param name="tier">Gets or sets tier of application gateway.
-        /// Possible values include: 'Standard'</param>
-        /// <param name="capacity">Gets or sets capacity (instance count) of
-        /// application gateway</param>
+        /// <param name="tier">Tier of application gateway. Possible values
+        /// include: 'Standard'</param>
+        /// <param name="capacity">Capacity (instance count) of application
+        /// gateway</param>
         public ApplicationGatewaySku(string name = default(string), string tier = default(string), int? capacity = default(int?))
         {
             Name = name;
@@ -47,20 +41,20 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets name of application gateway SKU. Possible values
         /// include: 'Standard_Small', 'Standard_Medium', 'Standard_Large'
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets tier of application gateway. Possible values include:
         /// 'Standard'
         /// </summary>
-        [JsonProperty(PropertyName = "tier")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "tier")]
         public string Tier { get; set; }
 
         /// <summary>
         /// Gets or sets capacity (instance count) of application gateway
         /// </summary>
-        [JsonProperty(PropertyName = "capacity")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "capacity")]
         public int? Capacity { get; set; }
 
     }

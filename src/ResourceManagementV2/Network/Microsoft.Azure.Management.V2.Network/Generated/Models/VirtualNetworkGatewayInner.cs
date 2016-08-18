@@ -8,19 +8,13 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A common class for general resource information
     /// </summary>
-    [JsonTransformation]
-    public partial class VirtualNetworkGatewayInner : Resource
+    [Microsoft.Rest.Serialization.JsonTransformation]
+    public partial class VirtualNetworkGatewayInner : Microsoft.Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the VirtualNetworkGatewayInner class.
@@ -55,7 +49,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// VirtualNetworkGateway resource Updating/Deleting/Failed</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated</param>
-        public VirtualNetworkGatewayInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations = default(IList<VirtualNetworkGatewayIPConfiguration>), string gatewayType = default(string), string vpnType = default(string), bool? enableBgp = default(bool?), SubResource gatewayDefaultSite = default(SubResource), VirtualNetworkGatewaySku sku = default(VirtualNetworkGatewaySku), VpnClientConfiguration vpnClientConfiguration = default(VpnClientConfiguration), BgpSettings bgpSettings = default(BgpSettings), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        public VirtualNetworkGatewayInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), System.Collections.Generic.IList<VirtualNetworkGatewayIPConfigurationInner> ipConfigurations = default(System.Collections.Generic.IList<VirtualNetworkGatewayIPConfigurationInner>), string gatewayType = default(string), string vpnType = default(string), bool? enableBgp = default(bool?), Microsoft.Rest.Azure.SubResource gatewayDefaultSite = default(Microsoft.Rest.Azure.SubResource), VirtualNetworkGatewaySku sku = default(VirtualNetworkGatewaySku), VpnClientConfiguration vpnClientConfiguration = default(VpnClientConfiguration), BgpSettings bgpSettings = default(BgpSettings), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
             : base(location, id, name, type, tags)
         {
             IpConfigurations = ipConfigurations;
@@ -74,27 +68,27 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets ipConfigurations for Virtual network gateway.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.ipConfigurations")]
-        public IList<VirtualNetworkGatewayIPConfiguration> IpConfigurations { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.ipConfigurations")]
+        public System.Collections.Generic.IList<VirtualNetworkGatewayIPConfigurationInner> IpConfigurations { get; set; }
 
         /// <summary>
         /// Gets or sets the type of this virtual network gateway. Possible
         /// values include: 'Vpn', 'ExpressRoute'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.gatewayType")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.gatewayType")]
         public string GatewayType { get; set; }
 
         /// <summary>
         /// Gets or sets the type of this virtual network gateway. Possible
         /// values include: 'PolicyBased', 'RouteBased'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.vpnType")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.vpnType")]
         public string VpnType { get; set; }
 
         /// <summary>
         /// Gets or sets enableBgp Flag
         /// </summary>
-        [JsonProperty(PropertyName = "properties.enableBgp")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.enableBgp")]
         public bool? EnableBgp { get; set; }
 
         /// <summary>
@@ -102,49 +96,49 @@ namespace Microsoft.Azure.Management.Network.Models
         /// which represents Local network site having default routes. Assign
         /// Null value in case of removing existing default site setting.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.gatewayDefaultSite")]
-        public SubResource GatewayDefaultSite { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.gatewayDefaultSite")]
+        public Microsoft.Rest.Azure.SubResource GatewayDefaultSite { get; set; }
 
         /// <summary>
         /// Gets or sets the reference of the VirtualNetworkGatewaySku
         /// resource which represents the sku selected for Virtual network
         /// gateway.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.sku")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.sku")]
         public VirtualNetworkGatewaySku Sku { get; set; }
 
         /// <summary>
         /// Gets or sets the reference of the VpnClientConfiguration resource
         /// which represents the P2S VpnClient configurations.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.vpnClientConfiguration")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.vpnClientConfiguration")]
         public VpnClientConfiguration VpnClientConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets virtual network gateway's BGP speaker settings
         /// </summary>
-        [JsonProperty(PropertyName = "properties.bgpSettings")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.bgpSettings")]
         public BgpSettings BgpSettings { get; set; }
 
         /// <summary>
         /// Gets or sets resource guid property of the VirtualNetworkGateway
         /// resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.resourceGuid")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.resourceGuid")]
         public string ResourceGuid { get; set; }
 
         /// <summary>
         /// Gets provisioning state of the VirtualNetworkGateway resource
         /// Updating/Deleting/Failed
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource
         /// is updated
         /// </summary>
-        [JsonProperty(PropertyName = "etag")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
     }

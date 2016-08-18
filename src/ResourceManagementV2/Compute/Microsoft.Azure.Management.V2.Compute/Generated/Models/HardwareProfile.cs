@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Describes a hardware profile.
@@ -74,7 +68,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// 'Standard_G4', 'Standard_G5', 'Standard_GS1', 'Standard_GS2',
         /// 'Standard_GS3', 'Standard_GS4', 'Standard_GS5'
         /// </summary>
-        [JsonProperty(PropertyName = "vmSize")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "vmSize")]
         public string VmSize { get; set; }
 
     }

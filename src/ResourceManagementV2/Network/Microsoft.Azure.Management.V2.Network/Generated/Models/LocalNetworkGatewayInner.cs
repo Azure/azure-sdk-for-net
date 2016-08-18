@@ -8,19 +8,13 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A common class for general resource information
     /// </summary>
-    [JsonTransformation]
-    public partial class LocalNetworkGatewayInner : Resource
+    [Microsoft.Rest.Serialization.JsonTransformation]
+    public partial class LocalNetworkGatewayInner : Microsoft.Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the LocalNetworkGatewayInner class.
@@ -42,7 +36,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// LocalNetworkGateway resource Updating/Deleting/Failed</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated</param>
-        public LocalNetworkGatewayInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), AddressSpace localNetworkAddressSpace = default(AddressSpace), string gatewayIpAddress = default(string), BgpSettings bgpSettings = default(BgpSettings), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        public LocalNetworkGatewayInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), AddressSpace localNetworkAddressSpace = default(AddressSpace), string gatewayIpAddress = default(string), BgpSettings bgpSettings = default(BgpSettings), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
             : base(location, id, name, type, tags)
         {
             LocalNetworkAddressSpace = localNetworkAddressSpace;
@@ -56,40 +50,40 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets local network site Address space
         /// </summary>
-        [JsonProperty(PropertyName = "properties.localNetworkAddressSpace")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.localNetworkAddressSpace")]
         public AddressSpace LocalNetworkAddressSpace { get; set; }
 
         /// <summary>
         /// Gets or sets IP address of local network gateway.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.gatewayIpAddress")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.gatewayIpAddress")]
         public string GatewayIpAddress { get; set; }
 
         /// <summary>
         /// Gets or sets local network gateway's BGP speaker settings
         /// </summary>
-        [JsonProperty(PropertyName = "properties.bgpSettings")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.bgpSettings")]
         public BgpSettings BgpSettings { get; set; }
 
         /// <summary>
         /// Gets or sets resource guid property of the LocalNetworkGateway
         /// resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.resourceGuid")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.resourceGuid")]
         public string ResourceGuid { get; set; }
 
         /// <summary>
         /// Gets provisioning state of the LocalNetworkGateway resource
         /// Updating/Deleting/Failed
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource
         /// is updated
         /// </summary>
-        [JsonProperty(PropertyName = "etag")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
     }

@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Compute-specific operation properties, including output
@@ -40,7 +34,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets operation output data (raw JSON)
         /// </summary>
-        [JsonProperty(PropertyName = "output")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "output")]
         public object Output { get; set; }
 
     }

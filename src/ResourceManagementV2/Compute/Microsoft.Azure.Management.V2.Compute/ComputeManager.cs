@@ -19,6 +19,8 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         #region Fluent private collections
         private IVirtualMachines virtualMachines;
+        private IVirtualMachineImages virtualMachineImages;
+        private IAvailabilitySets availabilitySets;
         #endregion
 
         #region ctrs
@@ -76,7 +78,7 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         #endregion
 
-        #region IStorageManager implementation 
+        #region IComputeManager implementation 
 
         public IVirtualMachines VirtualMachines
         {
@@ -90,11 +92,37 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
 
+        public IVirtualMachineImages VirtualMachineImages
+        {
+            get
+            {
+                if (virtualMachineImages == null)
+                {
+                    virtualMachineImages = new VirtualMachineImagesImpl(client.VirtualMachineImages);
+                }
+                return virtualMachineImages;
+            }
+        }
+
+
+        public IAvailabilitySets AvailabilitySets
+        {
+            get
+            {
+                if (availabilitySets == null)
+                {
+                    availabilitySets = new AvailabilitySetsImpl(client.AvailabilitySets, this);
+                }
+                return availabilitySets;
+            }
+        }
         #endregion
     }
 
     public interface IComputeManager : IManagerBase
     {
         IVirtualMachines VirtualMachines { get; }
+        IVirtualMachineImages VirtualMachineImages { get; }
+        IAvailabilitySets AvailabilitySets { get; }
     }
 }

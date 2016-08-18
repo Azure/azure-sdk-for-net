@@ -8,19 +8,13 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A common class for general resource information
     /// </summary>
-    [JsonTransformation]
-    public partial class VirtualNetworkGatewayConnectionInner : Resource
+    [Microsoft.Rest.Serialization.JsonTransformation]
+    public partial class VirtualNetworkGatewayConnectionInner : Microsoft.Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -54,7 +48,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Updating/Deleting/Failed</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated</param>
-        public VirtualNetworkGatewayConnectionInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), string authorizationKey = default(string), VirtualNetworkGatewayInner virtualNetworkGateway1 = default(VirtualNetworkGatewayInner), VirtualNetworkGatewayInner virtualNetworkGateway2 = default(VirtualNetworkGatewayInner), LocalNetworkGatewayInner localNetworkGateway2 = default(LocalNetworkGatewayInner), string connectionType = default(string), int? routingWeight = default(int?), string sharedKey = default(string), string connectionStatus = default(string), long? egressBytesTransferred = default(long?), long? ingressBytesTransferred = default(long?), SubResource peer = default(SubResource), bool? enableBgp = default(bool?), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        public VirtualNetworkGatewayConnectionInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string authorizationKey = default(string), VirtualNetworkGatewayInner virtualNetworkGateway1 = default(VirtualNetworkGatewayInner), VirtualNetworkGatewayInner virtualNetworkGateway2 = default(VirtualNetworkGatewayInner), LocalNetworkGatewayInner localNetworkGateway2 = default(LocalNetworkGatewayInner), string connectionType = default(string), int? routingWeight = default(int?), string sharedKey = default(string), string connectionStatus = default(string), long? egressBytesTransferred = default(long?), long? ingressBytesTransferred = default(long?), Microsoft.Rest.Azure.SubResource peer = default(Microsoft.Rest.Azure.SubResource), bool? enableBgp = default(bool?), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
             : base(location, id, name, type, tags)
         {
             AuthorizationKey = authorizationKey;
@@ -77,22 +71,22 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets the authorizationKey.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.authorizationKey")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.authorizationKey")]
         public string AuthorizationKey { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "properties.virtualNetworkGateway1")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.virtualNetworkGateway1")]
         public VirtualNetworkGatewayInner VirtualNetworkGateway1 { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "properties.virtualNetworkGateway2")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.virtualNetworkGateway2")]
         public VirtualNetworkGatewayInner VirtualNetworkGateway2 { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "properties.localNetworkGateway2")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.localNetworkGateway2")]
         public LocalNetworkGatewayInner LocalNetworkGateway2 { get; set; }
 
         /// <summary>
@@ -100,19 +94,19 @@ namespace Microsoft.Azure.Management.Network.Models
         /// -Ipsec/Dedicated/VpnClient/Vnet2Vnet. Possible values include:
         /// 'IPsec', 'Vnet2Vnet', 'ExpressRoute', 'VPNClient'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.connectionType")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.connectionType")]
         public string ConnectionType { get; set; }
 
         /// <summary>
         /// Gets or sets the Routing weight.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.routingWeight")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.routingWeight")]
         public int? RoutingWeight { get; set; }
 
         /// <summary>
         /// Gets or sets the Ipsec share key.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.sharedKey")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.sharedKey")]
         public string SharedKey { get; set; }
 
         /// <summary>
@@ -120,52 +114,52 @@ namespace Microsoft.Azure.Management.Network.Models
         /// values include: 'Unknown', 'Connecting', 'Connected',
         /// 'NotConnected'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.connectionStatus")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.connectionStatus")]
         public string ConnectionStatus { get; set; }
 
         /// <summary>
         /// Gets or sets the Egress Bytes Transferred in this connection
         /// </summary>
-        [JsonProperty(PropertyName = "properties.egressBytesTransferred")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.egressBytesTransferred")]
         public long? EgressBytesTransferred { get; set; }
 
         /// <summary>
         /// Gets or sets the Ingress Bytes Transferred in this connection
         /// </summary>
-        [JsonProperty(PropertyName = "properties.ingressBytesTransferred")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.ingressBytesTransferred")]
         public long? IngressBytesTransferred { get; set; }
 
         /// <summary>
         /// Gets or sets the reference to peerings resource.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.peer")]
-        public SubResource Peer { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.peer")]
+        public Microsoft.Rest.Azure.SubResource Peer { get; set; }
 
         /// <summary>
         /// Gets or sets enableBgp Flag
         /// </summary>
-        [JsonProperty(PropertyName = "properties.enableBgp")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.enableBgp")]
         public bool? EnableBgp { get; set; }
 
         /// <summary>
         /// Gets or sets resource guid property of the
         /// VirtualNetworkGatewayConnection resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.resourceGuid")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.resourceGuid")]
         public string ResourceGuid { get; set; }
 
         /// <summary>
         /// Gets provisioning state of the VirtualNetworkGatewayConnection
         /// resource Updating/Deleting/Failed
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource
         /// is updated
         /// </summary>
-        [JsonProperty(PropertyName = "etag")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
     }

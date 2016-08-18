@@ -8,14 +8,9 @@
 
 namespace Microsoft.Azure.Management.ResourceManager
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
-    using Models;
+   using Microsoft.Rest.Azure;
+   using Models;
 
     /// <summary>
     /// Extension methods for ProvidersOperations.
@@ -33,7 +28,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </param>
             public static ProviderInner Unregister(this IProvidersOperations operations, string resourceProviderNamespace)
             {
-                return Task.Factory.StartNew(s => ((IProvidersOperations)s).UnregisterAsync(resourceProviderNamespace), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IProvidersOperations)s).UnregisterAsync(resourceProviderNamespace), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -48,7 +43,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProviderInner> UnregisterAsync(this IProvidersOperations operations, string resourceProviderNamespace, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<ProviderInner> UnregisterAsync(this IProvidersOperations operations, string resourceProviderNamespace, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.UnregisterWithHttpMessagesAsync(resourceProviderNamespace, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -67,7 +62,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </param>
             public static ProviderInner Register(this IProvidersOperations operations, string resourceProviderNamespace)
             {
-                return Task.Factory.StartNew(s => ((IProvidersOperations)s).RegisterAsync(resourceProviderNamespace), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IProvidersOperations)s).RegisterAsync(resourceProviderNamespace), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -82,7 +77,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProviderInner> RegisterAsync(this IProvidersOperations operations, string resourceProviderNamespace, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<ProviderInner> RegisterAsync(this IProvidersOperations operations, string resourceProviderNamespace, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.RegisterWithHttpMessagesAsync(resourceProviderNamespace, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -99,9 +94,13 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='top'>
             /// Query parameters. If null is passed returns all deployments.
             /// </param>
-            public static IPage<ProviderInner> List(this IProvidersOperations operations, int? top = default(int?))
+            /// <param name='expand'>
+            /// The $expand query parameter. e.g. To include property aliases in response,
+            /// use $expand=resourceTypes/aliases.
+            /// </param>
+            public static Microsoft.Rest.Azure.IPage<ProviderInner> List(this IProvidersOperations operations, int? top = default(int?), string expand = default(string))
             {
-                return Task.Factory.StartNew(s => ((IProvidersOperations)s).ListAsync(top), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IProvidersOperations)s).ListAsync(top, expand), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -113,12 +112,16 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='top'>
             /// Query parameters. If null is passed returns all deployments.
             /// </param>
+            /// <param name='expand'>
+            /// The $expand query parameter. e.g. To include property aliases in response,
+            /// use $expand=resourceTypes/aliases.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ProviderInner>> ListAsync(this IProvidersOperations operations, int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<ProviderInner>> ListAsync(this IProvidersOperations operations, int? top = default(int?), string expand = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(top, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(top, expand, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -133,9 +136,13 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='resourceProviderNamespace'>
             /// Namespace of the resource provider.
             /// </param>
-            public static ProviderInner Get(this IProvidersOperations operations, string resourceProviderNamespace)
+            /// <param name='expand'>
+            /// The $expand query parameter. e.g. To include property aliases in response,
+            /// use $expand=resourceTypes/aliases.
+            /// </param>
+            public static ProviderInner Get(this IProvidersOperations operations, string resourceProviderNamespace, string expand = default(string))
             {
-                return Task.Factory.StartNew(s => ((IProvidersOperations)s).GetAsync(resourceProviderNamespace), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IProvidersOperations)s).GetAsync(resourceProviderNamespace, expand), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -147,12 +154,16 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='resourceProviderNamespace'>
             /// Namespace of the resource provider.
             /// </param>
+            /// <param name='expand'>
+            /// The $expand query parameter. e.g. To include property aliases in response,
+            /// use $expand=resourceTypes/aliases.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProviderInner> GetAsync(this IProvidersOperations operations, string resourceProviderNamespace, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<ProviderInner> GetAsync(this IProvidersOperations operations, string resourceProviderNamespace, string expand = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceProviderNamespace, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceProviderNamespace, expand, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -167,9 +178,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ProviderInner> ListNext(this IProvidersOperations operations, string nextPageLink)
+            public static Microsoft.Rest.Azure.IPage<ProviderInner> ListNext(this IProvidersOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IProvidersOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IProvidersOperations)s).ListNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -184,7 +195,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ProviderInner>> ListNextAsync(this IProvidersOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<ProviderInner>> ListNextAsync(this IProvidersOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The instance view of a virtual machine.
@@ -39,7 +33,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="extensions">the extensions information.</param>
         /// <param name="bootDiagnostics">the boot diagnostics.</param>
         /// <param name="statuses">the resource status information.</param>
-        public VirtualMachineInstanceView(int? platformUpdateDomain = default(int?), int? platformFaultDomain = default(int?), string rdpThumbPrint = default(string), VirtualMachineAgentInstanceView vmAgent = default(VirtualMachineAgentInstanceView), IList<DiskInstanceView> disks = default(IList<DiskInstanceView>), IList<VirtualMachineExtensionInstanceView> extensions = default(IList<VirtualMachineExtensionInstanceView>), BootDiagnosticsInstanceView bootDiagnostics = default(BootDiagnosticsInstanceView), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>))
+        public VirtualMachineInstanceView(int? platformUpdateDomain = default(int?), int? platformFaultDomain = default(int?), string rdpThumbPrint = default(string), VirtualMachineAgentInstanceView vmAgent = default(VirtualMachineAgentInstanceView), System.Collections.Generic.IList<DiskInstanceView> disks = default(System.Collections.Generic.IList<DiskInstanceView>), System.Collections.Generic.IList<VirtualMachineExtensionInstanceView> extensions = default(System.Collections.Generic.IList<VirtualMachineExtensionInstanceView>), BootDiagnosticsInstanceView bootDiagnostics = default(BootDiagnosticsInstanceView), System.Collections.Generic.IList<InstanceViewStatus> statuses = default(System.Collections.Generic.IList<InstanceViewStatus>))
         {
             PlatformUpdateDomain = platformUpdateDomain;
             PlatformFaultDomain = platformFaultDomain;
@@ -54,50 +48,50 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the Update Domain count.
         /// </summary>
-        [JsonProperty(PropertyName = "platformUpdateDomain")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "platformUpdateDomain")]
         public int? PlatformUpdateDomain { get; set; }
 
         /// <summary>
         /// Gets or sets the Fault Domain count.
         /// </summary>
-        [JsonProperty(PropertyName = "platformFaultDomain")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "platformFaultDomain")]
         public int? PlatformFaultDomain { get; set; }
 
         /// <summary>
         /// Gets or sets the Remote desktop certificate thumbprint.
         /// </summary>
-        [JsonProperty(PropertyName = "rdpThumbPrint")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "rdpThumbPrint")]
         public string RdpThumbPrint { get; set; }
 
         /// <summary>
         /// Gets or sets the VM Agent running on the virtual machine.
         /// </summary>
-        [JsonProperty(PropertyName = "vmAgent")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "vmAgent")]
         public VirtualMachineAgentInstanceView VmAgent { get; set; }
 
         /// <summary>
         /// Gets or sets the disks information.
         /// </summary>
-        [JsonProperty(PropertyName = "disks")]
-        public IList<DiskInstanceView> Disks { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "disks")]
+        public System.Collections.Generic.IList<DiskInstanceView> Disks { get; set; }
 
         /// <summary>
         /// Gets or sets the extensions information.
         /// </summary>
-        [JsonProperty(PropertyName = "extensions")]
-        public IList<VirtualMachineExtensionInstanceView> Extensions { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "extensions")]
+        public System.Collections.Generic.IList<VirtualMachineExtensionInstanceView> Extensions { get; set; }
 
         /// <summary>
         /// Gets or sets the boot diagnostics.
         /// </summary>
-        [JsonProperty(PropertyName = "bootDiagnostics")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "bootDiagnostics")]
         public BootDiagnosticsInstanceView BootDiagnostics { get; set; }
 
         /// <summary>
         /// Gets or sets the resource status information.
         /// </summary>
-        [JsonProperty(PropertyName = "statuses")]
-        public IList<InstanceViewStatus> Statuses { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "statuses")]
+        public System.Collections.Generic.IList<InstanceViewStatus> Statuses { get; set; }
 
     }
 }

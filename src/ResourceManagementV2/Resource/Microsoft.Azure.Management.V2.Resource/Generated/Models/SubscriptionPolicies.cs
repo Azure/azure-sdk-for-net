@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Subscription policies.
@@ -42,13 +36,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Gets or sets the subscription location placement Id.
         /// </summary>
-        [JsonProperty(PropertyName = "locationPlacementId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "locationPlacementId")]
         public string LocationPlacementId { get; set; }
 
         /// <summary>
         /// Gets or sets the subscription quota Id.
         /// </summary>
-        [JsonProperty(PropertyName = "quotaId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "quotaId")]
         public string QuotaId { get; set; }
 
     }

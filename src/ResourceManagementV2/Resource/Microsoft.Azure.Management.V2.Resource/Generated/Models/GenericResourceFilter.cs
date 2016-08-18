@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Resource filter.
@@ -42,19 +36,19 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Gets or sets the resource type.
         /// </summary>
-        [JsonProperty(PropertyName = "resourceType")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "resourceType")]
         public string ResourceType { get; set; }
 
         /// <summary>
         /// Gets or sets the tag name.
         /// </summary>
-        [JsonProperty(PropertyName = "tagname")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "tagname")]
         public string Tagname { get; set; }
 
         /// <summary>
         /// Gets or sets the tag value.
         /// </summary>
-        [JsonProperty(PropertyName = "tagvalue")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "tagvalue")]
         public string Tagvalue { get; set; }
 
     }

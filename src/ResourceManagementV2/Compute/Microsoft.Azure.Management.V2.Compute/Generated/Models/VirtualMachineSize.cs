@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Describes the properties of a VM size.
@@ -53,37 +47,37 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the VM size name.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the Number of cores supported by a VM size.
         /// </summary>
-        [JsonProperty(PropertyName = "numberOfCores")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "numberOfCores")]
         public int? NumberOfCores { get; set; }
 
         /// <summary>
         /// Gets or sets the OS disk size allowed by a VM size.
         /// </summary>
-        [JsonProperty(PropertyName = "osDiskSizeInMB")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "osDiskSizeInMB")]
         public int? OsDiskSizeInMB { get; set; }
 
         /// <summary>
         /// Gets or sets the Resource disk size allowed by a VM size.
         /// </summary>
-        [JsonProperty(PropertyName = "resourceDiskSizeInMB")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "resourceDiskSizeInMB")]
         public int? ResourceDiskSizeInMB { get; set; }
 
         /// <summary>
         /// Gets or sets the Memory size supported by a VM size.
         /// </summary>
-        [JsonProperty(PropertyName = "memoryInMB")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "memoryInMB")]
         public int? MemoryInMB { get; set; }
 
         /// <summary>
         /// Gets or sets the Maximum number of data disks allowed by a VM size.
         /// </summary>
-        [JsonProperty(PropertyName = "maxDataDiskCount")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "maxDataDiskCount")]
         public int? MaxDataDiskCount { get; set; }
 
     }

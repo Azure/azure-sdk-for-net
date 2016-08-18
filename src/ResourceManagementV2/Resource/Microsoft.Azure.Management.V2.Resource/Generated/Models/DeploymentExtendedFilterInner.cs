@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Deployment filter.
@@ -31,8 +25,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// Initializes a new instance of the DeploymentExtendedFilterInner
         /// class.
         /// </summary>
-        /// <param name="provisioningState">Gets or sets the provisioning
-        /// state.</param>
+        /// <param name="provisioningState">The provisioning state.</param>
         public DeploymentExtendedFilterInner(string provisioningState = default(string))
         {
             ProvisioningState = provisioningState;
@@ -41,7 +34,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Gets or sets the provisioning state.
         /// </summary>
-        [JsonProperty(PropertyName = "provisioningState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; set; }
 
     }

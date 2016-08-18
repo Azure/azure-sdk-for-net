@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Identity for the resource.
@@ -32,8 +26,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="principalId">The principal id of resource
         /// identity.</param>
         /// <param name="tenantId">The tenant id of resource.</param>
-        /// <param name="type">Gets or sets the identity type. Possible values
-        /// include: 'SystemAssigned'</param>
+        /// <param name="type">The identity type. Possible values include:
+        /// 'SystemAssigned'</param>
         public Identity(string principalId = default(string), string tenantId = default(string), ResourceIdentityType? type = default(ResourceIdentityType?))
         {
             PrincipalId = principalId;
@@ -44,20 +38,20 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Gets the principal id of resource identity.
         /// </summary>
-        [JsonProperty(PropertyName = "principalId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "principalId")]
         public string PrincipalId { get; private set; }
 
         /// <summary>
         /// Gets the tenant id of resource.
         /// </summary>
-        [JsonProperty(PropertyName = "tenantId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "tenantId")]
         public string TenantId { get; private set; }
 
         /// <summary>
         /// Gets or sets the identity type. Possible values include:
         /// 'SystemAssigned'
         /// </summary>
-        [JsonProperty(PropertyName = "type")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "type")]
         public ResourceIdentityType? Type { get; set; }
 
     }

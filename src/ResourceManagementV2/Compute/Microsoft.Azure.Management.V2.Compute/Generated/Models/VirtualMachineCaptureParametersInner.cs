@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Capture Virtual Machine parameters.
@@ -47,37 +41,37 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the captured VirtualHardDisk's name prefix.
         /// </summary>
-        [JsonProperty(PropertyName = "vhdPrefix")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "vhdPrefix")]
         public string VhdPrefix { get; set; }
 
         /// <summary>
         /// Gets or sets the destination container name.
         /// </summary>
-        [JsonProperty(PropertyName = "destinationContainerName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "destinationContainerName")]
         public string DestinationContainerName { get; set; }
 
         /// <summary>
         /// Gets or sets whether it overwrites destination VirtualHardDisk if
         /// true, in case of conflict.
         /// </summary>
-        [JsonProperty(PropertyName = "overwriteVhds")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "overwriteVhds")]
         public bool OverwriteVhds { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (VhdPrefix == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "VhdPrefix");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "VhdPrefix");
             }
             if (DestinationContainerName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "DestinationContainerName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "DestinationContainerName");
             }
         }
     }

@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Describes a virtual machine scale set virtual machine profile.
@@ -50,31 +44,31 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the virtual machine scale set OS profile.
         /// </summary>
-        [JsonProperty(PropertyName = "osProfile")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "osProfile")]
         public VirtualMachineScaleSetOSProfile OsProfile { get; set; }
 
         /// <summary>
         /// Gets or sets the virtual machine scale set storage profile.
         /// </summary>
-        [JsonProperty(PropertyName = "storageProfile")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "storageProfile")]
         public VirtualMachineScaleSetStorageProfile StorageProfile { get; set; }
 
         /// <summary>
         /// Gets or sets the virtual machine scale set network profile.
         /// </summary>
-        [JsonProperty(PropertyName = "networkProfile")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "networkProfile")]
         public VirtualMachineScaleSetNetworkProfile NetworkProfile { get; set; }
 
         /// <summary>
         /// Gets or sets the virtual machine scale set extension profile.
         /// </summary>
-        [JsonProperty(PropertyName = "extensionProfile")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "extensionProfile")]
         public VirtualMachineScaleSetExtensionProfile ExtensionProfile { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

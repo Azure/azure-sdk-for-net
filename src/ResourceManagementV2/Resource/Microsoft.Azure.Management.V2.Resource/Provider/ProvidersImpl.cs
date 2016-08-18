@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.V2.Resource
 
         public async Task<IProvider> GetByNameAsync(string resourceProviderNamespace, CancellationToken cancellationToken = default(CancellationToken))
         {
-            ProviderInner inner = await client.GetAsync(resourceProviderNamespace, cancellationToken);
+            ProviderInner inner = await client.GetAsync(resourceProviderNamespace, null, cancellationToken);
             return new ProviderImpl(inner);
         }
 

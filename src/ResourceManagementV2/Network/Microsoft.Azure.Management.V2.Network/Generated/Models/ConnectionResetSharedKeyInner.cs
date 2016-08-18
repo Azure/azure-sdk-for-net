@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     public partial class ConnectionResetSharedKeyInner
     {
@@ -38,7 +32,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets the virtual network connection reset shared key length
         /// </summary>
-        [JsonProperty(PropertyName = "keyLength")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "keyLength")]
         public long? KeyLength { get; set; }
 
     }

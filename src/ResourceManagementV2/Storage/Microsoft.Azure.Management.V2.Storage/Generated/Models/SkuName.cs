@@ -8,25 +8,22 @@
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for SkuName.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum SkuName
     {
-        [EnumMember(Value = "Standard_LRS")]
+        [System.Runtime.Serialization.EnumMember(Value = "Standard_LRS")]
         StandardLRS,
-        [EnumMember(Value = "Standard_GRS")]
+        [System.Runtime.Serialization.EnumMember(Value = "Standard_GRS")]
         StandardGRS,
-        [EnumMember(Value = "Standard_RAGRS")]
+        [System.Runtime.Serialization.EnumMember(Value = "Standard_RAGRS")]
         StandardRAGRS,
-        [EnumMember(Value = "Standard_ZRS")]
+        [System.Runtime.Serialization.EnumMember(Value = "Standard_ZRS")]
         StandardZRS,
-        [EnumMember(Value = "Premium_LRS")]
+        [System.Runtime.Serialization.EnumMember(Value = "Premium_LRS")]
         PremiumLRS
     }
 }

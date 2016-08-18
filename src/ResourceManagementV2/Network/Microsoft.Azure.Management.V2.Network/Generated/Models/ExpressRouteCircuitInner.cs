@@ -8,19 +8,13 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// ExpressRouteCircuit resource
     /// </summary>
-    [JsonTransformation]
-    public partial class ExpressRouteCircuitInner : Resource
+    [Microsoft.Rest.Serialization.JsonTransformation]
+    public partial class ExpressRouteCircuitInner : Microsoft.Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the ExpressRouteCircuitInner class.
@@ -49,9 +43,11 @@ namespace Microsoft.Azure.Management.Network.Models
         /// ServiceProviderProperties</param>
         /// <param name="provisioningState">Gets provisioning state of the
         /// PublicIP resource Updating/Deleting/Failed</param>
+        /// <param name="gatewayManagerEtag">Gets or sets the GatewayManager
+        /// Etag</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated</param>
-        public ExpressRouteCircuitInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), ExpressRouteCircuitSku sku = default(ExpressRouteCircuitSku), bool? allowClassicOperations = default(bool?), string circuitProvisioningState = default(string), string serviceProviderProvisioningState = default(string), IList<ExpressRouteCircuitAuthorizationInner> authorizations = default(IList<ExpressRouteCircuitAuthorizationInner>), IList<ExpressRouteCircuitPeeringInner> peerings = default(IList<ExpressRouteCircuitPeeringInner>), string serviceKey = default(string), string serviceProviderNotes = default(string), ExpressRouteCircuitServiceProviderProperties serviceProviderProperties = default(ExpressRouteCircuitServiceProviderProperties), string provisioningState = default(string), string etag = default(string))
+        public ExpressRouteCircuitInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), ExpressRouteCircuitSku sku = default(ExpressRouteCircuitSku), bool? allowClassicOperations = default(bool?), string circuitProvisioningState = default(string), string serviceProviderProvisioningState = default(string), System.Collections.Generic.IList<ExpressRouteCircuitAuthorizationInner> authorizations = default(System.Collections.Generic.IList<ExpressRouteCircuitAuthorizationInner>), System.Collections.Generic.IList<ExpressRouteCircuitPeeringInner> peerings = default(System.Collections.Generic.IList<ExpressRouteCircuitPeeringInner>), string serviceKey = default(string), string serviceProviderNotes = default(string), ExpressRouteCircuitServiceProviderProperties serviceProviderProperties = default(ExpressRouteCircuitServiceProviderProperties), string provisioningState = default(string), string gatewayManagerEtag = default(string), string etag = default(string))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -64,25 +60,26 @@ namespace Microsoft.Azure.Management.Network.Models
             ServiceProviderNotes = serviceProviderNotes;
             ServiceProviderProperties = serviceProviderProperties;
             ProvisioningState = provisioningState;
+            GatewayManagerEtag = gatewayManagerEtag;
             Etag = etag;
         }
 
         /// <summary>
         /// Gets or sets sku
         /// </summary>
-        [JsonProperty(PropertyName = "sku")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "sku")]
         public ExpressRouteCircuitSku Sku { get; set; }
 
         /// <summary>
         /// Gets or sets allow classic operations
         /// </summary>
-        [JsonProperty(PropertyName = "properties.allowClassicOperations")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.allowClassicOperations")]
         public bool? AllowClassicOperations { get; set; }
 
         /// <summary>
         /// Gets or sets CircuitProvisioningState state of the resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.circuitProvisioningState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.circuitProvisioningState")]
         public string CircuitProvisioningState { get; set; }
 
         /// <summary>
@@ -90,51 +87,57 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource . Possible values include: 'NotProvisioned',
         /// 'Provisioning', 'Provisioned', 'Deprovisioning'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.serviceProviderProvisioningState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.serviceProviderProvisioningState")]
         public string ServiceProviderProvisioningState { get; set; }
 
         /// <summary>
         /// Gets or sets list of authorizations
         /// </summary>
-        [JsonProperty(PropertyName = "properties.authorizations")]
-        public IList<ExpressRouteCircuitAuthorizationInner> Authorizations { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.authorizations")]
+        public System.Collections.Generic.IList<ExpressRouteCircuitAuthorizationInner> Authorizations { get; set; }
 
         /// <summary>
         /// Gets or sets list of peerings
         /// </summary>
-        [JsonProperty(PropertyName = "properties.peerings")]
-        public IList<ExpressRouteCircuitPeeringInner> Peerings { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.peerings")]
+        public System.Collections.Generic.IList<ExpressRouteCircuitPeeringInner> Peerings { get; set; }
 
         /// <summary>
         /// Gets or sets ServiceKey
         /// </summary>
-        [JsonProperty(PropertyName = "properties.serviceKey")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.serviceKey")]
         public string ServiceKey { get; set; }
 
         /// <summary>
         /// Gets or sets ServiceProviderNotes
         /// </summary>
-        [JsonProperty(PropertyName = "properties.serviceProviderNotes")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.serviceProviderNotes")]
         public string ServiceProviderNotes { get; set; }
 
         /// <summary>
         /// Gets or sets ServiceProviderProperties
         /// </summary>
-        [JsonProperty(PropertyName = "properties.serviceProviderProperties")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.serviceProviderProperties")]
         public ExpressRouteCircuitServiceProviderProperties ServiceProviderProperties { get; set; }
 
         /// <summary>
         /// Gets provisioning state of the PublicIP resource
         /// Updating/Deleting/Failed
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
+
+        /// <summary>
+        /// Gets or sets the GatewayManager Etag
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.gatewayManagerEtag")]
+        public string GatewayManagerEtag { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource
         /// is updated
         /// </summary>
-        [JsonProperty(PropertyName = "etag")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
     }

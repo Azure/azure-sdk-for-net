@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The List Virtual Machine operation response.
@@ -35,7 +29,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="nextLink">the uri to fetch the next page of VMs. Call
         /// ListNext() with this to fetch the next page of Virtual
         /// Machines.</param>
-        public VirtualMachineListResultInner(IList<VirtualMachineInner> value = default(IList<VirtualMachineInner>), string nextLink = default(string))
+        public VirtualMachineListResultInner(System.Collections.Generic.IList<VirtualMachineInner> value = default(System.Collections.Generic.IList<VirtualMachineInner>), string nextLink = default(string))
         {
             Value = value;
             NextLink = nextLink;
@@ -44,14 +38,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the list of virtual machines.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<VirtualMachineInner> Value { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
+        public System.Collections.Generic.IList<VirtualMachineInner> Value { get; set; }
 
         /// <summary>
         /// Gets or sets the uri to fetch the next page of VMs. Call
         /// ListNext() with this to fetch the next page of Virtual Machines.
         /// </summary>
-        [JsonProperty(PropertyName = "nextLink")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "nextLink")]
         public string NextLink { get; set; }
 
     }

@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Resource type managed by the resource provider.
@@ -29,15 +23,18 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the ProviderResourceType class.
         /// </summary>
-        /// <param name="resourceType">Gets or sets the resource type.</param>
-        /// <param name="locations">Gets or sets the collection of locations
-        /// where this resource type can be created in.</param>
-        /// <param name="apiVersions">Gets or sets the api version.</param>
-        /// <param name="properties">Gets or sets the properties.</param>
-        public ProviderResourceType(string resourceType = default(string), IList<string> locations = default(IList<string>), IList<string> apiVersions = default(IList<string>), IDictionary<string, string> properties = default(IDictionary<string, string>))
+        /// <param name="resourceType">The resource type.</param>
+        /// <param name="locations">The collection of locations where this
+        /// resource type can be created in.</param>
+        /// <param name="aliases">The aliases that are supported by this
+        /// resource type.</param>
+        /// <param name="apiVersions">The api version.</param>
+        /// <param name="properties">The properties.</param>
+        public ProviderResourceType(string resourceType = default(string), System.Collections.Generic.IList<string> locations = default(System.Collections.Generic.IList<string>), System.Collections.Generic.IList<AliasType> aliases = default(System.Collections.Generic.IList<AliasType>), System.Collections.Generic.IList<string> apiVersions = default(System.Collections.Generic.IList<string>), System.Collections.Generic.IDictionary<string, string> properties = default(System.Collections.Generic.IDictionary<string, string>))
         {
             ResourceType = resourceType;
             Locations = locations;
+            Aliases = aliases;
             ApiVersions = apiVersions;
             Properties = properties;
         }
@@ -45,27 +42,33 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Gets or sets the resource type.
         /// </summary>
-        [JsonProperty(PropertyName = "resourceType")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "resourceType")]
         public string ResourceType { get; set; }
 
         /// <summary>
         /// Gets or sets the collection of locations where this resource type
         /// can be created in.
         /// </summary>
-        [JsonProperty(PropertyName = "locations")]
-        public IList<string> Locations { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "locations")]
+        public System.Collections.Generic.IList<string> Locations { get; set; }
+
+        /// <summary>
+        /// Gets or sets the aliases that are supported by this resource type.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "aliases")]
+        public System.Collections.Generic.IList<AliasType> Aliases { get; set; }
 
         /// <summary>
         /// Gets or sets the api version.
         /// </summary>
-        [JsonProperty(PropertyName = "apiVersions")]
-        public IList<string> ApiVersions { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "apiVersions")]
+        public System.Collections.Generic.IList<string> ApiVersions { get; set; }
 
         /// <summary>
         /// Gets or sets the properties.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
-        public IDictionary<string, string> Properties { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties")]
+        public System.Collections.Generic.IDictionary<string, string> Properties { get; set; }
 
     }
 }

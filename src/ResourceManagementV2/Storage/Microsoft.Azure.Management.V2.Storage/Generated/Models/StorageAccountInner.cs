@@ -8,19 +8,13 @@
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The storage account.
     /// </summary>
-    [JsonTransformation]
-    public partial class StorageAccountInner : Resource
+    [Microsoft.Rest.Serialization.JsonTransformation]
+    public partial class StorageAccountInner : Microsoft.Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the StorageAccountInner class.
@@ -76,7 +70,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Access tier cannot be set for StandardLRS, StandardGRS,
         /// StandardRAGRS, or PremiumLRS account types. Possible values
         /// include: 'Hot', 'Cool'</param>
-        public StorageAccountInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), Sku sku = default(Sku), Kind? kind = default(Kind?), ProvisioningState? provisioningState = default(ProvisioningState?), Endpoints primaryEndpoints = default(Endpoints), string primaryLocation = default(string), AccountStatus? statusOfPrimary = default(AccountStatus?), DateTime? lastGeoFailoverTime = default(DateTime?), string secondaryLocation = default(string), AccountStatus? statusOfSecondary = default(AccountStatus?), DateTime? creationTime = default(DateTime?), CustomDomain customDomain = default(CustomDomain), Endpoints secondaryEndpoints = default(Endpoints), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?))
+        public StorageAccountInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), Sku sku = default(Sku), Kind? kind = default(Kind?), ProvisioningState? provisioningState = default(ProvisioningState?), Endpoints primaryEndpoints = default(Endpoints), string primaryLocation = default(string), AccountStatus? statusOfPrimary = default(AccountStatus?), System.DateTime? lastGeoFailoverTime = default(System.DateTime?), string secondaryLocation = default(string), AccountStatus? statusOfSecondary = default(AccountStatus?), System.DateTime? creationTime = default(System.DateTime?), CustomDomain customDomain = default(CustomDomain), Endpoints secondaryEndpoints = default(Endpoints), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -98,13 +92,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// <summary>
         /// Gets the SKU.
         /// </summary>
-        [JsonProperty(PropertyName = "sku")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; private set; }
 
         /// <summary>
         /// Gets the Kind. Possible values include: 'Storage', 'BlobStorage'
         /// </summary>
-        [JsonProperty(PropertyName = "kind")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "kind")]
         public Kind? Kind { get; private set; }
 
         /// <summary>
@@ -112,7 +106,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// was called. Possible values include: 'Creating', 'ResolvingDNS',
         /// 'Succeeded'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
         public ProvisioningState? ProvisioningState { get; private set; }
 
         /// <summary>
@@ -120,13 +114,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// blob, queue or table object.Note that StandardZRS and PremiumLRS
         /// accounts only return the blob endpoint.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.primaryEndpoints")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.primaryEndpoints")]
         public Endpoints PrimaryEndpoints { get; private set; }
 
         /// <summary>
         /// Gets the location of the primary for the storage account.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.primaryLocation")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.primaryLocation")]
         public string PrimaryLocation { get; private set; }
 
         /// <summary>
@@ -134,7 +128,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// storage account is available or unavailable. Possible values
         /// include: 'Available', 'Unavailable'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.statusOfPrimary")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.statusOfPrimary")]
         public AccountStatus? StatusOfPrimary { get; private set; }
 
         /// <summary>
@@ -144,15 +138,15 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// failover instance. Only available if the accountType is
         /// StandardGRS or StandardRAGRS.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.lastGeoFailoverTime")]
-        public DateTime? LastGeoFailoverTime { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.lastGeoFailoverTime")]
+        public System.DateTime? LastGeoFailoverTime { get; private set; }
 
         /// <summary>
         /// Gets the location of the geo replicated secondary for the storage
         /// account. Only available if the accountType is StandardGRS or
         /// StandardRAGRS.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.secondaryLocation")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.secondaryLocation")]
         public string SecondaryLocation { get; private set; }
 
         /// <summary>
@@ -161,20 +155,20 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// the accountType is StandardGRS or StandardRAGRS. Possible values
         /// include: 'Available', 'Unavailable'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.statusOfSecondary")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.statusOfSecondary")]
         public AccountStatus? StatusOfSecondary { get; private set; }
 
         /// <summary>
         /// Gets the creation date and time of the storage account in UTC.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.creationTime")]
-        public DateTime? CreationTime { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.creationTime")]
+        public System.DateTime? CreationTime { get; private set; }
 
         /// <summary>
         /// Gets the user assigned custom domain assigned to this storage
         /// account.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.customDomain")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.customDomain")]
         public CustomDomain CustomDomain { get; private set; }
 
         /// <summary>
@@ -183,14 +177,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// storage account. Only available if the accountType is
         /// StandardRAGRS.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.secondaryEndpoints")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.secondaryEndpoints")]
         public Endpoints SecondaryEndpoints { get; private set; }
 
         /// <summary>
         /// Gets the encryption settings on the account. If unspecified the
         /// account is unencrypted.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.encryption")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.encryption")]
         public Encryption Encryption { get; private set; }
 
         /// <summary>
@@ -199,13 +193,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// cannot be set for StandardLRS, StandardGRS, StandardRAGRS, or
         /// PremiumLRS account types. Possible values include: 'Hot', 'Cool'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.accessTier")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.accessTier")]
         public AccessTier? AccessTier { get; private set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

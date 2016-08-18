@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Plan for the resource.
@@ -29,11 +23,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the Plan class.
         /// </summary>
-        /// <param name="name">Gets or sets the plan ID.</param>
-        /// <param name="publisher">Gets or sets the publisher ID.</param>
-        /// <param name="product">Gets or sets the offer ID.</param>
-        /// <param name="promotionCode">Gets or sets the promotion
-        /// code.</param>
+        /// <param name="name">The plan ID.</param>
+        /// <param name="publisher">The publisher ID.</param>
+        /// <param name="product">The offer ID.</param>
+        /// <param name="promotionCode">The promotion code.</param>
         public Plan(string name = default(string), string publisher = default(string), string product = default(string), string promotionCode = default(string))
         {
             Name = name;
@@ -45,25 +38,25 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Gets or sets the plan ID.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the publisher ID.
         /// </summary>
-        [JsonProperty(PropertyName = "publisher")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "publisher")]
         public string Publisher { get; set; }
 
         /// <summary>
         /// Gets or sets the offer ID.
         /// </summary>
-        [JsonProperty(PropertyName = "product")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "product")]
         public string Product { get; set; }
 
         /// <summary>
         /// Gets or sets the promotion code.
         /// </summary>
-        [JsonProperty(PropertyName = "promotionCode")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "promotionCode")]
         public string PromotionCode { get; set; }
 
     }

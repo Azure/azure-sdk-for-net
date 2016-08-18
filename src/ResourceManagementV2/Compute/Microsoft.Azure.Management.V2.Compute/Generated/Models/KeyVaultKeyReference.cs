@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Describes a reference to Key Vault Key
@@ -33,7 +27,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Vault.</param>
         /// <param name="sourceVault">the Relative URL of the Key Vault
         /// containing the key</param>
-        public KeyVaultKeyReference(string keyUrl, SubResource sourceVault)
+        public KeyVaultKeyReference(string keyUrl, Microsoft.Rest.Azure.SubResource sourceVault)
         {
             KeyUrl = keyUrl;
             SourceVault = sourceVault;
@@ -42,30 +36,30 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the URL referencing a key in a Key Vault.
         /// </summary>
-        [JsonProperty(PropertyName = "keyUrl")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "keyUrl")]
         public string KeyUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the Relative URL of the Key Vault containing the key
         /// </summary>
-        [JsonProperty(PropertyName = "sourceVault")]
-        public SubResource SourceVault { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "sourceVault")]
+        public Microsoft.Rest.Azure.SubResource SourceVault { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (KeyUrl == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "KeyUrl");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "KeyUrl");
             }
             if (SourceVault == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "SourceVault");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "SourceVault");
             }
         }
     }

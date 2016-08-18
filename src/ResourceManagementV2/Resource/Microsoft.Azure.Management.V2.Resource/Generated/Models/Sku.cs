@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Sku for the resource.
@@ -29,12 +23,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the Sku class.
         /// </summary>
-        /// <param name="name">Gets or sets the sku name.</param>
-        /// <param name="tier">Gets or sets the sku tier.</param>
-        /// <param name="size">Gets or sets the sku size.</param>
-        /// <param name="family">Gets or sets the sku family.</param>
-        /// <param name="model">Gets or sets the sku model.</param>
-        /// <param name="capacity">Gets or sets the sku capacity.</param>
+        /// <param name="name">The sku name.</param>
+        /// <param name="tier">The sku tier.</param>
+        /// <param name="size">The sku size.</param>
+        /// <param name="family">The sku family.</param>
+        /// <param name="model">The sku model.</param>
+        /// <param name="capacity">The sku capacity.</param>
         public Sku(string name = default(string), string tier = default(string), string size = default(string), string family = default(string), string model = default(string), int? capacity = default(int?))
         {
             Name = name;
@@ -48,37 +42,37 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Gets or sets the sku name.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the sku tier.
         /// </summary>
-        [JsonProperty(PropertyName = "tier")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "tier")]
         public string Tier { get; set; }
 
         /// <summary>
         /// Gets or sets the sku size.
         /// </summary>
-        [JsonProperty(PropertyName = "size")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "size")]
         public string Size { get; set; }
 
         /// <summary>
         /// Gets or sets the sku family.
         /// </summary>
-        [JsonProperty(PropertyName = "family")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "family")]
         public string Family { get; set; }
 
         /// <summary>
         /// Gets or sets the sku model.
         /// </summary>
-        [JsonProperty(PropertyName = "model")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "model")]
         public string Model { get; set; }
 
         /// <summary>
         /// Gets or sets the sku capacity.
         /// </summary>
-        [JsonProperty(PropertyName = "capacity")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "capacity")]
         public int? Capacity { get; set; }
 
     }

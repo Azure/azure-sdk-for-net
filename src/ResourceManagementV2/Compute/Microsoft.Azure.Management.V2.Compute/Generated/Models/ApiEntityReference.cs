@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The API entity reference.
@@ -40,7 +34,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets the ARM resource id in the form of
         /// /subscriptions/{SubcriptionId}/resourceGroups/{ResourceGroupName}/...
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
     }

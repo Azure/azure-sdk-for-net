@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Describes an available virtual machine scale set sku.
@@ -43,19 +37,19 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets the type of resource the sku applies to.
         /// </summary>
-        [JsonProperty(PropertyName = "resourceType")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "resourceType")]
         public string ResourceType { get; private set; }
 
         /// <summary>
         /// Gets the Sku.
         /// </summary>
-        [JsonProperty(PropertyName = "sku")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; private set; }
 
         /// <summary>
         /// Gets available scaling information.
         /// </summary>
-        [JsonProperty(PropertyName = "capacity")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "capacity")]
         public VirtualMachineScaleSetSkuCapacity Capacity { get; private set; }
 
     }

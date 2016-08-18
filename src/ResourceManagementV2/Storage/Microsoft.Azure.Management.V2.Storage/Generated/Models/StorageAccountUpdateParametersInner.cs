@@ -8,18 +8,12 @@
 
 namespace Microsoft.Azure.Management.Storage.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The parameters to provide for the account.
     /// </summary>
-    [JsonTransformation]
+    [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class StorageAccountUpdateParametersInner
     {
         /// <summary>
@@ -55,7 +49,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// Access tier cannot be set for StandardLRS, StandardGRS,
         /// StandardRAGRS, or PremiumLRS account types. Possible values
         /// include: 'Hot', 'Cool'</param>
-        public StorageAccountUpdateParametersInner(Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?))
+        public StorageAccountUpdateParametersInner(Sku sku = default(Sku), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), CustomDomain customDomain = default(CustomDomain), Encryption encryption = default(Encryption), AccessTier? accessTier = default(AccessTier?))
         {
             Sku = sku;
             Tags = tags;
@@ -69,7 +63,7 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// StandardZRS or ProvisionedLRS, nor can accounts of that sku type
         /// be updated to any other value.
         /// </summary>
-        [JsonProperty(PropertyName = "sku")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; set; }
 
         /// <summary>
@@ -79,8 +73,8 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// for a resource. Each tag must have a key no greater than 128
         /// characters and value no greater than 256 characters.
         /// </summary>
-        [JsonProperty(PropertyName = "tags")]
-        public IDictionary<string, string> Tags { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "tags")]
+        public System.Collections.Generic.IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
         /// Gets or sets user domain assigned to the storage account. Name is
@@ -88,14 +82,14 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// account at this time. To clear the existing custom domain, use an
         /// empty string for the custom domain name property.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.customDomain")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.customDomain")]
         public CustomDomain CustomDomain { get; set; }
 
         /// <summary>
         /// Gets or sets provides the encryption settings on the account. The
         /// default setting is unencrypted.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.encryption")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.encryption")]
         public Encryption Encryption { get; set; }
 
         /// <summary>
@@ -104,13 +98,13 @@ namespace Microsoft.Azure.Management.Storage.Models
         /// cannot be set for StandardLRS, StandardGRS, StandardRAGRS, or
         /// PremiumLRS account types. Possible values include: 'Hot', 'Cool'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.accessTier")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.accessTier")]
         public AccessTier? AccessTier { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

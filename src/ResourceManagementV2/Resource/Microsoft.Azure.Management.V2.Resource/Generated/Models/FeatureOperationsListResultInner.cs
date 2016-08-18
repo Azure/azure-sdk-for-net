@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// List of previewed features.
@@ -34,7 +28,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <param name="value">Gets or sets the list of Features.</param>
         /// <param name="nextLink">Gets or sets the URL to get the next set of
         /// results.</param>
-        public FeatureOperationsListResultInner(IList<FeatureResultInner> value = default(IList<FeatureResultInner>), string nextLink = default(string))
+        public FeatureOperationsListResultInner(System.Collections.Generic.IList<FeatureResultInner> value = default(System.Collections.Generic.IList<FeatureResultInner>), string nextLink = default(string))
         {
             Value = value;
             NextLink = nextLink;
@@ -43,13 +37,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Gets or sets the list of Features.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<FeatureResultInner> Value { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
+        public System.Collections.Generic.IList<FeatureResultInner> Value { get; set; }
 
         /// <summary>
         /// Gets or sets the URL to get the next set of results.
         /// </summary>
-        [JsonProperty(PropertyName = "nextLink")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "nextLink")]
         public string NextLink { get; set; }
 
     }

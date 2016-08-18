@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Tag details.
@@ -29,11 +23,11 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the TagDetailsInner class.
         /// </summary>
-        /// <param name="id">Gets or sets the tag ID.</param>
-        /// <param name="tagName">Gets or sets the tag name.</param>
-        /// <param name="count">Gets or sets the tag count.</param>
-        /// <param name="values">Gets or sets the list of tag values.</param>
-        public TagDetailsInner(string id = default(string), string tagName = default(string), TagCount count = default(TagCount), IList<TagValueInner> values = default(IList<TagValueInner>))
+        /// <param name="id">The tag ID.</param>
+        /// <param name="tagName">The tag name.</param>
+        /// <param name="count">The tag count.</param>
+        /// <param name="values">The list of tag values.</param>
+        public TagDetailsInner(string id = default(string), string tagName = default(string), TagCount count = default(TagCount), System.Collections.Generic.IList<TagValueInner> values = default(System.Collections.Generic.IList<TagValueInner>))
         {
             Id = id;
             TagName = tagName;
@@ -44,26 +38,26 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Gets or sets the tag ID.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets the tag name.
         /// </summary>
-        [JsonProperty(PropertyName = "tagName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "tagName")]
         public string TagName { get; set; }
 
         /// <summary>
         /// Gets or sets the tag count.
         /// </summary>
-        [JsonProperty(PropertyName = "count")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "count")]
         public TagCount Count { get; set; }
 
         /// <summary>
         /// Gets or sets the list of tag values.
         /// </summary>
-        [JsonProperty(PropertyName = "values")]
-        public IList<TagValueInner> Values { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "values")]
+        public System.Collections.Generic.IList<TagValueInner> Values { get; set; }
 
     }
 }

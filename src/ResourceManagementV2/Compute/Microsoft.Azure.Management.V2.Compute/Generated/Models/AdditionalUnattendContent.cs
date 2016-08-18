@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// additional XML formatted information that can be included in the
@@ -57,7 +51,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets the pass name. Currently, the only allowable value is
         /// oobeSystem. Possible values include: 'oobeSystem'
         /// </summary>
-        [JsonProperty(PropertyName = "passName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "passName")]
         public PassNames? PassName { get; set; }
 
         /// <summary>
@@ -65,14 +59,14 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// value is Microsoft-Windows-Shell-Setup. Possible values include:
         /// 'Microsoft-Windows-Shell-Setup'
         /// </summary>
-        [JsonProperty(PropertyName = "componentName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "componentName")]
         public ComponentNames? ComponentName { get; set; }
 
         /// <summary>
         /// Gets or sets setting name (e.g. FirstLogonCommands, AutoLogon ).
         /// Possible values include: 'AutoLogon', 'FirstLogonCommands'
         /// </summary>
-        [JsonProperty(PropertyName = "settingName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "settingName")]
         public SettingNames? SettingName { get; set; }
 
         /// <summary>
@@ -81,7 +75,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// must be less than 4 KB and must include the root element for the
         /// setting or feature that is being inserted.
         /// </summary>
-        [JsonProperty(PropertyName = "content")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "content")]
         public string Content { get; set; }
 
     }

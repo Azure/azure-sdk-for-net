@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Describes a virtual machine scale set operating system disk.
@@ -44,7 +38,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// VirtualHardDisk should not exist.</param>
         /// <param name="vhdContainers">the list of virtual hard disk
         /// container uris.</param>
-        public VirtualMachineScaleSetOSDisk(string name, DiskCreateOptionTypes createOption, CachingTypes? caching = default(CachingTypes?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), VirtualHardDisk image = default(VirtualHardDisk), IList<string> vhdContainers = default(IList<string>))
+        public VirtualMachineScaleSetOSDisk(string name, DiskCreateOptionTypes createOption, CachingTypes? caching = default(CachingTypes?), OperatingSystemTypes? osType = default(OperatingSystemTypes?), VirtualHardDisk image = default(VirtualHardDisk), System.Collections.Generic.IList<string> vhdContainers = default(System.Collections.Generic.IList<string>))
         {
             Name = name;
             Caching = caching;
@@ -57,28 +51,28 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the disk name.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the caching type. Possible values include: 'None',
         /// 'ReadOnly', 'ReadWrite'
         /// </summary>
-        [JsonProperty(PropertyName = "caching")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "caching")]
         public CachingTypes? Caching { get; set; }
 
         /// <summary>
         /// Gets or sets the create option. Possible values include:
         /// 'fromImage', 'empty', 'attach'
         /// </summary>
-        [JsonProperty(PropertyName = "createOption")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "createOption")]
         public DiskCreateOptionTypes CreateOption { get; set; }
 
         /// <summary>
         /// Gets or sets the Operating System type. Possible values include:
         /// 'Windows', 'Linux'
         /// </summary>
-        [JsonProperty(PropertyName = "osType")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "osType")]
         public OperatingSystemTypes? OsType { get; set; }
 
         /// <summary>
@@ -87,26 +81,26 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Virtual Machine.If SourceImage is provided, the destination
         /// VirtualHardDisk should not exist.
         /// </summary>
-        [JsonProperty(PropertyName = "image")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "image")]
         public VirtualHardDisk Image { get; set; }
 
         /// <summary>
         /// Gets or sets the list of virtual hard disk container uris.
         /// </summary>
-        [JsonProperty(PropertyName = "vhdContainers")]
-        public IList<string> VhdContainers { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "vhdContainers")]
+        public System.Collections.Generic.IList<string> VhdContainers { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (Name == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Name");
             }
         }
     }

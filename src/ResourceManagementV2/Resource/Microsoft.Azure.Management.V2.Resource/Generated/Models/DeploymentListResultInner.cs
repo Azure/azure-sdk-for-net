@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// List of deployments.
@@ -29,10 +23,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the DeploymentListResultInner class.
         /// </summary>
-        /// <param name="value">Gets or sets the list of deployments.</param>
-        /// <param name="nextLink">Gets or sets the URL to get the next set of
+        /// <param name="value">The list of deployments.</param>
+        /// <param name="nextLink">The URL to get the next set of
         /// results.</param>
-        public DeploymentListResultInner(IList<DeploymentExtendedInner> value = default(IList<DeploymentExtendedInner>), string nextLink = default(string))
+        public DeploymentListResultInner(System.Collections.Generic.IList<DeploymentExtendedInner> value = default(System.Collections.Generic.IList<DeploymentExtendedInner>), string nextLink = default(string))
         {
             Value = value;
             NextLink = nextLink;
@@ -41,13 +35,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Gets or sets the list of deployments.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<DeploymentExtendedInner> Value { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
+        public System.Collections.Generic.IList<DeploymentExtendedInner> Value { get; set; }
 
         /// <summary>
         /// Gets or sets the URL to get the next set of results.
         /// </summary>
-        [JsonProperty(PropertyName = "nextLink")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "nextLink")]
         public string NextLink { get; set; }
 
     }

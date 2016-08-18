@@ -8,14 +8,9 @@
 
 namespace Microsoft.Azure.Management.Storage
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
-    using Models;
+   using Microsoft.Rest.Azure;
+   using Models;
 
     /// <summary>
     /// Extension methods for UsageOperations.
@@ -29,9 +24,9 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static UsageListResultInner List(this IUsageOperations operations)
+            public static System.Collections.Generic.IEnumerable<UsageInner> List(this IUsageOperations operations)
             {
-                return Task.Factory.StartNew(s => ((IUsageOperations)s).ListAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IUsageOperations)s).ListAsync(), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -44,7 +39,7 @@ namespace Microsoft.Azure.Management.Storage
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<UsageListResultInner> ListAsync(this IUsageOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<System.Collections.Generic.IEnumerable<UsageInner>> ListAsync(this IUsageOperations operations, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {

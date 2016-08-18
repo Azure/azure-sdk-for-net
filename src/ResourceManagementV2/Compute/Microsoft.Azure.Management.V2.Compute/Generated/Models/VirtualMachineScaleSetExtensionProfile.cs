@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Describes a virtual machine scale set extension profile.
@@ -33,7 +27,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// </summary>
         /// <param name="extensions">the virtual machine scale set child
         /// extension resources.</param>
-        public VirtualMachineScaleSetExtensionProfile(IList<VirtualMachineScaleSetExtension> extensions = default(IList<VirtualMachineScaleSetExtension>))
+        public VirtualMachineScaleSetExtensionProfile(System.Collections.Generic.IList<VirtualMachineScaleSetExtensionInner> extensions = default(System.Collections.Generic.IList<VirtualMachineScaleSetExtensionInner>))
         {
             Extensions = extensions;
         }
@@ -42,8 +36,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// Gets or sets the virtual machine scale set child extension
         /// resources.
         /// </summary>
-        [JsonProperty(PropertyName = "extensions")]
-        public IList<VirtualMachineScaleSetExtension> Extensions { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "extensions")]
+        public System.Collections.Generic.IList<VirtualMachineScaleSetExtensionInner> Extensions { get; set; }
 
     }
 }

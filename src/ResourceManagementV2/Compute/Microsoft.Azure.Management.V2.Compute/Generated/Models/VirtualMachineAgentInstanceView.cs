@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The instance view of the VM Agent running on the virtual machine.
@@ -35,7 +29,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="extensionHandlers">the virtual machine extension
         /// handler instance view.</param>
         /// <param name="statuses">the resource status information.</param>
-        public VirtualMachineAgentInstanceView(string vmAgentVersion = default(string), IList<VirtualMachineExtensionHandlerInstanceView> extensionHandlers = default(IList<VirtualMachineExtensionHandlerInstanceView>), IList<InstanceViewStatus> statuses = default(IList<InstanceViewStatus>))
+        public VirtualMachineAgentInstanceView(string vmAgentVersion = default(string), System.Collections.Generic.IList<VirtualMachineExtensionHandlerInstanceView> extensionHandlers = default(System.Collections.Generic.IList<VirtualMachineExtensionHandlerInstanceView>), System.Collections.Generic.IList<InstanceViewStatus> statuses = default(System.Collections.Generic.IList<InstanceViewStatus>))
         {
             VmAgentVersion = vmAgentVersion;
             ExtensionHandlers = extensionHandlers;
@@ -45,20 +39,20 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the VM Agent full version.
         /// </summary>
-        [JsonProperty(PropertyName = "vmAgentVersion")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "vmAgentVersion")]
         public string VmAgentVersion { get; set; }
 
         /// <summary>
         /// Gets or sets the virtual machine extension handler instance view.
         /// </summary>
-        [JsonProperty(PropertyName = "extensionHandlers")]
-        public IList<VirtualMachineExtensionHandlerInstanceView> ExtensionHandlers { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "extensionHandlers")]
+        public System.Collections.Generic.IList<VirtualMachineExtensionHandlerInstanceView> ExtensionHandlers { get; set; }
 
         /// <summary>
         /// Gets or sets the resource status information.
         /// </summary>
-        [JsonProperty(PropertyName = "statuses")]
-        public IList<InstanceViewStatus> Statuses { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "statuses")]
+        public System.Collections.Generic.IList<InstanceViewStatus> Statuses { get; set; }
 
     }
 }

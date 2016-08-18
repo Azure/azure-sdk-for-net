@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Api error.
@@ -34,7 +28,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <param name="code">the error code.</param>
         /// <param name="target">the target of the particular error.</param>
         /// <param name="message">the error message.</param>
-        public ApiError(IList<ApiErrorBase> details = default(IList<ApiErrorBase>), InnerError innererror = default(InnerError), string code = default(string), string target = default(string), string message = default(string))
+        public ApiError(System.Collections.Generic.IList<ApiErrorBase> details = default(System.Collections.Generic.IList<ApiErrorBase>), InnerError innererror = default(InnerError), string code = default(string), string target = default(string), string message = default(string))
         {
             Details = details;
             Innererror = innererror;
@@ -46,31 +40,31 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the Api error details
         /// </summary>
-        [JsonProperty(PropertyName = "details")]
-        public IList<ApiErrorBase> Details { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "details")]
+        public System.Collections.Generic.IList<ApiErrorBase> Details { get; set; }
 
         /// <summary>
         /// Gets or sets the Api inner error
         /// </summary>
-        [JsonProperty(PropertyName = "innererror")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "innererror")]
         public InnerError Innererror { get; set; }
 
         /// <summary>
         /// Gets or sets the error code.
         /// </summary>
-        [JsonProperty(PropertyName = "code")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "code")]
         public string Code { get; set; }
 
         /// <summary>
         /// Gets or sets the target of the particular error.
         /// </summary>
-        [JsonProperty(PropertyName = "target")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "target")]
         public string Target { get; set; }
 
         /// <summary>
         /// Gets or sets the error message.
         /// </summary>
-        [JsonProperty(PropertyName = "message")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "message")]
         public string Message { get; set; }
 
     }

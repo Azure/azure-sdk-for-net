@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     public partial class DeploymentExportResultInner
     {
@@ -28,7 +22,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// Initializes a new instance of the DeploymentExportResultInner
         /// class.
         /// </summary>
-        /// <param name="template">Gets or sets the template content.</param>
+        /// <param name="template">The template content.</param>
         public DeploymentExportResultInner(object template = default(object))
         {
             Template = template;
@@ -37,7 +31,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Gets or sets the template content.
         /// </summary>
-        [JsonProperty(PropertyName = "template")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "template")]
         public object Template { get; set; }
 
     }

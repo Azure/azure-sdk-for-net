@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Describes an OS profile.
@@ -40,7 +34,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// profile.</param>
         /// <param name="secrets">the List of certificates for addition to the
         /// VM.</param>
-        public OSProfile(string computerName = default(string), string adminUsername = default(string), string adminPassword = default(string), string customData = default(string), WindowsConfiguration windowsConfiguration = default(WindowsConfiguration), LinuxConfiguration linuxConfiguration = default(LinuxConfiguration), IList<VaultSecretGroup> secrets = default(IList<VaultSecretGroup>))
+        public OSProfile(string computerName = default(string), string adminUsername = default(string), string adminPassword = default(string), string customData = default(string), WindowsConfiguration windowsConfiguration = default(WindowsConfiguration), LinuxConfiguration linuxConfiguration = default(LinuxConfiguration), System.Collections.Generic.IList<VaultSecretGroup> secrets = default(System.Collections.Generic.IList<VaultSecretGroup>))
         {
             ComputerName = computerName;
             AdminUsername = adminUsername;
@@ -54,44 +48,44 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the computer name.
         /// </summary>
-        [JsonProperty(PropertyName = "computerName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "computerName")]
         public string ComputerName { get; set; }
 
         /// <summary>
         /// Gets or sets the admin user name.
         /// </summary>
-        [JsonProperty(PropertyName = "adminUsername")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "adminUsername")]
         public string AdminUsername { get; set; }
 
         /// <summary>
         /// Gets or sets the admin user password.
         /// </summary>
-        [JsonProperty(PropertyName = "adminPassword")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "adminPassword")]
         public string AdminPassword { get; set; }
 
         /// <summary>
         /// Gets or sets a base-64 encoded string of custom data.
         /// </summary>
-        [JsonProperty(PropertyName = "customData")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "customData")]
         public string CustomData { get; set; }
 
         /// <summary>
         /// Gets or sets the Windows Configuration of the OS profile.
         /// </summary>
-        [JsonProperty(PropertyName = "windowsConfiguration")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "windowsConfiguration")]
         public WindowsConfiguration WindowsConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets the Linux Configuration of the OS profile.
         /// </summary>
-        [JsonProperty(PropertyName = "linuxConfiguration")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "linuxConfiguration")]
         public LinuxConfiguration LinuxConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets the List of certificates for addition to the VM.
         /// </summary>
-        [JsonProperty(PropertyName = "secrets")]
-        public IList<VaultSecretGroup> Secrets { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "secrets")]
+        public System.Collections.Generic.IList<VaultSecretGroup> Secrets { get; set; }
 
     }
 }

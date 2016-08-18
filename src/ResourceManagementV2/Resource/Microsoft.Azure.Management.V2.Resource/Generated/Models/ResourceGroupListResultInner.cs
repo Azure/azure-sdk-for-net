@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// List of resource groups.
@@ -31,11 +25,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// Initializes a new instance of the ResourceGroupListResultInner
         /// class.
         /// </summary>
-        /// <param name="nextLink">Gets or sets the URL to get the next set of
+        /// <param name="nextLink">The URL to get the next set of
         /// results.</param>
-        /// <param name="value">Gets or sets the list of resource
-        /// groups.</param>
-        public ResourceGroupListResultInner(string nextLink, IList<ResourceGroupInner> value = default(IList<ResourceGroupInner>))
+        /// <param name="value">The list of resource groups.</param>
+        public ResourceGroupListResultInner(string nextLink, System.Collections.Generic.IList<ResourceGroupInner> value = default(System.Collections.Generic.IList<ResourceGroupInner>))
         {
             Value = value;
             NextLink = nextLink;
@@ -44,26 +37,26 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Gets or sets the list of resource groups.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<ResourceGroupInner> Value { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
+        public System.Collections.Generic.IList<ResourceGroupInner> Value { get; set; }
 
         /// <summary>
         /// Gets or sets the URL to get the next set of results.
         /// </summary>
-        [JsonProperty(PropertyName = "nextLink")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "nextLink")]
         public string NextLink { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (NextLink == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "NextLink");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "NextLink");
             }
             if (this.Value != null)
             {

@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// VirtualNetworkGatewaySku details
@@ -47,20 +41,20 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets gateway sku name -Basic/HighPerformance/Standard.
         /// Possible values include: 'Basic', 'HighPerformance', 'Standard'
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets gateway sku tier -Basic/HighPerformance/Standard.
         /// Possible values include: 'Basic', 'HighPerformance', 'Standard'
         /// </summary>
-        [JsonProperty(PropertyName = "tier")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "tier")]
         public string Tier { get; set; }
 
         /// <summary>
         /// Gets or sets the capacity
         /// </summary>
-        [JsonProperty(PropertyName = "capacity")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "capacity")]
         public int? Capacity { get; set; }
 
     }

@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Compute.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The instance view of a virtual machine boot diagnostics.
@@ -44,13 +38,13 @@ namespace Microsoft.Azure.Management.Compute.Models
         /// <summary>
         /// Gets or sets the console screenshot blob Uri.
         /// </summary>
-        [JsonProperty(PropertyName = "consoleScreenshotBlobUri")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "consoleScreenshotBlobUri")]
         public string ConsoleScreenshotBlobUri { get; set; }
 
         /// <summary>
         /// Gets or sets the Linux serial console log blob Uri.
         /// </summary>
-        [JsonProperty(PropertyName = "serialConsoleLogBlobUri")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "serialConsoleLogBlobUri")]
         public string SerialConsoleLogBlobUri { get; set; }
 
     }

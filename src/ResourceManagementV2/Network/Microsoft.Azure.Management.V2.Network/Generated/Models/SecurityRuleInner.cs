@@ -8,19 +8,13 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Network security rule
     /// </summary>
-    [JsonTransformation]
-    public partial class SecurityRuleInner : SubResource
+    [Microsoft.Rest.Serialization.JsonTransformation]
+    public partial class SecurityRuleInner : Microsoft.Rest.Azure.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the SecurityRuleInner class.
@@ -70,7 +64,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public SecurityRuleInner(string protocol, string sourceAddressPrefix, string destinationAddressPrefix, string access, string direction, String id = default(String), string description = default(string), string sourcePortRange = default(string), string destinationPortRange = default(string), int? priority = default(int?), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public SecurityRuleInner(string protocol, string sourceAddressPrefix, string destinationAddressPrefix, string access, string direction, string id = default(string), string description = default(string), string sourcePortRange = default(string), string destinationPortRange = default(string), int? priority = default(int?), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             Description = description;
@@ -90,28 +84,28 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets a description for this rule. Restricted to 140 chars.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.description")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.description")]
         public string Description { get; set; }
 
         /// <summary>
         /// Gets or sets Network protocol this rule applies to. Can be Tcp,
         /// Udp or All(*). Possible values include: 'Tcp', 'Udp', '*'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.protocol")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.protocol")]
         public string Protocol { get; set; }
 
         /// <summary>
         /// Gets or sets Source Port or Range. Integer or range between 0 and
         /// 65535. Asterix '*' can also be used to match all ports.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.sourcePortRange")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.sourcePortRange")]
         public string SourcePortRange { get; set; }
 
         /// <summary>
         /// Gets or sets Destination Port or Range. Integer or range between 0
         /// and 65535. Asterix '*' can also be used to match all ports.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.destinationPortRange")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.destinationPortRange")]
         public string DestinationPortRange { get; set; }
 
         /// <summary>
@@ -121,7 +115,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// can also be used. If this is an ingress rule, specifies where
         /// network traffic originates from.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.sourceAddressPrefix")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.sourceAddressPrefix")]
         public string SourceAddressPrefix { get; set; }
 
         /// <summary>
@@ -130,14 +124,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// tags such as 'VirtualNetwork', 'AzureLoadBalancer' and 'Internet'
         /// can also be used.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.destinationAddressPrefix")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.destinationAddressPrefix")]
         public string DestinationAddressPrefix { get; set; }
 
         /// <summary>
         /// Gets or sets network traffic is allowed or denied. Possible values
         /// are 'Allow' and 'Deny'. Possible values include: 'Allow', 'Deny'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.access")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.access")]
         public string Access { get; set; }
 
         /// <summary>
@@ -146,7 +140,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// the collection. The lower the priority number, the higher the
         /// priority of the rule.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.priority")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.priority")]
         public int? Priority { get; set; }
 
         /// <summary>
@@ -154,57 +148,57 @@ namespace Microsoft.Azure.Management.Network.Models
         /// direction specifies if rule will be evaluated on incoming or
         /// outcoming traffic. Possible values include: 'Inbound', 'Outbound'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.direction")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.direction")]
         public string Direction { get; set; }
 
         /// <summary>
         /// Gets provisioning state of the PublicIP resource
         /// Updating/Deleting/Failed
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets name of the resource that is unique within a resource group.
         /// This name can be used to access the resource
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets a unique read-only string that changes whenever the
         /// resource is updated
         /// </summary>
-        [JsonProperty(PropertyName = "etag")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (Protocol == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Protocol");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Protocol");
             }
             if (SourceAddressPrefix == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "SourceAddressPrefix");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "SourceAddressPrefix");
             }
             if (DestinationAddressPrefix == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "DestinationAddressPrefix");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "DestinationAddressPrefix");
             }
             if (Access == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Access");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Access");
             }
             if (Direction == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Direction");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Direction");
             }
         }
     }

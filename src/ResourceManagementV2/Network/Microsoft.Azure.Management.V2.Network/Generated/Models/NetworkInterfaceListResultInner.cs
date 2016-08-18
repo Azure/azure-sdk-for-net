@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Response for ListNetworkInterface Api service call
@@ -35,7 +29,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// resource group</param>
         /// <param name="nextLink">Gets the URL to get the next set of
         /// results.</param>
-        public NetworkInterfaceListResultInner(IList<NetworkInterfaceInner> value = default(IList<NetworkInterfaceInner>), string nextLink = default(string))
+        public NetworkInterfaceListResultInner(System.Collections.Generic.IList<NetworkInterfaceInner> value = default(System.Collections.Generic.IList<NetworkInterfaceInner>), string nextLink = default(string))
         {
             Value = value;
             NextLink = nextLink;
@@ -44,13 +38,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets list of NetworkInterfaces in a resource group
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<NetworkInterfaceInner> Value { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
+        public System.Collections.Generic.IList<NetworkInterfaceInner> Value { get; set; }
 
         /// <summary>
         /// Gets the URL to get the next set of results.
         /// </summary>
-        [JsonProperty(PropertyName = "nextLink")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "nextLink")]
         public string NextLink { get; set; }
 
     }

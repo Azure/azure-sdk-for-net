@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Resource provider information.
@@ -29,14 +23,14 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the ProviderInner class.
         /// </summary>
-        /// <param name="id">Gets or sets the provider id.</param>
-        /// <param name="namespaceProperty">Gets or sets the namespace of the
+        /// <param name="id">The provider id.</param>
+        /// <param name="namespaceProperty">The namespace of the
         /// provider.</param>
-        /// <param name="registrationState">Gets or sets the registration
-        /// state of the provider.</param>
-        /// <param name="resourceTypes">Gets or sets the collection of
-        /// provider resource types.</param>
-        public ProviderInner(string id = default(string), string namespaceProperty = default(string), string registrationState = default(string), IList<ProviderResourceType> resourceTypes = default(IList<ProviderResourceType>))
+        /// <param name="registrationState">The registration state of the
+        /// provider.</param>
+        /// <param name="resourceTypes">The collection of provider resource
+        /// types.</param>
+        public ProviderInner(string id = default(string), string namespaceProperty = default(string), string registrationState = default(string), System.Collections.Generic.IList<ProviderResourceType> resourceTypes = default(System.Collections.Generic.IList<ProviderResourceType>))
         {
             Id = id;
             NamespaceProperty = namespaceProperty;
@@ -47,26 +41,26 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Gets or sets the provider id.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets the namespace of the provider.
         /// </summary>
-        [JsonProperty(PropertyName = "namespace")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "namespace")]
         public string NamespaceProperty { get; set; }
 
         /// <summary>
         /// Gets or sets the registration state of the provider.
         /// </summary>
-        [JsonProperty(PropertyName = "registrationState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "registrationState")]
         public string RegistrationState { get; set; }
 
         /// <summary>
         /// Gets or sets the collection of provider resource types.
         /// </summary>
-        [JsonProperty(PropertyName = "resourceTypes")]
-        public IList<ProviderResourceType> ResourceTypes { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "resourceTypes")]
+        public System.Collections.Generic.IList<ProviderResourceType> ResourceTypes { get; set; }
 
     }
 }

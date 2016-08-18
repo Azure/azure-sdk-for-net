@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Response for CheckDnsNameAvailability Api servive call
@@ -40,7 +34,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets domain availability (True/False)
         /// </summary>
-        [JsonProperty(PropertyName = "available")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "available")]
         public bool? Available { get; set; }
 
     }

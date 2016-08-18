@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The response body contains the status of the specified asynchronous
@@ -48,12 +42,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Gets or sets status of the AzureAsuncOperation. Possible values
         /// include: 'InProgress', 'Succeeded', 'Failed'
         /// </summary>
-        [JsonProperty(PropertyName = "status")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "status")]
         public string Status { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "error")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "error")]
         public Error Error { get; set; }
 
     }

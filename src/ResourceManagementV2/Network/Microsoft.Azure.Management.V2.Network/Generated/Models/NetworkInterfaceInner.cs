@@ -8,19 +8,13 @@
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A NetworkInterface in a resource group
     /// </summary>
-    [JsonTransformation]
-    public partial class NetworkInterfaceInner : Resource
+    [Microsoft.Rest.Serialization.JsonTransformation]
+    public partial class NetworkInterfaceInner : Microsoft.Rest.Azure.Resource
     {
         /// <summary>
         /// Initializes a new instance of the NetworkInterfaceInner class.
@@ -50,7 +44,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// PublicIP resource Updating/Deleting/Failed</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated</param>
-        public NetworkInterfaceInner(String location = default(String), String id = default(String), String name = default(String), String type = default(String), IDictionary<string, String> tags = default(IDictionary<string, String>), SubResource virtualMachine = default(SubResource), NetworkSecurityGroupInner networkSecurityGroup = default(NetworkSecurityGroupInner), IList<NetworkInterfaceIPConfiguration> ipConfigurations = default(IList<NetworkInterfaceIPConfiguration>), NetworkInterfaceDnsSettings dnsSettings = default(NetworkInterfaceDnsSettings), string macAddress = default(string), bool? primary = default(bool?), bool? enableIPForwarding = default(bool?), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        public NetworkInterfaceInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), Microsoft.Rest.Azure.SubResource virtualMachine = default(Microsoft.Rest.Azure.SubResource), NetworkSecurityGroupInner networkSecurityGroup = default(NetworkSecurityGroupInner), System.Collections.Generic.IList<NetworkInterfaceIPConfigurationInner> ipConfigurations = default(System.Collections.Generic.IList<NetworkInterfaceIPConfigurationInner>), NetworkInterfaceDnsSettings dnsSettings = default(NetworkInterfaceDnsSettings), string macAddress = default(string), bool? primary = default(bool?), bool? enableIPForwarding = default(bool?), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
             : base(location, id, name, type, tags)
         {
             VirtualMachine = virtualMachine;
@@ -68,64 +62,64 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets the reference of a VirtualMachine
         /// </summary>
-        [JsonProperty(PropertyName = "properties.virtualMachine")]
-        public SubResource VirtualMachine { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.virtualMachine")]
+        public Microsoft.Rest.Azure.SubResource VirtualMachine { get; set; }
 
         /// <summary>
         /// Gets or sets the reference of the NetworkSecurityGroup resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.networkSecurityGroup")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.networkSecurityGroup")]
         public NetworkSecurityGroupInner NetworkSecurityGroup { get; set; }
 
         /// <summary>
         /// Gets or sets list of IPConfigurations of the network interface
         /// </summary>
-        [JsonProperty(PropertyName = "properties.ipConfigurations")]
-        public IList<NetworkInterfaceIPConfiguration> IpConfigurations { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.ipConfigurations")]
+        public System.Collections.Generic.IList<NetworkInterfaceIPConfigurationInner> IpConfigurations { get; set; }
 
         /// <summary>
         /// Gets or sets DNS settings in network interface
         /// </summary>
-        [JsonProperty(PropertyName = "properties.dnsSettings")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.dnsSettings")]
         public NetworkInterfaceDnsSettings DnsSettings { get; set; }
 
         /// <summary>
         /// Gets the MAC address of the network interface
         /// </summary>
-        [JsonProperty(PropertyName = "properties.macAddress")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.macAddress")]
         public string MacAddress { get; set; }
 
         /// <summary>
         /// Gets whether this is a primary NIC on a virtual machine
         /// </summary>
-        [JsonProperty(PropertyName = "properties.primary")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.primary")]
         public bool? Primary { get; set; }
 
         /// <summary>
         /// Gets or sets whether IPForwarding is enabled on the NIC
         /// </summary>
-        [JsonProperty(PropertyName = "properties.enableIPForwarding")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.enableIPForwarding")]
         public bool? EnableIPForwarding { get; set; }
 
         /// <summary>
         /// Gets or sets resource guid property of the network interface
         /// resource
         /// </summary>
-        [JsonProperty(PropertyName = "properties.resourceGuid")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.resourceGuid")]
         public string ResourceGuid { get; set; }
 
         /// <summary>
         /// Gets provisioning state of the PublicIP resource
         /// Updating/Deleting/Failed
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource
         /// is updated
         /// </summary>
-        [JsonProperty(PropertyName = "etag")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
     }

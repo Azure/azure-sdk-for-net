@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     public partial class DebugSetting
     {
@@ -26,8 +20,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the DebugSetting class.
         /// </summary>
-        /// <param name="detailLevel">Gets or sets the debug detail
-        /// level.</param>
+        /// <param name="detailLevel">The debug detail level.</param>
         public DebugSetting(string detailLevel = default(string))
         {
             DetailLevel = detailLevel;
@@ -36,7 +29,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Gets or sets the debug detail level.
         /// </summary>
-        [JsonProperty(PropertyName = "detailLevel")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "detailLevel")]
         public string DetailLevel { get; set; }
 
     }
