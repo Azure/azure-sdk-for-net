@@ -17,16 +17,16 @@ namespace Microsoft.Azure.Management.V2.Network
         IChildResource
     {
         /// <returns>the network traffic direction the rule applies to</returns>
-        SecurityRuleDirection Direction { get; }
+        string Direction { get; }
 
         /// <returns>the network protocol the rule applies to</returns>
-        SecurityRuleProtocol Protocol { get; }
+        string Protocol { get; }
 
         /// <returns>the user-defined description of the security rule</returns>
         string Description { get; }
 
         /// <returns>the type of access the rule enforces</returns>
-        SecurityRuleAccess Access { get; }
+        string Access { get; }
 
         /// <returns>the source address prefix the rule applies to, expressed using the CIDR notation in the format: "###.###.###.###/##",</returns>
         /// <returns>and "*" means "any"</returns>
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.V2.Network
 
         /// <returns>the priority number of this rule based on which this rule will be applied relative to the priority numbers of any other rules specified</returns>
         /// <returns>for this network security group</returns>
-        int Priority { get; }
+        int? Priority { get; }
 
     }
 }

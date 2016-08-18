@@ -54,6 +54,14 @@ namespace Microsoft.Azure.Management.V2.Resource
             this.manager = manager;
         }
 
+        public ManagerT MyManager
+        {
+            get
+            {
+                return this.manager;
+            }
+        }
+
         #region Getters [Implementation of IGroupableResource]
 
         public string ResourceGroupName

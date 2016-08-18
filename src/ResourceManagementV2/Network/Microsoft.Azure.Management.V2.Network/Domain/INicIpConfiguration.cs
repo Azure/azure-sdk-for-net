@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.V2.Network
         string PrivateIp { get; }
 
         /// <returns>the private IP allocation method (Dynamic, Static)</returns>
-        IPAllocationMethod PrivateIpAllocationMethod { get; }
+        string PrivateIpAllocationMethod { get; }
 
     }
 }

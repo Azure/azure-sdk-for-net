@@ -1,0 +1,129 @@
+/**
+* Copyright (c) Microsoft Corporation. All rights reserved.
+* Licensed under the MIT License. See License.txt in the project root for
+* license information.
+*/
+
+namespace Microsoft.Azure.Management.V2.Network
+{
+
+    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
+    using Microsoft.Azure.Management.Network.Models;
+    using Microsoft.Azure.Management.V2.Resource;
+    using Management.Network;
+    using System.Collections.Generic;
+    using System;
+    using NetworkInterface.Definition;
+    using System.Threading;
+    using System.Threading.Tasks;
+
+    /// <summary>
+    /// Implementation for {@link NetworkInterfaces}.
+    /// </summary>
+    internal class NetworkInterfacesImpl :
+        GroupableResources<INetworkInterface, NetworkInterfaceImpl, NetworkInterfaceInner, NetworkInterfacesOperations, NetworkManager>,
+        INetworkInterfaces
+    {
+        internal NetworkInterfacesImpl(NetworkInterfacesOperations client, NetworkManager networkManager) :
+            base(client, networkManager)
+        {
+        }
+
+        public PagedList<INetworkInterface> List()
+        {
+            IEnumerable<NetworkInterfaceInner> storageAccounts = InnerCollection.ListAll();
+            var pagedList = new PagedList<NetworkInterfaceInner>(storageAccounts);
+            return WrapList(pagedList);
+        }
+
+        public PagedList<INetworkInterface> ListByGroup(string groupName)
+        {
+            return ((ISupportsListingByGroup<INetworkInterface>)this).ListByGroupAsync(groupName).Result;
+        }
+
+        public void Delete(string id)
+        {
+           this.Delete(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
+        }
+
+        public void Delete(string groupName, string name)
+        {
+            this.InnerCollection.Delete(groupName, name);
+        }
+
+        public NetworkInterface.Definition.IBlank Define(string name)
+        {
+
+            return WrapModel(name);
+        }
+
+        protected override NetworkInterfaceImpl WrapModel(string name)
+        {
+            NetworkInterfaceInner inner = new NetworkInterfaceInner();
+            inner.IpConfigurations = new List<NetworkInterfaceIPConfigurationInner>();
+            inner.DnsSettings =  new NetworkInterfaceDnsSettings();
+            return new NetworkInterfaceImpl(name,
+                inner,
+                this.InnerCollection,
+                base.MyManager);
+        }
+
+        protected override INetworkInterface WrapModel(NetworkInterfaceInner inner)
+        {
+            return new NetworkInterfaceImpl(inner.Name,
+            inner,
+            this.InnerCollection,
+            base.MyManager);
+        }
+
+        IBlank ISupportsCreating<IBlank>.Define(string name)
+        {
+            return WrapModel(name);
+        }
+
+        PagedList<INetworkInterface> ISupportsListing<INetworkInterface>.List()
+        {
+            IEnumerable<NetworkInterfaceInner> data = InnerCollection.ListAll();
+            var pagedList = new PagedList<NetworkInterfaceInner>(data);
+            return WrapList(pagedList);
+        }
+
+        PagedList<INetworkInterface> ISupportsListingByGroup<INetworkInterface>.ListByGroup(string resourceGroupName)
+        {
+            return ((ISupportsListingByGroup<INetworkInterface>)this).ListByGroupAsync(resourceGroupName).Result;
+        }
+
+        async Task<PagedList<INetworkInterface>> ISupportsListingByGroup<INetworkInterface>.ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken)
+        {
+            var data = await this.InnerCollection.ListAsync(resourceGroupName);
+            return WrapList(new PagedList<NetworkInterfaceInner>(data));
+        }
+
+        void ISupportsDeleting.Delete(string id)
+        {
+            ((ISupportsDeleting)this).DeleteAsync(id).Wait();
+        }
+
+        async Task ISupportsDeleting.DeleteAsync(string id, CancellationToken cancellationToken)
+        {
+            await this.InnerCollection.DeleteAsync(ResourceUtils.GroupFromResourceId(id),
+                ResourceUtils.NameFromResourceId(id), cancellationToken);
+        }
+
+        void ISupportsDeletingByGroup.Delete(string groupName, string name)
+        {
+            this.InnerCollection.Delete(groupName, name);
+        }
+
+        async Task ISupportsDeletingByGroup.DeleteAsync(string groupName, string name, CancellationToken cancellationToken)
+        {
+            await this.InnerCollection.DeleteAsync(groupName, name, cancellationToken);
+        }
+
+        public override Task<INetworkInterface> GetByGroupAsync(string groupName, string name)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}

@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefini
         /// </summary>
         /// <param name="protocol">protocol one of the supported protocols</param>
         /// <returns>the next stage of the security rule definition</returns>
-        IWithAttach<ParentT> WithProtocol (SecurityRuleProtocol protocol);
+        IWithAttach<ParentT> WithProtocol (string protocol);
 
         /// <summary>
         /// Makes this rule apply to any supported protocol.
