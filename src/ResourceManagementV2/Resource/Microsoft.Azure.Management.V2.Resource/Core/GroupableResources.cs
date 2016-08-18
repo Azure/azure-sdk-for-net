@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
 
         public IFluentResourceT GetById(string id)
         {
-            throw new NotImplementedException();
+            return GetByIdAsync(id).Result;
         }
 
         public Task<IFluentResourceT> GetByIdAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
