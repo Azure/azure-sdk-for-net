@@ -22,10 +22,10 @@ namespace Microsoft.Azure.Management.V2.Network
     /// Implementation for {@link NetworkInterfaces}.
     /// </summary>
     internal class NetworkInterfacesImpl :
-        GroupableResources<INetworkInterface, NetworkInterfaceImpl, NetworkInterfaceInner, NetworkInterfacesOperations, NetworkManager>,
+        GroupableResources<INetworkInterface, NetworkInterfaceImpl, NetworkInterfaceInner, INetworkInterfacesOperations, NetworkManager>,
         INetworkInterfaces
     {
-        internal NetworkInterfacesImpl(NetworkInterfacesOperations client, NetworkManager networkManager) :
+        internal NetworkInterfacesImpl(INetworkInterfacesOperations client, NetworkManager networkManager) :
             base(client, networkManager)
         {
         }
@@ -39,7 +39,9 @@ namespace Microsoft.Azure.Management.V2.Network
 
         public PagedList<INetworkInterface> ListByGroup(string groupName)
         {
-            return ((ISupportsListingByGroup<INetworkInterface>)this).ListByGroupAsync(groupName).Result;
+            IEnumerable<NetworkInterfaceInner> list = InnerCollection.List(groupName);
+            var pagedList = new PagedList<NetworkInterfaceInner>(list);
+            return WrapList(pagedList);
         }
 
         public void Delete(string id)
@@ -121,9 +123,10 @@ namespace Microsoft.Azure.Management.V2.Network
             await this.InnerCollection.DeleteAsync(groupName, name, cancellationToken);
         }
 
-        public override Task<INetworkInterface> GetByGroupAsync(string groupName, string name)
+        public async override Task<INetworkInterface> GetByGroupAsync(string groupName, string name)
         {
-            throw new NotImplementedException();
+            var data = await this.InnerCollection.GetAsync(groupName, name);
+            return this.WrapModel(data);
         }
     }
 }

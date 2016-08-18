@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.V2.Network
     using System.Threading;
     using Management.Network;
     using System;
+    using System.Collections.ObjectModel;
 
     /// <summary>
     /// Implementation for {@link NetworkSecurityGroup} and its create and update interfaces.
@@ -37,11 +38,11 @@ namespace Microsoft.Azure.Management.V2.Network
         IDefinition,
         IUpdate
     {
-        private NetworkSecurityGroupsOperations innerCollection;
+        private INetworkSecurityGroupsOperations innerCollection;
         private IList<INetworkSecurityRule> rules;
         private IList<INetworkSecurityRule> defaultRules;
 
-        private NetworkSecurityGroupImpl(string name, NetworkSecurityGroupInner innerModel, NetworkSecurityGroupsOperations innerCollection, NetworkManager networkManager) :
+        internal NetworkSecurityGroupImpl(string name, NetworkSecurityGroupInner innerModel, INetworkSecurityGroupsOperations innerCollection, NetworkManager networkManager) :
             base(name, innerModel, networkManager)
         {
             this.innerCollection = innerCollection;
@@ -126,14 +127,12 @@ namespace Microsoft.Azure.Management.V2.Network
 
         public IList<INetworkSecurityRule> SecurityRules()
         {
-            //TODO: make readonly
-            return this.rules;
+            return new ReadOnlyCollection<INetworkSecurityRule>(this.rules);
         }
 
         public IList<INetworkSecurityRule> DefaultSecurityRules()
         {
-            //TODO: make readonly
-            return this.defaultRules;
+            return new ReadOnlyCollection<INetworkSecurityRule>(this.defaultRules);
         }
 
         public IList<string> NetworkInterfaceIds

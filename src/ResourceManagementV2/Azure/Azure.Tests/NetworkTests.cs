@@ -12,7 +12,7 @@ namespace Azure.Tests
     public class NetworkTests
     {
         [Fact]
-        public void NetworkManagerTests()
+        public void TestPublicIpAddresses()
         {
             INetworkManager manager = this.CreateNetworkManager();
             var list = manager.PublicIpAddresses.List();
@@ -20,8 +20,41 @@ namespace Azure.Tests
             {
                 
             }
+
         }
 
+        [Fact]
+        public void TestNetworks()
+        {
+            INetworkManager manager = this.CreateNetworkManager();
+            var list = manager.Networks.List();
+            foreach (var item in list)
+            {
+                var name = item.Name;
+            }
+        }
+
+        [Fact]
+        public void TestNetworkSecurityGroups()
+        {
+            INetworkManager manager = this.CreateNetworkManager();
+            var list = manager.NetworkSecurityGroups.List();
+            foreach (var item in list)
+            {
+                var name = item.Name;
+            }
+        }
+
+        [Fact]
+        public void TestNetworkInterfaces()
+        {
+            INetworkManager manager = this.CreateNetworkManager();
+            var list = manager.NetworkInterfaces.List();
+            foreach (var item in list)
+            {
+                var name = item.Name;
+            }
+        }
 
         public INetworkManager CreateNetworkManager()
         {

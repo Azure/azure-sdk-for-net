@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Management.V2.Network
     using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.V2.Resource;
     using Management.Network;
+    using System.Collections.ObjectModel;
 
     /// <summary>
     /// Implementation for {@link Network} and its create and update interfaces.
@@ -38,7 +39,12 @@ namespace Microsoft.Azure.Management.V2.Network
     {
         private VirtualNetworksOperations innerCollection;
         private Dictionary<string, ISubnet> subnets;
-        private NetworkImpl(string name, VirtualNetworkInner innerModel, VirtualNetworksOperations innerCollection, NetworkManager networkManager) :
+        private string name;
+        private VirtualNetworkInner inner;
+        private IVirtualNetworksOperations innerCollection1;
+        private NetworkManager myManager;
+
+        internal NetworkImpl(string name, VirtualNetworkInner innerModel, VirtualNetworksOperations innerCollection, NetworkManager networkManager) :
             base(name, innerModel, networkManager)
         {
             this.innerCollection = innerCollection;
@@ -137,8 +143,7 @@ namespace Microsoft.Azure.Management.V2.Network
         {
             get
             {
-                //TODO: need to make readonly
-                return this.Inner.AddressSpace.AddressPrefixes;
+                return new ReadOnlyCollection<string>(this.Inner.AddressSpace.AddressPrefixes);
             }
         }
 
@@ -146,16 +151,14 @@ namespace Microsoft.Azure.Management.V2.Network
         {
             get
             {
-                //TODO: need to make readonly
-                return this.Inner.DhcpOptions.DnsServers;
+                return new ReadOnlyCollection<string>(this.Inner.DhcpOptions.DnsServers);
             }
         }
         public IDictionary<string, ISubnet> Subnets
         {
             get
             {
-                //TODO: need to make readonly
-                return this.subnets;
+                return new ReadOnlyDictionary<string, ISubnet>(this.subnets);
             }
         }
 

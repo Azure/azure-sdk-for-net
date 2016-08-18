@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Management.V2.Network
     using System.Threading.Tasks;
     using Management.Network;
     using System;
+    using System.Collections.ObjectModel;
 
     /// <summary>
     /// Implementation for {@link NetworkInterface} and its create and update interfaces.
@@ -37,7 +38,7 @@ namespace Microsoft.Azure.Management.V2.Network
         IDefinition,
          NetworkInterface.Update.IUpdate
     {
-        private NetworkInterfacesOperations client;
+        private INetworkInterfacesOperations client;
         private string nicName;
         private NicIpConfigurationImpl nicPrimaryIpConfiguration;
         private IList<INicIpConfiguration> nicIpConfigurations;
@@ -48,7 +49,7 @@ namespace Microsoft.Azure.Management.V2.Network
         private INetworkSecurityGroup networkSecurityGroup;
         private ResourceNamer namer;
 
-        internal NetworkInterfaceImpl(string name, NetworkInterfaceInner innerModel, NetworkInterfacesOperations client, NetworkManager networkManager) :
+        internal NetworkInterfaceImpl(string name, NetworkInterfaceInner innerModel, INetworkInterfacesOperations client, NetworkManager networkManager) :
              base(name, innerModel, networkManager)
         {
 
@@ -186,6 +187,7 @@ namespace Microsoft.Azure.Management.V2.Network
         public NetworkInterfaceImpl WithIpForwarding()
         {
             this.Inner.EnableIPForwarding = true;
+
             return this;
         }
 
@@ -306,8 +308,7 @@ namespace Microsoft.Azure.Management.V2.Network
         }
         public IList<INicIpConfiguration> IpConfigurations()
         {
-            //TODO: make readonly collection
-            return this.nicIpConfigurations;
+            return new ReadOnlyCollection<INicIpConfiguration>(this.nicIpConfigurations);
         }
 
         public string NetworkSecurityGroupId
