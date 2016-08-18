@@ -42,6 +42,17 @@ namespace Microsoft.Azure.Management.Sql.Models
             set { this._auditActionsAndGroups = value; }
         }
         
+        private bool _isStorageSecondaryKeyInUse;
+        
+        /// <summary>
+        /// Optional. Indicating whether the storage secondary key is in use.
+        /// </summary>
+        public bool IsStorageSecondaryKeyInUse
+        {
+            get { return this._isStorageSecondaryKeyInUse; }
+            set { this._isStorageSecondaryKeyInUse = value; }
+        }
+        
         private int _retentionDays;
         
         /// <summary>
@@ -75,6 +86,17 @@ namespace Microsoft.Azure.Management.Sql.Models
         {
             get { return this._storageAccountAccessKey; }
             set { this._storageAccountAccessKey = value; }
+        }
+        
+        private string _storageAccountSubscriptionId;
+        
+        /// <summary>
+        /// Optional. Gets or sets the storage account subscription Id.
+        /// </summary>
+        public string StorageAccountSubscriptionId
+        {
+            get { return this._storageAccountSubscriptionId; }
+            set { this._storageAccountSubscriptionId = value; }
         }
         
         private string _storageEndpoint;
