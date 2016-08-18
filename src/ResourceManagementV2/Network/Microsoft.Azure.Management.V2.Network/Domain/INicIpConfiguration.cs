@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.V2.Network
     /// An IP configuration in a network interface.
     /// </summary>
     public interface INicIpConfiguration  :
-        IWrapper<NetworkInterfaceIPConfigurationInner>,
+        IWrapper<NetworkInterfaceIPConfiguration>,
         IChildResource
     {
         /// <summary>
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.V2.Network
         string PrivateIp { get; }
 
         /// <returns>the private IP allocation method (Dynamic, Static)</returns>
-        IPAllocationMethod PrivateIpAllocationMethod { get; }
+        string PrivateIpAllocationMethod { get; }
 
     }
 }

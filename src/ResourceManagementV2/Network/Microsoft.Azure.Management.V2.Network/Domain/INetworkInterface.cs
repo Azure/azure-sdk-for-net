@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.V2.Network
         IUpdatable<IUpdate>
     {
         /// <returns><tt>true</tt> if IP forwarding is enabled in this network interface</returns>
-        bool IsIpForwardingEnabled { get; }
+        bool? IsIpForwardingEnabled { get; }
 
         /// <returns>the MAC Address of the network interface</returns>
         string MacAddress { get; }
@@ -70,10 +70,10 @@ namespace Microsoft.Azure.Management.V2.Network
 
         /// <returns>the private IP allocation method (Dynamic, Static) of this network interface's</returns>
         /// <returns>primary IP configuration.</returns>
-        IPAllocationMethod PrimaryPrivateIpAllocationMethod { get; }
+        string PrimaryPrivateIpAllocationMethod { get; }
 
         /// <returns>the IP configurations of this network interface</returns>
-        IList<INicIpConfiguration> IpConfigurations { get; }
+        IList<INicIpConfiguration> IpConfigurations();
 
         /// <returns>the primary IP configuration of this network interface</returns>
         INicIpConfiguration PrimaryIpConfiguration { get; }

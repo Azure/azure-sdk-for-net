@@ -5,7 +5,5 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.Network.Models
 {
-    public class NetworkInterfaceIPConfigurationInner
-    {
-    }
+
 }
