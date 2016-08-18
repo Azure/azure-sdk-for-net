@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.V2.Network
     /// Implementation for {@link NicIpConfiguration} and its create and update interfaces.
     /// </summary>
     public class NicIpConfigurationImpl :
-        ChildResource<NetworkInterfaceIPConfiguration, NetworkInterfaceImpl>,
+        ChildResource<NetworkInterfaceIPConfigurationInner, NetworkInterfaceImpl>,
         INicIpConfiguration,
         NicIpConfiguration.Definition.IDefinition<NetworkInterface.Definition.IWithCreate>,
         NicIpConfiguration.UpdateDefinition.IUpdateDefinition<NetworkInterface.Update.IUpdate>,
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.V2.Network
         private bool removePrimaryPublicIPAssociation;
         private ILoadBalancer loadBalancerToAssociate;
 
-        internal NicIpConfigurationImpl(NetworkInterfaceIPConfiguration inner, NetworkInterfaceImpl parent, INetworkManager NetworkManager, bool isInCreateModel) :
+        internal NicIpConfigurationImpl(NetworkInterfaceIPConfigurationInner inner, NetworkInterfaceImpl parent, INetworkManager NetworkManager, bool isInCreateModel) :
             base(inner.Id, inner, parent)
         {
             this.isInCreateMode = isInCreateModel;
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.V2.Network
 
         internal static NicIpConfigurationImpl PrepareNicIpConfiguration(string name, NetworkInterfaceImpl parent, INetworkManager NetworkManager)
         {
-            NetworkInterfaceIPConfiguration ipConfigurationInner = new NetworkInterfaceIPConfiguration();
+            NetworkInterfaceIPConfigurationInner ipConfigurationInner = new NetworkInterfaceIPConfigurationInner();
             ipConfigurationInner.Name = name;
             return new NicIpConfigurationImpl(ipConfigurationInner,
                 parent,
@@ -222,7 +222,7 @@ namespace Microsoft.Azure.Management.V2.Network
 
         public NicIpConfigurationImpl WithBackendAddressPool(string name)
         {
-            foreach (BackendAddressPool pool in this.loadBalancerToAssociate.Inner.BackendAddressPools)
+            foreach (BackendAddressPoolInner pool in this.loadBalancerToAssociate.Inner.BackendAddressPools)
             {
                 if (pool.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
                 {
@@ -234,14 +234,14 @@ namespace Microsoft.Azure.Management.V2.Network
             return this;
         }
 
-        private IList<BackendAddressPool> EnsureBackendAddressPools
+        private IList<BackendAddressPoolInner> EnsureBackendAddressPools
         {
             get
             {
-                IList<BackendAddressPool> poolRefs = this.Inner.LoadBalancerBackendAddressPools;
+                IList<BackendAddressPoolInner> poolRefs = this.Inner.LoadBalancerBackendAddressPools;
                 if (poolRefs == null)
                 {
-                    poolRefs = new List<BackendAddressPool>();
+                    poolRefs = new List<BackendAddressPoolInner>();
                     this.Inner.LoadBalancerBackendAddressPools = poolRefs;
                 }
 

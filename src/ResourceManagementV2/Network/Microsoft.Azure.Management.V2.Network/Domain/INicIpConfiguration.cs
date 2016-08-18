@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.V2.Network
     /// An IP configuration in a network interface.
     /// </summary>
     public interface INicIpConfiguration  :
-        IWrapper<NetworkInterfaceIPConfiguration>,
+        IWrapper<NetworkInterfaceIPConfigurationInner>,
         IChildResource
     {
         /// <summary>

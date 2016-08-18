@@ -397,11 +397,11 @@ namespace Microsoft.Azure.Management.V2.Network
         {
             if (this.Inner.IpConfigurations == null)
             {
-                this.Inner.IpConfigurations = new List<NetworkInterfaceIPConfiguration>();
+                this.Inner.IpConfigurations = new List<NetworkInterfaceIPConfigurationInner>();
             }
 
             this.nicIpConfigurations = new List<INicIpConfiguration>();
-            foreach (NetworkInterfaceIPConfiguration ipConfig in this.Inner.IpConfigurations)
+            foreach (NetworkInterfaceIPConfigurationInner ipConfig in this.Inner.IpConfigurations)
             {
                 NicIpConfigurationImpl nicIpConfiguration = new NicIpConfigurationImpl(ipConfig,
                     this,
