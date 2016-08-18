@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.V2.Network
         private INetworkSecurityGroup networkSecurityGroup;
         private ResourceNamer namer;
 
-        private NetworkInterfaceImpl(string name, NetworkInterfaceInner innerModel, NetworkInterfacesOperations client, NetworkManager networkManager) :
+        internal NetworkInterfaceImpl(string name, NetworkInterfaceInner innerModel, NetworkInterfacesOperations client, NetworkManager networkManager) :
              base(name, innerModel, networkManager)
         {
 

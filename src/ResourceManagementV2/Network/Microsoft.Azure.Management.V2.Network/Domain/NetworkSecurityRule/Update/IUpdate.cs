@@ -152,7 +152,7 @@ namespace Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update
         /// </summary>
         /// <param name="protocol">protocol one of the supported protocols</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate WithProtocol (SecurityRuleProtocol protocol);
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate WithProtocol (string protocol);
 
         /// <summary>
         /// Makes this rule apply to any supported protocol.

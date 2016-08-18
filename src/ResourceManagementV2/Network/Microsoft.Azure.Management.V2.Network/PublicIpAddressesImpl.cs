@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.V2.Network
 
         void ISupportsDeleting.Delete(string id)
         {
-            ((ISupportsDeleting)this).DeleteAsync(ResourceUtils.GroupFromResourceId(id)).Wait();
+            ((ISupportsDeleting)this).DeleteAsync(id).Wait();
         }
 
         Task ISupportsDeleting.DeleteAsync(string id, CancellationToken cancellationToken)
@@ -102,7 +102,6 @@ namespace Microsoft.Azure.Management.V2.Network
         {
             var data = await this.InnerCollection.ListAsync(resourceGroupName);
             return WrapList(new PagedList<PublicIPAddressInner>(data));
-            throw new NotImplementedException();
         }
 
         void ISupportsDeletingByGroup.Delete(string groupName, string name)
