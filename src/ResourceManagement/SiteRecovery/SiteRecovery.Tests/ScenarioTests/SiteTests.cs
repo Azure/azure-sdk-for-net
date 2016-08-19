@@ -16,6 +16,7 @@
 using Microsoft.Azure.Management.SiteRecovery.Models;
 using Microsoft.Azure.Management.SiteRecovery;
 using Microsoft.Azure.Test;
+using Microsoft.Azure;
 using System.Net;
 using Xunit;
 using System.Collections.Generic;
@@ -28,7 +29,6 @@ namespace SiteRecovery.Tests
     {
         string siteName = "site3";
 
-        [Fact]
         public void CreateSite()
         {
             using (UndoContext context = UndoContext.Current)
@@ -38,7 +38,6 @@ namespace SiteRecovery.Tests
 
                 FabricCreationInput siteInput = new FabricCreationInput();
                 siteInput.Properties = new FabricCreationInputProperties();
-                siteInput.Properties.FabricType = "";
 
                 var site = client.Fabrics.Create(siteName, siteInput, RequestHeaders);
                 var response = client.Fabrics.Get(siteName, RequestHeaders);
@@ -47,7 +46,6 @@ namespace SiteRecovery.Tests
             }
         }
 
-        [Fact]
         public void DeleteSite()
         {
             using (UndoContext context = UndoContext.Current)
@@ -58,6 +56,42 @@ namespace SiteRecovery.Tests
                 var site = client.Fabrics.Delete(siteName, RequestHeaders);
                 Assert.True(site.StatusCode == HttpStatusCode.NoContent, "Site Name should have been deleted");
             }
+        }
+
+        public void CheckSiteConsistency()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler);
+
+                var responseServers = client.Fabrics.List(RequestHeaders);
+                Assert.True(
+                    responseServers.Fabrics.Count > 0,
+                    "Servers count cannot be less than one.");
+
+                List<Fabric> inconsistentFabrics = new List<Fabric>();
+                foreach (var fabric in responseServers.Fabrics)
+                {
+                    if (IsFabricInconsistent(fabric))
+                    {
+                        inconsistentFabrics.Add(fabric);
+                    }
+                }
+
+                foreach (var fabric in inconsistentFabrics)
+                {
+                    var fabricResponse = client.Fabrics.CheckConsistency(
+                        fabric.Name,
+                        RequestHeaders);
+                    Assert.Equal(OperationStatus.Succeeded, fabricResponse.Status);
+                }
+            }
+        }
+
+        private bool IsFabricInconsistent(Fabric fabric)
+        {
+            return fabric.Properties.BcdrState == "ConsistencyCheckPending";
         }
     }
 }

@@ -120,6 +120,17 @@ namespace Microsoft.Azure.Management.RecoveryServices
             get { return this._resourceGroup; }
         }
         
+        private IStampOperations _allocatedStamps;
+        
+        /// <summary>
+        /// Definition of allocated stamp operations for the Recovery Services
+        /// extension.
+        /// </summary>
+        public virtual IStampOperations AllocatedStamps
+        {
+            get { return this._allocatedStamps; }
+        }
+        
         private IVaultExtendedInfoOperations _vaultExtendedInfo;
         
         /// <summary>
@@ -160,6 +171,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         {
             this._replicationUsages = new ReplicationUsagesOperations(this);
             this._resourceGroup = new ResourceGroupsOperations(this);
+            this._allocatedStamps = new StampOperations(this);
             this._vaultExtendedInfo = new VaultExtendedInfoOperations(this);
             this._vaults = new VaultOperations(this);
             this._vaultUsage = new VaultUsageOperations(this);
@@ -249,6 +261,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
         {
             this._replicationUsages = new ReplicationUsagesOperations(this);
             this._resourceGroup = new ResourceGroupsOperations(this);
+            this._allocatedStamps = new StampOperations(this);
             this._vaultExtendedInfo = new VaultExtendedInfoOperations(this);
             this._vaults = new VaultOperations(this);
             this._vaultUsage = new VaultUsageOperations(this);

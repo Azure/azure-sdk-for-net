@@ -97,6 +97,15 @@ namespace Microsoft.Azure.Management.RecoveryServices
         }
         
         /// <summary>
+        /// Definition of allocated stamp operations for the Recovery Services
+        /// extension.
+        /// </summary>
+        IStampOperations AllocatedStamps
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Definition of vault extended info operations for the Recovery
         /// Services extension.
         /// </summary>
