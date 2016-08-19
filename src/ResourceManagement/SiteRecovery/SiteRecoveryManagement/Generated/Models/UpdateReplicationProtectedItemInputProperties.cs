@@ -44,6 +44,18 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._enableRDPOnTargetOption = value; }
         }
         
+        private string _licenseType;
+        
+        /// <summary>
+        /// Optional. Gets or sets License Type of the VM to be used for HUB
+        /// https://azure.microsoft.com/en-in/pricing/hybrid-use-benefit/.
+        /// </summary>
+        public string LicenseType
+        {
+            get { return this._licenseType; }
+            set { this._licenseType = value; }
+        }
+        
         private string _recoveryAvailabilitySetId;
         
         /// <summary>
