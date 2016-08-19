@@ -3620,6 +3620,11 @@ namespace Microsoft.Azure.Management.SiteRecovery
                         }
                     }
                     
+                    if (input.Properties.LicenseType != null)
+                    {
+                        propertiesValue["licenseType"] = input.Properties.LicenseType;
+                    }
+                    
                     if (input.Properties.RecoveryCloudServiceId != null)
                     {
                         propertiesValue["recoveryCloudServiceId"] = input.Properties.RecoveryCloudServiceId;
@@ -5195,6 +5200,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageAzureV2ProviderSpecificSettingsInstance.DiscoveryType = discoveryTypeInstance;
                                         }
                                         
+                                        JToken licenseTypeValue = providerSpecificDetailsValue["licenseType"];
+                                        if (licenseTypeValue != null && licenseTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string licenseTypeInstance = ((string)licenseTypeValue);
+                                            inMageAzureV2ProviderSpecificSettingsInstance.LicenseType = licenseTypeInstance;
+                                        }
+                                        
                                         JToken enableRDPOnTargetOptionValue = providerSpecificDetailsValue["enableRDPOnTargetOption"];
                                         if (enableRDPOnTargetOptionValue != null && enableRDPOnTargetOptionValue.Type != JTokenType.Null)
                                         {
@@ -5933,6 +5945,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             int sourceVmCPUCountInstance3 = ((int)sourceVmCPUCountValue3);
                                             hyperVReplicaAzureReplicationDetailsInstance.SourceVmCPUCount = sourceVmCPUCountInstance3;
+                                        }
+                                        
+                                        JToken licenseTypeValue2 = providerSpecificDetailsValue["licenseType"];
+                                        if (licenseTypeValue2 != null && licenseTypeValue2.Type != JTokenType.Null)
+                                        {
+                                            string licenseTypeInstance2 = ((string)licenseTypeValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.LicenseType = licenseTypeInstance2;
                                         }
                                         
                                         JToken enableRDPOnTargetOptionValue2 = providerSpecificDetailsValue["enableRDPOnTargetOption"];
@@ -7275,6 +7294,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageAzureV2ProviderSpecificSettingsInstance.DiscoveryType = discoveryTypeInstance;
                                         }
                                         
+                                        JToken licenseTypeValue = providerSpecificDetailsValue["licenseType"];
+                                        if (licenseTypeValue != null && licenseTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string licenseTypeInstance = ((string)licenseTypeValue);
+                                            inMageAzureV2ProviderSpecificSettingsInstance.LicenseType = licenseTypeInstance;
+                                        }
+                                        
                                         JToken enableRDPOnTargetOptionValue = providerSpecificDetailsValue["enableRDPOnTargetOption"];
                                         if (enableRDPOnTargetOptionValue != null && enableRDPOnTargetOptionValue.Type != JTokenType.Null)
                                         {
@@ -8013,6 +8039,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             int sourceVmCPUCountInstance3 = ((int)sourceVmCPUCountValue3);
                                             hyperVReplicaAzureReplicationDetailsInstance.SourceVmCPUCount = sourceVmCPUCountInstance3;
+                                        }
+                                        
+                                        JToken licenseTypeValue2 = providerSpecificDetailsValue["licenseType"];
+                                        if (licenseTypeValue2 != null && licenseTypeValue2.Type != JTokenType.Null)
+                                        {
+                                            string licenseTypeInstance2 = ((string)licenseTypeValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.LicenseType = licenseTypeInstance2;
                                         }
                                         
                                         JToken enableRDPOnTargetOptionValue2 = providerSpecificDetailsValue["enableRDPOnTargetOption"];
@@ -9414,6 +9447,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageAzureV2ProviderSpecificSettingsInstance.DiscoveryType = discoveryTypeInstance;
                                         }
                                         
+                                        JToken licenseTypeValue = providerSpecificDetailsValue["licenseType"];
+                                        if (licenseTypeValue != null && licenseTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string licenseTypeInstance = ((string)licenseTypeValue);
+                                            inMageAzureV2ProviderSpecificSettingsInstance.LicenseType = licenseTypeInstance;
+                                        }
+                                        
                                         JToken enableRDPOnTargetOptionValue = providerSpecificDetailsValue["enableRDPOnTargetOption"];
                                         if (enableRDPOnTargetOptionValue != null && enableRDPOnTargetOptionValue.Type != JTokenType.Null)
                                         {
@@ -10152,6 +10192,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             int sourceVmCPUCountInstance3 = ((int)sourceVmCPUCountValue3);
                                             hyperVReplicaAzureReplicationDetailsInstance.SourceVmCPUCount = sourceVmCPUCountInstance3;
+                                        }
+                                        
+                                        JToken licenseTypeValue2 = providerSpecificDetailsValue["licenseType"];
+                                        if (licenseTypeValue2 != null && licenseTypeValue2.Type != JTokenType.Null)
+                                        {
+                                            string licenseTypeInstance2 = ((string)licenseTypeValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.LicenseType = licenseTypeInstance2;
                                         }
                                         
                                         JToken enableRDPOnTargetOptionValue2 = providerSpecificDetailsValue["enableRDPOnTargetOption"];
@@ -11784,6 +11831,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageAzureV2ProviderSpecificSettingsInstance.DiscoveryType = discoveryTypeInstance;
                                         }
                                         
+                                        JToken licenseTypeValue = providerSpecificDetailsValue["licenseType"];
+                                        if (licenseTypeValue != null && licenseTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string licenseTypeInstance = ((string)licenseTypeValue);
+                                            inMageAzureV2ProviderSpecificSettingsInstance.LicenseType = licenseTypeInstance;
+                                        }
+                                        
                                         JToken enableRDPOnTargetOptionValue = providerSpecificDetailsValue["enableRDPOnTargetOption"];
                                         if (enableRDPOnTargetOptionValue != null && enableRDPOnTargetOptionValue.Type != JTokenType.Null)
                                         {
@@ -12522,6 +12576,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             int sourceVmCPUCountInstance3 = ((int)sourceVmCPUCountValue3);
                                             hyperVReplicaAzureReplicationDetailsInstance.SourceVmCPUCount = sourceVmCPUCountInstance3;
+                                        }
+                                        
+                                        JToken licenseTypeValue2 = providerSpecificDetailsValue["licenseType"];
+                                        if (licenseTypeValue2 != null && licenseTypeValue2.Type != JTokenType.Null)
+                                        {
+                                            string licenseTypeInstance2 = ((string)licenseTypeValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.LicenseType = licenseTypeInstance2;
                                         }
                                         
                                         JToken enableRDPOnTargetOptionValue2 = providerSpecificDetailsValue["enableRDPOnTargetOption"];
@@ -13923,6 +13984,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageAzureV2ProviderSpecificSettingsInstance.DiscoveryType = discoveryTypeInstance;
                                         }
                                         
+                                        JToken licenseTypeValue = providerSpecificDetailsValue["licenseType"];
+                                        if (licenseTypeValue != null && licenseTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string licenseTypeInstance = ((string)licenseTypeValue);
+                                            inMageAzureV2ProviderSpecificSettingsInstance.LicenseType = licenseTypeInstance;
+                                        }
+                                        
                                         JToken enableRDPOnTargetOptionValue = providerSpecificDetailsValue["enableRDPOnTargetOption"];
                                         if (enableRDPOnTargetOptionValue != null && enableRDPOnTargetOptionValue.Type != JTokenType.Null)
                                         {
@@ -14661,6 +14729,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             int sourceVmCPUCountInstance3 = ((int)sourceVmCPUCountValue3);
                                             hyperVReplicaAzureReplicationDetailsInstance.SourceVmCPUCount = sourceVmCPUCountInstance3;
+                                        }
+                                        
+                                        JToken licenseTypeValue2 = providerSpecificDetailsValue["licenseType"];
+                                        if (licenseTypeValue2 != null && licenseTypeValue2.Type != JTokenType.Null)
+                                        {
+                                            string licenseTypeInstance2 = ((string)licenseTypeValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.LicenseType = licenseTypeInstance2;
                                         }
                                         
                                         JToken enableRDPOnTargetOptionValue2 = providerSpecificDetailsValue["enableRDPOnTargetOption"];
@@ -16293,6 +16368,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageAzureV2ProviderSpecificSettingsInstance.DiscoveryType = discoveryTypeInstance;
                                         }
                                         
+                                        JToken licenseTypeValue = providerSpecificDetailsValue["licenseType"];
+                                        if (licenseTypeValue != null && licenseTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string licenseTypeInstance = ((string)licenseTypeValue);
+                                            inMageAzureV2ProviderSpecificSettingsInstance.LicenseType = licenseTypeInstance;
+                                        }
+                                        
                                         JToken enableRDPOnTargetOptionValue = providerSpecificDetailsValue["enableRDPOnTargetOption"];
                                         if (enableRDPOnTargetOptionValue != null && enableRDPOnTargetOptionValue.Type != JTokenType.Null)
                                         {
@@ -17031,6 +17113,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             int sourceVmCPUCountInstance3 = ((int)sourceVmCPUCountValue3);
                                             hyperVReplicaAzureReplicationDetailsInstance.SourceVmCPUCount = sourceVmCPUCountInstance3;
+                                        }
+                                        
+                                        JToken licenseTypeValue2 = providerSpecificDetailsValue["licenseType"];
+                                        if (licenseTypeValue2 != null && licenseTypeValue2.Type != JTokenType.Null)
+                                        {
+                                            string licenseTypeInstance2 = ((string)licenseTypeValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.LicenseType = licenseTypeInstance2;
                                         }
                                         
                                         JToken enableRDPOnTargetOptionValue2 = providerSpecificDetailsValue["enableRDPOnTargetOption"];
@@ -18432,6 +18521,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageAzureV2ProviderSpecificSettingsInstance.DiscoveryType = discoveryTypeInstance;
                                         }
                                         
+                                        JToken licenseTypeValue = providerSpecificDetailsValue["licenseType"];
+                                        if (licenseTypeValue != null && licenseTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string licenseTypeInstance = ((string)licenseTypeValue);
+                                            inMageAzureV2ProviderSpecificSettingsInstance.LicenseType = licenseTypeInstance;
+                                        }
+                                        
                                         JToken enableRDPOnTargetOptionValue = providerSpecificDetailsValue["enableRDPOnTargetOption"];
                                         if (enableRDPOnTargetOptionValue != null && enableRDPOnTargetOptionValue.Type != JTokenType.Null)
                                         {
@@ -19170,6 +19266,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             int sourceVmCPUCountInstance3 = ((int)sourceVmCPUCountValue3);
                                             hyperVReplicaAzureReplicationDetailsInstance.SourceVmCPUCount = sourceVmCPUCountInstance3;
+                                        }
+                                        
+                                        JToken licenseTypeValue2 = providerSpecificDetailsValue["licenseType"];
+                                        if (licenseTypeValue2 != null && licenseTypeValue2.Type != JTokenType.Null)
+                                        {
+                                            string licenseTypeInstance2 = ((string)licenseTypeValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.LicenseType = licenseTypeInstance2;
                                         }
                                         
                                         JToken enableRDPOnTargetOptionValue2 = providerSpecificDetailsValue["enableRDPOnTargetOption"];
@@ -20571,6 +20674,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageAzureV2ProviderSpecificSettingsInstance.DiscoveryType = discoveryTypeInstance;
                                         }
                                         
+                                        JToken licenseTypeValue = providerSpecificDetailsValue["licenseType"];
+                                        if (licenseTypeValue != null && licenseTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string licenseTypeInstance = ((string)licenseTypeValue);
+                                            inMageAzureV2ProviderSpecificSettingsInstance.LicenseType = licenseTypeInstance;
+                                        }
+                                        
                                         JToken enableRDPOnTargetOptionValue = providerSpecificDetailsValue["enableRDPOnTargetOption"];
                                         if (enableRDPOnTargetOptionValue != null && enableRDPOnTargetOptionValue.Type != JTokenType.Null)
                                         {
@@ -21309,6 +21419,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             int sourceVmCPUCountInstance3 = ((int)sourceVmCPUCountValue3);
                                             hyperVReplicaAzureReplicationDetailsInstance.SourceVmCPUCount = sourceVmCPUCountInstance3;
+                                        }
+                                        
+                                        JToken licenseTypeValue2 = providerSpecificDetailsValue["licenseType"];
+                                        if (licenseTypeValue2 != null && licenseTypeValue2.Type != JTokenType.Null)
+                                        {
+                                            string licenseTypeInstance2 = ((string)licenseTypeValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.LicenseType = licenseTypeInstance2;
                                         }
                                         
                                         JToken enableRDPOnTargetOptionValue2 = providerSpecificDetailsValue["enableRDPOnTargetOption"];
@@ -22710,6 +22827,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageAzureV2ProviderSpecificSettingsInstance.DiscoveryType = discoveryTypeInstance;
                                         }
                                         
+                                        JToken licenseTypeValue = providerSpecificDetailsValue["licenseType"];
+                                        if (licenseTypeValue != null && licenseTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string licenseTypeInstance = ((string)licenseTypeValue);
+                                            inMageAzureV2ProviderSpecificSettingsInstance.LicenseType = licenseTypeInstance;
+                                        }
+                                        
                                         JToken enableRDPOnTargetOptionValue = providerSpecificDetailsValue["enableRDPOnTargetOption"];
                                         if (enableRDPOnTargetOptionValue != null && enableRDPOnTargetOptionValue.Type != JTokenType.Null)
                                         {
@@ -23448,6 +23572,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             int sourceVmCPUCountInstance3 = ((int)sourceVmCPUCountValue3);
                                             hyperVReplicaAzureReplicationDetailsInstance.SourceVmCPUCount = sourceVmCPUCountInstance3;
+                                        }
+                                        
+                                        JToken licenseTypeValue2 = providerSpecificDetailsValue["licenseType"];
+                                        if (licenseTypeValue2 != null && licenseTypeValue2.Type != JTokenType.Null)
+                                        {
+                                            string licenseTypeInstance2 = ((string)licenseTypeValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.LicenseType = licenseTypeInstance2;
                                         }
                                         
                                         JToken enableRDPOnTargetOptionValue2 = providerSpecificDetailsValue["enableRDPOnTargetOption"];
@@ -24849,6 +24980,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageAzureV2ProviderSpecificSettingsInstance.DiscoveryType = discoveryTypeInstance;
                                         }
                                         
+                                        JToken licenseTypeValue = providerSpecificDetailsValue["licenseType"];
+                                        if (licenseTypeValue != null && licenseTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string licenseTypeInstance = ((string)licenseTypeValue);
+                                            inMageAzureV2ProviderSpecificSettingsInstance.LicenseType = licenseTypeInstance;
+                                        }
+                                        
                                         JToken enableRDPOnTargetOptionValue = providerSpecificDetailsValue["enableRDPOnTargetOption"];
                                         if (enableRDPOnTargetOptionValue != null && enableRDPOnTargetOptionValue.Type != JTokenType.Null)
                                         {
@@ -25587,6 +25725,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             int sourceVmCPUCountInstance3 = ((int)sourceVmCPUCountValue3);
                                             hyperVReplicaAzureReplicationDetailsInstance.SourceVmCPUCount = sourceVmCPUCountInstance3;
+                                        }
+                                        
+                                        JToken licenseTypeValue2 = providerSpecificDetailsValue["licenseType"];
+                                        if (licenseTypeValue2 != null && licenseTypeValue2.Type != JTokenType.Null)
+                                        {
+                                            string licenseTypeInstance2 = ((string)licenseTypeValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.LicenseType = licenseTypeInstance2;
                                         }
                                         
                                         JToken enableRDPOnTargetOptionValue2 = providerSpecificDetailsValue["enableRDPOnTargetOption"];
@@ -26988,6 +27133,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMageAzureV2ProviderSpecificSettingsInstance.DiscoveryType = discoveryTypeInstance;
                                         }
                                         
+                                        JToken licenseTypeValue = providerSpecificDetailsValue["licenseType"];
+                                        if (licenseTypeValue != null && licenseTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string licenseTypeInstance = ((string)licenseTypeValue);
+                                            inMageAzureV2ProviderSpecificSettingsInstance.LicenseType = licenseTypeInstance;
+                                        }
+                                        
                                         JToken enableRDPOnTargetOptionValue = providerSpecificDetailsValue["enableRDPOnTargetOption"];
                                         if (enableRDPOnTargetOptionValue != null && enableRDPOnTargetOptionValue.Type != JTokenType.Null)
                                         {
@@ -27726,6 +27878,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             int sourceVmCPUCountInstance3 = ((int)sourceVmCPUCountValue3);
                                             hyperVReplicaAzureReplicationDetailsInstance.SourceVmCPUCount = sourceVmCPUCountInstance3;
+                                        }
+                                        
+                                        JToken licenseTypeValue2 = providerSpecificDetailsValue["licenseType"];
+                                        if (licenseTypeValue2 != null && licenseTypeValue2.Type != JTokenType.Null)
+                                        {
+                                            string licenseTypeInstance2 = ((string)licenseTypeValue2);
+                                            hyperVReplicaAzureReplicationDetailsInstance.LicenseType = licenseTypeInstance2;
                                         }
                                         
                                         JToken enableRDPOnTargetOptionValue2 = providerSpecificDetailsValue["enableRDPOnTargetOption"];
@@ -29176,6 +29335,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     inMageAzureV2ProviderSpecificSettingsInstance.DiscoveryType = discoveryTypeInstance;
                                                 }
                                                 
+                                                JToken licenseTypeValue = providerSpecificDetailsValue["licenseType"];
+                                                if (licenseTypeValue != null && licenseTypeValue.Type != JTokenType.Null)
+                                                {
+                                                    string licenseTypeInstance = ((string)licenseTypeValue);
+                                                    inMageAzureV2ProviderSpecificSettingsInstance.LicenseType = licenseTypeInstance;
+                                                }
+                                                
                                                 JToken enableRDPOnTargetOptionValue = providerSpecificDetailsValue["enableRDPOnTargetOption"];
                                                 if (enableRDPOnTargetOptionValue != null && enableRDPOnTargetOptionValue.Type != JTokenType.Null)
                                                 {
@@ -29914,6 +30080,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     int sourceVmCPUCountInstance3 = ((int)sourceVmCPUCountValue3);
                                                     hyperVReplicaAzureReplicationDetailsInstance.SourceVmCPUCount = sourceVmCPUCountInstance3;
+                                                }
+                                                
+                                                JToken licenseTypeValue2 = providerSpecificDetailsValue["licenseType"];
+                                                if (licenseTypeValue2 != null && licenseTypeValue2.Type != JTokenType.Null)
+                                                {
+                                                    string licenseTypeInstance2 = ((string)licenseTypeValue2);
+                                                    hyperVReplicaAzureReplicationDetailsInstance.LicenseType = licenseTypeInstance2;
                                                 }
                                                 
                                                 JToken enableRDPOnTargetOptionValue2 = providerSpecificDetailsValue["enableRDPOnTargetOption"];
@@ -31315,6 +31488,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     inMageAzureV2ProviderSpecificSettingsInstance.DiscoveryType = discoveryTypeInstance;
                                                 }
                                                 
+                                                JToken licenseTypeValue = providerSpecificDetailsValue["licenseType"];
+                                                if (licenseTypeValue != null && licenseTypeValue.Type != JTokenType.Null)
+                                                {
+                                                    string licenseTypeInstance = ((string)licenseTypeValue);
+                                                    inMageAzureV2ProviderSpecificSettingsInstance.LicenseType = licenseTypeInstance;
+                                                }
+                                                
                                                 JToken enableRDPOnTargetOptionValue = providerSpecificDetailsValue["enableRDPOnTargetOption"];
                                                 if (enableRDPOnTargetOptionValue != null && enableRDPOnTargetOptionValue.Type != JTokenType.Null)
                                                 {
@@ -32053,6 +32233,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     int sourceVmCPUCountInstance3 = ((int)sourceVmCPUCountValue3);
                                                     hyperVReplicaAzureReplicationDetailsInstance.SourceVmCPUCount = sourceVmCPUCountInstance3;
+                                                }
+                                                
+                                                JToken licenseTypeValue2 = providerSpecificDetailsValue["licenseType"];
+                                                if (licenseTypeValue2 != null && licenseTypeValue2.Type != JTokenType.Null)
+                                                {
+                                                    string licenseTypeInstance2 = ((string)licenseTypeValue2);
+                                                    hyperVReplicaAzureReplicationDetailsInstance.LicenseType = licenseTypeInstance2;
                                                 }
                                                 
                                                 JToken enableRDPOnTargetOptionValue2 = providerSpecificDetailsValue["enableRDPOnTargetOption"];
@@ -33412,6 +33599,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     inMageAzureV2ProviderSpecificSettingsInstance.DiscoveryType = discoveryTypeInstance;
                                                 }
                                                 
+                                                JToken licenseTypeValue = providerSpecificDetailsValue["licenseType"];
+                                                if (licenseTypeValue != null && licenseTypeValue.Type != JTokenType.Null)
+                                                {
+                                                    string licenseTypeInstance = ((string)licenseTypeValue);
+                                                    inMageAzureV2ProviderSpecificSettingsInstance.LicenseType = licenseTypeInstance;
+                                                }
+                                                
                                                 JToken enableRDPOnTargetOptionValue = providerSpecificDetailsValue["enableRDPOnTargetOption"];
                                                 if (enableRDPOnTargetOptionValue != null && enableRDPOnTargetOptionValue.Type != JTokenType.Null)
                                                 {
@@ -34150,6 +34344,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                 {
                                                     int sourceVmCPUCountInstance3 = ((int)sourceVmCPUCountValue3);
                                                     hyperVReplicaAzureReplicationDetailsInstance.SourceVmCPUCount = sourceVmCPUCountInstance3;
+                                                }
+                                                
+                                                JToken licenseTypeValue2 = providerSpecificDetailsValue["licenseType"];
+                                                if (licenseTypeValue2 != null && licenseTypeValue2.Type != JTokenType.Null)
+                                                {
+                                                    string licenseTypeInstance2 = ((string)licenseTypeValue2);
+                                                    hyperVReplicaAzureReplicationDetailsInstance.LicenseType = licenseTypeInstance2;
                                                 }
                                                 
                                                 JToken enableRDPOnTargetOptionValue2 = providerSpecificDetailsValue["enableRDPOnTargetOption"];
