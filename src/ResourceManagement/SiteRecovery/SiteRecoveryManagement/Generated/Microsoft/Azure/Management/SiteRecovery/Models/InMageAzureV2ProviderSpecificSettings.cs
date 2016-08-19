@@ -68,8 +68,8 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private string _discoveryType;
         
         /// <summary>
-        /// Optional. Gets or sets a value inidicating the discovery type of
-        /// the machine.Value can be vCenter or physical.
+        /// Optional. Gets or sets a value indicating the discovery type of the
+        /// machine.Value can be vCenter or physical.
         /// </summary>
         public string DiscoveryType
         {
@@ -86,6 +86,18 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         {
             get { return this._diskResized; }
             set { this._diskResized = value; }
+        }
+        
+        private string _enableRDPOnTargetOption;
+        
+        /// <summary>
+        /// Optional. Gets or sets the option to enable RDP on target vm after
+        /// failover.Value can be Never, OnlyOnTestFailover or Always.
+        /// </summary>
+        public string EnableRDPOnTargetOption
+        {
+            get { return this._enableRDPOnTargetOption; }
+            set { this._enableRDPOnTargetOption = value; }
         }
         
         private string _infrastructureVmId;
@@ -233,6 +245,19 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._protectionStage = value; }
         }
         
+        private string _recoveryAzureLogStorageAccountId;
+        
+        /// <summary>
+        /// Optional. Gets or sets the ARM id of the log storage acount used
+        /// for replication.This will be set to null if no log storage account
+        /// was provided during enableprotection.
+        /// </summary>
+        public string RecoveryAzureLogStorageAccountId
+        {
+            get { return this._recoveryAzureLogStorageAccountId; }
+            set { this._recoveryAzureLogStorageAccountId = value; }
+        }
+        
         private string _recoveryAzureStorageAccount;
         
         /// <summary>
@@ -374,6 +399,28 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         {
             get { return this._vMNics; }
             set { this._vMNics = value; }
+        }
+        
+        private string _vmProtectionState;
+        
+        /// <summary>
+        /// Optional. Gets or sets the protection status for the VM.
+        /// </summary>
+        public string VmProtectionState
+        {
+            get { return this._vmProtectionState; }
+            set { this._vmProtectionState = value; }
+        }
+        
+        private string _vmProtectionStateDescription;
+        
+        /// <summary>
+        /// Optional. Gets or sets the protection state description for the VM.
+        /// </summary>
+        public string VmProtectionStateDescription
+        {
+            get { return this._vmProtectionStateDescription; }
+            set { this._vmProtectionStateDescription = value; }
         }
         
         /// <summary>

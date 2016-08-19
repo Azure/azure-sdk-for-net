@@ -41,17 +41,6 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._customDetails = value; }
         }
         
-        private string _fabricType;
-        
-        /// <summary>
-        /// Optional. Type of fabric.
-        /// </summary>
-        public string FabricType
-        {
-            get { return this._fabricType; }
-            set { this._fabricType = value; }
-        }
-        
         /// <summary>
         /// Initializes a new instance of the FabricCreationInputProperties
         /// class.

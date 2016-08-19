@@ -428,6 +428,52 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     }
                                 }
                                 
+                                JToken eventSpecificDetailsValue = propertiesValue["eventSpecificDetails"];
+                                if (eventSpecificDetailsValue != null && eventSpecificDetailsValue.Type != JTokenType.Null)
+                                {
+                                    string typeName2 = ((string)eventSpecificDetailsValue["instanceType"]);
+                                    if (typeName2 == "JobStatus")
+                                    {
+                                        JobStatusEventDetails jobStatusEventDetailsInstance = new JobStatusEventDetails();
+                                        
+                                        JToken jobIdValue = eventSpecificDetailsValue["jobId"];
+                                        if (jobIdValue != null && jobIdValue.Type != JTokenType.Null)
+                                        {
+                                            string jobIdInstance = ((string)jobIdValue);
+                                            jobStatusEventDetailsInstance.JobId = jobIdInstance;
+                                        }
+                                        
+                                        JToken jobFriendlyNameValue = eventSpecificDetailsValue["jobFriendlyName"];
+                                        if (jobFriendlyNameValue != null && jobFriendlyNameValue.Type != JTokenType.Null)
+                                        {
+                                            string jobFriendlyNameInstance = ((string)jobFriendlyNameValue);
+                                            jobStatusEventDetailsInstance.JobFriendlyName = jobFriendlyNameInstance;
+                                        }
+                                        
+                                        JToken jobStatusValue = eventSpecificDetailsValue["jobStatus"];
+                                        if (jobStatusValue != null && jobStatusValue.Type != JTokenType.Null)
+                                        {
+                                            string jobStatusInstance = ((string)jobStatusValue);
+                                            jobStatusEventDetailsInstance.JobStatus = jobStatusInstance;
+                                        }
+                                        
+                                        JToken affectedObjectTypeValue = eventSpecificDetailsValue["affectedObjectType"];
+                                        if (affectedObjectTypeValue != null && affectedObjectTypeValue.Type != JTokenType.Null)
+                                        {
+                                            string affectedObjectTypeInstance = ((string)affectedObjectTypeValue);
+                                            jobStatusEventDetailsInstance.AffectedObjectType = affectedObjectTypeInstance;
+                                        }
+                                        
+                                        JToken instanceTypeValue5 = eventSpecificDetailsValue["instanceType"];
+                                        if (instanceTypeValue5 != null && instanceTypeValue5.Type != JTokenType.Null)
+                                        {
+                                            string instanceTypeInstance5 = ((string)instanceTypeValue5);
+                                            jobStatusEventDetailsInstance.InstanceType = instanceTypeInstance5;
+                                        }
+                                        propertiesInstance.EventSpecificDetails = jobStatusEventDetailsInstance;
+                                    }
+                                }
+                                
                                 JToken healthErrorsArray = propertiesValue["healthErrors"];
                                 if (healthErrorsArray != null && healthErrorsArray.Type != JTokenType.Null)
                                 {
@@ -983,6 +1029,52 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     inMageAzureV2EventDetailsInstance.InstanceType = instanceTypeInstance4;
                                                 }
                                                 propertiesInstance.ProviderDetails = inMageAzureV2EventDetailsInstance;
+                                            }
+                                        }
+                                        
+                                        JToken eventSpecificDetailsValue = propertiesValue["eventSpecificDetails"];
+                                        if (eventSpecificDetailsValue != null && eventSpecificDetailsValue.Type != JTokenType.Null)
+                                        {
+                                            string typeName2 = ((string)eventSpecificDetailsValue["instanceType"]);
+                                            if (typeName2 == "JobStatus")
+                                            {
+                                                JobStatusEventDetails jobStatusEventDetailsInstance = new JobStatusEventDetails();
+                                                
+                                                JToken jobIdValue = eventSpecificDetailsValue["jobId"];
+                                                if (jobIdValue != null && jobIdValue.Type != JTokenType.Null)
+                                                {
+                                                    string jobIdInstance = ((string)jobIdValue);
+                                                    jobStatusEventDetailsInstance.JobId = jobIdInstance;
+                                                }
+                                                
+                                                JToken jobFriendlyNameValue = eventSpecificDetailsValue["jobFriendlyName"];
+                                                if (jobFriendlyNameValue != null && jobFriendlyNameValue.Type != JTokenType.Null)
+                                                {
+                                                    string jobFriendlyNameInstance = ((string)jobFriendlyNameValue);
+                                                    jobStatusEventDetailsInstance.JobFriendlyName = jobFriendlyNameInstance;
+                                                }
+                                                
+                                                JToken jobStatusValue = eventSpecificDetailsValue["jobStatus"];
+                                                if (jobStatusValue != null && jobStatusValue.Type != JTokenType.Null)
+                                                {
+                                                    string jobStatusInstance = ((string)jobStatusValue);
+                                                    jobStatusEventDetailsInstance.JobStatus = jobStatusInstance;
+                                                }
+                                                
+                                                JToken affectedObjectTypeValue = eventSpecificDetailsValue["affectedObjectType"];
+                                                if (affectedObjectTypeValue != null && affectedObjectTypeValue.Type != JTokenType.Null)
+                                                {
+                                                    string affectedObjectTypeInstance = ((string)affectedObjectTypeValue);
+                                                    jobStatusEventDetailsInstance.AffectedObjectType = affectedObjectTypeInstance;
+                                                }
+                                                
+                                                JToken instanceTypeValue5 = eventSpecificDetailsValue["instanceType"];
+                                                if (instanceTypeValue5 != null && instanceTypeValue5.Type != JTokenType.Null)
+                                                {
+                                                    string instanceTypeInstance5 = ((string)instanceTypeValue5);
+                                                    jobStatusEventDetailsInstance.InstanceType = instanceTypeInstance5;
+                                                }
+                                                propertiesInstance.EventSpecificDetails = jobStatusEventDetailsInstance;
                                             }
                                         }
                                         

@@ -31,6 +31,52 @@ namespace Microsoft.Azure.Management.SiteRecovery
     public static partial class FabricOperationsExtensions
     {
         /// <summary>
+        /// Checks consistency of a fabric.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IFabricOperations.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Required. Fabric Name.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static LongRunningOperationResponse BeginCheckConsistency(this IFabricOperations operations, string fabricName, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IFabricOperations)s).BeginCheckConsistencyAsync(fabricName, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Checks consistency of a fabric.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IFabricOperations.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Required. Fabric Name.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<LongRunningOperationResponse> BeginCheckConsistencyAsync(this IFabricOperations operations, string fabricName, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.BeginCheckConsistencyAsync(fabricName, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Creates a Fabric
         /// </summary>
         /// <param name='operations'>
@@ -325,6 +371,52 @@ namespace Microsoft.Azure.Management.SiteRecovery
         }
         
         /// <summary>
+        /// Checks consistency of a fabric.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IFabricOperations.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Required. Fabric Name.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static LongRunningOperationResponse CheckConsistency(this IFabricOperations operations, string fabricName, CustomRequestHeaders customRequestHeaders)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IFabricOperations)s).CheckConsistencyAsync(fabricName, customRequestHeaders);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Checks consistency of a fabric.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IFabricOperations.
+        /// </param>
+        /// <param name='fabricName'>
+        /// Required. Fabric Name.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Optional. Request header parameters.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<LongRunningOperationResponse> CheckConsistencyAsync(this IFabricOperations operations, string fabricName, CustomRequestHeaders customRequestHeaders)
+        {
+            return operations.CheckConsistencyAsync(fabricName, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Creates a fabric
         /// </summary>
         /// <param name='operations'>
@@ -518,6 +610,52 @@ namespace Microsoft.Azure.Management.SiteRecovery
         public static Task<FabricResponse> GetAsync(this IFabricOperations operations, string fabricName, CustomRequestHeaders customRequestHeaders)
         {
             return operations.GetAsync(fabricName, customRequestHeaders, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IFabricOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static LongRunningOperationResponse GetCheckConsistencyStatus(this IFabricOperations operations, string operationStatusLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IFabricOperations)s).GetCheckConsistencyStatusAsync(operationStatusLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.SiteRecovery.IFabricOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Location value returned by the Begin operation.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        public static Task<LongRunningOperationResponse> GetCheckConsistencyStatusAsync(this IFabricOperations operations, string operationStatusLink)
+        {
+            return operations.GetCheckConsistencyStatusAsync(operationStatusLink, CancellationToken.None);
         }
         
         /// <summary>
