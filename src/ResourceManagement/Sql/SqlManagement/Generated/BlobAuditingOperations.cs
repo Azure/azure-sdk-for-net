@@ -219,6 +219,13 @@ namespace Microsoft.Azure.Management.Sql
                     }
                 }
                 
+                if (parameters.Properties.StorageAccountSubscriptionId != null)
+                {
+                    propertiesValue["storageAccountSubscriptionId"] = parameters.Properties.StorageAccountSubscriptionId;
+                }
+                
+                propertiesValue["isStorageSecondaryKeyInUse"] = parameters.Properties.IsStorageSecondaryKeyInUse;
+                
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
@@ -423,6 +430,13 @@ namespace Microsoft.Azure.Management.Sql
                         propertiesValue["auditActionsAndGroups"] = auditActionsAndGroupsArray;
                     }
                 }
+                
+                if (parameters.Properties.StorageAccountSubscriptionId != null)
+                {
+                    propertiesValue["storageAccountSubscriptionId"] = parameters.Properties.StorageAccountSubscriptionId;
+                }
+                
+                propertiesValue["isStorageSecondaryKeyInUse"] = parameters.Properties.IsStorageSecondaryKeyInUse;
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
@@ -692,6 +706,20 @@ namespace Microsoft.Azure.Management.Sql
                                     {
                                         propertiesInstance.AuditActionsAndGroups.Add(((string)auditActionsAndGroupsValue));
                                     }
+                                }
+                                
+                                JToken storageAccountSubscriptionIdValue = propertiesValue["storageAccountSubscriptionId"];
+                                if (storageAccountSubscriptionIdValue != null && storageAccountSubscriptionIdValue.Type != JTokenType.Null)
+                                {
+                                    string storageAccountSubscriptionIdInstance = ((string)storageAccountSubscriptionIdValue);
+                                    propertiesInstance.StorageAccountSubscriptionId = storageAccountSubscriptionIdInstance;
+                                }
+                                
+                                JToken isStorageSecondaryKeyInUseValue = propertiesValue["isStorageSecondaryKeyInUse"];
+                                if (isStorageSecondaryKeyInUseValue != null && isStorageSecondaryKeyInUseValue.Type != JTokenType.Null)
+                                {
+                                    bool isStorageSecondaryKeyInUseInstance = ((bool)isStorageSecondaryKeyInUseValue);
+                                    propertiesInstance.IsStorageSecondaryKeyInUse = isStorageSecondaryKeyInUseInstance;
                                 }
                             }
                             
@@ -1136,6 +1164,20 @@ namespace Microsoft.Azure.Management.Sql
                                     {
                                         propertiesInstance.AuditActionsAndGroups.Add(((string)auditActionsAndGroupsValue));
                                     }
+                                }
+                                
+                                JToken storageAccountSubscriptionIdValue = propertiesValue["storageAccountSubscriptionId"];
+                                if (storageAccountSubscriptionIdValue != null && storageAccountSubscriptionIdValue.Type != JTokenType.Null)
+                                {
+                                    string storageAccountSubscriptionIdInstance = ((string)storageAccountSubscriptionIdValue);
+                                    propertiesInstance.StorageAccountSubscriptionId = storageAccountSubscriptionIdInstance;
+                                }
+                                
+                                JToken isStorageSecondaryKeyInUseValue = propertiesValue["isStorageSecondaryKeyInUse"];
+                                if (isStorageSecondaryKeyInUseValue != null && isStorageSecondaryKeyInUseValue.Type != JTokenType.Null)
+                                {
+                                    bool isStorageSecondaryKeyInUseInstance = ((bool)isStorageSecondaryKeyInUseValue);
+                                    propertiesInstance.IsStorageSecondaryKeyInUse = isStorageSecondaryKeyInUseInstance;
                                 }
                             }
                             

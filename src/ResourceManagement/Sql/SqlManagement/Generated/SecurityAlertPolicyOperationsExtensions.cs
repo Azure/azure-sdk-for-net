@@ -106,6 +106,66 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Creates or updates an Azure SQL Server security alert policy.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.ISecurityAlertPolicyOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server on which the
+        /// database is hosted.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The required parameters for creating or updating a Azure
+        /// SQL Database security alert policy.
+        /// </param>
+        /// <returns>
+        /// Response to Azure Sql Server security alert policy create or update
+        /// operation.
+        /// </returns>
+        public static ServerSecurityAlertPolicyCreateOrUpdateResponse CreateOrUpdateServerSecurityAlertPolicy(this ISecurityAlertPolicyOperations operations, string resourceGroupName, string serverName, ServerSecurityAlertPolicyCreateOrUpdateParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((ISecurityAlertPolicyOperations)s).CreateOrUpdateServerSecurityAlertPolicyAsync(resourceGroupName, serverName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Creates or updates an Azure SQL Server security alert policy.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.ISecurityAlertPolicyOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server on which the
+        /// database is hosted.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The required parameters for creating or updating a Azure
+        /// SQL Database security alert policy.
+        /// </param>
+        /// <returns>
+        /// Response to Azure Sql Server security alert policy create or update
+        /// operation.
+        /// </returns>
+        public static Task<ServerSecurityAlertPolicyCreateOrUpdateResponse> CreateOrUpdateServerSecurityAlertPolicyAsync(this ISecurityAlertPolicyOperations operations, string resourceGroupName, string serverName, ServerSecurityAlertPolicyCreateOrUpdateParameters parameters)
+        {
+            return operations.CreateOrUpdateServerSecurityAlertPolicyAsync(resourceGroupName, serverName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Returns an Azure SQL Database security alert policy.
         /// </summary>
         /// <param name='operations'>
@@ -163,6 +223,104 @@ namespace Microsoft.Azure.Management.Sql
         public static Task<DatabaseSecurityAlertPolicyGetResponse> GetDatabaseSecurityAlertPolicyAsync(this ISecurityAlertPolicyOperations operations, string resourceGroupName, string serverName, string databaseName)
         {
             return operations.GetDatabaseSecurityAlertPolicyAsync(resourceGroupName, serverName, databaseName, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Gets the status of an Azure Sql Server security alert policy create
+        /// or update operation.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.ISecurityAlertPolicyOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Server blob auditing status link returned by the
+        /// CreateOrUpdate operation
+        /// </param>
+        /// <returns>
+        /// Response for long running Azure Sql server threat detection create
+        /// or update operations.
+        /// </returns>
+        public static ServerSecurityAlertPolicyOperationResponse GetOperationStatus(this ISecurityAlertPolicyOperations operations, string operationStatusLink)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((ISecurityAlertPolicyOperations)s).GetOperationStatusAsync(operationStatusLink);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Gets the status of an Azure Sql Server security alert policy create
+        /// or update operation.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.ISecurityAlertPolicyOperations.
+        /// </param>
+        /// <param name='operationStatusLink'>
+        /// Required. Server blob auditing status link returned by the
+        /// CreateOrUpdate operation
+        /// </param>
+        /// <returns>
+        /// Response for long running Azure Sql server threat detection create
+        /// or update operations.
+        /// </returns>
+        public static Task<ServerSecurityAlertPolicyOperationResponse> GetOperationStatusAsync(this ISecurityAlertPolicyOperations operations, string operationStatusLink)
+        {
+            return operations.GetOperationStatusAsync(operationStatusLink, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Returns an Azure SQL Database security alert policy.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.ISecurityAlertPolicyOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server on which the
+        /// database is hosted.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a get server security alert policy
+        /// request.
+        /// </returns>
+        public static ServerSecurityAlertPolicyGetResponse GetServerSecurityAlertPolicy(this ISecurityAlertPolicyOperations operations, string resourceGroupName, string serverName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((ISecurityAlertPolicyOperations)s).GetServerSecurityAlertPolicyAsync(resourceGroupName, serverName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Returns an Azure SQL Database security alert policy.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.Sql.ISecurityAlertPolicyOperations.
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server on which the
+        /// database is hosted.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a get server security alert policy
+        /// request.
+        /// </returns>
+        public static Task<ServerSecurityAlertPolicyGetResponse> GetServerSecurityAlertPolicyAsync(this ISecurityAlertPolicyOperations operations, string resourceGroupName, string serverName)
+        {
+            return operations.GetServerSecurityAlertPolicyAsync(resourceGroupName, serverName, CancellationToken.None);
         }
     }
 }

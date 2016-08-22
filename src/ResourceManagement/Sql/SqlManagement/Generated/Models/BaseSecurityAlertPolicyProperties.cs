@@ -63,6 +63,17 @@ namespace Microsoft.Azure.Management.Sql.Models
             set { this._emailAddresses = value; }
         }
         
+        private int _retentionDays;
+        
+        /// <summary>
+        /// Optional. Specifies the number of days to keep in the audit logs.
+        /// </summary>
+        public int RetentionDays
+        {
+            get { return this._retentionDays; }
+            set { this._retentionDays = value; }
+        }
+        
         private string _state;
         
         /// <summary>
@@ -72,6 +83,30 @@ namespace Microsoft.Azure.Management.Sql.Models
         {
             get { return this._state; }
             set { this._state = value; }
+        }
+        
+        private string _storageAccountAccessKey;
+        
+        /// <summary>
+        /// Optional. Specifies the identifier key of the auditing storage
+        /// account.
+        /// </summary>
+        public string StorageAccountAccessKey
+        {
+            get { return this._storageAccountAccessKey; }
+            set { this._storageAccountAccessKey = value; }
+        }
+        
+        private string _storageEndpoint;
+        
+        /// <summary>
+        /// Optional. Specifies the blob storage endpoint (e.g.
+        /// https://MyAccount.blob.core.windows.net).
+        /// </summary>
+        public string StorageEndpoint
+        {
+            get { return this._storageEndpoint; }
+            set { this._storageEndpoint = value; }
         }
         
         /// <summary>
