@@ -37,14 +37,13 @@ namespace ServiceBus.Tests.ScenarioTests
                 InitializeClients(context);
 
                 var location = ServiceBusManagementHelper.DefaultLocation;
-                var resourceGroup = "Default-ServiceBus-CentralUS";
 
-                //var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
-                //if (string.IsNullOrWhiteSpace(resourceGroup))
-                //{
-                //    resourceGroup = TestUtilities.GenerateName(ServiceBusManagementHelper.ResourceGroupPrefix);
-                //    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
-                //}
+                var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
+                if (string.IsNullOrWhiteSpace(resourceGroup))
+                {
+                    resourceGroup = TestUtilities.GenerateName(ServiceBusManagementHelper.ResourceGroupPrefix);
+                    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
+                }
 
 
                 // Create a namespace
@@ -54,7 +53,6 @@ namespace ServiceBus.Tests.ScenarioTests
                     new NamespaceCreateOrUpdateParameters()
                     {
                         Location = location,
-                        Kind = "Messaging",
                         Sku = new Sku
                         {
                             Name = "Standard",
@@ -94,7 +92,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 //Get the created Queue
                 var getQueueResponse = ServiceBusManagementClient.Queues.Get(resourceGroup, namespaceName, queueName);
                 Assert.NotNull(getQueueResponse);
-                Assert.Equal(QueueEntityStatus.Active, getQueueResponse.Status);
+                Assert.Equal(EntityStatus.Active, getQueueResponse.Status);
                 Assert.Equal(getQueueResponse.Name, queueName);                
 
                 //Create a queue AuthorizationRule

@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public TimeSpan? AutoDeleteOnIdle { get; set; }
 
         /// <summary>
-        /// entity availability status for the queue. Possible values include:
+        /// Entity availability status for the queue. Possible values include:
         /// 'Available', 'Limited', 'Renaming', 'Restoring', 'Unknown'
         /// </summary>
         [JsonProperty(PropertyName = "properties.entityAvailabilityStatus ")]

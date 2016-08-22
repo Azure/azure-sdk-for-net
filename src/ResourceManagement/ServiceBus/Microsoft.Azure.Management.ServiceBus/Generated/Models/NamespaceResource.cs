@@ -30,10 +30,9 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <summary>
         /// Initializes a new instance of the NamespaceResource class.
         /// </summary>
-        public NamespaceResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string kind = default(string), Sku sku = default(Sku), string provisioningState = default(string), NamespaceState? status = default(NamespaceState?), DateTime? createdAt = default(DateTime?), DateTime? updatedAt = default(DateTime?), string serviceBusEndpoint = default(string), bool? createACSNamespace = default(bool?), bool? enabled = default(bool?))
+        public NamespaceResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string provisioningState = default(string), NamespaceState? status = default(NamespaceState?), DateTime? createdAt = default(DateTime?), DateTime? updatedAt = default(DateTime?), string serviceBusEndpoint = default(string), bool? createACSNamespace = default(bool?), bool? enabled = default(bool?))
             : base(id, name, type, location, tags)
         {
-            Kind = kind;
             Sku = sku;
             ProvisioningState = provisioningState;
             Status = status;
@@ -43,12 +42,6 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
             CreateACSNamespace = createACSNamespace;
             Enabled = enabled;
         }
-
-        /// <summary>
-        /// Kind of the Namespace. Possible values include: 'Messaging'
-        /// </summary>
-        [JsonProperty(PropertyName = "kind")]
-        public string Kind { get; set; }
 
         /// <summary>
         /// </summary>

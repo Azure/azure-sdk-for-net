@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     {
         [EnumMember(Value = "PrimaryKey")]
         PrimaryKey,
-        [EnumMember(Value = "SecondayKey")]
-        SecondayKey
+        [EnumMember(Value = "SecondaryKey")]
+        SecondaryKey
     }
 }

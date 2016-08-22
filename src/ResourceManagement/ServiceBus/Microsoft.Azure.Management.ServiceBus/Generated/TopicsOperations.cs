@@ -647,7 +647,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<TopicResource>> GetTopicWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<TopicResource>> GetWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -680,7 +680,7 @@ namespace Microsoft.Azure.Management.ServiceBus
                 tracingParameters.Add("namespaceName", namespaceName);
                 tracingParameters.Add("topicName", topicName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetTopic", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -1231,11 +1231,11 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <param name='namespaceName'>
         /// The namespace name
         /// </param>
-        /// <param name='authorizationRuleName'>
-        /// Authorization rule name.
-        /// </param>
         /// <param name='topicName'>
         /// The topic name.
+        /// </param>
+        /// <param name='authorizationRuleName'>
+        /// Authorization rule name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1246,7 +1246,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SharedAccessAuthorizationRuleResource>> GetAuthorizationRuleWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string authorizationRuleName, string topicName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SharedAccessAuthorizationRuleResource>> GetAuthorizationRuleWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, string authorizationRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1256,13 +1256,13 @@ namespace Microsoft.Azure.Management.ServiceBus
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
             }
-            if (authorizationRuleName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "authorizationRuleName");
-            }
             if (topicName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "topicName");
+            }
+            if (authorizationRuleName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "authorizationRuleName");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -1281,8 +1281,8 @@ namespace Microsoft.Azure.Management.ServiceBus
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("namespaceName", namespaceName);
-                tracingParameters.Add("authorizationRuleName", authorizationRuleName);
                 tracingParameters.Add("topicName", topicName);
+                tracingParameters.Add("authorizationRuleName", authorizationRuleName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetAuthorizationRule", tracingParameters);
             }
@@ -1291,8 +1291,8 @@ namespace Microsoft.Azure.Management.ServiceBus
             var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/authorizationRules/{authorizationRuleName}").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{namespaceName}", Uri.EscapeDataString(namespaceName));
-            _url = _url.Replace("{authorizationRuleName}", Uri.EscapeDataString(authorizationRuleName));
             _url = _url.Replace("{topicName}", Uri.EscapeDataString(topicName));
+            _url = _url.Replace("{authorizationRuleName}", Uri.EscapeDataString(authorizationRuleName));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)

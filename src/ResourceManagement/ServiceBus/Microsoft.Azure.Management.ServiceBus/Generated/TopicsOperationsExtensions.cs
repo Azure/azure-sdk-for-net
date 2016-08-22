@@ -215,9 +215,9 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='topicName'>
             /// The topic name.
             /// </param>
-            public static TopicResource GetTopic(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName)
+            public static TopicResource Get(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName)
             {
-                return Task.Factory.StartNew(s => ((ITopicsOperations)s).GetTopicAsync(resourceGroupName, namespaceName, topicName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ITopicsOperations)s).GetAsync(resourceGroupName, namespaceName, topicName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -238,9 +238,9 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TopicResource> GetTopicAsync(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TopicResource> GetAsync(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetTopicWithHttpMessagesAsync(resourceGroupName, namespaceName, topicName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, namespaceName, topicName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -362,15 +362,15 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='namespaceName'>
             /// The namespace name
             /// </param>
-            /// <param name='authorizationRuleName'>
-            /// Authorization rule name.
-            /// </param>
             /// <param name='topicName'>
             /// The topic name.
             /// </param>
-            public static SharedAccessAuthorizationRuleResource GetAuthorizationRule(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, string topicName)
+            /// <param name='authorizationRuleName'>
+            /// Authorization rule name.
+            /// </param>
+            public static SharedAccessAuthorizationRuleResource GetAuthorizationRule(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName, string authorizationRuleName)
             {
-                return Task.Factory.StartNew(s => ((ITopicsOperations)s).GetAuthorizationRuleAsync(resourceGroupName, namespaceName, authorizationRuleName, topicName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ITopicsOperations)s).GetAuthorizationRuleAsync(resourceGroupName, namespaceName, topicName, authorizationRuleName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -385,18 +385,18 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='namespaceName'>
             /// The namespace name
             /// </param>
-            /// <param name='authorizationRuleName'>
-            /// Authorization rule name.
-            /// </param>
             /// <param name='topicName'>
             /// The topic name.
+            /// </param>
+            /// <param name='authorizationRuleName'>
+            /// Authorization rule name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SharedAccessAuthorizationRuleResource> GetAuthorizationRuleAsync(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, string topicName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SharedAccessAuthorizationRuleResource> GetAuthorizationRuleAsync(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName, string authorizationRuleName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetAuthorizationRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, authorizationRuleName, topicName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetAuthorizationRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, topicName, authorizationRuleName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

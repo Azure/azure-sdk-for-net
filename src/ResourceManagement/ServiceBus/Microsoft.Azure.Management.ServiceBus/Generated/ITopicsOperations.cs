@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<TopicResource>> GetTopicWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<TopicResource>> GetWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Authorization rules for a topic.
         /// </summary>
@@ -170,11 +170,11 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <param name='namespaceName'>
         /// The namespace name
         /// </param>
-        /// <param name='authorizationRuleName'>
-        /// Authorization rule name.
-        /// </param>
         /// <param name='topicName'>
         /// The topic name.
+        /// </param>
+        /// <param name='authorizationRuleName'>
+        /// Authorization rule name.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -182,7 +182,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<SharedAccessAuthorizationRuleResource>> GetAuthorizationRuleWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string authorizationRuleName, string topicName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SharedAccessAuthorizationRuleResource>> GetAuthorizationRuleWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, string authorizationRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a topic authorizationRule
         /// </summary>

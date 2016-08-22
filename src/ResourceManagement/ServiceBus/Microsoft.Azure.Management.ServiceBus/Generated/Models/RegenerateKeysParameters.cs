@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
 
         /// <summary>
         /// Key that needs to be regenerated . Possible values include:
-        /// 'PrimaryKey', 'SecondayKey'
+        /// 'PrimaryKey', 'SecondaryKey'
         /// </summary>
         [JsonProperty(PropertyName = "Policykey")]
         public Policykey? Policykey { get; set; }

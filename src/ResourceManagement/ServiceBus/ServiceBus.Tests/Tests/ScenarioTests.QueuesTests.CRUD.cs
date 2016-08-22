@@ -35,14 +35,13 @@ namespace ServiceBus.Tests.ScenarioTests
             {
                 InitializeClients(context);
                 var location = ServiceBusManagementHelper.DefaultLocation;
-                var resourceGroup = "Default-ServiceBus-CentralUS";
 
-                //var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
-                //if (string.IsNullOrWhiteSpace(resourceGroup))
-                //{
-                //    resourceGroup = TestUtilities.GenerateName(ServiceBusManagementHelper.ResourceGroupPrefix);
-                //    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
-                //}
+                var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
+                if (string.IsNullOrWhiteSpace(resourceGroup))
+                {
+                    resourceGroup = TestUtilities.GenerateName(ServiceBusManagementHelper.ResourceGroupPrefix);
+                    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
+                }
 
                 var namespaceName = TestUtilities.GenerateName(ServiceBusManagementHelper.NamespacePrefix);
 
@@ -50,7 +49,6 @@ namespace ServiceBus.Tests.ScenarioTests
                     new NamespaceCreateOrUpdateParameters()
                     {
                         Location = location,
-                        Kind = "Messaging",
                         Sku = new Sku
                         {
                             Name = "Standard",
@@ -61,10 +59,8 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.NotNull(createNamespaceResponse);
                 Assert.Equal(createNamespaceResponse.Name, namespaceName);
 
-                //TestUtilities.Wait(TimeSpan.FromSeconds(5));
-
-
-                // //// Queues
+                // TestUtilities.Wait(TimeSpan.FromSeconds(5));
+                // Queues
 
                 var queueName = TestUtilities.GenerateName(ServiceBusManagementHelper.QueuesPrefix);
                 //var namespaceName = "sdk-Namespace4123";
@@ -115,13 +111,10 @@ namespace ServiceBus.Tests.ScenarioTests
                     string x = ex.Message;
                 }
 
-                //var queueName = "sdk-Queues3590";
-
                 //Get the created Queue
-
                 var getQueueResponse = ServiceBusManagementClient.Queues.Get(resourceGroup, namespaceName, queueName);
                 Assert.NotNull(getQueueResponse);
-                Assert.Equal(QueueEntityStatus.Active, getQueueResponse.Status);
+                Assert.Equal(EntityStatus.Active, getQueueResponse.Status);
                 Assert.Equal(getQueueResponse.Name, queueName);
                                                
                 //Get Queue with invalid name

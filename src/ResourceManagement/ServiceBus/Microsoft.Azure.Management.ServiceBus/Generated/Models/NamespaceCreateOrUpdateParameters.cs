@@ -32,12 +32,11 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// Initializes a new instance of the
         /// NamespaceCreateOrUpdateParameters class.
         /// </summary>
-        public NamespaceCreateOrUpdateParameters(string location, Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), string kind = default(string), string provisioningState = default(string), NamespaceState? status = default(NamespaceState?), DateTime? createdAt = default(DateTime?), DateTime? updatedAt = default(DateTime?), string serviceBusEndpoint = default(string), bool? createACSNamespace = default(bool?), bool? enabled = default(bool?))
+        public NamespaceCreateOrUpdateParameters(string location, Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), NamespaceState? status = default(NamespaceState?), DateTime? createdAt = default(DateTime?), DateTime? updatedAt = default(DateTime?), string serviceBusEndpoint = default(string), bool? createACSNamespace = default(bool?), bool? enabled = default(bool?))
         {
             Location = location;
             Sku = sku;
             Tags = tags;
-            Kind = kind;
             ProvisioningState = provisioningState;
             Status = status;
             CreatedAt = createdAt;
@@ -63,13 +62,6 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
-
-        /// <summary>
-        /// Specifies the namespace type; for example: Messaging. Possible
-        /// values include: 'Messaging'
-        /// </summary>
-        [JsonProperty(PropertyName = "kind")]
-        public string Kind { get; set; }
 
         /// <summary>
         /// Provisioning state of the Namespace.

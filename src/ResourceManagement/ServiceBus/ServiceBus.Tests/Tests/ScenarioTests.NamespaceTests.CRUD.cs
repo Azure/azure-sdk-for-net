@@ -13,18 +13,16 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-
 namespace ServiceBus.Tests.ScenarioTests
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Microsoft.Azure.Management.ServiceBus;
     using Microsoft.Azure.Management.ServiceBus.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using System;
-    using System.Linq;
-    using System.Net;
     using TestHelper;
     using Xunit;
-    using System.Collections.Generic;
     public partial class ScenarioTests 
     {
         [Fact]
@@ -35,13 +33,12 @@ namespace ServiceBus.Tests.ScenarioTests
                 InitializeClients(context);
 
                 var location = ServiceBusManagementHelper.DefaultLocation;
-                var resourceGroup = "Default-ServiceBus-CentralUS";
-                //var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
-                //if (string.IsNullOrWhiteSpace(resourceGroup))
-                //{
-                //    resourceGroup = TestUtilities.GenerateName(ServiceBusManagementHelper.ResourceGroupPrefix);
-                //    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
-                //}
+                var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
+                if (string.IsNullOrWhiteSpace(resourceGroup))
+                {
+                    resourceGroup = TestUtilities.GenerateName(ServiceBusManagementHelper.ResourceGroupPrefix);
+                    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
+                }
 
                 var namespaceName = TestUtilities.GenerateName(ServiceBusManagementHelper.NamespacePrefix);
 
@@ -49,7 +46,6 @@ namespace ServiceBus.Tests.ScenarioTests
                     new NamespaceCreateOrUpdateParameters()
                     {
                         Location = location,
-                        Kind = "Messaging",
                         Sku = new Sku
                         {
                             Name = "Standard",
