@@ -39,8 +39,10 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             string methodName= "testframework_failed")
         {
             var context = new MockContext();
-
-            HttpMockServer.FileSystemUtilsObject = new Microsoft.Azure.Test.HttpRecorder.FileSystemUtils();
+            if (HttpMockServer.FileSystemUtilsObject == null)
+            {
+                HttpMockServer.FileSystemUtilsObject = new Microsoft.Azure.Test.HttpRecorder.FileSystemUtils();
+            }
             HttpMockServer.Initialize(className, methodName);
             if (HttpMockServer.Mode != HttpRecorderMode.Playback)
             {

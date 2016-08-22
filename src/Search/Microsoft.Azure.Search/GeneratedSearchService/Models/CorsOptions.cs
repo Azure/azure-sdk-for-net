@@ -19,6 +19,7 @@ namespace Microsoft.Azure.Search.Models
     /// <summary>
     /// Defines options to control Cross-Origin Resource Sharing (CORS) for an
     /// index.
+    /// <see href="https://msdn.microsoft.com/library/azure/dn798941.aspx" />
     /// </summary>
     public partial class CorsOptions
     {
@@ -53,8 +54,11 @@ namespace Microsoft.Azure.Search.Models
         public long? MaxAgeInSeconds { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public virtual void Validate()
         {
             if (AllowedOrigins == null)

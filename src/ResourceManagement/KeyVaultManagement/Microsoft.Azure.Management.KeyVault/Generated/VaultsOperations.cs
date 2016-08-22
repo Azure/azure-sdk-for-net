@@ -115,6 +115,10 @@ namespace Microsoft.Azure.Management.KeyVault
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
             }
+            if (parameters == null)
+            {
+                parameters = new VaultCreateOrUpdateParameters();
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

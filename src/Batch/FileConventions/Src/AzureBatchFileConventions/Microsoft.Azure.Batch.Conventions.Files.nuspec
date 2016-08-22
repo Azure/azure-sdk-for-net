@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Microsoft.Azure.Batch.Conventions.Files</id>
+    <version>$version$</version>
+    <title>Microsoft Azure Batch File Conventions</title>
+    <authors>Microsoft</authors>
+    <owners>azure-sdk, Microsoft</owners>
+    <licenseUrl>http://aka.ms/windowsazureapache2</licenseUrl>
+    <projectUrl>https://github.com/Azure/azure-sdk-for-net</projectUrl>
+    <iconUrl>http://go.microsoft.com/fwlink/?LinkID=288890</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>
+This library encapsulates a set of storage conventions for Azure Batch task
+and job outputs, making it convenient for clients to browse and retrieve outputs
+by task and job id and the type of output.
+    </description>
+    <summary>A .NET implementation of file storage conventions for the Microsoft Azure Batch service.</summary>
+    <releaseNotes>
+This version of the file conventions library works with version 5.0.0 of the Azure Batch SDK for .NET.
+    </releaseNotes>
+    <tags>Microsoft, Azure, Batch, windowsazureofficial</tags>
+    <dependencies>
+      <group targetFramework=".NETFramework4.5">
+        <dependency id="Azure.Batch" version="5.0.0" />
+        <dependency id="WindowsAzure.Storage" version="6.2.0" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\binaries\net45\Microsoft.Azure.Batch.Conventions.Files.dll" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.Batch.Conventions.Files.pdb" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.Batch.Conventions.Files.xml" target="lib\net45" />
+  </files>
+</package>

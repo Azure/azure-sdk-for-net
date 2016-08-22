@@ -25,7 +25,10 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// Initializes a new instance of the VaultCreateOrUpdateParameters
         /// class.
         /// </summary>
-        public VaultCreateOrUpdateParameters() { }
+        public VaultCreateOrUpdateParameters()
+        {
+            Properties = new VaultProperties();
+        }
 
         /// <summary>
         /// Initializes a new instance of the VaultCreateOrUpdateParameters
@@ -38,6 +41,7 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// vault. </param>
         public VaultCreateOrUpdateParameters(string location, VaultProperties properties, IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
+            Properties = new VaultProperties();
             Location = location;
             Tags = tags;
             Properties = properties;

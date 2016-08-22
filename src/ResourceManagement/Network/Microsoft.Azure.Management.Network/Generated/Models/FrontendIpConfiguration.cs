@@ -47,19 +47,19 @@ namespace Microsoft.Azure.Management.Network.Models
         }
 
         /// <summary>
-        /// Read only.Inbound rules URIs that use this frontend IP
+        /// Read only. Inbound rules URIs that use this frontend IP
         /// </summary>
         [JsonProperty(PropertyName = "properties.inboundNatRules")]
         public IList<SubResource> InboundNatRules { get; private set; }
 
         /// <summary>
-        /// Read only.Inbound pools URIs that use this frontend IP
+        /// Read only. Inbound pools URIs that use this frontend IP
         /// </summary>
         [JsonProperty(PropertyName = "properties.inboundNatPools")]
         public IList<SubResource> InboundNatPools { get; private set; }
 
         /// <summary>
-        /// Read only.Outbound rules URIs that use this frontend IP
+        /// Read only. Outbound rules URIs that use this frontend IP
         /// </summary>
         [JsonProperty(PropertyName = "properties.outboundNatRules")]
         public IList<SubResource> OutboundNatRules { get; private set; }

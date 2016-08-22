@@ -25,6 +25,7 @@ namespace Microsoft.Azure.Search
             /// <summary>
             /// Creates a new Azure Search datasource or updates a datasource if it
             /// already exists.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946900.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -38,14 +39,18 @@ namespace Microsoft.Azure.Search
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static DataSource CreateOrUpdate(this IDataSourcesOperations operations, string dataSourceName, DataSource dataSource, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
+            /// <param name='accessCondition'>
+            /// Additional parameters for the operation
+            /// </param>
+            public static DataSource CreateOrUpdate(this IDataSourcesOperations operations, string dataSourceName, DataSource dataSource, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition))
             {
-                return Task.Factory.StartNew(s => ((IDataSourcesOperations)s).CreateOrUpdateAsync(dataSourceName, dataSource, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IDataSourcesOperations)s).CreateOrUpdateAsync(dataSourceName, dataSource, searchRequestOptions, accessCondition), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Creates a new Azure Search datasource or updates a datasource if it
             /// already exists.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946900.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -59,12 +64,15 @@ namespace Microsoft.Azure.Search
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
+            /// <param name='accessCondition'>
+            /// Additional parameters for the operation
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<DataSource> CreateOrUpdateAsync(this IDataSourcesOperations operations, string dataSourceName, DataSource dataSource, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<DataSource> CreateOrUpdateAsync(this IDataSourcesOperations operations, string dataSourceName, DataSource dataSource, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(dataSourceName, dataSource, searchRequestOptions, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(dataSourceName, dataSource, searchRequestOptions, accessCondition, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -72,6 +80,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Deletes an Azure Search datasource.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946881.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -82,13 +91,17 @@ namespace Microsoft.Azure.Search
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static void Delete(this IDataSourcesOperations operations, string dataSourceName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
+            /// <param name='accessCondition'>
+            /// Additional parameters for the operation
+            /// </param>
+            public static void Delete(this IDataSourcesOperations operations, string dataSourceName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition))
             {
-                Task.Factory.StartNew(s => ((IDataSourcesOperations)s).DeleteAsync(dataSourceName, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IDataSourcesOperations)s).DeleteAsync(dataSourceName, searchRequestOptions, accessCondition), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Deletes an Azure Search datasource.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946881.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -97,18 +110,22 @@ namespace Microsoft.Azure.Search
             /// The name of the datasource to delete.
             /// </param>
             /// <param name='searchRequestOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            /// <param name='accessCondition'>
             /// Additional parameters for the operation
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IDataSourcesOperations operations, string dataSourceName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IDataSourcesOperations operations, string dataSourceName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteWithHttpMessagesAsync(dataSourceName, searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteWithHttpMessagesAsync(dataSourceName, searchRequestOptions, accessCondition, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
             /// Retrieves a datasource definition from Azure Search.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946893.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -126,6 +143,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Retrieves a datasource definition from Azure Search.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946893.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -149,6 +167,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Lists all datasources available for an Azure Search service.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946878.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -163,6 +182,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Lists all datasources available for an Azure Search service.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946878.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -183,6 +203,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Creates a new Azure Search datasource.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946876.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -200,6 +221,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Creates a new Azure Search datasource.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946876.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

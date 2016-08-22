@@ -24,7 +24,10 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the VaultProperties class.
         /// </summary>
-        public VaultProperties() { }
+        public VaultProperties()
+        {
+            Sku = new Sku();
+        }
 
         /// <summary>
         /// Initializes a new instance of the VaultProperties class.
@@ -49,6 +52,7 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// from the key vault.</param>
         public VaultProperties(Guid tenantId, Sku sku, IList<AccessPolicyEntry> accessPolicies, string vaultUri = default(string), bool? enabledForDeployment = default(bool?), bool? enabledForDiskEncryption = default(bool?), bool? enabledForTemplateDeployment = default(bool?))
         {
+            Sku = new Sku();
             VaultUri = vaultUri;
             TenantId = tenantId;
             Sku = sku;
@@ -133,6 +137,13 @@ namespace Microsoft.Azure.Management.KeyVault.Models
                 if (this.AccessPolicies.Count > 16)
                 {
                     throw new ValidationException(ValidationRules.MaxItems, "AccessPolicies", 16);
+                }
+                foreach (var element in this.AccessPolicies)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
                 }
             }
         }

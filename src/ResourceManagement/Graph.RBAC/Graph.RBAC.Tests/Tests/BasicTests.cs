@@ -171,7 +171,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
                 var client = GetGraphClient(context);
 
                 var groups = client.Groups.List();
-                var group = client.Groups.Get(groups.ElementAt(2).ObjectId);
+                var group = client.Groups.Get(groups.ElementAt(1).ObjectId);
                 Assert.NotNull(group);
                 Assert.NotNull(group.ObjectId);
                 Assert.NotNull(group.DisplayName);

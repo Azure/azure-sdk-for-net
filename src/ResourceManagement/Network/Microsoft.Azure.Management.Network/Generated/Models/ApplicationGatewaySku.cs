@@ -37,21 +37,20 @@ namespace Microsoft.Azure.Management.Network.Models
         }
 
         /// <summary>
-        /// Gets or sets name of application gateway SKU. Possible values
-        /// include: 'Standard_Small', 'Standard_Medium', 'Standard_Large'
+        /// Name of application gateway SKU. Possible values include:
+        /// 'Standard_Small', 'Standard_Medium', 'Standard_Large'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets tier of application gateway. Possible values include:
-        /// 'Standard'
+        /// Tier of application gateway. Possible values include: 'Standard'
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
         public string Tier { get; set; }
 
         /// <summary>
-        /// Gets or sets capacity (instance count) of application gateway
+        /// Capacity (instance count) of application gateway
         /// </summary>
         [JsonProperty(PropertyName = "capacity")]
         public int? Capacity { get; set; }

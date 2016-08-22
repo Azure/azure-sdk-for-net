@@ -30,13 +30,7 @@ namespace Microsoft.Azure.Search
             HttpClientHandler rootHandler, 
             params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
-            var validatedSearchServiceName = new SearchServiceName(searchServiceName);
-            Throw.IfArgumentNull(credentials, "credentials");
-
-            this.Credentials = credentials;
-            this.BaseUri = validatedSearchServiceName.BuildBaseUri();
-
-            this.Credentials.InitializeServiceClient(this);
+            Initialize(searchServiceName, credentials);
         }
 
         /// <summary>
@@ -49,6 +43,17 @@ namespace Microsoft.Azure.Search
         public SearchServiceClient(string searchServiceName, SearchCredentials credentials)
             : this()
         {
+            Initialize(searchServiceName, credentials);
+        }
+
+        /// <inheritdoc />
+        public SearchCredentials SearchCredentials
+        {
+            get { return (SearchCredentials)this.Credentials; }
+        }
+
+        private void Initialize(string searchServiceName, SearchCredentials credentials)
+        {
             var validatedSearchServiceName = new SearchServiceName(searchServiceName);
             Throw.IfArgumentNull(credentials, "credentials");
 
@@ -56,12 +61,6 @@ namespace Microsoft.Azure.Search
             this.BaseUri = validatedSearchServiceName.BuildBaseUri();
 
             this.Credentials.InitializeServiceClient(this);
-        }
-
-        /// <inheritdoc />
-        public SearchCredentials SearchCredentials
-        {
-            get { return (SearchCredentials)this.Credentials; }
         }
     }
 }

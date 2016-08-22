@@ -32,19 +32,17 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <param name="name">SKU name to specify whether the key vault is a
         /// standard vault or a premium vault. Possible values include:
         /// 'standard', 'premium'</param>
-        /// <param name="family">SKU family name. Possible values include:
-        /// 'A'</param>
-        public Sku(SkuName name, string family = default(string))
+        public Sku(SkuName name)
         {
-            Family = family;
             Name = name;
         }
-
         /// <summary>
-        /// Gets or sets SKU family name. Possible values include: 'A'
+        /// Static constructor for Sku class.
         /// </summary>
-        [JsonProperty(PropertyName = "family")]
-        public string Family { get; set; }
+        static Sku()
+        {
+            Family = "A";
+        }
 
         /// <summary>
         /// Gets or sets SKU name to specify whether the key vault is a
@@ -53,6 +51,12 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public SkuName Name { get; set; }
+
+        /// <summary>
+        /// SKU family name
+        /// </summary>
+        [JsonProperty(PropertyName = "family")]
+        public static string Family { get; private set; }
 
         /// <summary>
         /// Validate the object.
