@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Search
 {
     using System;
 
-    internal struct IndexName
+    internal class IndexName
     {
         private readonly string _name;
 
@@ -18,7 +18,12 @@ namespace Microsoft.Azure.Search
 
         public static implicit operator string(IndexName indexName)
         {
-            return indexName._name ?? String.Empty;
+            return indexName.ToString();
+        }
+
+        public override string ToString()
+        {
+            return _name ?? String.Empty;
         }
     }
 }

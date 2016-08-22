@@ -24,7 +24,10 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the Vault class.
         /// </summary>
-        public Vault() { }
+        public Vault()
+        {
+            Properties = new VaultProperties();
+        }
 
         /// <summary>
         /// Initializes a new instance of the Vault class.
@@ -41,6 +44,7 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         public Vault(string name, string location, VaultProperties properties, string id = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
             : base(name, location, id, type, tags)
         {
+            Properties = new VaultProperties();
             Properties = properties;
         }
 

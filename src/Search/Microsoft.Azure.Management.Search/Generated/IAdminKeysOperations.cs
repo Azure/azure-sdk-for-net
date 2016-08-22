@@ -25,6 +25,7 @@ namespace Microsoft.Azure.Management.Search
         /// <summary>
         /// Returns the primary and secondary API keys for the given Azure
         /// Search service.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn832685.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the current subscription.
@@ -38,6 +39,15 @@ namespace Microsoft.Azure.Management.Search
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         Task<AzureOperationResponse<AdminKeyResult>> ListWithHttpMessagesAsync(string resourceGroupName, string serviceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

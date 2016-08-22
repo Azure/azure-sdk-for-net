@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Search.Tests
             Run(() =>
             {
                 SearchServiceClient serviceClient = Data.GetSearchServiceClient();
-                SearchIndexClient indexClient = serviceClient.Indexes.GetClient("test");
+                ISearchIndexClient indexClient = serviceClient.Indexes.GetClient("test");
 
                 Assert.Equal(serviceClient.SearchCredentials.ApiKey, indexClient.SearchCredentials.ApiKey);
                 Assert.Equal(new Uri(serviceClient.BaseUri, "/indexes('test')"), indexClient.BaseUri);

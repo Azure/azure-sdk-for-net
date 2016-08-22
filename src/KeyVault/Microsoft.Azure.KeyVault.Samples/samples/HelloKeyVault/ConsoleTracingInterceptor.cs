@@ -18,12 +18,11 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using Hyak.Common;
-using Hyak.Common.Internals;
+using Microsoft.Rest;
 
 namespace Sample.Microsoft.HelloKeyVault
 {
-    internal class ConsoleTracingInterceptor : ICloudTracingInterceptor
+    internal class ConsoleTracingInterceptor : IServiceClientTracingInterceptor
     {
         private void Write(string message, params object[] arguments)
         {
@@ -47,27 +46,27 @@ namespace Sample.Microsoft.HelloKeyVault
         {
         }
 
-        public void Enter(string invocationId, object instance, string method, IDictionary<string, object> parameters)
+        public void EnterMethod(string invocationId, object instance, string method, IDictionary<string, object> parameters)
         {
             Write("{0} - [{1}]: Entered method {2} with arguments: {3}", invocationId, instance, method, parameters.AsFormattedString());
         }
 
         public void SendRequest(string invocationId, HttpRequestMessage request)
         {
-            Write("{0} - {1}", invocationId, request.AsString());
+            Write("{0} - {1}", invocationId, request.AsFormattedString());
         }
 
         public void ReceiveResponse(string invocationId, HttpResponseMessage response)
         {
-            Write("{0} - {1}", invocationId, response.AsString());
+            Write("{0} - {1}", invocationId, response.AsFormattedString());
         }
 
-        public void Error(string invocationId, Exception ex)
+        public void TraceError(string invocationId, Exception ex)
         {
             Write("{0} - Error: {1}", invocationId, ex);
         }
 
-        public void Exit(string invocationId, object result)
+        public void ExitMethod(string invocationId, object result)
         {
             Write("{0} - Exited method with result: {1}", invocationId, result);
         }

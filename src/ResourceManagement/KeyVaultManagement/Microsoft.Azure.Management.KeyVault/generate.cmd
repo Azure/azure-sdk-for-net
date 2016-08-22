@@ -4,7 +4,7 @@
 ::
 
 @echo off
-set autoRestVersion=0.17.0-Nightly20160714
+set autoRestVersion=0.17.0-Nightly20160629
 
 if  "%1" == "" (
 	set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-keyvault/2015-06-01/swagger/keyvault.json"

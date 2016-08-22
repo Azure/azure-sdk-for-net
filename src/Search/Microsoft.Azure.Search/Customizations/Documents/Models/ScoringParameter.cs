@@ -5,7 +5,9 @@
 namespace Microsoft.Azure.Search.Models
 {
     using System;
+    using System.Collections.Generic;
     using System.Globalization;
+    using System.Linq;
     using Microsoft.Spatial;
 
     /// <summary>
@@ -18,13 +20,28 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         /// <param name="name">Name of the scoring parameter.</param>
         /// <param name="value">Value of the scoring parameter.</param>
+        [Obsolete("This property is obsolete. Please use the constructor overload that takes a list of values instead.")]
         public ScoringParameter(string name, string value)
         {
             Throw.IfArgumentNull(name, "name");
             Throw.IfArgumentNull(value, "value");
 
             Name = name;
-            Value = value;
+            Values = value.Split(',');
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the ScoringParameter class with the given name and string values.
+        /// </summary>
+        /// <param name="name">Name of the scoring parameter.</param>
+        /// <param name="values">Values of the scoring parameter.</param>
+        public ScoringParameter(string name, IEnumerable<string> values)
+        {
+            Throw.IfArgumentNull(name, "name");
+            Throw.IfArgumentNull(values, "values");
+
+            Name = name;
+            Values = values.ToList();   // Deep copy.
         }
 
         /// <summary>
@@ -32,7 +49,7 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         /// <param name="name">Name of the scoring parameter.</param>
         /// <param name="value">Value of the scoring parameter.</param>
-        public ScoringParameter(string name, GeographyPoint value) : this(name, ToLonLatString(value)) { }
+        public ScoringParameter(string name, GeographyPoint value) : this(name, ToLonLatStrings(value)) { }
 
         /// <summary>
         /// Gets the name of the scoring parameter.
@@ -42,7 +59,19 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Gets the value of the scoring parameter.
         /// </summary>
-        public string Value { get; private set; }
+        [Obsolete("This property is obsolete. Please use the Values property or ToString() method instead.")]
+        public string Value
+        {
+            get
+            {
+                return this.Values.ToCommaSeparatedString();
+            }
+        }
+
+        /// <summary>
+        /// Gets the values of the scoring parameter.
+        /// </summary>
+        public IEnumerable<string> Values{ get; private set; }
 
         /// <summary>
         /// Returns the scoring parameter in a format that can be used in a Search API request.
@@ -52,17 +81,30 @@ namespace Microsoft.Azure.Search.Models
         /// </returns>
         public override string ToString()
         {
-            return String.Format(CultureInfo.InvariantCulture, "{0}:{1}", this.Name, this.Value);
+            return String.Format(
+                CultureInfo.InvariantCulture, 
+                "{0}-{1}", 
+                this.Name, 
+                this.Values.Select(v => EscapeValue(v)).ToCommaSeparatedString());
         }
 
-        private static string ToLonLatString(GeographyPoint point)
+        private static string EscapeValue(string value)
+        {
+            return String.Format(
+                CultureInfo.InvariantCulture, 
+                "'{0}'", 
+                value != null ? value.Replace("'", "''") : null);
+        }
+
+        private static IEnumerable<string> ToLonLatStrings(GeographyPoint point)
         {
             if (point == null)
             {
-                return null;
+                yield break;
             }
 
-            return String.Format(CultureInfo.InvariantCulture, "{0},{1}", point.Longitude, point.Latitude);
+            yield return point.Longitude.ToString(CultureInfo.InvariantCulture);
+            yield return point.Latitude.ToString(CultureInfo.InvariantCulture);
         }
     }
 }

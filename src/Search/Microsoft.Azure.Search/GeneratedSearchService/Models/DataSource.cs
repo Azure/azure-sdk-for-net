@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the DataSource class.
         /// </summary>
-        public DataSource(string name, string type, DataSourceCredentials credentials, DataContainer container, string description = default(string), DataChangeDetectionPolicy dataChangeDetectionPolicy = default(DataChangeDetectionPolicy), DataDeletionDetectionPolicy dataDeletionDetectionPolicy = default(DataDeletionDetectionPolicy))
+        public DataSource(string name, DataSourceType type, DataSourceCredentials credentials, DataContainer container, string description = default(string), DataChangeDetectionPolicy dataChangeDetectionPolicy = default(DataChangeDetectionPolicy), DataDeletionDetectionPolicy dataDeletionDetectionPolicy = default(DataDeletionDetectionPolicy), string eTag = default(string))
         {
             Name = name;
             Description = description;
@@ -39,6 +39,7 @@ namespace Microsoft.Azure.Search.Models
             Container = container;
             DataChangeDetectionPolicy = dataChangeDetectionPolicy;
             DataDeletionDetectionPolicy = dataDeletionDetectionPolicy;
+            ETag = eTag;
         }
 
         /// <summary>
@@ -57,7 +58,7 @@ namespace Microsoft.Azure.Search.Models
         /// Gets or sets the type of the datasource.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
+        public DataSourceType Type { get; set; }
 
         /// <summary>
         /// Gets or sets credentials for the datasource.
@@ -84,8 +85,17 @@ namespace Microsoft.Azure.Search.Models
         public DataDeletionDetectionPolicy DataDeletionDetectionPolicy { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Gets or sets the ETag of the DataSource.
         /// </summary>
+        [JsonProperty(PropertyName = "@odata.etag")]
+        public string ETag { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public virtual void Validate()
         {
             if (Name == null)
