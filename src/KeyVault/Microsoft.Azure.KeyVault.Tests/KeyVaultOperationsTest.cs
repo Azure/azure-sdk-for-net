@@ -905,6 +905,11 @@ namespace Microsoft.Azure.KeyVault.Tests
                     var retrievedSecret =
                         client.GetSecretAsync(certificateBundleVersion.SecretIdentifier.Identifier).GetAwaiter().GetResult();
                     Assert.True(0 == string.CompareOrdinal(retrievedSecret.ContentType, certificateMimeType));
+                    Assert.True(retrievedSecret.Managed);
+
+                    // Get corresponding key
+                    var key = client.GetKeyAsync(createdCertificateBundle.Kid).GetAwaiter().GetResult();
+                    Assert.True(key.Managed);
 
                     var retrievedCertificate = new X509Certificate2(
                         Convert.FromBase64String(retrievedSecret.Value),
@@ -1519,7 +1524,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     Provider = "Test",
                 };
 
-                var createdIssuer01 = client.SetCertificateIssuerAsync(_vaultAddress, issuer01Name, issuer01).GetAwaiter().GetResult();
+                var createdIssuer01 = client.SetCertificateIssuerAsync(_vaultAddress, issuer01Name, issuer01.Provider).GetAwaiter().GetResult();
                 Assert.NotNull(createdIssuer01);
                 
                 const string certificateName = "testIssuerCert01";
@@ -1610,7 +1615,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     Provider = "Test",
                 };
 
-                var createdIssuer01 = client.SetCertificateIssuerAsync(_vaultAddress, issuer01Name, issuer01).GetAwaiter().GetResult();
+                var createdIssuer01 = client.SetCertificateIssuerAsync(_vaultAddress, issuer01Name, issuer01.Provider).GetAwaiter().GetResult();
                 Assert.NotNull(createdIssuer01);
 
                 const string certificateName = "cancellationRequestedCert01";
@@ -1652,10 +1657,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                 try
                 {
                     Assert.NotNull(certificateOperation);
-                    var cancelledCertificateOperation = client.UpdateCertificateOperationAsync(_vaultAddress, certificateName, new CertificateOperation
-                    {
-                        CancellationRequested = true,
-                    }).GetAwaiter().GetResult();
+                    var cancelledCertificateOperation = client.UpdateCertificateOperationAsync(_vaultAddress, certificateName, cancellationRequested : true).GetAwaiter().GetResult();
 
                     Assert.NotNull(cancelledCertificateOperation);
                     Assert.True(cancelledCertificateOperation.CancellationRequested.HasValue && cancelledCertificateOperation.CancellationRequested.Value);
@@ -1687,7 +1689,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     Provider = "Test",
                 };
 
-                var createdIssuer01 = client.SetCertificateIssuerAsync(_vaultAddress, issuer01Name, issuer01).GetAwaiter().GetResult();
+                var createdIssuer01 = client.SetCertificateIssuerAsync(_vaultAddress, issuer01Name, issuer01.Provider).GetAwaiter().GetResult();
                 Assert.NotNull(createdIssuer01);
 
                 const string certificateName = "deletedRequestedCert01";
@@ -1825,7 +1827,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     certificateBundleLatest.Tags = tags;
 
                     var certificateBundleUpdatedResponse = client.UpdateCertificateAsync(
-                        certificateBundleLatest.CertificateIdentifier.Identifier, certificateBundleLatest.Attributes, certificateBundleLatest.Tags).GetAwaiter().GetResult();
+                        certificateBundleLatest.CertificateIdentifier.Identifier, null, certificateBundleLatest.Attributes, certificateBundleLatest.Tags).GetAwaiter().GetResult();
 
                     Assert.NotNull(certificateBundleUpdatedResponse);
                     Assert.NotNull(certificateBundleUpdatedResponse.SecretIdentifier);
@@ -2059,7 +2061,8 @@ namespace Microsoft.Azure.KeyVault.Tests
                     }
                 };
 
-                var createdIssuer01 = client.SetCertificateIssuerAsync(_vaultAddress, issuer01Name, issuer01).GetAwaiter().GetResult();
+                var createdIssuer01 = client.SetCertificateIssuerAsync(_vaultAddress, issuer01Name, 
+                    issuer01.Provider, issuer01.Credentials, issuer01.OrganizationDetails, issuer01.Attributes).GetAwaiter().GetResult();
                 Assert.NotNull(createdIssuer01);
 
                 var retrievedIssuer01 = client.GetCertificateIssuerAsync(_vaultAddress, issuer01Name).GetAwaiter().GetResult();
@@ -2089,7 +2092,8 @@ namespace Microsoft.Azure.KeyVault.Tests
                     }
                 };
 
-                var createdIssuer02 = client.SetCertificateIssuerAsync(_vaultAddress, issuer02Name, issuer02).GetAwaiter().GetResult();
+                var createdIssuer02 = client.SetCertificateIssuerAsync(_vaultAddress, issuer02Name,
+                    issuer01.Provider, issuer01.Credentials, issuer01.OrganizationDetails, issuer01.Attributes).GetAwaiter().GetResult();
                 Assert.NotNull(createdIssuer02);
 
                 var issuers = client.GetCertificateIssuersAsync(_vaultAddress).GetAwaiter().GetResult();

@@ -36,7 +36,9 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <param name="tags">Application-specific metadata in the form of
         /// key-value pairs</param>
         /// <param name="kid">The key id for certificate.</param>
-        public SecretBundle(string value = default(string), string id = default(string), string contentType = default(string), SecretAttributes attributes = default(SecretAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), string kid = default(string))
+        /// <param name="managed">True if the secret's lifetime is managed by
+        /// key vault.</param>
+        public SecretBundle(string value = default(string), string id = default(string), string contentType = default(string), SecretAttributes attributes = default(SecretAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), string kid = default(string), bool? managed = default(bool?))
         {
             Value = value;
             Id = id;
@@ -44,6 +46,7 @@ namespace Microsoft.Azure.KeyVault.Models
             Attributes = attributes;
             Tags = tags;
             Kid = kid;
+            Managed = managed;
         }
 
         /// <summary>
@@ -82,6 +85,12 @@ namespace Microsoft.Azure.KeyVault.Models
         /// </summary>
         [JsonProperty(PropertyName = "kid")]
         public string Kid { get; set; }
+
+        /// <summary>
+        /// Gets or sets true if the secret's lifetime is managed by key vault.
+        /// </summary>
+        [JsonProperty(PropertyName = "managed")]
+        public bool? Managed { get; set; }
 
     }
 }

@@ -413,18 +413,19 @@ namespace Microsoft.Azure.KeyVault
         /// <summary>
         /// Updates a certificate version.
         /// </summary>
-        /// <param name="certificateIdentifier">The URL for the certificate.</param>             
+        /// <param name="certificateIdentifier">The URL for the certificate.</param>      
+        /// <param name='certificatePolicy'>The management policy for the certificate.</param>       
         /// <param name="certificateAttributes">The attributes of the certificate (optional)</param>
         /// <param name="tags">Application-specific metadata in the form of key-value pairs</param>
         /// <param name="cancellationToken">Optional cancellation token</param>
         /// <returns>The updated certificate.</returns>
-        public static async Task<CertificateBundle> UpdateCertificateAsync(this IKeyVaultClient operations, string certificateIdentifier, CertificateAttributes certificateAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default(CancellationToken))
+        public static async Task<CertificateBundle> UpdateCertificateAsync(this IKeyVaultClient operations, string certificateIdentifier, CertificatePolicy certificatePolicy = default(CertificatePolicy), CertificateAttributes certificateAttributes = null, IDictionary<string, string> tags = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (string.IsNullOrWhiteSpace(certificateIdentifier))
                 throw new ArgumentNullException("certificateIdentifier");
 
             var certId = new CertificateIdentifier(certificateIdentifier);
-            using (var _result = await operations.UpdateCertificateWithHttpMessagesAsync(certId.Vault, certId.Name, certId.Version ?? string.Empty, certificateAttributes, tags, null, cancellationToken).ConfigureAwait(false))
+            using (var _result = await operations.UpdateCertificateWithHttpMessagesAsync(certId.Vault, certId.Name, certId.Version ?? string.Empty, certificatePolicy, certificateAttributes, tags, null, cancellationToken).ConfigureAwait(false))
             {
                 return _result.Body;
             }

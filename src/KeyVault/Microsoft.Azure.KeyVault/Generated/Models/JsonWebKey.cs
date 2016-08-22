@@ -30,8 +30,9 @@ namespace Microsoft.Azure.KeyVault.Models
         /// Initializes a new instance of the JsonWebKey class.
         /// </summary>
         /// <param name="kid">Key Identifier</param>
-        /// <param name="kty">Key type, usually RSA. Possible values include:
-        /// 'EC', 'RSA', 'RSA-HSM', 'oct'</param>
+        /// <param name="kty">Supported JsonWebKey key types (kty) for
+        /// Elliptic Curve, RSA, HSM, Octet, usually RSA. Possible values
+        /// include: 'EC', 'RSA', 'RSA-HSM', 'oct'</param>
         /// <param name="n">RSA modulus</param>
         /// <param name="e">RSA public exponent</param>
         /// <param name="d">RSA private exponent</param>
@@ -66,8 +67,9 @@ namespace Microsoft.Azure.KeyVault.Models
         public string Kid { get; set; }
 
         /// <summary>
-        /// Gets or sets key type, usually RSA. Possible values include: 'EC',
-        /// 'RSA', 'RSA-HSM', 'oct'
+        /// Gets or sets supported JsonWebKey key types (kty) for Elliptic
+        /// Curve, RSA, HSM, Octet, usually RSA. Possible values include:
+        /// 'EC', 'RSA', 'RSA-HSM', 'oct'
         /// </summary>
         [JsonProperty(PropertyName = "kty")]
         public string Kty { get; set; }
@@ -137,7 +139,7 @@ namespace Microsoft.Azure.KeyVault.Models
         /// Gets or sets symmetric key
         /// </summary>
         [JsonConverter(typeof(Base64UrlJsonConverter))]
-        [JsonProperty(PropertyName = "K")]
+        [JsonProperty(PropertyName = "k")]
         public byte[] K { get; set; }
 
         /// <summary>

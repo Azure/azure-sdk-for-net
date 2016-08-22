@@ -33,7 +33,7 @@
         "System.Runtime": "",
         "System.Runtime.Serialization": "",
         "System.Threading.Tasks": ""
-      },
+      }
     },
     "netstandard1.5": {
       "buildOptions": { "define": [ "PORTABLE" ] },

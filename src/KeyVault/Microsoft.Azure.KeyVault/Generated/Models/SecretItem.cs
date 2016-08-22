@@ -35,12 +35,15 @@ namespace Microsoft.Azure.KeyVault.Models
         /// key-value pairs</param>
         /// <param name="contentType">Type of the secret value such as a
         /// password</param>
-        public SecretItem(string id = default(string), SecretAttributes attributes = default(SecretAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), string contentType = default(string))
+        /// <param name="managed">True if the secret's lifetime is managed by
+        /// key vault.</param>
+        public SecretItem(string id = default(string), SecretAttributes attributes = default(SecretAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), string contentType = default(string), bool? managed = default(bool?))
         {
             Id = id;
             Attributes = attributes;
             Tags = tags;
             ContentType = contentType;
+            Managed = managed;
         }
 
         /// <summary>
@@ -67,6 +70,12 @@ namespace Microsoft.Azure.KeyVault.Models
         /// </summary>
         [JsonProperty(PropertyName = "contentType")]
         public string ContentType { get; set; }
+
+        /// <summary>
+        /// Gets or sets true if the secret's lifetime is managed by key vault.
+        /// </summary>
+        [JsonProperty(PropertyName = "managed")]
+        public bool? Managed { get; set; }
 
     }
 }
