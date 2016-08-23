@@ -16,7 +16,6 @@
 // governing permissions and limitations under the License.
 
 using System.Security.Cryptography;
-using Microsoft.Azure.KeyVault.Models;
 using Microsoft.Azure.KeyVault.WebKey;
 using Newtonsoft.Json;
 using Xunit;

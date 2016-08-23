@@ -1,21 +1,8 @@
-﻿//
-// Copyright © Microsoft Corporation, All Rights Reserved
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// THIS CODE IS PROVIDED *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS
-// OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION
-// ANY IMPLIED WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A
-// PARTICULAR PURPOSE, MERCHANTABILITY OR NON-INFRINGEMENT.
-//
-// See the Apache License, Version 2.0 for the specific language
-// governing permissions and limitations under the License.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
+// 
 
-using Microsoft.Azure.KeyVault.Models;
 using System;
 using System.Security.Cryptography;
 
@@ -28,7 +15,6 @@ namespace Microsoft.Azure.KeyVault.WebKey
         /// </summary>        
         /// <returns>An initialize AES provider</returns>
         /// <remarks>Throws InvalidOperationException if the JsonWebKey is not an Octet key</remarks>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage( "Microsoft.Reliability", "CA2000:Dispose objects before losing scope" )]
         public static Aes ToAes( this JsonWebKey self )
         {
             if ( self == null )

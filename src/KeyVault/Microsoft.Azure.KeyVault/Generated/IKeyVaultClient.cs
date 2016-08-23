@@ -17,6 +17,7 @@ namespace Microsoft.Azure.KeyVault
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using Microsoft.Azure.KeyVault.WebKey;
 
     /// <summary>
     /// Performs cryptographic key operations and vault operations against the

@@ -16,6 +16,7 @@ namespace Microsoft.Azure.KeyVault
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using Microsoft.Azure.KeyVault.WebKey;
 
     /// <summary>
     /// Extension methods for KeyVaultClient.
