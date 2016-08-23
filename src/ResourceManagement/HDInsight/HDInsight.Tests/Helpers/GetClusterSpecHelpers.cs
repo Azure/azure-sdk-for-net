@@ -141,136 +141,6 @@ namespace HDInsight.Tests.Helpers
             return cluster;
         }
 
-        public static ClusterCreateParametersExtended GetIaasAdJoinedClusterSpec()
-        {
-            var cluster = new ClusterCreateParametersExtended
-            {
-                Location = "East US 2",
-                Properties = new ClusterCreateProperties
-                {
-                    ClusterDefinition = new ClusterDefinition
-                    {
-                        ClusterType = "Hadoop"
-                    },
-                    ClusterVersion = "3.4",
-                    OperatingSystemType = OSType.Linux
-                }
-            };
-
-            var coreConfigs = new Dictionary<string, string>
-            {
-                {"fs.defaultFS", string.Format("wasb://{0}@{1}", DefaultContainer, StorageAccountName)},
-                {
-                    string.Format("fs.azure.account.key.{0}", StorageAccountName),
-                    StorageAccountKey
-                }
-            };
-            
-            var gatewayConfigs = new Dictionary<string, string>
-            {
-                {"restAuthCredential.isEnabled", "true"},
-                {"restAuthCredential.username", HttpUser},
-                {"restAuthCredential.password", HttpPassword}
-            };
-
-            var configurations = new Dictionary<string, Dictionary<string, string>>
-            {
-                {"core-site", coreConfigs},
-                {"gateway", gatewayConfigs}
-            };
-
-            var serializedConfig = JsonConvert.SerializeObject(configurations);
-            cluster.Properties.ClusterDefinition.Configurations = serializedConfig;
-
-            cluster.Tags.Add("tag1", "value1");
-            cluster.Tags.Add("tag2", "value2");
-
-            var sshPublicKeys = new List<SshPublicKey>();
-            var sshPublicKey = new SshPublicKey
-            {
-                CertificateData =
-                    string.Format("ssh-rsa {0}", SshKey)
-            };
-            sshPublicKeys.Add(sshPublicKey);
-
-            var hardwareProfile = new HardwareProfile
-            {
-                VmSize = "Large"
-            };
-            var osProfile = new OsProfile
-            {
-                LinuxOperatingSystemProfile = new LinuxOperatingSystemProfile
-                {
-                    UserName = SshUser,
-                    Password = SshPassword,
-                    SshProfile = new SshProfile
-                    {
-                        SshPublicKeys = sshPublicKeys
-                    }
-                }
-            };
-
-            var virtualNetworkProfile = new VirtualNetworkProfile
-            {
-                Id = VirtualNetworkId,
-                SubnetName = SubnetName
-            };
-
-            var securityProfile = new SecurityProfile
-            {
-                ActiveDirectoryConfiguration = new ActiveDirectoryConfiguration
-                {
-                    DirectoryType = DirectoryType.ActiveDirectory,
-                    Domain = string.Format("{0}.{1}", DomainNameParts[0],DomainNameParts[1]),
-                    DomainAdminPassword = DomainAdminPassword,
-                    DomainAdminUsername = DomainAdminUserName,
-                    LdapUrls = LdapUrls,
-                    OrganizationalUnitDN = OrganizationalUnitDN 
-                }
-            };
-           
-
-            var headNode = new Role
-            {
-                Name = "headnode",
-                TargetInstanceCount = 2,
-                HardwareProfile = hardwareProfile,
-                OsProfile = osProfile,
-                VirtualNetworkProfile = virtualNetworkProfile,
-                SecurityProfile = securityProfile
-            };
-
-            var workerNode = new Role
-            {
-                Name = "workernode",
-                TargetInstanceCount = 1,
-                HardwareProfile = hardwareProfile,
-                OsProfile = osProfile,
-                VirtualNetworkProfile = virtualNetworkProfile,
-                SecurityProfile = securityProfile
-            };
-
-            var zookeeperNode = new Role
-            {
-                Name = "zookeepernode",
-                TargetInstanceCount = 3,
-                HardwareProfile = new HardwareProfile
-                {
-                    VmSize = "Small"
-                },
-                OsProfile = osProfile,
-                VirtualNetworkProfile = virtualNetworkProfile,
-                SecurityProfile = securityProfile
-            };
-
-            cluster.Properties.ComputeProfile = new ComputeProfile();
-            cluster.Properties.ComputeProfile.Roles.Add(headNode);
-            cluster.Properties.ComputeProfile.Roles.Add(workerNode);
-            cluster.Properties.ComputeProfile.Roles.Add(zookeeperNode);
-
-            return cluster;
-        }
-
         public static ClusterCreateParametersExtended GetPaasClusterSpec()
         {
             var cluster = new ClusterCreateParametersExtended
@@ -414,6 +284,43 @@ namespace HDInsight.Tests.Helpers
                 HeadNodeSize = "ExtraLarge",
                 ZookeeperNodeSize = "Large",
             };
+            return clusterparams;
+        }
+
+        public static ClusterCreateParameters GetAdJoinedCreateParametersIaas()
+        {
+            var clusterparams = new ClusterCreateParameters
+            {
+                ClusterSizeInNodes = 3,
+                ClusterType = "Hadoop",
+                WorkerNodeSize = "Large",
+                DefaultStorageAccountName = StorageAccountName,
+                DefaultStorageAccountKey = StorageAccountKey,
+                OSType = OSType.Linux,
+                UserName = HttpUser,
+                Password = HttpPassword,
+                DefaultStorageContainer = DefaultContainer,
+                Location = "East US 2",
+                SshUserName = SshUser,
+                SshPassword = SshPassword,
+                SshPublicKey = SshKey,
+                Version = "3.4",
+                VirtualNetworkId = VirtualNetworkId,
+                SubnetName = SubnetName,
+                SecurityProfile = new SecurityProfile
+                {
+                    ActiveDirectoryConfiguration = new ActiveDirectoryConfiguration
+                    {
+                        DirectoryType = DirectoryType.ActiveDirectory,
+                        Domain = string.Format("{0}.{1}", DomainNameParts[0], DomainNameParts[1]),
+                        DomainAdminPassword = DomainAdminPassword,
+                        DomainAdminUsername = DomainAdminUserName,
+                        LdapUrls = LdapUrls,
+                        OrganizationalUnitDN = OrganizationalUnitDN
+                    }
+                }
+            };
+
             return clusterparams;
         }
 

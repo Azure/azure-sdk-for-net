@@ -106,13 +106,13 @@ namespace HDInsight.Tests
                 var client = HDInsightManagementTestUtilities.GetHDInsightManagementClient(handler);
                 var resourceManagementClient = HDInsightManagementTestUtilities.GetResourceManagementClient(handler);
                 var resourceGroup = HDInsightManagementTestUtilities.CreateResourceGroup(resourceManagementClient, "East US 2");
-
-                var cluster = GetClusterSpecHelpers.GetIaasAdJoinedClusterSpec();
+                
+                var cluster = GetClusterSpecHelpers.GetAdJoinedCreateParametersIaas();
                 const string dnsname = "hdisdk-adcluster";
 
                 var createresponse = client.Clusters.Create(resourceGroup, dnsname, cluster);
                 Assert.Equal(cluster.Location, createresponse.Cluster.Location);
-                Assert.Equal(cluster.Properties.ClusterDefinition.ClusterType, createresponse.Cluster.Properties.ClusterDefinition.ClusterType);
+                Assert.Equal(cluster.ClusterType, createresponse.Cluster.Properties.ClusterDefinition.ClusterType);
                 Assert.Null(createresponse.Cluster.Properties.ClusterDefinition.Configurations);
                 Assert.Equal(createresponse.StatusCode, HttpStatusCode.OK);
                 Assert.Equal(createresponse.Cluster.Properties.ProvisioningState, HDInsightClusterProvisioningState.Succeeded);
