@@ -405,6 +405,64 @@ namespace Microsoft.Azure.Batch.Protocol
             }
 
             /// <summary>
+            /// Reactivates the specified task.
+            /// </summary>
+            /// <remarks>
+            /// Reactivation makes a task eligible to be retried again up to its maximum
+            /// retry count. This will fail for tasks that are not completed or that
+            /// previously completed successfully (with an exit code of 0). Additionally,
+            /// this will fail if the job has completed (or is terminating or deleting).
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='jobId'>
+            /// The id of the job containing the task.
+            /// </param>
+            /// <param name='taskId'>
+            /// The id of the task to reactivate.
+            /// </param>
+            /// <param name='taskReactivateOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            public static TaskReactivateHeaders Reactivate(this ITaskOperations operations, string jobId, string taskId, TaskReactivateOptions taskReactivateOptions = default(TaskReactivateOptions))
+            {
+                return Task.Factory.StartNew(s => ((ITaskOperations)s).ReactivateAsync(jobId, taskId, taskReactivateOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Reactivates the specified task.
+            /// </summary>
+            /// <remarks>
+            /// Reactivation makes a task eligible to be retried again up to its maximum
+            /// retry count. This will fail for tasks that are not completed or that
+            /// previously completed successfully (with an exit code of 0). Additionally,
+            /// this will fail if the job has completed (or is terminating or deleting).
+            /// </remarks>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='jobId'>
+            /// The id of the job containing the task.
+            /// </param>
+            /// <param name='taskId'>
+            /// The id of the task to reactivate.
+            /// </param>
+            /// <param name='taskReactivateOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<TaskReactivateHeaders> ReactivateAsync(this ITaskOperations operations, string jobId, string taskId, TaskReactivateOptions taskReactivateOptions = default(TaskReactivateOptions), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ReactivateWithHttpMessagesAsync(jobId, taskId, taskReactivateOptions, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Headers;
+                }
+            }
+
+            /// <summary>
             /// Lists all of the tasks that are associated with the specified job.
             /// </summary>
             /// <param name='operations'>

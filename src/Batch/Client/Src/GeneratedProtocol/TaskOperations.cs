@@ -2306,6 +2306,296 @@ namespace Microsoft.Azure.Batch.Protocol
         }
 
         /// <summary>
+        /// Reactivates the specified task.
+        /// </summary>
+        /// <remarks>
+        /// Reactivation makes a task eligible to be retried again up to its maximum
+        /// retry count. This will fail for tasks that are not completed or that
+        /// previously completed successfully (with an exit code of 0). Additionally,
+        /// this will fail if the job has completed (or is terminating or deleting).
+        /// </remarks>
+        /// <param name='jobId'>
+        /// The id of the job containing the task.
+        /// </param>
+        /// <param name='taskId'>
+        /// The id of the task to reactivate.
+        /// </param>
+        /// <param name='taskReactivateOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="BatchErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<AzureOperationHeaderResponse<TaskReactivateHeaders>> ReactivateWithHttpMessagesAsync(string jobId, string taskId, TaskReactivateOptions taskReactivateOptions = default(TaskReactivateOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (jobId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "jobId");
+            }
+            if (taskId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "taskId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            int? timeout = default(int?);
+            if (taskReactivateOptions != null)
+            {
+                timeout = taskReactivateOptions.Timeout;
+            }
+            string clientRequestId = default(string);
+            if (taskReactivateOptions != null)
+            {
+                clientRequestId = taskReactivateOptions.ClientRequestId;
+            }
+            bool? returnClientRequestId = default(bool?);
+            if (taskReactivateOptions != null)
+            {
+                returnClientRequestId = taskReactivateOptions.ReturnClientRequestId;
+            }
+            DateTime? ocpDate = default(DateTime?);
+            if (taskReactivateOptions != null)
+            {
+                ocpDate = taskReactivateOptions.OcpDate;
+            }
+            string ifMatch = default(string);
+            if (taskReactivateOptions != null)
+            {
+                ifMatch = taskReactivateOptions.IfMatch;
+            }
+            string ifNoneMatch = default(string);
+            if (taskReactivateOptions != null)
+            {
+                ifNoneMatch = taskReactivateOptions.IfNoneMatch;
+            }
+            DateTime? ifModifiedSince = default(DateTime?);
+            if (taskReactivateOptions != null)
+            {
+                ifModifiedSince = taskReactivateOptions.IfModifiedSince;
+            }
+            DateTime? ifUnmodifiedSince = default(DateTime?);
+            if (taskReactivateOptions != null)
+            {
+                ifUnmodifiedSince = taskReactivateOptions.IfUnmodifiedSince;
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("jobId", jobId);
+                tracingParameters.Add("taskId", taskId);
+                tracingParameters.Add("timeout", timeout);
+                tracingParameters.Add("clientRequestId", clientRequestId);
+                tracingParameters.Add("returnClientRequestId", returnClientRequestId);
+                tracingParameters.Add("ocpDate", ocpDate);
+                tracingParameters.Add("ifMatch", ifMatch);
+                tracingParameters.Add("ifNoneMatch", ifNoneMatch);
+                tracingParameters.Add("ifModifiedSince", ifModifiedSince);
+                tracingParameters.Add("ifUnmodifiedSince", ifUnmodifiedSince);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "Reactivate", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "jobs/{jobId}/tasks/{taskId}/reactivate").ToString();
+            _url = _url.Replace("{jobId}", Uri.EscapeDataString(jobId));
+            _url = _url.Replace("{taskId}", Uri.EscapeDataString(taskId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (timeout != null)
+            {
+                _queryParameters.Add(string.Format("timeout={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(timeout, this.Client.SerializationSettings).Trim('"'))));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (clientRequestId != null)
+            {
+                if (_httpRequest.Headers.Contains("client-request-id"))
+                {
+                    _httpRequest.Headers.Remove("client-request-id");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("client-request-id", clientRequestId);
+            }
+            if (returnClientRequestId != null)
+            {
+                if (_httpRequest.Headers.Contains("return-client-request-id"))
+                {
+                    _httpRequest.Headers.Remove("return-client-request-id");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("return-client-request-id", SafeJsonConvert.SerializeObject(returnClientRequestId, this.Client.SerializationSettings).Trim('"'));
+            }
+            if (ocpDate != null)
+            {
+                if (_httpRequest.Headers.Contains("ocp-date"))
+                {
+                    _httpRequest.Headers.Remove("ocp-date");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("ocp-date", SafeJsonConvert.SerializeObject(ocpDate, new DateTimeRfc1123JsonConverter()).Trim('"'));
+            }
+            if (ifMatch != null)
+            {
+                if (_httpRequest.Headers.Contains("If-Match"))
+                {
+                    _httpRequest.Headers.Remove("If-Match");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("If-Match", ifMatch);
+            }
+            if (ifNoneMatch != null)
+            {
+                if (_httpRequest.Headers.Contains("If-None-Match"))
+                {
+                    _httpRequest.Headers.Remove("If-None-Match");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("If-None-Match", ifNoneMatch);
+            }
+            if (ifModifiedSince != null)
+            {
+                if (_httpRequest.Headers.Contains("If-Modified-Since"))
+                {
+                    _httpRequest.Headers.Remove("If-Modified-Since");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("If-Modified-Since", SafeJsonConvert.SerializeObject(ifModifiedSince, new DateTimeRfc1123JsonConverter()).Trim('"'));
+            }
+            if (ifUnmodifiedSince != null)
+            {
+                if (_httpRequest.Headers.Contains("If-Unmodified-Since"))
+                {
+                    _httpRequest.Headers.Remove("If-Unmodified-Since");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("If-Unmodified-Since", SafeJsonConvert.SerializeObject(ifUnmodifiedSince, new DateTimeRfc1123JsonConverter()).Trim('"'));
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 204)
+            {
+                var ex = new BatchErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    BatchError _errorBody = SafeJsonConvert.DeserializeObject<BatchError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationHeaderResponse<TaskReactivateHeaders>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("request-id").FirstOrDefault();
+            }
+            try
+            {
+                _result.Headers = _httpResponse.GetHeadersAsJson().ToObject<TaskReactivateHeaders>(JsonSerializer.Create(this.Client.DeserializationSettings));
+            }
+            catch (JsonException ex)
+            {
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw new SerializationException("Unable to deserialize the headers.", _httpResponse.GetHeadersAsJson().ToString(), ex);
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
         /// Lists all of the tasks that are associated with the specified job.
         /// </summary>
         /// <param name='nextPageLink'>

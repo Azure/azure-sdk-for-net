@@ -247,6 +247,38 @@ namespace Microsoft.Azure.Batch.Protocol
         /// </exception>
         Task<AzureOperationHeaderResponse<TaskTerminateHeaders>> TerminateWithHttpMessagesAsync(string jobId, string taskId, TaskTerminateOptions taskTerminateOptions = default(TaskTerminateOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Reactivates the specified task.
+        /// </summary>
+        /// <remarks>
+        /// Reactivation makes a task eligible to be retried again up to its
+        /// maximum retry count. This will fail for tasks that are not
+        /// completed or that previously completed successfully (with an exit
+        /// code of 0). Additionally, this will fail if the job has completed
+        /// (or is terminating or deleting).
+        /// </remarks>
+        /// <param name='jobId'>
+        /// The id of the job containing the task.
+        /// </param>
+        /// <param name='taskId'>
+        /// The id of the task to reactivate.
+        /// </param>
+        /// <param name='taskReactivateOptions'>
+        /// Additional parameters for the operation
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="BatchErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationHeaderResponse<TaskReactivateHeaders>> ReactivateWithHttpMessagesAsync(string jobId, string taskId, TaskReactivateOptions taskReactivateOptions = default(TaskReactivateOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Lists all of the tasks that are associated with the specified job.
         /// </summary>
         /// <param name='nextPageLink'>
