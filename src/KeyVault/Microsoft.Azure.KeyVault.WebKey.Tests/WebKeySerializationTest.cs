@@ -20,7 +20,7 @@ using Microsoft.Azure.KeyVault.WebKey;
 using Newtonsoft.Json;
 using Xunit;
 
-namespace Microsoft.Azure.KeyVault.Tests
+namespace Microsoft.Azure.KeyVault.WebKey.Tests
 {
     public class TestSerialization
     {

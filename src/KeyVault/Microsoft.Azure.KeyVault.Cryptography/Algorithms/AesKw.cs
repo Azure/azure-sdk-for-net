@@ -16,7 +16,6 @@
 // governing permissions and limitations under the License.
 
 using System;
-using System.Linq;
 using System.Security.Cryptography;
 
 namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
