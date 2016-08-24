@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// Note that this method can result in a call to the cloud to fetch the network interface information.
         /// </summary>
         /// <returns>the primary network interface associated with this resource</returns>
-        INetworkInterface PrimaryNetworkInterface { get; }
+        INetworkInterface PrimaryNetworkInterface ();
 
         /// <returns>the resource id of the primary network interface associated with this resource</returns>
         string PrimaryNetworkInterfaceId { get; }

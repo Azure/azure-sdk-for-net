@@ -7,8 +7,8 @@
 namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
     using Microsoft.Azure.Management.Compute.Models;
+    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
     /// <summary>
     /// The first stage of a  data disk definition.
     /// @param <ParentT> the return type of the final {@link WithAttach#attach()}

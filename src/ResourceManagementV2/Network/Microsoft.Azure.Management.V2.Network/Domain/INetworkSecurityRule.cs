@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.V2.Network
     /// A network security rule in a network security group.
     /// </summary>
     public interface INetworkSecurityRule  :
-        IWrapper<SecurityRuleInner>,
+        IWrapper<Microsoft.Azure.Management.Network.Models.SecurityRuleInner>,
         IChildResource
     {
         /// <returns>the network traffic direction the rule applies to</returns>

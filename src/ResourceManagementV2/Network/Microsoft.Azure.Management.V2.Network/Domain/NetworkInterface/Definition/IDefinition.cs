@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition
     /// The stage of the network interface definition allowing to specify the resource group.
     /// </summary>
     public interface IWithGroup  :
-        Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition.IWithGroup<IWithPrimaryNetwork>
+        Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryNetwork>
     {
     }
     /// <summary>
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition
         /// </summary>
         /// <param name="creatable">creatable a creatable definition for a new network security group</param>
         /// <returns>the next stage of the network interface definition</returns>
-        IWithCreate WithNewNetworkSecurityGroup (ICreatable<INetworkSecurityGroup> creatable);
+        IWithCreate WithNewNetworkSecurityGroup (ICreatable<Microsoft.Azure.Management.V2.Network.INetworkSecurityGroup> creatable);
 
         /// <summary>
         /// Associates an existing network security group with the network interface.
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition
         /// </summary>
         /// <param name="creatable">creatable a creatable definition for a new virtual network</param>
         /// <returns>the next stage of the network interface definition</returns>
-        IWithPrimaryPrivateIp WithNewPrimaryNetwork (ICreatable<INetwork> creatable);
+        IWithPrimaryPrivateIp WithNewPrimaryNetwork (ICreatable<Microsoft.Azure.Management.V2.Network.INetwork> creatable);
 
         /// <summary>
         /// Creates a new virtual network to associate with the network interface's primary IP configuration.
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition
         /// </summary>
         /// <param name="name">name name for the IP configuration</param>
         /// <returns>the first stage of a secondary IP configuration definition</returns>
-        Microsoft.Azure.Management.V2.Network.NicIpConfiguration.Definition.IBlank<IWithCreate> DefineSecondaryIpConfiguration (string name);
+        Microsoft.Azure.Management.V2.Network.NicIpConfiguration.Definition.IBlank<Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate> DefineSecondaryIpConfiguration (string name);
 
     }
     /// <summary>
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition
         /// </summary>
         /// <param name="creatable">creatable a creatable definition for a new public IP</param>
         /// <returns>the next stage of the network interface definition</returns>
-        IWithCreate WithNewPrimaryPublicIpAddress (ICreatable<IPublicIpAddress> creatable);
+        IWithCreate WithNewPrimaryPublicIpAddress (ICreatable<Microsoft.Azure.Management.V2.Network.IPublicIpAddress> creatable);
 
         /// <summary>
         /// Creates a new public IP address in the same region and group as the resource and associate it
@@ -199,8 +199,8 @@ namespace Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition
     /// for any other optional settings to be specified.
     /// </summary>
     public interface IWithCreate  :
-        ICreatable<INetworkInterface>,
-        IDefinitionWithTags<IWithCreate>,
+        ICreatable<Microsoft.Azure.Management.V2.Network.INetworkInterface>,
+        IDefinitionWithTags<Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate>,
         IWithPrimaryPublicIpAddress,
         IWithNetworkSecurityGroup,
         IWithSecondaryIpConfiguration

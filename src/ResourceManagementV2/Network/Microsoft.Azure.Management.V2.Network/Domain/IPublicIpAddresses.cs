@@ -13,12 +13,12 @@ namespace Microsoft.Azure.Management.V2.Network
     /// Entry point to public IP address management.
     /// </summary>
     public interface IPublicIpAddresses  :
-        ISupportsListing<IPublicIpAddress>,
-        ISupportsCreating<IBlank>,
+        ISupportsListing<Microsoft.Azure.Management.V2.Network.IPublicIpAddress>,
+        ISupportsCreating<Microsoft.Azure.Management.V2.Network.PublicIpAddress.Definition.IBlank>,
         ISupportsDeleting,
-        ISupportsListingByGroup<IPublicIpAddress>,
-        ISupportsGettingByGroup<IPublicIpAddress>,
-        ISupportsGettingById<IPublicIpAddress>,
+        ISupportsListingByGroup<Microsoft.Azure.Management.V2.Network.IPublicIpAddress>,
+        ISupportsGettingByGroup<Microsoft.Azure.Management.V2.Network.IPublicIpAddress>,
+        ISupportsGettingById<Microsoft.Azure.Management.V2.Network.IPublicIpAddress>,
         ISupportsDeletingByGroup
     {
     }

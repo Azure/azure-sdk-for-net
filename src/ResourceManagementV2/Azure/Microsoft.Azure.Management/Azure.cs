@@ -6,6 +6,7 @@ using Microsoft.Azure.Management.V2.Resource.Core;
 using Microsoft.Azure.Management.V2.Storage;
 using Microsoft.Rest;
 using System.Linq;
+using Microsoft.Azure.Management.V2.Network;
 
 namespace Microsoft.Azure.Management
 {
@@ -16,6 +17,7 @@ namespace Microsoft.Azure.Management
         private IResourceManager resourceManager;
         private IStorageManager storageManager;
         private IComputeManager computeManager;
+        private INetworkManager networkManager;
 
         #endregion
 
@@ -50,6 +52,38 @@ namespace Microsoft.Azure.Management
             }
         }
 
+        public INetworks Networks
+        {
+            get
+            {
+                return networkManager.Networks;
+            }
+        }
+
+        public INetworkSecurityGroups NetworkSecurityGroups
+        {
+            get
+            {
+                return networkManager.NetworkSecurityGroups;
+            }
+        }
+
+        public IPublicIpAddresses PublicIpAddresses
+        {
+            get
+            {
+                return networkManager.PublicIpAddresses;
+            }
+        }
+
+        public INetworkInterfaces NetworkInterfaces
+        {
+            get
+            {
+                return networkManager.NetworkInterfaces;
+            }
+        }
+
         #endregion
 
         #region ctrs
@@ -59,6 +93,7 @@ namespace Microsoft.Azure.Management
             resourceManager = ResourceManager2.Authenticate(restClient).WithSubscription(subscriptionId);
             storageManager = StorageManager.Authenticate(restClient, subscriptionId);
             computeManager = ComputeManager.Authenticate(restClient, subscriptionId);
+            networkManager = NetworkManager.Authenticate(restClient, subscriptionId);
             SubscriptionId = subscriptionId;
         }
 
@@ -200,5 +235,13 @@ namespace Microsoft.Azure.Management
         IStorageAccounts StorageAccounts { get; }
 
         IVirtualMachines VirtualMachines { get; }
+
+        INetworks Networks { get; }
+
+        INetworkSecurityGroups NetworkSecurityGroups { get; }
+
+        IPublicIpAddresses PublicIpAddresses { get; }
+
+        INetworkInterfaces NetworkInterfaces { get; }
     }
 }

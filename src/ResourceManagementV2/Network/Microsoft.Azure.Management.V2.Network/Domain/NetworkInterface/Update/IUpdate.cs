@@ -7,11 +7,11 @@
 namespace Microsoft.Azure.Management.V2.Network.NetworkInterface.Update
 {
 
-    using Microsoft.Azure.Management.V2.Network;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.V2.Resource.Core.Resource.Update;
-    using Microsoft.Azure.Management.V2.Network.NicIpConfiguration.UpdateDefinition;
+    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.V2.Network;
     using Microsoft.Azure.Management.V2.Network.NicIpConfiguration.Update;
+    using Microsoft.Azure.Management.V2.Network.NicIpConfiguration.UpdateDefinition;
     /// <summary>
     /// The template for an update operation, containing all the settings that
     /// can be modified.
@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.V2.Network.NetworkInterface.Update
     /// Call {@link Update#apply()} to apply the changes to the resource in Azure.
     /// </summary>
     public interface IUpdate  :
-        IAppliable<INetworkInterface>,
+        IAppliable<Microsoft.Azure.Management.V2.Network.INetworkInterface>,
         IUpdateWithTags<Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate>,
         IWithPrimaryNetworkSubnet,
         IWithPrimaryPrivateIp,
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.V2.Network.NetworkInterface.Update
         /// </summary>
         /// <param name="creatable">creatable a creatable definition for a new public IP</param>
         /// <returns>the next stage of the network interface update</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate WithNewPrimaryPublicIpAddress (ICreatable<IPublicIpAddress> creatable);
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate WithNewPrimaryPublicIpAddress (ICreatable<Microsoft.Azure.Management.V2.Network.IPublicIpAddress> creatable);
 
         /// <summary>
         /// Creates a new public IP address in the same region and group as the resource and associate it
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.V2.Network.NetworkInterface.Update
         /// </summary>
         /// <param name="creatable">creatable a creatable definition for a new network security group</param>
         /// <returns>the next stage of the network interface update</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate WithNewNetworkSecurityGroup (ICreatable<INetworkSecurityGroup> creatable);
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate WithNewNetworkSecurityGroup (ICreatable<Microsoft.Azure.Management.V2.Network.INetworkSecurityGroup> creatable);
 
         /// <summary>
         /// Associates an existing network security group with the network interface.

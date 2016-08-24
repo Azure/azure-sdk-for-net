@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.V2.Network
     /// <summary>
     /// Implementation for {@link NetworkInterfaces}.
     /// </summary>
-    internal class NetworkInterfacesImpl :
+    public partial class NetworkInterfacesImpl :
         GroupableResources<INetworkInterface, NetworkInterfaceImpl, NetworkInterfaceInner, INetworkInterfacesOperations, NetworkManager>,
         INetworkInterfaces
     {
@@ -79,44 +79,12 @@ namespace Microsoft.Azure.Management.V2.Network
             base.MyManager);
         }
 
-        IBlank ISupportsCreating<IBlank>.Define(string name)
-        {
-            return WrapModel(name);
-        }
-
-        PagedList<INetworkInterface> ISupportsListing<INetworkInterface>.List()
-        {
-            IEnumerable<NetworkInterfaceInner> data = InnerCollection.ListAll();
-            var pagedList = new PagedList<NetworkInterfaceInner>(data);
-            return WrapList(pagedList);
-        }
-
-        PagedList<INetworkInterface> ISupportsListingByGroup<INetworkInterface>.ListByGroup(string resourceGroupName)
-        {
-            return ((ISupportsListingByGroup<INetworkInterface>)this).ListByGroupAsync(resourceGroupName).Result;
-        }
-
         async Task<PagedList<INetworkInterface>> ISupportsListingByGroup<INetworkInterface>.ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken)
         {
             var data = await this.InnerCollection.ListAsync(resourceGroupName);
             return WrapList(new PagedList<NetworkInterfaceInner>(data));
         }
 
-        void ISupportsDeleting.Delete(string id)
-        {
-            ((ISupportsDeleting)this).DeleteAsync(id).Wait();
-        }
-
-        async Task ISupportsDeleting.DeleteAsync(string id, CancellationToken cancellationToken)
-        {
-            await this.InnerCollection.DeleteAsync(ResourceUtils.GroupFromResourceId(id),
-                ResourceUtils.NameFromResourceId(id), cancellationToken);
-        }
-
-        void ISupportsDeletingByGroup.Delete(string groupName, string name)
-        {
-            this.InnerCollection.Delete(groupName, name);
-        }
 
         async Task ISupportsDeletingByGroup.DeleteAsync(string groupName, string name, CancellationToken cancellationToken)
         {
@@ -127,6 +95,11 @@ namespace Microsoft.Azure.Management.V2.Network
         {
             var data = await this.InnerCollection.GetAsync(groupName, name);
             return this.WrapModel(data);
+        }
+
+        async Task ISupportsDeleting.DeleteAsync(string id, CancellationToken cancellationToken)
+        {
+           await this.InnerCollection.DeleteAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id), cancellationToken);
         }
     }
 }

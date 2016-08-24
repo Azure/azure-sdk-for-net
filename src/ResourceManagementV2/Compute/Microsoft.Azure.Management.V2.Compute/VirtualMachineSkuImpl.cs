@@ -3,7 +3,7 @@ using Microsoft.Azure.Management.V2.Resource.Core;
 
 namespace Microsoft.Azure.Management.V2.Compute
 {
-    internal class VirtualMachineSkuImpl : IVirtualMachineSku
+    public partial class VirtualMachineSkuImpl : IVirtualMachineSku
     {
         private IVirtualMachineOffer offer;
         private IVirtualMachineImagesInSku imagesInSku;

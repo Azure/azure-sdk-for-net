@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.V2.Network
     /// Implementation for {@link PublicIpAddress} and its create and update interfaces.
     /// </summary>
     /// 
-    public class PublicIpAddressImpl  :
+    public partial class PublicIpAddressImpl  :
         GroupableResource<IPublicIpAddress,
             PublicIPAddressInner, 
             Rest.Azure.Resource,
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.V2.Network
 
 
         /// <returns>the assigned reverse FQDN, if any</returns>
-        string Microsoft.Azure.Management.V2.Network.IPublicIpAddress.ReverseFqdn
+        string ReverseFqdn
         {
             get
             {
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.V2.Network
         }
         
         /// <returns>the assigned leaf domain label</returns>
-        string Microsoft.Azure.Management.V2.Network.IPublicIpAddress.LeafDomainLabel
+        string LeafDomainLabel
         {
             get
             {
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.V2.Network
         }
         
         /// <returns>the assigned FQDN (fully qualified domain name)</returns>
-        string Microsoft.Azure.Management.V2.Network.IPublicIpAddress.Fqdn
+        string Fqdn
         {
             get
             {
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.V2.Network
         }
         
         /// <returns>the idle connection timeout setting (in minutes)</returns>
-        int? Microsoft.Azure.Management.V2.Network.IPublicIpAddress.IdleTimeoutInMinutes
+        int? IdleTimeoutInMinutes
         {
             get
             {
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Management.V2.Network
         }
         
         /// <returns>the assigned IP address</returns>
-        string Microsoft.Azure.Management.V2.Network.IPublicIpAddress.IpAddress
+        string IpAddress
         {
             get
             {
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.V2.Network
         }
         
         /// <returns>the IP address allocation method (Static/Dynamic)</returns>
-        string Microsoft.Azure.Management.V2.Network.IPublicIpAddress.IpAllocationMethod
+        string IpAllocationMethod
         {
             get
             {
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="reverseFQDN">reverseFQDN the reverse FQDN to assign</param>
         /// <returns>the next stage of the resource update</returns>
-        IUpdate Microsoft.Azure.Management.V2.Network.PublicIpAddress.Update.IWithReverseFQDN.WithReverseFqdn(string reverseFQDN)
+        IUpdate WithReverseFqdn(string reverseFQDN)
         {
             this.parameters.DnsSettings.ReverseFqdn = reverseFQDN.ToLower();
             return this;
@@ -130,31 +130,9 @@ namespace Microsoft.Azure.Management.V2.Network
         /// Ensures that no reverse FQDN will be used.
         /// </summary>
         /// <returns>The next stage of the resource update</returns>
-        IUpdate Microsoft.Azure.Management.V2.Network.PublicIpAddress.Update.IWithReverseFQDN.WithoutReverseFqdn()
+        IUpdate WithoutReverseFqdn()
         {
             return ((PublicIpAddress.Update.IWithReverseFQDN)this).WithReverseFqdn(null);
-        }
-
-        /// <summary>
-        /// Specifies the reverse FQDN to assign to this public IP address.
-        /// <p>
-        /// </summary>
-        /// <param name="reverseFQDN">reverseFQDN the reverse FQDN to assign</param>
-        /// <returns>the next stage of the resource definition</returns>
-        IWithCreate Microsoft.Azure.Management.V2.Network.PublicIpAddress.Definition.IWithReverseFQDN.WithReverseFqdn(string reverseFQDN)
-        {
-            this.parameters.DnsSettings.ReverseFqdn = reverseFQDN.ToLower();
-            return null;
-        }
-
-        /// <summary>
-        /// Ensures that no reverse FQDN will be used.
-        /// </summary>
-        /// <returns>the next stage of the resource definition</returns>
-        IWithCreate Microsoft.Azure.Management.V2.Network.PublicIpAddress.Definition.IWithReverseFQDN.WithoutReverseFqdn()
-        {
-
-            return ((PublicIpAddress.Definition.IWithReverseFQDN)this).WithReverseFqdn(null);
         }
 
         /// <summary>
@@ -162,7 +140,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="minutes">minutes the length of the time out in minutes</param>
         /// <returns>the next stage of the resource update</returns>
-        IUpdate Microsoft.Azure.Management.V2.Network.PublicIpAddress.Update.IWithIdleTimout.WithIdleTimeoutInMinutes(int minutes)
+        IUpdate WithIdleTimeoutInMinutes(int minutes)
         {
 
             this.parameters.IdleTimeoutInMinutes = minutes;
@@ -175,7 +153,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// This means that this public IP address will not be associated with a domain name.
         /// </summary>
         /// <returns>the next stage of the resource update</returns>
-        IUpdate Microsoft.Azure.Management.V2.Network.PublicIpAddress.Update.IWithLeafDomainLabel.WithoutLeafDomainLabel()
+        IUpdate WithoutLeafDomainLabel()
         {
 
             return ((PublicIpAddress.Update.IWithLeafDomainLabel)this).WithLeafDomainLabel(null);
@@ -189,32 +167,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="dnsName">dnsName the leaf domain label to use. This must follow the required naming convention for leaf domain names.</param>
         /// <returns>the next stage of the resource update</returns>
-        IUpdate Microsoft.Azure.Management.V2.Network.PublicIpAddress.Update.IWithLeafDomainLabel.WithLeafDomainLabel(string dnsName)
-        {
-            this.parameters.DnsSettings.DomainNameLabel = dnsName.ToLower();
-            return this;
-        }
-
-        /// <summary>
-        /// Ensures that no leaf domain label will be used.
-        /// <p>
-        /// This means that this public IP address will not be associated with a domain name.
-        /// </summary>
-        /// <returns>the next stage of the public IP address definition</returns>
-        IWithCreate Microsoft.Azure.Management.V2.Network.PublicIpAddress.Definition.IWithLeafDomainLabel.WithoutLeafDomainLabel()
-        {
-            return ((PublicIpAddress.Definition.IWithLeafDomainLabel)this).WithLeafDomainLabel(null);
-        }
-
-        /// <summary>
-        /// Specifies the leaf domain label to associate with this public IP address.
-        /// <p>
-        /// The fully qualified domain name (FQDN)
-        /// will be constructed automatically by appending the rest of the domain to this label.
-        /// </summary>
-        /// <param name="dnsName">dnsName the leaf domain label to use. This must follow the required naming convention for leaf domain names.</param>
-        /// <returns>the next stage of the public IP address definition</returns>
-        IWithCreate Microsoft.Azure.Management.V2.Network.PublicIpAddress.Definition.IWithLeafDomainLabel.WithLeafDomainLabel(string dnsName)
+        IUpdate WithLeafDomainLabel(string dnsName)
         {
             this.parameters.DnsSettings.DomainNameLabel = dnsName.ToLower();
             return this;
@@ -227,7 +180,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// obtain the actual IP address allocated for this resource by Azure
         /// </summary>
         /// <returns>the next stage of the resource update</returns>
-        IUpdate Microsoft.Azure.Management.V2.Network.PublicIpAddress.Update.IWithIpAddress.WithStaticIp()
+        IUpdate WithStaticIp()
         {
             this.parameters.PublicIPAllocationMethod = IPAllocationMethod.Static;
             return this;
@@ -237,43 +190,9 @@ namespace Microsoft.Azure.Management.V2.Network
         /// Enables dynamic IP address allocation.
         /// </summary>
         /// <returns>the next stage of the resource update</returns>
-        IUpdate Microsoft.Azure.Management.V2.Network.PublicIpAddress.Update.IWithIpAddress.WithDynamicIp()
+        IUpdate WithDynamicIp()
         {
-            this.parameters.PublicIPAllocationMethod = IPAllocationMethod.Dynamic;
-            return this;
-        }
-
-        /// <summary>
-        /// Enables static IP address allocation.
-        /// <p>
-        /// Use {@link PublicIpAddress#ipAddress()} after the public IP address is created to obtain the
-        /// actual IP address allocated for this resource by Azure
-        /// </summary>
-        /// <returns>the next stage of the public IP address definition</returns>
-        IWithCreate Microsoft.Azure.Management.V2.Network.PublicIpAddress.Definition.IWithIpAddress.WithStaticIp()
-        {
-            this.parameters.PublicIPAllocationMethod = IPAllocationMethod.Static;
-            return this;
-        }
-
-        /// <summary>
-        /// Enables dynamic IP address allocation.
-        /// </summary>
-        /// <returns>the next stage of the public IP address definition</returns>
-        IWithCreate Microsoft.Azure.Management.V2.Network.PublicIpAddress.Definition.IWithIpAddress.WithDynamicIp()
-        {
-            this.parameters.PublicIPAllocationMethod = IPAllocationMethod.Dynamic;
-            return this;
-        }
-
-        /// <summary>
-        /// Specifies the timeout (in minutes) for an idle connection.
-        /// </summary>
-        /// <param name="minutes">minutes the length of the time out in minutes</param>
-        /// <returns>the next stage of the resource definition</returns>
-        IWithCreate Microsoft.Azure.Management.V2.Network.PublicIpAddress.Definition.IWithIdleTimeout.WithIdleTimeoutInMinutes(int minutes)
-        {
-            this.parameters.IdleTimeoutInMinutes = minutes;
+            this.Inner.PublicIPAllocationMethod = IPAllocationMethod.Dynamic;
             return this;
         }
 

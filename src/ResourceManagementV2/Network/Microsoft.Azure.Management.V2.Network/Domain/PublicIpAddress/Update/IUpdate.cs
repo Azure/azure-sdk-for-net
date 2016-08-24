@@ -7,9 +7,9 @@
 namespace Microsoft.Azure.Management.V2.Network.PublicIpAddress.Update
 {
 
-    using Microsoft.Azure.Management.V2.Network;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.V2.Resource.Core.Resource.Update;
+    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.V2.Network;
     /// <summary>
     /// A public IP address update allowing to change the IP allocation method (static or dynamic).
     /// </summary>
@@ -69,12 +69,12 @@ namespace Microsoft.Azure.Management.V2.Network.PublicIpAddress.Update
     /// Use {@link Update#apply()} to apply the changes to the resource in Azure.
     /// </summary>
     public interface IUpdate  :
-        IAppliable<IPublicIpAddress>,
+        IAppliable<Microsoft.Azure.Management.V2.Network.IPublicIpAddress>,
         IWithIpAddress,
         IWithLeafDomainLabel,
         IWithReverseFQDN,
         IWithIdleTimout,
-        IUpdateWithTags<IUpdate>
+        IUpdateWithTags<Microsoft.Azure.Management.V2.Network.PublicIpAddress.Update.IUpdate>
     {
     }
     /// <summary>

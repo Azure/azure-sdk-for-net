@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Microsoft.Azure.Management.V2.Compute
 {
-    internal class VirtualMachineImageImpl : IndexableWrapper<VirtualMachineImageInner>, IVirtualMachineImage
+    public partial class VirtualMachineImageImpl : IndexableWrapper<VirtualMachineImageInner>, IVirtualMachineImage
     {
         internal VirtualMachineImageImpl(Region location, string publisher, string offer, string sku, string version, VirtualMachineImageInner inner) : base(inner.Name, inner)
         {

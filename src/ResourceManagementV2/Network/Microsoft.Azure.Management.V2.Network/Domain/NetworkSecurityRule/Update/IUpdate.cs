@@ -7,9 +7,8 @@
 namespace Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResourceActions;
     using Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update;
-    using Microsoft.Azure.Management.Network.Models;
+    using Microsoft.Azure.Management.V2.Resource.Core.ChildResourceActions;
     /// <summary>
     /// The stage of the network rule description allowing the destination port(s) to be specified.
     /// </summary>
@@ -26,7 +25,7 @@ namespace Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update
         /// Makes this rule apply to any destination port.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate ToAnyPort { get; }
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate ToAnyPort ();
 
         /// <summary>
         /// Specifies the destination port range to which this rule applies.
@@ -46,25 +45,25 @@ namespace Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update
         /// Allows inbound traffic.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate AllowInbound { get; }
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate AllowInbound ();
 
         /// <summary>
         /// Allows outbound traffic.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate AllowOutbound { get; }
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate AllowOutbound ();
 
         /// <summary>
         /// Blocks inbound traffic.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate DenyInbound { get; }
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate DenyInbound ();
 
         /// <summary>
         /// Blocks outbound traffic.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate DenyOutbound { get; }
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate DenyOutbound ();
 
     }
     /// <summary>
@@ -83,7 +82,7 @@ namespace Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update
         /// Specifies that the rule applies to any traffic source address.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate FromAnyAddress { get; }
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate FromAnyAddress ();
 
     }
     /// <summary>
@@ -131,7 +130,7 @@ namespace Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update
         /// Makes this rule apply to any source port.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate FromAnyPort { get; }
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate FromAnyPort ();
 
         /// <summary>
         /// Specifies the source port range to which this rule applies.
@@ -177,7 +176,7 @@ namespace Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update
         /// Makes the rule apply to any traffic destination address.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate ToAnyAddress { get; }
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate ToAnyAddress ();
 
     }
 }

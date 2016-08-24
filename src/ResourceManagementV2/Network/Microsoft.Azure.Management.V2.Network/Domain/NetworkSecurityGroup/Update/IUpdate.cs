@@ -7,8 +7,8 @@
 namespace Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core.Resource.Update;
     using Microsoft.Azure.Management.V2.Network;
+    using Microsoft.Azure.Management.V2.Resource.Core.Resource.Update;
     using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition;
     using Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update;
@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update
     /// Call {@link Update#apply()} to apply the changes to the resource in Azure.
     /// </summary>
     public interface IUpdate  :
-        IAppliable<INetworkSecurityGroup>,
+        IAppliable<Microsoft.Azure.Management.V2.Network.INetworkSecurityGroup>,
         IUpdateWithTags<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>,
         IWithRule
     {

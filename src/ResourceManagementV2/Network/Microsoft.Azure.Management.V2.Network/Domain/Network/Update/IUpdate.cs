@@ -7,12 +7,12 @@
 namespace Microsoft.Azure.Management.V2.Network.Network.Update
 {
 
+    using Microsoft.Azure.Management.V2.Network.Subnet.Update;
     using System.Collections.Generic;
     using Microsoft.Azure.Management.V2.Network.Subnet.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Network.Subnet.Update;
     using Microsoft.Azure.Management.V2.Network;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.V2.Resource.Core.Resource.Update;
+    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     /// <summary>
     /// The stage of the virtual network update allowing to specify the DNS server.
     /// </summary>
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Management.V2.Network.Network.Update
     /// Call {@link Update#apply()} to apply the changes to the resource in Azure.
     /// </summary>
     public interface IUpdate  :
-        IAppliable<INetwork>,
+        IAppliable<Microsoft.Azure.Management.V2.Network.INetwork>,
         IUpdateWithTags<Microsoft.Azure.Management.V2.Network.Network.Update.IUpdate>,
         IWithSubnet,
         IWithDnsServer,

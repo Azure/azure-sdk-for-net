@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.V2.Network.NicIpConfiguration.Update
         /// </summary>
         /// <param name="creatable">creatable a creatable definition for a new public IP</param>
         /// <returns>the next stage of the network interface IP configuration update</returns>
-        Microsoft.Azure.Management.V2.Network.NicIpConfiguration.Update.IUpdate WithNewPublicIpAddress (ICreatable<IPublicIpAddress> creatable);
+        Microsoft.Azure.Management.V2.Network.NicIpConfiguration.Update.IUpdate WithNewPublicIpAddress (ICreatable<Microsoft.Azure.Management.V2.Network.IPublicIpAddress> creatable);
 
         /// <summary>
         /// Creates a new public IP address in the same region and group as the resource and associate it

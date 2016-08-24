@@ -7,8 +7,8 @@
 namespace Microsoft.Azure.Management.V2.Compute
 {
 
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition;
     using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
+    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition;
     /// <summary>
     /// Entry point to virtual machine management API.
     /// </summary>

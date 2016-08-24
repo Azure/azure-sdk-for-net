@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Microsoft.Azure.Management.V2.Compute
 {
-    internal class VirtualMachinePublishersImpl
+    public partial class VirtualMachinePublishersImpl
         : ReadableWrappers<IVirtualMachinePublisher, VirtualMachinePublisherImpl, VirtualMachineImageResourceInner>,
           IVirtualMachinePublishers
     {

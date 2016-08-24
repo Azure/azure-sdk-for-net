@@ -7,7 +7,6 @@
 namespace Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition
 {
 
-    using Microsoft.Azure.Management.Network.Models;
     using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
     /// <summary>
     /// The stage of the security rule definition allowing the protocol that the rule applies to to be specified.
@@ -59,7 +58,7 @@ namespace Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition
         /// Makes this rule apply to any destination port.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        IWithProtocol<ParentT> ToAnyPort { get; }
+        IWithProtocol<ParentT> ToAnyPort ();
 
         /// <summary>
         /// Specifies the destination port range to which this rule applies.
@@ -101,7 +100,7 @@ namespace Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition
         /// Makes the rule apply to any traffic destination address.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        IWithDestinationPort<ParentT> ToAnyAddress { get; }
+        IWithDestinationPort<ParentT> ToAnyAddress ();
 
     }
     /// <summary>
@@ -160,7 +159,7 @@ namespace Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition
         /// Makes this rule apply to any source port.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        IWithDestinationAddress<ParentT> FromAnyPort { get; }
+        IWithDestinationAddress<ParentT> FromAnyPort ();
 
         /// <summary>
         /// Specifies the source port range to which this rule applies.
@@ -188,7 +187,7 @@ namespace Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition
         /// Specifies that the rule applies to any traffic source address.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        IWithSourcePort<ParentT> FromAnyAddress { get; }
+        IWithSourcePort<ParentT> FromAnyAddress ();
 
     }
     /// <summary>
@@ -201,25 +200,25 @@ namespace Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition
         /// Allows inbound traffic.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        IWithSourceAddress<ParentT> AllowInbound { get; }
+        IWithSourceAddress<ParentT> AllowInbound ();
 
         /// <summary>
         /// Allows outbound traffic.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        IWithSourceAddress<ParentT> AllowOutbound { get; }
+        IWithSourceAddress<ParentT> AllowOutbound ();
 
         /// <summary>
         /// Blocks inbound traffic.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        IWithSourceAddress<ParentT> DenyInbound { get; }
+        IWithSourceAddress<ParentT> DenyInbound ();
 
         /// <summary>
         /// Blocks outbound traffic.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        IWithSourceAddress<ParentT> DenyOutbound { get; }
+        IWithSourceAddress<ParentT> DenyOutbound ();
 
     }
 }

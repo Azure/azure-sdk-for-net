@@ -7,19 +7,19 @@
 namespace Microsoft.Azure.Management.V2.Network
 {
 
+    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.V2.Resource.Core;
     using System.Collections.Generic;
     using Microsoft.Azure.Management.Network.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.V2.Network.NetworkInterface.Update;
     /// <summary>
     /// Network interface.
     /// </summary>
     public interface INetworkInterface  :
         IGroupableResource,
-        IRefreshable<INetworkInterface>,
-        IWrapper<NetworkInterfaceInner>,
-        IUpdatable<IUpdate>
+        IRefreshable<Microsoft.Azure.Management.V2.Network.INetworkInterface>,
+        IWrapper<Microsoft.Azure.Management.Network.Models.NetworkInterfaceInner>,
+        IUpdatable<Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate>
     {
         /// <returns><tt>true</tt> if IP forwarding is enabled in this network interface</returns>
         bool? IsIpForwardingEnabled { get; }
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// This method makes a rest API call to fetch the public IP.
         /// </summary>
         /// <returns>the public IP associated with this network interface</returns>
-        IPublicIpAddress PrimaryPublicIpAddress { get; }
+        IPublicIpAddress PrimaryPublicIpAddress ();
 
         /// <returns>the resource id of the virtual network subnet associated with this network interface.</returns>
         string PrimarySubnetId { get; }
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// This method makes a rest API call to fetch the virtual network.
         /// </summary>
         /// <returns>the virtual network associated with this network interface.</returns>
-        INetwork PrimaryNetwork { get; }
+        INetwork PrimaryNetwork ();
 
         /// <summary>
         /// Gets the private IP address allocated to this network interface's primary IP configuration.
@@ -73,10 +73,10 @@ namespace Microsoft.Azure.Management.V2.Network
         string PrimaryPrivateIpAllocationMethod { get; }
 
         /// <returns>the IP configurations of this network interface</returns>
-        IList<INicIpConfiguration> IpConfigurations();
+        IList<Microsoft.Azure.Management.V2.Network.INicIpConfiguration> IpConfigurations ();
 
         /// <returns>the primary IP configuration of this network interface</returns>
-        INicIpConfiguration PrimaryIpConfiguration { get; }
+        INicIpConfiguration PrimaryIpConfiguration ();
 
         /// <returns>the network security group resource id or null if there is no network security group</returns>
         /// <returns>associated with this network interface.</returns>
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// This method makes a rest API call to fetch the Network Security Group resource.
         /// </summary>
         /// <returns>the network security group associated with this network interface.</returns>
-        INetworkSecurityGroup NetworkSecurityGroup { get; }
+        INetworkSecurityGroup NetworkSecurityGroup ();
 
     }
 }

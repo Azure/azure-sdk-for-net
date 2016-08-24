@@ -7,12 +7,12 @@
 namespace Microsoft.Azure.Management.V2.Compute
 {
 
+    using Microsoft.Azure.Management.Compute.Models;
+    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update;
+    using Microsoft.Azure.Management.V2.Resource.Core;
     using System.Collections.Generic;
     using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core;
     using Microsoft.Azure.Management.V2.Network;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update;
     /// <summary>
     /// An immutable client-side representation of an Azure virtual machine.
     /// </summary>
@@ -78,13 +78,13 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// this will caches the instance view which can be later retrieved using {@link VirtualMachine#instanceView()}.
         /// </summary>
         /// <returns>the refreshed instance view</returns>
-        VirtualMachineInstanceView RefreshInstanceView { get; }
+        VirtualMachineInstanceView RefreshInstanceView();
 
         /// <returns>name of this virtual machine</returns>
         string ComputerName { get; }
 
         /// <returns>the virtual machine size</returns>
-        VirtualMachineSizeTypes Size { get; }
+        string Size { get; }
 
         /// <returns>the operating system of this virtual machine</returns>
         OperatingSystemTypes? OsType { get; }
