@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-﻿namespace Microsoft.Azure.Batch
+namespace Microsoft.Azure.Batch
 {
     using System;
     using System.Collections.Generic;
@@ -23,6 +23,7 @@
     using System.Threading;
     using System.Threading.Tasks;
 
+    using Microsoft.Azure.Batch.Common;
     using Models = Microsoft.Azure.Batch.Protocol.Models;
     using Microsoft.Rest.Azure;
 
@@ -716,6 +717,69 @@
             IEnumerable<BatchClientBehavior> additionalBehaviors = null)
         {
             using (System.Threading.Tasks.Task asyncTask = DeleteTaskAsync(jobId, taskId, additionalBehaviors))
+            {
+                asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
+            }
+        }
+
+        /// <summary>
+        /// Reactivates a task, allowing it to run again even if its retry count has been exhausted.
+        /// </summary>
+        /// <param name="jobId">The id of the job containing the task.</param>
+        /// <param name="taskId">The id of the task.</param>
+        /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken"/> for controlling the lifetime of the asynchronous operation.</param>
+        /// <returns>A <see cref="System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+        /// <remarks>
+        /// <para>
+        /// Reactivation makes a task eligible to be retried again up to its maximum retry count.
+        /// </para> 
+        /// <para>
+        /// Additionally, this will fail if the job is in the <see cref="JobState.Completed"/> or <see cref="JobState.Terminating"/> or <see cref="JobState.Deleting"/> state.
+        /// This is a blocking operation. For a non-blocking equivalent, see <see cref="ReactivateTaskAsync"/>.
+        /// </para>
+        /// <para>
+        /// The reactivate operation runs asynchronously.
+        /// </para>
+        /// </remarks>
+        public System.Threading.Tasks.Task ReactivateTaskAsync(
+            string jobId,
+            string taskId,
+            IEnumerable<BatchClientBehavior> additionalBehaviors = null,
+            CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // set up behavior manager
+            BehaviorManager bhMgr = new BehaviorManager(this.CustomBehaviors, additionalBehaviors);
+
+            System.Threading.Tasks.Task asyncTask = this.ParentBatchClient.ProtocolLayer.ReactivateTask(jobId, taskId, bhMgr, cancellationToken);
+            
+            return asyncTask;
+        }
+
+        /// <summary>
+        /// Reactivates a task, allowing it to run again even if its retry count has been exhausted.
+        /// </summary>
+        /// <param name="jobId">The id of the job containing the task.</param>
+        /// <param name="taskId">The id of the task.</param>
+        /// <param name="additionalBehaviors">A collection of <see cref="BatchClientBehavior"/> instances that are applied to the Batch service request after the <see cref="CustomBehaviors"/>.</param>
+        /// <remarks>
+        /// <para>
+        /// Reactivation makes a task eligible to be retried again up to its maximum retry count.
+        /// </para> 
+        /// <para>
+        /// This operation will fail for tasks that are not completed or that previously completed successfully (with an exit code of 0).
+        /// </para>
+        /// <para>
+        /// Additionally, this will fail if the job is in the <see cref="JobState.Completed"/> or <see cref="JobState.Terminating"/> or <see cref="JobState.Deleting"/> state.
+        /// This is a blocking operation. For a non-blocking equivalent, see <see cref="ReactivateTaskAsync"/>.
+        /// </para>
+        /// </remarks>
+        public void ReactivateTask(
+            string jobId,
+            string taskId,
+            IEnumerable<BatchClientBehavior> additionalBehaviors = null)
+        {
+            using (System.Threading.Tasks.Task asyncTask = ReactivateTaskAsync(jobId, taskId, additionalBehaviors))
             {
                 asyncTask.WaitAndUnaggregateException(this.CustomBehaviors, additionalBehaviors);
             }
