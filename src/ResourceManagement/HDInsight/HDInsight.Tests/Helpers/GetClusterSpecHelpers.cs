@@ -289,38 +289,24 @@ namespace HDInsight.Tests.Helpers
 
         public static ClusterCreateParameters GetAdJoinedCreateParametersIaas()
         {
-            var clusterparams = new ClusterCreateParameters
+            var clusterparams = GetCustomCreateParametersIaas();
+            clusterparams.Version = "3.4";
+            clusterparams.Location = "East US 2";
+            clusterparams.VirtualNetworkId = VirtualNetworkId;
+            clusterparams.SubnetName = SubnetName;
+            clusterparams.SecurityProfile = new SecurityProfile
             {
-                ClusterSizeInNodes = 3,
-                ClusterType = "Hadoop",
-                WorkerNodeSize = "Large",
-                DefaultStorageAccountName = StorageAccountName,
-                DefaultStorageAccountKey = StorageAccountKey,
-                OSType = OSType.Linux,
-                UserName = HttpUser,
-                Password = HttpPassword,
-                DefaultStorageContainer = DefaultContainer,
-                Location = "East US 2",
-                SshUserName = SshUser,
-                SshPassword = SshPassword,
-                SshPublicKey = SshKey,
-                Version = "3.4",
-                VirtualNetworkId = VirtualNetworkId,
-                SubnetName = SubnetName,
-                SecurityProfile = new SecurityProfile
+                ActiveDirectoryConfiguration = new ActiveDirectoryConfiguration
                 {
-                    ActiveDirectoryConfiguration = new ActiveDirectoryConfiguration
-                    {
-                        DirectoryType = DirectoryType.ActiveDirectory,
-                        Domain = string.Format("{0}.{1}", DomainNameParts[0], DomainNameParts[1]),
-                        DomainAdminPassword = DomainAdminPassword,
-                        DomainAdminUsername = DomainAdminUserName,
-                        LdapUrls = LdapUrls,
-                        OrganizationalUnitDN = OrganizationalUnitDN
-                    }
+                    DirectoryType = DirectoryType.ActiveDirectory,
+                    Domain = string.Format("{0}.{1}", DomainNameParts[0], DomainNameParts[1]),
+                    DomainAdminPassword = DomainAdminPassword,
+                    DomainAdminUsername = DomainAdminUserName,
+                    LdapUrls = LdapUrls,
+                    OrganizationalUnitDN = OrganizationalUnitDN
                 }
             };
-
+            
             return clusterparams;
         }
 
