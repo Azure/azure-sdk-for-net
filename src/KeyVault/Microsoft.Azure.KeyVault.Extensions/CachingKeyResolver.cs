@@ -48,6 +48,12 @@ namespace Microsoft.Azure.KeyVault
 
         #region IKeyResolver
 
+        /// <summary>
+        /// Resolve a key indicated by its ID to the corresponding <see cref="IKey"/>
+        /// </summary>
+        /// <param name="kid"> the key identifier </param>
+        /// <param name="token"> the cancellation token </param>
+        /// <returns> task result of the <see cref="IKey"/></returns>
         public async Task<IKey> ResolveKeyAsync( string kid, CancellationToken token )
         {
             if ( _isDisposed )
@@ -78,6 +84,9 @@ namespace Microsoft.Azure.KeyVault
 
         #endregion
 
+        /// <summary>
+        /// Disposes the object
+        /// </summary>
         public void Dispose()
         {
             Dispose( true );

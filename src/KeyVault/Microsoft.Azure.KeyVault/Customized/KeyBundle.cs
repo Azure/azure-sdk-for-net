@@ -19,6 +19,9 @@ namespace Microsoft.Azure.KeyVault.Models
 {
     public partial class KeyBundle
     {
+        /// <summary>
+        /// The identifier for the key object
+        /// </summary>
         public KeyIdentifier KeyIdentifier
         {
             get

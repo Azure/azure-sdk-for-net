@@ -19,6 +19,9 @@ namespace Microsoft.Azure.KeyVault.Models
 {
     public partial class CertificateOperation
     {
+        /// <summary>
+        /// The certificate operation identifier
+        /// </summary>
         public CertificateOperationIdentifier CertificateOperationIdentifier
         {
             get

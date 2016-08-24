@@ -17,8 +17,14 @@
 
 namespace Microsoft.Azure.KeyVault.Models
 {
+    /// <summary>
+    /// The certificate item containing certificate metadata
+    /// </summary>
     public partial class CertificateItem
     {
+        /// <summary>
+        /// The certificate identifier
+        /// </summary>
         public CertificateIdentifier Identifier
         {
             get

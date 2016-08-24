@@ -25,6 +25,9 @@ using Microsoft.Azure.KeyVault.Models;
 
 namespace Microsoft.Azure.KeyVault
 {
+    /// <summary>
+    /// Key Vault key that performs cryptography operations at REST
+    /// </summary>
     internal class KeyVaultKey : IKey
     {
         private readonly KeyVaultClient _client;

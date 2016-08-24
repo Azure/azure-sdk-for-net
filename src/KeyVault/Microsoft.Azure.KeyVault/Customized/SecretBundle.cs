@@ -21,6 +21,9 @@ namespace Microsoft.Azure.KeyVault.Models
 {
     public partial class SecretBundle
     {
+        /// <summary>
+        /// The identifier for secret object
+        /// </summary>
         public SecretIdentifier SecretIdentifier
         {
             get

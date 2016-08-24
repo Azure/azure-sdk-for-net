@@ -26,12 +26,25 @@ using Microsoft.Rest;
 
 namespace Microsoft.Azure.KeyVault
 {
+    /// <summary>
+    /// The Key Vault credential class that implements <see cref="ServiceClientCredentials"/>
+    /// </summary>
     public class KeyVaultCredential : ServiceClientCredentials
     {        
+        /// <summary>
+        /// The authentication callback
+        /// </summary>
         public event KeyVaultClient.AuthenticationCallback OnAuthenticate = null;
 
+        /// <summary>
+        /// Bearer token
+        /// </summary>
         public string Token { get; set; }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="authenticationCallback"> the authentication callback. </param>
         public KeyVaultCredential(KeyVaultClient.AuthenticationCallback authenticationCallback)
         {
             OnAuthenticate = authenticationCallback;

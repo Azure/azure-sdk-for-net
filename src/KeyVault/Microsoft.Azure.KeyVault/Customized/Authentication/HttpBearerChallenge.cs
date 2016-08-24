@@ -20,6 +20,9 @@ using System.Collections.Generic;
 
 namespace Microsoft.Azure.KeyVault
 {
+    /// <summary>
+    /// Handles http bearer challenge operations
+    /// </summary>
     public sealed class HttpBearerChallenge
     {
         private const string Authorization = "authorization";
@@ -167,6 +170,9 @@ namespace Microsoft.Azure.KeyVault
             }
         }
 
+        /// <summary>
+        /// The Authority of the request URI
+        /// </summary>
         public string SourceAuthority
         {
             get
@@ -175,6 +181,9 @@ namespace Microsoft.Azure.KeyVault
             }
         }
 
+        /// <summary>
+        /// The source URI
+        /// </summary>
         public Uri SourceUri
         {
             get

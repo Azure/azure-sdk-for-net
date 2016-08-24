@@ -48,7 +48,7 @@ namespace Microsoft.Azure.KeyVault.Models
         }
 
         /// <summary>
-        /// This is the Id of the key backing the certificate.
+        /// This is the Id of the certificate.
         /// </summary>
         public CertificateIdentifier CertificateIdentifier
         {

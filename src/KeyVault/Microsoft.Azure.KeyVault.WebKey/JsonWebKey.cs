@@ -10,6 +10,7 @@ namespace Microsoft.Azure.KeyVault.WebKey
     using System.Collections.Generic;
     using Newtonsoft.Json;
     using System.Runtime.Serialization;
+    using System.Security.Cryptography;
 
     /// <summary>
     /// As of http://tools.ietf.org/html/draft-ietf-jose-json-web-key-18
@@ -143,6 +144,50 @@ namespace Microsoft.Azure.KeyVault.WebKey
         [JsonConverter(typeof(Base64UrlJsonConverter))]
         [JsonProperty(PropertyName = "key_hsm")]
         public byte[] T { get; set; }
+
+        /// <summary>
+        /// Converts an AES object to a WebKey of type Octet
+        /// </summary>
+        /// <param name="aesProvider"></param>
+        /// <returns></returns>
+        public JsonWebKey(Aes aesProvider)
+        {
+            if (aesProvider == null)
+                throw new ArgumentNullException("aesProvider");
+
+            Kty = JsonWebKeyType.Octet;
+            K = aesProvider.Key;
+        }
+
+        /// <summary>
+        /// Converts a RSA object to a WebKey of type RSA.
+        /// </summary>
+        /// <param name="rsaProvider">The RSA object to convert</param>
+        /// <param name="includePrivateParameters">True to include the RSA private key parameters</param>
+        /// <returns>A WebKey representing the RSA object</returns>
+        public JsonWebKey(RSA rsaProvider, bool includePrivateParameters = false) : this(rsaProvider.ExportParameters(includePrivateParameters))
+        {
+        }
+
+        /// <summary>
+        /// Converts a RSAParameters object to a WebKey of type RSA.
+        /// </summary>
+        /// <param name="rsaProvider">The RSA object to convert</param>
+        /// <returns>A WebKey representing the RSA object</returns>
+        public JsonWebKey(RSAParameters rsaParameters)
+        {
+            Kty = JsonWebKeyType.Rsa;
+
+            E = rsaParameters.Exponent;
+            N = rsaParameters.Modulus;
+
+            D = rsaParameters.D;
+            DP = rsaParameters.DP;
+            DQ = rsaParameters.DQ;
+            QI = rsaParameters.InverseQ;
+            P = rsaParameters.P;
+            Q = rsaParameters.Q;
+        }
 
         public override bool Equals( object obj )
         {
@@ -373,6 +418,154 @@ namespace Microsoft.Azure.KeyVault.WebKey
                 return false;
 
             return ( tokenParameters || publicParameters );
+        }
+
+        /// <summary>
+        /// Converts a WebKey of type Octet to an AES object.
+        /// </summary>
+        /// <param name="key">The WebKey to convert</param>
+        /// <returns>An AES object</returns>
+        public Aes ToAes()
+        {
+            if (!Kty.Equals(JsonWebKeyType.Octet))
+                throw new InvalidOperationException("key is not an octet key");
+
+            if (K == null)
+                throw new InvalidOperationException("key does not contain a value");
+
+            Aes aesProvider = Aes.Create();
+
+            if (aesProvider != null)
+                aesProvider.Key = K;
+
+            return aesProvider;
+        }
+
+        /// <summary>
+        /// Remove leading zeros from all RSA parameters.
+        /// </summary>
+        public void CanonicalizeRSA()
+        {
+            N = RemoveLeadingZeros(N);
+            E = RemoveLeadingZeros(E);
+            D = RemoveLeadingZeros(D);
+            DP = RemoveLeadingZeros(DP);
+            DQ = RemoveLeadingZeros(DQ);
+            QI = RemoveLeadingZeros(QI);
+            P = RemoveLeadingZeros(P);
+            Q = RemoveLeadingZeros(Q);
+        }
+
+        /// <summary>
+        /// Converts a WebKey of type RSA or RSAHSM to a RSA object
+        /// </summary>
+        /// <param name="includePrivateParameters">Determines whether private key material, if available, is included</param>
+        /// <returns>An initialized RSACryptoServiceProvider instance</returns>
+        public RSACryptoServiceProvider ToRSA(bool includePrivateParameters = false)
+        {
+            var rsaParameters = ToRSAParameters(includePrivateParameters);
+            var rsaProvider = new RSACryptoServiceProvider();
+
+            rsaProvider.ImportParameters(rsaParameters);
+
+            return rsaProvider;
+        }
+
+        public RSAParameters ToRSAParameters(bool includePrivateParameters = false)
+        {
+            if (!string.Equals(JsonWebKeyType.Rsa, Kty) && !string.Equals(JsonWebKeyType.RsaHsm, Kty))
+                throw new ArgumentException("JsonWebKey is not a RSA key");
+
+            VerifyNonZero("N", N);
+            VerifyNonZero("E", E);
+
+            // Length requirements defined by 2.2.2.9.1 RSA Private Key BLOB (https://msdn.microsoft.com/en-us/library/cc250013.aspx).
+            // See KV bugs 190589 and 183469.
+
+            var result = new RSAParameters();
+            result.Modulus = RemoveLeadingZeros(N);
+            result.Exponent = ForceLength("E", E, 4);
+
+            if (includePrivateParameters)
+            {
+                var bitlen = result.Modulus.Length * 8;
+
+                result.D = ForceLength("D", D, bitlen / 8);
+                result.DP = ForceLength("DP", DP, bitlen / 16);
+                result.DQ = ForceLength("DQ", DQ, bitlen / 16);
+                result.InverseQ = ForceLength("IQ", QI, bitlen / 16);
+                result.P = ForceLength("P", P, bitlen / 16);
+                result.Q = ForceLength("Q", Q, bitlen / 16);
+            };
+
+            return result;
+        }
+
+        private static void VerifyNonZero(string name, byte[] value)
+        {
+            if (value != null && value.Length > 0)
+            {
+                for (var i = 0; i < value.Length; ++i)
+                    if (value[i] != 0)
+                        return;
+            }
+
+            throw new ArgumentException("Value of \"" + name + "\" must be non-zero.");
+        }
+
+        private static byte[] RemoveLeadingZeros(byte[] value)
+        {
+            // Do nothing if:
+            // 1) value is null.
+            // 2) value is empty.
+            // 3) value has length of 1 (this is considered a useful zero).
+            // 4) first byte is already non-zero (optimization).
+            if (value == null || value.Length <= 1 || value[0] != 0)
+                return value;
+
+            // We know that value[0] is zero, so we start from 1.
+            for (var i = 1; i < value.Length; ++i)
+            {
+                if (value[i] != 0)
+                {
+                    var result = new byte[value.Length - i];
+                    Array.Copy(value, i, result, 0, result.Length);
+                    return result;
+                }
+            }
+
+            // If all is zero, return an array with a single useful zero.
+            return new byte[] { 0 };
+        }
+
+        private static byte[] ForceLength(string name, byte[] value, int requiredLength)
+        {
+
+            if (value == null || value.Length == 0)
+                throw new ArgumentException("Value of \"" + name + "\" is null or empty.");
+
+            if (value.Length == requiredLength)
+                return value;
+
+            if (value.Length < requiredLength)
+            {
+                var padded = new byte[requiredLength];
+                Array.Copy(value, 0, padded, requiredLength - value.Length, value.Length);
+                return padded;
+            }
+
+            // value.Length > requiredLength
+
+            // Make sure the extra bytes are all zeros.
+            var extraLen = value.Length - requiredLength;
+            for (var i = 0; i < extraLen; ++i)
+                if (value[i] != 0)
+                    throw new ArgumentException("Invalid length of \"" + name + "\": expected at most " +
+                                                 requiredLength + " bytes, found " + (value.Length - i) + " bytes.");
+
+            var trimmed = new byte[requiredLength];
+            Array.Copy(value, value.Length - requiredLength, trimmed, 0, requiredLength);
+            return trimmed;
         }
 
         [OnDeserialized]
