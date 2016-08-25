@@ -15,6 +15,8 @@ _Release date: 2016.09.09_
     * OnPremisesCassandraTableDataset
 * The following copy source types have been added: 	
     * CassandraSource
+* Add WebServiceInputs property to AzureMLBatchExecutionActivity
+    * Enable passing multiple web service inputs to an Azure Machine Learning experiment
 
 ## Version 4.9.1
 _Release date: 2016.07.05_ 
