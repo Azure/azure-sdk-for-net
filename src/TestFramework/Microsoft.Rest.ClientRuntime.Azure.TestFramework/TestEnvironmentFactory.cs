@@ -8,8 +8,10 @@ using System.Net.Http;
 using Newtonsoft.Json.Linq;
 using System.Threading;
 using Microsoft.Azure.Test.HttpRecorder;
-using Microsoft.Rest.Azure.Authentication;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using System.Threading.Tasks;
+using System.Net.Http.Headers;
+using Microsoft.Rest.Azure.Authentication;
 
 namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 {
@@ -44,7 +46,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             {
                 testEnv.UserName = TestEnvironment.UserIdDefault;
                 SetEnvironmentSubscriptionId(testEnv, connectionString);
-                testEnv.Credentials = new TokenCredentials(TestEnvironment.RawTokenDefault);
+                testEnv.TokenInfo[TokenAudience.Management] = new TokenCredentials(TestEnvironment.RawToken);
+                testEnv.TokenInfo[TokenAudience.Graph] = new TokenCredentials(TestEnvironment.RawGraphToken);
             }
             else //Record or None
             {
@@ -60,63 +63,45 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
                     if (parsedConnection.ContainsKey(TestEnvironment.RawToken))
                     {
-                        var token = parsedConnection[TestEnvironment.RawToken];
-                        testEnv.Credentials = new TokenCredentials(token);
+                        testEnv.TokenInfo[TokenAudience.Management] = new TokenCredentials(TestEnvironment.RawToken);
+                        testEnv.TokenInfo[TokenAudience.Graph] = new TokenCredentials(TestEnvironment.RawGraphToken);
                     }
                     else
                     {
                         string password = null;
-                        if(testEnv.UserName != null && 
-                           !parsedConnection.TryGetValue(TestEnvironment.AADPasswordKey, out password))
-                        {
-                            throw new InvalidOperationException("Certificate is not yet supported on dnxcore platform");
-                        }
+                        parsedConnection.TryGetValue(TestEnvironment.AADPasswordKey, out password);
 
                         if (testEnv.UserName != null && password != null)
                         {
-                            ServiceClientTracing.Information("Using AAD auth with username and password combination");
-                            testEnv.Credentials = UserTokenProvider.LoginSilentAsync(testEnv.ClientId,
-                                testEnv.Tenant, testEnv.UserName, password, testEnv.AsAzureEnvironment(), null)
+                            TestEnvironmentFactory.LoginUserAsync(
+                                testEnv.TokenInfo,
+                                testEnv.Tenant,
+                                testEnv.UserName,
+                                password,
+                                testEnv.Endpoints)
                                 .ConfigureAwait(false).GetAwaiter().GetResult();
                         }
                         else if (testEnv.ServicePrincipal != null && password != null)
                         {
-                            ServiceClientTracing.Information("Using AAD auth with service principal and password combination");
-                            testEnv.Credentials = ApplicationTokenProvider.LoginSilentAsync(testEnv.Tenant,
-                                testEnv.ServicePrincipal, password, testEnv.AsAzureEnvironment())
+                            TestEnvironmentFactory.LoginServicePrincipalAsync(
+                                testEnv.TokenInfo,
+                                testEnv.Tenant,
+                                testEnv.ServicePrincipal, 
+                                password, 
+                                testEnv.Endpoints)
                                 .ConfigureAwait(false).GetAwaiter().GetResult();
                         }
 #if NET45
                         else
                         {
-                            ServiceClientTracing.Information("Using AAD auth with pop-up dialog using default environment...");
-                            ActiveDirectoryClientSettings directoryClientSettings = new ActiveDirectoryClientSettings()
-                            {
-                                ClientId = testEnv.ClientId,
-                                PromptBehavior = PromptBehavior.Auto,
-                                ClientRedirectUri = new Uri("urn:ietf:wg:oauth:2.0:oob")
-                            };
-                            testEnv.Credentials = UserTokenProvider.LoginWithPromptAsync(testEnv.Tenant, directoryClientSettings, TestUtilities.AsAzureEnvironment(testEnv)).ConfigureAwait(false).GetAwaiter().GetResult();
+                            TestEnvironmentFactory.LoginWithPromptAsync(
+                                testEnv.TokenInfo,
+                                testEnv.Tenant,
+                                testEnv.Endpoints);
                         }
 #endif
                     }
                 }//end-of-if connectionString present
-
-                if (testEnv.Credentials == null)
-                {
-                    throw new InvalidOperationException("Prompting for credential is not yet supported for cross-platform testing");
-                    //will authenticate the user if the connection string is nullOrEmpty and the mode is not playback
-                    //ServiceClientTracing.Information("Using AAD auth with pop-up dialog using default environment...");
-                    //var clientSettings = new ActiveDirectoryClientSettings
-                    //{
-                    //    ClientId = testEnv.ClientId,
-                    //    PromptBehavior = PromptBehavior.Auto,
-                    //    ClientRedirectUri = new Uri("urn:ietf:wg:oauth:2.0:oob")
-                    //};
-                    //testEnv.Credentials = UserTokenProvider.LoginWithPromptAsync(testEnv.Tenant,
-                    //        clientSettings, testEnv.AsAzureEnvironment())
-                    //        .ConfigureAwait(false).GetAwaiter().GetResult();
-                }
 
                 // Management Clients that are not subscription based should set "SubscriptionId=None" in
                 // the connection string.
@@ -125,7 +110,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                     //Getting subscriptions from server
                     var subscriptions = ListSubscriptions(
                         testEnv.BaseUri.ToString(),
-                        testEnv.Credentials);
+                        testEnv.TokenInfo[TokenAudience.Management]);
 
                     if (subscriptions.Count == 0)
                     {
@@ -205,7 +190,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             }
         }
 
-        public static List<SubscriptionInfo> ListSubscriptions(string baseuri, ServiceClientCredentials credentials)
+        public static List<SubscriptionInfo> ListSubscriptions(string baseuri, TokenCredentials credentials)
         {
             var request = new HttpRequestMessage
             {
@@ -213,7 +198,9 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             };
 
             HttpClient client = new HttpClient();
+            
             credentials.ProcessHttpRequestAsync(request, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
+
             HttpResponseMessage response = client.SendAsync(request).Result;
             response.EnsureSuccessStatusCode();
 
@@ -223,5 +210,123 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             var results = ((JArray)jsonResult["value"]).Select(item => new SubscriptionInfo((JObject)item)).ToList();
             return results;
         }
+
+        private static async Task LoginUserAsync(
+            Dictionary<TokenAudience, TokenCredentials> tokens,
+            string domain, 
+            string username, 
+            string password,
+            TestEndpoints endpoints)
+        {
+            var mgmSettings = new ActiveDirectoryServiceSettings()
+            {
+                AuthenticationEndpoint = new Uri(endpoints.AADAuthUri.ToString() + domain),
+                TokenAudience = endpoints.AADTokenAudienceUri
+            };
+            var grpSettings = new ActiveDirectoryServiceSettings()
+            {
+                AuthenticationEndpoint = new Uri(endpoints.AADAuthUri.ToString() + domain),
+                TokenAudience = endpoints.GraphTokenAudienceUri
+            };
+
+            var mgmAuthResult = (TokenCredentials) await UserTokenProvider
+                                .LoginSilentAsync(TestEnvironment.ClientIdDefault, domain, username, password, mgmSettings)
+                                .ConfigureAwait(false);
+
+            try
+            {
+                var graphAuthResult = (TokenCredentials)await UserTokenProvider
+                                .LoginSilentAsync(TestEnvironment.ClientIdDefault, domain, username, password, grpSettings)
+                                .ConfigureAwait(false);
+                tokens[TokenAudience.Graph] = graphAuthResult;
+            }
+            catch
+            {
+                // Not all accounts are registered to have access to Graph endpoints. 
+            }
+
+            tokens[TokenAudience.Management] = mgmAuthResult;
+        }
+
+        private static async Task LoginServicePrincipalAsync(
+            Dictionary<TokenAudience, TokenCredentials> tokens,
+            string domain, 
+            string servicePrincipalId, 
+            string key,
+            TestEndpoints endpoints)
+        {
+            var mgmSettings = new ActiveDirectoryServiceSettings()
+            {
+                AuthenticationEndpoint = new Uri(endpoints.AADAuthUri.ToString() + domain),
+                TokenAudience = endpoints.AADTokenAudienceUri
+            };
+
+            var mgmAuthResult = (TokenCredentials) await ApplicationTokenProvider
+                            .LoginSilentAsync(domain, servicePrincipalId, key, mgmSettings)
+                            .ConfigureAwait(false);
+
+            var grpSettings = new ActiveDirectoryServiceSettings()
+            {
+                AuthenticationEndpoint = new Uri(endpoints.AADAuthUri.ToString() + domain),
+                TokenAudience = endpoints.GraphTokenAudienceUri
+            };
+
+            try
+            {
+                var graphAuthResult = (TokenCredentials)await ApplicationTokenProvider
+                                .LoginSilentAsync(domain, servicePrincipalId, key, grpSettings)
+                                .ConfigureAwait(false);
+                tokens[TokenAudience.Graph] = graphAuthResult;
+            }
+            catch
+            {
+                // Not all accounts are registered to have access to Graph endpoints. 
+            }
+
+            tokens[TokenAudience.Management] = mgmAuthResult;
+        }
+
+#if NET45
+        private static void LoginWithPromptAsync(
+            Dictionary<TokenAudience, TokenCredentials> tokens,
+            string domain,
+            TestEndpoints endpoints)
+        {
+            var mgmSettings = new ActiveDirectoryServiceSettings()
+            {
+                AuthenticationEndpoint = new Uri(endpoints.AADAuthUri.ToString() + domain),
+                TokenAudience = endpoints.AADTokenAudienceUri
+            };
+            var grpSettings = new ActiveDirectoryServiceSettings()
+            {
+                AuthenticationEndpoint = new Uri(endpoints.AADAuthUri.ToString() + domain),
+                TokenAudience = endpoints.GraphTokenAudienceUri
+            };
+
+            var clientSettings = new ActiveDirectoryClientSettings()
+            {
+                ClientId = TestEnvironment.ClientIdDefault,
+                ClientRedirectUri = new Uri("urn:ietf:wg:oauth:2.0:oob"),
+                PromptBehavior = PromptBehavior.Auto
+            };
+
+            var mgmAuthResult = (TokenCredentials) UserTokenProvider
+                          .LoginWithPromptAsync(domain, clientSettings, mgmSettings)
+                          .ConfigureAwait(false)
+                          .GetAwaiter().GetResult();
+            try
+            {
+                var graphAuthResult = (TokenCredentials)UserTokenProvider
+                               .LoginWithPromptAsync(domain, clientSettings, grpSettings)
+                              .GetAwaiter().GetResult();
+                tokens[TokenAudience.Graph] = graphAuthResult;
+            }
+            catch
+            {
+                // Not all accounts are registered to have access to Graph endpoints. 
+            }
+            tokens[TokenAudience.Management] = mgmAuthResult;
+        }
+#endif
     }
 }

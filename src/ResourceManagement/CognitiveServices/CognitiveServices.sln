@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.CognitiveServices", "Microsoft.Azure.Management.CognitiveServices\Microsoft.Azure.Management.CognitiveServices.xproj", "{6A2CBCF7-34FB-4B4A-B3FD-604F6E547B66}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "CognitiveServices.Tests", "CognitiveServices.Tests\CognitiveServices.Tests.xproj", "{091F3D34-8A9C-47A6-B814-0BF463930C34}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "HttpRecorder", "..\..\TestFramework\Microsoft.Azure.Test.HttpRecorder\HttpRecorder.xproj", "{5D12D45A-E55F-410E-B8AF-9DC90E81B237}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "TestFramework", "..\..\TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework\TestFramework.xproj", "{C4C4E1C8-B99D-4D90-8C27-6D0C0A268BA5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6A2CBCF7-34FB-4B4A-B3FD-604F6E547B66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A2CBCF7-34FB-4B4A-B3FD-604F6E547B66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A2CBCF7-34FB-4B4A-B3FD-604F6E547B66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A2CBCF7-34FB-4B4A-B3FD-604F6E547B66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{091F3D34-8A9C-47A6-B814-0BF463930C34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{091F3D34-8A9C-47A6-B814-0BF463930C34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{091F3D34-8A9C-47A6-B814-0BF463930C34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{091F3D34-8A9C-47A6-B814-0BF463930C34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D12D45A-E55F-410E-B8AF-9DC90E81B237}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D12D45A-E55F-410E-B8AF-9DC90E81B237}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D12D45A-E55F-410E-B8AF-9DC90E81B237}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D12D45A-E55F-410E-B8AF-9DC90E81B237}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4C4E1C8-B99D-4D90-8C27-6D0C0A268BA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4C4E1C8-B99D-4D90-8C27-6D0C0A268BA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4C4E1C8-B99D-4D90-8C27-6D0C0A268BA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4C4E1C8-B99D-4D90-8C27-6D0C0A268BA5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

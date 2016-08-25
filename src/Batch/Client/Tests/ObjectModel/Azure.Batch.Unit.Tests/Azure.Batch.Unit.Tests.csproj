@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <ProjectGuid>{37F66AC7-C54C-4FE2-B691-5260D3971BAB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Azure.Batch.Unit.Tests</RootNamespace>
+    <AssemblyName>Azure.Batch.Unit.Tests</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <UnitTestProject>true</UnitTestProject>
+    <TestProjectType>UnitTest</TestProjectType>
+    <AutoRestProjects>true</AutoRestProjects>
+    <TestProject>true</TestProject>
+  </PropertyGroup>
+  <Import Project="..\..\..\..\..\..\tools\Library.Settings.targets" />
+  <Import Project="$(LibraryNugetPackageFolder)\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props" Condition="Exists('$(LibraryNugetPackageFolder)\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props')" />
+  <Import Project="$(LibraryNugetPackageFolder)\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props" Condition="Exists('$(LibraryNugetPackageFolder)\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props')" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Net45-Debug'">
+    <DocumentationFile>bin\Net45-Debug\Azure.Batch.Unit.Tests.xml</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Data.OData">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Data.OData.5.6.4\lib\net40\Microsoft.Data.OData.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Rest.ClientRuntime">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.2.3.1\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Rest.ClientRuntime.Azure">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.Azure.3.3.1\lib\net45\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>$(LibraryNugetPackageFolder)\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Spatial">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(LibraryNugetPackageFolder)\System.Spatial.5.6.4\lib\net40\System.Spatial.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="xunit.abstractions, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>$(LibraryNugetPackageFolder)\xunit.abstractions.2.0.0\lib\net35\xunit.abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="xunit.assert, Version=2.0.0.2929, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(LibraryNugetPackageFolder)\xunit.assert.2.0.0\lib\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.assert.dll</HintPath>
+    </Reference>
+    <Reference Include="xunit.core, Version=2.0.0.2929, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <HintPath>$(LibraryNugetPackageFolder)\xunit.extensibility.core.2.0.0\lib\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Src\Batch.csproj">
+      <Project>{3328FBBF-9C20-4775-B367-856C09DC13BF}</Project>
+      <Name>Batch</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Common\BatchTestCommon.csproj">
+      <Project>{B697759F-6EF9-4142-8BD3-D78BF18C678E}</Project>
+      <Name>BatchTestCommon</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CertificateUnitTests.cs" />
+    <Compile Include="ComputeNodeUnitTests.cs" />
+    <Compile Include="JobAutoTerminationUnitTests.cs" />
+    <Compile Include="BatchClientUnitTest.cs" />
+    <Compile Include="CommitAndRefreshUnitTests.cs" />
+    <Compile Include="ODataUnitTests.cs" />
+    <Compile Include="OptionsUnitTests.cs" />
+    <Compile Include="PatchUnitTests.cs" />
+    <Compile Include="SynchronousMethodExceptionBehaviorUnitTests.cs" />
+    <Compile Include="ExceptionUnitTests.cs" />
+    <Compile Include="FakeClient.cs" />
+    <Compile Include="PropertyAccessorUnitTests.cs" />
+    <Compile Include="PropertyManagementUnitTests.cs" />
+    <Compile Include="ApplicationPackageReferencesUnitTests.cs" />
+    <Compile Include="ApplicationPackageUnitTests.cs" />
+    <Compile Include="PagedCollectionUnitTests.cs" />
+    <Compile Include="TaskIdRangeUnitTests.cs" />
+    <Compile Include="TaskDependenciesUnitTests.cs" />
+    <Compile Include="EnumUnitTests.cs" />
+    <Compile Include="StreamUnitTests.cs" />
+    <Compile Include="TestUtilities\InterceptorFactory.cs" />
+    <Compile Include="TestUtilities\ReflectionHelpers.cs" />
+    <Compile Include="BatchRequestUnitTests.cs" />
+    <Compile Include="ClientUnitTestCommon.cs" />
+    <Compile Include="ConcurrentChangeTrackedListUnitTests.cs" />
+    <Compile Include="PropertyUnitTests.cs" />
+    <Compile Include="RetryPolicyUnitTests.cs" />
+    <Compile Include="PoolUnitTests.cs" />
+    <Compile Include="BindingStateConstraintUnitTests.cs" />
+    <Compile Include="StaticAnalysisUnitTests.cs" />
+    <Compile Include="TestUtilities\ObjectFactory.cs" />
+    <Compile Include="TestUtilities\ObjectFactoryConstructionSpecification.cs" />
+    <Compile Include="TestUtilities\ComparerPropertyMapping.cs" />
+    <Compile Include="TestUtilities\ObjectComparer.cs" />
+    <Compile Include="TestUtilities\SourceParser.cs" />
+    <Compile Include="TestUtilities\SourceParserResult.cs" />
+    <Compile Include="TestUtilities\ComparisonRule.cs" />
+    <Compile Include="AddTaskCollectionUnitTests.cs" />
+    <Compile Include="InterceptorUnitTests.cs" />
+    <Compile Include="UtilitiesInternalUnitTests.cs" />
+    <Compile Include="UtilitiesUnitTests.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="howto.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(LibraryNugetPackageFolder)\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props')" Text="$([System.String]::Format('$(ErrorText)', '$(LibraryNugetPackageFolder)\xunit.runner.visualstudio.2.0.0\build\net20\xunit.runner.visualstudio.props'))" />
+    <Error Condition="!Exists('$(LibraryNugetPackageFolder)\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props')" Text="$([System.String]::Format('$(ErrorText)', '$(LibraryNugetPackageFolder)\xunit.core.2.0.0\build\portable-net45+win+wpa81+wp80+monotouch+monoandroid+Xamarin.iOS\xunit.core.props'))" />
+  </Target>
+</Project>

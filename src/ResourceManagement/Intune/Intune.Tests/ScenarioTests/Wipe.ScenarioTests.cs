@@ -21,6 +21,7 @@ using Microsoft.Azure.Test.HttpRecorder;
 
 namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
 {
+    [Collection("Intune Tests")]
     public class WipeScenarioTests:TestBase
     {
         /// <summary>
@@ -37,7 +38,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
         [Fact]
         public void ShouldWipeDevices()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Microsoft.Azure.Management.Intune.Tests.ScenarioTests.WipeScenarioTests"))
             {
                 var client = IntuneClientHelper.GetIntuneResourceManagementClient(context);
                 var userId = TestContextHelper.GetAdUserFromTestContext("AADUserId");

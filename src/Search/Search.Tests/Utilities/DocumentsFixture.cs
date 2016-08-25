@@ -5,7 +5,6 @@
 namespace Microsoft.Azure.Search.Tests.Utilities
 {
     using System;
-    using System.Linq;
     using Microsoft.Azure.Search.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Microsoft.Spatial;
@@ -48,7 +47,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                     Tags = new[] { "motel", "budget" },
                     ParkingIncluded = true,
                     SmokingAllowed = true,
-                    LastRenovationDate = new DateTimeOffset(1982, 4, 28, 0, 0, 0, TimeSpan.Zero),
+                    LastRenovationDate = new DateTimeOffset(1982, 4, 28, 0, 0, 0, TimeSpan.Zero),   //aka.ms/sre-codescan/disable
                     Rating = 1,
                     Location = GeographyPoint.Create(49.678581, -122.131577)
                 },
@@ -112,7 +111,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
 
             SearchIndexClient indexClient = this.GetSearchIndexClient();
 
-            var batch = IndexBatch.Create(TestDocuments.Select(d => IndexAction.Create(d)));
+            var batch = IndexBatch.Upload(TestDocuments);
             indexClient.Documents.Index(batch);
 
             SearchTestUtilities.WaitForIndexing();

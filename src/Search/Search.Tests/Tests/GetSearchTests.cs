@@ -76,6 +76,30 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
+        public void CanSearchWithLuceneSyntax()
+        {
+            Run(TestCanSearchWithLuceneSyntax);
+        }
+
+        [Fact]
+        public void CanSearchWithRegex()
+        {
+            Run(TestCanSearchWithRegex);
+        }
+
+        [Fact]
+        public void CanSearchWithSpecialCharsInRegex()
+        {
+            Run(TestCanSearchWithEscapedSpecialCharsInRegex);
+        }
+
+        [Fact]
+        public void SearchThrowsWhenSpecialCharInRegexIsUnescaped()
+        {
+            Run(TestSearchThrowsWhenSpecialCharInRegexIsUnescaped);
+        }
+
+        [Fact]
         public void CanUseTopAndSkipForClientSidePaging()
         {
             Run(TestCanUseTopAndSkipForClientSidePaging);
@@ -149,6 +173,24 @@ namespace Microsoft.Azure.Search.Tests
         public void CanFilterNonNullableType()
         {
             Run(TestCanFilterNonNullableType);
+        }
+
+        [Fact]
+        public void CanSearchWithCustomContractResolver()
+        {
+            Run(TestCanSearchWithCustomContractResolver);
+        }
+
+        [Fact]
+        public void CanSearchWithCustomConverterViaSettings()
+        {
+            Run(TestCanSearchWithCustomConverterViaSettings);
+        }
+
+        [Fact]
+        public void CanSearchWithCustomConverter()
+        {
+            Run(TestCanSearchWithCustomConverter);
         }
 
         protected override SearchIndexClient GetClient()

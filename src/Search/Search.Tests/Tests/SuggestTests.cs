@@ -6,12 +6,12 @@ namespace Microsoft.Azure.Search.Tests
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Net;
     using Microsoft.Azure.Search.Models;
     using Microsoft.Azure.Search.Tests.Utilities;
     using Microsoft.Rest.Azure;
-    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Xunit;
 
     // MAINTENANCE NOTE: Test methods (those marked with [Fact]) need to be in the derived classes in order for
@@ -32,13 +32,8 @@ namespace Microsoft.Azure.Search.Tests
             IEnumerable<Hotel> expectedDocs =
                 Data.TestDocuments.Where(h => h.HotelId == "4" || h.HotelId == "5").OrderBy(h => h.HotelId);
                 
-            SearchAssert.SequenceEqual(
-                expectedDocs,
-                response.Results.Select(r => r.Document));
-
-            SearchAssert.SequenceEqual(
-                expectedDocs.Select(h => h.Description),
-                response.Results.Select(r => r.Text));
+            Assert.Equal(expectedDocs, response.Results.Select(r => r.Document));
+            Assert.Equal(expectedDocs.Select(h => h.Description), response.Results.Select(r => r.Text));
         }
 
         protected void TestCanSuggestDynamicDocuments()
@@ -61,7 +56,7 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Equal(expectedDocs.Length, response.Results.Count);
             for (int i = 0; i < expectedDocs.Length; i++)
             {
-                SearchAssert.DocumentsEqual(expectedDocs[i], response.Results[i].Document);
+                Assert.Equal(expectedDocs[i], response.Results[i].Document);
                 Assert.Equal(expectedDocs[i]["description"], response.Results[i].Text);
             }
         }
@@ -71,27 +66,20 @@ namespace Microsoft.Azure.Search.Tests
             SearchIndexClient client = GetClient();
 
             var invalidParameters = new SuggestParameters() { OrderBy = new[] { "This is not a valid orderby." } };
-            CloudException e =
-                Assert.Throws<CloudException>(() => client.Documents.Suggest("hotel", "sg", invalidParameters));
-
-            Assert.Equal(HttpStatusCode.BadRequest, e.Response.StatusCode);
-            Assert.Contains(
-                "Invalid expression: Syntax error at position 7 in 'This is not a valid orderby.'",
-                e.Message);
+            SearchAssert.ThrowsCloudException(
+                () => client.Documents.Suggest("hotel", "sg", invalidParameters),
+                HttpStatusCode.BadRequest,
+                "Invalid expression: Syntax error at position 7 in 'This is not a valid orderby.'");
         }
 
         protected void TestSuggestThrowsWhenGivenBadSuggesterName()
         {
             SearchIndexClient client = GetClient();
 
-            CloudException e =
-                Assert.Throws<CloudException>(
-                    () => client.Documents.Suggest("hotel", "Suggester does not exist", new SuggestParameters()));
-
-            Assert.Equal(HttpStatusCode.BadRequest, e.Response.StatusCode);
-            Assert.Contains(
-                "The specified suggester name 'Suggester does not exist' does not exist in this index definition.",
-                e.Message);
+            SearchAssert.ThrowsCloudException(
+                () => client.Documents.Suggest("hotel", "Suggester does not exist", new SuggestParameters()),
+                HttpStatusCode.BadRequest,
+                "The specified suggester name 'Suggester does not exist' does not exist in this index definition.");
         }
 
         protected void TestFuzzyIsOffByDefault()
@@ -121,7 +109,12 @@ namespace Microsoft.Azure.Search.Tests
             SearchIndexClient client = GetClientForQuery();
 
             var suggestParameters =
-                new SuggestParameters() { Filter = "rating gt 3 and lastRenovationDate gt 2000-01-01T00:00:00Z" };
+                new SuggestParameters()
+                {
+                    Filter = "rating gt 3 and lastRenovationDate gt 2000-01-01T00:00:00Z",
+                    OrderBy = new[] { "hotelId" }   // Use OrderBy so changes in ranking don't break the test.
+                };
+
             DocumentSuggestResult<Hotel> response =
                 client.Documents.Suggest<Hotel>("hotel", "sg", suggestParameters);
 
@@ -146,9 +139,9 @@ namespace Microsoft.Azure.Search.Tests
 
             AssertKeySequenceEqual(response, "1");
 
-            // Note: Highlighting is not perfect due to the way Azure Search builds edge n-grams for suggestions.
             Assert.True(
-                response.Results[0].Text.StartsWith("Best <b>hotel in</b> town", StringComparison.Ordinal));
+                response.Results[0].Text.StartsWith("Best <b>hotel</b> in town", StringComparison.Ordinal),
+                String.Format(CultureInfo.InvariantCulture, "Actual text: {0}", response.Results[0].Text));
         }
 
         protected void TestOrderByProgressivelyBreaksTies()
@@ -240,26 +233,13 @@ namespace Microsoft.Azure.Search.Tests
         {
             SearchServiceClient serviceClient = Data.GetSearchServiceClient();
 
-            Index index =
-                new Index()
-                {
-                    Name = TestUtilities.GenerateName(),
-                    Fields = new[]
-                    {
-                        new Field("ISBN", DataType.String) { IsKey = true },
-                        new Field("Title", DataType.String) { IsSearchable = true },
-                        new Field("Author", DataType.String),
-                        new Field("PublishDate", DataType.DateTimeOffset)
-                    },
-                    Suggesters = new[] { new Suggester("sg", SuggesterSearchMode.AnalyzingInfixMatching, "Title") }
-                };
-
+            Index index = Book.DefineIndex();
             serviceClient.Indexes.Create(index);
             SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
 
             var doc1 = new Book() { ISBN = "123", Title = "Lord of the Rings", Author = "J.R.R. Tolkien" };
             var doc2 = new Book() { ISBN = "456", Title = "War and Peace", PublishDate = new DateTime(2015, 8, 18) };
-            var batch = IndexBatch.Create(IndexAction.Create(doc1), IndexAction.Create(doc2));
+            var batch = IndexBatch.Upload(new[] { doc1, doc2 });
 
             indexClient.Documents.Index(batch);
             SearchTestUtilities.WaitForIndexing();
@@ -270,12 +250,72 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Equal(doc2, response.Results[0].Document);
         }
 
+        protected void TestCanSuggestWithCustomContractResolver()
+        {
+            SearchIndexClient client = GetClientForQuery();
+            client.DeserializationSettings.ContractResolver = new MyCustomContractResolver();
+
+            var parameters = new SuggestParameters() { Select = new[] { "*" } };
+            DocumentSuggestResult<LoudHotel> response = client.Documents.Suggest<LoudHotel>("Best", "sg", parameters);
+
+            Assert.Equal(1, response.Results.Count);
+            Assert.Equal(Data.TestDocuments[0], response.Results[0].Document.ToHotel());
+        }
+
+        protected void TestCanSuggestWithCustomConverter()
+        {
+            TestCanSuggestWithCustomConverter<CustomBookWithConverter>();
+        }
+
+        protected void TestCanSuggestWithCustomConverterViaSettings()
+        {
+            Action<SearchIndexClient> customizeSettings =
+                client =>
+                {
+                    var converter = new CustomBookConverter<CustomBook>();
+                    converter.Install(client);
+                };
+
+            TestCanSuggestWithCustomConverter<CustomBook>(customizeSettings);
+        }
+
+        private void TestCanSuggestWithCustomConverter<T>(Action<SearchIndexClient> customizeSettings = null)
+            where T : CustomBook, new()
+        {
+            customizeSettings = customizeSettings ?? (client => { });
+            SearchServiceClient serviceClient = Data.GetSearchServiceClient();
+
+            Index index = Book.DefineIndex();
+            serviceClient.Indexes.Create(index);
+            SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
+            customizeSettings(indexClient);
+
+            var doc = new T()
+            {
+                InternationalStandardBookNumber = "123",
+                Name = "Lord of the Rings",
+                AuthorName = "J.R.R. Tolkien",
+                PublishDateTime = new DateTime(1954, 7, 29)
+            };
+
+            var batch = IndexBatch.Upload(new[] { doc });
+
+            indexClient.Documents.Index(batch);
+            SearchTestUtilities.WaitForIndexing();
+
+            var parameters = new SuggestParameters() { Select = new[] { "*" } };
+            DocumentSuggestResult<T> response = indexClient.Documents.Suggest<T>("Lord", "sg", parameters);
+
+            Assert.Equal(1, response.Results.Count);
+            Assert.Equal(doc, response.Results[0].Document);
+        }
+
         private void AssertKeySequenceEqual(DocumentSuggestResult<Hotel> response, params string[] expectedKeys)
         {
             Assert.NotNull(response.Results);
 
             IEnumerable<string> actualKeys = response.Results.Select(r => r.Document.HotelId);
-            SearchAssert.SequenceEqual(expectedKeys, actualKeys);
+            Assert.Equal(expectedKeys, actualKeys);
         }
     }
 }

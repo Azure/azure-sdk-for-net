@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Test
         public static ResourceManagementClient GetResourceManagementClientWithHandler(MockContext context, RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = true;
-            var client = context.GetServiceClient<ResourceManagementClient>(handler);
+            var client = context.GetServiceClient<ResourceManagementClient>(handlers: handler);
             return client;
         }
 

@@ -3,6 +3,8 @@ using System.Linq;
 using System.Net;
 using Microsoft.Azure.Management.Network;
 using Microsoft.Azure.Management.Network.Models;
+using Microsoft.Azure.Management.Redis;
+using Microsoft.Azure.Management.Redis.Models;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Test;
@@ -13,6 +15,7 @@ using Xunit;
 namespace Networks.Tests
 {
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using System;
 
     public class SubnetTests
     {
@@ -24,7 +27,6 @@ namespace Networks.Tests
 
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                
                 var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);
                 var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
 
@@ -108,6 +110,96 @@ namespace Networks.Tests
                 Assert.Equal(subnet1Name, getSubnetListResponse.ElementAt(0).Name);
 
                 #endregion
+            }
+        }
+
+        [Fact]
+        public void SubnetResourceNavigationLinksTest()
+        {
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler3 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);
+                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
+                var redisClient = RedisCacheManagementTestUtilities.GetRedisManagementClientWithHandler(context, handler3);
+
+                var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient,
+                    "Microsoft.Network/virtualNetworks");
+
+                string resourceGroupName = TestUtilities.GenerateName("csmrg");
+                resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
+                    new ResourceGroup
+                    {
+                        Location = location
+                    });
+
+                string vnetName = TestUtilities.GenerateName();
+                string subnetName = TestUtilities.GenerateName();
+                string redisName = TestUtilities.GenerateName();
+
+                var vnet = new VirtualNetwork()
+                {
+                    Location = location,
+
+                    AddressSpace = new AddressSpace()
+                    {
+                        AddressPrefixes = new List<string>()
+                        {
+                            "10.0.0.0/16",
+                        }
+                    },
+                    DhcpOptions = new DhcpOptions()
+                    {
+                        DnsServers = new List<string>()
+                        {
+                            "10.1.1.1",
+                            "10.1.2.4"
+                        }
+                    },
+                    Subnets = new List<Subnet>()
+                    {
+                        new Subnet()
+                        {
+                            Name = subnetName,
+                            AddressPrefix = "10.0.0.0/24",
+                        }
+                    }
+                };
+
+                var putVnetResponse = networkManagementClient.VirtualNetworks.CreateOrUpdate(resourceGroupName, vnetName, vnet);
+
+                var getSubnetResponse = networkManagementClient.Subnets.Get(resourceGroupName, vnetName, subnetName);
+                Assert.Null(getSubnetResponse.ResourceNavigationLinks);
+
+                redisClient.Redis.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, redisName, parameters: new RedisCreateOrUpdateParameters
+                    {
+                        Location = location,
+                        Sku = new Sku()
+                        {
+                            Name = SkuName.Premium,
+                            Family = SkuFamily.P,
+                            Capacity = 1
+                        },
+                        SubnetId = getSubnetResponse.Id
+                    }).Wait();
+
+                // wait for maximum 30 minutes for cache to create
+                for (int i = 0; i < 60; i++)
+                {
+                    TestUtilities.Wait(new TimeSpan(0, 0, 30));
+                    RedisResource responseGet = redisClient.Redis.Get(resourceGroupName: resourceGroupName, name: redisName);
+                    if ("succeeded".Equals(responseGet.ProvisioningState, StringComparison.OrdinalIgnoreCase))
+                    {
+                        break;
+                    }
+                    Assert.False(i == 60, "Cache is not in succeeded state even after 30 min.");
+                }
+
+                getSubnetResponse = networkManagementClient.Subnets.Get(resourceGroupName, vnetName, subnetName);
+                Assert.Equal(1, getSubnetResponse.ResourceNavigationLinks.Count);
             }
         }
 

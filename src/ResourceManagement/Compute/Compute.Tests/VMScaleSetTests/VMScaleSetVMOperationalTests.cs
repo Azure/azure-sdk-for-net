@@ -86,16 +86,21 @@ namespace Compute.Tests
                     Assert.True(getInstanceViewResponse != null, "VMScaleSetVM not returned.");
                     ValidateVMScaleSetVMInstanceView(getInstanceViewResponse);
 
-                    Expression<Func<VirtualMachineScaleSetVM, bool>> filter = vm => vm.LatestModelApplied == true;
-                    var listResponse = m_CrpClient.VirtualMachineScaleSetVMs.List(rgName, vmssName, filter);
+                    var query = new Microsoft.Rest.Azure.OData.ODataQuery<VirtualMachineScaleSetVM>();
+                    query.SetFilter(vm => vm.LatestModelApplied == true);
+                    var listResponse = m_CrpClient.VirtualMachineScaleSetVMs.List(rgName, vmssName, query);
                     Assert.False(listResponse == null, "VMScaleSetVMs not returned");
                     Assert.True(listResponse.Count() == inputVMScaleSet.Sku.Capacity);
 
-                    listResponse = m_CrpClient.VirtualMachineScaleSetVMs.List(rgName, vmssName, null, "instanceView", "instanceView");
+                    query.Filter = null;
+                    query.Expand = "instanceView";
+                    listResponse = m_CrpClient.VirtualMachineScaleSetVMs.List(rgName, vmssName, query, "instanceView");
                     Assert.False(listResponse == null, "VMScaleSetVMs not returned");
                     Assert.True(listResponse.Count() == inputVMScaleSet.Sku.Capacity);
                     
                     m_CrpClient.VirtualMachineScaleSetVMs.Start(rgName, vmScaleSet.Name, instanceId);
+                    // TODO: Re-enable the test once GA
+                    //m_CrpClient.VirtualMachineScaleSetVMs.Reimage(rgName, vmScaleSet.Name, instanceId);
                     m_CrpClient.VirtualMachineScaleSetVMs.Restart(rgName, vmScaleSet.Name, instanceId);
                     m_CrpClient.VirtualMachineScaleSetVMs.PowerOff(rgName, vmScaleSet.Name, instanceId);
                     m_CrpClient.VirtualMachineScaleSetVMs.Deallocate(rgName, vmScaleSet.Name, instanceId);

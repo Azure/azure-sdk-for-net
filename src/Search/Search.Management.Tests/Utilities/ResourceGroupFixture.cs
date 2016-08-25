@@ -5,8 +5,8 @@
 namespace Microsoft.Azure.Search.Tests.Utilities
 {
     using System.Linq;
-    using Microsoft.Azure.Management.Resources;
-    using Microsoft.Azure.Management.Resources.Models;
+    using Management.ResourceManager;
+    using Management.ResourceManager.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Xunit;
 
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
             Location = provider.ResourceTypes.First().Locations.First();
 
             // Create resource group
-            ResourceGroupName = TestUtilities.GenerateName();
+            ResourceGroupName = SearchTestUtilities.GenerateName();
             ResourceGroup resourceGroup =
                 client.ResourceGroups.CreateOrUpdate(ResourceGroupName, new ResourceGroup() { Location = Location });
             Assert.NotNull(resourceGroup);

@@ -52,12 +52,12 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// <summary>
         /// The key inside the connection string for the DataLake FileSystem URI suffix
         /// </summary>
-        public const string DataLakeServiceUri = "DataLakeServiceUri";
+        public const string DataLakeStoreServiceUri = "DataLakeStoreServiceUri";
 
         /// <summary>
         /// The key inside the connection string for the Kona Catalog URI
         /// </summary>
-        public const string KonaCatalogServiceUri = "KonaCatalogServiceUri";
+        public const string DataLakeAnalyticsJobAndCatalogServiceUri = "DataLakeAnalyticsJobAndCatalogServiceUri";
 
         /// <summary>
         /// The key inside the connection string for a Microsoft ID (OrgId or LiveId)
@@ -78,6 +78,11 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// A raw JWT token for AAD authentication
         /// </summary>
         public const string RawToken = "RawToken";
+        
+        /// <summary>
+        /// A raw JWT token for Graph authentication
+        /// </summary>
+        public const string RawGraphToken = "RawGraphToken";
 
         /// <summary>
         /// The client ID to use when authenticating with AAD

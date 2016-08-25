@@ -37,6 +37,7 @@ namespace Compute.Tests
                 VirtualMachineExtensionType = "VMAccessAgent",
                 TypeHandlerVersion = "2.0",
                 AutoUpgradeMinorVersion = true,
+                ForceUpdateTag = "RerunExtension",
                 Settings = "{}",
                 ProtectedSettings = "{}"
             };
@@ -46,6 +47,7 @@ namespace Compute.Tests
             return vmExtension;
         }
 
+        [Fact]
         public void TestVMExtensionOperations()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -71,8 +73,6 @@ namespace Compute.Tests
                     
                     // Add an extension to the VM
                     var vmExtension = GetTestVMExtension();
-                    //var lroResponse = m_CrpClient.VirtualMachineExtensions.CreateOrUpdate(rgName, vm.Name, vmExtension);
-                    //Assert.True(lroResponse.Status != ComputeOperationStatus.InProgress);
                     var response = m_CrpClient.VirtualMachineExtensions.CreateOrUpdate(rgName, vm.Name, vmExtension.Name, vmExtension);
                     ValidateVMExtension(vmExtension, response);
 
@@ -90,7 +90,7 @@ namespace Compute.Tests
                     ValidateVMExtension(vmExtension, getVMResponse.Resources.FirstOrDefault());
 
                     // Validate the extension instance view in the VM instance-view
-                    var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.Get(rgName, vm.Name, "instanceView");
+                    var getVMWithInstanceViewResponse = m_CrpClient.VirtualMachines.Get(rgName, vm.Name, InstanceViewTypes.InstanceView);
                     ValidateVMExtensionInstanceView(getVMWithInstanceViewResponse.InstanceView.Extensions.FirstOrDefault());
 
                     // Validate the extension delete API
@@ -113,6 +113,7 @@ namespace Compute.Tests
             Assert.True(vmExtExpected.AutoUpgradeMinorVersion == vmExtReturned.AutoUpgradeMinorVersion);
             Assert.True(vmExtExpected.TypeHandlerVersion == vmExtReturned.TypeHandlerVersion);
             Assert.True(vmExtExpected.Settings.ToString() == vmExtReturned.Settings.ToString());
+            Assert.True(vmExtExpected.ForceUpdateTag == vmExtReturned.ForceUpdateTag);
         }
 
         private void ValidateVMExtensionInstanceView(VirtualMachineExtensionInstanceView vmExtInstanceView)

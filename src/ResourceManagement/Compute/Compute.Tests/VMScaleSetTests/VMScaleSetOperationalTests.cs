@@ -71,6 +71,8 @@ namespace Compute.Tests
 
                     // TODO: AutoRest skips the following methods - Start, Restart, PowerOff, Deallocate
                     m_CrpClient.VirtualMachineScaleSets.Start(rgName, vmScaleSet.Name);
+                    // TODO: Re-enable the test once GA
+                    //m_CrpClient.VirtualMachineScaleSets.Reimage(rgName, vmScaleSet.Name);
                     m_CrpClient.VirtualMachineScaleSets.Restart(rgName, vmScaleSet.Name);
                     m_CrpClient.VirtualMachineScaleSets.PowerOff(rgName, vmScaleSet.Name);
                     m_CrpClient.VirtualMachineScaleSets.Deallocate(rgName, vmScaleSet.Name);

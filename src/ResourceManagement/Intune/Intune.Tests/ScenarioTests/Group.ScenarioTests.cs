@@ -25,6 +25,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
     /// <summary>
     /// Test class for linking/Unlinking groups to an Intune Policy
     /// </summary>
+    [Collection("Intune Tests")]
     public class GroupScenarioTests : TestBase
     {        
         public GroupScenarioTests()
@@ -38,7 +39,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
         [Fact]
         public void ShouldAddAndRemoveAndroidMAMGroupsForPolicy()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Microsoft.Azure.Management.Intune.Tests.ScenarioTests.GroupScenarioTests"))
             {
                 //Initialize aadClient if the test mode is not Playback
                 AADClientHelper aadClient = null;
@@ -90,7 +91,7 @@ namespace Microsoft.Azure.Management.Intune.Tests.ScenarioTests
         [Fact]
         public void ShouldAddAndRemoveiOSMAMGroupsForPolicy()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Microsoft.Azure.Management.Intune.Tests.ScenarioTests.GroupScenarioTests"))
             {
                 var client = IntuneClientHelper.GetIntuneResourceManagementClient(context);                
                 //Create a policy              

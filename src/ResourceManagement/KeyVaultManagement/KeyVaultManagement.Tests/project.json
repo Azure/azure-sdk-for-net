@@ -1,0 +1,28 @@
+{
+  "version": "2.0.0-preview",
+  "description": "KeyVault.Tests Class Library",
+  "authors": [ "Microsoft Corporation" ],
+
+  "testRunner": "xunit",
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": [ "dnxcore50", "portable-net451+win8" ],
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "type": "platform",
+          "version": "1.0.0"
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "Microsoft.Azure.Test.HttpRecorder": "[1.6.7-preview,2.0.0)",
+    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "[1.3.5-preview,2.0.0)",
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.1,4.0.0)",
+    "Microsoft.Azure.Management.KeyVault": "2.0.0-preview",
+    "Microsoft.Azure.Management.ResourceManager": "1.1.3-preview",
+    "xunit": "2.2.0-beta2-build3300",
+    "dotnet-test-xunit": "2.2.0-preview2-build1029",
+    "Microsoft.Azure.Graph.RBAC": "2.2.2-preview"
+  }
+}

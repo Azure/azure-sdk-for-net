@@ -17,7 +17,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using Hyak.Common;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Test;
 using Xunit;
@@ -25,285 +24,592 @@ using Microsoft.Azure.Management.Dns.Models;
 
 namespace Microsoft.Azure.Management.Dns.Testing
 {
+    using Resources;
+    using Rest.Azure;
+    using Rest.ClientRuntime.Azure.TestFramework;
+
     public class ZoneScenarioTests
     {
         [Fact]
         public void CrudZoneFullCycle()
         {
-            using (UndoContext context = UndoContext.Current)
+            using (
+                MockContext context = MockContext.Start(this.GetType().FullName)
+                )
             {
-                context.Start();
-                DnsManagementClient dnsClient = ResourceGroupHelper.GetDnsClient();
+                var resourcesHandler = new RecordedDelegatingHandler
+                {
+                    StatusCodeToReturn = HttpStatusCode.OK
+                };
+                var dnsHandler = new RecordedDelegatingHandler
+                {
+                    StatusCodeToReturn = HttpStatusCode.OK
+                };
+                var dnsClient = ResourceGroupHelper.GetDnsClient(
+                    context,
+                    dnsHandler);
+                var resourceManagementClient =
+                    ResourceGroupHelper.GetResourcesClient(
+                        context,
+                        resourcesHandler);
 
-                string zoneName = TestUtilities.GenerateName("hydratestdnszone");
-                string location = ResourceGroupHelper.GetResourceLocation(ResourceGroupHelper.GetResourcesClient(), "microsoft.network/dnszones");
-                ResourceGroupExtended resourceGroup = ResourceGroupHelper.CreateResourceGroup();
+                string zoneName =
+                    TestUtilities.GenerateName("hydratest.dnszone.com");
+                string location =
+                    ResourceGroupHelper.GetResourceLocation(
+                        resourceManagementClient,
+                        "microsoft.network/dnszones");
+                ResourceGroup resourceGroup =
+                    ResourceGroupHelper.CreateResourceGroup(
+                        resourceManagementClient);
 
                 Action<Zone> assertZoneInvariants = zone =>
                 {
                     Assert.Equal(zoneName, zone.Name);
-                    Assert.False(string.IsNullOrEmpty(zone.ETag));
+                    Assert.False(string.IsNullOrEmpty(zone.Etag));
                 };
 
                 // Create the zone clean, verify response
-                ZoneCreateOrUpdateResponse createResponse = dnsClient.Zones.CreateOrUpdate(
-                    resourceGroup.Name, 
-                    zoneName, 
-                    new ZoneCreateOrUpdateParameters
+                var createdZone = dnsClient.Zones.CreateOrUpdate(
+                    resourceGroup.Name,
+                    zoneName,
+                    ifMatch: null,
+                    ifNoneMatch: null,
+                    parameters: new Zone
                     {
-                        Zone = new Microsoft.Azure.Management.Dns.Models.Zone
-                        {
-                            Location = location,
-                            Name = zoneName,
-                            Tags = new Dictionary<string, string> { { "tag1", "value1" } },
-                            ETag = null,
-                            Properties = new Microsoft.Azure.Management.Dns.Models.ZoneProperties
-                            {
-                            }
-                        }
+                        Location = location,
+                        Tags =
+                            new Dictionary<string, string> {{"tag1", "value1"}},
                     });
 
-                Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
-                assertZoneInvariants(createResponse.Zone);
-                Assert.Equal(1, createResponse.Zone.Tags.Count);
+                assertZoneInvariants(createdZone);
+                Assert.Equal(1, createdZone.Tags.Count);
+                Assert.True(
+                    createdZone.NameServers != null &&
+                    createdZone.NameServers.Any(
+                        nameServer => !string.IsNullOrWhiteSpace(nameServer)));
+
+                // Ensure that Id is parseable into resourceGroup
+                string resourceGroupName =
+                    ExtractResourceGroupNameFromId(createdZone.Id);
+                Assert.True(resourceGroupName.Equals(resourceGroup.Name));
 
                 // Retrieve the zone after create, verify response
-                var getresponse = dnsClient.Zones.Get(resourceGroup.Name, zoneName);
+                var retrievedZone = dnsClient.Zones.Get(
+                    resourceGroup.Name,
+                    zoneName);
 
-                Assert.Equal(HttpStatusCode.OK, getresponse.StatusCode);
-                assertZoneInvariants(getresponse.Zone);
-                Assert.Equal(1, getresponse.Zone.Tags.Count);
+                assertZoneInvariants(retrievedZone);
+                Assert.Equal(1, retrievedZone.Tags.Count);
+
+                Assert.True(
+                    retrievedZone.NameServers != null &&
+                    retrievedZone.NameServers.Any(
+                        nameServer => !string.IsNullOrWhiteSpace(nameServer)));
 
                 // Call Update on the object returned by Create (important distinction from Get below)
-                Zone createdZone = createResponse.Zone;
-                createdZone.Tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" } };
+                createdZone.Tags = new Dictionary<string, string>
+                {
+                    {"tag1", "value1"},
+                    {"tag2", "value2"}
+                };
 
-                ZoneCreateOrUpdateResponse updateResponse = dnsClient.Zones.CreateOrUpdate(resourceGroup.Name, zoneName, new ZoneCreateOrUpdateParameters { Zone = createdZone });
+                var updateResponse =
+                    dnsClient.Zones.CreateOrUpdate(
+                        resourceGroup.Name,
+                        zoneName,
+                        ifMatch: null,
+                        ifNoneMatch: null,
+                        parameters: createdZone);
 
-                Assert.Equal(HttpStatusCode.OK, updateResponse.StatusCode);
-                assertZoneInvariants(updateResponse.Zone);
-                Assert.Equal(2, updateResponse.Zone.Tags.Count);
+                assertZoneInvariants(updateResponse);
+                Assert.Equal(2, updateResponse.Tags.Count);
 
                 // Retrieve the zone after create, verify response
-                getresponse = dnsClient.Zones.Get(resourceGroup.Name, zoneName);
+                retrievedZone = dnsClient.Zones.Get(
+                    resourceGroup.Name,
+                    zoneName);
 
-                Assert.Equal(HttpStatusCode.OK, getresponse.StatusCode);
-                assertZoneInvariants(getresponse.Zone);
-                Assert.Equal(2, getresponse.Zone.Tags.Count);
+                assertZoneInvariants(retrievedZone);
+                Assert.Equal(2, retrievedZone.Tags.Count);
 
                 // Call Update on the object returned by Get (important distinction from Create above)
-                Zone retrievedZone = getresponse.Zone;
-                retrievedZone.Tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" }, { "tag3", "value3" } };
+                retrievedZone.Tags = new Dictionary<string, string>
+                {
+                    {"tag1", "value1"},
+                    {"tag2", "value2"},
+                    {"tag3", "value3"}
+                };
 
-                updateResponse = dnsClient.Zones.CreateOrUpdate(resourceGroup.Name, zoneName, new ZoneCreateOrUpdateParameters { Zone = retrievedZone });
+                updateResponse =
+                    dnsClient.Zones.CreateOrUpdate(
+                        resourceGroup.Name,
+                        zoneName,
+                        ifMatch: null,
+                        ifNoneMatch: null,
+                        parameters: retrievedZone);
 
-                Assert.Equal(HttpStatusCode.OK, updateResponse.StatusCode);
-                assertZoneInvariants(updateResponse.Zone);
-                Assert.Equal(3, updateResponse.Zone.Tags.Count);
+                assertZoneInvariants(updateResponse);
+                Assert.Equal(3, updateResponse.Tags.Count);
 
                 // Delete the zone
-                AzureOperationResponse deleteResponse = dnsClient.Zones.Delete(resourceGroup.Name, zoneName, new ZoneDeleteParameters());
-                Assert.Equal(HttpStatusCode.OK, deleteResponse.StatusCode);
+                DeleteZones(dnsClient, resourceGroup, new[] {zoneName});
             }
+        }
+
+        private string ExtractResourceGroupNameFromId(string id)
+        {
+            var parts = id.Split(
+                new[] {'/'},
+                StringSplitOptions.RemoveEmptyEntries);
+            int rgIndex = -1;
+            for (int i = 0; i < parts.Length; i++)
+            {
+                if (parts[i].Equals(
+                    "resourceGroups",
+                    StringComparison.OrdinalIgnoreCase))
+                {
+                    rgIndex = i;
+                    break;
+                }
+            }
+
+            if (rgIndex != -1 && rgIndex + 1 < parts.Length)
+            {
+                return parts[rgIndex + 1];
+            }
+
+            throw new FormatException(
+                string.Format(
+                    "Unable to extract resource group name from {0} ",
+                    id));
         }
 
         [Fact]
         public void ListZones()
         {
-            using (UndoContext context = UndoContext.Current)
+            using (
+                MockContext context = MockContext.Start(this.GetType().FullName)
+                )
             {
-                context.Start();
-                DnsManagementClient dnsClient = ResourceGroupHelper.GetDnsClient();
+                var resourcesHandler = new RecordedDelegatingHandler
+                {
+                    StatusCodeToReturn = HttpStatusCode.OK
+                };
+                var dnsHandler = new RecordedDelegatingHandler
+                {
+                    StatusCodeToReturn = HttpStatusCode.OK
+                };
+                DnsManagementClient dnsClient =
+                    ResourceGroupHelper.GetDnsClient(context, dnsHandler);
 
-                var zoneNames = new[] { TestUtilities.GenerateName("hydratestdnszone"), TestUtilities.GenerateName("hydratestdnszone") };
-                ResourceGroupExtended resourceGroup = ResourceGroupHelper.CreateResourceGroup();
-                ZoneScenarioTests.CreateZones(dnsClient, resourceGroup, zoneNames);
+                var zoneNames = new[]
+                {
+                    TestUtilities.GenerateName("hydratest.dnszone.com"),
+                    TestUtilities.GenerateName("hydratest.dnszone.com")
+                };
+                var resourceManagementClient =
+                    ResourceGroupHelper.GetResourcesClient(
+                        context,
+                        resourcesHandler);
+                ResourceGroup resourceGroup =
+                    ResourceGroupHelper.CreateResourceGroup(
+                        resourceManagementClient);
+                ZoneScenarioTests.CreateZones(
+                    dnsClient,
+                    resourceGroup,
+                    zoneNames,
+                    resourceManagementClient);
 
-                ZoneListResponse listresponse = dnsClient.Zones.List(resourceGroup.Name, new ZoneListParameters());
+                var listresponse =
+                    dnsClient.Zones.ListInResourceGroup(resourceGroup.Name);
 
                 Assert.NotNull(listresponse);
-                Assert.Equal(2, listresponse.Zones.Count);
+                Assert.Equal(2, listresponse.Count());
                 Assert.True(
-                    listresponse.Zones.Any(zoneReturned => string.Equals(zoneNames[0], zoneReturned.Name))
-                    && listresponse.Zones.Any(zoneReturned => string.Equals(zoneNames[1], zoneReturned.Name)),
+                    listresponse.Any(
+                        zoneReturned =>
+                            string.Equals(zoneNames[0], zoneReturned.Name))
+                    &&
+                    listresponse.Any(
+                        zoneReturned =>
+                            string.Equals(zoneNames[1], zoneReturned.Name)),
                     "The response of the List request does not meet expectations.");
 
-                ZoneScenarioTests.DeleteZones(dnsClient, resourceGroup, zoneNames);
+                ZoneScenarioTests.DeleteZones(
+                    dnsClient,
+                    resourceGroup,
+                    zoneNames);
+            }
+        }
+
+        [Fact]
+        public void ListZonesInSubscription()
+        {
+            using (
+                MockContext context = MockContext.Start(this.GetType().FullName)
+                )
+            {
+                var resourcesHandler = new RecordedDelegatingHandler
+                {
+                    StatusCodeToReturn = HttpStatusCode.OK
+                };
+                var dnsHandler = new RecordedDelegatingHandler
+                {
+                    StatusCodeToReturn = HttpStatusCode.OK
+                };
+                DnsManagementClient dnsClient =
+                    ResourceGroupHelper.GetDnsClient(context, dnsHandler);
+
+                var zoneNames = new[]
+                {
+                    TestUtilities.GenerateName("hydratest.dnszone.com"),
+                    TestUtilities.GenerateName("hydratest.dnszone.com")
+                };
+                var resourceManagementClient =
+                    ResourceGroupHelper.GetResourcesClient(
+                        context,
+                        resourcesHandler);
+                ResourceGroup resourceGroup =
+                    ResourceGroupHelper.CreateResourceGroup(
+                        resourceManagementClient);
+                ZoneScenarioTests.CreateZones(
+                    dnsClient,
+                    resourceGroup,
+                    zoneNames,
+                    resourceManagementClient);
+
+                var listresponse = dnsClient.Zones.ListInSubscription();
+
+                Assert.NotNull(listresponse);
+                Assert.True(listresponse.Count() > 2);
+                Assert.True(
+                    listresponse.Any(
+                        zoneReturned =>
+                            string.Equals(zoneNames[0], zoneReturned.Name))
+                    &&
+                    listresponse.Any(
+                        zoneReturned =>
+                            string.Equals(zoneNames[1], zoneReturned.Name)),
+                    "The response of the List request does not meet expectations.");
+
+                ZoneScenarioTests.DeleteZones(
+                    dnsClient,
+                    resourceGroup,
+                    zoneNames);
             }
         }
 
         [Fact]
         public void ListZonesWithTopParameter()
         {
-            using (UndoContext context = UndoContext.Current)
+            using (
+                MockContext context = MockContext.Start(this.GetType().FullName)
+                )
             {
-                context.Start();
-                DnsManagementClient dnsClient = ResourceGroupHelper.GetDnsClient();
+                var resourcesHandler = new RecordedDelegatingHandler
+                {
+                    StatusCodeToReturn = HttpStatusCode.OK
+                };
+                var dnsHandler = new RecordedDelegatingHandler
+                {
+                    StatusCodeToReturn = HttpStatusCode.OK
+                };
+                DnsManagementClient dnsClient =
+                    ResourceGroupHelper.GetDnsClient(context, dnsHandler);
 
-                var zoneNames = new[] { TestUtilities.GenerateName("hydratestdnszone") + ".com", TestUtilities.GenerateName("hydratestdnszone") + ".con" };
-                ResourceGroupExtended resourceGroup = ResourceGroupHelper.CreateResourceGroup();
-                ZoneScenarioTests.CreateZones(dnsClient, resourceGroup, zoneNames);
+                var zoneNames = new[]
+                {
+                    TestUtilities.GenerateName("hydratest.dnszone") + ".com",
+                    TestUtilities.GenerateName("hydratest.dnszone") + ".com"
+                };
+                var resourceManagementClient =
+                    ResourceGroupHelper.GetResourcesClient(
+                        context,
+                        resourcesHandler);
+                ResourceGroup resourceGroup =
+                    ResourceGroupHelper.CreateResourceGroup(
+                        resourceManagementClient);
+                ZoneScenarioTests.CreateZones(
+                    dnsClient,
+                    resourceGroup,
+                    zoneNames,
+                    resourceManagementClient);
 
-                ZoneListResponse listresponse = dnsClient.Zones.List(resourceGroup.Name, new ZoneListParameters { Top = "1" });
+                var listresponse =
+                    dnsClient.Zones.ListInResourceGroup(resourceGroup.Name, "1");
 
                 Assert.NotNull(listresponse);
-                Assert.Equal(1, listresponse.Zones.Count);
-                Assert.True(listresponse.Zones.Any(zoneReturned => string.Equals(zoneNames[0], zoneReturned.Name)),
-                    "The response of the List request does not meet expectations.");
+                Assert.Equal(1, listresponse.Count());
+                Assert.True(
+                    zoneNames.Any(
+                        zoneName => zoneName == listresponse.ElementAt(0).Name));
 
-                ZoneScenarioTests.DeleteZones(dnsClient, resourceGroup, zoneNames);
-            }
-        }
-
-        [Fact]
-        public void ListZonesWithFilterParameter()
-        {
-            using (UndoContext context = UndoContext.Current)
-            {
-                context.Start();
-                DnsManagementClient dnsClient = ResourceGroupHelper.GetDnsClient();
-
-                var zoneNames = new[] { TestUtilities.GenerateName("hydratestdnszone"), TestUtilities.GenerateName("hydratestdnszone") };
-                ResourceGroupExtended resourceGroup = ResourceGroupHelper.CreateResourceGroup();
-                ZoneScenarioTests.CreateZones(dnsClient, resourceGroup, zoneNames);
-
-                ZoneListResponse listresponse = dnsClient.Zones.List(resourceGroup.Name, new ZoneListParameters { Filter = string.Format("endswith(Name,'{0}')", zoneNames[0]) });
-
-                Assert.NotNull(listresponse);
-                Assert.Equal(1, listresponse.Zones.Count);
-
-                ZoneScenarioTests.DeleteZones(dnsClient, resourceGroup, zoneNames);
+                ZoneScenarioTests.DeleteZones(
+                    dnsClient,
+                    resourceGroup,
+                    zoneNames);
             }
         }
 
         [Fact]
         public void ListZonesWithListNext()
         {
-            using (UndoContext context = UndoContext.Current)
+            using (
+                MockContext context = MockContext.Start(this.GetType().FullName)
+                )
             {
-                context.Start();
-                DnsManagementClient dnsClient = ResourceGroupHelper.GetDnsClient();
+                var resourcesHandler = new RecordedDelegatingHandler
+                {
+                    StatusCodeToReturn = HttpStatusCode.OK
+                };
+                var dnsHandler = new RecordedDelegatingHandler
+                {
+                    StatusCodeToReturn = HttpStatusCode.OK
+                };
+                DnsManagementClient dnsClient =
+                    ResourceGroupHelper.GetDnsClient(context, dnsHandler);
 
-                var zoneNames = new[] { TestUtilities.GenerateName("hydratestdnszone"), TestUtilities.GenerateName("hydratestdnszone") };
-                ResourceGroupExtended resourceGroup = ResourceGroupHelper.CreateResourceGroup();
-                ZoneScenarioTests.CreateZones(dnsClient, resourceGroup, zoneNames);
+                var zoneNames = new[]
+                {
+                    TestUtilities.GenerateName("hydratest.dnszone.com"),
+                    TestUtilities.GenerateName("hydratest.dnszone.com")
+                };
+                var resourceManagementClient =
+                    ResourceGroupHelper.GetResourcesClient(
+                        context,
+                        resourcesHandler);
+                ResourceGroup resourceGroup =
+                    ResourceGroupHelper.CreateResourceGroup(
+                        resourceManagementClient);
+                ZoneScenarioTests.CreateZones(
+                    dnsClient,
+                    resourceGroup,
+                    zoneNames,
+                    resourceManagementClient);
 
-                ZoneListResponse listresponse = dnsClient.Zones.List(resourceGroup.Name, new ZoneListParameters { Top = "1" });
+                var listresponse =
+                    dnsClient.Zones.ListInResourceGroup(resourceGroup.Name, "1");
 
-                Assert.NotNull(listresponse.NextLink);
+                Assert.NotNull(listresponse.NextPageLink);
 
-                listresponse = dnsClient.Zones.ListNext(listresponse.NextLink);
+                listresponse =
+                    dnsClient.Zones.ListInResourceGroupNext(
+                        (listresponse.NextPageLink));
 
-                Assert.Equal(1, listresponse.Zones.Count);
+                Assert.Equal(1, listresponse.Count());
 
-                ZoneScenarioTests.DeleteZones(dnsClient, resourceGroup, zoneNames);
+                ZoneScenarioTests.DeleteZones(
+                    dnsClient,
+                    resourceGroup,
+                    zoneNames);
             }
         }
 
         [Fact]
         public void UpdateZonePreconditionFailed()
         {
-            using (UndoContext context = UndoContext.Current)
+            using (
+                MockContext context = MockContext.Start(this.GetType().FullName)
+                )
             {
-                context.Start();
-                DnsManagementClient dnsClient = ResourceGroupHelper.GetDnsClient();
+                var resourcesHandler = new RecordedDelegatingHandler
+                {
+                    StatusCodeToReturn = HttpStatusCode.OK
+                };
+                var dnsHandler = new RecordedDelegatingHandler
+                {
+                    StatusCodeToReturn = HttpStatusCode.OK
+                };
+                DnsManagementClient dnsClient =
+                    ResourceGroupHelper.GetDnsClient(context, dnsHandler);
 
-                string zoneName = TestUtilities.GenerateName("hydratestdnszone");
-                string location = ResourceGroupHelper.GetResourceLocation(ResourceGroupHelper.GetResourcesClient(), "microsoft.network/dnszones");
-                ResourceGroupExtended resourceGroup = ResourceGroupHelper.CreateResourceGroup();
-                ZoneCreateOrUpdateResponse createresponse = ResourceGroupHelper.CreateZone(dnsClient, zoneName, location, resourceGroup);
+                string zoneName =
+                    TestUtilities.GenerateName("hydratest.dnszone.com");
+                var resourceManagementClient =
+                    ResourceGroupHelper.GetResourcesClient(
+                        context,
+                        resourcesHandler);
+                string location =
+                    ResourceGroupHelper.GetResourceLocation(
+                        resourceManagementClient,
+                        "microsoft.network/dnszones");
 
-                ZoneCreateOrUpdateParameters updateParameters = new ZoneCreateOrUpdateParameters { Zone = createresponse.Zone };
-                updateParameters.Zone.ETag = "somegibberish";
+                ResourceGroup resourceGroup =
+                    ResourceGroupHelper.CreateResourceGroup(
+                        resourceManagementClient);
+                var createdZone = ResourceGroupHelper.CreateZone(
+                    dnsClient,
+                    zoneName,
+                    location,
+                    resourceGroup);
 
                 // expect Precondition Failed 412
                 TestHelpers.AssertThrows<CloudException>(
-                    () => dnsClient.Zones.CreateOrUpdate(resourceGroup.Name, zoneName, updateParameters),
-                    ex => ex.Error.Code == "PreconditionFailed");
+                    () =>
+                        dnsClient.Zones.CreateOrUpdate(
+                            resourceGroup.Name,
+                            zoneName,
+                            createdZone,
+                            "somegibberish",
+                            null),
+                    ex => ex.Body.Code == "PreconditionFailed");
 
-                // expect Precondition Failed 412
+                var result = dnsClient.Zones.Delete(
+                    resourceGroup.Name,
+                    zoneName,
+                    ifMatch: null,
+                    ifNoneMatch: null);
+                Assert.Equal(result.Status, OperationStatus.Succeeded);
+
+                result = dnsClient.Zones.Delete(
+                    resourceGroup.Name,
+                    "hiya.com",
+                    ifMatch: null,
+                    ifNoneMatch: null);
+                Assert.Null(result);
+            }
+        }
+
+        [Fact]
+        public void GetNonExistingZoneFailsAsExpected()
+        {
+            using (
+                MockContext context = MockContext.Start(this.GetType().FullName)
+                )
+            {
+                var resourcesHandler = new RecordedDelegatingHandler
+                {
+                    StatusCodeToReturn = HttpStatusCode.OK
+                };
+                var dnsHandler = new RecordedDelegatingHandler
+                {
+                    StatusCodeToReturn = HttpStatusCode.OK
+                };
+                DnsManagementClient dnsClient =
+                    ResourceGroupHelper.GetDnsClient(context, dnsHandler);
+
+                string zoneName =
+                    TestUtilities.GenerateName("hydratest.dnszone.com");
+                var resourceManagementClient =
+                    ResourceGroupHelper.GetResourcesClient(
+                        context,
+                        resourcesHandler);
+                string location =
+                    ResourceGroupHelper.GetResourceLocation(
+                        resourceManagementClient,
+                        "microsoft.network/dnszones");
+
+                ResourceGroup resourceGroup =
+                    ResourceGroupHelper.CreateResourceGroup(
+                        resourceManagementClient);
+
                 TestHelpers.AssertThrows<CloudException>(
-                    () => dnsClient.Zones.Delete(resourceGroup.Name, zoneName, new ZoneDeleteParameters { IfMatch = "somemoregib" }),
-                    ex => ex.Error.Code == "PreconditionFailed");
-
-                dnsClient.Zones.Delete(resourceGroup.Name, zoneName, new ZoneDeleteParameters());
+                    () => dnsClient.Zones.Get(resourceGroup.Name, zoneName),
+                    ex => ex.Body.Code == "ResourceNotFound");
             }
         }
 
         [Fact]
         public void CrudZoneSetsTheCurrentAndMaxRecordSetNumbersInResponse()
         {
-            using (UndoContext context = UndoContext.Current)
+            using (
+                MockContext context = MockContext.Start(this.GetType().FullName)
+                )
             {
-                context.Start();
-                DnsManagementClient dnsClient = ResourceGroupHelper.GetDnsClient();
+                var resourcesHandler = new RecordedDelegatingHandler
+                {
+                    StatusCodeToReturn = HttpStatusCode.OK
+                };
+                var dnsHandler = new RecordedDelegatingHandler
+                {
+                    StatusCodeToReturn = HttpStatusCode.OK
+                };
+                DnsManagementClient dnsClient =
+                    ResourceGroupHelper.GetDnsClient(context, dnsHandler);
 
-                string zoneName = TestUtilities.GenerateName("hydratestdnszone");
-                string location = ResourceGroupHelper.GetResourceLocation(ResourceGroupHelper.GetResourcesClient(), "microsoft.network/dnszones");
-                ResourceGroupExtended resourceGroup = ResourceGroupHelper.CreateResourceGroup();
+                string zoneName =
+                    TestUtilities.GenerateName("hydratest.dnszone.com");
+                var resourceManagementClient =
+                    ResourceGroupHelper.GetResourcesClient(
+                        context,
+                        resourcesHandler);
+                string location =
+                    ResourceGroupHelper.GetResourceLocation(
+                        resourceManagementClient,
+                        "microsoft.network/dnszones");
+
+                ResourceGroup resourceGroup =
+                    ResourceGroupHelper.CreateResourceGroup(
+                        resourceManagementClient);
 
                 // Create the zone clean
-                ZoneCreateOrUpdateResponse createResponse = dnsClient.Zones.CreateOrUpdate(
+                dnsClient.Zones.CreateOrUpdate(
                     resourceGroup.Name,
                     zoneName,
-                    new ZoneCreateOrUpdateParameters
-                        {
-                            Zone = new Microsoft.Azure.Management.Dns.Models.Zone
-                                {
-                                    Location = location,
-                                    Name = zoneName,
-                                    Properties = new Microsoft.Azure.Management.Dns.Models.ZoneProperties
-                                        {
-                                            MaxNumberOfRecordSets = 42, // Test that specifying this value does not break Create (it must be ignored on server side).
-                                            NumberOfRecordSets = 65,    // Test that specifying this value does not break Create (it must be ignored on server side).
-                                        }
-                                }
-                        });
-
-                // Verify RecordSet numbers in the response.
-                Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
+                    new Zone
+                    {
+                        Location = location,
+                        MaxNumberOfRecordSets = 42,
+                        // Test that specifying this value does not break Create (it must be ignored on server side).
+                        NumberOfRecordSets = 65,
+                        // Test that specifying this value does not break Create (it must be ignored on server side).
+                    });
 
                 // Retrieve the zone after create
-                ZoneGetResponse getResponse = dnsClient.Zones.Get(resourceGroup.Name, zoneName);
+                Zone retrievedZone = dnsClient.Zones.Get(
+                    resourceGroup.Name,
+                    zoneName);
 
                 // Verify RecordSet numbers in the response.
-                Assert.Equal(HttpStatusCode.OK, getResponse.StatusCode);
-                Assert.True(getResponse.Zone.Properties.NumberOfRecordSets == 2);
+                Assert.True(retrievedZone.NumberOfRecordSets == 2);
 
-                Zone retrievedZone = getResponse.Zone;
-                retrievedZone.Tags = new Dictionary<string, string> { { "tag1", "value1" } };
-                retrievedZone.Properties.NumberOfRecordSets = null;
-                retrievedZone.Properties.MaxNumberOfRecordSets = null;
+                retrievedZone.Tags = new Dictionary<string, string>
+                {
+                    {"tag1", "value1"}
+                };
+                retrievedZone.NumberOfRecordSets = null;
+                retrievedZone.MaxNumberOfRecordSets = null;
 
-                // Update the zone
-                ZoneCreateOrUpdateResponse updateResponse = dnsClient.Zones.CreateOrUpdate(resourceGroup.Name, zoneName, new ZoneCreateOrUpdateParameters { Zone = retrievedZone });
-
-                // Verify RecordSet numbers in the response.
-                Assert.Equal(HttpStatusCode.OK, updateResponse.StatusCode);
-                
                 // Delete the zone
-                AzureOperationResponse deleteResponse = dnsClient.Zones.Delete(resourceGroup.Name, zoneName, new ZoneDeleteParameters());
-                Assert.Equal(HttpStatusCode.OK, deleteResponse.StatusCode);
+                DeleteZones(dnsClient, resourceGroup, new[] {zoneName});
             }
         }
 
         #region Helper methods
 
-        public static void CreateZones(DnsManagementClient dnsClient, ResourceGroupExtended resourceGroup, string[] zoneNames)
+        public static void CreateZones(
+            DnsManagementClient dnsClient,
+            ResourceGroup resourceGroup,
+            string[] zoneNames,
+            ResourceManagementClient resourcesClient)
         {
-            string location = ResourceGroupHelper.GetResourceLocation(ResourceGroupHelper.GetResourcesClient(), "microsoft.network/dnszones");
+            string location =
+                ResourceGroupHelper.GetResourceLocation(
+                    resourcesClient,
+                    "microsoft.network/dnszones");
 
             foreach (string zoneName in zoneNames)
             {
-                ResourceGroupHelper.CreateZone(dnsClient, zoneName, location, resourceGroup);
+                ResourceGroupHelper.CreateZone(
+                    dnsClient,
+                    zoneName,
+                    location,
+                    resourceGroup);
             }
         }
 
-        public static void DeleteZones(DnsManagementClient dnsClient, ResourceGroupExtended resourceGroup, string[] zoneNames)
+        public static void DeleteZones(
+            DnsManagementClient dnsClient,
+            ResourceGroup resourceGroup,
+            string[] zoneNames)
         {
             foreach (string zoneName in zoneNames)
             {
-                dnsClient.Zones.Delete(resourceGroup.Name, zoneName, new ZoneDeleteParameters());
+                var response = dnsClient.Zones.Delete(
+                    resourceGroup.Name,
+                    zoneName);
+                Assert.True(response.Status == OperationStatus.Succeeded);
             }
         }
 

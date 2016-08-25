@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
 
             SearchServiceClient searchClient = this.GetSearchServiceClient();
 
-            IndexName = TestUtilities.GenerateName();
+            IndexName = SearchTestUtilities.GenerateName();
 
             // This is intentionally a different index definition than the one returned by IndexTests.CreateTestIndex().
             // That index is meant to exercise serialization of the index definition itself, while this one is tuned
@@ -94,11 +94,15 @@ namespace Microsoft.Azure.Search.Tests.Utilities
             Uri baseUri = 
                 new Uri(
                     currentEnvironment.GetBaseSearchUri(SearchServiceName), 
-                    String.Format("indexes/{0}/", indexName));
+                    String.Format("indexes('{0}')/", indexName));
 
             currentEnvironment.BaseUri = baseUri;
-            currentEnvironment.Credentials = new SearchCredentials(apiKey);
-            return MockContext.GetServiceClient<SearchIndexClient>(currentEnvironment, handlers);
+            var credentials = new SearchCredentials(apiKey);
+            return MockContext.GetServiceClientWithCredentials<SearchIndexClient>(
+                currentEnvironment, 
+                credentials,
+                false,
+                handlers);
         }
     }
 }

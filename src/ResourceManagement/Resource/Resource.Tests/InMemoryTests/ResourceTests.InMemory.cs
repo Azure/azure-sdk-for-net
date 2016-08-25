@@ -18,8 +18,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Test;
 using Microsoft.Rest;
 using Microsoft.Rest.Azure.OData;
@@ -54,6 +54,13 @@ namespace ResourceGroups.Tests
 	                    'siteMode': 'Standard',
                         'computeMode':'Dedicated',
                         'provisioningState':'Succeeded'
+                   },
+                   'sku': {
+                        'name': 'F1',
+                        'tier': 'Free',
+                        'size': 'F1',
+                        'family': 'F',
+                        'capacity': 0
                     }
                 }")
             };
@@ -73,6 +80,11 @@ namespace ResourceGroups.Tests
             Assert.Equal("/subscriptions/12345/resourceGroups/foo/providers/Microsoft.Web/Sites/site1", result.Id);
             Assert.True(result.Properties.ToString().Contains("Dedicated"));
             Assert.Equal("Succeeded", (result.Properties as JObject)["provisioningState"]);
+            Assert.Equal("F1", result.Sku.Name);
+            Assert.Equal("Free", result.Sku.Tier);
+            Assert.Equal("F1", result.Sku.Size);
+            Assert.Equal("F", result.Sku.Family);
+            Assert.Equal(0, result.Sku.Capacity);
         }
 
         [Fact]
@@ -287,6 +299,74 @@ namespace ResourceGroups.Tests
             Assert.Equal("finance", result.Tags["department"]);
             Assert.Equal("tagvalue", result.Tags["tagname"]);
             Assert.True(result.Properties.ToString().Contains("Dedicated"));
+        }
+
+        [Fact]
+        public void ResourceCreateOrUpdateWithIdentityValidateMessage()
+        {
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"{
+                    'location': 'South Central US',
+                    'tags' : {
+                        'department':'finance',
+                        'tagname':'tagvalue'
+                    },
+                    'properties': {
+                        'name':'site3',
+	                    'siteMode': 'Standard',
+                        'computeMode':'Dedicated',
+                        'provisioningState':'Succeeded'
+                    },
+                    'identity': {
+                        'type': 'SystemAssigned',
+                        'principalId': 'foo'
+                    }
+                }")
+            };
+            response.Headers.Add("x-ms-request-id", "1");
+            var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
+            var client = GetResourceManagementClient(handler);
+
+            var result = client.Resources.CreateOrUpdate(
+                "foo",
+                "Microsoft.Web",
+                string.Empty,
+                "sites",
+                "site3",
+                "2014-01-04",
+                new GenericResource
+                {
+                    Location = "South Central US",
+                    Tags = new Dictionary<string, string>() { { "department", "finance" }, { "tagname", "tagvalue" } },
+                    Properties = @"{
+                        'name':'site3',
+	                    'siteMode': 'Standard',
+                        'computeMode':'Dedicated'
+                    }",
+                    Identity = new Identity { Type = ResourceIdentityType.SystemAssigned }
+                }
+            );
+
+            JObject json = JObject.Parse(handler.Request);
+
+            // Validate headers
+            Assert.Equal(HttpMethod.Put, handler.Method);
+            Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
+
+            // Validate payload
+            Assert.Equal("South Central US", json["location"].Value<string>());
+            Assert.Equal("finance", json["tags"]["department"].Value<string>());
+            Assert.Equal("tagvalue", json["tags"]["tagname"].Value<string>());
+
+            // Validate result
+            Assert.Equal("South Central US", result.Location);
+            Assert.Equal("Succeeded", (result.Properties as JObject)["provisioningState"]);
+            Assert.Equal("finance", result.Tags["department"]);
+            Assert.Equal("tagvalue", result.Tags["tagname"]);
+            Assert.True(result.Properties.ToString().Contains("Dedicated"));
+            Assert.Equal("SystemAssigned", result.Identity.Type.ToString());
+            Assert.Equal("foo", result.Identity.PrincipalId);
         }
 
         [Fact]

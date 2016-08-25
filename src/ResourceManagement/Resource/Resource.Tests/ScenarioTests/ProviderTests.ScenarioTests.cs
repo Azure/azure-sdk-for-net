@@ -19,8 +19,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using Microsoft.Rest.Azure;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Management.Resources.Models;
+using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Microsoft.Azure.Test;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
@@ -99,6 +99,50 @@ namespace ResourceGroups.Tests
         }
 
         [Fact]
+        public void GetProviderWithAliases()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var computeNamespace = "Microsoft.Compute";
+                var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+                var client = GetResourceManagementClient(context, handler);
+
+                var reg = client.Providers.Register(computeNamespace);
+                Assert.NotNull(reg);
+
+                var result = client.Providers.List(expand: "resourceTypes/aliases");
+
+                // Validate headers
+                Assert.Equal(HttpMethod.Get, handler.Method);
+                Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
+
+                // Validate result
+                Assert.True(result.Any());
+                var computeProvider = result.First(
+                    provider => string.Equals(provider.NamespaceProperty, computeNamespace, StringComparison.OrdinalIgnoreCase));
+
+                Assert.NotEmpty(computeProvider.ResourceTypes);
+                var virtualMachinesType = computeProvider.ResourceTypes.First(
+                    resourceType => string.Equals(resourceType.ResourceType, "virtualMachines", StringComparison.OrdinalIgnoreCase));
+
+                Assert.NotEmpty(virtualMachinesType.Aliases);
+                Assert.Equal("Microsoft.Compute/virtualMachines/sku.name", virtualMachinesType.Aliases[0].Name);
+                Assert.Equal("properties.hardwareProfile.vmSize", virtualMachinesType.Aliases[0].Paths[0].Path);
+
+                computeProvider = client.Providers.Get(resourceProviderNamespace: computeNamespace, expand: "resourceTypes/aliases");
+
+                Assert.NotEmpty(computeProvider.ResourceTypes);
+                virtualMachinesType = computeProvider.ResourceTypes.First(
+                    resourceType => string.Equals(resourceType.ResourceType, "virtualMachines", StringComparison.OrdinalIgnoreCase));
+
+                Assert.NotEmpty(virtualMachinesType.Aliases);
+                Assert.Equal("Microsoft.Compute/virtualMachines/sku.name", virtualMachinesType.Aliases[0].Name);
+                Assert.Equal("properties.hardwareProfile.vmSize", virtualMachinesType.Aliases[0].Paths[0].Path);
+            }
+        }
+
+        [Fact]
         public void VerifyProviderRegister()
         {
             var handler = new RecordedDelegatingHandler() {StatusCodeToReturn = HttpStatusCode.OK};
@@ -135,67 +179,6 @@ namespace ResourceGroups.Tests
                             provider.RegistrationState == "Unregistering",
                             "RegistrationState is expected NotRegistered or Unregistering. Actual value " +
                             provider.RegistrationState);
-            }
-        }
-
-        [Fact]
-        public void ProviderOperationsList()
-        {
-            using (MockContext context = MockContext.Start(this.GetType().FullName))
-            {
-                const string DefaultApiVersion = "2014-06-01";
-
-                var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-
-                var client = GetResourceManagementClient(context, handler);
-                var insightsProvider = client.Providers.Get(ProviderName);
-
-                // Validate result
-                Assert.True(insightsProvider != null);
-
-                // Validate headers
-                Assert.Equal(HttpMethod.Get, handler.Method);
-                Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
-
-                Assert.NotEmpty(insightsProvider.ResourceTypes);
-                var operationResourceType = insightsProvider.ResourceTypes.Single(x => x.ResourceType == "operations");
-                IList<string> operationsSupportedApiVersions = operationResourceType.ApiVersions;
-                string latestSupportedApiVersion = DefaultApiVersion;
-
-                if (operationsSupportedApiVersions != null && operationsSupportedApiVersions.Any())
-                {
-                    latestSupportedApiVersion = operationsSupportedApiVersions.First();
-                }
-
-                ResourceIdentity identity = new ResourceIdentity
-                {
-                    ResourceName = string.Empty,
-                    ResourceType = "operations",
-                    ResourceProviderNamespace = ProviderName,
-                    ResourceProviderApiVersion = latestSupportedApiVersion
-                };
-
-                var operations = client.ResourceProviderOperationDetails.List(identity.ResourceProviderNamespace, identity.ResourceProviderApiVersion);
-
-                Assert.NotEmpty(operations);
-                Assert.NotEmpty(operations.First().Name);
-                Assert.NotNull(operations.First().Display);
-                IEnumerable<ResourceProviderOperationDefinition> definitions =
-                    operations.Where(op => string.Equals(op.Name, "Microsoft.Insights/AlertRules/Write", StringComparison.OrdinalIgnoreCase));
-                Assert.NotNull(definitions);
-                Assert.NotEmpty(definitions);
-                Assert.Equal(1, definitions.Count());
-
-                // Negative case with unsupported api version
-                identity = new ResourceIdentity
-                {
-                    ResourceName = string.Empty,
-                    ResourceType = "operations",
-                    ResourceProviderNamespace = ProviderName,
-                    ResourceProviderApiVersion = "2015-01-01"
-                };
-
-                Assert.Throws<CloudException>(() => client.ResourceProviderOperationDetails.List(identity.ResourceProviderNamespace, identity.ResourceProviderApiVersion));
             }
         }
     }

@@ -19,6 +19,7 @@ using Microsoft.Azure.Management.Resources;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Net;
 using Xunit;
 
 namespace Compute.Tests
@@ -99,6 +100,7 @@ namespace Compute.Tests
                     VirtualMachine vm1 = CreateVM_NoAsyncTracking(rg1Name, as1Name, storageAccountOutput, imageRef, out inputVM1);
 
                     m_CrpClient.VirtualMachines.Start(rg1Name, vm1.Name);
+                    m_CrpClient.VirtualMachines.Redeploy(rg1Name, vm1.Name);
                     m_CrpClient.VirtualMachines.Restart(rg1Name, vm1.Name);
                     m_CrpClient.VirtualMachines.PowerOff(rg1Name, vm1.Name);
                     m_CrpClient.VirtualMachines.Deallocate(rg1Name, vm1.Name);
@@ -134,7 +136,7 @@ namespace Compute.Tests
                             vm.StorageProfile.ImageReference = null;
                             vm.StorageProfile.OsDisk.Image = new VirtualHardDisk { Uri = imageUri };
                             vm.StorageProfile.OsDisk.Vhd.Uri = vm.StorageProfile.OsDisk.Vhd.Uri.Replace(".vhd", "copy.vhd");
-                            vm.StorageProfile.OsDisk.OsType = "Windows";
+                            vm.StorageProfile.OsDisk.OsType = OperatingSystemTypes.Windows;
                         }, false, false);
                     Assert.True(vm2.StorageProfile.OsDisk.Image.Uri == imageUri);
                 }
@@ -144,6 +146,61 @@ namespace Compute.Tests
                     // of the test to cover deletion. CSM does persistent retrying over all RG resources.
                     m_ResourcesClient.ResourceGroups.Delete(rg1Name);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Covers following Operations:
+        /// Create RG
+        /// Create Storage Account
+        /// Create Network Resources
+        /// Create VM
+        /// GET VM Model View
+        /// Redeploy VM
+        /// Delete RG
+        /// </summary>
+        [Fact]
+        public void TestVMOperations_Redeploy()
+        {
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                EnsureClientsInitialized(context);
+
+                ImageReference imageRef = GetPlatformVMImage(useWindowsImage: true);
+
+                // Create resource group
+                string rg1Name = TestUtilities.GenerateName(TestPrefix) + 1;
+                string asName = TestUtilities.GenerateName("as");
+                string storageAccountName = TestUtilities.GenerateName(TestPrefix);
+                VirtualMachine inputVM1;
+
+                bool passed = false;
+                try
+                {
+                    // Create Storage Account, so that both the VMs can share it
+                    var storageAccountOutput = CreateStorageAccount(rg1Name, storageAccountName);
+
+                    VirtualMachine vm1 = CreateVM_NoAsyncTracking(rg1Name, asName, storageAccountOutput, imageRef,
+                        out inputVM1);
+
+                    var redeployOperationResponse = m_CrpClient.VirtualMachines.BeginRedeployWithHttpMessagesAsync(rg1Name, vm1.Name);
+                    //Assert.Equal(HttpStatusCode.Accepted, redeployOperationResponse.Result.Response.StatusCode);
+                    var lroResponse = m_CrpClient.VirtualMachines.RedeployWithHttpMessagesAsync(rg1Name,
+                        vm1.Name).GetAwaiter().GetResult();
+                    //Assert.Equal(ComputeOperationStatus.Succeeded, lroResponse.Status);
+
+                    passed = true;
+                }
+                finally
+                {
+                    // Cleanup the created resources. But don't wait since it takes too long, and it's not the purpose
+                    // of the test to cover deletion. CSM does persistent retrying over all RG resources.
+                    var deleteRg1Response = m_ResourcesClient.ResourceGroups.BeginDeleteWithHttpMessagesAsync(rg1Name);
+                    //Assert.True(deleteRg1Response.StatusCode == HttpStatusCode.Accepted,
+                    //    "BeginDeleting status was not Accepted.");
+                }
+
+                Assert.True(passed);
             }
         }
     }

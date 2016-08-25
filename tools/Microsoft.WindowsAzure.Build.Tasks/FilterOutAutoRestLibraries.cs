@@ -29,19 +29,19 @@ namespace Microsoft.WindowsAzure.Build.Tasks
         public string AutoRestMark { get; set; }
 
         [Output]
-        public ITaskItem[] Non_Dnx_AutoRestLibraries { get; private set; }
+        public ITaskItem[] Non_NetCore_AutoRestLibraries { get; private set; }
 
         [Output]
         public ITaskItem[] NonAutoRestLibraries { get; private set; }
 
         [Output]
-        public ITaskItem[] Dnx_AutoRestLibraries { get; private set; }
+        public ITaskItem[] NetCore_AutoRestLibraries { get; private set; }
 
         public override bool Execute()
         {
-            var nonDnxAutoRestLibraries = new List<ITaskItem>();
-            var dnxAutoRestLibraries = new List<ITaskItem>();
-            var dnxLibraryTestOnes = new List<ITaskItem>();
+            var nonNetCoreAutoRestLibraries = new List<ITaskItem>();
+            var netCoreAutoRestLibraries = new List<ITaskItem>();
+            var netCoreLibraryTestOnes = new List<ITaskItem>();
             var others =  new List<ITaskItem>();
             foreach (ITaskItem solution in AllLibraries)
             {
@@ -65,22 +65,22 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                     {
                         throw new System.InvalidOperationException("We are not able to handle more than 1 nuget projects from the same library");
                     }
-                    if (nugetProjects.Length == 0)
+                    if (nugetProjects.Length == 1)
                     {
                         solution.SetMetadata("NugetProj", nugetProjects[0]);
                         solution.SetMetadata("PackageName", Path.GetFileNameWithoutExtension(nugetProjects[0]));
                     }
-                    nonDnxAutoRestLibraries.Add(solution);
+                    nonNetCoreAutoRestLibraries.Add(solution);
                 }
                 else
                 {
-                    string[] dnxProjectJsonFiles = Directory.GetFiles(libFolder, "project.json", SearchOption.AllDirectories);
-                    if (dnxProjectJsonFiles.Length != 0 )
+                    string[] netCoreProjectJsonFiles = Directory.GetFiles(libFolder, "project.json", SearchOption.AllDirectories);
+                    if (netCoreProjectJsonFiles.Length != 0 )
                     {
                         var libDirectories = new List<string>();
                         var testDirectories = new List<string>();
 
-                        foreach (var file in dnxProjectJsonFiles)
+                        foreach (var file in netCoreProjectJsonFiles)
                         {
                             string dir = Path.GetDirectoryName(file);
                             if (dir.EndsWith(".test", System.StringComparison.OrdinalIgnoreCase) ||
@@ -96,14 +96,14 @@ namespace Microsoft.WindowsAzure.Build.Tasks
 
                         for(int i = 0; i < libDirectories.Count; i++)
                         {
-                            TaskItem dnxLib = new TaskItem(solution);
-                            dnxLib.SetMetadata("Library", libDirectories[i]);
-                            dnxLib.SetMetadata("PackageName", Path.GetFileName(libDirectories[i]));
+                            TaskItem netCoreLib = new TaskItem(solution);
+                            netCoreLib.SetMetadata("Library", libDirectories[i]);
+                            netCoreLib.SetMetadata("PackageName", Path.GetFileName(libDirectories[i]));
                             if (i < testDirectories.Count) {
                                 //the matching might not be very accurate, but enough for now.
-                                dnxLib.SetMetadata("Test", testDirectories[i]);
+                                netCoreLib.SetMetadata("Test", testDirectories[i]);
                             }
-                            dnxAutoRestLibraries.Add(dnxLib);
+                            netCoreAutoRestLibraries.Add(netCoreLib);
                         }
                     }
                     else
@@ -113,11 +113,11 @@ namespace Microsoft.WindowsAzure.Build.Tasks
                 }
             }
 
-            Log.LogMessage(MessageImportance.High, "We have found {0} non dnx autorest libraries.", nonDnxAutoRestLibraries.Count);
-            Log.LogMessage(MessageImportance.High, "We have found {0} dnx autorest libraries.", dnxAutoRestLibraries.Count);
+            Log.LogMessage(MessageImportance.High, "We have found {0} non netcore autorest libraries.", nonNetCoreAutoRestLibraries.Count);
+            Log.LogMessage(MessageImportance.High, "We have found {0} netcore autorest libraries.", netCoreAutoRestLibraries.Count);
             Log.LogMessage(MessageImportance.High, "we have found {0} Non autorest libraries.", others.Count);
-            Non_Dnx_AutoRestLibraries = nonDnxAutoRestLibraries.ToArray();
-            Dnx_AutoRestLibraries = dnxAutoRestLibraries.ToArray();
+            Non_NetCore_AutoRestLibraries = nonNetCoreAutoRestLibraries.ToArray();
+            NetCore_AutoRestLibraries = netCoreAutoRestLibraries.ToArray();
             NonAutoRestLibraries = others.ToArray();
             return true;
         }

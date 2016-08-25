@@ -105,7 +105,8 @@ namespace WebSites.Tests.ScenarioTests
                 });
         }
 
-        [Fact(Skip = "Test does not work in playback mode due to key matching issue in test framework")]
+        //Fact(Skip = "Test does not work in playback mode due to key matching issue in test framework")]
+        [Fact(Skip="TODO: Fix datetime parsing in test to properly handle universal time and rerecord.")]
         public void GetSiteMetrics()
         {
             RunWebsiteTestScenario(
@@ -310,7 +311,8 @@ namespace WebSites.Tests.ScenarioTests
                     var gitHubSourceControl = new SourceControl()
                     {
                         SourceControlName = "GitHub",
-                        Token = "36c7290f81fda5877d52d2fc3fbc7c31acd25051"
+                        Token = "36c7290f81fda5877d52d2fc3fbc7c31acd25051",
+                        Location = locationName
                     };
 
                     webSitesClient.Provider.UpdateSourceControl(gitHubSourceControl.SourceControlName, gitHubSourceControl);
@@ -342,8 +344,6 @@ namespace WebSites.Tests.ScenarioTests
                 var webSiteName = TestUtilities.GenerateName("csmws");
                 var resourceGroupName = TestUtilities.GenerateName("csmrg");
                 var webHostingPlanName = TestUtilities.GenerateName("csmwhp");
-                var serverfarmId = ResourceGroupHelper.GetServerFarmId(webSitesClient.SubscriptionId,
-                    resourceGroupName, webHostingPlanName);
                 var location = ResourceGroupHelper.GetResourceLocation(resourcesClient, "Microsoft.Web/sites");
 
                 resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
@@ -352,7 +352,7 @@ namespace WebSites.Tests.ScenarioTests
                         Location = location
                     });
 
-                webSitesClient.ServerFarms.CreateOrUpdateServerFarm(resourceGroupName, webHostingPlanName, 
+                var serverFarm = webSitesClient.ServerFarms.CreateOrUpdateServerFarm(resourceGroupName, webHostingPlanName, 
                     new ServerFarmWithRichSku()
                     {
                         ServerFarmWithRichSkuName = webHostingPlanName,
@@ -369,11 +369,11 @@ namespace WebSites.Tests.ScenarioTests
                     SiteName = webSiteName,
                     Location = location,
                     Tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "" } },
-                    ServerFarmId = serverfarmId
+                    ServerFarmId = serverFarm.Id
                 });
 
                 Assert.Equal(webSiteName, webSite.Name);
-                Assert.Equal(serverfarmId, webSite.ServerFarmId, StringComparer.OrdinalIgnoreCase);
+                Assert.Equal(serverFarm.Id, webSite.ServerFarmId, StringComparer.OrdinalIgnoreCase);
                 Assert.Equal("value1", webSite.Tags["tag1"]);
                 Assert.Equal("", webSite.Tags["tag2"]);
 
@@ -457,7 +457,8 @@ namespace WebSites.Tests.ScenarioTests
             }
         }
 
-        [Fact(Skip = "Test failing due to test issue. Needs further investigation")]
+        //[Fact(Skip = "Test failing due to test issue. Needs further investigation")]
+        [Fact]
         public void CloneSite()
         {
             RunWebsiteTestScenario(
@@ -478,7 +479,7 @@ namespace WebSites.Tests.ScenarioTests
                     ServiceClientTracing.IsEnabled = true;
                     var operationResponse = webSitesClient.Sites.CreateOrUpdateSite(resourceGroupName, targetSiteName, site);
                     ServiceClientTracing.IsEnabled = false;
-                }, "Premium");
+                }, "Premium", "P1");
         }
 
         private Guid ParseOperationIdFromLocation(string location)

@@ -17,11 +17,11 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void ListNoTrigger()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowTriggersScenarioTests"))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
-                var client = this.GetLogicManagementClient(context);
-
+                var client = this.GetWorkflowClient(context);
+                
                 // Create a workflow
                 var workflow = client.Workflows.CreateOrUpdate(
                     resourceGroupName: this.resourceGroupName,
@@ -29,10 +29,7 @@ namespace Test.Azure.Management.Logic
                     workflow: new Workflow
                     {
                         Location = this.location,
-                        Sku = new Sku()
-                        {
-                            Name = SkuName.Basic
-                        },
+                        Sku = this.Sku,
                         Definition = JToken.Parse(this.definition)
                     });
 
@@ -49,11 +46,11 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void GetAndListTriggers()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowTriggersScenarioTests"))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
-                var client = this.GetLogicManagementClient(context);
-
+                var client = this.GetWorkflowClient(context);
+                
                 // Create a workflow
                 var workflow = client.Workflows.CreateOrUpdate(
                     resourceGroupName: this.resourceGroupName,
@@ -61,10 +58,7 @@ namespace Test.Azure.Management.Logic
                     workflow: new Workflow
                     {
                         Location = this.location,
-                        Sku = new Sku()
-                        {
-                            Name = SkuName.Basic
-                        },
+                        Sku = this.Sku,
                         Definition = JToken.Parse(this.simpleTriggerDefinition)
                     });
 
@@ -86,11 +80,11 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void RunTrigger()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowTriggersScenarioTests"))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
-                var client = this.GetLogicManagementClient(context);
-
+                var client = this.GetWorkflowClient(context);
+                
                 // Create a workflow
                 var workflow = client.Workflows.CreateOrUpdate(
                     resourceGroupName: this.resourceGroupName,
@@ -98,10 +92,7 @@ namespace Test.Azure.Management.Logic
                     workflow: new Workflow
                     {
                         Location = this.location,
-                        Sku = new Sku()
-                        {
-                            Name = SkuName.Basic
-                        },
+                        Sku = this.Sku,
                         Definition = JToken.Parse(this.simpleTriggerDefinition)
                     });
 

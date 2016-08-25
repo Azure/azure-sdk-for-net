@@ -61,7 +61,7 @@ namespace Test.Azure.Management.Logic
         public void WorkflowTriggers_List_Exception()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -78,7 +78,7 @@ namespace Test.Azure.Management.Logic
         public void WorkflowTriggers_List_OK()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -104,7 +104,7 @@ namespace Test.Azure.Management.Logic
         public void WorkflowTriggers_ListNext_Exception()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -120,7 +120,7 @@ namespace Test.Azure.Management.Logic
         public void WorkflowTriggers_ListNext_OK()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -146,7 +146,7 @@ namespace Test.Azure.Management.Logic
         public void WorkflowTriggers_Get_Exception()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -164,7 +164,7 @@ namespace Test.Azure.Management.Logic
         public void WorkflowTriggers_Get_OK()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -190,7 +190,7 @@ namespace Test.Azure.Management.Logic
         public void WorkflowTriggers_Run_Exception()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -201,14 +201,14 @@ namespace Test.Azure.Management.Logic
             Assert.Throws<ValidationException>(() => client.WorkflowTriggers.Run(null, "wfName", "triggerName"));
             Assert.Throws<ValidationException>(() => client.WorkflowTriggers.Run("rgName", null, "triggerName"));
             Assert.Throws<ValidationException>(() => client.WorkflowTriggers.Run("rgName", "wfName", null));
-            Assert.Throws<CloudException>(() => client.WorkflowTriggers.Run("rgName", "wfName", "triggerName"));
+            Assert.Throws<HttpOperationException>(() => client.WorkflowTriggers.Run("rgName", "wfName", "triggerName"));
         }
 
         [Fact]
         public void WorkflowTriggers_Run_OK()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -221,6 +221,93 @@ namespace Test.Azure.Management.Logic
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();
             handler.Request.ValidateAction("run");
+        }
+
+        [Fact]
+        public void WorkflowTriggers_Run_OK_Accepted()
+        {
+            var handler = new RecordedDelegatingHandler();
+            var client = this.CreateWorkflowClient(handler);
+
+            handler.Response = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.Accepted,
+                Content = this.Empty
+            };
+
+            client.WorkflowTriggers.Run("rgName", "wfName", "triggerName");
+
+            // Validates request.
+            handler.Request.ValidateAuthorizationHeader();
+            handler.Request.ValidateAction("run");
+        }
+
+        [Fact]
+        public void WorkflowTriggers_Run_OK_NoContent()
+        {
+            var handler = new RecordedDelegatingHandler();
+            var client = this.CreateWorkflowClient(handler);
+
+            handler.Response = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.NoContent,
+                Content = this.Empty
+            };
+
+            client.WorkflowTriggers.Run("rgName", "wfName", "triggerName");
+
+            // Validates request.
+            handler.Request.ValidateAuthorizationHeader();
+            handler.Request.ValidateAction("run");
+        }
+
+        #endregion
+
+        #region WorkflowTriggers_ListCallbackUrl
+
+        [Fact]
+        public void WorkflowTriggers_ListCallbackUrl_Exception()
+        {
+            var handler = new RecordedDelegatingHandler();
+            var client = this.CreateWorkflowClient(handler);
+
+            handler.Response = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.InternalServerError,
+                Content = this.Empty
+            };
+
+            Assert.Throws<ValidationException>(() => client.WorkflowTriggers.ListCallbackUrl(null, "wfName", "triggerName"));
+            Assert.Throws<ValidationException>(() => client.WorkflowTriggers.ListCallbackUrl("rgName", null, "triggerName"));
+            Assert.Throws<ValidationException>(() => client.WorkflowTriggers.ListCallbackUrl("rgName", "wfName", null));
+            Assert.Throws<CloudException>(() => client.WorkflowTriggers.ListCallbackUrl("rgName", "wfName", "triggerName"));
+        }
+
+        [Fact]
+        public void WorkflowTriggers_ListCallbackUrl_OK()
+        {
+            var handler = new RecordedDelegatingHandler();
+            var client = this.CreateWorkflowClient(handler);
+
+            var triggerCallbackUrl = @"https://prod-07.westus.logic.azure.com:443" +
+                @"/subscriptions/66666666-6666-6666-6666-666666666666/resourceGroups/rgName" +
+                @"/providers/Microsoft.Logic/workflows/wfName/triggers/manual/listCallbackUrl";
+            var responseContent = new StringContent($"{{ 'value' : '{triggerCallbackUrl}' }}");
+
+            handler.Response = new HttpResponseMessage
+            {
+                StatusCode = HttpStatusCode.OK,
+                Content = responseContent,
+            };
+
+            var triggerUrl = client.WorkflowTriggers.ListCallbackUrl("rgName", "wfName", "triggerName");
+
+            // Validates request.
+            handler.Request.ValidateAuthorizationHeader();
+            handler.Request.ValidateMethod(HttpMethod.Post);
+
+            // Validates result.
+            Assert.Equal(triggerCallbackUrl, triggerUrl.Value);
         }
 
         #endregion

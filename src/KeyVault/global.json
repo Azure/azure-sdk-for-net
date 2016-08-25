@@ -1,0 +1,3 @@
+{
+  "projects": [ "../TestFramework/", "Microsoft.Azure.KeyVault", "Microsoft.Azure.KeyVault.Tests", "Microsoft.Azure.KeyVault.Cryptography", "Microsoft.Azure.KeyVault.Core", "../ResourceManagement/KeyVaultManagement" ]
+}

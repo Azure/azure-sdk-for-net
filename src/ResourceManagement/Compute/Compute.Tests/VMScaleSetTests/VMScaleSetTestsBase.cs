@@ -41,7 +41,7 @@ namespace Compute.Tests
             {
                 Name = "vmssext01",
                 Publisher = "Microsoft.Compute",
-                VirtualMachineScaleSetExtensionType = "VMAccessAgent",
+                Type = "VMAccessAgent",
                 TypeHandlerVersion = "2.0",
                 AutoUpgradeMinorVersion = true,
                 Settings = "{}",
@@ -66,6 +66,7 @@ namespace Compute.Tests
                     Capacity = 2,
                     Name = VirtualMachineSizeTypes.StandardA0,
                 },
+                OverProvision = false,
                 UpgradePolicy = new UpgradePolicy()
                 {
                     Mode = UpgradeMode.Automatic
@@ -80,7 +81,7 @@ namespace Compute.Tests
                             Caching = CachingTypes.None,
                             CreateOption = DiskCreateOptionTypes.FromImage,
                             Name = "test",
-                            VhdContainers = new List<string>{ vhdContainer }
+                            VhdContainers = new List<string> { vhdContainer }
                         },
                     },
                     OsProfile = new VirtualMachineScaleSetOSProfile()
@@ -106,7 +107,8 @@ namespace Compute.Tests
                                         Subnet = new Microsoft.Azure.Management.Compute.Models.ApiEntityReference()
                                         {
                                             Id = subnetId
-                                        }
+                                        },
+                                        ApplicationGatewayBackendAddressPools = new List<Microsoft.Azure.Management.Compute.Models.SubResource>(),
                                     }
                                 }
                             }
@@ -118,24 +120,27 @@ namespace Compute.Tests
         }
 
         protected VirtualMachineScaleSet CreateVMScaleSet_NoAsyncTracking(
-            string rgName, 
+            string rgName,
             string vmssName,
-            StorageAccount storageAccount, 
+            StorageAccount storageAccount,
             ImageReference imageRef,
             out VirtualMachineScaleSet inputVMScaleSet,
             VirtualMachineScaleSetExtensionProfile extensionProfile = null,
             Action<VirtualMachineScaleSet> vmScaleSetCustomizer = null,
-            bool createWithPublicIpAddress = false)
+            bool createWithPublicIpAddress = false,
+            Subnet subnet = null)
         {
             try
             {
                 var createOrUpdateResponse = CreateVMScaleSetAndGetOperationResponse(rgName,
                                                                                      vmssName,
-                                                                                     storageAccount, 
-                                                                                     imageRef, 
-                                                                                     out inputVMScaleSet, 
+                                                                                     storageAccount,
+                                                                                     imageRef,
+                                                                                     out inputVMScaleSet,
                                                                                      extensionProfile,
-                                                                                     vmScaleSetCustomizer);
+                                                                                     vmScaleSetCustomizer,
+                                                                                     createWithPublicIpAddress,
+                                                                                     subnet);
 
                 var getResponse = m_CrpClient.VirtualMachineScaleSets.Get(rgName, vmssName);
 
@@ -151,7 +156,7 @@ namespace Compute.Tests
         protected VirtualMachineScaleSet CreateVMScaleSet(
             string rgName,
             string vmssName,
-            StorageAccount storageAccount, 
+            StorageAccount storageAccount,
             ImageReference imageRef,
             out VirtualMachineScaleSet inputVMScaleSet,
             VirtualMachineScaleSetExtensionProfile extensionProfile = null,
@@ -189,7 +194,8 @@ namespace Compute.Tests
             out VirtualMachineScaleSet inputVMScaleSet,
             VirtualMachineScaleSetExtensionProfile extensionProfile = null,
             Action<VirtualMachineScaleSet> vmScaleSetCustomizer = null,
-            bool createWithPublicIpAddress = false)
+            bool createWithPublicIpAddress = false,
+            Subnet subnet = null)
         {
             // Create the resource Group, it might have been already created during StorageAccount creation.
             var resourceGroup = m_ResourcesClient.ResourceGroups.CreateOrUpdate(
@@ -201,7 +207,7 @@ namespace Compute.Tests
 
             var getPublicIpAddressResponse = createWithPublicIpAddress ? null : CreatePublicIP(rgName);
 
-            var subnetResponse = CreateVNET(rgName);
+            var subnetResponse = subnet ?? CreateVNET(rgName);
 
             var nicResponse = CreateNIC(
                 rgName,
@@ -235,7 +241,7 @@ namespace Compute.Tests
             // TODO: AutoRest
             Assert.NotNull(vmScaleSetInstanceView.Extensions);
             int instancesCount = vmScaleSetInstanceView.Extensions.Sum(statusSummary => statusSummary.StatusesSummary.Sum(t => t.Count.Value));
-            Assert.True(instancesCount == vmScaleSet.Sku.Capacity);
+            Assert.True(instancesCount >= vmScaleSet.Sku.Capacity);
         }
 
         protected void ValidateVMScaleSet(VirtualMachineScaleSet vmScaleSet, VirtualMachineScaleSet vmScaleSetOut)
@@ -287,6 +293,77 @@ namespace Compute.Tests
                     var vmExt = vmScaleSetOut.VirtualMachineProfile.ExtensionProfile.Extensions.FirstOrDefault(s => String.Compare(s.Name, vmExtension.Name, StringComparison.OrdinalIgnoreCase) == 0);
                     Assert.NotNull(vmExt);
                 }
+            }
+
+            if (vmScaleSet.VirtualMachineProfile.NetworkProfile != null)
+            {
+                if (vmScaleSet.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations != null && vmScaleSet.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations.Count > 0)
+                {
+                    Assert.NotNull(vmScaleSetOut.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations);
+                    Assert.Equal(
+                        vmScaleSetOut.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations.Count,
+                        vmScaleSet.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations.Count);
+
+                    foreach (var nicconfig in vmScaleSet.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations)
+                    {
+                        var outnicconfig =
+                            vmScaleSetOut.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations.First(
+                                nc => string.Equals(nc.Name, nicconfig.Name, StringComparison.OrdinalIgnoreCase));
+                        Assert.NotNull(outnicconfig);
+                        CompareVmssNicConfig(nicconfig, outnicconfig);
+                    }
+                }
+            }
+            else
+            {
+                Assert.True((vmScaleSetOut.VirtualMachineProfile.NetworkProfile == null) || (vmScaleSetOut.VirtualMachineProfile.NetworkProfile.NetworkInterfaceConfigurations.Count == 0));
+            }
+        }
+
+        protected void CompareVmssNicConfig(VirtualMachineScaleSetNetworkConfiguration nicconfig,
+            VirtualMachineScaleSetNetworkConfiguration outnicconfig)
+        {
+            if (nicconfig.IpConfigurations != null && nicconfig.IpConfigurations.Count > 0)
+            {
+                Assert.NotNull(outnicconfig.IpConfigurations);
+
+                Assert.Equal(nicconfig.IpConfigurations.Count, outnicconfig.IpConfigurations.Count);
+
+                foreach (var ipconfig in nicconfig.IpConfigurations)
+                {
+                    var outipconfig =
+                        outnicconfig.IpConfigurations.First(
+                            ic => string.Equals(ic.Name, ipconfig.Name, StringComparison.OrdinalIgnoreCase));
+                    Assert.NotNull(outipconfig);
+                    CompareIpConfigApplicationGatewayPools(ipconfig, outipconfig);
+                }
+            }
+            else
+            {
+                Assert.True((outnicconfig.IpConfigurations == null) || (outnicconfig.IpConfigurations.Count == 0));
+            }
+        }
+
+        protected void CompareIpConfigApplicationGatewayPools(VirtualMachineScaleSetIPConfiguration ipconfig, VirtualMachineScaleSetIPConfiguration outipconfig)
+        {
+            if (ipconfig.ApplicationGatewayBackendAddressPools != null && ipconfig.ApplicationGatewayBackendAddressPools.Count > 0)
+            {
+                Assert.NotNull(outipconfig.ApplicationGatewayBackendAddressPools);
+
+                Assert.Equal(ipconfig.ApplicationGatewayBackendAddressPools.Count,
+                    outipconfig.ApplicationGatewayBackendAddressPools.Count);
+
+                foreach (var pool in ipconfig.ApplicationGatewayBackendAddressPools)
+                {
+                    var outPool =
+                        outipconfig.ApplicationGatewayBackendAddressPools.First(
+                            p => string.Equals(p.Id, pool.Id, StringComparison.OrdinalIgnoreCase));
+                    Assert.NotNull(outPool);
+                }
+            }
+            else
+            {
+                Assert.True((outipconfig.ApplicationGatewayBackendAddressPools == null) || (outipconfig.ApplicationGatewayBackendAddressPools.Count == 0));
             }
         }
     }

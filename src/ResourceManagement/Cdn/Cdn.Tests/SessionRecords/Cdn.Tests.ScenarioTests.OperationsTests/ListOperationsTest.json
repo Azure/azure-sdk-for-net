@@ -1,0 +1,74 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/providers/Microsoft.Cdn/operations?api-version=2016-04-02",
+      "EncodedRequestUri": "L3Byb3ZpZGVycy9NaWNyb3NvZnQuQ2RuL29wZXJhdGlvbnM/YXBpLXZlcnNpb249MjAxNi0wNC0wMg==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "de33e78f-9ffa-4116-9bbc-a40299c8b802"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Cdn.CdnManagementClient/1.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"name\": \"Microsoft.Cdn/edgenodes/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"EdgeNode\",\r\n        \"operation\": \"read\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/edgenodes/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"EdgeNode\",\r\n        \"operation\": \"write\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/edgenodes/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"EdgeNode\",\r\n        \"operation\": \"delete\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/profiles/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"Profile\",\r\n        \"operation\": \"read\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/profiles/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"Profile\",\r\n        \"operation\": \"write\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/profiles/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"Profile\",\r\n        \"operation\": \"delete\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/profiles/GenerateSsoUri/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"Profile\",\r\n        \"operation\": \"GenerateSsoUri\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/profiles/endpoints/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"Endpoint\",\r\n        \"operation\": \"read\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/profiles/endpoints/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"Endpoint\",\r\n        \"operation\": \"write\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/profiles/endpoints/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"Endpoint\",\r\n        \"operation\": \"delete\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/profiles/endpoints/Start/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"Endpoint\",\r\n        \"operation\": \"Start\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/profiles/endpoints/Stop/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"Endpoint\",\r\n        \"operation\": \"Stop\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/profiles/endpoints/Purge/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"Endpoint\",\r\n        \"operation\": \"Purge\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/profiles/endpoints/Load/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"Endpoint\",\r\n        \"operation\": \"Load\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/profiles/endpoints/ValidateCustomDomain/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"Endpoint\",\r\n        \"operation\": \"ValidateCustomDomain\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/profiles/endpoints/customdomains/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"CustomDomain\",\r\n        \"operation\": \"read\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/profiles/endpoints/customdomains/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"CustomDomain\",\r\n        \"operation\": \"write\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/profiles/endpoints/customdomains/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"CustomDomain\",\r\n        \"operation\": \"delete\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/profiles/endpoints/origins/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"Origin\",\r\n        \"operation\": \"read\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/profiles/endpoints/origins/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"Origin\",\r\n        \"operation\": \"write\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/profiles/endpoints/origins/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"Origin\",\r\n        \"operation\": \"delete\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/operationresults/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"OperationResult\",\r\n        \"operation\": \"read\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/operationresults/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"OperationResult\",\r\n        \"operation\": \"write\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/operationresults/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"OperationResult\",\r\n        \"operation\": \"delete\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/operationresults/profileresults/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"Profile\",\r\n        \"operation\": \"read\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/operationresults/profileresults/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"Profile\",\r\n        \"operation\": \"write\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/operationresults/profileresults/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"Profile\",\r\n        \"operation\": \"delete\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/operationresults/profileresults/GenerateSsoUri/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"Profile\",\r\n        \"operation\": \"GenerateSsoUri\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/operationresults/profileresults/endpointresults/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"Endpoint\",\r\n        \"operation\": \"read\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/operationresults/profileresults/endpointresults/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"Endpoint\",\r\n        \"operation\": \"write\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/operationresults/profileresults/endpointresults/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"Endpoint\",\r\n        \"operation\": \"delete\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/operationresults/profileresults/endpointresults/Start/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"Endpoint\",\r\n        \"operation\": \"Start\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/operationresults/profileresults/endpointresults/Stop/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"Endpoint\",\r\n        \"operation\": \"Stop\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/operationresults/profileresults/endpointresults/Purge/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"Endpoint\",\r\n        \"operation\": \"Purge\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/operationresults/profileresults/endpointresults/Load/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"Endpoint\",\r\n        \"operation\": \"Load\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/operationresults/profileresults/endpointresults/ValidateCustomDomain/action\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"Endpoint\",\r\n        \"operation\": \"ValidateCustomDomain\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/operationresults/profileresults/endpointresults/originresults/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"Origin\",\r\n        \"operation\": \"read\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/operationresults/profileresults/endpointresults/originresults/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"Origin\",\r\n        \"operation\": \"write\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/operationresults/profileresults/endpointresults/originresults/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"Origin\",\r\n        \"operation\": \"delete\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/operationresults/profileresults/endpointresults/customdomainresults/read\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"CustomDomain\",\r\n        \"operation\": \"read\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/operationresults/profileresults/endpointresults/customdomainresults/write\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"CustomDomain\",\r\n        \"operation\": \"write\"\r\n      }\r\n    },\r\n    {\r\n      \"name\": \"Microsoft.Cdn/operationresults/profileresults/endpointresults/customdomainresults/delete\",\r\n      \"display\": {\r\n        \"provider\": \"Microsoft.Cdn\",\r\n        \"resource\": \"CustomDomain\",\r\n        \"operation\": \"delete\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "6263"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "x-ms-request-id": [
+          "e160501c-b498-4ef7-964e-b722ebdf11c9"
+        ],
+        "x-ms-client-request-id": [
+          "de33e78f-9ffa-4116-9bbc-a40299c8b802"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-tenant-reads": [
+          "14985"
+        ],
+        "x-ms-correlation-request-id": [
+          "51aa90e9-fc56-46b7-88b2-bf57fa491f10"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160421T193111Z:51aa90e9-fc56-46b7-88b2-bf57fa491f10"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Thu, 21 Apr 2016 19:31:11 GMT"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "06adb0b3-baaa-4e5f-9df6-ca770f7902cd"
+  }
+}

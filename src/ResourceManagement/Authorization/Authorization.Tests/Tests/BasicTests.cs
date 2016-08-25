@@ -48,6 +48,7 @@ namespace Authorization.Tests
         [Fact]
         public void ClassicAdministratorListTests()
         {
+            HttpMockServer.RecordsDirectory = "SessionRecords";
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = testContext.GetAuthorizationManagementClient(context);
@@ -625,16 +626,14 @@ namespace Authorization.Tests
             {
                 var client = testContext.GetAuthorizationManagementClient(context);
 
-                RoleDefinitionCreateOrUpdateParameters createOrUpdateParams;
+                RoleDefinition createOrUpdateParams;
                 var roleDefinitionId = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition");
                 string currentSubscriptionId = "/subscriptions/" + client.SubscriptionId;
 
                 // Create a custom role definition
                 try
                 {
-                    createOrUpdateParams = new RoleDefinitionCreateOrUpdateParameters()
-                    {
-                        RoleDefinition = new RoleDefinition()
+                    createOrUpdateParams = new RoleDefinition()
                         {
                             // Name = roleDefinitionId,
                             Properties = new RoleDefinitionProperties()
@@ -650,21 +649,20 @@ namespace Authorization.Tests
                                 },
                                 AssignableScopes = new List<string>() { currentSubscriptionId },
                             },
-                        }
                     };
 
                     var roleDefinition = client.RoleDefinitions.CreateOrUpdate(
                         currentSubscriptionId, 
                         roleDefinitionId.ToString(), 
-                        createOrUpdateParams.RoleDefinition);
+                        createOrUpdateParams);
 
                     // Update role name, permissions for the custom role
-                    createOrUpdateParams.RoleDefinition.Properties.RoleName = "UpdatedRoleName_" + roleDefinitionId.ToString();
-                    createOrUpdateParams.RoleDefinition.Properties.Permissions.Single().Actions.Add("Microsoft.Support/*/read");
+                    createOrUpdateParams.Properties.RoleName = "UpdatedRoleName_" + roleDefinitionId.ToString();
+                    createOrUpdateParams.Properties.Permissions.Single().Actions.Add("Microsoft.Support/*/read");
 
                     var updatedRoleDefinition = client.RoleDefinitions.CreateOrUpdate(currentSubscriptionId,
                         roleDefinitionId.ToString(),
-                        createOrUpdateParams.RoleDefinition);
+                        createOrUpdateParams);
                    
                     // Validate the updated roleDefinition properties.
                     Assert.NotNull(updatedRoleDefinition);
@@ -680,13 +678,13 @@ namespace Authorization.Tests
                     Assert.Equal(currentSubscriptionId.ToLower(), updatedRoleDefinition.Properties.AssignableScopes.Single().ToLower());
                 
                     // Negative test: Update the role with an empty RoleName 
-                    createOrUpdateParams.RoleDefinition.Properties.RoleName = null;
+                    createOrUpdateParams.Properties.RoleName = null;
 
                     try
                     {
                         client.RoleDefinitions.CreateOrUpdate(currentSubscriptionId,
                         roleDefinitionId.ToString(),
-                        createOrUpdateParams.RoleDefinition);
+                        createOrUpdateParams);
                     }
                     catch (CloudException ce)
                     {
@@ -711,7 +709,7 @@ namespace Authorization.Tests
             {
                 var client = testContext.GetAuthorizationManagementClient(context);
 
-                RoleDefinitionCreateOrUpdateParameters createOrUpdateParams;
+                RoleDefinition createOrUpdateParams;
                 var roleDefinitionId = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition1");
                 string currentSubscriptionId = "/subscriptions/" + client.SubscriptionId;
                 string fullRoleId = currentSubscriptionId + RoleDefIdPrefix + roleDefinitionId;
@@ -723,9 +721,7 @@ namespace Authorization.Tests
                 // Create a custom role definition
                 try
                 {
-                    createOrUpdateParams = new RoleDefinitionCreateOrUpdateParameters()
-                    {
-                        RoleDefinition = new RoleDefinition()
+                    createOrUpdateParams = new RoleDefinition()
                         {
                             Properties = new RoleDefinitionProperties()
                             {
@@ -740,12 +736,11 @@ namespace Authorization.Tests
                                 },
                                 AssignableScopes = new List<string>() { currentSubscriptionId },
                             },
-                        }
                     };
 
                     var roleDefinition = client.RoleDefinitions.CreateOrUpdate(currentSubscriptionId,
                         roleDefinitionId.ToString(),
-                        createOrUpdateParams.RoleDefinition);
+                        createOrUpdateParams);
 
                     // Validate the roleDefinition properties.
                     Assert.NotNull(roleDefinition);
@@ -765,13 +760,13 @@ namespace Authorization.Tests
                         resourceGroup, 
                         new ResourceGroup
                         { Location = "westus"});
-                    createOrUpdateParams.RoleDefinition.Properties.AssignableScopes = new List<string> { resourceGroupScope };
-                    createOrUpdateParams.RoleDefinition.Properties.RoleName = "NewRoleName_" + newRoleId.ToString();
+                    createOrUpdateParams.Properties.AssignableScopes = new List<string> { resourceGroupScope };
+                    createOrUpdateParams.Properties.RoleName = "NewRoleName_" + newRoleId.ToString();
 
                     roleDefinition = client.RoleDefinitions.CreateOrUpdate(
                         resourceGroupScope,
                         newRoleId.ToString(), 
-                        createOrUpdateParams.RoleDefinition);
+                        createOrUpdateParams);
                     Assert.NotNull(roleDefinition);
 
                 }
@@ -792,11 +787,11 @@ namespace Authorization.Tests
                 {
                     client.RoleDefinitions.CreateOrUpdate(currentSubscriptionId,
                         roleDefinitionId.ToString(),
-                        createOrUpdateParams.RoleDefinition);
+                        createOrUpdateParams);
                     var roleDefinition2Id = GetValueFromTestContext(Guid.NewGuid, Guid.Parse, "RoleDefinition3");
                     client.RoleDefinitions.CreateOrUpdate(currentSubscriptionId,
                         roleDefinitionId.ToString(),
-                        createOrUpdateParams.RoleDefinition);
+                        createOrUpdateParams);
                 }
                 catch (CloudException ce)
                 {
@@ -816,9 +811,9 @@ namespace Authorization.Tests
                     Assert.NotNull(allRoleDefinitions);
                     RoleDefinition builtInRole = allRoleDefinitions.First(x => x.Properties.Type == "BuiltInRole");
 
-                    createOrUpdateParams.RoleDefinition.Properties.RoleName = "NewRoleName_" + builtInRole.Name.ToString();
+                    createOrUpdateParams.Properties.RoleName = "NewRoleName_" + builtInRole.Name.ToString();
                     client.RoleDefinitions.CreateOrUpdate(currentSubscriptionId,
-                        builtInRole.Name, createOrUpdateParams.RoleDefinition);
+                        builtInRole.Name, createOrUpdateParams);
                 }
                 catch (CloudException ce)
                 {
@@ -826,13 +821,13 @@ namespace Authorization.Tests
                 }
               
                 // Negative test - create a roledefinition with type=BuiltInRole
-                createOrUpdateParams.RoleDefinition.Properties.Type = "BuiltInRole";
+                createOrUpdateParams.Properties.Type = "BuiltInRole";
 
                 try
                 {
                     client.RoleDefinitions.CreateOrUpdate(currentSubscriptionId,
                         roleDefinitionId.ToString(),
-                        createOrUpdateParams.RoleDefinition);
+                        createOrUpdateParams);
                 }
                 catch(CloudException ce)
                 {
@@ -841,14 +836,14 @@ namespace Authorization.Tests
                 
                 // Negative Test - create a custom role with empty role name
                 // reset the role type
-                createOrUpdateParams.RoleDefinition.Properties.Type = null;
-                createOrUpdateParams.RoleDefinition.Properties.RoleName = string.Empty;
+                createOrUpdateParams.Properties.Type = null;
+                createOrUpdateParams.Properties.RoleName = string.Empty;
 
                 try
                 {
                     client.RoleDefinitions.CreateOrUpdate(currentSubscriptionId,
                         roleDefinitionId.ToString(),
-                        createOrUpdateParams.RoleDefinition);
+                        createOrUpdateParams);
                 }
                 catch (CloudException ce)
                 {
@@ -857,14 +852,14 @@ namespace Authorization.Tests
 
                 // Negative Test - create a custom role with empty assignable scopes
                 // reset the role name
-                createOrUpdateParams.RoleDefinition.Properties.RoleName = "NewRoleName_" + roleDefinitionId.ToString();
-                createOrUpdateParams.RoleDefinition.Properties.AssignableScopes = new List<string>();
+                createOrUpdateParams.Properties.RoleName = "NewRoleName_" + roleDefinitionId.ToString();
+                createOrUpdateParams.Properties.AssignableScopes = new List<string>();
 
                 try
                 {
                     client.RoleDefinitions.CreateOrUpdate(currentSubscriptionId,
                         roleDefinitionId.ToString(),
-                        createOrUpdateParams.RoleDefinition);
+                        createOrUpdateParams);
                 }
                 catch (CloudException ce)
                 {
@@ -872,7 +867,7 @@ namespace Authorization.Tests
                 }
 
                 // Negative Test - create a custom role with invalid value for assignable scopes
-                createOrUpdateParams.RoleDefinition.Properties.AssignableScopes.Add("Invalid_Scope");
+                createOrUpdateParams.Properties.AssignableScopes.Add("Invalid_Scope");
 
                 //try
                 //{

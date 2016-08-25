@@ -1,0 +1,49 @@
+{
+  "version": "2.0.2-preview",
+  "description": "Microsoft Azure Management TrafficManager Library",
+  "authors": [ "Microsoft" ],
+
+  "packOptions": {
+    "summary": "Microsoft Azure Management TrafficManager Library",
+    "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
+    "tags": [ "Microsoft Azure TrafficManager management", "TrafficManager", "TrafficManager management", "REST HTTP client", "windowsazureofficial" ],
+    "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+    "requireLicenseAcceptance":  true,
+  },
+
+  "buildOptions": {
+    "delaySign": true,
+    "publicSign": false,
+    "keyFile": "../../../../tools/MSSharedLibKey.snk"
+  },
+
+  "dependencies": {
+  },
+
+  "frameworks": {
+    "net45": {
+      "dependencies": {
+        "Microsoft.Rest.ClientRuntime.Azure": "[3.1.0,4.0.0)"
+      }
+    },
+    "netstandard1.5": {
+      "imports": ["dnxcore50"],
+      "dependencies": {
+        "Microsoft.NETCore.Platforms": "1.0.1",
+        "System.Diagnostics.Tools": "4.0.1",
+        "System.Net.Http": "4.1.0",
+        "System.Runtime.Serialization.Primitives": "4.1.1",
+        "System.Threading.Tasks": "4.0.11",
+        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.1,4.0.0)"
+      }
+    },
+    "netstandard1.1": {
+      "imports": ["dnxcore50"],
+      "dependencies": {
+        "System.Runtime.Serialization.Primitives": "4.1.1",
+        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.1,4.0.0)"
+      }
+    }
+  }
+}

@@ -9,6 +9,7 @@ namespace Test.Azure.Management.Logic
     using Microsoft.Azure.Management.Logic;
     using Microsoft.Azure.Management.Logic.Models;
     using Microsoft.Rest.Azure;
+    using Microsoft.Rest.Azure.OData;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Newtonsoft.Json.Linq;
     using Xunit;
@@ -19,11 +20,11 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void CreateAndDeleteWorkflow()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowsScenarioTests"))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
-                var client = this.GetLogicManagementClient(context);
-
+                var client = this.GetWorkflowClient(context);
+                
                 // Create a workflow
                 client.Workflows.CreateOrUpdate(
                     resourceGroupName: this.resourceGroupName,
@@ -31,18 +32,15 @@ namespace Test.Azure.Management.Logic
                     workflow: new Workflow
                     {
                         Location = this.location,
-                        Sku = new Sku()
-                        {
-                            Name = SkuName.Basic
-                        },
-                        Definition = JToken.Parse(this.definition)
+                        Sku = this.Sku,
+                        Definition = JToken.Parse(this.definition)                        
                     });
 
                 // Get the workflow and verify the content
                 var workflow = client.Workflows.Get(this.resourceGroupName, workflowName);
                 Assert.Equal(WorkflowState.Enabled, workflow.State);
                 Assert.Equal(this.location, workflow.Location);
-                Assert.Equal(SkuName.Basic, workflow.Sku.Name);
+                Assert.Equal(this.Sku.Name, workflow.Sku.Name);
                 Assert.NotEmpty(workflow.Definition.ToString());
 
                 // Delete the workflow
@@ -53,11 +51,11 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void CreateAndEnableDisableWorkflow()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowsScenarioTests"))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
-                var client = this.GetLogicManagementClient(context);
-
+                var client = this.GetWorkflowClient(context);
+                
                 // Create a workflow
                 var workflow = client.Workflows.CreateOrUpdate(
                     this.resourceGroupName,
@@ -65,10 +63,7 @@ namespace Test.Azure.Management.Logic
                     new Workflow
                     {
                         Location = this.location,
-                        Sku = new Sku()
-                        {
-                            Name = SkuName.Free
-                        },
+                        Sku = this.Sku,
                         State = WorkflowState.Disabled,
                         Definition = JToken.Parse(this.definition)
                     });
@@ -99,12 +94,12 @@ namespace Test.Azure.Management.Logic
         [Fact]
         public void ListWorkflow()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowsScenarioTests"))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
                 string workflowName2 = TestUtilities.GenerateName("logicwf");
-                var client = this.GetLogicManagementClient(context);
-
+                var client = this.GetWorkflowClient(context);
+                
                 // Create a workflow
                 var workflow = client.Workflows.CreateOrUpdate(
                     this.resourceGroupName,
@@ -112,10 +107,7 @@ namespace Test.Azure.Management.Logic
                     new Workflow
                     {
                         Location = this.location,
-                        Sku = new Sku()
-                        {
-                            Name = SkuName.Free
-                        },
+                        Sku = this.Sku,
                         State = WorkflowState.Disabled,
                         Definition = JToken.Parse(this.definition)
                     });
@@ -131,16 +123,13 @@ namespace Test.Azure.Management.Logic
                     new Workflow
                     {
                         Location = this.location,
-                        Sku = new Sku()
-                        {
-                            Name = SkuName.Free
-                        },
+                        Sku = this.Sku,
                         State = WorkflowState.Disabled,
                         Definition = JToken.Parse(this.definition)
                     });
 
                 // List the workflow in resource group
-                var lists = client.Workflows.ListByResourceGroup(this.resourceGroupName, 1, f => f.State == WorkflowState.Disabled);
+                var lists = client.Workflows.ListByResourceGroup(this.resourceGroupName, new ODataQuery<WorkflowFilter>(f => f.State == WorkflowState.Disabled) { Top = 1 });
 
                 Assert.Equal(1, lists.Count());
 
@@ -167,13 +156,13 @@ namespace Test.Azure.Management.Logic
         }
 
         [Fact]
-        public void ValidateAndRunWorkflow()
+        public void ValidateWorkflow()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowsScenarioTests"))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
-                var client = this.GetLogicManagementClient(context);
-
+                var client = this.GetWorkflowClient(context);
+                
                 // Create a workflow
                 client.Workflows.CreateOrUpdate(
                     resourceGroupName: this.resourceGroupName,
@@ -181,24 +170,19 @@ namespace Test.Azure.Management.Logic
                     workflow: new Workflow
                     {
                         Location = this.location,
-                        Sku = new Sku()
-                        {
-                            Name = SkuName.Basic
-                        },
+                        Sku = this.Sku,
                         Definition = JToken.Parse(this.simpleTriggerDefinition)
                     });
 
                 // Validate a workflow
                 client.Workflows.Validate(
                     this.resourceGroupName,
+                    this.location,
                     workflowName,
                     new Workflow
                     {
                         Location = this.location,
-                        Sku = new Sku()
-                        {
-                            Name = SkuName.Free
-                        },
+                        Sku = this.Sku,
                         Definition = JToken.Parse(this.definition)
                     });
 
@@ -207,35 +191,25 @@ namespace Test.Azure.Management.Logic
                     // Validate an invlaid workflow
                     client.Workflows.Validate(
                         this.resourceGroupName,
+                        this.location,
                         workflowName,
                         new Workflow
                         {
                             Location = this.location,
-                            Sku = new Sku()
-                            {
-                                Name = SkuName.Free
-                            },
+                            Sku = this.Sku,
                             Definition = "invalid definition"
                         });
                 });
-
-                var run = client.Workflows.Run(resourceGroupName, workflowName, new RunWorkflowParameters
-                    {
-                        Name = "pushTrigger",
-                        Outputs = "testbody"
-                    });
-
-                Assert.Equal("testbody", run.Outputs["output1"].Value.ToString());
             }
         }
 
         [Fact]
         public void DeleteAllWorkflows()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowsScenarioTests"))
             {
-                var client = this.GetLogicManagementClient(context);
-
+                var client = this.GetWorkflowClient(context);
+                
                 var workflows = client.Workflows.ListByResourceGroup(this.resourceGroupName);
 
                 foreach (var workflow in workflows)
@@ -260,13 +234,13 @@ namespace Test.Azure.Management.Logic
         }
 
         [Fact]
-        public void UpdateAndRunWorkflow()
+        public void UpdateWorkflow()
         {
-            using (MockContext context = MockContext.Start())
+            using (MockContext context = MockContext.Start("Test.Azure.Management.Logic.WorkflowsScenarioTests"))
             {
                 string workflowName = TestUtilities.GenerateName("logicwf");
-                var client = this.GetLogicManagementClient(context);
-
+                var client = this.GetWorkflowClient(context);
+                
                 // Create a workflow
                 var workflow = client.Workflows.CreateOrUpdate(
                     this.resourceGroupName,
@@ -274,10 +248,7 @@ namespace Test.Azure.Management.Logic
                     new Workflow
                     {
                         Location = this.location,
-                        Sku = new Sku()
-                        {
-                            Name = SkuName.Free
-                        },
+                        Sku = this.Sku,
                         Definition = JToken.Parse(this.definition)
                     });
 

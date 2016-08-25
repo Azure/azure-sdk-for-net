@@ -12,7 +12,6 @@ namespace Microsoft.Azure.Search.Tests
     using Microsoft.Azure.Search.Tests.Utilities;
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
-    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Microsoft.Spatial;
     using Xunit;
 
@@ -39,7 +38,7 @@ namespace Microsoft.Azure.Search.Tests
                 Assert.Null(response.Results[i].Highlights);
             }
                 
-            SearchAssert.SequenceEqual(response.Results.Select(r => r.Document), Data.TestDocuments);
+            Assert.Equal(response.Results.Select(r => r.Document), Data.TestDocuments);
         }
 
         protected void TestCanSearchDynamicDocuments()
@@ -59,7 +58,7 @@ namespace Microsoft.Azure.Search.Tests
             {
                 Assert.Equal(1, response.Results[i].Score);
                 Assert.Null(response.Results[i].Highlights);
-                SearchAssert.DocumentsEqual(Data.TestDocuments[i].AsDocument(), response.Results[i].Document);
+                Assert.Equal(Data.TestDocuments[i].AsDocument(), response.Results[i].Document);
             }
         }
 
@@ -68,13 +67,10 @@ namespace Microsoft.Azure.Search.Tests
             SearchIndexClient client = GetClient();
 
             var invalidParameters = new SearchParameters() { Filter = "This is not a valid filter." };
-            CloudException e = 
-                Assert.Throws<CloudException>(() => client.Documents.Search("*", invalidParameters));
-
-            Assert.Equal(HttpStatusCode.BadRequest, e.Response.StatusCode);
-            Assert.Contains(
-                "Invalid expression: Syntax error at position 7 in 'This is not a valid filter.'",
-                e.Message);
+            SearchAssert.ThrowsCloudException(
+                () => client.Documents.Search("*", invalidParameters),
+                HttpStatusCode.BadRequest,
+                "Invalid expression: Syntax error at position 7 in 'This is not a valid filter.'");
         }
 
         protected void TestDefaultSearchModeIsAny()
@@ -90,7 +86,13 @@ namespace Microsoft.Azure.Search.Tests
         {
             SearchIndexClient client = GetClientForQuery();
 
-            var searchParameters = new SearchParameters() { SearchMode = SearchMode.All };
+            var searchParameters = 
+                new SearchParameters()
+                {
+                    QueryType = QueryType.Simple,   // Set explicitly at least once for test coverage.
+                    SearchMode = SearchMode.All
+                };
+
             DocumentSearchResult<Hotel> response =
                 client.Documents.Search<Hotel>("Cheapest hotel", searchParameters);
 
@@ -146,19 +148,22 @@ namespace Microsoft.Azure.Search.Tests
 
             HitHighlights highlights = response.Results[0].Highlights;
             Assert.NotNull(highlights);
-            SearchAssert.SequenceEqual(new[] { Description, Category }, highlights.Keys);
-
+            Assert.Equal(2, highlights.Keys.Count);
+            Assert.Contains(Description, highlights.Keys);
+            Assert.Contains(Category, highlights.Keys);
+            
             string categoryHighlight = highlights[Category].Single();
             Assert.Equal("<b>Luxury</b>", categoryHighlight);
 
-            string[] expectedDescriptionHighlights =
+            // Typed as IEnumerable so we get the right overload of Assert.Equals below.
+            IEnumerable<string> expectedDescriptionHighlights =
                 new[] 
                 { 
                     "Best <b>hotel</b> in town if you like <b>luxury</b> hotels.",
                     "We highly recommend this <b>hotel</b>."
                 };
 
-            SearchAssert.SequenceEqual(expectedDescriptionHighlights, highlights[Description]);
+            Assert.Equal(expectedDescriptionHighlights, highlights[Description]);
         }
 
         protected void TestOrderByProgressivelyBreaksTies()
@@ -213,6 +218,73 @@ namespace Microsoft.Azure.Search.Tests
             Assert.NotNull(response.Results);
             Assert.Equal(1, response.Results.Count);
             Assert.Equal(expectedDoc, response.Results.First().Document);
+        }
+
+        protected void TestCanSearchWithLuceneSyntax()
+        {
+            SearchIndexClient client = GetClientForQuery();
+
+            var searchParameters = 
+                new SearchParameters()
+                {
+                    QueryType = QueryType.Full,
+                    Select = new[] { "hotelName", "baseRate" }
+                };
+
+            DocumentSearchResult<Hotel> response =
+                client.Documents.Search<Hotel>("hotelName:roch~", searchParameters);
+
+            var expectedDoc = new Hotel() { HotelName = "Roach Motel", BaseRate = 79.99 };
+
+            Assert.NotNull(response.Results);
+            Assert.Equal(1, response.Results.Count);
+            Assert.Equal(expectedDoc, response.Results.First().Document);
+        }
+
+        protected void TestCanSearchWithRegex()
+        {
+            SearchIndexClient client = GetClientForQuery();
+
+            var searchParameters =
+                new SearchParameters()
+                {
+                    QueryType = QueryType.Full,
+                    Select = new[] { "hotelName", "baseRate" }
+                };
+
+            DocumentSearchResult<Hotel> response =
+                client.Documents.Search<Hotel>(@"hotelName:/.*oach.*\/?/", searchParameters);
+
+            var expectedDoc = new Hotel() { HotelName = "Roach Motel", BaseRate = 79.99 };
+
+            Assert.NotNull(response.Results);
+            Assert.Equal(1, response.Results.Count);
+            Assert.Equal(expectedDoc, response.Results.First().Document);
+        }
+
+        protected void TestCanSearchWithEscapedSpecialCharsInRegex()
+        {
+            SearchIndexClient client = GetClientForQuery();
+
+            var searchParameters = new SearchParameters() { QueryType = QueryType.Full };
+
+            DocumentSearchResult response =
+                client.Documents.Search(@"/\+\-\&\|\!\(\)\{\}\[\]\^\""\\~\*\?\:\\\//", searchParameters);
+
+            Assert.NotNull(response.Results);
+            Assert.Equal(0, response.Results.Count);
+        }
+
+        protected void TestSearchThrowsWhenSpecialCharInRegexIsUnescaped()
+        {
+            SearchIndexClient client = GetClient();
+
+            var searchParameters = new SearchParameters() { QueryType = QueryType.Full };
+
+            SearchAssert.ThrowsCloudException(
+                () => client.Documents.Search(@"/.*/.*/", searchParameters),
+                HttpStatusCode.BadRequest,
+                "Failed to parse query string at line 1, column 8.");
         }
 
         protected void TestCanUseTopAndSkipForClientSidePaging()
@@ -482,25 +554,13 @@ namespace Microsoft.Azure.Search.Tests
         {
             SearchServiceClient serviceClient = Data.GetSearchServiceClient();
 
-            Index index =
-                new Index()
-                {
-                    Name = TestUtilities.GenerateName(),
-                    Fields = new[]
-                    {
-                        new Field("ISBN", DataType.String) { IsKey = true },
-                        new Field("Title", DataType.String) { IsSearchable = true },
-                        new Field("Author", DataType.String),
-                        new Field("PublishDate", DataType.DateTimeOffset)
-                    }
-                };
-
+            Index index = Book.DefineIndex();
             serviceClient.Indexes.Create(index);
             SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
 
             var doc1 = new Book() { ISBN = "123", Title = "Lord of the Rings", Author = "J.R.R. Tolkien" };
             var doc2 = new Book() { ISBN = "456", Title = "War and Peace", PublishDate = new DateTime(2015, 8, 18) };
-            var batch = IndexBatch.Create(IndexAction.Create(doc1), IndexAction.Create(doc2));
+            var batch = IndexBatch.Upload(new[] { doc1, doc2 });
                 
             indexClient.Documents.Index(batch);
             SearchTestUtilities.WaitForIndexing();
@@ -516,7 +576,7 @@ namespace Microsoft.Azure.Search.Tests
 
             Index index = new Index()
             {
-                Name = TestUtilities.GenerateName(),
+                Name = SearchTestUtilities.GenerateName(),
                 Fields = new[]
                 {
                     new Field("Key", DataType.String) { IsKey = true },
@@ -557,7 +617,7 @@ namespace Microsoft.Azure.Search.Tests
                 StartDate = default(DateTimeOffset)
             };
 
-            var batch = IndexBatch.Create(IndexAction.Create(doc1), IndexAction.Create(doc2));
+            var batch = IndexBatch.Upload(new[] { doc1, doc2 });
                 
             indexClient.Documents.Index(batch);
             SearchTestUtilities.WaitForIndexing();
@@ -575,7 +635,7 @@ namespace Microsoft.Azure.Search.Tests
 
             Index index = new Index()
             {
-                Name = TestUtilities.GenerateName(),
+                Name = SearchTestUtilities.GenerateName(),
                 Fields = new[]
                 {
                     new Field("Key", DataType.String) { IsKey = true },
@@ -592,12 +652,12 @@ namespace Microsoft.Azure.Search.Tests
                 IntValue = null
             };
 
-            var batch = IndexBatch.Create(IndexAction.Create(doc));
+            var batch = IndexBatch.Upload(new[] { doc });
 
             indexClient.Documents.Index(batch);
             SearchTestUtilities.WaitForIndexing();
 
-            RestException e = Assert.Throws<RestException>(() => indexClient.Documents.Search<ModelWithInt>("*"));
+            SerializationException e = Assert.Throws<SerializationException>(() => indexClient.Documents.Search<ModelWithInt>("*"));
             Assert.Contains("Error converting value {null} to type 'System.Int32'. Path 'IntValue'.", e.ToString());
         }
 
@@ -607,7 +667,7 @@ namespace Microsoft.Azure.Search.Tests
 
             Index index = new Index()
             {
-                Name = TestUtilities.GenerateName(),
+                Name = SearchTestUtilities.GenerateName(),
                 Fields = new[]
                 {
                     new Field("Key", DataType.String) { IsKey = true },
@@ -619,7 +679,7 @@ namespace Microsoft.Azure.Search.Tests
             SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
 
             var doc = new ModelWithInt() { Key = "123", IntValue = 0 };
-            var batch = IndexBatch.Create(IndexAction.Create(doc));
+            var batch = IndexBatch.Upload(new[] { doc });
 
             indexClient.Documents.Index(batch);
             SearchTestUtilities.WaitForIndexing();
@@ -631,6 +691,65 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Equal(doc.IntValue, response.Results[0].Document.IntValue);
         }
 
+        protected void TestCanSearchWithCustomContractResolver()
+        {
+            SearchIndexClient client = GetClientForQuery();
+            client.DeserializationSettings.ContractResolver = new MyCustomContractResolver();
+
+            DocumentSearchResult<LoudHotel> response = client.Documents.Search<LoudHotel>("Best");
+
+            Assert.Equal(1, response.Results.Count);
+            Assert.Equal(Data.TestDocuments[0], response.Results[0].Document.ToHotel());
+        }
+
+        protected void TestCanSearchWithCustomConverter()
+        {
+            TestCanSearchWithCustomConverter<CustomBookWithConverter>();
+        }
+
+        protected void TestCanSearchWithCustomConverterViaSettings()
+        {
+            Action<SearchIndexClient> customizeSettings =
+                client =>
+                {
+                    var converter = new CustomBookConverter<CustomBook>();
+                    converter.Install(client);
+                };
+
+            TestCanSearchWithCustomConverter<CustomBook>(customizeSettings);
+        }
+
+        private void TestCanSearchWithCustomConverter<T>(Action<SearchIndexClient> customizeSettings = null)
+            where T : CustomBook, new()
+        {
+            customizeSettings = customizeSettings ?? (client => { });
+
+            SearchServiceClient serviceClient = Data.GetSearchServiceClient();
+
+            Index index = Book.DefineIndex();
+            serviceClient.Indexes.Create(index);
+            SearchIndexClient indexClient = Data.GetSearchIndexClient(index.Name);
+            customizeSettings(indexClient);
+
+            var doc = new T()
+            {
+                InternationalStandardBookNumber = "123",
+                Name = "Lord of the Rings",
+                AuthorName = "J.R.R. Tolkien",
+                PublishDateTime = new DateTime(1954, 7, 29)
+            };
+
+            var batch = IndexBatch.Upload(new[] { doc });
+
+            indexClient.Documents.Index(batch);
+            SearchTestUtilities.WaitForIndexing();
+
+            DocumentSearchResult<T> response = indexClient.Documents.Search<T>("*");
+
+            Assert.Equal(1, response.Results.Count);
+            Assert.Equal(doc, response.Results[0].Document);
+        }
+
         private IEnumerable<string> IndexDocuments(SearchIndexClient client, int totalDocCount)
         {
             int existingDocumentCount = Data.TestDocuments.Length;
@@ -639,19 +758,18 @@ namespace Microsoft.Azure.Search.Tests
                 Enumerable.Range(existingDocumentCount + 1, totalDocCount - existingDocumentCount)
                 .Select(id => id.ToString());
 
-            IEnumerable<Hotel> hotels = hotelIds.Select(id => new Hotel() { HotelId = id });
-            List<IndexAction<Hotel>> actions = hotels.Select(h => IndexAction.Create(h)).ToList();
+            List<Hotel> hotels = hotelIds.Select(id => new Hotel() { HotelId = id }).ToList();
 
-            for (int i = 0; i < actions.Count; i += 1000)
+            for (int i = 0; i < hotels.Count; i += 1000)
             {
-                IEnumerable<IndexAction<Hotel>> nextActions = actions.Skip(i).Take(1000);
+                IEnumerable<Hotel> nextHotels = hotels.Skip(i).Take(1000);
 
-                if (!nextActions.Any())
+                if (!nextHotels.Any())
                 {
                     break;
                 }
 
-                var batch = IndexBatch.Create(nextActions);
+                var batch = IndexBatch.Upload(nextHotels);
                 client.Documents.Index(batch);
 
                 SearchTestUtilities.WaitForIndexing();
@@ -665,7 +783,7 @@ namespace Microsoft.Azure.Search.Tests
             Assert.NotNull(response.Results);
 
             IEnumerable<string> actualKeys = response.Results.Select(r => r.Document.HotelId);
-            SearchAssert.SequenceEqual(expectedKeys, actualKeys);
+            Assert.Equal(expectedKeys, actualKeys);
         }
 
         private void AssertKeySequenceEqual(DocumentSearchResult response, params string[] expectedKeys)
@@ -673,7 +791,7 @@ namespace Microsoft.Azure.Search.Tests
             Assert.NotNull(response.Results);
 
             IEnumerable<string> actualKeys = response.Results.Select(r => (string)r.Document["hotelId"]);
-            SearchAssert.SequenceEqual(expectedKeys, actualKeys);
+            Assert.Equal(expectedKeys, actualKeys);
         }
 
         private void AssertContainsKeys(DocumentSearchResult<Hotel> response, params string[] expectedKeys)

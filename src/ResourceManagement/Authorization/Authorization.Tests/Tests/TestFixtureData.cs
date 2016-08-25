@@ -25,6 +25,7 @@ using System.Net;
 using Xunit;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using Microsoft.Azure.Management.Resources;
+using Microsoft.Rest;
 
 namespace Authorization.Tests
 {
@@ -56,6 +57,7 @@ namespace Authorization.Tests
 
         public TestExecutionContext()
         {
+            HttpMockServer.RecordsDirectory = "SessionRecords";
             this.createdUsers = new List<Guid>();
             this.createdGroups = new List<string>();
 
@@ -165,9 +167,11 @@ namespace Authorization.Tests
                 this.GraphClient.DeleteGroup(group);
             }
 
+            var env = TestEnvironmentFactory.GetTestEnvironment();
+            var cred = env.TokenInfo[TokenAudience.Management];
             var authorizationClient = new AuthorizationManagementClient(
                 TestEnvironmentFactory.GetTestEnvironment().BaseUri,
-                TestEnvironmentFactory.GetTestEnvironment().Credentials);
+                cred);
             foreach (var assignment in authorizationClient.RoleAssignments.List(null))
             {
                 authorizationClient.RoleAssignments.DeleteById(assignment.Id);

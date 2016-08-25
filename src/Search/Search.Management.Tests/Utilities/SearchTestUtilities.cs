@@ -5,17 +5,24 @@
 namespace Microsoft.Azure.Search.Tests.Utilities
 {
     using System;
-    using System.Net;
-    using System.Net.Sockets;
+    using System.Linq;
+    using System.Net.Http;
     using System.Threading;
     using Microsoft.Azure.Test.HttpRecorder;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
     public static class SearchTestUtilities
     {
+        private static readonly HttpClient _httpClient = new HttpClient();
+
         public static string GenerateServiceName()
         {
             return TestUtilities.GenerateName(prefix: "azs-");
+        }
+
+        public static string GenerateName()
+        {
+            return TestUtilities.GenerateName();
         }
 
         public static void WaitForIndexing()
@@ -41,27 +48,41 @@ namespace Microsoft.Azure.Search.Tests.Utilities
 
             while (retries < maxRetries)
             {
-                try
+                if (CanResolve(baseUri))
                 {
-                    Dns.GetHostEntry(baseUri.DnsSafeHost);
                     return true;
                 }
-                catch (SocketException e)
+                else
                 {
-                    if (e.Message.Contains("The remote name could not be resolved") ||
-                        e.Message.Contains("No such host is known"))
-                    {
-                        Thread.Sleep(retryDelay);
-                        retries++;
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    Thread.Sleep(retryDelay);
+                    retries++;
                 }
             }
 
             return false;
+        }
+
+        // Workaround since the Dns class is not available in PCLs.
+        private static bool CanResolve(Uri url)
+        {
+            try
+            {
+                return _httpClient.GetAsync(url).Wait(TimeSpan.FromSeconds(5));
+            }
+            catch (AggregateException e)
+            {
+                HttpRequestException httpEx = e.InnerExceptions.FirstOrDefault() as HttpRequestException;
+                if (httpEx != null)
+                {
+                    if (httpEx.InnerException != null && 
+                        httpEx.InnerException.Message.Contains("could not be resolved"))
+                    {
+                        return false;
+                    }
+                }
+
+                throw;
+            }
         }
     }
 }

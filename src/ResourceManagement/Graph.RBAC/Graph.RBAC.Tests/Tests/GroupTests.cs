@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
                 ADGroup group = CreateGroup(context);
                 DeleteGroup(context, group.ObjectId);
                 //verify the group has been deleted.
-                Assert.Throws(typeof(CloudException), () => { SearchGroup(context, group.ObjectId); });
+                Assert.Throws(typeof(GraphErrorException), () => { SearchGroup(context, group.ObjectId); });
             }
         }
 

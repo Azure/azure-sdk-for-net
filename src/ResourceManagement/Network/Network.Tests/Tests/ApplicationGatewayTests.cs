@@ -10,10 +10,12 @@ using Networks.Tests.Helpers;
 using ResourceGroups.Tests;
 using Xunit;
 using System;
+using System.IO;
 using System.Security.Cryptography.X509Certificates;
 
 namespace Networks.Tests
 {
+    using Microsoft.Azure.Test.HttpRecorder;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
     using SubResource = Microsoft.Azure.Management.Network.Models.SubResource;
@@ -33,6 +35,11 @@ namespace Networks.Tests
                     appGwname,
                     childResourceType,
                     childResourceName);
+        }
+
+        public ApplicationGatewayTests()
+        {
+            HttpMockServer.RecordsDirectory = "SessionRecords";
         }
 
         private ApplicationGatewaySslCertificate CreateSslCertificate(string sslCertName, string password)
@@ -55,6 +62,7 @@ namespace Networks.Tests
             var frontendPort1Name = TestUtilities.GenerateName();
             var frontendPort2Name = TestUtilities.GenerateName();            
             var backendAddressPoolName = TestUtilities.GenerateName();
+            var nicBackendAddressPoolName = TestUtilities.GenerateName();
             var backendHttpSettings1Name = TestUtilities.GenerateName();
             var backendHttpSettings2Name = TestUtilities.GenerateName();
             var requestRoutingRule1Name = TestUtilities.GenerateName();
@@ -63,6 +71,7 @@ namespace Networks.Tests
             var httpListener2Name = TestUtilities.GenerateName();            
             var probeName = TestUtilities.GenerateName();
             var sslCertName = TestUtilities.GenerateName();
+            var authCertName = TestUtilities.GenerateName();
 
             //var httpListenerMultiHostingName = TestUtilities.GenerateName();
             //var frontendPortMultiHostingName = TestUtilities.GenerateName();
@@ -71,9 +80,30 @@ namespace Networks.Tests
             //var videoPathRuleName = TestUtilities.GenerateName();
             //var requestRoutingRuleMultiHostingName = TestUtilities.GenerateName();
 
+            string certPath = System.IO.Path.Combine("Tests", "Data", "ApplicationGatewayAuthCert.cer");
+            Console.WriteLine("Certificate Path: {0}", certPath);
+            var x509AuthCertificate = new X509Certificate2(certPath);
+
+            var authCertList = new List<ApplicationGatewayAuthenticationCertificate>()
+            {
+                new ApplicationGatewayAuthenticationCertificate()
+                {
+                    Name = authCertName,
+                    Data  = Convert.ToBase64String(x509AuthCertificate.Export(X509ContentType.Cert))
+                }
+            };
+
             var appGw = new ApplicationGateway()
             {
                 Location = location,                
+                SslPolicy = new ApplicationGatewaySslPolicy()
+                    {
+                        DisabledSslProtocols = new List<string>()
+                        {
+                            ApplicationGatewaySslProtocol.TLSv10,
+                            ApplicationGatewaySslProtocol.TLSv11
+                        }
+                    },
                 Sku = new ApplicationGatewaySku()
                     {
                         Name = ApplicationGatewaySkuName.StandardSmall,
@@ -150,6 +180,10 @@ namespace Networks.Tests
                                     IpAddress = "23.99.1.115"
                                 }
                             }
+                        },
+                        new ApplicationGatewayBackendAddressPool()
+                        {
+                            Name = nicBackendAddressPoolName,
                         }
                     },
                 BackendHttpSettingsCollection = new List<ApplicationGatewayBackendHttpSettings> 
@@ -170,9 +204,17 @@ namespace Networks.Tests
                         new ApplicationGatewayBackendHttpSettings()
                         {
                             Name = backendHttpSettings2Name,
-                            Port = 80,
-                            Protocol = ApplicationGatewayProtocol.Http,
+                            Port = 443,
+                            Protocol = ApplicationGatewayProtocol.Https,
                             CookieBasedAffinity = ApplicationGatewayCookieBasedAffinity.Enabled,                            
+                            AuthenticationCertificates =  new List<SubResource>()
+                            {
+                                new SubResource()
+                                {
+                                    Id = GetChildAppGwResourceId(subscriptionId,
+                                    resourceGroupName, appGwName, "authenticationCertificates", authCertName)
+                                }
+                            }
                         }
                     },
                 HttpListeners = new List<ApplicationGatewayHttpListener>
@@ -333,7 +375,8 @@ namespace Networks.Tests
                         //            resourceGroupName, appGwName, "urlPathMaps", urlPathMapName)
                         //    }
                         //}
-                    }
+                    },
+                AuthenticationCertificates = authCertList
             };
             return appGw;
         }
@@ -351,6 +394,8 @@ namespace Networks.Tests
             Assert.Equal(gw1.BackendHttpSettingsCollection.Count, gw2.BackendHttpSettingsCollection.Count);
             Assert.Equal(gw1.HttpListeners.Count, gw2.HttpListeners.Count);
             Assert.Equal(gw1.RequestRoutingRules.Count, gw2.RequestRoutingRules.Count);            
+            Assert.Equal(gw1.SslPolicy.DisabledSslProtocols.Count, gw2.SslPolicy.DisabledSslProtocols.Count);
+            Assert.Equal(gw1.AuthenticationCertificates.Count, gw2.AuthenticationCertificates.Count);
         }
 
         [Fact]
@@ -375,28 +420,103 @@ namespace Networks.Tests
                     });
 
                 var vnetName = TestUtilities.GenerateName();
-                var subnetName = TestUtilities.GenerateName();
+                var gwSubnetName = TestUtilities.GenerateName();
+                var subnet2Name = TestUtilities.GenerateName();
                 var appGwName = TestUtilities.GenerateName();
 
-                var virtualNetwork = TestHelper.CreateVirtualNetwork(vnetName, subnetName, resourceGroupName, location, networkManagementClient);
-                var getSubnetResponse = networkManagementClient.Subnets.Get(resourceGroupName, vnetName, subnetName);
-                Console.WriteLine("Virtual Network GatewaySubnet Id: {0}", getSubnetResponse.Id);
-                var subnet = getSubnetResponse;
+                var vnet = new VirtualNetwork()
+                {
+                    Location = location,
 
-                var appGw = CreateApplicationGateway(location, subnet, resourceGroupName, appGwName, networkManagementClient.SubscriptionId);     
+                    AddressSpace = new AddressSpace()
+                    {
+                        AddressPrefixes = new List<string>()
+                    {
+                        "10.0.0.0/16",
+                    }
+                    },
+                    DhcpOptions = new DhcpOptions()
+                    {
+                        DnsServers = new List<string>()
+                    {
+                        "10.1.1.1",
+                        "10.1.2.4"
+                    }
+                    },
+                    Subnets = new List<Subnet>()
+                    {
+                        new Subnet()
+                        {
+                            Name = gwSubnetName,
+                            AddressPrefix = "10.0.0.0/24",
+                        },
+                        new Subnet()
+                        {
+                            Name = subnet2Name,
+                            AddressPrefix = "10.0.1.0/24",
+                        }
+                    }
+                };
+
+                var putVnetResponse = networkManagementClient.VirtualNetworks.CreateOrUpdate(resourceGroupName, vnetName, vnet);
+                var getVnetResponse = networkManagementClient.VirtualNetworks.Get(resourceGroupName, vnetName);
+                var getSubnetResponse = networkManagementClient.Subnets.Get(resourceGroupName, vnetName, gwSubnetName);
+                Console.WriteLine("Virtual Network GatewaySubnet Id: {0}", getSubnetResponse.Id);
+                var gwSubnet = getSubnetResponse;
+
+                var appGw = CreateApplicationGateway(location, gwSubnet, resourceGroupName, appGwName, networkManagementClient.SubscriptionId);     
 
                 // Put AppGw                
-           var putAppGwResponse = networkManagementClient.ApplicationGateways.CreateOrUpdate(resourceGroupName, appGwName, appGw);                
+                var putAppGwResponse = networkManagementClient.ApplicationGateways.CreateOrUpdate(resourceGroupName, appGwName, appGw);                
                 Assert.Equal("Succeeded", putAppGwResponse.ProvisioningState);
                 
                 // Get AppGw
-                var getResp = networkManagementClient.ApplicationGateways.Get(resourceGroupName, appGwName);
-                Assert.Equal(appGwName, getResp.Name);
-                CompareApplicationGateway(appGw, getResp);
+                var getGateway = networkManagementClient.ApplicationGateways.Get(resourceGroupName, appGwName);
+                Assert.Equal(appGwName, getGateway.Name);
+                CompareApplicationGateway(appGw, getGateway);
+
+                // Create Nics
+                string nic1name = TestUtilities.GenerateName();
+                string nic2name = TestUtilities.GenerateName();
+
+                var nic1 = TestHelper.CreateNetworkInterface(
+                    nic1name,
+                    resourceGroupName,
+                    null,
+                    getVnetResponse.Subnets[1].Id,
+                    location,
+                    "ipconfig",
+                    networkManagementClient);
+
+                var nic2 = TestHelper.CreateNetworkInterface(
+                    nic2name,
+                    resourceGroupName,
+                    null,
+                    getVnetResponse.Subnets[1].Id,
+                    location,
+                    "ipconfig",
+                    networkManagementClient);
+
+                // Add NIC to application gateway backend address pool.
+                nic1.IpConfigurations[0].ApplicationGatewayBackendAddressPools = new List<ApplicationGatewayBackendAddressPool>
+                                                                                    {
+                                                                                        getGateway.BackendAddressPools[1]
+                                                                                    };
+                nic2.IpConfigurations[0].ApplicationGatewayBackendAddressPools = new List<ApplicationGatewayBackendAddressPool>
+                                                                                    {
+                                                                                        getGateway.BackendAddressPools[1]
+                                                                                    };
+                // Put Nics
+                networkManagementClient.NetworkInterfaces.CreateOrUpdate(resourceGroupName, nic1name, nic1);
+                networkManagementClient.NetworkInterfaces.CreateOrUpdate(resourceGroupName, nic2name, nic2);
 
                 //Start AppGw
                 networkManagementClient.ApplicationGateways.Start(resourceGroupName, appGwName);
                 
+                // Get AppGw and make sure nics are added to backend
+                getGateway = networkManagementClient.ApplicationGateways.Get(resourceGroupName, appGwName);
+                Assert.Equal(2, getGateway.BackendAddressPools[1].BackendIPConfigurations.Count);
+
                 //Stop AppGw
                 networkManagementClient.ApplicationGateways.Stop(resourceGroupName, appGwName);
                 

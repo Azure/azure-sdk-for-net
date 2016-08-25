@@ -1,11 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
@@ -16,11 +18,11 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
     {
         private Regex _resourceGroupPattern = new Regex(@"/subscriptions/[^/]+/resourcegroups/([^?]+)\?api-version");
         private HashSet<string> _resourceGroupsCreated = new HashSet<string>();
-        private ServiceClientCredentials _credentials;
+        private TokenCredentials _tokenCredentials;
 
-        public ResourceGroupCleaner(ServiceClientCredentials credentials)
+        public ResourceGroupCleaner(TokenCredentials tokenCredentials)
         {
-            _credentials = credentials;
+            _tokenCredentials = tokenCredentials;
         }
 
         protected override Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
@@ -42,8 +44,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 HttpRequestMessage httpRequest = new HttpRequestMessage();
                 httpRequest.Method = new HttpMethod("DELETE");
                 httpRequest.RequestUri = new Uri(resourceGroupUri);
-
-                await _credentials.ProcessHttpRequestAsync(httpRequest, CancellationToken.None).ConfigureAwait(false);
+                
+                _tokenCredentials.ProcessHttpRequestAsync(httpRequest, CancellationToken.None).ConfigureAwait(false).GetAwaiter().GetResult();
 
                 HttpResponseMessage httpResponse = await httpClient.SendAsync(httpRequest).ConfigureAwait(false);
                 string groupName = _resourceGroupPattern.Match(resourceGroupUri).Groups[1].Value;

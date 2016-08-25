@@ -161,43 +161,49 @@ namespace Compute.Tests
                 Assert.True(extImages.Count > 0);
 
                 string ver = extImages.First().Name;
+                var query = new Microsoft.Rest.Azure.OData.ODataQuery<Microsoft.Azure.Management.Compute.Models.VirtualMachineExtensionImage>();
 
+                query.SetFilter(f => f.Name.StartsWith(ver));
                 parameters.FilterExpression = "$filter=startswith(name,'" + ver + "')";
                 var vmextimg = _pirClient.VirtualMachineExtensionImages.ListVersions(
                     parameters.Location,
                     parameters.PublisherName,
                     parameters.Type,
-                    f => f.Name.StartsWith(ver));
+                    query);
                 Assert.True(vmextimg.Count > 0);
                 Assert.True(vmextimg.Count(vmi => vmi.Name == "2.0") != 0);
 
                 // Filter: startswith - Negative Test
+                query.SetFilter(f => f.Name.StartsWith("1.0"));
                 parameters.FilterExpression = "$filter=startswith(name,'1.0')";
                 vmextimg = _pirClient.VirtualMachineExtensionImages.ListVersions(
                     parameters.Location,
                     parameters.PublisherName,
                     parameters.Type,
-                    f => f.Name.StartsWith("1.0"));
+                    query);
                 Assert.True(vmextimg.Count == 0);
                 Assert.True(vmextimg.Count(vmi => vmi.Name == "2.0") == 0);
 
                 // Filter: top - Positive Test
+                query.Filter = null;
+                query.Top =1;
                 parameters.FilterExpression = "$top=1";
                 vmextimg = _pirClient.VirtualMachineExtensionImages.ListVersions(
                     parameters.Location,
                     parameters.PublisherName,
                     parameters.Type,
-                    top: 1);
+                    query);
                 Assert.True(vmextimg.Count == 1);
                 Assert.True(vmextimg.Count(vmi => vmi.Name == "2.0") != 0);
 
                 // Filter: top - Negative Test
+                query.Top = 0;
                 parameters.FilterExpression = "$top=0";
                 vmextimg = _pirClient.VirtualMachineExtensionImages.ListVersions(
                     parameters.Location,
                     parameters.PublisherName,
                     parameters.Type,
-                    top: 0);
+                    query);
                 Assert.True(vmextimg.Count == 0);
             }
         }

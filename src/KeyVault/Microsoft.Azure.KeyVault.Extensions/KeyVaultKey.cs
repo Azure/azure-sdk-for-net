@@ -21,6 +21,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.KeyVault.Core;
 using Microsoft.Azure.KeyVault.WebKey;
+using Microsoft.Azure.KeyVault.Models;
 
 namespace Microsoft.Azure.KeyVault
 {

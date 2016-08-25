@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                 // wait several minutes, we fail fast here.
                 TimeSpan maxDelay = 
                     (HttpMockServer.Mode == HttpRecorderMode.Record) ? 
-                        TimeSpan.FromMinutes(10) : TimeSpan.FromSeconds(15);
+                        TimeSpan.FromMinutes(1) : TimeSpan.FromSeconds(15);
                 
                 if (SearchTestUtilities.WaitForSearchServiceDns(searchServiceName, maxDelay))
                 {

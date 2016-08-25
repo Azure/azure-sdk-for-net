@@ -217,7 +217,8 @@ namespace WebSites.Tests.ScenarioTests
             }
         }
 
-        [Fact(Skip = "Test does not work in playback mode due to key matching issue in test framework")]
+        //[Fact(Skip = "Test does not work in playback mode due to key matching issue in test framework")]
+        [Fact(Skip="TODO: Fix datetime parsing in test to correctly handle UTC times and rerecord.")]
         public void GetWebHostingPlanMetrics()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -259,7 +260,7 @@ namespace WebSites.Tests.ScenarioTests
                     ServerFarmId = serverfarmId
                 });
 
-                var endTime = DateTime.UtcNow;
+                var endTime = DateTime.Parse("2015-12-11T09:52:42Z");
                 var metricNames = new List<string> { "MemoryPercentage", "CpuPercentage", "DiskQueueLength", "HttpQueueLength", "BytesReceived", "BytesSent" };
                 metricNames.Sort();
                 var result = webSitesClient.ServerFarms.GetServerFarmMetrics(resourceGroupName: resourceGroupName,

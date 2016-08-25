@@ -48,7 +48,7 @@ namespace Test.Azure.Management.Logic
                     'type':'Bool'
                 },
                 'subscription':{
-                    'defaultValue':'1a66ce04-b633-4a0b-b2bc-a912ec8986a6',
+                    'defaultValue':'66666666-6666-6666-6666-666666666666',
                     'type':'String'
                 },
                 'resourceGroup':{
@@ -59,9 +59,9 @@ namespace Test.Azure.Management.Logic
                     'defaultValue':{
                         'type':'ActiveDirectoryOAuth',
                         'audience':'https://management.azure.com/',
-                        'tenant':'72f988bf-86f1-41af-91ab-2d7cd011db47',
-                        'clientId':'64011f29-3932-4168-b73d-adc835a56732',
-                        'secret':'q8Wf7SwoM4iSVgaHZdghScLX8xDxMMUATWvRalclJjo='
+                        'tenant':'66666666-6666-6666-6666-666666666666',
+                        'clientId':'66666666-6666-6666-6666-666666666666',
+                       'secret':'<placeholder>'                    
                     },
                     'type':'Object'
                 }
@@ -107,7 +107,7 @@ namespace Test.Azure.Management.Logic
         public void WorkflowVersions_Get_Exception()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -124,7 +124,7 @@ namespace Test.Azure.Management.Logic
         public void WorkflowVersions_Get_OK()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -179,11 +179,9 @@ namespace Test.Azure.Management.Logic
             Assert.Equal("Microsoft.Web/serverFarms", workflow.Sku.Plan.Type);
             Assert.Equal("planName", workflow.Sku.Plan.Name);
             Assert.NotEmpty(workflow.Definition.ToString());
-            Assert.Equal(null, workflow.DefinitionLink);
             Assert.Equal(2, workflow.Parameters.Count);
             Assert.Equal(ParameterType.String, workflow.Parameters["parameter1"].Type);
             Assert.Equal(ParameterType.Array, workflow.Parameters["parameter2"].Type);
-            Assert.Equal(null, workflow.ParametersLink);
         }
 
         #endregion

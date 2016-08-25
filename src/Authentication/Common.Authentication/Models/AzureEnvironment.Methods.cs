@@ -99,7 +99,8 @@ namespace Microsoft.Azure.Common.Authentication.Models
                         { AzureEnvironment.Endpoint.AzureKeyVaultDnsSuffix, AzureEnvironmentConstants.AzureKeyVaultDnsSuffix},
                         { AzureEnvironment.Endpoint.AzureKeyVaultServiceEndpointResourceId, AzureEnvironmentConstants.AzureKeyVaultServiceEndpointResourceId},
                         { AzureEnvironment.Endpoint.AzureDataLakeAnalyticsCatalogAndJobEndpointSuffix, AzureEnvironmentConstants.AzureDataLakeAnalyticsCatalogAndJobEndpointSuffix},
-                        { AzureEnvironment.Endpoint.AzureDataLakeStoreFileSystemEndpointSuffix, AzureEnvironmentConstants.AzureDataLakeStoreFileSystemEndpointSuffix}
+                        { AzureEnvironment.Endpoint.AzureDataLakeStoreFileSystemEndpointSuffix, AzureEnvironmentConstants.AzureDataLakeStoreFileSystemEndpointSuffix},
+                        { AzureEnvironment.Endpoint.GraphEndpointResourceId, AzureEnvironmentConstants.AzureGraphEndpoint}
                     }
                 }
             },
@@ -121,9 +122,10 @@ namespace Microsoft.Azure.Common.Authentication.Models
                         { AzureEnvironment.Endpoint.SqlDatabaseDnsSuffix, AzureEnvironmentConstants.ChinaSqlDatabaseDnsSuffix },
                         { AzureEnvironment.Endpoint.Graph, AzureEnvironmentConstants.ChinaGraphEndpoint },
                         { AzureEnvironment.Endpoint.TrafficManagerDnsSuffix, AzureEnvironmentConstants.ChinaTrafficManagerDnsSuffix },
-                        { AzureEnvironment.Endpoint.AzureKeyVaultDnsSuffix, null},
-                        { AzureEnvironment.Endpoint.AzureKeyVaultServiceEndpointResourceId, null}
-                        // TODO: DataLakeAnalytics and ADL do not have a China endpoint yet. Once they do, add them here.
+                        { AzureEnvironment.Endpoint.AzureKeyVaultDnsSuffix, AzureEnvironmentConstants.ChinaKeyVaultDnsSuffix },
+                        { AzureEnvironment.Endpoint.AzureKeyVaultServiceEndpointResourceId, AzureEnvironmentConstants.ChinaKeyVaultServiceEndpointResourceId },
+                         { AzureEnvironment.Endpoint.GraphEndpointResourceId, AzureEnvironmentConstants.ChinaGraphEndpoint}
+                       // TODO: DataLakeAnalytics and ADL do not have a China endpoint yet. Once they do, add them here.
                     }
                 }
             },
@@ -145,10 +147,11 @@ namespace Microsoft.Azure.Common.Authentication.Models
                         { AzureEnvironment.Endpoint.SqlDatabaseDnsSuffix, AzureEnvironmentConstants.USGovernmentSqlDatabaseDnsSuffix },
                         { AzureEnvironment.Endpoint.Graph, AzureEnvironmentConstants.USGovernmentGraphEndpoint },
                         { AzureEnvironment.Endpoint.TrafficManagerDnsSuffix, null },
-                        { AzureEnvironment.Endpoint.AzureKeyVaultDnsSuffix, null},
-                        { AzureEnvironment.Endpoint.AzureKeyVaultServiceEndpointResourceId, null},
+                        { AzureEnvironment.Endpoint.AzureKeyVaultDnsSuffix, AzureEnvironmentConstants.USGovernmentKeyVaultDnsSuffix},
+                        { AzureEnvironment.Endpoint.AzureKeyVaultServiceEndpointResourceId, AzureEnvironmentConstants.USGovernmentKeyVaultServiceEndpointResourceId},
                         { AzureEnvironment.Endpoint.AzureDataLakeAnalyticsCatalogAndJobEndpointSuffix, null},
-                        { AzureEnvironment.Endpoint.AzureDataLakeStoreFileSystemEndpointSuffix, null}
+                        { AzureEnvironment.Endpoint.AzureDataLakeStoreFileSystemEndpointSuffix, null},
+                        {AzureEnvironment.Endpoint.GraphEndpointResourceId, AzureEnvironmentConstants.USGovernmentGraphEndpoint}
                     }
                 }
             }
@@ -173,6 +176,15 @@ namespace Microsoft.Azure.Common.Authentication.Models
 
             return null;
         }
+
+        public AzureEnvironment.Endpoint GetTokenAudience(AzureEnvironment.Endpoint targetEndpoint)
+        {
+            return targetEndpoint == AzureEnvironment.Endpoint.Graph
+                ? AzureEnvironment.Endpoint.GraphEndpointResourceId
+                : AzureEnvironment.Endpoint.ActiveDirectoryServiceEndpointResourceId;
+        }
+
+    
 
         public bool IsEndpointSet(AzureEnvironment.Endpoint endpoint)
         {
@@ -316,7 +328,9 @@ namespace Microsoft.Azure.Common.Authentication.Models
             
             AzureDataLakeAnalyticsCatalogAndJobEndpointSuffix,
 
-            AzureDataLakeStoreFileSystemEndpointSuffix
+            AzureDataLakeStoreFileSystemEndpointSuffix,
+
+            GraphEndpointResourceId
         }
     }
 
@@ -335,13 +349,13 @@ namespace Microsoft.Azure.Common.Authentication.Models
 
         public const string ChinaServiceEndpoint = "https://management.core.chinacloudapi.cn/";
 
-        public const string USGovernmentServiceEndpoint = "https://management.core.usgovcloudapi.net";
+        public const string USGovernmentServiceEndpoint = "https://management.core.usgovcloudapi.net/";
 
         public const string AzureResourceManagerEndpoint = "https://management.azure.com/";
 
-        public const string ChinaResourceManagerEndpoint = "https://management.chinacloudapi.cn";
+        public const string ChinaResourceManagerEndpoint = "https://management.chinacloudapi.cn/";
 
-        public const string USGovernmentResourceManagerEndpoint = "https://management.usgovcloudapi.net";
+        public const string USGovernmentResourceManagerEndpoint = "https://management.usgovcloudapi.net/";
 
         public const string GalleryEndpoint = "https://gallery.azure.com/";
 
@@ -391,7 +405,15 @@ namespace Microsoft.Azure.Common.Authentication.Models
 
         public const string AzureKeyVaultDnsSuffix = "vault.azure.net";
 
+        public const string ChinaKeyVaultDnsSuffix = "vault.azure.cn";
+
+        public const string USGovernmentKeyVaultDnsSuffix = "vault.usgovcloudapi.net";
+
         public const string AzureKeyVaultServiceEndpointResourceId = "https://vault.azure.net";
+
+        public const string ChinaKeyVaultServiceEndpointResourceId = "https://vault.azure.cn";
+
+        public const string USGovernmentKeyVaultServiceEndpointResourceId = "https://vault.usgovcloudapi.net";
 
         public const string AzureDataLakeAnalyticsCatalogAndJobEndpointSuffix = "azuredatalakeanalytics.net";
 

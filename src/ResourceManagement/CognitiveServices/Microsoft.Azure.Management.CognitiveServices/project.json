@@ -1,0 +1,87 @@
+{
+  "version": "0.1.3-preview",
+  "description": "Microsoft Azure Management Cognitive Services Library",
+  "authors": [ "Microsoft" ],
+
+  "packOptions": {
+    "summary": "Microsoft Azure Management Cognitive Services Library.",
+    "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
+    "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+    "tags": [ "Microsoft Azure Cognitive Services management", "Cognitive Services", "Cognitive Services management", "REST HTTP client", "windowsazureofficial" ],
+    "requireLicenseAcceptance":  true,
+  },
+
+  "buildOptions": {
+    "delaySign": true,
+    "publicSign": false,
+    "keyFile": "../../../../tools/MSSharedLibKey.snk"
+  },
+
+  "dependencies": {
+  },
+
+  "frameworks": {
+    "net45": {
+      "frameworkAssemblies": {
+        "System.Collections": "",
+        "System.Linq.Expressions": "",
+        "System.Runtime": "",
+        "System.Runtime.Serialization": "",
+        "System.Threading.Tasks": ""
+      },
+      "dependencies": {
+        "Microsoft.Rest.ClientRuntime": "[2.1.0,3.0.0)",
+        "Microsoft.Rest.ClientRuntime.Azure": "[3.1.0,4.0.0)"
+      }
+    },     
+    "netstandard1.1": {
+      "buildOptions": { "define": [ "PORTABLE" ] },
+      "imports": ["dnxcore50", "portable-net45+win8"],
+      "dependencies": {
+        "NETStandard.Library": "1.6.0",
+        "System.Runtime.Serialization.Primitives": "4.1.1",
+        "Microsoft.Rest.ClientRuntime": "[2.3.1,3.0)",
+        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.1,4.0.0)"
+      }
+    },
+    "netstandard1.5": {
+      "buildOptions": { "define": [ "PORTABLE" ] },
+      "imports": ["dnxcore50"],
+      "dependencies": {
+        "Microsoft.NETCore.Platforms": "1.0.1",
+        "System.Collections": "4.0.11",
+        "System.Collections.Concurrent": "4.0.12",
+        "System.Diagnostics.Debug": "4.0.11",
+        "System.Diagnostics.Tools": "4.0.1",
+        "System.Diagnostics.Tracing": "4.1.0",
+        "System.Globalization": "4.0.11",
+        "System.IO": "4.1.0",
+        "System.IO.Compression": "4.1.0",
+        "System.Linq": "4.1.0",
+        "System.Net.Http": "4.1.0",
+        "System.Net.Primitives": "4.0.11",
+        "System.ObjectModel": "4.0.12",
+        "System.Reflection": "4.1.0",
+        "System.Reflection.Extensions": "4.0.1",
+        "System.Reflection.Primitives": "4.0.1",
+        "System.Resources.ResourceManager": "4.0.1",
+        "System.Runtime": "4.1.0",
+        "System.Runtime.Extensions": "4.1.0",
+        "System.Runtime.InteropServices": "4.1.0",
+        "System.Runtime.InteropServices.RuntimeInformation": "4.0.0",
+        "System.Runtime.Numerics": "4.0.1",
+        "System.Text.Encoding": "4.0.11",
+        "System.Text.Encoding.Extensions": "4.0.11",
+        "System.Text.RegularExpressions": "4.1.0",
+        "System.Threading": "4.0.11",
+        "System.Threading.Tasks": "4.0.11",
+        "System.Xml.ReaderWriter": "4.0.11",
+        "System.Xml.XDocument": "4.0.11",
+        "System.Runtime.Serialization.Primitives": "4.1.1",
+        "Microsoft.Rest.ClientRuntime": "[2.3.1,3.0)",
+        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.1,4.0.0)"
+      }
+    }
+  }
+}

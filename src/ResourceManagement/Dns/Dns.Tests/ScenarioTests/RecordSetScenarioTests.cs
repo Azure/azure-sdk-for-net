@@ -18,7 +18,6 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
-using Hyak.Common;
 using Microsoft.Azure.Management.Resources;
 using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Azure.Management.Dns;
@@ -29,6 +28,9 @@ using Microsoft.Azure.Management.Dns.Models;
 
 namespace Microsoft.Azure.Management.Dns.Testing
 {
+    using Rest.Azure;
+    using Rest.ClientRuntime.Azure.TestFramework;
+
     public class RecordSetScenarioTests
     {
         public class SingleRecordSetTestContext
@@ -39,169 +41,217 @@ namespace Microsoft.Azure.Management.Dns.Testing
 
             public string Location { get; set; }
 
-            public ResourceGroupExtended ResourceGroup { get; set; }
+            public ResourceGroup ResourceGroup { get; set; }
 
             public DnsManagementClient DnsClient { get; set; }
 
-            public RecordSetCreateOrUpdateParameters TestRecordSkeleton 
-            {
-                get { return this.GetNewTestRecordSkeleton(this.RecordSetName); }
+            public RecordedDelegatingHandler DnsHandler { get; set; }
 
-            }
+            public RecordedDelegatingHandler ResourcesHandler { get; set; }
 
-            public RecordSetCreateOrUpdateParameters GetNewTestRecordSkeleton(string recordSetName, uint ttl = 42)
+            public RecordSet TestRecordSkeleton
+                => this.GetNewTestRecordSkeleton(this.RecordSetName);
+
+            public RecordSet GetNewTestRecordSkeleton(
+                string recordSetName,
+                uint ttl = 42)
             {
-                return new RecordSetCreateOrUpdateParameters
+                return new RecordSet
                 {
-                    RecordSet = new RecordSet
-                    {
-                        Name = recordSetName,
-                        Location = this.Location,
-                        ETag = null,
-                        Properties = new RecordSetProperties
-                        {
-                            Ttl = ttl,
-                        }
-                    }
+                    Name = recordSetName,
+                    Etag = null,
+                    TTL = ttl,
                 };
             }
         }
 
-        private static SingleRecordSetTestContext SetupSingleRecordSetTest()
+        private static SingleRecordSetTestContext SetupSingleRecordSetTest(
+            MockContext context)
         {
             var testContext = new SingleRecordSetTestContext();
-            testContext.ZoneName = TestUtilities.GenerateName("hydratestdnszone");
-            testContext.RecordSetName = TestUtilities.GenerateName("hydratestdnsrec");
-            testContext.Location = ResourceGroupHelper.GetResourceLocation(ResourceGroupHelper.GetResourcesClient(), "microsoft.network/dnszones");
-            testContext.ResourceGroup = ResourceGroupHelper.CreateResourceGroup();
-            testContext.DnsClient = ResourceGroupHelper.GetDnsClient();
-            ResourceGroupHelper.CreateZone(testContext.DnsClient, testContext.ZoneName, testContext.Location, testContext.ResourceGroup);
+            testContext.ResourcesHandler = new RecordedDelegatingHandler
+            {
+                StatusCodeToReturn = HttpStatusCode.OK
+            };
+            testContext.DnsHandler = new RecordedDelegatingHandler
+            {
+                StatusCodeToReturn = HttpStatusCode.OK
+            };
+            testContext.DnsClient = ResourceGroupHelper.GetDnsClient(
+                context,
+                testContext.DnsHandler);
+            var resourceManagementClient =
+                ResourceGroupHelper.GetResourcesClient(
+                    context,
+                    testContext.ResourcesHandler);
+            testContext.ZoneName =
+                TestUtilities.GenerateName("hydratest.dnszone.com");
+            testContext.RecordSetName =
+                TestUtilities.GenerateName("hydratestdnsrec");
+            testContext.Location =
+                ResourceGroupHelper.GetResourceLocation(
+                    resourceManagementClient,
+                    "microsoft.network/dnszones");
+            testContext.ResourceGroup =
+                ResourceGroupHelper.CreateResourceGroup(
+                    resourceManagementClient);
+            ResourceGroupHelper.CreateZone(
+                testContext.DnsClient,
+                testContext.ZoneName,
+                testContext.Location,
+                testContext.ResourceGroup);
             return testContext;
         }
 
         [Fact]
         public void CrudRecordSetFullCycle()
         {
-            using (UndoContext context = UndoContext.Current)
+            using (
+                MockContext context = MockContext.Start(this.GetType().FullName)
+                )
             {
-                context.Start();
-                SingleRecordSetTestContext testContext = SetupSingleRecordSetTest();
-                RecordSetCreateOrUpdateParameters createParameters = testContext.TestRecordSkeleton;
-                createParameters.RecordSet.Properties.ARecords = new List<ARecord> { new ARecord { Ipv4Address = "123.32.1.0" } };
-                createParameters.RecordSet.Properties.Ttl = 60;
+                SingleRecordSetTestContext testContext =
+                    SetupSingleRecordSetTest(context);
+                var recordSetToBeCreated = testContext.TestRecordSkeleton;
+                recordSetToBeCreated.ARecords = new List<ARecord>
+                {
+                    new ARecord {Ipv4Address = "123.32.1.0"}
+                };
+                recordSetToBeCreated.TTL = 60;
 
                 // Create the records clean, verify response
-                RecordSetCreateOrUpdateResponse createResponse = testContext.DnsClient.RecordSets.CreateOrUpdate(
+                var createResponse = testContext.DnsClient.RecordSets
+                    .CreateOrUpdate(
+                        testContext.ResourceGroup.Name,
+                        testContext.ZoneName,
+                        testContext.RecordSetName,
+                        RecordType.A,
+                        ifMatch: null,
+                        ifNoneMatch: null,
+                        parameters: recordSetToBeCreated);
+
+                Assert.True(
+                    TestHelpers.AreEqual(
+                        recordSetToBeCreated,
+                        createResponse,
+                        ignoreEtag: true),
+                    "Response body of Create does not match expectations");
+                Assert.False(string.IsNullOrWhiteSpace(createResponse.Etag));
+
+                // Retrieve the zone after create, verify response
+                var getresponse = testContext.DnsClient.RecordSets.Get(
+                    testContext.ResourceGroup.Name,
+                    testContext.ZoneName,
+                    testContext.RecordSetName,
+                    RecordType.A);
+
+                Assert.True(
+                    TestHelpers.AreEqual(
+                        createResponse,
+                        getresponse,
+                        ignoreEtag: false),
+                    "Response body of Get does not match expectations");
+
+                // Call Update on the object returned by Create (important distinction from Get below)
+                Models.RecordSet createdRecordSet = createResponse;
+
+                createdRecordSet.TTL = 120;
+                createdRecordSet.Metadata = new Dictionary<string, string>
+                {
+                    {"tag1", "value1"},
+                    {"tag2", "value2"}
+                };
+                createdRecordSet.ARecords = new List<ARecord>
+                {
+                    new ARecord {Ipv4Address = "123.32.1.0"},
+                    new ARecord {Ipv4Address = "101.10.0.1"}
+                };
+
+                var updateResponse = testContext.DnsClient.RecordSets
+                    .CreateOrUpdate(
+                        testContext.ResourceGroup.Name,
+                        testContext.ZoneName,
+                        testContext.RecordSetName,
+                        RecordType.A,
+                        ifMatch: null,
+                        ifNoneMatch: null,
+                        parameters: createdRecordSet);
+
+                Assert.True(
+                    TestHelpers.AreEqual(
+                        createdRecordSet,
+                        updateResponse,
+                        ignoreEtag: true),
+                    "Response body of Update does not match expectations");
+                Assert.False(string.IsNullOrWhiteSpace(updateResponse.Etag));
+
+                // Retrieve the records after create, verify response
+                getresponse = testContext.DnsClient.RecordSets.Get(
+                    testContext.ResourceGroup.Name,
+                    testContext.ZoneName,
+                    testContext.RecordSetName,
+                    RecordType.A);
+
+                Assert.True(
+                    TestHelpers.AreEqual(updateResponse, getresponse),
+                    "Response body of Get does not match expectations");
+
+                // Call Update on the object returned by Get (important distinction from Create above)
+                Models.RecordSet retrievedRecordSet = getresponse;
+                retrievedRecordSet.TTL = 180;
+                retrievedRecordSet.ARecords = new List<ARecord>
+                {
+                    new ARecord {Ipv4Address = "123.32.1.0"},
+                    new ARecord {Ipv4Address = "101.10.0.1"},
+                    new ARecord {Ipv4Address = "22.33.44.55"},
+                };
+
+                updateResponse = testContext.DnsClient.RecordSets.CreateOrUpdate
+                    (
+                        testContext.ResourceGroup.Name,
+                        testContext.ZoneName,
+                        testContext.RecordSetName,
+                        RecordType.A,
+                        ifMatch: null,
+                        ifNoneMatch: null,
+                        parameters: retrievedRecordSet);
+
+                Assert.True(
+                    TestHelpers.AreEqual(
+                        retrievedRecordSet,
+                        updateResponse,
+                        ignoreEtag: true),
+                    "Response body of Update does not match expectations");
+                Assert.False(string.IsNullOrWhiteSpace(updateResponse.Etag));
+
+                // Delete the record set
+                testContext.DnsClient.RecordSets.Delete(
                     testContext.ResourceGroup.Name,
                     testContext.ZoneName,
                     testContext.RecordSetName,
                     RecordType.A,
-                    createParameters);
-
-                Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
-                Assert.True(
-                    TestHelpers.AreEqual(createParameters.RecordSet, createResponse.RecordSet, ignoreEtag: true),
-                    "Response body of Create does not match expectations");
-                Assert.False(string.IsNullOrWhiteSpace(createResponse.RecordSet.ETag));
-
-                // Retrieve the zone after create, verify response
-                var getresponse = testContext.DnsClient.RecordSets.Get(
-                    testContext.ResourceGroup.Name, 
-                    testContext.ZoneName, 
-                    testContext.RecordSetName, 
-                    RecordType.A);
-
-                Assert.Equal(HttpStatusCode.OK, getresponse.StatusCode);
-                Assert.True(
-                    TestHelpers.AreEqual(createResponse.RecordSet, getresponse.RecordSet, ignoreEtag: false),
-                    "Response body of Get does not match expectations");
-
-                // Call Update on the object returned by Create (important distinction from Get below)
-                Models.RecordSet createdRecordSet = createResponse.RecordSet;
-                createdRecordSet.Tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" } };
-                createdRecordSet.Properties.Ttl = 120;
-                createdRecordSet.Properties.ARecords = new List<ARecord> 
-                { 
-                    new ARecord { Ipv4Address = "123.32.1.0" }, 
-                    new ARecord { Ipv4Address = "101.10.0.1" } 
-                };
-
-                RecordSetCreateOrUpdateResponse updateResponse = testContext.DnsClient.RecordSets.CreateOrUpdate(
-                    testContext.ResourceGroup.Name, 
-                    testContext.ZoneName, 
-                    testContext.RecordSetName, 
-                    RecordType.A, 
-                    new RecordSetCreateOrUpdateParameters { RecordSet = createdRecordSet });
-
-                Assert.Equal(HttpStatusCode.OK, updateResponse.StatusCode);
-                Assert.True(
-                    TestHelpers.AreEqual(createdRecordSet, updateResponse.RecordSet, ignoreEtag: true),
-                    "Response body of Update does not match expectations");
-                Assert.False(string.IsNullOrWhiteSpace(updateResponse.RecordSet.ETag));
-
-                // Retrieve the records after create, verify response
-                getresponse = testContext.DnsClient.RecordSets.Get(
-                    testContext.ResourceGroup.Name, 
-                    testContext.ZoneName, 
-                    testContext.RecordSetName, 
-                    RecordType.A);
-
-                Assert.Equal(HttpStatusCode.OK, getresponse.StatusCode);
-                Assert.True(
-                    TestHelpers.AreEqual(updateResponse.RecordSet, getresponse.RecordSet),
-                    "Response body of Get does not match expectations");
-
-                // Call Update on the object returned by Get (important distinction from Create above)
-                Models.RecordSet retrievedRecordSet = getresponse.RecordSet;
-                retrievedRecordSet.Tags = new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" }, { "tag3", "value3" } };
-                retrievedRecordSet.Properties.Ttl = 180;
-                retrievedRecordSet.Properties.ARecords = new List<ARecord> 
-                { 
-                    new ARecord { Ipv4Address = "123.32.1.0" }, 
-                    new ARecord { Ipv4Address = "101.10.0.1" },
-                    new ARecord { Ipv4Address = "22.33.44.55" },
-                };
-
-                updateResponse = testContext.DnsClient.RecordSets.CreateOrUpdate(
-                    testContext.ResourceGroup.Name, 
-                    testContext.ZoneName, 
-                    testContext.RecordSetName, 
-                    RecordType.A, 
-                    new RecordSetCreateOrUpdateParameters { RecordSet = retrievedRecordSet });
-
-                Assert.Equal(HttpStatusCode.OK, updateResponse.StatusCode);
-                Assert.True(
-                    TestHelpers.AreEqual(retrievedRecordSet, updateResponse.RecordSet, ignoreEtag: true),
-                    "Response body of Update does not match expectations");
-                Assert.False(string.IsNullOrWhiteSpace(updateResponse.RecordSet.ETag));
-
-                // Delete the record set
-                AzureOperationResponse deleteResponse = testContext.DnsClient.RecordSets.Delete(
-                    testContext.ResourceGroup.Name, 
-                    testContext.ZoneName, 
-                    testContext.RecordSetName, 
-                    RecordType.A, 
-                    new RecordSetDeleteParameters());
-                Assert.Equal(HttpStatusCode.OK, deleteResponse.StatusCode);
+                    ifMatch: null,
+                    ifNoneMatch: null);
 
                 // Delete the zone
-                deleteResponse = testContext.DnsClient.Zones.Delete(
-                    testContext.ResourceGroup.Name, 
-                    testContext.ZoneName, 
-                    new ZoneDeleteParameters());
+                var deleteResponse = testContext.DnsClient.Zones.Delete(
+                    testContext.ResourceGroup.Name,
+                    testContext.ZoneName,
+                    ifMatch: null,
+                    ifNoneMatch: null);
             }
         }
 
         [Fact]
         public void CreateGetA()
         {
-            Action<RecordSetCreateOrUpdateParameters> setTestRecords = createParams => 
+            Action<RecordSet> setTestRecords = createParams =>
             {
-                createParams.RecordSet.Properties.ARecords = new List<ARecord> 
-                    { 
-                        new ARecord { Ipv4Address = "120.63.230.220" }, 
-                        new ARecord { Ipv4Address = "4.3.2.1" },
-                    };
+                createParams.ARecords = new List<ARecord>
+                {
+                    new ARecord {Ipv4Address = "120.63.230.220"},
+                    new ARecord {Ipv4Address = "4.3.2.1"},
+                };
 
                 return;
             };
@@ -212,13 +262,13 @@ namespace Microsoft.Azure.Management.Dns.Testing
         [Fact]
         public void CreateGetAaaa()
         {
-            Action<RecordSetCreateOrUpdateParameters> setTestRecords = createParams =>
+            Action<RecordSet> setTestRecords = createParams =>
             {
-                createParams.RecordSet.Properties.AaaaRecords = new List<AaaaRecord> 
-                    { 
-                        new AaaaRecord { Ipv6Address = "0:0:0:0:0:ffff:783f:e6dc" }, 
-                        new AaaaRecord { Ipv6Address = "0:0:0:0:0:ffff:403:201" },
-                    };
+                createParams.AaaaRecords = new List<AaaaRecord>
+                {
+                    new AaaaRecord {Ipv6Address = "0:0:0:0:0:ffff:783f:e6dc"},
+                    new AaaaRecord {Ipv6Address = "0:0:0:0:0:ffff:403:201"},
+                };
 
                 return;
             };
@@ -229,13 +279,12 @@ namespace Microsoft.Azure.Management.Dns.Testing
         [Fact]
         public void CreateGetMx()
         {
-            Action<RecordSetCreateOrUpdateParameters> setTestRecords = createParams =>
+            Action<RecordSet> setTestRecords = createParams =>
             {
-                createParams.RecordSet.Properties.MxRecords = new List<MxRecord> 
-                    { 
-                        new MxRecord { Exchange = "mail1.scsfsm.com", Preference = 1 }, 
-                        new MxRecord { Exchange = "mail2.scsfsm.com", Preference = 2 },
-
+                createParams.MxRecords = new List<MxRecord>
+                {
+                    new MxRecord {Exchange = "mail1.scsfsm.com", Preference = 1},
+                    new MxRecord {Exchange = "mail2.scsfsm.com", Preference = 2},
                 };
 
                 return;
@@ -247,12 +296,12 @@ namespace Microsoft.Azure.Management.Dns.Testing
         [Fact]
         public void CreateGetNs()
         {
-            Action<RecordSetCreateOrUpdateParameters> setTestRecords = createParams =>
+            Action<RecordSet> setTestRecords = createParams =>
             {
-                createParams.RecordSet.Properties.NsRecords = new List<NsRecord> 
-                    { 
-                        new NsRecord { Nsdname = "ns1.scsfsm.com" }, 
-                        new NsRecord { Nsdname = "ns2.scsfsm.com" },
+                createParams.NsRecords = new List<NsRecord>
+                {
+                    new NsRecord {Nsdname = "ns1.scsfsm.com"},
+                    new NsRecord {Nsdname = "ns2.scsfsm.com"},
                 };
 
                 return;
@@ -261,15 +310,15 @@ namespace Microsoft.Azure.Management.Dns.Testing
             this.RecordSetCreateGet(RecordType.NS, setTestRecords);
         }
 
-        [Fact(Skip = "PTR is not yet supported in the service.")]
+        [Fact]
         public void CreateGetPtr()
         {
-            Action<RecordSetCreateOrUpdateParameters> setTestRecords = createParams =>
+            Action<RecordSet> setTestRecords = createParams =>
             {
-                createParams.RecordSet.Properties.PtrRecords = new List<PtrRecord> 
-                    { 
-                        new PtrRecord { Ptrdname = "www1.scsfsm.com" }, 
-                        new PtrRecord { Ptrdname = "www2.scsfsm.com" },
+                createParams.PtrRecords = new List<PtrRecord>
+                {
+                    new PtrRecord {Ptrdname = "www1.scsfsm.com"},
+                    new PtrRecord {Ptrdname = "www2.scsfsm.com"},
                 };
 
                 return;
@@ -281,13 +330,25 @@ namespace Microsoft.Azure.Management.Dns.Testing
         [Fact]
         public void CreateGetSrv()
         {
-            Action<RecordSetCreateOrUpdateParameters> setTestRecords = createParams =>
+            Action<RecordSet> setTestRecords = createParams =>
             {
-                createParams.RecordSet.Properties.SrvRecords = new List<SrvRecord> 
-                    { 
-                        new SrvRecord { Target = "bt2.scsfsm.com", Priority = 0, Weight = 2, Port = 44 }, 
-                        new SrvRecord { Target = "bt1.scsfsm.com", Priority = 1, Weight = 1, Port = 45 },
-                    };
+                createParams.SrvRecords = new List<SrvRecord>
+                {
+                    new SrvRecord
+                    {
+                        Target = "bt2.scsfsm.com",
+                        Priority = 0,
+                        Weight = 2,
+                        Port = 44
+                    },
+                    new SrvRecord
+                    {
+                        Target = "bt1.scsfsm.com",
+                        Priority = 1,
+                        Weight = 1,
+                        Port = 45
+                    },
+                };
 
                 return;
             };
@@ -298,12 +359,12 @@ namespace Microsoft.Azure.Management.Dns.Testing
         [Fact]
         public void CreateGetTxt()
         {
-            Action<RecordSetCreateOrUpdateParameters> setTestRecords = createParams =>
+            Action<RecordSet> setTestRecords = createParams =>
             {
-                createParams.RecordSet.Properties.TxtRecords = new List<TxtRecord> 
-                    {    
-                        new TxtRecord { Value = "lorem" }, 
-                        new TxtRecord { Value = "ipsum" },
+                createParams.TxtRecords = new List<TxtRecord>
+                {
+                    new TxtRecord {Value = new[] {"lorem"}.ToList()},
+                    new TxtRecord {Value = new[] {"ipsum"}.ToList()},
                 };
 
                 return;
@@ -315,9 +376,9 @@ namespace Microsoft.Azure.Management.Dns.Testing
         [Fact]
         public void CreateGetCname()
         {
-            Action<RecordSetCreateOrUpdateParameters> setTestRecords = createParams =>
+            Action<RecordSet> setTestRecords = createParams =>
             {
-                createParams.RecordSet.Properties.CnameRecord = new CnameRecord
+                createParams.CnameRecord = new CnameRecord
                 {
                     Cname = "www.contoroso.com",
                 };
@@ -331,40 +392,46 @@ namespace Microsoft.Azure.Management.Dns.Testing
         [Fact]
         public void UpdateSoa()
         {
-            using (UndoContext context = UndoContext.Current)
+            using (
+                MockContext context = MockContext.Start(this.GetType().FullName)
+                )
             {
-                context.Start();
-                SingleRecordSetTestContext testContext = SetupSingleRecordSetTest();
+                SingleRecordSetTestContext testContext =
+                    SetupSingleRecordSetTest(context);
 
                 // SOA for the zone should already exist
-                RecordSetGetResponse getresponse = testContext.DnsClient.RecordSets.Get(
+                var getresponse = testContext.DnsClient.RecordSets.Get(
                     testContext.ResourceGroup.Name,
                     testContext.ZoneName,
                     "@",
                     RecordType.SOA);
 
-                Assert.Equal(HttpStatusCode.OK, getresponse.StatusCode);
-                RecordSet soaResource = getresponse.RecordSet;
+                RecordSet soaResource = getresponse;
                 Assert.NotNull(soaResource);
-                Assert.NotNull(soaResource.Properties.SoaRecord);
+                Assert.NotNull(soaResource.SoaRecord);
 
-                soaResource.Properties.SoaRecord.ExpireTime = 123;
-                soaResource.Properties.SoaRecord.MinimumTtl = 1234;
-                soaResource.Properties.SoaRecord.RefreshTime = 12345;
-                soaResource.Properties.SoaRecord.RetryTime = 123456;
+                soaResource.SoaRecord.ExpireTime = 123;
+                soaResource.SoaRecord.MinimumTtl = 1234;
+                soaResource.SoaRecord.RefreshTime = 12345;
+                soaResource.SoaRecord.RetryTime = 123456;
 
-                var updateParameters = new RecordSetCreateOrUpdateParameters { RecordSet = soaResource };
+                var updateParameters = soaResource;
 
-                RecordSetCreateOrUpdateResponse updateResponse = testContext.DnsClient.RecordSets.CreateOrUpdate(
-                    testContext.ResourceGroup.Name,
-                    testContext.ZoneName,
-                    "@",
-                    RecordType.SOA,
-                    updateParameters);
+                var updateResponse = testContext.DnsClient.RecordSets
+                    .CreateOrUpdate(
+                        testContext.ResourceGroup.Name,
+                        testContext.ZoneName,
+                        "@",
+                        RecordType.SOA,
+                        ifMatch: null,
+                        ifNoneMatch: null,
+                        parameters: updateParameters);
 
-                Assert.Equal(HttpStatusCode.OK, getresponse.StatusCode);
                 Assert.True(
-                    TestHelpers.AreEqual(soaResource, updateResponse.RecordSet, ignoreEtag: true),
+                    TestHelpers.AreEqual(
+                        soaResource,
+                        updateResponse,
+                        ignoreEtag: true),
                     "Response body of Update does not match expectations");
 
                 getresponse = testContext.DnsClient.RecordSets.Get(
@@ -373,74 +440,112 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     "@",
                     RecordType.SOA);
 
-                Assert.Equal(HttpStatusCode.OK, getresponse.StatusCode);
                 Assert.True(
-                    TestHelpers.AreEqual(updateResponse.RecordSet, getresponse.RecordSet),
+                    TestHelpers.AreEqual(updateResponse, getresponse),
                     "Response body of Get does not match expectations");
 
                 // SOA will get deleted with the zone
                 testContext.DnsClient.Zones.Delete(
                     testContext.ResourceGroup.Name,
                     testContext.ZoneName,
-                    new ZoneDeleteParameters());
+                    ifMatch: null,
+                    ifNoneMatch: null);
             }
         }
 
         [Fact]
         public void ListRecordsInZoneOneType()
         {
-            ListRecordsInZone(isCrossType: false);             
+            ListRecordsInZone(isCrossType: false);
         }
 
         [Fact]
         public void ListRecordsInZoneAcrossTypes()
         {
-            ListRecordsInZone(isCrossType: true);             
+            ListRecordsInZone(isCrossType: true);
         }
 
-        private void ListRecordsInZone(bool isCrossType)
+        private void ListRecordsInZone(
+            bool isCrossType,
+            [System.Runtime.CompilerServices.CallerMemberName] string methodName
+                = "testframework_failed")
         {
-            using (UndoContext context = UndoContext.Current)
+            using (
+                MockContext context = MockContext.Start(
+                    this.GetType().FullName,
+                    methodName))
             {
-                context.Start(currentMethodStackDepth: 4);
-                SingleRecordSetTestContext testContext = SetupSingleRecordSetTest();
+                SingleRecordSetTestContext testContext =
+                    SetupSingleRecordSetTest(context);
 
-                var recordSetNames = new[] { TestUtilities.GenerateName("hydratestrec"), TestUtilities.GenerateName("hydratestrec"), TestUtilities.GenerateName("hydratestrec") };
+                var recordSetNames = new[]
+                {
+                    TestUtilities.GenerateName("hydratestrec"),
+                    TestUtilities.GenerateName("hydratestrec"),
+                    TestUtilities.GenerateName("hydratestrec")
+                };
 
-                RecordSetScenarioTests.CreateRecordSets(testContext, recordSetNames);
+                RecordSetScenarioTests.CreateRecordSets(
+                    testContext,
+                    recordSetNames);
 
                 if (isCrossType)
                 {
-                    RecordSetListResponse listresponse = testContext.DnsClient.RecordSets.ListAll(
-                        testContext.ResourceGroup.Name, 
-                        testContext.ZoneName,
-                        new RecordSetListParameters());
+                    var listresponse = testContext.DnsClient.RecordSets
+                        .ListAllInResourceGroup(
+                            testContext.ResourceGroup.Name,
+                            testContext.ZoneName);
 
                     // not checking for the record count as this will return standard SOA and auth NS records as well
                     Assert.NotNull(listresponse);
                     Assert.True(
-                        listresponse.RecordSets.Any(recordSetReturned => string.Equals(recordSetNames[0], recordSetReturned.Name))
-                        && listresponse.RecordSets.Any(recordSetReturned => string.Equals(recordSetNames[1], recordSetReturned.Name))
-                        && listresponse.RecordSets.Any(recordSetReturned => string.Equals(recordSetNames[2], recordSetReturned.Name)),
+                        listresponse.Any(
+                            recordSetReturned =>
+                                string.Equals(
+                                    recordSetNames[0],
+                                    recordSetReturned.Name))
+                        &&
+                        listresponse.Any(
+                            recordSetReturned =>
+                                string.Equals(
+                                    recordSetNames[1],
+                                    recordSetReturned.Name))
+                        &&
+                        listresponse.Any(
+                            recordSetReturned =>
+                                string.Equals(
+                                    recordSetNames[2],
+                                    recordSetReturned.Name)),
                         "The returned records do not meet expectations");
                 }
                 else
                 {
-                    RecordSetListResponse listresponse = testContext.DnsClient.RecordSets.List(
-                        testContext.ResourceGroup.Name,
-                        testContext.ZoneName,
-                        RecordType.TXT,
-                        new RecordSetListParameters());
+                    var listresponse = testContext.DnsClient.RecordSets
+                        .ListByType(
+                            testContext.ResourceGroup.Name,
+                            testContext.ZoneName,
+                            RecordType.TXT);
 
                     Assert.NotNull(listresponse);
-                    Assert.Equal(2, listresponse.RecordSets.Count);
+                    Assert.Equal(2, listresponse.Count());
                     Assert.True(
-                        listresponse.RecordSets.Any(recordSetReturned => string.Equals(recordSetNames[0], recordSetReturned.Name))
-                        && listresponse.RecordSets.Any(recordSetReturned => string.Equals(recordSetNames[1], recordSetReturned.Name)),
+                        listresponse.Any(
+                            recordSetReturned =>
+                                string.Equals(
+                                    recordSetNames[0],
+                                    recordSetReturned.Name))
+                        &&
+                        listresponse.Any(
+                            recordSetReturned =>
+                                string.Equals(
+                                    recordSetNames[1],
+                                    recordSetReturned.Name)),
                         "The returned records do not meet expectations");
                 }
 
-                RecordSetScenarioTests.DeleteRecordSetsAndZone(testContext, recordSetNames);
+                RecordSetScenarioTests.DeleteRecordSetsAndZone(
+                    testContext,
+                    recordSetNames);
             }
         }
 
@@ -456,180 +561,111 @@ namespace Microsoft.Azure.Management.Dns.Testing
             this.ListRecordsInZoneWithTop(isCrossType: true);
         }
 
-        private void ListRecordsInZoneWithTop(bool isCrossType)
+        private void ListRecordsInZoneWithTop(
+            bool isCrossType,
+            [System.Runtime.CompilerServices.CallerMemberName] string methodName
+                = "testframework_failed")
         {
-            using (UndoContext context = UndoContext.Current)
+            using (
+                MockContext context = MockContext.Start(
+                    this.GetType().FullName,
+                    methodName))
             {
-                context.Start(currentMethodStackDepth: 4);
-                SingleRecordSetTestContext testContext = RecordSetScenarioTests.SetupSingleRecordSetTest();
+                SingleRecordSetTestContext testContext =
+                    RecordSetScenarioTests.SetupSingleRecordSetTest(context);
 
-                var recordSetNames = new[] { TestUtilities.GenerateName("hydratestrec") + ".com", TestUtilities.GenerateName("hydratestrec") + ".con", TestUtilities.GenerateName("hydratestrec") + ".con" };
+                var recordSetNames = new[]
+                {
+                    TestUtilities.GenerateName("hydratestrec") + ".com",
+                    TestUtilities.GenerateName("hydratestrec") + ".com",
+                    TestUtilities.GenerateName("hydratestrec") + ".com"
+                };
 
-                RecordSetScenarioTests.CreateRecordSets(testContext, recordSetNames);
+                RecordSetScenarioTests.CreateRecordSets(
+                    testContext,
+                    recordSetNames);
 
-                RecordSetListResponse listResponse;
+                IPage<RecordSet> listResponse;
 
                 if (isCrossType)
                 {
                     // Using top = 3, it will pick up SOA, NS and the first TXT
-                    listResponse = testContext.DnsClient.RecordSets.ListAll(
-                        testContext.ResourceGroup.Name, 
-                        testContext.ZoneName,
-                        new RecordSetListParameters { Top = "3" });
+                    listResponse = testContext.DnsClient.RecordSets
+                        .ListAllInResourceGroup(
+                            testContext.ResourceGroup.Name,
+                            testContext.ZoneName,
+                            "3");
+                    // verify if TXT is in the list
+                    Assert.True(
+                        listResponse.Where(rs => rs.Type == "TXT")
+                            .All(
+                                listedRecordSet =>
+                                    recordSetNames.Any(
+                                        createdName =>
+                                            createdName == listedRecordSet.Name)),
+                        "The returned records do not meet expectations");
                 }
                 else
                 {
                     // Using top = 3, it will pick up SOA, NS and the first TXT, process it and return just the TXT
-                    listResponse = testContext.DnsClient.RecordSets.List(
+                    listResponse = testContext.DnsClient.RecordSets.ListByType(
                         testContext.ResourceGroup.Name,
                         testContext.ZoneName,
                         RecordType.TXT,
-                        new RecordSetListParameters { Top = "3" });
+                        "3");
+                    Assert.True(
+                        listResponse.All(
+                            listedRecordSet =>
+                                recordSetNames.Any(
+                                    createdName =>
+                                        createdName == listedRecordSet.Name)),
+                        "The returned records do not meet expectations");
                 }
 
-                Assert.NotNull(listResponse);
-                Assert.True(
-                    listResponse.RecordSets.Any(recordReturned => string.Equals(recordSetNames[0], recordReturned.Name)),
-                    "The returned records do not meet expectations");
-
-                RecordSetScenarioTests.DeleteRecordSetsAndZone(testContext, recordSetNames);
-            }
-        }
-
-        [Fact]
-        public void ListRecordsInZoneOneTypeWithFilter()
-        {
-            this.ListRecordsInZoneWithFilter(isCrossType: false);
-        }
-
-        [Fact]
-        public void ListRecordsInZoneAcrossTypesWithFilter()
-        {
-            this.ListRecordsInZoneWithFilter(isCrossType: true);
-        }
-
-        private void ListRecordsInZoneWithFilter(bool isCrossType)
-        {
-            using (UndoContext context = UndoContext.Current)
-            {
-                context.Start(currentMethodStackDepth: 4);
-                SingleRecordSetTestContext testContext = RecordSetScenarioTests.SetupSingleRecordSetTest();
-
-                var recordSetNames = new[] { TestUtilities.GenerateName("hydratestrec"), TestUtilities.GenerateName("hydratestrec"), TestUtilities.GenerateName("hydratestrec") };
-
-                RecordSetScenarioTests.CreateRecordSets(testContext, recordSetNames);
-
-                RecordSetListResponse listResponse;
-
-                if (isCrossType)
-                {
-                    listResponse = testContext.DnsClient.RecordSets.ListAll(
-                        testContext.ResourceGroup.Name,
-                        testContext.ZoneName,
-                        new RecordSetListParameters { Filter = string.Format("endswith(Name,'{0}')", recordSetNames[0]) });
-                }
-                else
-                {
-                    listResponse = testContext.DnsClient.RecordSets.List(
-                        testContext.ResourceGroup.Name,
-                        testContext.ZoneName,
-                        RecordType.TXT,
-                        new RecordSetListParameters { Filter = string.Format("endswith(Name,'{0}')", recordSetNames[0]) });
-                }
-
-                // not checking for the record count as this will return standard SOA and auth NS records as well
-                Assert.NotNull(listResponse);
-                Assert.Equal(1, listResponse.RecordSets.Count);
-                Assert.NotNull(listResponse.RecordSets.FirstOrDefault());
-                Assert.Equal(recordSetNames[0], listResponse.RecordSets.FirstOrDefault().Name);
-
-                RecordSetScenarioTests.DeleteRecordSetsAndZone(testContext, recordSetNames);
-            }
-        }
-
-        [Fact]
-        public void ListRecordsInZoneOneTypeWithNext()
-        {
-            this.ListRecordsInZoneWithNext(isCrossType: false);
-        }
-
-        [Fact]
-        public void ListRecordsInZoneAcrossTypesWithNext()
-        {
-            this.ListRecordsInZoneWithNext(isCrossType: true);
-        }
-
-        private void ListRecordsInZoneWithNext(bool isCrossType)
-        {
-            using (UndoContext context = UndoContext.Current)
-            {
-                context.Start(currentMethodStackDepth: 4);
-                SingleRecordSetTestContext testContext = RecordSetScenarioTests.SetupSingleRecordSetTest();
-
-                const string suffix = ".com";
-
-                var recordSetNames = new[] { TestUtilities.GenerateName("hydratestrec") + suffix, TestUtilities.GenerateName("hydratestrec") + ".con", TestUtilities.GenerateName("hydratestrec") + ".con" };
-
-                RecordSetScenarioTests.CreateRecordSets(testContext, recordSetNames);
-
-                RecordSetListResponse listResponse;
-
-                if (isCrossType)
-                {
-                    listResponse = testContext.DnsClient.RecordSets.ListAll(
-                        testContext.ResourceGroup.Name,
-                        testContext.ZoneName,
-                        new RecordSetListParameters { Top = "3" });
-                }
-                else
-                {
-                    listResponse = testContext.DnsClient.RecordSets.List(
-                        testContext.ResourceGroup.Name,
-                        testContext.ZoneName,
-                        RecordType.TXT,
-                        new RecordSetListParameters { Top = "3" });
-                }
-
-                listResponse = testContext.DnsClient.RecordSets.ListNext(listResponse.NextLink);
-
-                Assert.NotNull(listResponse);
-                Assert.True(
-                    listResponse.RecordSets.Any(recordReturned => string.Equals(recordSetNames[1], recordReturned.Name)),
-                    "The returned records do not meet expectations");
-
-                RecordSetScenarioTests.DeleteRecordSetsAndZone(testContext, recordSetNames);
+                RecordSetScenarioTests.DeleteRecordSetsAndZone(
+                    testContext,
+                    recordSetNames);
             }
         }
 
         [Fact]
         public void UpdateRecordSetPreconditionFailed()
         {
-            using (UndoContext context = UndoContext.Current)
+            using (
+                MockContext context = MockContext.Start(this.GetType().FullName)
+                )
             {
-                context.Start();
-                SingleRecordSetTestContext testContext = SetupSingleRecordSetTest();
-                RecordSetCreateOrUpdateParameters createParameters = testContext.TestRecordSkeleton;
-                createParameters.RecordSet.Properties.CnameRecord = new CnameRecord { Cname = "www.contoso.example.com" };
+                SingleRecordSetTestContext testContext =
+                    SetupSingleRecordSetTest(context);
+                var createParameters = testContext.TestRecordSkeleton;
+                createParameters.CnameRecord = new CnameRecord
+                {
+                    Cname = "www.contoso.example.com"
+                };
 
-                RecordSetCreateOrUpdateResponse createResponse = testContext.DnsClient.RecordSets.CreateOrUpdate(
-                    testContext.ResourceGroup.Name,
-                    testContext.ZoneName,
-                    testContext.RecordSetName,
-                    RecordType.CNAME,
-                    createParameters);
+                var createResponse = testContext.DnsClient.RecordSets
+                    .CreateOrUpdate(
+                        testContext.ResourceGroup.Name,
+                        testContext.ZoneName,
+                        testContext.RecordSetName,
+                        RecordType.CNAME,
+                        ifMatch: null,
+                        ifNoneMatch: null,
+                        parameters: createParameters);
 
-                RecordSetCreateOrUpdateParameters updateParameters = new RecordSetCreateOrUpdateParameters { RecordSet = createResponse.RecordSet };
-                updateParameters.RecordSet.ETag = "somegibberish";
+                var updateParameters = createResponse;
 
                 // expect Precondition Failed 412
                 TestHelpers.AssertThrows<CloudException>(
                     () => testContext.DnsClient.RecordSets.CreateOrUpdate(
-                        testContext.ResourceGroup.Name, 
-                        testContext.ZoneName, 
-                        testContext.RecordSetName, 
-                        RecordType.CNAME, 
-                        updateParameters),
-                    exceptionAsserts: ex => ex.Error.Code == "PreconditionFailed");
+                        testContext.ResourceGroup.Name,
+                        testContext.ZoneName,
+                        testContext.RecordSetName,
+                        RecordType.CNAME,
+                        ifMatch: "somegibberish",
+                        ifNoneMatch: null,
+                        parameters: updateParameters),
+                    exceptionAsserts: ex => ex.Body.Code == "PreconditionFailed");
 
                 // expect Precondition Failed 412
                 TestHelpers.AssertThrows<CloudException>(
@@ -638,43 +674,59 @@ namespace Microsoft.Azure.Management.Dns.Testing
                         testContext.ZoneName,
                         testContext.RecordSetName,
                         RecordType.CNAME,
-                        new RecordSetDeleteParameters { IfMatch = "somemoregib" }),
-                    exceptionAsserts: ex => ex.Error.Code == "PreconditionFailed");
+                        ifMatch: "somegibberish",
+                        ifNoneMatch: null),
+                    exceptionAsserts: ex => ex.Body.Code == "PreconditionFailed");
 
                 testContext.DnsClient.RecordSets.Delete(
-                        testContext.ResourceGroup.Name,
-                        testContext.ZoneName,
-                        testContext.RecordSetName,
-                        RecordType.CNAME,
-                        new RecordSetDeleteParameters { IfMatch = null });
+                    testContext.ResourceGroup.Name,
+                    testContext.ZoneName,
+                    testContext.RecordSetName,
+                    RecordType.CNAME,
+                    ifMatch: null,
+                    ifNoneMatch: null);
 
-                testContext.DnsClient.Zones.Delete(testContext.ResourceGroup.Name, testContext.ZoneName, new ZoneDeleteParameters());
+                testContext.DnsClient.Zones.Delete(
+                    testContext.ResourceGroup.Name,
+                    testContext.ZoneName,
+                    ifMatch: null,
+                    ifNoneMatch: null);
             }
         }
 
         private void RecordSetCreateGet(
             RecordType recordType,
-            Action<RecordSetCreateOrUpdateParameters> setRecordsAction)
+            Action<RecordSet> setRecordsAction,
+            [System.Runtime.CompilerServices.CallerMemberName] string methodName
+                = "testframework_failed")
         {
-            using (UndoContext context = UndoContext.Current)
+            using (
+                MockContext context = MockContext.Start(
+                    this.GetType().FullName,
+                    methodName))
             {
-                context.Start(currentMethodStackDepth: 4);
-                SingleRecordSetTestContext testContext = SetupSingleRecordSetTest();
-                RecordSetCreateOrUpdateParameters createParameters = testContext.TestRecordSkeleton;
+                SingleRecordSetTestContext testContext =
+                    SetupSingleRecordSetTest(context);
+                var createParameters = testContext.TestRecordSkeleton;
                 setRecordsAction(createParameters);
 
-                RecordSetCreateOrUpdateResponse createResponse = testContext.DnsClient.RecordSets.CreateOrUpdate(
-                    testContext.ResourceGroup.Name,
-                    testContext.ZoneName,
-                    testContext.RecordSetName,
-                    recordType,
-                    createParameters);
+                var createResponse = testContext.DnsClient.RecordSets
+                    .CreateOrUpdate(
+                        testContext.ResourceGroup.Name,
+                        testContext.ZoneName,
+                        testContext.RecordSetName,
+                        recordType,
+                        ifMatch: null,
+                        ifNoneMatch: null,
+                        parameters: createParameters);
 
-                Assert.Equal(HttpStatusCode.Created, createResponse.StatusCode);
                 Assert.True(
-                    TestHelpers.AreEqual(createParameters.RecordSet, createResponse.RecordSet, ignoreEtag: true),
+                    TestHelpers.AreEqual(
+                        createParameters,
+                        createResponse,
+                        ignoreEtag: true),
                     "Response body of Create does not match expectations");
-                Assert.False(string.IsNullOrWhiteSpace(createResponse.RecordSet.ETag));
+                Assert.False(string.IsNullOrWhiteSpace(createResponse.Etag));
 
                 var getresponse = testContext.DnsClient.RecordSets.Get(
                     testContext.ResourceGroup.Name,
@@ -682,84 +734,116 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     testContext.RecordSetName,
                     recordType);
 
-                Assert.Equal(HttpStatusCode.OK, getresponse.StatusCode);
                 Assert.True(
-                    TestHelpers.AreEqual(createResponse.RecordSet, getresponse.RecordSet, ignoreEtag: false),
+                    TestHelpers.AreEqual(
+                        createResponse,
+                        getresponse,
+                        ignoreEtag: false),
                     "Response body of Get does not match expectations");
 
                 // BUG 2364951: should work without specifying ETag
-                AzureOperationResponse deleteResponse = testContext.DnsClient.RecordSets.Delete(
+                testContext.DnsClient.RecordSets.Delete(
                     testContext.ResourceGroup.Name,
                     testContext.ZoneName,
                     testContext.RecordSetName,
                     recordType,
-                    new RecordSetDeleteParameters { IfMatch = getresponse.RecordSet.ETag });  
-                Assert.Equal(HttpStatusCode.OK, deleteResponse.StatusCode);
+                    ifMatch: null,
+                    ifNoneMatch: null);
 
-                deleteResponse = testContext.DnsClient.Zones.Delete(
+                var deleteResponse = testContext.DnsClient.Zones.Delete(
                     testContext.ResourceGroup.Name,
                     testContext.ZoneName,
-                    new ZoneDeleteParameters());
+                    ifMatch: null,
+                    ifNoneMatch: null);
             }
         }
 
         #region Helper methods
 
-        public static void CreateRecordSets(SingleRecordSetTestContext testContext, string[] recordSetNames)
+        public static void CreateRecordSets(
+            SingleRecordSetTestContext testContext,
+            string[] recordSetNames)
         {
-            RecordSetCreateOrUpdateParameters createParameters1 = testContext.GetNewTestRecordSkeleton(recordSetNames[0]);
-            createParameters1.RecordSet.Properties.TxtRecords = new List<TxtRecord> { new TxtRecord { Value = "text1" } };
-            RecordSetCreateOrUpdateParameters createParameters2 = testContext.GetNewTestRecordSkeleton(recordSetNames[1]);
-            createParameters2.RecordSet.Properties.TxtRecords = new List<TxtRecord> { new TxtRecord { Value = "text2" } };
-            RecordSetCreateOrUpdateParameters createParameters3 = testContext.GetNewTestRecordSkeleton(recordSetNames[2]);
-            createParameters3.RecordSet.Properties.AaaaRecords = new List<AaaaRecord> { new AaaaRecord { Ipv6Address = "123::45" } };
+            var createParameters1 =
+                testContext.GetNewTestRecordSkeleton(recordSetNames[0]);
+            createParameters1.TxtRecords = new List<TxtRecord>
+            {
+                new TxtRecord {Value = new[] {"text1"}.ToList()}
+            };
+            var createParameters2 =
+                testContext.GetNewTestRecordSkeleton(recordSetNames[1]);
+            createParameters2.TxtRecords = new List<TxtRecord>
+            {
+                new TxtRecord {Value = new[] {"text1"}.ToList()}
+            };
+            var createParameters3 =
+                testContext.GetNewTestRecordSkeleton(recordSetNames[2]);
+            createParameters3.AaaaRecords = new List<AaaaRecord>
+            {
+                new AaaaRecord {Ipv6Address = "123::45"}
+            };
 
             testContext.DnsClient.RecordSets.CreateOrUpdate(
                 testContext.ResourceGroup.Name,
                 testContext.ZoneName,
-                createParameters1.RecordSet.Name,
+                createParameters1.Name,
                 RecordType.TXT,
-                createParameters1);
+                ifMatch: null,
+                ifNoneMatch: null,
+                parameters: createParameters1);
 
             testContext.DnsClient.RecordSets.CreateOrUpdate(
                 testContext.ResourceGroup.Name,
                 testContext.ZoneName,
-                createParameters2.RecordSet.Name,
+                createParameters2.Name,
                 RecordType.TXT,
-                createParameters2);
+                ifMatch: null,
+                ifNoneMatch: null,
+                parameters: createParameters2);
 
             testContext.DnsClient.RecordSets.CreateOrUpdate(
                 testContext.ResourceGroup.Name,
                 testContext.ZoneName,
-                createParameters3.RecordSet.Name,
+                createParameters3.Name,
                 RecordType.AAAA,
-                createParameters3);
+                ifMatch: null,
+                ifNoneMatch: null,
+                parameters: createParameters3);
         }
 
-        public static void DeleteRecordSetsAndZone(SingleRecordSetTestContext testContext, string[] recordSetNames)
+        public static void DeleteRecordSetsAndZone(
+            SingleRecordSetTestContext testContext,
+            string[] recordSetNames)
         {
             testContext.DnsClient.RecordSets.Delete(
-                        testContext.ResourceGroup.Name,
-                        testContext.ZoneName,
-                        recordSetNames[0],
-                        RecordType.TXT,
-                        new RecordSetDeleteParameters { IfMatch = null });
+                testContext.ResourceGroup.Name,
+                testContext.ZoneName,
+                recordSetNames[0],
+                RecordType.TXT,
+                ifMatch: null,
+                ifNoneMatch: null);
 
             testContext.DnsClient.RecordSets.Delete(
-                        testContext.ResourceGroup.Name,
-                        testContext.ZoneName,
-                        recordSetNames[1],
-                        RecordType.TXT,
-                        new RecordSetDeleteParameters { IfMatch = null });
+                testContext.ResourceGroup.Name,
+                testContext.ZoneName,
+                recordSetNames[1],
+                RecordType.TXT,
+                ifMatch: null,
+                ifNoneMatch: null);
 
             testContext.DnsClient.RecordSets.Delete(
-                        testContext.ResourceGroup.Name,
-                        testContext.ZoneName,
-                        recordSetNames[2],
-                        RecordType.AAAA,
-                        new RecordSetDeleteParameters { IfMatch = null });
+                testContext.ResourceGroup.Name,
+                testContext.ZoneName,
+                recordSetNames[2],
+                RecordType.AAAA,
+                ifMatch: null,
+                ifNoneMatch: null);
 
-            testContext.DnsClient.Zones.Delete(testContext.ResourceGroup.Name, testContext.ZoneName, new ZoneDeleteParameters());
+            testContext.DnsClient.Zones.Delete(
+                testContext.ResourceGroup.Name,
+                testContext.ZoneName,
+                ifMatch: null,
+                ifNoneMatch: null);
         }
 
         #endregion
