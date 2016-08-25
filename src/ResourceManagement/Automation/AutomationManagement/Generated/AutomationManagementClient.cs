@@ -294,6 +294,18 @@ namespace Microsoft.Azure.Management.Automation
             get { return this._jobStreams; }
         }
         
+        private ILinkedWorkspaceOperations _linkedWorkspace;
+        
+        /// <summary>
+        /// Service operation for automation linked workspace.  (see
+        /// http://aka.ms/azureautomationsdk/linkedworkspaceoperations for
+        /// more information)
+        /// </summary>
+        public virtual ILinkedWorkspaceOperations LinkedWorkspace
+        {
+            get { return this._linkedWorkspace; }
+        }
+        
         private IModuleOperations _modules;
         
         /// <summary>
@@ -484,6 +496,7 @@ namespace Microsoft.Azure.Management.Automation
             this._jobs = new JobOperations(this);
             this._jobSchedules = new JobScheduleOperations(this);
             this._jobStreams = new JobStreamOperations(this);
+            this._linkedWorkspace = new LinkedWorkspaceOperations(this);
             this._modules = new ModuleOperations(this);
             this._objectDataTypes = new ObjectDataTypeOperations(this);
             this._runbookDraft = new RunbookDraftOperations(this);
@@ -580,6 +593,7 @@ namespace Microsoft.Azure.Management.Automation
             this._jobs = new JobOperations(this);
             this._jobSchedules = new JobScheduleOperations(this);
             this._jobStreams = new JobStreamOperations(this);
+            this._linkedWorkspace = new LinkedWorkspaceOperations(this);
             this._modules = new ModuleOperations(this);
             this._objectDataTypes = new ObjectDataTypeOperations(this);
             this._runbookDraft = new RunbookDraftOperations(this);
@@ -772,11 +786,11 @@ namespace Microsoft.Azure.Management.Automation
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.BadRequest)
+                    if (statusCode == HttpStatusCode.NotFound)
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.NotFound)
+                    if (statusCode == HttpStatusCode.BadRequest)
                     {
                         result.Status = OperationStatus.Failed;
                     }

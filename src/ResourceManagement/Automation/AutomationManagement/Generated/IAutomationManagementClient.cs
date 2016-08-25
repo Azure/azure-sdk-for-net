@@ -243,6 +243,16 @@ namespace Microsoft.Azure.Management.Automation
         }
         
         /// <summary>
+        /// Service operation for automation linked workspace.  (see
+        /// http://aka.ms/azureautomationsdk/linkedworkspaceoperations for
+        /// more information)
+        /// </summary>
+        ILinkedWorkspaceOperations LinkedWorkspace
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Service operation for automation modules.  (see
         /// http://aka.ms/azureautomationsdk/moduleoperations for more
         /// information)
