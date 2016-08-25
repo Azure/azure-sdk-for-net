@@ -20,7 +20,8 @@
   "dependencies": {
     "Microsoft.Azure.KeyVault": "2.0.0-preview",
     "Microsoft.Azure.KeyVault.Core": "2.0.0-preview",
-    "Microsoft.Azure.KeyVault.Cryptography": "2.0.0-preview"
+    "Microsoft.Azure.KeyVault.Cryptography": "2.0.0-preview",
+    "Microsoft.Azure.KeyVault.WebKey": "2.0.0-preview"
   },
   "frameworks": {
     "netstandard1.5": {

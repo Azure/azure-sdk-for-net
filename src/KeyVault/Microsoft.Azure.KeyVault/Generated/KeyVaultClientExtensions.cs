@@ -16,6 +16,7 @@ namespace Microsoft.Azure.KeyVault
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using Microsoft.Azure.KeyVault.WebKey;
 
     /// <summary>
     /// Extension methods for KeyVaultClient.
@@ -35,7 +36,8 @@ namespace Microsoft.Azure.KeyVault
             /// The name of the key
             /// </param>
             /// <param name='kty'>
-            /// The type of key to create. Valid key types, see JsonWebKeyType. Possible
+            /// The type of key to create. Valid key types, see JsonWebKeyType. Supported
+            /// JsonWebKey key types (kty) for Elliptic Curve, RSA, HSM, Octet. Possible
             /// values include: 'EC', 'RSA', 'RSA-HSM', 'oct'
             /// </param>
             /// <param name='keySize'>
@@ -781,15 +783,24 @@ namespace Microsoft.Azure.KeyVault
             /// <param name='issuerName'>
             /// The name of the issuer.
             /// </param>
-            /// <param name='issuer'>
-            /// The issuer bundle.
+            /// <param name='provider'>
+            /// The name of the issuer.
+            /// </param>
+            /// <param name='credentials'>
+            /// The credentials to be used for the issuer.
+            /// </param>
+            /// <param name='organizationDetails'>
+            /// Details of the organization as provided to the issuer.
+            /// </param>
+            /// <param name='attributes'>
+            /// Attributes of the issuer object.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IssuerBundle> SetCertificateIssuerAsync(this IKeyVaultClient operations, string vaultBaseUrl, string issuerName, IssuerBundle issuer, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IssuerBundle> SetCertificateIssuerAsync(this IKeyVaultClient operations, string vaultBaseUrl, string issuerName, string provider, IssuerCredentials credentials = default(IssuerCredentials), OrganizationDetails organizationDetails = default(OrganizationDetails), IssuerAttributes attributes = default(IssuerAttributes), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.SetCertificateIssuerWithHttpMessagesAsync(vaultBaseUrl, issuerName, issuer, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.SetCertificateIssuerWithHttpMessagesAsync(vaultBaseUrl, issuerName, provider, credentials, organizationDetails, attributes, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -807,15 +818,24 @@ namespace Microsoft.Azure.KeyVault
             /// <param name='issuerName'>
             /// The name of the issuer.
             /// </param>
-            /// <param name='issuer'>
-            /// The issuer bundle.
+            /// <param name='provider'>
+            /// The name of the issuer.
+            /// </param>
+            /// <param name='credentials'>
+            /// The credentials to be used for the issuer.
+            /// </param>
+            /// <param name='organizationDetails'>
+            /// Details of the organization as provided to the issuer.
+            /// </param>
+            /// <param name='attributes'>
+            /// Attributes of the issuer object.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IssuerBundle> UpdateCertificateIssuerAsync(this IKeyVaultClient operations, string vaultBaseUrl, string issuerName, IssuerBundle issuer, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IssuerBundle> UpdateCertificateIssuerAsync(this IKeyVaultClient operations, string vaultBaseUrl, string issuerName, string provider = default(string), IssuerCredentials credentials = default(IssuerCredentials), OrganizationDetails organizationDetails = default(OrganizationDetails), IssuerAttributes attributes = default(IssuerAttributes), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateCertificateIssuerWithHttpMessagesAsync(vaultBaseUrl, issuerName, issuer, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateCertificateIssuerWithHttpMessagesAsync(vaultBaseUrl, issuerName, provider, credentials, organizationDetails, attributes, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1031,6 +1051,9 @@ namespace Microsoft.Azure.KeyVault
             /// <param name='certificateVersion'>
             /// The version of the certificate
             /// </param>
+            /// <param name='certificatePolicy'>
+            /// The management policy for the certificate
+            /// </param>
             /// <param name='certificateAttributes'>
             /// The attributes of the certificate (optional)
             /// </param>
@@ -1040,9 +1063,9 @@ namespace Microsoft.Azure.KeyVault
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CertificateBundle> UpdateCertificateAsync(this IKeyVaultClient operations, string vaultBaseUrl, string certificateName, string certificateVersion, CertificateAttributes certificateAttributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CertificateBundle> UpdateCertificateAsync(this IKeyVaultClient operations, string vaultBaseUrl, string certificateName, string certificateVersion, CertificatePolicy certificatePolicy = default(CertificatePolicy), CertificateAttributes certificateAttributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateCertificateWithHttpMessagesAsync(vaultBaseUrl, certificateName, certificateVersion, certificateAttributes, tags, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateCertificateWithHttpMessagesAsync(vaultBaseUrl, certificateName, certificateVersion, certificatePolicy, certificateAttributes, tags, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -1086,15 +1109,15 @@ namespace Microsoft.Azure.KeyVault
             /// <param name='certificateName'>
             /// The name of the certificate
             /// </param>
-            /// <param name='certificateOperation'>
-            /// The certificate operation response.
+            /// <param name='cancellationRequested'>
+            /// Indicates if cancellation was requested on the certificate operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CertificateOperation> UpdateCertificateOperationAsync(this IKeyVaultClient operations, string vaultBaseUrl, string certificateName, CertificateOperation certificateOperation, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<CertificateOperation> UpdateCertificateOperationAsync(this IKeyVaultClient operations, string vaultBaseUrl, string certificateName, bool cancellationRequested, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateCertificateOperationWithHttpMessagesAsync(vaultBaseUrl, certificateName, certificateOperation, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateCertificateOperationWithHttpMessagesAsync(vaultBaseUrl, certificateName, cancellationRequested, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

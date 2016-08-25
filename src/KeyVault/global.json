@@ -1,3 +1,13 @@
 {
-  "projects": [ "../TestFramework/", "Microsoft.Azure.KeyVault", "Microsoft.Azure.KeyVault.Tests", "Microsoft.Azure.KeyVault.Cryptography", "Microsoft.Azure.KeyVault.Core", "../ResourceManagement/KeyVaultManagement" ]
+  "projects": [
+    "../TestFramework/",
+    "../ResourceManagement/KeyVaultManagement",
+    "Microsoft.Azure.KeyVault",
+    "Microsoft.Azure.KeyVault.Tests",
+    "Microsoft.Azure.KeyVault.Core",
+    "Microsoft.Azure.KeyVault.Cryptography",
+    "Microsoft.Azure.KeyVault.Cryptography.Tests",
+    "Microsoft.Azure.KeyVault.Extensions",
+    "Microsoft.Azure.KeyVault.Extensions.Tests"
+  ]
 }

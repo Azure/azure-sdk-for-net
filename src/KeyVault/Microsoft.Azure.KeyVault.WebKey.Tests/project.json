@@ -1,0 +1,30 @@
+{
+  "version": "2.0.0-preview",
+  "description": "Microsoft.Azure.KeyVault.WebKey.Tests Class Library",
+  "authors": [ "Microsoft Corporation" ],
+
+  "buildOptions": {
+    "delaySign": true,
+    "publicSign": false,
+    "keyFile": "../../../tools/MSSharedLibKey.snk",
+    "compile": "../../../tools/DisableTestRunParallel.cs"
+  },
+
+  "testRunner": "xunit",
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": [ "dnxcore50", "portable-net451+win8" ],
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "type": "platform",
+          "version": "1.0.0"
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "dotnet-test-xunit": "2.2.0-preview2-build1029",
+    "Microsoft.Azure.KeyVault.WebKey": "2.0.0-preview",
+    "xunit": "2.2.0-beta2-build3300"
+  }
+}
