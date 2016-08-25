@@ -181,6 +181,71 @@
             CommonPatchJobTest(protoJob, modificationFunction, assertAction);
         }
 
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
+        public void TestPatchJob_UnchangedEntitiesAreIgnored()
+        {
+            const string jobId = "Foo";
+
+            var protoJob = new Protocol.Models.CloudJob(
+                id: jobId,
+                constraints: new Protocol.Models.JobConstraints(maxWallClockTime: TimeSpan.FromSeconds(10)),
+                metadata: new List<Protocol.Models.MetadataItem>() { new Protocol.Models.MetadataItem() },
+                poolInfo: new Protocol.Models.PoolInformation(poolId: "Test"));
+
+            Action<CloudJob> modificationFunction = job =>
+                {
+                    //Do nothing
+                };
+
+            Action<Protocol.Models.JobPatchParameter> assertAction = patchParameters =>
+                {
+                    Assert.Null(patchParameters.Priority);
+                    Assert.Null(patchParameters.Metadata);
+                    Assert.Null(patchParameters.PoolInfo);
+                    Assert.Null(patchParameters.OnAllTasksComplete);
+                    Assert.Null(patchParameters.Constraints);
+                };
+
+            CommonPatchJobTest(protoJob, modificationFunction, assertAction);
+        }
+
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
+        public void TestPatchJob_UnchangedChildEntityWithNonemptyListIsIgnored()
+        {
+            const string jobId = "Foo";
+
+            var protoJob = new Protocol.Models.CloudJob(
+                id: jobId,
+                poolInfo: new Protocol.Models.PoolInformation(
+                    poolId: "Test",
+                    autoPoolSpecification: new Protocol.Models.AutoPoolSpecification(
+                        Protocol.Models.PoolLifetimeOption.Job,
+                        pool: new Protocol.Models.PoolSpecification(
+                            "small",
+                            applicationPackageReferences: new List<Protocol.Models.ApplicationPackageReference>()
+                                {
+                                    new Protocol.Models.ApplicationPackageReference("a")
+                                }))));
+
+            Action<CloudJob> modificationFunction = job =>
+                {
+                    //Do nothing
+                };
+
+            Action<Protocol.Models.JobPatchParameter> assertAction = patchParameters =>
+                {
+                    Assert.Null(patchParameters.Priority);
+                    Assert.Null(patchParameters.Metadata);
+                    Assert.Null(patchParameters.PoolInfo);
+                    Assert.Null(patchParameters.OnAllTasksComplete);
+                    Assert.Null(patchParameters.Constraints);
+                };
+
+            CommonPatchJobTest(protoJob, modificationFunction, assertAction);
+        }
+
         #endregion
 
         #region Pool
@@ -286,6 +351,64 @@
             CommonPatchPoolTest(protoPool, modificationFunction, assertAction);
         }
 
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
+        public void TestPatchPool_UnchangedEntitiesAreIgnored()
+        {
+            const string poolId = "Foo";
+
+            var protoPool = new Protocol.Models.CloudPool(
+                id: poolId,
+                startTask: new Protocol.Models.StartTask(commandLine: "Foo"),
+                metadata: new List<Protocol.Models.MetadataItem>() { new Protocol.Models.MetadataItem() });
+
+            Action<CloudPool> modificationFunction = pool =>
+                {
+                    //Do nothing
+                };
+
+            Action<Protocol.Models.PoolPatchParameter> assertAction = patchParameters =>
+            {
+                Assert.Null(patchParameters.Metadata);
+                Assert.Null(patchParameters.ApplicationPackageReferences);
+                Assert.Null(patchParameters.CertificateReferences);
+                Assert.Null(patchParameters.StartTask);
+            };
+
+            CommonPatchPoolTest(protoPool, modificationFunction, assertAction);
+        }
+
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
+        public void TestPatchPool_UnchangedChildEntityWithNonemptyListIsIgnored()
+        {
+            const string poolId = "Foo";
+
+            var protoPool = new Protocol.Models.CloudPool(
+                id: poolId,
+                startTask: new Protocol.Models.StartTask(
+                    commandLine: "Foo",
+                    resourceFiles: new List<Protocol.Models.ResourceFile>()
+                        {
+                            new Protocol.Models.ResourceFile("sas", "filepath")
+                        }));
+
+            Action<CloudPool> modificationFunction = pool =>
+                {
+                    //Do nothing
+                };
+
+            Action<Protocol.Models.PoolPatchParameter> assertAction = patchParameters =>
+                {
+                    Assert.Null(patchParameters.Metadata);
+                    Assert.Null(patchParameters.ApplicationPackageReferences);
+                    Assert.Null(patchParameters.CertificateReferences);
+                    Assert.Null(patchParameters.StartTask);
+                };
+
+            CommonPatchPoolTest(protoPool, modificationFunction, assertAction);
+        }
+
         #endregion
 
         #region JobSchedule
@@ -386,6 +509,69 @@
                 Assert.NotNull(patchParameters.Schedule);
                 Assert.Equal(newStartWindow, patchParameters.Schedule.StartWindow);
             };
+
+            CommonPatchJobScheduleTest(protoJobSchedule, modificationFunction, assertAction);
+        }
+
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
+        public void TestPatchJobSchedule_UnchangedPropertiesAreIgnored()
+        {
+            const string jobScheduleId = "Foo";
+
+            var protoJobSchedule = new Protocol.Models.CloudJobSchedule(
+                id: jobScheduleId,
+                schedule: new Protocol.Models.Schedule(startWindow: TimeSpan.FromSeconds(10)),
+                metadata: new List<Protocol.Models.MetadataItem>() { new Protocol.Models.MetadataItem() },
+                jobSpecification: new Protocol.Models.JobSpecification(
+                    poolInfo: new Protocol.Models.PoolInformation(poolId: "Test")));
+
+            Action<CloudJobSchedule> modificationFunction = jobSchedule =>
+                {
+                    //Do nothing
+                };
+
+            Action<Protocol.Models.JobSchedulePatchParameter> assertAction = patchParameters =>
+                {
+                    Assert.Null(patchParameters.JobSpecification);
+                    Assert.Null(patchParameters.Metadata);
+                    Assert.Null(patchParameters.Schedule);
+                };
+
+            CommonPatchJobScheduleTest(protoJobSchedule, modificationFunction, assertAction);
+        }
+
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
+        public void TestPatchJobSchedule_UnchangedChildEntityWithNonEmptyListIsIgnored()
+        {
+            const string jobScheduleId = "Foo";
+
+            var protoJobSchedule = new Protocol.Models.CloudJobSchedule(
+                id: jobScheduleId,
+                jobSpecification: new Protocol.Models.JobSpecification(
+                    poolInfo: new Protocol.Models.PoolInformation(
+                        poolId: "Test",
+                        autoPoolSpecification: new Protocol.Models.AutoPoolSpecification(
+                        Protocol.Models.PoolLifetimeOption.Job,
+                        pool: new Protocol.Models.PoolSpecification(
+                            "small",
+                            applicationPackageReferences: new List<Protocol.Models.ApplicationPackageReference>()
+                                {
+                                    new Protocol.Models.ApplicationPackageReference("a")
+                                })))));
+
+            Action<CloudJobSchedule> modificationFunction = jobSchedule =>
+                {
+                    //Do nothing
+                };
+
+            Action<Protocol.Models.JobSchedulePatchParameter> assertAction = patchParameters =>
+                {
+                    Assert.Null(patchParameters.JobSpecification);
+                    Assert.Null(patchParameters.Metadata);
+                    Assert.Null(patchParameters.Schedule);
+                };
 
             CommonPatchJobScheduleTest(protoJobSchedule, modificationFunction, assertAction);
         }
