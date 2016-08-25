@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         private static ImageReference GetImageReference(string referenceString, string enumAsString)
         {
-            var parts = referenceString.Split(new char[' '], StringSplitOptions.RemoveEmptyEntries);
+            var parts = referenceString.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
             if (parts.Count() != 3)
             {
                 throw new ArgumentException("The EnumNameAttribute for " + enumAsString + " is not in correct format");
@@ -30,7 +30,8 @@ namespace Microsoft.Azure.Management.V2.Compute
             {
                 Publisher = parts[0],
                 Offer = parts[1],
-                Sku = parts[2]
+                Sku = parts[2],
+                Version = "latest"               
             };
         }
     }

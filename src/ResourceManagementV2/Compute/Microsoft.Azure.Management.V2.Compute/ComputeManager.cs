@@ -8,11 +8,16 @@ using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest;
 using Microsoft.Azure.Management.V2.Resource;
+using Microsoft.Azure.Management.V2.Storage;
+using Microsoft.Azure.Management.V2.Network;
 
 namespace Microsoft.Azure.Management.V2.Compute
 {
     public class ComputeManager : ManagerBase, IComputeManager
     {
+        private IStorageManager storageManager;
+        private INetworkManager networkManager;
+
         #region SDK clients
         private ComputeManagementClient client;
         #endregion
@@ -32,6 +37,8 @@ namespace Microsoft.Azure.Management.V2.Compute
                 restClient.RootHttpHandler,
                 restClient.Handlers.ToArray());
             client.SubscriptionId = subscriptionId;
+            storageManager = StorageManager.Authenticate(restClient, subscriptionId);
+            networkManager = NetworkManager.Authenticate(restClient, subscriptionId);
         }
 
         #endregion
@@ -86,9 +93,15 @@ namespace Microsoft.Azure.Management.V2.Compute
             {
                 if (virtualMachines == null)
                 {
-                    //virtualMachines = new VirtulaMachinesImpl(client.VirtualMachines, this);
+                    virtualMachines = new VirtualMachinesImpl(
+                        client.VirtualMachines, 
+                        client.VirtualMachineSizes, 
+                        this,
+                        storageManager,
+                        networkManager);
                 }
-                return null;
+
+                return virtualMachines;
             }
         }
 
