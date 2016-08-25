@@ -43,14 +43,14 @@ namespace Microsoft.Azure.Management.V2.Network.LoadBalancer.Definition
         /// stage of a public IP endpoint's definition.
         /// </summary>
         /// <returns>the next stage of the definition</returns>
-        IWithCreate WithNewPublicIpAddress (ICreatable<IPublicIpAddress> creatablePublicIpAddress);
+        IWithCreate WithNewPublicIpAddress (ICreatable<Microsoft.Azure.Management.V2.Network.IPublicIpAddress> creatablePublicIpAddress);
 
     }
     /// <summary>
     /// The stage of the load balancer definition allowing to specify the resource group.
     /// </summary>
     public interface IWithGroup  :
-        Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition.IWithGroup<IWithVirtualMachine>
+        Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.V2.Network.LoadBalancer.Definition.IWithVirtualMachine>
     {
     }
     /// <summary>
@@ -98,8 +98,8 @@ namespace Microsoft.Azure.Management.V2.Network.LoadBalancer.Definition
     /// for any other optional settings to be specified.
     /// </summary>
     public interface IWithCreate  :
-        ICreatable<ILoadBalancer>,
-        IDefinitionWithTags<IWithCreate>,
+        ICreatable<Microsoft.Azure.Management.V2.Network.ILoadBalancer>,
+        IDefinitionWithTags<Microsoft.Azure.Management.V2.Network.LoadBalancer.Definition.IWithCreate>,
         IWithPublicIpAddresses
     {
     }

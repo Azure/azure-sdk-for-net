@@ -13,11 +13,11 @@ namespace Microsoft.Azure.Management.V2.Network
     /// Entry point to network security group management.
     /// </summary>
     public interface INetworkSecurityGroups  :
-        ISupportsCreating<IBlank>,
-        ISupportsListing<INetworkSecurityGroup>,
-        ISupportsListingByGroup<INetworkSecurityGroup>,
-        ISupportsGettingByGroup<INetworkSecurityGroup>,
-        ISupportsGettingById<INetworkSecurityGroup>,
+        ISupportsCreating<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IBlank>,
+        ISupportsListing<Microsoft.Azure.Management.V2.Network.INetworkSecurityGroup>,
+        ISupportsListingByGroup<Microsoft.Azure.Management.V2.Network.INetworkSecurityGroup>,
+        ISupportsGettingByGroup<Microsoft.Azure.Management.V2.Network.INetworkSecurityGroup>,
+        ISupportsGettingById<Microsoft.Azure.Management.V2.Network.INetworkSecurityGroup>,
         ISupportsDeleting,
         ISupportsDeletingByGroup
     {

@@ -13,11 +13,11 @@ namespace Microsoft.Azure.Management.V2.Network
     /// Entry point to virtual network management API in Azure.
     /// </summary>
     public interface INetworks  :
-        ISupportsCreating<IBlank>,
-        ISupportsListing<INetwork>,
-        ISupportsListingByGroup<INetwork>,
-        ISupportsGettingByGroup<INetwork>,
-        ISupportsGettingById<INetwork>,
+        ISupportsCreating<Microsoft.Azure.Management.V2.Network.Network.Definition.IBlank>,
+        ISupportsListing<Microsoft.Azure.Management.V2.Network.INetwork>,
+        ISupportsListingByGroup<Microsoft.Azure.Management.V2.Network.INetwork>,
+        ISupportsGettingByGroup<Microsoft.Azure.Management.V2.Network.INetwork>,
+        ISupportsGettingById<Microsoft.Azure.Management.V2.Network.INetwork>,
         ISupportsDeleting,
         ISupportsDeletingByGroup
     {

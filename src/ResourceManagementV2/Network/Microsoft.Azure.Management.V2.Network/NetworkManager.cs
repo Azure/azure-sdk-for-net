@@ -11,6 +11,9 @@
     {
         private NetworkManagementClient networkManagementClient;
         private PublicIpAddressesImpl publicIpAddresses;
+        private NetworkInterfacesImpl networkInterfaces;
+        private NetworkSecurityGroupsImpl networkSecurityGroups;
+        private NetworksImpl networks;
 
         private NetworkManager(RestClient restClient, string subscriptionId) : base(restClient, subscriptionId)
         {
@@ -84,12 +87,34 @@
         /// <summary>
         /// return entry point to virtual network management
         /// </summary>
-        public INetworks Networks { get; }
+        public INetworks Networks
+        {
+            get
+            {
+                if (networks == null)
+                {
+                    networks = new NetworksImpl(networkManagementClient, this);
+                }
+
+                return networks;
+            }
+        }
 
         /// <summary>
         /// return entry point to network security group management
         /// </summary>
-        public INetworkSecurityGroups NetworkSecurityGroups { get { return null; } }
+        public INetworkSecurityGroups NetworkSecurityGroups
+        {
+            get
+            {
+                if (networkSecurityGroups == null)
+                {
+                    networkSecurityGroups = new NetworkSecurityGroupsImpl(networkManagementClient.NetworkSecurityGroups, this);
+                }
+
+                return networkSecurityGroups;
+            }
+        }
 
         /// <summary>
         /// return entry point to public IP address management
@@ -102,6 +127,7 @@
                 {
                     publicIpAddresses = new PublicIpAddressesImpl(networkManagementClient.PublicIPAddresses, this);
                 }
+
                 return publicIpAddresses;
             }
         }
@@ -110,7 +136,18 @@
         /// <summary>
         /// return entry point to network interface management
         /// </summary>
-        public INetworkInterfaces NetworkInterfaces { get { return null; } }
+        public INetworkInterfaces NetworkInterfaces
+        {
+            get
+            {
+                if (networkInterfaces == null)
+                {
+                    networkInterfaces = new NetworkInterfacesImpl(networkManagementClient.NetworkInterfaces, this);
+                }
+
+                return networkInterfaces;
+            }
+        }
 
         /// <summary>
         /// return entry point to load balancer management

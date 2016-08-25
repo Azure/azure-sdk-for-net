@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
         {
             get
             {
-                throw new NotImplementedException();
+                return EnumNameAttribute.FromName<Region>(GetValue("Location") as string);
             }
         }
 
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
         {
             get
             {
-                throw new NotImplementedException();
+                return this.GetValue("Tags") as IDictionary<string, string>;
             }
         }
 

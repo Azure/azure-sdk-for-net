@@ -627,7 +627,14 @@ namespace Microsoft.Azure.Management.Network
                 throw ex;
             }
             // Create Result
-            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<NetworkInterfaceInner>();
+            AzureOperationResponse<NetworkInterfaceInner> _result;
+            try
+            {
+                _result = new Microsoft.Rest.Azure.AzureOperationResponse<NetworkInterfaceInner>();
+            }
+            catch (System.Exception ex) {
+                throw ex;
+            }
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))

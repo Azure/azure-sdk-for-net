@@ -10,8 +10,8 @@ namespace Microsoft.Azure.Management.V2.Network.Network.Definition
     using System.Collections.Generic;
     using Microsoft.Azure.Management.V2.Network.Subnet.Definition;
     using Microsoft.Azure.Management.V2.Resource.Core.Resource.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.V2.Network;
+    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition;
     /// <summary>
     /// The entirety of the virtual network definition.
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.V2.Network.Network.Definition
         /// </summary>
         /// <param name="name">name the name of the subnet</param>
         /// <returns>the first stage of the new subnet definition</returns>
-        Microsoft.Azure.Management.V2.Network.Subnet.Definition.IBlank<IWithCreateAndSubnet> DefineSubnet (string name);
+        Microsoft.Azure.Management.V2.Network.Subnet.Definition.IBlank<Microsoft.Azure.Management.V2.Network.Network.Definition.IWithCreateAndSubnet> DefineSubnet (string name);
 
     }
     /// <summary>
@@ -78,8 +78,8 @@ namespace Microsoft.Azure.Management.V2.Network.Network.Definition
     /// (see {@link WithCreate#withAddressSpace(String)}).
     /// </summary>
     public interface IWithCreate  :
-        ICreatable<INetwork>,
-        IDefinitionWithTags<IWithCreate>
+        ICreatable<Microsoft.Azure.Management.V2.Network.INetwork>,
+        IDefinitionWithTags<Microsoft.Azure.Management.V2.Network.Network.Definition.IWithCreate>
     {
         /// <summary>
         /// Specifies the IP address of an existing DNS server to associate with the virtual network.
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.V2.Network.Network.Definition
     /// The stage of the virtual network definition allowing to specify the resource group.
     /// </summary>
     public interface IWithGroup  :
-        Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition.IWithGroup<IWithCreate>
+        Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.V2.Network.Network.Definition.IWithCreate>
     {
     }
 }

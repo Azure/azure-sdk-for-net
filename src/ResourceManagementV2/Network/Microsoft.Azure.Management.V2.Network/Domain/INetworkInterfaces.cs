@@ -13,11 +13,11 @@ namespace Microsoft.Azure.Management.V2.Network
     /// Entry point to network interface management.
     /// </summary>
     public interface INetworkInterfaces  :
-        ISupportsCreating<IBlank>,
-        ISupportsListing<INetworkInterface>,
-        ISupportsListingByGroup<INetworkInterface>,
-        ISupportsGettingByGroup<INetworkInterface>,
-        ISupportsGettingById<INetworkInterface>,
+        ISupportsCreating<Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IBlank>,
+        ISupportsListing<Microsoft.Azure.Management.V2.Network.INetworkInterface>,
+        ISupportsListingByGroup<Microsoft.Azure.Management.V2.Network.INetworkInterface>,
+        ISupportsGettingByGroup<Microsoft.Azure.Management.V2.Network.INetworkInterface>,
+        ISupportsGettingById<Microsoft.Azure.Management.V2.Network.INetworkInterface>,
         ISupportsDeleting,
         ISupportsDeletingByGroup
     {

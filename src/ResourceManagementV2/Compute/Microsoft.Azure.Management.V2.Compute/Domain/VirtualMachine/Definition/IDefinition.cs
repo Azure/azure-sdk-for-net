@@ -7,8 +7,8 @@
 namespace Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.V2.Network;
+    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.Compute.Models;
     using Microsoft.Azure.Management.V2.Storage;
     using Microsoft.Azure.Management.V2.Compute;
@@ -280,15 +280,8 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition
         /// <param name="sizeName">sizeName the name of the size for the virtual machine as text</param>
         /// <returns>the stage representing creatable VM definition</returns>
         IWithCreate WithSize (string sizeName);
-
-        /// <summary>
-        /// Specifies the virtual machine size.
-        /// </summary>
-        /// <param name="size">size a size from the list of available sizes for the virtual machine</param>
-        /// <returns>the stage representing creatable VM definition</returns>
-        IWithCreate WithSize (VirtualMachineSizeTypes size);
-
     }
+
     /// <summary>
     /// The stage of the Windows virtual machine definition which contains all the minimum required inputs for
     /// the resource to be created (via {@link WithCreate#create()}, but also allows
@@ -301,13 +294,13 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition
         /// Specifies that VM Agent should not be provisioned.
         /// </summary>
         /// <returns>the stage representing creatable Windows VM definition</returns>
-        IWithWindowsCreate DisableVmAgent { get; }
+        IWithWindowsCreate DisableVmAgent();
 
         /// <summary>
         /// Specifies that automatic updates should be disabled.
         /// </summary>
         /// <returns>the stage representing creatable Windows VM definition</returns>
-        IWithWindowsCreate DisableAutoUpdate { get; }
+        IWithWindowsCreate DisableAutoUpdate();
 
         /// <summary>
         /// Specifies the time-zone.

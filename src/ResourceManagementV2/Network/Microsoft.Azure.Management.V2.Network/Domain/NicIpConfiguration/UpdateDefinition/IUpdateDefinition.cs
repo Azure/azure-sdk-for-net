@@ -7,8 +7,8 @@
 namespace Microsoft.Azure.Management.V2.Network.NicIpConfiguration.UpdateDefinition
 {
 
-    using Microsoft.Azure.Management.V2.Network;
     using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.V2.Network;
     using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
     /// <summary>
     /// The stage of the network interface IP configuration definition allowing to specify the virtual network.
@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.V2.Network.NicIpConfiguration.UpdateDefinit
         /// </summary>
         /// <param name="creatable">creatable a creatable definition for a new virtual network</param>
         /// <returns>the next stage of the network interface IP configuration definition</returns>
-        IWithPrivateIp<ParentT> WithNewNetwork (ICreatable<INetwork> creatable);
+        IWithPrivateIp<ParentT> WithNewNetwork (ICreatable<Microsoft.Azure.Management.V2.Network.INetwork> creatable);
 
         /// <summary>
         /// Creates a new virtual network to associate with the network interface IP configuration.
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.V2.Network.NicIpConfiguration.UpdateDefinit
         /// </summary>
         /// <param name="creatable">creatable a creatable definition for a new public IP</param>
         /// <returns>the next stage of the network interface IP configuration definition</returns>
-        IWithAttach<ParentT> WithNewPublicIpAddress (ICreatable<IPublicIpAddress> creatable);
+        IWithAttach<ParentT> WithNewPublicIpAddress (ICreatable<Microsoft.Azure.Management.V2.Network.IPublicIpAddress> creatable);
 
         /// <summary>
         /// Creates a new public IP address in the same region and group as the resource and associate it

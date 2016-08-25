@@ -7,18 +7,18 @@
 namespace Microsoft.Azure.Management.V2.Network
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.V2.Network.PublicIpAddress.Update;
+    using Microsoft.Azure.Management.V2.Resource.Core;
     using Microsoft.Azure.Management.Network.Models;
+    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     /// <summary>
     /// Public IP address.
     /// </summary>
     public interface IPublicIpAddress  :
         IGroupableResource,
-        IRefreshable<IPublicIpAddress>,
-        IWrapper<PublicIPAddressInner>,
-        IUpdatable<IUpdate>
+        IRefreshable<Microsoft.Azure.Management.V2.Network.IPublicIpAddress>,
+        IWrapper<Microsoft.Azure.Management.Network.Models.PublicIPAddressInner>,
+        IUpdatable<Microsoft.Azure.Management.V2.Network.PublicIpAddress.Update.IUpdate>
     {
         /// <returns>the assigned IP address</returns>
         string IpAddress { get; }

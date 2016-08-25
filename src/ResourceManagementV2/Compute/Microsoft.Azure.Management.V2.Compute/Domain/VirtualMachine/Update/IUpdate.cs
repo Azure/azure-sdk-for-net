@@ -7,11 +7,11 @@
 namespace Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update
 {
 
-    using Microsoft.Azure.Management.V2.Network;
     using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.V2.Network;
     using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.V2.Compute;
     using Microsoft.Azure.Management.V2.Resource.Core.Resource.Update;
+    using Microsoft.Azure.Management.V2.Compute;
     using Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Update;
     /// <summary>
     /// The stage of virtual machine definition allowing to specify additional network interfaces.
@@ -78,14 +78,6 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update
         /// <param name="sizeName">sizeName the name of the size for the virtual machine as text</param>
         /// <returns>the stage representing updatable VM definition</returns>
         Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate WithSize (string sizeName);
-
-        /// <summary>
-        /// Specifies the new size for the virtual machine.
-        /// </summary>
-        /// <param name="size">size a size from the list of available sizes for the virtual machine</param>
-        /// <returns>the stage representing updatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate WithSize (VirtualMachineSizeTypes size);
-
     }
     /// <summary>
     /// The stage of the virtual machine definition allowing to specify data disk configuration.

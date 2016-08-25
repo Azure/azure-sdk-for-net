@@ -19,11 +19,12 @@ namespace Microsoft.Azure.Management.V2.Network
     using System.Threading;
     using Management.Network;
     using System;
+    using System.Collections.ObjectModel;
 
     /// <summary>
     /// Implementation for {@link NetworkSecurityGroup} and its create and update interfaces.
     /// </summary>
-    public class NetworkSecurityGroupImpl :
+    public partial class NetworkSecurityGroupImpl :
         GroupableResource<INetworkSecurityGroup, 
             NetworkSecurityGroupInner,
             Rest.Azure.Resource,
@@ -37,11 +38,11 @@ namespace Microsoft.Azure.Management.V2.Network
         IDefinition,
         IUpdate
     {
-        private NetworkSecurityGroupsOperations innerCollection;
+        private INetworkSecurityGroupsOperations innerCollection;
         private IList<INetworkSecurityRule> rules;
         private IList<INetworkSecurityRule> defaultRules;
 
-        private NetworkSecurityGroupImpl(string name, NetworkSecurityGroupInner innerModel, NetworkSecurityGroupsOperations innerCollection, NetworkManager networkManager) :
+        internal NetworkSecurityGroupImpl(string name, NetworkSecurityGroupInner innerModel, INetworkSecurityGroupsOperations innerCollection, NetworkManager networkManager) :
             base(name, innerModel, networkManager)
         {
             this.innerCollection = innerCollection;
@@ -126,14 +127,12 @@ namespace Microsoft.Azure.Management.V2.Network
 
         public IList<INetworkSecurityRule> SecurityRules()
         {
-            //TODO: make readonly
-            return this.rules;
+            return new ReadOnlyCollection<INetworkSecurityRule>(this.rules);
         }
 
         public IList<INetworkSecurityRule> DefaultSecurityRules()
         {
-            //TODO: make readonly
-            return this.defaultRules;
+            return new ReadOnlyCollection<INetworkSecurityRule>(this.defaultRules);
         }
 
         public IList<string> NetworkInterfaceIds
@@ -152,94 +151,12 @@ namespace Microsoft.Azure.Management.V2.Network
             }
         }
 
-        public override Task<INetworkSecurityGroup> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<INetworkSecurityGroup> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-
-            // final NetworkSecurityGroupImpl self = this;
-            // return this.innerCollection.createOrUpdateAsync(this.resourceGroupName(), this.name(), this.Inner,
-            // new ServiceCallback<NetworkSecurityGroupInner>() {
-            // @Override
-            // public void failure(Throwable t) {
-            // callback.failure(t);
-            // }
-            // 
-            // @Override
-            // public void success(ServiceResponse<NetworkSecurityGroupInner> response) {
-            // self.setInner(response.getBody());
-            // initializeRulesFromInner();
-            // callback.success(new ServiceResponse<Resource>(self, response.getResponse()));
-            // }
-            // });
-
-            return null;
+            var response = await this.innerCollection.CreateOrUpdateAsync(this.ResourceGroupName, this.Name, this.Inner);
+            this.SetInner(response);
+            this.InitializeRulesFromInner();
+            return this;
         }
-
-
-        /// <returns>list of default security rules associated with this network security group</returns>
-        System.Collections.Generic.IList<INetworkSecurityRule> Microsoft.Azure.Management.V2.Network.INetworkSecurityGroup.DefaultSecurityRules
-        {
-            get
-            {
-                return this.DefaultSecurityRules() as System.Collections.Generic.IList<INetworkSecurityRule>;
-            }
-        }
-
-        /// <returns>list of security rules associated with this network security group</returns>
-        System.Collections.Generic.IList<INetworkSecurityRule> Microsoft.Azure.Management.V2.Network.INetworkSecurityGroup.SecurityRules
-        {
-            get
-            {
-                return this.SecurityRules() as System.Collections.Generic.IList<INetworkSecurityRule>;
-            }
-        }
-
-        /// <returns>list of the ids of the network interfaces associated with this network security group</returns>
-        System.Collections.Generic.IList<string> Microsoft.Azure.Management.V2.Network.INetworkSecurityGroup.NetworkInterfaceIds
-        {
-            get
-            {
-                return this.NetworkInterfaceIds as System.Collections.Generic.IList<string>;
-            }
-        }
-        /// <summary>
-        /// Starts the definition of a new security rule.
-        /// </summary>
-        /// <param name="name">name the name for the new security rule</param>
-        /// <returns>the first stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IBlank<IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithRule.DefineRule(string name)
-        {
-            return this.DefineRule(name) as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IBlank<IWithCreate>;
-        }
-
-        /// <summary>
-        /// Begins the definition of a new security rule to be added to this network security group.
-        /// </summary>
-        /// <param name="name">name the name of the new security rule</param>
-        /// <returns>the first stage of the new security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IBlank<IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IWithRule.DefineRule(string name)
-        {
-            return this.DefineRule(name) as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IBlank<IUpdate>;
-        }
-
-        /// <summary>
-        /// Removes an existing security rule.
-        /// </summary>
-        /// <param name="name">name the name of the security rule to remove</param>
-        /// <returns>the next stage of the network security group description</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IWithRule.WithoutRule(string name)
-        {
-            return this.WithoutRule(name) as Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate;
-        }
-
-        /// <summary>
-        /// Begins the description of an update of an existing security rule of this network security group.
-        /// </summary>
-        /// <param name="name">name the name of an existing security rule</param>
-        /// <returns>the first stage of the security rule update description</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IWithRule.UpdateRule(string name)
-        {
-            return this.UpdateRule(name) as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate;
-        }
-
     }
 }

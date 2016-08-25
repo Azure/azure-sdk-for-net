@@ -7,8 +7,8 @@
 namespace Microsoft.Azure.Management.V2.Compute.AvailabilitySet.Update
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.V2.Resource.Core.Resource.Update;
+    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.V2.Compute;
     /// <summary>
     /// The template for an availability set update operation, containing all the settings that

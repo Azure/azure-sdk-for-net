@@ -7,11 +7,11 @@
 namespace Microsoft.Azure.Management.V2.Compute
 {
 
-    using System.Collections.Generic;
-    using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core;
     using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.V2.Resource.Core;
+    using System.Collections.Generic;
     using Microsoft.Azure.Management.V2.Compute.AvailabilitySet.Update;
+    using Microsoft.Azure.Management.Compute.Models;
     /// <summary>
     /// An immutable client-side representation of an Azure availability set.
     /// </summary>

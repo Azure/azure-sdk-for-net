@@ -8,8 +8,8 @@ namespace Microsoft.Azure.Management.V2.Network.PublicIpAddress.Definition
 {
 
     using Microsoft.Azure.Management.V2.Resource.Core.Resource.Definition;
-    using Microsoft.Azure.Management.V2.Network;
     using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.V2.Network;
     using Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition;
     /// <summary>
     /// A public IP address definition allowing to set the IP allocation method (static or dynamic).
@@ -102,12 +102,12 @@ namespace Microsoft.Azure.Management.V2.Network.PublicIpAddress.Definition
     /// for any other optional settings to be specified.
     /// </summary>
     public interface IWithCreate  :
-        ICreatable<IPublicIpAddress>,
+        ICreatable<Microsoft.Azure.Management.V2.Network.IPublicIpAddress>,
         IWithLeafDomainLabel,
         IWithIpAddress,
         IWithReverseFQDN,
         IWithIdleTimeout,
-        IDefinitionWithTags<IWithCreate>
+        IDefinitionWithTags<Microsoft.Azure.Management.V2.Network.PublicIpAddress.Definition.IWithCreate>
     {
     }
     /// <summary>
@@ -123,7 +123,7 @@ namespace Microsoft.Azure.Management.V2.Network.PublicIpAddress.Definition
     /// The stage of the public IP address definition allowing to specify the resource group.
     /// </summary>
     public interface IWithGroup  :
-        Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition.IWithGroup<IWithCreate>
+        Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.V2.Network.PublicIpAddress.Definition.IWithCreate>
     {
     }
 }

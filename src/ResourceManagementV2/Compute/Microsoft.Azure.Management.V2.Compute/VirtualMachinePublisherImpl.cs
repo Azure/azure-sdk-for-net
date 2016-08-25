@@ -3,7 +3,7 @@ using Microsoft.Azure.Management.V2.Resource.Core;
 
 namespace Microsoft.Azure.Management.V2.Compute
 {
-    internal class VirtualMachinePublisherImpl : IVirtualMachinePublisher
+    public partial class VirtualMachinePublisherImpl : IVirtualMachinePublisher
     {
         private IVirtualMachineOffers offers;
 

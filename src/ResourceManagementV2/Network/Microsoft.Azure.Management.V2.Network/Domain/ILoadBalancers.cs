@@ -13,11 +13,11 @@ namespace Microsoft.Azure.Management.V2.Network
     /// Entry point to load balancer management API in Azure.
     /// </summary>
     public interface ILoadBalancers  :
-        ISupportsCreating<IBlank>,
-        ISupportsListing<ILoadBalancer>,
-        ISupportsListingByGroup<ILoadBalancer>,
-        ISupportsGettingByGroup<ILoadBalancer>,
-        ISupportsGettingById<ILoadBalancer>,
+        ISupportsCreating<Microsoft.Azure.Management.V2.Network.LoadBalancer.Definition.IBlank>,
+        ISupportsListing<Microsoft.Azure.Management.V2.Network.ILoadBalancer>,
+        ISupportsListingByGroup<Microsoft.Azure.Management.V2.Network.ILoadBalancer>,
+        ISupportsGettingByGroup<Microsoft.Azure.Management.V2.Network.ILoadBalancer>,
+        ISupportsGettingById<Microsoft.Azure.Management.V2.Network.ILoadBalancer>,
         ISupportsDeleting,
         ISupportsDeletingByGroup
     {
