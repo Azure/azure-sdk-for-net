@@ -33,13 +33,16 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// directory.</param>
         /// <param name="group">the group owner, an AAD Object ID.</param>
         /// <param name="owner">the user owner, an AAD Object ID.</param>
+        /// <param name="permission">The octal representation of the unnamed
+        /// user, mask and other permissions.</param>
         /// <param name="stickyBit">the indicator of whether the sticky bit is
         /// on or off.</param>
-        public AclStatus(IList<string> entries = default(IList<string>), string group = default(string), string owner = default(string), bool? stickyBit = default(bool?))
+        public AclStatus(IList<string> entries = default(IList<string>), string group = default(string), string owner = default(string), int? permission = default(int?), bool? stickyBit = default(bool?))
         {
             Entries = entries;
             Group = group;
             Owner = owner;
+            Permission = permission;
             StickyBit = stickyBit;
         }
 
@@ -62,10 +65,17 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         public string Owner { get; set; }
 
         /// <summary>
-        /// Gets or sets the indicator of whether the sticky bit is on or off.
+        /// Gets or sets the octal representation of the unnamed user, mask
+        /// and other permissions.
+        /// </summary>
+        [JsonProperty(PropertyName = "permission")]
+        public int? Permission { get; set; }
+
+        /// <summary>
+        /// Gets the indicator of whether the sticky bit is on or off.
         /// </summary>
         [JsonProperty(PropertyName = "stickyBit")]
-        public bool? StickyBit { get; set; }
+        public bool? StickyBit { get; private set; }
 
     }
 }
