@@ -22,12 +22,12 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Identifier for the issuer object.
         /// </summary>
-        public IssuerIdentifier IssuerIdentifier
+        public CertificateIssuerIdentifier IssuerIdentifier
         {
             get
             {
                 if (!string.IsNullOrWhiteSpace(Id))
-                    return new IssuerIdentifier(Id);
+                    return new CertificateIssuerIdentifier(Id);
                 else
                     return null;
             }

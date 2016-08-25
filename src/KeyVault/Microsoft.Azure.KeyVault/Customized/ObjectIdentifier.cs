@@ -338,7 +338,7 @@ namespace Microsoft.Azure.KeyVault
     /// <summary>
     /// The Key Vault issuer identifier.
     /// </summary>
-    public sealed class IssuerIdentifier : ObjectIdentifier
+    public sealed class CertificateIssuerIdentifier : ObjectIdentifier
     {
         /// <summary>
         /// Verifies whether the identifier belongs to a key vault issuer.
@@ -363,7 +363,7 @@ namespace Microsoft.Azure.KeyVault
         /// </summary>
         /// <param name="vaultBaseUrl">The vault base URL.</param>
         /// <param name="name">The name of the issuer.</param>
-        public IssuerIdentifier(string vaultBaseUrl, string name)
+        public CertificateIssuerIdentifier(string vaultBaseUrl, string name)
         {
             if (string.IsNullOrEmpty(vaultBaseUrl))
                 throw new ArgumentNullException("vaultBaseUrl");
@@ -386,7 +386,7 @@ namespace Microsoft.Azure.KeyVault
         /// Constructor.
         /// </summary>
         /// <param name="identifier">The key vault issuer identifier.</param>
-        public IssuerIdentifier(string identifier)
+        public CertificateIssuerIdentifier(string identifier)
         {
             if (string.IsNullOrEmpty(identifier))
                 throw new ArgumentNullException("identifier");

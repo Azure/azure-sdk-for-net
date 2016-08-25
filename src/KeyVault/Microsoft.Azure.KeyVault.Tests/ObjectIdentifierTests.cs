@@ -120,14 +120,14 @@ namespace Microsoft.Azure.KeyVault.Tests
         {
             string baseId = string.Format("{0}/certificates/issuers/{1}", vault, name);
 
-            var id = new IssuerIdentifier(baseId);
+            var id = new CertificateIssuerIdentifier(baseId);
             Assert.Equal(baseId, id.BaseIdentifier);
             Assert.Equal(baseId, id.Identifier);
             Assert.Equal(vault, id.Vault);
             Assert.Equal(name, id.Name);
             Assert.Equal(string.Empty, id.Version);
-            Assert.True(IssuerIdentifier.IsIssuerIdentifier(baseId));
-            Assert.False(IssuerIdentifier.IsIssuerIdentifier(baseId + "/version"));
+            Assert.True(CertificateIssuerIdentifier.IsIssuerIdentifier(baseId));
+            Assert.False(CertificateIssuerIdentifier.IsIssuerIdentifier(baseId + "/version"));
         }
     }
 }

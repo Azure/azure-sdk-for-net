@@ -68,8 +68,9 @@ namespace Microsoft.Azure.KeyVault.Models
     public static class CertificateContentType
     {
         public const string Pfx = "application/x-pkcs12";
+        public const string Pem = "application/x-pem-file";
 
-        public static readonly string[] AllTypes = { Pfx };
+        public static readonly string[] AllTypes = { Pfx, Pem };
     }
 
     /// <summary>
