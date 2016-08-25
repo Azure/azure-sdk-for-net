@@ -134,12 +134,12 @@ namespace Microsoft.AzureStack.Management.Models
             set { this._providerLocation = value; }
         }
         
-        private Microsoft.AzureStack.Management.Models.ProvisioningState? _provisioningState;
+        private string _provisioningState;
         
         /// <summary>
         /// Optional. Gets or sets the provisioning state.
         /// </summary>
-        public Microsoft.AzureStack.Management.Models.ProvisioningState? ProvisioningState
+        public string ProvisioningState
         {
             get { return this._provisioningState; }
             set { this._provisioningState = value; }

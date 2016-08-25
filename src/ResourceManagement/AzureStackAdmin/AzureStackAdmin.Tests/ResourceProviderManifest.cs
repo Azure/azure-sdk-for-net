@@ -185,7 +185,7 @@ namespace AzureStackAdmin.Tests
 
                                                              }
                                                          },
-                                         ProvisioningState = ProvisioningState.Succeeded
+                                         ProvisioningState = "Succeeded"
                                      }
                     }
                     ));

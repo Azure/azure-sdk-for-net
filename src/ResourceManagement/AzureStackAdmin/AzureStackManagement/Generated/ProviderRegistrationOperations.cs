@@ -402,7 +402,7 @@ namespace Microsoft.AzureStack.Management
                     
                     if (parameters.ProviderRegistration.Properties.ProvisioningState != null)
                     {
-                        propertiesValue["ProvisioningState"] = parameters.ProviderRegistration.Properties.ProvisioningState.Value.ToString();
+                        propertiesValue["ProvisioningState"] = parameters.ProviderRegistration.Properties.ProvisioningState;
                     }
                 }
                 
@@ -457,7 +457,7 @@ namespace Microsoft.AzureStack.Management
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created)
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Created && statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
@@ -471,7 +471,7 @@ namespace Microsoft.AzureStack.Management
                     // Create Result
                     ProviderRegistrationCreateOrUpdateResult result = null;
                     // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created)
+                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.Created || statusCode == HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
@@ -758,7 +758,7 @@ namespace Microsoft.AzureStack.Management
                                 JToken provisioningStateValue = propertiesValue2["ProvisioningState"];
                                 if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
                                 {
-                                    ProvisioningState provisioningStateInstance = ((ProvisioningState)Enum.Parse(typeof(ProvisioningState), ((string)provisioningStateValue), true));
+                                    string provisioningStateInstance = ((string)provisioningStateValue);
                                     propertiesInstance.ProvisioningState = provisioningStateInstance;
                                 }
                             }
@@ -1384,7 +1384,7 @@ namespace Microsoft.AzureStack.Management
                                 JToken provisioningStateValue = propertiesValue["ProvisioningState"];
                                 if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
                                 {
-                                    ProvisioningState provisioningStateInstance = ((ProvisioningState)Enum.Parse(typeof(ProvisioningState), ((string)provisioningStateValue), true));
+                                    string provisioningStateInstance = ((string)provisioningStateValue);
                                     propertiesInstance.ProvisioningState = provisioningStateInstance;
                                 }
                             }
@@ -1858,7 +1858,7 @@ namespace Microsoft.AzureStack.Management
                                         JToken provisioningStateValue = propertiesValue["ProvisioningState"];
                                         if (provisioningStateValue != null && provisioningStateValue.Type != JTokenType.Null)
                                         {
-                                            ProvisioningState provisioningStateInstance = ((ProvisioningState)Enum.Parse(typeof(ProvisioningState), ((string)provisioningStateValue), true));
+                                            string provisioningStateInstance = ((string)provisioningStateValue);
                                             propertiesInstance.ProvisioningState = provisioningStateInstance;
                                         }
                                     }
