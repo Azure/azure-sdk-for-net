@@ -833,7 +833,7 @@ namespace Microsoft.Azure.KeyVault
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IssuerBundle> UpdateCertificateIssuerAsync(this IKeyVaultClient operations, string vaultBaseUrl, string issuerName, string provider, IssuerCredentials credentials = default(IssuerCredentials), OrganizationDetails organizationDetails = default(OrganizationDetails), IssuerAttributes attributes = default(IssuerAttributes), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IssuerBundle> UpdateCertificateIssuerAsync(this IKeyVaultClient operations, string vaultBaseUrl, string issuerName, string provider = default(string), IssuerCredentials credentials = default(IssuerCredentials), OrganizationDetails organizationDetails = default(OrganizationDetails), IssuerAttributes attributes = default(IssuerAttributes), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateCertificateIssuerWithHttpMessagesAsync(vaultBaseUrl, issuerName, provider, credentials, organizationDetails, attributes, null, cancellationToken).ConfigureAwait(false))
                 {

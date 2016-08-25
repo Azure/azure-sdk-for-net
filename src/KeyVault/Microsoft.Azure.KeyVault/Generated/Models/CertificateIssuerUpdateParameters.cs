@@ -37,7 +37,7 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <param name="organizationDetails">Details of the organization as
         /// provided to the issuer.</param>
         /// <param name="attributes">Attributes of the issuer object.</param>
-        public CertificateIssuerUpdateParameters(string provider, IssuerCredentials credentials = default(IssuerCredentials), OrganizationDetails organizationDetails = default(OrganizationDetails), IssuerAttributes attributes = default(IssuerAttributes))
+        public CertificateIssuerUpdateParameters(string provider = default(string), IssuerCredentials credentials = default(IssuerCredentials), OrganizationDetails organizationDetails = default(OrganizationDetails), IssuerAttributes attributes = default(IssuerAttributes))
         {
             Provider = provider;
             Credentials = credentials;
@@ -69,29 +69,5 @@ namespace Microsoft.Azure.KeyVault.Models
         [JsonProperty(PropertyName = "attributes")]
         public IssuerAttributes Attributes { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (Provider == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Provider");
-            }
-            if (this.Provider != null)
-            {
-                if (this.Provider.Length > 20)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "Provider", 20);
-                }
-                if (this.Provider.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Provider", 1);
-                }
-            }
-        }
     }
 }

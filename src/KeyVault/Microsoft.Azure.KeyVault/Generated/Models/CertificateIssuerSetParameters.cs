@@ -81,17 +81,6 @@ namespace Microsoft.Azure.KeyVault.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Provider");
             }
-            if (this.Provider != null)
-            {
-                if (this.Provider.Length > 20)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "Provider", 20);
-                }
-                if (this.Provider.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "Provider", 1);
-                }
-            }
         }
     }
 }

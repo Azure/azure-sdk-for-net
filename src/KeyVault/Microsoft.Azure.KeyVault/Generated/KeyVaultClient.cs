@@ -5621,17 +5621,6 @@ namespace Microsoft.Azure.KeyVault
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "provider");
             }
-            if (provider != null)
-            {
-                if (provider.Length > 20)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "provider", 20);
-                }
-                if (provider.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "provider", 1);
-                }
-            }
             CertificateIssuerSetParameters parameter = new CertificateIssuerSetParameters();
             if (provider != null || credentials != null || organizationDetails != null || attributes != null)
             {
@@ -5826,7 +5815,7 @@ namespace Microsoft.Azure.KeyVault
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IssuerBundle>> UpdateCertificateIssuerWithHttpMessagesAsync(string vaultBaseUrl, string issuerName, string provider, IssuerCredentials credentials = default(IssuerCredentials), OrganizationDetails organizationDetails = default(OrganizationDetails), IssuerAttributes attributes = default(IssuerAttributes), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IssuerBundle>> UpdateCertificateIssuerWithHttpMessagesAsync(string vaultBaseUrl, string issuerName, string provider = default(string), IssuerCredentials credentials = default(IssuerCredentials), OrganizationDetails organizationDetails = default(OrganizationDetails), IssuerAttributes attributes = default(IssuerAttributes), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (vaultBaseUrl == null)
             {
@@ -5839,21 +5828,6 @@ namespace Microsoft.Azure.KeyVault
             if (this.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
-            }
-            if (provider == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "provider");
-            }
-            if (provider != null)
-            {
-                if (provider.Length > 20)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "provider", 20);
-                }
-                if (provider.Length < 1)
-                {
-                    throw new ValidationException(ValidationRules.MinLength, "provider", 1);
-                }
             }
             CertificateIssuerUpdateParameters parameter = new CertificateIssuerUpdateParameters();
             if (provider != null || credentials != null || organizationDetails != null || attributes != null)

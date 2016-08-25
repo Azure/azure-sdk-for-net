@@ -20,8 +20,8 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         public const string All = "all";
         public const string Encrypt = "encrypt";
         public const string Decrypt = "decrypt";
-        public const string Wrapkey = "wrapkey";
-        public const string Unwrapkey = "unwrapkey";
+        public const string WrapKey = "wrapKey";
+        public const string UnwrapKey = "unwrapKey";
         public const string Sign = "sign";
         public const string Verify = "verify";
         public const string Get = "get";

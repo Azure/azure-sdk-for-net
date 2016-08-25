@@ -84,12 +84,11 @@ namespace Microsoft.Azure.KeyVault.Models
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
-        /// Gets or sets if this is a secret backing a KV certificate, then
-        /// this field specifies the corresponding key backing the KV
-        /// certificate.
+        /// Gets if this is a secret backing a KV certificate, then this field
+        /// specifies the corresponding key backing the KV certificate.
         /// </summary>
         [JsonProperty(PropertyName = "kid")]
-        public string Kid { get; set; }
+        public string Kid { get; private set; }
 
         /// <summary>
         /// Gets true if the secret's lifetime is managed by key vault i.e. if
