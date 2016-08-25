@@ -255,7 +255,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             mockedFrontend.GetStreamLengthImplementation = (streamPath, isDownload) =>
             {
                 // sleep for 1 second to allow for the cancellation to actual happen
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
                 return frontEnd.GetStreamLength(streamPath, isDownload);
             };
             var up = CreateParameters(isResume: false);
@@ -278,7 +278,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             Task uploadTask = Task.Run(() =>
             {
                 uploader.Execute();
-                Thread.Sleep(1000);
+                Thread.Sleep(2000);
             }, cancelToken);
             myTokenSource.Cancel();
             Assert.True(cancelToken.IsCancellationRequested);
