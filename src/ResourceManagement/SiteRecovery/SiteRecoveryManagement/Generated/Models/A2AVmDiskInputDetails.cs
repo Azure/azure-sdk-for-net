@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private string _diskUri;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Primary disk URI.
         /// </summary>
         public string DiskUri
         {
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private string _primaryStagingAzureStorageAccountId;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Primary staging Azure storage account ARM Id.
         /// </summary>
         public string PrimaryStagingAzureStorageAccountId
         {
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private string _recoveryAzureStorageAccountId;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Recovery Azure storage account ARM Id.
         /// </summary>
         public string RecoveryAzureStorageAccountId
         {

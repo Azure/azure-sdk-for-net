@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private int _appConsistentFrequencyInMinutes;
         
         /// <summary>
-        /// Optional.
+        /// Optional. App consistent frequency in minutes.
         /// </summary>
         public int AppConsistentFrequencyInMinutes
         {
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private int _crashConsistentFrequencyInMinutes;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Crash consistent frequency in minutes.
         /// </summary>
         public int CrashConsistentFrequencyInMinutes
         {
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private string _multiVmSyncStatus;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Multi vm sync status.
         /// </summary>
         public string MultiVmSyncStatus
         {
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private int _recoveryPointHistory;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Recovery point history.
         /// </summary>
         public int RecoveryPointHistory
         {
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private int _recoveryPointThresholdInMinutes;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Recovery point threshold in minutes.
         /// </summary>
         public int RecoveryPointThresholdInMinutes
         {
