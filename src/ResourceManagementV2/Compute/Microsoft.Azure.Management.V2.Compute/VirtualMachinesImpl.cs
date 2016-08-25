@@ -33,11 +33,11 @@ namespace Microsoft.Azure.Management.V2.Compute
             ComputeManager>,
         IVirtualMachines
     {
-        private StorageManager storageManager;
-        private NetworkManager networkManager;
+        private IStorageManager storageManager;
+        private INetworkManager networkManager;
         private VirtualMachineSizesImpl vmSizes;
 
-        internal VirtualMachinesImpl(IVirtualMachinesOperations client, VirtualMachineSizesOperations virtualMachineSizesClient, ComputeManager computeManager, StorageManager storageManager, NetworkManager networkManager) :
+        internal VirtualMachinesImpl(IVirtualMachinesOperations client, IVirtualMachineSizesOperations virtualMachineSizesClient, ComputeManager computeManager, IStorageManager storageManager, INetworkManager networkManager) :
             base(client, computeManager)
         {
             this.storageManager = storageManager;
@@ -169,9 +169,10 @@ namespace Microsoft.Azure.Management.V2.Compute
             return WrapList(new PagedList<VirtualMachineInner>(data));
         }
 
-        public override Task<IVirtualMachine> GetByGroupAsync(string groupName, string name)
+        public async override Task<IVirtualMachine> GetByGroupAsync(string groupName, string name)
         {
-            throw new NotImplementedException();
+            var data = await this.InnerCollection.GetAsync(groupName, name);
+            return this.WrapModel(data);
         }
     }
 }

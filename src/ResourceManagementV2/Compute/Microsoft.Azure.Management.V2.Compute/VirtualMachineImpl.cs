@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             VirtualMachineInner innerModel,
             IVirtualMachinesOperations client,
             IComputeManager computeManager,
-            StorageManager storageManager,
+            IStorageManager storageManager,
             INetworkManager networkManager) :
             base(name, innerModel, computeManager)
         {
@@ -90,9 +90,8 @@ namespace Microsoft.Azure.Management.V2.Compute
             // return new VirtualMachineSizeImpl(inner);
             // }
             // };
-            // initializeDataDisks();
+            InitializeDataDisks();
             // }
-
         }
 
         public async override Task<IVirtualMachine> Refresh()
@@ -206,11 +205,8 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         public VirtualMachineImpl WithPrimaryPrivateIpAddressStatic(string staticPrivateIpAddress)
         {
-
-            // this.nicDefinitionWithCreate = this.nicDefinitionWithPrivateIp
-            // .withPrimaryPrivateIpAddressStatic(staticPrivateIpAddress);
-            // return this;
-
+            this.nicDefinitionWithCreate = this.nicDefinitionWithPrivateIp
+                .WithPrimaryPrivateIpAddressStatic(staticPrivateIpAddress);
             return this;
         }
 
@@ -869,6 +865,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
 
             DataDiskImpl.SetDataDisksDefaults(this.dataDisks, this.vmName);
+            await HandleStorageSettingsAsync();
             HandleNetworkSettings();
             HandleAvailabilitySettings();
             var response = await client.CreateOrUpdateAsync(ResourceGroupName, vmName, Inner);
@@ -988,11 +985,14 @@ namespace Microsoft.Azure.Management.V2.Compute
             {
                 if (this.IsOSDiskFromImage(this.Inner.StorageProfile.OsDisk))
                 {
-                    string baseUrlStr = "\\{storage-base-url}";
                     string uri = this.Inner.StorageProfile.OsDisk.Vhd.Uri;
-                    var index = uri.IndexOf(baseUrlStr);
-                    uri = uri.Remove(index, baseUrlStr.Length).Insert(index,
-                        storageAccount.EndPoints.Primary.Blob);
+                    if (uri.StartsWith("{storage-base-url}"))
+                    {
+                        uri = uri.Remove(0, "{storage-base-url}".Length).Insert(0,
+                            storageAccount.EndPoints.Primary.Blob);
+
+                    }
+
                     this.Inner.StorageProfile.OsDisk.Vhd.Uri = uri;
                 }
 
@@ -1088,7 +1088,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             {
                 if (this.creatableStorageAccountKey != null
                     || this.existingStorageAccountToAssociate != null
-                    || this.IsInCreateMode)
+                    || !this.IsInCreateMode)
                 {
                     return false;
                 }
@@ -1218,7 +1218,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             {
                 if (status.Code != null && status.Code.StartsWith(codePrefix))
                 {
-                    return status.Code;
+                    return status.Code.Substring(codePrefix.Length + 1).ToUpper();
                 }
             }
 

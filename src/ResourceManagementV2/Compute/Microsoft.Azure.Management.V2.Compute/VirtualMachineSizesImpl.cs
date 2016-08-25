@@ -17,9 +17,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         ReadableWrappers<IVirtualMachineSize, VirtualMachineSizeImpl, VirtualMachineSize>,
         IVirtualMachineSizes
     {
-        private VirtualMachineSizesOperations innerCollection;
+        private IVirtualMachineSizesOperations innerCollection;
 
-        internal VirtualMachineSizesImpl(VirtualMachineSizesOperations innerCollection)
+        internal VirtualMachineSizesImpl(IVirtualMachineSizesOperations innerCollection)
         {
             this.innerCollection = innerCollection;
         }
