@@ -42,15 +42,11 @@ namespace Microsoft.Azure.Management.V2.Network
         IUpdate
     {
         private IPublicIPAddressesOperations client;
-        private PublicIPAddressInner parameters;
-
-        private string groupName;
 
         internal  PublicIpAddressImpl (string name, PublicIPAddressInner innerModel, IPublicIPAddressesOperations client, INetworkManager networkManager)
             : base(name, innerModel, networkManager)
         {
             this.client = client;
-            this.parameters = new PublicIPAddressInner();
         }
 
 
@@ -59,22 +55,22 @@ namespace Microsoft.Azure.Management.V2.Network
         {
             get
             {
-                return this.parameters.DnsSettings.ReverseFqdn;
+                return this.Inner.DnsSettings.ReverseFqdn;
             }
         }
-        
+
         /// <returns>the assigned leaf domain label</returns>
         string LeafDomainLabel
         {
             get
             {
-                if (this.parameters.DnsSettings == null)
+                if (this.Inner.DnsSettings == null)
                 {
                     return null;
                 }
                 else
                 {
-                    return this.parameters.DnsSettings.DomainNameLabel;
+                    return this.Inner.DnsSettings.DomainNameLabel;
                 }
             }
         }
@@ -84,7 +80,7 @@ namespace Microsoft.Azure.Management.V2.Network
         {
             get
             {
-                return this.parameters.DnsSettings.Fqdn;
+                return this.Inner.DnsSettings.Fqdn;
             }
         }
         
@@ -93,7 +89,7 @@ namespace Microsoft.Azure.Management.V2.Network
         {
             get
             {
-                return this.parameters.IdleTimeoutInMinutes;
+                return this.Inner.IdleTimeoutInMinutes;
             }
         }
         
@@ -102,7 +98,7 @@ namespace Microsoft.Azure.Management.V2.Network
         {
             get
             {
-                return this.parameters.IpAddress;
+                return this.Inner.IpAddress;
             }
         }
         
@@ -111,7 +107,7 @@ namespace Microsoft.Azure.Management.V2.Network
         {
             get
             {
-                return this.parameters.PublicIPAllocationMethod;
+                return this.Inner.PublicIPAllocationMethod;
             }
         }
 
@@ -122,7 +118,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// <returns>the next stage of the resource update</returns>
         IUpdate WithReverseFqdn(string reverseFQDN)
         {
-            this.parameters.DnsSettings.ReverseFqdn = reverseFQDN.ToLower();
+            this.Inner.DnsSettings.ReverseFqdn = reverseFQDN.ToLower();
             return this;
         }
 
@@ -143,7 +139,7 @@ namespace Microsoft.Azure.Management.V2.Network
         IUpdate WithIdleTimeoutInMinutes(int minutes)
         {
 
-            this.parameters.IdleTimeoutInMinutes = minutes;
+            this.Inner.IdleTimeoutInMinutes = minutes;
             return this;
         }
 
@@ -169,7 +165,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// <returns>the next stage of the resource update</returns>
         IUpdate WithLeafDomainLabel(string dnsName)
         {
-            this.parameters.DnsSettings.DomainNameLabel = dnsName.ToLower();
+            this.Inner.DnsSettings.DomainNameLabel = dnsName.ToLower();
             return this;
         }
 
@@ -182,7 +178,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// <returns>the next stage of the resource update</returns>
         IUpdate WithStaticIp()
         {
-            this.parameters.PublicIPAllocationMethod = IPAllocationMethod.Static;
+            this.Inner.PublicIPAllocationMethod = IPAllocationMethod.Static;
             return this;
         }
 
@@ -198,14 +194,13 @@ namespace Microsoft.Azure.Management.V2.Network
 
         public override IUpdate Update()
         {
-            this.parameters = new PublicIPAddressInner();
             return this;
         }
 
         public async override Task<IPublicIpAddress> Refresh()
         {
             var response = await client.GetWithHttpMessagesAsync(this.ResourceGroupName,
-                this.parameters.Name);
+                this.Inner.Name);
             SetInner(response.Body);
             return this;
         }
@@ -213,18 +208,19 @@ namespace Microsoft.Azure.Management.V2.Network
         public override async Task<IPublicIpAddress> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             // // Clean up empty DNS settings
-            var dnsSettings = this.parameters.DnsSettings;
+            var dnsSettings = this.Inner.DnsSettings;
             if (dnsSettings != null)
             {
                 if (string.IsNullOrWhiteSpace(dnsSettings.DomainNameLabel)
                 && string.IsNullOrWhiteSpace(dnsSettings.Fqdn)
                 && string.IsNullOrWhiteSpace(dnsSettings.ReverseFqdn))
                 {
-                    this.parameters.DnsSettings = null;
+                    this.Inner.DnsSettings = null;
                 }
             }
 
-            var response = await this.client.CreateOrUpdateAsync(this.ResourceGroupName, this.Name, this.parameters);
+            var response = await this.client.CreateOrUpdateAsync(this.ResourceGroupName, this.Name, this.Inner);
+            this.SetInner(response);
             return this;
         }
     }

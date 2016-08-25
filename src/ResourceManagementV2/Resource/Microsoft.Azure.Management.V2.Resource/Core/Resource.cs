@@ -31,7 +31,7 @@ namespace Microsoft.Rest.Azure
         /// Resource Id
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
+        public virtual string Id { get; protected set; }
 
         /// <summary>
         /// Resource name

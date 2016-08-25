@@ -104,9 +104,10 @@ namespace Microsoft.Azure.Management.V2.Network
             await this.InnerCollection.DeleteAsync(groupName, name);
         }
 
-        public override Task<IPublicIpAddress> GetByGroupAsync(string groupName, string name)
+        public async override Task<IPublicIpAddress> GetByGroupAsync(string groupName, string name)
         {
-            throw new NotImplementedException();
+            var data = await this.InnerCollection.GetAsync(groupName, name);
+            return this.WrapModel(data);
         }
     }
 }

@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.V2.Network
 
         protected override NetworkImpl WrapModel(string name)
         {
-            VirtualNetworkInner inner = new VirtualNetworkInner();
+            VirtualNetworkInner inner = new VirtualNetworkInner(default(string), default(string), name);
 
             // Initialize address space
             AddressSpace addressSpace = inner.AddressSpace;

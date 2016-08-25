@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.V2.Network
         protected override NetworkSecurityGroupImpl WrapModel(string name)
         {
 
-            NetworkSecurityGroupInner inner = new NetworkSecurityGroupInner();
+            NetworkSecurityGroupInner inner = new NetworkSecurityGroupInner(name: name);
 
             // Initialize rules
             if (inner.SecurityRules == null)

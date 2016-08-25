@@ -151,26 +151,12 @@ namespace Microsoft.Azure.Management.V2.Network
             }
         }
 
-        public override Task<INetworkSecurityGroup> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public async override Task<INetworkSecurityGroup> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-
-            // final NetworkSecurityGroupImpl self = this;
-            // return this.innerCollection.createOrUpdateAsync(this.resourceGroupName(), this.name(), this.Inner,
-            // new ServiceCallback<NetworkSecurityGroupInner>() {
-            // @Override
-            // public void failure(Throwable t) {
-            // callback.failure(t);
-            // }
-            // 
-            // @Override
-            // public void success(ServiceResponse<NetworkSecurityGroupInner> response) {
-            // self.setInner(response.getBody());
-            // initializeRulesFromInner();
-            // callback.success(new ServiceResponse<Resource>(self, response.getResponse()));
-            // }
-            // });
-
-            return null;
+            var response = await this.innerCollection.CreateOrUpdateAsync(this.ResourceGroupName, this.Name, this.Inner);
+            this.SetInner(response);
+            this.InitializeRulesFromInner();
+            return this;
         }
     }
 }

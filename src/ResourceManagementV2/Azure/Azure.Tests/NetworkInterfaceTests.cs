@@ -15,7 +15,7 @@ namespace Azure.Tests
         string testId = "" + System.DateTime.Now.Ticks % 100000L;
 
         [Fact]
-        public void CreateTest()
+        public void CreateUpdateTest()
         {
             var manager = TestHelper.CreateNetworkManager();
             manager.NetworkInterfaces.Define("nic" + testId)
@@ -26,12 +26,7 @@ namespace Azure.Tests
                     .WithNewPrimaryPublicIpAddress("pipdns" + this.testId)
                     .WithIpForwarding()
                     .Create();
-        }
 
-        [Fact]
-        public void UpdateTest()
-        {
-            var manager = TestHelper.CreateNetworkManager();
             var resource = manager.NetworkInterfaces.GetByGroup("rg" + this.testId, "nic" + testId);
             resource = resource.Update()
                 .WithoutIpForwarding()
@@ -43,6 +38,8 @@ namespace Azure.Tests
                 .WithTag("tag2", "value2")
                 .Apply();
             Assert.True(resource.Tags.ContainsKey("tag1"));
+
+            manager.NetworkInterfaces.Delete(resource.Id);
         }
 
         public void print(INetworkInterface resource)

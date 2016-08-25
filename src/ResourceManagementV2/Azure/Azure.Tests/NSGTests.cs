@@ -15,7 +15,7 @@ namespace Azure.Tests
         string testId = "" + System.DateTime.Now.Ticks % 100000L;
 
         [Fact]
-        public void CreateTest()
+        public void CreateUpdateTest()
         {
             var newName = "nsg" + this.testId;
             var manager = TestHelper.CreateNetworkManager();
@@ -45,14 +45,7 @@ namespace Azure.Tests
             // Verify
             Assert.True(nsg.Region.Equals(Region.US_WEST));
             Assert.True(nsg.SecurityRules().Count == 2);
-        }
 
-
-        [Fact]
-        public void UpdateTest()
-        {
-            var newName = "nsg" + this.testId;
-            var manager = TestHelper.CreateNetworkManager();
             var resource = manager.NetworkSecurityGroups.GetByGroup("rg" + this.testId, newName);
             resource = resource.Update()
                 .WithoutRule("rule1")
@@ -76,6 +69,8 @@ namespace Azure.Tests
                     .Parent()
                 .Apply();
             Assert.True(resource.Tags.ContainsKey("tag1"));
+
+            manager.NetworkSecurityGroups.Delete(resource.Id);
         }
 
 

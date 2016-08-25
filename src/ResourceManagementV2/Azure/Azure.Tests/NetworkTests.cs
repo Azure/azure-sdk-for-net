@@ -15,7 +15,7 @@ namespace Azure.Tests
         string testId = "" + System.DateTime.Now.Ticks % 100000L;
 
         [Fact]
-        public void CreateTest()
+        public void CreateUpdateTest()
         {
             string newName = "net" + this.testId;
             var region = Region.US_WEST;
@@ -39,21 +39,8 @@ namespace Azure.Tests
                         .WithExistingNetworkSecurityGroup(nsg)
                         .Attach()
                     .Create();
-        }
 
-
-        [Fact]
-        public void UpdateTest()
-        {
-            var newName = "net" + this.testId;
-            var groupName = "rg" + this.testId;
-            var manager = TestHelper.CreateNetworkManager();
             var resource = manager.Networks.GetByGroup(groupName, newName);
-            var nsg = manager.NetworkSecurityGroups.Define("nsgB" + this.testId)
-                .WithRegion(resource.Region)
-                .WithExistingResourceGroup(resource.ResourceGroupName)
-                .Create();
-
             resource = resource.Update()
                 .WithTag("tag1", "value1")
                 .WithTag("tag2", "value2")
@@ -70,6 +57,9 @@ namespace Azure.Tests
                     .Attach()
                 .Apply();
             Assert.True(resource.Tags.ContainsKey("tag1"));
+
+            manager.Networks.Delete(resource.Id);
+            manager.NetworkSecurityGroups.Delete(nsg.Id);
         }
 
 

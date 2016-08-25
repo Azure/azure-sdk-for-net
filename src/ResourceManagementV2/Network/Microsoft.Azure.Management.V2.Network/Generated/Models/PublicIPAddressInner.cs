@@ -55,6 +55,12 @@ namespace Microsoft.Azure.Management.Network.Models
         }
 
         /// <summary>
+        /// Resource Id
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
+        public override string Id { get; protected set; }
+
+        /// <summary>
         /// Gets or sets PublicIP allocation method (Static/Dynamic). Possible
         /// values include: 'Static', 'Dynamic'
         /// </summary>

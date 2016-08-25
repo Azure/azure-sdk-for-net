@@ -14,40 +14,35 @@ namespace Azure.Tests
         string testId = "" + System.DateTime.Now.Ticks % 100000L;
 
         [Fact]
-        public void CreateTest()
+        public void CreateUpdateTest()
         {
             var newPipName = "pip" + this.testId;
             var newRG = "rg" + this.testId;
             var manager = TestHelper.CreateNetworkManager();
-            manager.PublicIpAddresses.Define(newPipName)
+            var pip = manager.PublicIpAddresses.Define(newPipName)
                 .WithRegion(Region.US_WEST)
                 .WithNewResourceGroup(newRG)
                 .WithDynamicIp()
                 .WithLeafDomainLabel(newPipName)
                 .WithIdleTimeoutInMinutes(10)
                 .Create();
-        }
 
-
-        [Fact]
-        public void UpdateTest()
-        {
-            var newPipName = "pip" + this.testId;
-            var newRG = "rg" + this.testId;
-            var manager = TestHelper.CreateNetworkManager();
             var resource = manager.PublicIpAddresses.GetByGroup(newRG, newPipName);
             var updatedDnsName = resource.LeafDomainLabel + "xx";
             var updatedIdleTimeout = 15;
             resource = resource.Update()
                     .WithStaticIp()
                     .WithLeafDomainLabel(updatedDnsName)
-                    .WithReverseFqdn(resource.LeafDomainLabel + "." + resource.Region + ".cloudapp.azure.com")
+                    .WithReverseFqdn(resource.LeafDomainLabel + "." + resource.RegionName + ".cloudapp.azure.com")
                     .WithIdleTimeoutInMinutes(updatedIdleTimeout)
                     .WithTag("tag1", "value1")
                     .WithTag("tag2", "value2")
                     .Apply();
             Assert.True(resource.LeafDomainLabel.Equals(updatedDnsName, StringComparison.OrdinalIgnoreCase));
             Assert.True(resource.IdleTimeoutInMinutes == updatedIdleTimeout);
+
+            manager.PublicIpAddresses.Delete(pip.Id);
+
         }
 
 

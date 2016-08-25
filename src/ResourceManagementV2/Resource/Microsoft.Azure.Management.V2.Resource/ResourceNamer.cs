@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.V2.Resource
             }
 
             var millis = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
-            var jan1970millis = DateTime.ParseExact("1/1/1970 0:00 AM", ResourceNamer.formats,
+            var jan1970millis = DateTime.ParseExact("1/1/1970 0:00:00 AM", ResourceNamer.formats,
                                     new CultureInfo("en-US"), DateTimeStyles.None).Ticks / TimeSpan.TicksPerMillisecond;
             String minRandomString = ((millis - jan1970millis) % 100000L).ToString();
             if (maxLen <= (prefix.Length + randName.Length + minRandomnessLength))
