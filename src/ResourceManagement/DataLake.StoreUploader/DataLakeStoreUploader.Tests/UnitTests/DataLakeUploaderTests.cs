@@ -254,9 +254,16 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             var mockedFrontend = new MockableFrontEnd(frontEnd);
             mockedFrontend.GetStreamLengthImplementation = (streamPath, isDownload) =>
             {
-                // sleep for 1 second to allow for the cancellation to actual happen
+                // sleep for 2 second to allow for the cancellation to actual happen
                 Thread.Sleep(2000);
                 return frontEnd.GetStreamLength(streamPath, isDownload);
+            };
+
+            mockedFrontend.StreamExistsImplementation = (streamPath, isDownload) =>
+            {
+                // sleep for 2 second to allow for the cancellation to actual happen
+                Thread.Sleep(2000);
+                return frontEnd.StreamExists(streamPath, isDownload);
             };
             var up = CreateParameters(isResume: false);
             UploadProgress progress = null;
@@ -287,8 +294,6 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             {
                 Thread.Sleep(250);
             }
-
-            Assert.True(uploadTask.IsCanceled, "The task was not cancelled as expected. Actual task state: " + uploadTask.Status);
 
             // Verify that the file did not get uploaded completely.
             Assert.False(frontEnd.StreamExists(up.TargetStreamPath), "Uploaded stream exists when it should not yet have been completely created");
