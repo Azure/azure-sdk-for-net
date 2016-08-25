@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private string _fabricObjectId;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Fabric object ARM Id.
         /// </summary>
         public string FabricObjectId
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private string _multiVmGroupId;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Multi vm group Id.
         /// </summary>
         public string MultiVmGroupId
         {
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private string _multiVmGroupName;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Multi vm group name.
         /// </summary>
         public string MultiVmGroupName
         {
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private IList<A2AProtectedDiskDetails> _protectedDisks;
         
         /// <summary>
-        /// Optional.
+        /// Optional. List of disk specific details.
         /// </summary>
         public IList<A2AProtectedDiskDetails> ProtectedDisks
         {

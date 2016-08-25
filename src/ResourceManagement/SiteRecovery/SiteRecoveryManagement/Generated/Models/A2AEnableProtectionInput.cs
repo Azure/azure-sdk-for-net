@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private string _fabricObjectId;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Fabric object ARM Id.
         /// </summary>
         public string FabricObjectId
         {
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private string _recoveryAvailabilitySetId;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Primary staging Azure storage account ARM Id.
         /// </summary>
         public string RecoveryAvailabilitySetId
         {
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private string _recoveryCloudServiceId;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Recovery cloud service ARM Id.
         /// </summary>
         public string RecoveryCloudServiceId
         {
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private string _recoveryContainerId;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Recovery container ARM Id.
         /// </summary>
         public string RecoveryContainerId
         {
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private string _recoveryResourceGroupId;
         
         /// <summary>
-        /// Optional.
+        /// Optional. Recovery resource group ARM Id.
         /// </summary>
         public string RecoveryResourceGroupId
         {
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         private IList<A2AVmDiskInputDetails> _vmDisks;
         
         /// <summary>
-        /// Optional.
+        /// Optional. List of disk specific details.
         /// </summary>
         public IList<A2AVmDiskInputDetails> VmDisks
         {
