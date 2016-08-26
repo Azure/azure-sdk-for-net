@@ -37,14 +37,13 @@ namespace EventHub.Tests.ScenarioTests
                 InitializeClients(context);
 
                 var location = EventHubManagementHelper.DefaultLocation;
-                var resourceGroup = "Default-ServiceBus-WestUS";
 
-                //var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
-                //if (string.IsNullOrWhiteSpace(resourceGroup))
-                //{
-                //    resourceGroup = TestUtilities.GenerateName(ServiceBusManagementHelper.ResourceGroupPrefix);
-                //    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
-                //}
+                var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
+                if (string.IsNullOrWhiteSpace(resourceGroup))
+                {
+                    resourceGroup = TestUtilities.GenerateName(ServiceBusManagementHelper.ResourceGroupPrefix);
+                    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
+                }
 
                 //Create a namespace
                 var namespaceName = TestUtilities.GenerateName(EventHubManagementHelper.NamespacePrefix);
