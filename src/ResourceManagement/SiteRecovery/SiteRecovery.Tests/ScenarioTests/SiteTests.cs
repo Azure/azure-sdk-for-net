@@ -28,6 +28,8 @@ namespace SiteRecovery.Tests
     public class SiteTests : SiteRecoveryTestsBase
     {
         string siteName = "site3";
+        string location = "southeastasia";
+        string azureSiteName = "azureSite1";
 
         [Fact]
         public void CreateSite()
@@ -57,6 +59,40 @@ namespace SiteRecovery.Tests
 
                 var site = client.Fabrics.Delete(siteName, RequestHeaders);
                 Assert.True(site.StatusCode == HttpStatusCode.NoContent, "Site Name should have been deleted");
+            }
+        }
+
+        [Fact]
+        public void A2ACreateSite()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler, Constants.A2A);
+
+                FabricCreationInput siteInput = new FabricCreationInput();
+                siteInput.Properties = new FabricCreationInputProperties();
+
+                siteInput.Properties.CustomDetails = new AzureFabricCreationInput()
+                {
+                    Location = location
+                };
+
+                var response = client.Fabrics.BeginCreating(azureSiteName, siteInput, RequestHeaders);
+                Assert.NotNull(response);
+            }
+        }
+
+        [Fact]
+        public void A2ADeleteSite()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler, Constants.A2A);
+
+                var response = client.Fabrics.BeginDeleting(azureSiteName, RequestHeaders);
+                Assert.NotNull(response);
             }
         }
 
