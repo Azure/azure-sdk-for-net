@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// Initializes a new instance of the QueueCreateOrUpdateParameters
         /// class.
         /// </summary>
-        public QueueCreateOrUpdateParameters(string location, string name = default(string), TimeSpan? lockDuration = default(TimeSpan?), DateTime? accessedAt = default(DateTime?), TimeSpan? autoDeleteOnIdle = default(TimeSpan?), EntityAvailabilityStatus? entityAvailabilityStatus = default(EntityAvailabilityStatus?), DateTime? createdAt = default(DateTime?), TimeSpan? defaultMessageTimeToLive = default(TimeSpan?), TimeSpan? duplicateDetectionHistoryTimeWindow = default(TimeSpan?), bool? enableBatchedOperations = default(bool?), bool? deadLetteringOnMessageExpiration = default(bool?), bool? enableExpress = default(bool?), bool? enablePartitioning = default(bool?), bool? isAnonymousAccessible = default(bool?), int? maxDeliveryCount = default(int?), long? maxSizeInMegabytes = default(long?), long? messageCount = default(long?), MessageCountDetails countDetails = default(MessageCountDetails), bool? requiresDuplicateDetection = default(bool?), bool? requiresSession = default(bool?), long? sizeInBytes = default(long?), EntityStatus? status = default(EntityStatus?), bool? supportOrdering = default(bool?), DateTime? updatedAt = default(DateTime?))
+        public QueueCreateOrUpdateParameters(string location, string name = default(string), string lockDuration = default(string), DateTime? accessedAt = default(DateTime?), string autoDeleteOnIdle = default(string), EntityAvailabilityStatus? entityAvailabilityStatus = default(EntityAvailabilityStatus?), DateTime? createdAt = default(DateTime?), string defaultMessageTimeToLive = default(string), string duplicateDetectionHistoryTimeWindow = default(string), bool? enableBatchedOperations = default(bool?), bool? deadLetteringOnMessageExpiration = default(bool?), bool? enableExpress = default(bool?), bool? enablePartitioning = default(bool?), bool? isAnonymousAccessible = default(bool?), int? maxDeliveryCount = default(int?), long? maxSizeInMegabytes = default(long?), long? messageCount = default(long?), MessageCountDetails countDetails = default(MessageCountDetails), bool? requiresDuplicateDetection = default(bool?), bool? requiresSession = default(bool?), long? sizeInBytes = default(long?), EntityStatus? status = default(EntityStatus?), bool? supportOrdering = default(bool?), DateTime? updatedAt = default(DateTime?))
         {
             Name = name;
             Location = location;
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// LockDuration is 5 minutes; the default value is 1 minute.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lockDuration ")]
-        public TimeSpan? LockDuration { get; set; }
+        public string LockDuration { get; set; }
 
         /// <summary>
         /// Last time a message was sent, or the last time there was a receive
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// deleted. The minimum duration is 5 minutes.
         /// </summary>
         [JsonProperty(PropertyName = "properties.autoDeleteOnIdle")]
-        public TimeSpan? AutoDeleteOnIdle { get; set; }
+        public string AutoDeleteOnIdle { get; set; }
 
         /// <summary>
         /// Entity availability status for the queue. Possible values include:
@@ -114,14 +114,14 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// not set on a message itself.
         /// </summary>
         [JsonProperty(PropertyName = "properties.defaultMessageTimeToLive")]
-        public TimeSpan? DefaultMessageTimeToLive { get; set; }
+        public string DefaultMessageTimeToLive { get; set; }
 
         /// <summary>
         /// TimeSpan structure that defines the duration of the duplicate
         /// detection history. The default value is 10 minutes..
         /// </summary>
         [JsonProperty(PropertyName = "properties.duplicateDetectionHistoryTimeWindow ")]
-        public TimeSpan? DuplicateDetectionHistoryTimeWindow { get; set; }
+        public string DuplicateDetectionHistoryTimeWindow { get; set; }
 
         /// <summary>
         /// value that indicates whether server-side batched operations are

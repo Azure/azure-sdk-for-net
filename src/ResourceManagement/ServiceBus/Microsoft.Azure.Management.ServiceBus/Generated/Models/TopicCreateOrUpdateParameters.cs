@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// Initializes a new instance of the TopicCreateOrUpdateParameters
         /// class.
         /// </summary>
-        public TopicCreateOrUpdateParameters(string location, string name = default(string), DateTime? accessedAt = default(DateTime?), TimeSpan? autoDeleteOnIdle = default(TimeSpan?), EntityAvailabilityStatus? entityAvailabilityStatus = default(EntityAvailabilityStatus?), DateTime? createdAt = default(DateTime?), MessageCountDetails countDetails = default(MessageCountDetails), TimeSpan? defaultMessageTimeToLive = default(TimeSpan?), TimeSpan? duplicateDetectionHistoryTimeWindow = default(TimeSpan?), bool? enableBatchedOperations = default(bool?), bool? enableExpress = default(bool?), bool? enablePartitioning = default(bool?), bool? enableSubscriptionPartitioning = default(bool?), bool? filteringMessagesBeforePublishing = default(bool?), bool? isAnonymousAccessible = default(bool?), bool? isExpress = default(bool?), long? maxSizeInMegabytes = default(long?), bool? requiresDuplicateDetection = default(bool?), long? sizeInBytes = default(long?), EntityStatus? status = default(EntityStatus?), int? subscriptionCount = default(int?), bool? supportOrdering = default(bool?), DateTime? updatedAt = default(DateTime?))
+        public TopicCreateOrUpdateParameters(string location, string name = default(string), DateTime? accessedAt = default(DateTime?), string autoDeleteOnIdle = default(string), EntityAvailabilityStatus? entityAvailabilityStatus = default(EntityAvailabilityStatus?), DateTime? createdAt = default(DateTime?), MessageCountDetails countDetails = default(MessageCountDetails), string defaultMessageTimeToLive = default(string), string duplicateDetectionHistoryTimeWindow = default(string), bool? enableBatchedOperations = default(bool?), bool? enableExpress = default(bool?), bool? enablePartitioning = default(bool?), bool? enableSubscriptionPartitioning = default(bool?), bool? filteringMessagesBeforePublishing = default(bool?), bool? isAnonymousAccessible = default(bool?), bool? isExpress = default(bool?), long? maxSizeInMegabytes = default(long?), bool? requiresDuplicateDetection = default(bool?), long? sizeInBytes = default(long?), EntityStatus? status = default(EntityStatus?), int? subscriptionCount = default(int?), bool? supportOrdering = default(bool?), DateTime? updatedAt = default(DateTime?))
         {
             Name = name;
             Location = location;
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// deleted. The minimum duration is 5 minutes.
         /// </summary>
         [JsonProperty(PropertyName = "properties.autoDeleteOnIdle")]
-        public TimeSpan? AutoDeleteOnIdle { get; set; }
+        public string AutoDeleteOnIdle { get; set; }
 
         /// <summary>
         /// Entity availability status for the topic. Possible values include:
@@ -110,14 +110,14 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// not set on a message itself.
         /// </summary>
         [JsonProperty(PropertyName = "properties.defaultMessageTimeToLive")]
-        public TimeSpan? DefaultMessageTimeToLive { get; set; }
+        public string DefaultMessageTimeToLive { get; set; }
 
         /// <summary>
         /// TimeSpan structure that defines the duration of the duplicate
         /// detection history. The default value is 10 minutes..
         /// </summary>
         [JsonProperty(PropertyName = "properties.duplicateDetectionHistoryTimeWindow ")]
-        public TimeSpan? DuplicateDetectionHistoryTimeWindow { get; set; }
+        public string DuplicateDetectionHistoryTimeWindow { get; set; }
 
         /// <summary>
         /// Value that indicates whether server-side batched operations are

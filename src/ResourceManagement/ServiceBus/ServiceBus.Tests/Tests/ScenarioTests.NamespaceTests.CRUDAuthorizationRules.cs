@@ -144,6 +144,15 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.NotNull(listKeysResponse.PrimaryConnectionString);
                 Assert.NotNull(listKeysResponse.SecondaryConnectionString);
 
+                // Regenerate AuthorizationRules
+                var regenerateKeysParameters = new RegenerateKeysParameters();
+                regenerateKeysParameters.Policykey = Policykey.PrimaryKey;
+
+                var regenerateKeysResponse = ServiceBusManagementClient.Namespaces.RegenerateKeys(resourceGroup, namespaceName, authorizationRuleName, regenerateKeysParameters);
+                Assert.NotNull(regenerateKeysResponse);
+                Assert.NotEqual(regenerateKeysResponse.PrimaryKey, listKeysResponse.PrimaryKey);
+                Assert.Equal(regenerateKeysResponse.SecondaryKey, listKeysResponse.SecondaryKey);
+
                 // Delete namespace authorizationRule
                 ServiceBusManagementClient.Namespaces.DeleteAuthorizationRule(resourceGroup, namespaceName, authorizationRuleName);
 

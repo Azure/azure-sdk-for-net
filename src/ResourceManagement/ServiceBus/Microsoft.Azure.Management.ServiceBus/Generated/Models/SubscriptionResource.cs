@@ -30,8 +30,8 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <summary>
         /// Initializes a new instance of the SubscriptionResource class.
         /// </summary>
-        public SubscriptionResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DateTime? accessedAt = default(DateTime?), TimeSpan? autoDeleteOnIdle = default(TimeSpan?), MessageCountDetails countDetails = default(MessageCountDetails), DateTime? createdAt = default(DateTime?), TimeSpan? defaultMessageTimeToLive = default(TimeSpan?), bool? deadLetteringOnFilterEvaluationExceptions = default(bool?), bool? deadLetteringOnMessageExpiration = default(bool?), bool? enableBatchedOperations = default(bool?), EntityAvailabilityStatus? entityAvailabilityStatus = default(EntityAvailabilityStatus?), bool? isReadOnly = default(bool?), TimeSpan? lockDuration = default(TimeSpan?), int? maxDeliveryCount = default(int?), long? messageCount = default(long?), bool? requiresSession = default(bool?), EntityStatus? status = default(EntityStatus?), DateTime? updatedAt = default(DateTime?))
-            : base(id, name, type, location, tags)
+        public SubscriptionResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DateTime? accessedAt = default(DateTime?), string autoDeleteOnIdle = default(string), MessageCountDetails countDetails = default(MessageCountDetails), DateTime? createdAt = default(DateTime?), string defaultMessageTimeToLive = default(string), bool? deadLetteringOnFilterEvaluationExceptions = default(bool?), bool? deadLetteringOnMessageExpiration = default(bool?), bool? enableBatchedOperations = default(bool?), EntityAvailabilityStatus? entityAvailabilityStatus = default(EntityAvailabilityStatus?), bool? isReadOnly = default(bool?), string lockDuration = default(string), int? maxDeliveryCount = default(int?), long? messageCount = default(long?), bool? requiresSession = default(bool?), EntityStatus? status = default(EntityStatus?), DateTime? updatedAt = default(DateTime?))
+            : base(location, id, name, type, tags)
         {
             AccessedAt = accessedAt;
             AutoDeleteOnIdle = autoDeleteOnIdle;
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// deleted. The minimum duration is 5 minutes.
         /// </summary>
         [JsonProperty(PropertyName = "properties.autoDeleteOnIdle")]
-        public TimeSpan? AutoDeleteOnIdle { get; set; }
+        public string AutoDeleteOnIdle { get; set; }
 
         /// <summary>
         /// </summary>
@@ -82,7 +82,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// not set on a message itself.
         /// </summary>
         [JsonProperty(PropertyName = "properties.defaultMessageTimeToLive")]
-        public TimeSpan? DefaultMessageTimeToLive { get; set; }
+        public string DefaultMessageTimeToLive { get; set; }
 
         /// <summary>
         /// Value that indicates if a subscription has dead letter support on
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// The lock duration time span for the subscription.
         /// </summary>
         [JsonProperty(PropertyName = "properties.lockDuration")]
-        public TimeSpan? LockDuration { get; set; }
+        public string LockDuration { get; set; }
 
         /// <summary>
         /// Number of maximum deliveries.
@@ -157,5 +157,12 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         [JsonProperty(PropertyName = "properties.updatedAt")]
         public DateTime? UpdatedAt { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }

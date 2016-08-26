@@ -158,49 +158,6 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Deletes a topic from the specified namespace and resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The topics name.
-            /// </param>
-            /// <param name='topicName'>
-            /// The topics name.
-            /// </param>
-            public static void BeginDelete(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName)
-            {
-                Task.Factory.StartNew(s => ((ITopicsOperations)s).BeginDeleteAsync(resourceGroupName, namespaceName, topicName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes a topic from the specified namespace and resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The topics name.
-            /// </param>
-            /// <param name='topicName'>
-            /// The topics name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task BeginDeleteAsync(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, namespaceName, topicName, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <summary>
             /// Returns the description for the specified topic
             /// </summary>
             /// <param name='operations'>

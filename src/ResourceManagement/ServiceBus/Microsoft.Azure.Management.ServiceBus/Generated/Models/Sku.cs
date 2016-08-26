@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <summary>
         /// Initializes a new instance of the Sku class.
         /// </summary>
-        public Sku(string name = default(string), string tier = default(string), int? capacity = default(int?))
+        public Sku(string tier, string name = default(string), int? capacity = default(int?))
         {
             Name = name;
             Tier = tier;
@@ -37,8 +37,8 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         }
 
         /// <summary>
-        /// The resource type that this object applies to. Eg: NamespaceType.
-        /// Possible values include: 'Basic', 'Standard', 'Premium'
+        /// Name of this Sku. Possible values include: 'Basic', 'Standard',
+        /// 'Premium'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
@@ -51,10 +51,20 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public string Tier { get; set; }
 
         /// <summary>
-        /// The messaging units or eventhub throughput units
+        /// The messaging units for the tier specified
         /// </summary>
         [JsonProperty(PropertyName = "capacity")]
         public int? Capacity { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (Tier == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Tier");
+            }
+        }
     }
 }

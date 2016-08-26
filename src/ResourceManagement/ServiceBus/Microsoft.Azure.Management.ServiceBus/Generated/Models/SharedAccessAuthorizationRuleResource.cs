@@ -32,8 +32,8 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// Initializes a new instance of the
         /// SharedAccessAuthorizationRuleResource class.
         /// </summary>
-        public SharedAccessAuthorizationRuleResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<AccessRights?> rights = default(IList<AccessRights?>))
-            : base(id, name, type, location, tags)
+        public SharedAccessAuthorizationRuleResource(string location, IList<AccessRights?> rights, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+            : base(location, id, name, type, tags)
         {
             Rights = rights;
         }
@@ -44,5 +44,16 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         [JsonProperty(PropertyName = "properties.rights")]
         public IList<AccessRights?> Rights { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public override void Validate()
+        {
+            base.Validate();
+            if (Rights == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Rights");
+            }
+        }
     }
 }

@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// Initializes a new instance of the
         /// SharedAccessAuthorizationRuleCreateOrUpdateParameters class.
         /// </summary>
-        public SharedAccessAuthorizationRuleCreateOrUpdateParameters(string location = default(string), string name = default(string), IList<AccessRights?> rights = default(IList<AccessRights?>))
+        public SharedAccessAuthorizationRuleCreateOrUpdateParameters(IList<AccessRights?> rights, string location = default(string), string name = default(string))
         {
             Location = location;
             Name = name;
@@ -57,5 +57,15 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         [JsonProperty(PropertyName = "properties.rights")]
         public IList<AccessRights?> Rights { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (Rights == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Rights");
+            }
+        }
     }
 }

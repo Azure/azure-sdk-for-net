@@ -117,6 +117,10 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Location");
             }
+            if (this.Sku != null)
+            {
+                this.Sku.Validate();
+            }
         }
     }
 }
