@@ -44,7 +44,7 @@ namespace ServiceBus.Tests.ScenarioTests
                     this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
                 }
 
-                //Create a namespace
+                // Create a namespace
                 var namespaceName = TestUtilities.GenerateName(ServiceBusManagementHelper.NamespacePrefix);
                 var createNamespaceResponse = ServiceBusManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
                     new NamespaceCreateOrUpdateParameters()
@@ -57,7 +57,7 @@ namespace ServiceBus.Tests.ScenarioTests
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
-                //Get the created namespace
+                // Get the created namespace
                 var getNamespaceResponse = ServiceBusManagementClient.Namespaces.Get(resourceGroup, namespaceName);
                 if (string.Compare(getNamespaceResponse.ProvisioningState, "Succeeded", true) != 0)
                     TestUtilities.Wait(TimeSpan.FromSeconds(5));
@@ -68,7 +68,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.Equal(NamespaceState.Active , getNamespaceResponse.Status);
                 Assert.Equal(location, getNamespaceResponse.Location, StringComparer.CurrentCultureIgnoreCase);
 
-                //Create a namespace AuthorizationRule
+                // Create a namespace AuthorizationRule
                 var authorizationRuleName = TestUtilities.GenerateName(ServiceBusManagementHelper.AuthorizationRulesPrefix);
                 string createPrimaryKey = HttpMockServer.GetVariable("CreatePrimaryKey", ServiceBusManagementHelper.GenerateRandomKey());
                 var createAutorizationRuleParameter = new SharedAccessAuthorizationRuleCreateOrUpdateParameters()
@@ -88,7 +88,7 @@ namespace ServiceBus.Tests.ScenarioTests
                     Assert.True(createNamespaceAuthorizationRuleResponse.Rights.Any(r => r == right));
                 }
 
-                //Get default namespace AuthorizationRules
+                // Get default namespace AuthorizationRules
                 var getNamespaceAuthorizationRulesResponse = ServiceBusManagementClient.Namespaces.GetAuthorizationRule(resourceGroup, namespaceName, ServiceBusManagementHelper.DefaultNamespaceAuthorizationRule);
                 Assert.NotNull(getNamespaceAuthorizationRulesResponse);
                 Assert.Equal(getNamespaceAuthorizationRulesResponse.Name, ServiceBusManagementHelper.DefaultNamespaceAuthorizationRule);
@@ -96,7 +96,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.True(getNamespaceAuthorizationRulesResponse.Rights.Any(r => r == AccessRights.Send));
                 Assert.True(getNamespaceAuthorizationRulesResponse.Rights.Any(r => r == AccessRights.Manage));
 
-                //Get created namespace AuthorizationRules
+                // Get created namespace AuthorizationRules
                 getNamespaceAuthorizationRulesResponse = ServiceBusManagementClient.Namespaces.GetAuthorizationRule(resourceGroup, namespaceName, authorizationRuleName);
                 Assert.NotNull(getNamespaceAuthorizationRulesResponse);
                 Assert.True(getNamespaceAuthorizationRulesResponse.Rights.Count == createAutorizationRuleParameter.Rights.Count);
@@ -105,14 +105,14 @@ namespace ServiceBus.Tests.ScenarioTests
                     Assert.True(getNamespaceAuthorizationRulesResponse.Rights.Any(r => r == right));
                 }
 
-                //Get all namespaces AuthorizationRules 
+                // Get all namespaces AuthorizationRules 
                 var getAllNamespaceAuthorizationRulesResponse = ServiceBusManagementClient.Namespaces.ListAuthorizationRules(resourceGroup, namespaceName);
                 Assert.NotNull(getAllNamespaceAuthorizationRulesResponse);
                 Assert.True(getAllNamespaceAuthorizationRulesResponse.Count() > 1);
                 Assert.True(getAllNamespaceAuthorizationRulesResponse.Any(ns => ns.Name == authorizationRuleName));
                 Assert.True(getAllNamespaceAuthorizationRulesResponse.Any(auth => auth.Name == ServiceBusManagementHelper.DefaultNamespaceAuthorizationRule));
 
-                //Update namespace authorizationRule
+                // Update namespace authorizationRule
                 string updatePrimaryKey = HttpMockServer.GetVariable("UpdatePrimaryKey", ServiceBusManagementHelper.GenerateRandomKey());
                 SharedAccessAuthorizationRuleCreateOrUpdateParameters updateNamespaceAuthorizationRuleParameter = new SharedAccessAuthorizationRuleCreateOrUpdateParameters();
                 updateNamespaceAuthorizationRuleParameter.Rights = new List<AccessRights?>() { AccessRights.Listen };
@@ -128,9 +128,8 @@ namespace ServiceBus.Tests.ScenarioTests
                     Assert.True(updateNamespaceAuthorizationRuleResponse.Rights.Any(r => r.Equals(right)));
                 }
 
-                //Get the updated namespace AuthorizationRule
-                var getNamespaceAuthorizationRuleResponse = ServiceBusManagementClient.Namespaces.GetAuthorizationRule(resourceGroup, namespaceName,
-                    authorizationRuleName);
+                // Get the updated namespace AuthorizationRule
+                var getNamespaceAuthorizationRuleResponse = ServiceBusManagementClient.Namespaces.GetAuthorizationRule(resourceGroup, namespaceName,                     authorizationRuleName);
                 Assert.NotNull(getNamespaceAuthorizationRuleResponse);
                 Assert.Equal(authorizationRuleName, getNamespaceAuthorizationRuleResponse.Name);
                 Assert.True(getNamespaceAuthorizationRuleResponse.Rights.Count == updateNamespaceAuthorizationRuleParameter.Rights.Count);
@@ -139,13 +138,13 @@ namespace ServiceBus.Tests.ScenarioTests
                     Assert.True(getNamespaceAuthorizationRuleResponse.Rights.Any(r => r.Equals(right)));
                 }
 
-                //Get the connectionString to the namespace for a Authorization rule created
+                // Get the connectionString to the namespace for a Authorization rule created
                 var listKeysResponse = ServiceBusManagementClient.Namespaces.ListKeys(resourceGroup, namespaceName, authorizationRuleName);
                 Assert.NotNull(listKeysResponse);
                 Assert.NotNull(listKeysResponse.PrimaryConnectionString);
                 Assert.NotNull(listKeysResponse.SecondaryConnectionString);
 
-                //Delete namespace authorizationRule
+                // Delete namespace authorizationRule
                 ServiceBusManagementClient.Namespaces.DeleteAuthorizationRule(resourceGroup, namespaceName, authorizationRuleName);
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
@@ -161,7 +160,7 @@ namespace ServiceBus.Tests.ScenarioTests
 
                 try
                 {
-                    //Delete namespace
+                    // Delete namespace
                     ServiceBusManagementClient.Namespaces.Delete(resourceGroup, namespaceName); 
                 }
                 catch (Exception ex)

@@ -43,6 +43,7 @@ namespace ServiceBus.Tests.ScenarioTests
                     this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
                 }
 
+                // Create Namespace
                 var namespaceName = TestUtilities.GenerateName(ServiceBusManagementHelper.NamespacePrefix);
 
                 var createNamespaceResponse = this.ServiceBusManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
@@ -59,12 +60,10 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.NotNull(createNamespaceResponse);
                 Assert.Equal(createNamespaceResponse.Name, namespaceName);
 
-                // TestUtilities.Wait(TimeSpan.FromSeconds(5));
-                // Queues
+                TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
+                // Create Queue
                 var queueName = TestUtilities.GenerateName(ServiceBusManagementHelper.QueuesPrefix);
-                //var namespaceName = "sdk-Namespace4123";
-
                 var createQueueResponse = this.ServiceBusManagementClient.Queues.CreateOrUpdate(resourceGroup, namespaceName, queueName,
                 new QueueCreateOrUpdateParameters()
                 {
@@ -76,8 +75,6 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.Equal(createQueueResponse.Name, queueName);
 
                 // Verify with invalid Queue name
-
-
                 string queueName_invalid = queueName + "12";
                 try
                 {
@@ -111,13 +108,13 @@ namespace ServiceBus.Tests.ScenarioTests
                     string x = ex.Message;
                 }
 
-                //Get the created Queue
+                // Get the created Queue
                 var getQueueResponse = ServiceBusManagementClient.Queues.Get(resourceGroup, namespaceName, queueName);
                 Assert.NotNull(getQueueResponse);
                 Assert.Equal(EntityStatus.Active, getQueueResponse.Status);
                 Assert.Equal(getQueueResponse.Name, queueName);
                                                
-                //Get Queue with invalid name
+                // Get Queue with invalid name
                 try
                 {
                     var getQueueResponse1 = ServiceBusManagementClient.Queues.Get(resourceGroup, namespaceName, queueName_invalid);                    
@@ -127,20 +124,14 @@ namespace ServiceBus.Tests.ScenarioTests
                     Assert.Equal(ex.Message, "The requested resource "+ queueName_invalid + " does not exist.");
                 }
 
-
                 // Get all Queues with valid parameters
                 var getQueueListAllResponse = ServiceBusManagementClient.Queues.ListAll(resourceGroup, namespaceName);
                 Assert.NotNull(getQueueListAllResponse);
                 Assert.True(getQueueListAllResponse.Count() >= 1);                
                 Assert.True(getQueueListAllResponse.All(ns => ns.Id.Contains(resourceGroup)));
-
-                // Get all Queues with invalid parameters
                 
 
                 // Update Queue. 
-
-                // Set the Parameters to update he Queue 
-
                 var updateQueuesParameter = new QueueCreateOrUpdateParameters()
                 {
                     Location = location,
@@ -149,14 +140,11 @@ namespace ServiceBus.Tests.ScenarioTests
                 };
 
                 var updateQueueResponse = ServiceBusManagementClient.Queues.CreateOrUpdate(resourceGroup, namespaceName, queueName, updateQueuesParameter);
-
                 Assert.NotNull(updateQueueResponse);
                 Assert.True(updateQueueResponse.EnableExpress);
                 Assert.True(updateQueueResponse.IsAnonymousAccessible);
 
-
                 //Delete Created Queue  and check for the NotFound exception 
-
                 ServiceBusManagementClient.Queues.Delete(resourceGroup, namespaceName, queueName);
                 try
                 {
@@ -165,10 +153,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 catch (Exception ex)
                 {
                     Assert.Equal(ex.Message, "The requested resource " + queueName + " does not exist.");
-                }
-                
-                //Queue end
-                
+                }                
             }
         }
     }
