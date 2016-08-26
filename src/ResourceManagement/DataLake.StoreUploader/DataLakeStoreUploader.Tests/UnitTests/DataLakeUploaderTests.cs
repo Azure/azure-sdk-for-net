@@ -311,9 +311,10 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             var backingFrontEnd1 = new InMemoryFrontEnd();
             var frontEnd1 = new MockableFrontEnd(backingFrontEnd1);
             frontEnd1.ConcatenateImplementation = (target, inputs, isDownload) => { throw new IntentionalException(); }; //fail the concatenation
-            
+
             //attempt full upload
             var up = CreateParameters(isResume: false);
+
             var uploader = new DataLakeStoreUploader(up, frontEnd1);
             uploader.DeleteMetadataFile();
 
@@ -372,7 +373,20 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             //attempt to load the file fully, but only allow creating 1 target stream
             var backingFrontEnd = new InMemoryFrontEnd();
             var frontEnd = new MockableFrontEnd(backingFrontEnd);
-
+            UploadFolderProgress progress = null;
+            var syncRoot = new object();
+            IProgress<UploadFolderProgress> progressTracker = new Progress<UploadFolderProgress>(
+                (p) =>
+                {
+                    lock (syncRoot)
+                    {
+                        //it is possible that these come out of order because of race conditions (multiple threads reporting at the same time); only update if we are actually making progress
+                        if (progress == null || progress.UploadedByteCount < p.UploadedByteCount)
+                        {
+                            progress = p;
+                        }
+                    }
+                });
             int createStreamCount = 0;
             frontEnd.CreateStreamImplementation = (path, overwrite, data, byteCount) =>
             {
@@ -385,16 +399,17 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
                 backingFrontEnd.CreateStream(path, overwrite, data, byteCount);
             };
             var up = CreateParameters(isResume: false, isRecursive: true);
-            var uploader = new DataLakeStoreUploader(up, frontEnd);
+            var uploader = new DataLakeStoreUploader(up, frontEnd, folderProgressTracker: progressTracker);
             uploader.DeleteMetadataFile();
 
+            // Verifies that a bug in folder upload with progress hung on failure is fixed.
             Assert.Throws<AggregateException>(() => uploader.Execute());
             Assert.Equal(1, frontEnd.ListDirectory(up.TargetStreamPath, false).Keys.Count);
             Assert.Equal(1, backingFrontEnd.StreamCount);
 
             //resume the upload but point it to the real back-end, which doesn't throw exceptions
             up = CreateParameters(isResume: true, isRecursive: true);
-            uploader = new DataLakeStoreUploader(up, backingFrontEnd);
+            uploader = new DataLakeStoreUploader(up, backingFrontEnd, folderProgressTracker: progressTracker);
 
             try
             {
@@ -406,6 +421,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             }
 
             VerifyFileUploadedSuccessfully(up, backingFrontEnd);
+            VerifyFolderProgressStatus(progress, _largeFileData.Length + (_smallFileData.Length * 2), 3);
         }
 
         /// <summary>

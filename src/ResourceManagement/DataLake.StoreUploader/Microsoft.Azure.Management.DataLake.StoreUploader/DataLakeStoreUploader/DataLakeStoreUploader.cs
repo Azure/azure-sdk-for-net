@@ -26,6 +26,11 @@ using System.Threading.Tasks;
 namespace Microsoft.Azure.Management.DataLake.StoreUploader
 {
     /// <summary>
+    /// Represents a delegate that is called in the event of a thread uploading a file terminating unexpectedly.
+    /// </summary>
+    public delegate void FileUploadThreadFailProgressUpdate(UploadMetadata failedFile);
+
+    /// <summary>
     /// Represents a general purpose file uploader into DataLake. Supports the efficient upload of large files.
     /// </summary>
     public sealed class DataLakeStoreUploader
@@ -46,6 +51,12 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         private bool isDirectory = false;
 
         #endregion
+
+        /// <summary>
+        ///  An event that is registered to progress tracking to ensure that, in the event of an unexpected upload failure,
+        ///  progress is properly updated.
+        /// </summary>
+        public event FileUploadThreadFailProgressUpdate OnFileUploadThreadFailProgressUpdate;
 
         #region Constructor
 
@@ -182,6 +193,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                                 UploadMetadata file;
                                 while (allFiles.TryDequeue(out file))
                                 {
+                                    
                                     try
                                     {
                                         _token.ThrowIfCancellationRequested();
@@ -241,6 +253,9 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                                             }
                                             catch { } // if we can't save the metadata we shouldn't fail out. 
                                         }
+
+                                        // indicate we failed to tracking thread.
+                                        this.OnFileUploadThreadFailProgressUpdate?.Invoke(file);
                                     }
                                     finally
                                     {
@@ -1002,6 +1017,10 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             }
 
             var overallProgress = new UploadFolderProgress(metadata);
+
+            // register an event to ensure that, no matter what, we account for all file uploads.
+            this.OnFileUploadThreadFailProgressUpdate += overallProgress.OnFileUploadThreadAborted;
+
             toStart = overallProgress.GetProgressTrackingThread(_token);
             return new Progress<UploadProgress>(
                 (sup) =>
@@ -1010,7 +1029,6 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     overallProgress.SetSegmentProgress(sup);
                     _folderProgressTracker.Report(overallProgress);
                 });
-
         }
 
         /// <summary>

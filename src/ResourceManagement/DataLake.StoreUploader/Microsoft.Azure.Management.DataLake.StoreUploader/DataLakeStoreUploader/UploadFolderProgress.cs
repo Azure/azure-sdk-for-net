@@ -57,13 +57,19 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
             foreach (var fileMetadata in metadata.Files)
             {
+                var toAdd = new UploadProgress(fileMetadata);
                 if (fileMetadata.Status == SegmentUploadStatus.Complete)
                 {
                     this.UploadedByteCount += fileMetadata.FileLength;
                     this.UploadedFileCount++;
+                    toAdd.UploadedByteCount = toAdd.TotalFileLength;
+                    foreach(var segment in toAdd._segmentProgress)
+                    {
+                        segment.UploadedByteCount = segment.Length;
+                    }
                 }
 
-                _fileProgress.Add(new UploadProgress(fileMetadata));
+                _fileProgress.Add(toAdd);
             }
         }
 
@@ -135,12 +141,30 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         }
 
         /// <summary>
+        /// Updates the progress to indicate that a file failed
+        /// </summary>
+        internal void OnFileUploadThreadAborted(UploadMetadata failedFile)
+        {
+            lock(_fileProgress)
+            {
+                var previousProgress = _fileProgress.Where(p => p.UploadId.Equals(failedFile.UploadId, StringComparison.InvariantCultureIgnoreCase)).First();
+                foreach (var segment in previousProgress._segmentProgress)
+                {
+                    segment.IsFailed = true;
+                    previousProgress.SetSegmentProgress(segment);
+                }
+
+                this.UploadedFileCount++;
+            }
+        }
+
+        /// <summary>
         /// Updates the progress while there is still progress to update.
         /// </summary>
         private void SetSegmentProgress(CancellationToken token)
         {
             UploadProgress segmentProgress;
-            while (this.UploadedFileCount != this.TotalFileCount)
+            while (this.UploadedFileCount < this.TotalFileCount)
             {
                 token.ThrowIfCancellationRequested();
                 if(_progressBacklog.TryDequeue(out segmentProgress))
