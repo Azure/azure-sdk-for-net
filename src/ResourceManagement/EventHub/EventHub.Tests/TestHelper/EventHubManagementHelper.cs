@@ -31,7 +31,7 @@ namespace EventHub.Tests.TestHelper
     public static class EventHubManagementHelper
     {
         internal const string DefaultLocation = "South Central US";
-        internal const string ResourceGroupPrefix = "Default-EventrHub";
+        internal const string ResourceGroupPrefix = "Default-EventHub";
         internal const string NamespacePrefix = "sdk-Namespace";
         internal const string AuthorizationRulesPrefix = "sdk-Authrules";
         internal const string DefaultNamespaceAuthorizationRule = "RootManageSharedAccessKey";
