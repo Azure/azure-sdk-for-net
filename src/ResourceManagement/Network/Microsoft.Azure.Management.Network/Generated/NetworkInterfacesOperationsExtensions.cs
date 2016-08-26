@@ -387,8 +387,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List networkInterfaces opertion retrieves all the networkInterfaces in
-            /// a subscription.
+            /// The List networkInterfaces operation retrieves all the networkInterfaces
+            /// in a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -399,8 +399,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List networkInterfaces opertion retrieves all the networkInterfaces in
-            /// a subscription.
+            /// The List networkInterfaces operation retrieves all the networkInterfaces
+            /// in a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -417,8 +417,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List networkInterfaces opertion retrieves all the networkInterfaces in
-            /// a resource group.
+            /// The List networkInterfaces operation retrieves all the networkInterfaces
+            /// in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -432,8 +432,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List networkInterfaces opertion retrieves all the networkInterfaces in
-            /// a resource group.
+            /// The List networkInterfaces operation retrieves all the networkInterfaces
+            /// in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -693,8 +693,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List networkInterfaces opertion retrieves all the networkInterfaces in
-            /// a subscription.
+            /// The List networkInterfaces operation retrieves all the networkInterfaces
+            /// in a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -708,8 +708,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List networkInterfaces opertion retrieves all the networkInterfaces in
-            /// a subscription.
+            /// The List networkInterfaces operation retrieves all the networkInterfaces
+            /// in a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -729,8 +729,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List networkInterfaces opertion retrieves all the networkInterfaces in
-            /// a resource group.
+            /// The List networkInterfaces operation retrieves all the networkInterfaces
+            /// in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -744,8 +744,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List networkInterfaces opertion retrieves all the networkInterfaces in
-            /// a resource group.
+            /// The List networkInterfaces operation retrieves all the networkInterfaces
+            /// in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

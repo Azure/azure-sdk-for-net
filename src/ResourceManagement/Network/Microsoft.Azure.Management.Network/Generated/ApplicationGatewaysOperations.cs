@@ -651,8 +651,8 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The List ApplicationGateway opertion retrieves all the applicationgateways
-        /// in a resource group.
+        /// The List ApplicationGateway operation retrieves all the
+        /// applicationgateways in a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -825,8 +825,8 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The List applicationgateway opertion retrieves all the applicationgateways
-        /// in a subscription.
+        /// The List applicationgateway operation retrieves all the
+        /// applicationgateways in a subscription.
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1342,8 +1342,8 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The List ApplicationGateway opertion retrieves all the applicationgateways
-        /// in a resource group.
+        /// The List ApplicationGateway operation retrieves all the
+        /// applicationgateways in a resource group.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1502,8 +1502,8 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The List applicationgateway opertion retrieves all the applicationgateways
-        /// in a subscription.
+        /// The List applicationgateway operation retrieves all the
+        /// applicationgateways in a subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

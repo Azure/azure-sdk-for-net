@@ -235,8 +235,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List ApplicationGateway opertion retrieves all the applicationgateways
-            /// in a resource group.
+            /// The List ApplicationGateway operation retrieves all the
+            /// applicationgateways in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -250,8 +250,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List ApplicationGateway opertion retrieves all the applicationgateways
-            /// in a resource group.
+            /// The List ApplicationGateway operation retrieves all the
+            /// applicationgateways in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -271,8 +271,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List applicationgateway opertion retrieves all the applicationgateways
-            /// in a subscription.
+            /// The List applicationgateway operation retrieves all the
+            /// applicationgateways in a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -283,8 +283,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List applicationgateway opertion retrieves all the applicationgateways
-            /// in a subscription.
+            /// The List applicationgateway operation retrieves all the
+            /// applicationgateways in a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -457,8 +457,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List ApplicationGateway opertion retrieves all the applicationgateways
-            /// in a resource group.
+            /// The List ApplicationGateway operation retrieves all the
+            /// applicationgateways in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -472,8 +472,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List ApplicationGateway opertion retrieves all the applicationgateways
-            /// in a resource group.
+            /// The List ApplicationGateway operation retrieves all the
+            /// applicationgateways in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -493,8 +493,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List applicationgateway opertion retrieves all the applicationgateways
-            /// in a subscription.
+            /// The List applicationgateway operation retrieves all the
+            /// applicationgateways in a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -508,8 +508,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List applicationgateway opertion retrieves all the applicationgateways
-            /// in a subscription.
+            /// The List applicationgateway operation retrieves all the
+            /// applicationgateways in a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -691,7 +691,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The List subnets opertion retrieves all the subnets in a virtual network.
+        /// The List subnets operation retrieves all the subnets in a virtual network.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -873,7 +873,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The List subnets opertion retrieves all the subnets in a virtual network.
+        /// The List subnets operation retrieves all the subnets in a virtual network.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

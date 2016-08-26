@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Network
         public NetworkManagementClient Client { get; private set; }
 
         /// <summary>
-        /// The List ExpressRouteServiceProvider opertion retrieves all the available
+        /// The List ExpressRouteServiceProvider operation retrieves all the available
         /// ExpressRouteServiceProviders.
         /// </summary>
         /// <param name='customHeaders'>
@@ -215,7 +215,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The List ExpressRouteServiceProvider opertion retrieves all the available
+        /// The List ExpressRouteServiceProvider operation retrieves all the available
         /// ExpressRouteServiceProviders.
         /// </summary>
         /// <param name='nextPageLink'>

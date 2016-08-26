@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<ApplicationGateway>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The List ApplicationGateway opertion retrieves all the
+        /// The List ApplicationGateway operation retrieves all the
         /// applicationgateways in a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<IPage<ApplicationGateway>>> ListWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The List applicationgateway opertion retrieves all the
+        /// The List applicationgateway operation retrieves all the
         /// applicationgateways in a subscription.
         /// </summary>
         /// <param name='customHeaders'>
@@ -211,7 +211,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse> BeginStopWithHttpMessagesAsync(string resourceGroupName, string applicationGatewayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The List ApplicationGateway opertion retrieves all the
+        /// The List ApplicationGateway operation retrieves all the
         /// applicationgateways in a resource group.
         /// </summary>
         /// <param name='nextPageLink'>
@@ -225,7 +225,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<IPage<ApplicationGateway>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The List applicationgateway opertion retrieves all the
+        /// The List applicationgateway operation retrieves all the
         /// applicationgateways in a subscription.
         /// </summary>
         /// <param name='nextPageLink'>

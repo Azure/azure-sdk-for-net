@@ -265,7 +265,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List network security rule opertion retrieves all the routes in a
+            /// The List network security rule operation retrieves all the routes in a
             /// route table.
             /// </summary>
             /// <param name='operations'>
@@ -283,7 +283,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List network security rule opertion retrieves all the routes in a
+            /// The List network security rule operation retrieves all the routes in a
             /// route table.
             /// </summary>
             /// <param name='operations'>
@@ -307,7 +307,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List network security rule opertion retrieves all the routes in a
+            /// The List network security rule operation retrieves all the routes in a
             /// route table.
             /// </summary>
             /// <param name='operations'>
@@ -322,7 +322,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List network security rule opertion retrieves all the routes in a
+            /// The List network security rule operation retrieves all the routes in a
             /// route table.
             /// </summary>
             /// <param name='operations'>

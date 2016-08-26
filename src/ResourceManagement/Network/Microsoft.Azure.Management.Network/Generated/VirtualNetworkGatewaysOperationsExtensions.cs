@@ -243,8 +243,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List VirtualNetworkGateways opertion retrieves all the virtual network
-            /// gateways stored.
+            /// The List VirtualNetworkGateways operation retrieves all the virtual
+            /// network gateways stored.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -258,8 +258,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List VirtualNetworkGateways opertion retrieves all the virtual network
-            /// gateways stored.
+            /// The List VirtualNetworkGateways operation retrieves all the virtual
+            /// network gateways stored.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -435,8 +435,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List VirtualNetworkGateways opertion retrieves all the virtual network
-            /// gateways stored.
+            /// The List VirtualNetworkGateways operation retrieves all the virtual
+            /// network gateways stored.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -450,8 +450,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List VirtualNetworkGateways opertion retrieves all the virtual network
-            /// gateways stored.
+            /// The List VirtualNetworkGateways operation retrieves all the virtual
+            /// network gateways stored.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

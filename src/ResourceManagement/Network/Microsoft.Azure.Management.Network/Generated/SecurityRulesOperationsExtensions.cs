@@ -269,7 +269,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List network security rule opertion retrieves all the security rules
+            /// The List network security rule operation retrieves all the security rules
             /// in a network security group.
             /// </summary>
             /// <param name='operations'>
@@ -287,7 +287,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List network security rule opertion retrieves all the security rules
+            /// The List network security rule operation retrieves all the security rules
             /// in a network security group.
             /// </summary>
             /// <param name='operations'>
@@ -311,7 +311,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List network security rule opertion retrieves all the security rules
+            /// The List network security rule operation retrieves all the security rules
             /// in a network security group.
             /// </summary>
             /// <param name='operations'>
@@ -326,7 +326,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List network security rule opertion retrieves all the security rules
+            /// The List network security rule operation retrieves all the security rules
             /// in a network security group.
             /// </summary>
             /// <param name='operations'>

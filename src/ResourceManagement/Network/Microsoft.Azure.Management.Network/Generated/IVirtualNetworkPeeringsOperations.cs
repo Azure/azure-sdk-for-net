@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<VirtualNetworkPeering>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, string virtualNetworkPeeringName, VirtualNetworkPeering virtualNetworkPeeringParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The List virtual network peerings opertion retrieves all the
+        /// The List virtual network peerings operation retrieves all the
         /// peerings in a virtual network.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<IPage<VirtualNetworkPeering>>> ListWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The List virtual network peerings opertion retrieves all the
+        /// The List virtual network peerings operation retrieves all the
         /// peerings in a virtual network.
         /// </summary>
         /// <param name='nextPageLink'>

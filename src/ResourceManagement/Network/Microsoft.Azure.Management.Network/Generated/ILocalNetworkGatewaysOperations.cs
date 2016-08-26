@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string localNetworkGatewayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The List LocalNetworkGateways opertion retrieves all the local
+        /// The List LocalNetworkGateways operation retrieves all the local
         /// network gateways stored.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<IPage<LocalNetworkGateway>>> ListWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The List LocalNetworkGateways opertion retrieves all the local
+        /// The List LocalNetworkGateways operation retrieves all the local
         /// network gateways stored.
         /// </summary>
         /// <param name='nextPageLink'>

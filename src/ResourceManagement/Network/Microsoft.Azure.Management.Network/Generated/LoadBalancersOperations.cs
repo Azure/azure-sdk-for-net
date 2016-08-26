@@ -657,7 +657,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The List loadBalancer opertion retrieves all the loadbalancers in a
+        /// The List loadBalancer operation retrieves all the loadbalancers in a
         /// subscription.
         /// </summary>
         /// <param name='customHeaders'>
@@ -822,7 +822,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The List loadBalancer opertion retrieves all the loadbalancers in a
+        /// The List loadBalancer operation retrieves all the loadbalancers in a
         /// resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -996,7 +996,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The List loadBalancer opertion retrieves all the loadbalancers in a
+        /// The List loadBalancer operation retrieves all the loadbalancers in a
         /// subscription.
         /// </summary>
         /// <param name='nextPageLink'>
@@ -1156,7 +1156,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The List loadBalancer opertion retrieves all the loadbalancers in a
+        /// The List loadBalancer operation retrieves all the loadbalancers in a
         /// resource group.
         /// </summary>
         /// <param name='nextPageLink'>

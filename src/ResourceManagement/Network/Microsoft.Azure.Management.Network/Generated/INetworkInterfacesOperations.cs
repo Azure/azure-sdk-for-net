@@ -181,7 +181,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<NetworkInterface>> GetVirtualMachineScaleSetNetworkInterfaceWithHttpMessagesAsync(string resourceGroupName, string virtualMachineScaleSetName, string virtualmachineIndex, string networkInterfaceName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The List networkInterfaces opertion retrieves all the
+        /// The List networkInterfaces operation retrieves all the
         /// networkInterfaces in a subscription.
         /// </summary>
         /// <param name='customHeaders'>
@@ -192,7 +192,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<IPage<NetworkInterface>>> ListAllWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The List networkInterfaces opertion retrieves all the
+        /// The List networkInterfaces operation retrieves all the
         /// networkInterfaces in a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -303,7 +303,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<IPage<NetworkInterface>>> ListVirtualMachineScaleSetNetworkInterfacesNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The List networkInterfaces opertion retrieves all the
+        /// The List networkInterfaces operation retrieves all the
         /// networkInterfaces in a subscription.
         /// </summary>
         /// <param name='nextPageLink'>
@@ -317,7 +317,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<IPage<NetworkInterface>>> ListAllNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The List networkInterfaces opertion retrieves all the
+        /// The List networkInterfaces operation retrieves all the
         /// networkInterfaces in a resource group.
         /// </summary>
         /// <param name='nextPageLink'>

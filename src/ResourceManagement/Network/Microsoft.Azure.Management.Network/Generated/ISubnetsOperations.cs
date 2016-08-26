@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<Subnet>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, string subnetName, Subnet subnetParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The List subnets opertion retrieves all the subnets in a virtual
+        /// The List subnets operation retrieves all the subnets in a virtual
         /// network.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<IPage<Subnet>>> ListWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The List subnets opertion retrieves all the subnets in a virtual
+        /// The List subnets operation retrieves all the subnets in a virtual
         /// network.
         /// </summary>
         /// <param name='nextPageLink'>

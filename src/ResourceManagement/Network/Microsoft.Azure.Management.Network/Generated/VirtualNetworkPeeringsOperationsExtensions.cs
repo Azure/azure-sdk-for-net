@@ -265,8 +265,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List virtual network peerings opertion retrieves all the peerings in a
-            /// virtual network.
+            /// The List virtual network peerings operation retrieves all the peerings in
+            /// a virtual network.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -283,8 +283,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List virtual network peerings opertion retrieves all the peerings in a
-            /// virtual network.
+            /// The List virtual network peerings operation retrieves all the peerings in
+            /// a virtual network.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -307,8 +307,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List virtual network peerings opertion retrieves all the peerings in a
-            /// virtual network.
+            /// The List virtual network peerings operation retrieves all the peerings in
+            /// a virtual network.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -322,8 +322,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List virtual network peerings opertion retrieves all the peerings in a
-            /// virtual network.
+            /// The List virtual network peerings operation retrieves all the peerings in
+            /// a virtual network.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

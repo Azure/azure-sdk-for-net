@@ -655,7 +655,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The List LocalNetworkGateways opertion retrieves all the local network
+        /// The List LocalNetworkGateways operation retrieves all the local network
         /// gateways stored.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -829,7 +829,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The List LocalNetworkGateways opertion retrieves all the local network
+        /// The List LocalNetworkGateways operation retrieves all the local network
         /// gateways stored.
         /// </summary>
         /// <param name='nextPageLink'>
