@@ -806,6 +806,71 @@ namespace Microsoft.Azure.Management.HDInsight
                                         }
                                     }
                                     
+                                    if (rolesItem.SecurityProfile != null)
+                                    {
+                                        JObject securityProfileValue = new JObject();
+                                        roleValue["securityProfile"] = securityProfileValue;
+                                        
+                                        if (rolesItem.SecurityProfile.ActiveDirectoryConfiguration != null)
+                                        {
+                                            JObject activeDirectoryConfigurationValue = new JObject();
+                                            securityProfileValue["activeDirectoryConfiguration"] = activeDirectoryConfigurationValue;
+                                            
+                                            activeDirectoryConfigurationValue["directoryType"] = rolesItem.SecurityProfile.ActiveDirectoryConfiguration.DirectoryType.ToString();
+                                            
+                                            if (rolesItem.SecurityProfile.ActiveDirectoryConfiguration.Domain != null)
+                                            {
+                                                activeDirectoryConfigurationValue["domain"] = rolesItem.SecurityProfile.ActiveDirectoryConfiguration.Domain;
+                                            }
+                                            
+                                            if (rolesItem.SecurityProfile.ActiveDirectoryConfiguration.OrganizationalUnitDN != null)
+                                            {
+                                                activeDirectoryConfigurationValue["organizationalUnitDN"] = rolesItem.SecurityProfile.ActiveDirectoryConfiguration.OrganizationalUnitDN;
+                                            }
+                                            
+                                            if (rolesItem.SecurityProfile.ActiveDirectoryConfiguration.LdapUrls != null)
+                                            {
+                                                if (rolesItem.SecurityProfile.ActiveDirectoryConfiguration.LdapUrls is ILazyCollection == false || ((ILazyCollection)rolesItem.SecurityProfile.ActiveDirectoryConfiguration.LdapUrls).IsInitialized)
+                                                {
+                                                    JArray ldapUrlsArray = new JArray();
+                                                    foreach (string ldapUrlsItem in rolesItem.SecurityProfile.ActiveDirectoryConfiguration.LdapUrls)
+                                                    {
+                                                        ldapUrlsArray.Add(ldapUrlsItem);
+                                                    }
+                                                    activeDirectoryConfigurationValue["ldapUrls"] = ldapUrlsArray;
+                                                }
+                                            }
+                                            
+                                            if (rolesItem.SecurityProfile.ActiveDirectoryConfiguration.DomainAdminUsername != null)
+                                            {
+                                                activeDirectoryConfigurationValue["domainAdminUsername"] = rolesItem.SecurityProfile.ActiveDirectoryConfiguration.DomainAdminUsername;
+                                            }
+                                            
+                                            if (rolesItem.SecurityProfile.ActiveDirectoryConfiguration.DomainAdminPassword != null)
+                                            {
+                                                activeDirectoryConfigurationValue["domainAdminPassword"] = rolesItem.SecurityProfile.ActiveDirectoryConfiguration.DomainAdminPassword;
+                                            }
+                                        }
+                                        
+                                        if (rolesItem.SecurityProfile.RoleAdminGroupDN != null)
+                                        {
+                                            securityProfileValue["roleAdminGroupDN"] = rolesItem.SecurityProfile.RoleAdminGroupDN;
+                                        }
+                                        
+                                        if (rolesItem.SecurityProfile.RoleUsersGroupDNs != null)
+                                        {
+                                            if (rolesItem.SecurityProfile.RoleUsersGroupDNs is ILazyCollection == false || ((ILazyCollection)rolesItem.SecurityProfile.RoleUsersGroupDNs).IsInitialized)
+                                            {
+                                                JArray roleUsersGroupDNsArray = new JArray();
+                                                foreach (string roleUsersGroupDNsItem in rolesItem.SecurityProfile.RoleUsersGroupDNs)
+                                                {
+                                                    roleUsersGroupDNsArray.Add(roleUsersGroupDNsItem);
+                                                }
+                                                securityProfileValue["roleUsersGroupDNs"] = roleUsersGroupDNsArray;
+                                            }
+                                        }
+                                    }
+                                    
                                     if (rolesItem.ScriptActions != null)
                                     {
                                         if (rolesItem.ScriptActions is ILazyCollection == false || ((ILazyCollection)rolesItem.ScriptActions).IsInitialized)
@@ -1129,6 +1194,80 @@ namespace Microsoft.Azure.Management.HDInsight
                                                 {
                                                     string subnetInstance = ((string)subnetValue);
                                                     virtualNetworkProfileInstance.SubnetName = subnetInstance;
+                                                }
+                                            }
+                                            
+                                            JToken securityProfileValue2 = rolesValue["securityProfile"];
+                                            if (securityProfileValue2 != null && securityProfileValue2.Type != JTokenType.Null)
+                                            {
+                                                SecurityProfile securityProfileInstance = new SecurityProfile();
+                                                roleInstance.SecurityProfile = securityProfileInstance;
+                                                
+                                                JToken activeDirectoryConfigurationValue2 = securityProfileValue2["activeDirectoryConfiguration"];
+                                                if (activeDirectoryConfigurationValue2 != null && activeDirectoryConfigurationValue2.Type != JTokenType.Null)
+                                                {
+                                                    ActiveDirectoryConfiguration activeDirectoryConfigurationInstance = new ActiveDirectoryConfiguration();
+                                                    securityProfileInstance.ActiveDirectoryConfiguration = activeDirectoryConfigurationInstance;
+                                                    
+                                                    JToken directoryTypeValue = activeDirectoryConfigurationValue2["directoryType"];
+                                                    if (directoryTypeValue != null && directoryTypeValue.Type != JTokenType.Null)
+                                                    {
+                                                        DirectoryType directoryTypeInstance = ((DirectoryType)Enum.Parse(typeof(DirectoryType), ((string)directoryTypeValue), true));
+                                                        activeDirectoryConfigurationInstance.DirectoryType = directoryTypeInstance;
+                                                    }
+                                                    
+                                                    JToken domainValue = activeDirectoryConfigurationValue2["domain"];
+                                                    if (domainValue != null && domainValue.Type != JTokenType.Null)
+                                                    {
+                                                        string domainInstance = ((string)domainValue);
+                                                        activeDirectoryConfigurationInstance.Domain = domainInstance;
+                                                    }
+                                                    
+                                                    JToken organizationalUnitDNValue = activeDirectoryConfigurationValue2["organizationalUnitDN"];
+                                                    if (organizationalUnitDNValue != null && organizationalUnitDNValue.Type != JTokenType.Null)
+                                                    {
+                                                        string organizationalUnitDNInstance = ((string)organizationalUnitDNValue);
+                                                        activeDirectoryConfigurationInstance.OrganizationalUnitDN = organizationalUnitDNInstance;
+                                                    }
+                                                    
+                                                    JToken ldapUrlsArray2 = activeDirectoryConfigurationValue2["ldapUrls"];
+                                                    if (ldapUrlsArray2 != null && ldapUrlsArray2.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken ldapUrlsValue in ((JArray)ldapUrlsArray2))
+                                                        {
+                                                            activeDirectoryConfigurationInstance.LdapUrls.Add(((string)ldapUrlsValue));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken domainAdminUsernameValue = activeDirectoryConfigurationValue2["domainAdminUsername"];
+                                                    if (domainAdminUsernameValue != null && domainAdminUsernameValue.Type != JTokenType.Null)
+                                                    {
+                                                        string domainAdminUsernameInstance = ((string)domainAdminUsernameValue);
+                                                        activeDirectoryConfigurationInstance.DomainAdminUsername = domainAdminUsernameInstance;
+                                                    }
+                                                    
+                                                    JToken domainAdminPasswordValue = activeDirectoryConfigurationValue2["domainAdminPassword"];
+                                                    if (domainAdminPasswordValue != null && domainAdminPasswordValue.Type != JTokenType.Null)
+                                                    {
+                                                        string domainAdminPasswordInstance = ((string)domainAdminPasswordValue);
+                                                        activeDirectoryConfigurationInstance.DomainAdminPassword = domainAdminPasswordInstance;
+                                                    }
+                                                }
+                                                
+                                                JToken roleAdminGroupDNValue = securityProfileValue2["roleAdminGroupDN"];
+                                                if (roleAdminGroupDNValue != null && roleAdminGroupDNValue.Type != JTokenType.Null)
+                                                {
+                                                    string roleAdminGroupDNInstance = ((string)roleAdminGroupDNValue);
+                                                    securityProfileInstance.RoleAdminGroupDN = roleAdminGroupDNInstance;
+                                                }
+                                                
+                                                JToken roleUsersGroupDNsArray2 = securityProfileValue2["roleUsersGroupDNs"];
+                                                if (roleUsersGroupDNsArray2 != null && roleUsersGroupDNsArray2.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken roleUsersGroupDNsValue in ((JArray)roleUsersGroupDNsArray2))
+                                                    {
+                                                        securityProfileInstance.RoleUsersGroupDNs.Add(((string)roleUsersGroupDNsValue));
+                                                    }
                                                 }
                                             }
                                             
@@ -2708,6 +2847,80 @@ namespace Microsoft.Azure.Management.HDInsight
                                                 }
                                             }
                                             
+                                            JToken securityProfileValue = rolesValue["securityProfile"];
+                                            if (securityProfileValue != null && securityProfileValue.Type != JTokenType.Null)
+                                            {
+                                                SecurityProfile securityProfileInstance = new SecurityProfile();
+                                                roleInstance.SecurityProfile = securityProfileInstance;
+                                                
+                                                JToken activeDirectoryConfigurationValue = securityProfileValue["activeDirectoryConfiguration"];
+                                                if (activeDirectoryConfigurationValue != null && activeDirectoryConfigurationValue.Type != JTokenType.Null)
+                                                {
+                                                    ActiveDirectoryConfiguration activeDirectoryConfigurationInstance = new ActiveDirectoryConfiguration();
+                                                    securityProfileInstance.ActiveDirectoryConfiguration = activeDirectoryConfigurationInstance;
+                                                    
+                                                    JToken directoryTypeValue = activeDirectoryConfigurationValue["directoryType"];
+                                                    if (directoryTypeValue != null && directoryTypeValue.Type != JTokenType.Null)
+                                                    {
+                                                        DirectoryType directoryTypeInstance = ((DirectoryType)Enum.Parse(typeof(DirectoryType), ((string)directoryTypeValue), true));
+                                                        activeDirectoryConfigurationInstance.DirectoryType = directoryTypeInstance;
+                                                    }
+                                                    
+                                                    JToken domainValue = activeDirectoryConfigurationValue["domain"];
+                                                    if (domainValue != null && domainValue.Type != JTokenType.Null)
+                                                    {
+                                                        string domainInstance = ((string)domainValue);
+                                                        activeDirectoryConfigurationInstance.Domain = domainInstance;
+                                                    }
+                                                    
+                                                    JToken organizationalUnitDNValue = activeDirectoryConfigurationValue["organizationalUnitDN"];
+                                                    if (organizationalUnitDNValue != null && organizationalUnitDNValue.Type != JTokenType.Null)
+                                                    {
+                                                        string organizationalUnitDNInstance = ((string)organizationalUnitDNValue);
+                                                        activeDirectoryConfigurationInstance.OrganizationalUnitDN = organizationalUnitDNInstance;
+                                                    }
+                                                    
+                                                    JToken ldapUrlsArray = activeDirectoryConfigurationValue["ldapUrls"];
+                                                    if (ldapUrlsArray != null && ldapUrlsArray.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken ldapUrlsValue in ((JArray)ldapUrlsArray))
+                                                        {
+                                                            activeDirectoryConfigurationInstance.LdapUrls.Add(((string)ldapUrlsValue));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken domainAdminUsernameValue = activeDirectoryConfigurationValue["domainAdminUsername"];
+                                                    if (domainAdminUsernameValue != null && domainAdminUsernameValue.Type != JTokenType.Null)
+                                                    {
+                                                        string domainAdminUsernameInstance = ((string)domainAdminUsernameValue);
+                                                        activeDirectoryConfigurationInstance.DomainAdminUsername = domainAdminUsernameInstance;
+                                                    }
+                                                    
+                                                    JToken domainAdminPasswordValue = activeDirectoryConfigurationValue["domainAdminPassword"];
+                                                    if (domainAdminPasswordValue != null && domainAdminPasswordValue.Type != JTokenType.Null)
+                                                    {
+                                                        string domainAdminPasswordInstance = ((string)domainAdminPasswordValue);
+                                                        activeDirectoryConfigurationInstance.DomainAdminPassword = domainAdminPasswordInstance;
+                                                    }
+                                                }
+                                                
+                                                JToken roleAdminGroupDNValue = securityProfileValue["roleAdminGroupDN"];
+                                                if (roleAdminGroupDNValue != null && roleAdminGroupDNValue.Type != JTokenType.Null)
+                                                {
+                                                    string roleAdminGroupDNInstance = ((string)roleAdminGroupDNValue);
+                                                    securityProfileInstance.RoleAdminGroupDN = roleAdminGroupDNInstance;
+                                                }
+                                                
+                                                JToken roleUsersGroupDNsArray = securityProfileValue["roleUsersGroupDNs"];
+                                                if (roleUsersGroupDNsArray != null && roleUsersGroupDNsArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken roleUsersGroupDNsValue in ((JArray)roleUsersGroupDNsArray))
+                                                    {
+                                                        securityProfileInstance.RoleUsersGroupDNs.Add(((string)roleUsersGroupDNsValue));
+                                                    }
+                                                }
+                                            }
+                                            
                                             JToken scriptActionsArray = rolesValue["scriptActions"];
                                             if (scriptActionsArray != null && scriptActionsArray.Type != JTokenType.Null)
                                             {
@@ -3934,6 +4147,80 @@ namespace Microsoft.Azure.Management.HDInsight
                                                 }
                                             }
                                             
+                                            JToken securityProfileValue = rolesValue["securityProfile"];
+                                            if (securityProfileValue != null && securityProfileValue.Type != JTokenType.Null)
+                                            {
+                                                SecurityProfile securityProfileInstance = new SecurityProfile();
+                                                roleInstance.SecurityProfile = securityProfileInstance;
+                                                
+                                                JToken activeDirectoryConfigurationValue = securityProfileValue["activeDirectoryConfiguration"];
+                                                if (activeDirectoryConfigurationValue != null && activeDirectoryConfigurationValue.Type != JTokenType.Null)
+                                                {
+                                                    ActiveDirectoryConfiguration activeDirectoryConfigurationInstance = new ActiveDirectoryConfiguration();
+                                                    securityProfileInstance.ActiveDirectoryConfiguration = activeDirectoryConfigurationInstance;
+                                                    
+                                                    JToken directoryTypeValue = activeDirectoryConfigurationValue["directoryType"];
+                                                    if (directoryTypeValue != null && directoryTypeValue.Type != JTokenType.Null)
+                                                    {
+                                                        DirectoryType directoryTypeInstance = ((DirectoryType)Enum.Parse(typeof(DirectoryType), ((string)directoryTypeValue), true));
+                                                        activeDirectoryConfigurationInstance.DirectoryType = directoryTypeInstance;
+                                                    }
+                                                    
+                                                    JToken domainValue = activeDirectoryConfigurationValue["domain"];
+                                                    if (domainValue != null && domainValue.Type != JTokenType.Null)
+                                                    {
+                                                        string domainInstance = ((string)domainValue);
+                                                        activeDirectoryConfigurationInstance.Domain = domainInstance;
+                                                    }
+                                                    
+                                                    JToken organizationalUnitDNValue = activeDirectoryConfigurationValue["organizationalUnitDN"];
+                                                    if (organizationalUnitDNValue != null && organizationalUnitDNValue.Type != JTokenType.Null)
+                                                    {
+                                                        string organizationalUnitDNInstance = ((string)organizationalUnitDNValue);
+                                                        activeDirectoryConfigurationInstance.OrganizationalUnitDN = organizationalUnitDNInstance;
+                                                    }
+                                                    
+                                                    JToken ldapUrlsArray = activeDirectoryConfigurationValue["ldapUrls"];
+                                                    if (ldapUrlsArray != null && ldapUrlsArray.Type != JTokenType.Null)
+                                                    {
+                                                        foreach (JToken ldapUrlsValue in ((JArray)ldapUrlsArray))
+                                                        {
+                                                            activeDirectoryConfigurationInstance.LdapUrls.Add(((string)ldapUrlsValue));
+                                                        }
+                                                    }
+                                                    
+                                                    JToken domainAdminUsernameValue = activeDirectoryConfigurationValue["domainAdminUsername"];
+                                                    if (domainAdminUsernameValue != null && domainAdminUsernameValue.Type != JTokenType.Null)
+                                                    {
+                                                        string domainAdminUsernameInstance = ((string)domainAdminUsernameValue);
+                                                        activeDirectoryConfigurationInstance.DomainAdminUsername = domainAdminUsernameInstance;
+                                                    }
+                                                    
+                                                    JToken domainAdminPasswordValue = activeDirectoryConfigurationValue["domainAdminPassword"];
+                                                    if (domainAdminPasswordValue != null && domainAdminPasswordValue.Type != JTokenType.Null)
+                                                    {
+                                                        string domainAdminPasswordInstance = ((string)domainAdminPasswordValue);
+                                                        activeDirectoryConfigurationInstance.DomainAdminPassword = domainAdminPasswordInstance;
+                                                    }
+                                                }
+                                                
+                                                JToken roleAdminGroupDNValue = securityProfileValue["roleAdminGroupDN"];
+                                                if (roleAdminGroupDNValue != null && roleAdminGroupDNValue.Type != JTokenType.Null)
+                                                {
+                                                    string roleAdminGroupDNInstance = ((string)roleAdminGroupDNValue);
+                                                    securityProfileInstance.RoleAdminGroupDN = roleAdminGroupDNInstance;
+                                                }
+                                                
+                                                JToken roleUsersGroupDNsArray = securityProfileValue["roleUsersGroupDNs"];
+                                                if (roleUsersGroupDNsArray != null && roleUsersGroupDNsArray.Type != JTokenType.Null)
+                                                {
+                                                    foreach (JToken roleUsersGroupDNsValue in ((JArray)roleUsersGroupDNsArray))
+                                                    {
+                                                        securityProfileInstance.RoleUsersGroupDNs.Add(((string)roleUsersGroupDNsValue));
+                                                    }
+                                                }
+                                            }
+                                            
                                             JToken scriptActionsArray = rolesValue["scriptActions"];
                                             if (scriptActionsArray != null && scriptActionsArray.Type != JTokenType.Null)
                                             {
@@ -4888,6 +5175,80 @@ namespace Microsoft.Azure.Management.HDInsight
                                                         }
                                                     }
                                                     
+                                                    JToken securityProfileValue = rolesValue["securityProfile"];
+                                                    if (securityProfileValue != null && securityProfileValue.Type != JTokenType.Null)
+                                                    {
+                                                        SecurityProfile securityProfileInstance = new SecurityProfile();
+                                                        roleInstance.SecurityProfile = securityProfileInstance;
+                                                        
+                                                        JToken activeDirectoryConfigurationValue = securityProfileValue["activeDirectoryConfiguration"];
+                                                        if (activeDirectoryConfigurationValue != null && activeDirectoryConfigurationValue.Type != JTokenType.Null)
+                                                        {
+                                                            ActiveDirectoryConfiguration activeDirectoryConfigurationInstance = new ActiveDirectoryConfiguration();
+                                                            securityProfileInstance.ActiveDirectoryConfiguration = activeDirectoryConfigurationInstance;
+                                                            
+                                                            JToken directoryTypeValue = activeDirectoryConfigurationValue["directoryType"];
+                                                            if (directoryTypeValue != null && directoryTypeValue.Type != JTokenType.Null)
+                                                            {
+                                                                DirectoryType directoryTypeInstance = ((DirectoryType)Enum.Parse(typeof(DirectoryType), ((string)directoryTypeValue), true));
+                                                                activeDirectoryConfigurationInstance.DirectoryType = directoryTypeInstance;
+                                                            }
+                                                            
+                                                            JToken domainValue = activeDirectoryConfigurationValue["domain"];
+                                                            if (domainValue != null && domainValue.Type != JTokenType.Null)
+                                                            {
+                                                                string domainInstance = ((string)domainValue);
+                                                                activeDirectoryConfigurationInstance.Domain = domainInstance;
+                                                            }
+                                                            
+                                                            JToken organizationalUnitDNValue = activeDirectoryConfigurationValue["organizationalUnitDN"];
+                                                            if (organizationalUnitDNValue != null && organizationalUnitDNValue.Type != JTokenType.Null)
+                                                            {
+                                                                string organizationalUnitDNInstance = ((string)organizationalUnitDNValue);
+                                                                activeDirectoryConfigurationInstance.OrganizationalUnitDN = organizationalUnitDNInstance;
+                                                            }
+                                                            
+                                                            JToken ldapUrlsArray = activeDirectoryConfigurationValue["ldapUrls"];
+                                                            if (ldapUrlsArray != null && ldapUrlsArray.Type != JTokenType.Null)
+                                                            {
+                                                                foreach (JToken ldapUrlsValue in ((JArray)ldapUrlsArray))
+                                                                {
+                                                                    activeDirectoryConfigurationInstance.LdapUrls.Add(((string)ldapUrlsValue));
+                                                                }
+                                                            }
+                                                            
+                                                            JToken domainAdminUsernameValue = activeDirectoryConfigurationValue["domainAdminUsername"];
+                                                            if (domainAdminUsernameValue != null && domainAdminUsernameValue.Type != JTokenType.Null)
+                                                            {
+                                                                string domainAdminUsernameInstance = ((string)domainAdminUsernameValue);
+                                                                activeDirectoryConfigurationInstance.DomainAdminUsername = domainAdminUsernameInstance;
+                                                            }
+                                                            
+                                                            JToken domainAdminPasswordValue = activeDirectoryConfigurationValue["domainAdminPassword"];
+                                                            if (domainAdminPasswordValue != null && domainAdminPasswordValue.Type != JTokenType.Null)
+                                                            {
+                                                                string domainAdminPasswordInstance = ((string)domainAdminPasswordValue);
+                                                                activeDirectoryConfigurationInstance.DomainAdminPassword = domainAdminPasswordInstance;
+                                                            }
+                                                        }
+                                                        
+                                                        JToken roleAdminGroupDNValue = securityProfileValue["roleAdminGroupDN"];
+                                                        if (roleAdminGroupDNValue != null && roleAdminGroupDNValue.Type != JTokenType.Null)
+                                                        {
+                                                            string roleAdminGroupDNInstance = ((string)roleAdminGroupDNValue);
+                                                            securityProfileInstance.RoleAdminGroupDN = roleAdminGroupDNInstance;
+                                                        }
+                                                        
+                                                        JToken roleUsersGroupDNsArray = securityProfileValue["roleUsersGroupDNs"];
+                                                        if (roleUsersGroupDNsArray != null && roleUsersGroupDNsArray.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JToken roleUsersGroupDNsValue in ((JArray)roleUsersGroupDNsArray))
+                                                            {
+                                                                securityProfileInstance.RoleUsersGroupDNs.Add(((string)roleUsersGroupDNsValue));
+                                                            }
+                                                        }
+                                                    }
+                                                    
                                                     JToken scriptActionsArray = rolesValue["scriptActions"];
                                                     if (scriptActionsArray != null && scriptActionsArray.Type != JTokenType.Null)
                                                     {
@@ -5428,6 +5789,80 @@ namespace Microsoft.Azure.Management.HDInsight
                                                         {
                                                             string subnetInstance = ((string)subnetValue);
                                                             virtualNetworkProfileInstance.SubnetName = subnetInstance;
+                                                        }
+                                                    }
+                                                    
+                                                    JToken securityProfileValue = rolesValue["securityProfile"];
+                                                    if (securityProfileValue != null && securityProfileValue.Type != JTokenType.Null)
+                                                    {
+                                                        SecurityProfile securityProfileInstance = new SecurityProfile();
+                                                        roleInstance.SecurityProfile = securityProfileInstance;
+                                                        
+                                                        JToken activeDirectoryConfigurationValue = securityProfileValue["activeDirectoryConfiguration"];
+                                                        if (activeDirectoryConfigurationValue != null && activeDirectoryConfigurationValue.Type != JTokenType.Null)
+                                                        {
+                                                            ActiveDirectoryConfiguration activeDirectoryConfigurationInstance = new ActiveDirectoryConfiguration();
+                                                            securityProfileInstance.ActiveDirectoryConfiguration = activeDirectoryConfigurationInstance;
+                                                            
+                                                            JToken directoryTypeValue = activeDirectoryConfigurationValue["directoryType"];
+                                                            if (directoryTypeValue != null && directoryTypeValue.Type != JTokenType.Null)
+                                                            {
+                                                                DirectoryType directoryTypeInstance = ((DirectoryType)Enum.Parse(typeof(DirectoryType), ((string)directoryTypeValue), true));
+                                                                activeDirectoryConfigurationInstance.DirectoryType = directoryTypeInstance;
+                                                            }
+                                                            
+                                                            JToken domainValue = activeDirectoryConfigurationValue["domain"];
+                                                            if (domainValue != null && domainValue.Type != JTokenType.Null)
+                                                            {
+                                                                string domainInstance = ((string)domainValue);
+                                                                activeDirectoryConfigurationInstance.Domain = domainInstance;
+                                                            }
+                                                            
+                                                            JToken organizationalUnitDNValue = activeDirectoryConfigurationValue["organizationalUnitDN"];
+                                                            if (organizationalUnitDNValue != null && organizationalUnitDNValue.Type != JTokenType.Null)
+                                                            {
+                                                                string organizationalUnitDNInstance = ((string)organizationalUnitDNValue);
+                                                                activeDirectoryConfigurationInstance.OrganizationalUnitDN = organizationalUnitDNInstance;
+                                                            }
+                                                            
+                                                            JToken ldapUrlsArray = activeDirectoryConfigurationValue["ldapUrls"];
+                                                            if (ldapUrlsArray != null && ldapUrlsArray.Type != JTokenType.Null)
+                                                            {
+                                                                foreach (JToken ldapUrlsValue in ((JArray)ldapUrlsArray))
+                                                                {
+                                                                    activeDirectoryConfigurationInstance.LdapUrls.Add(((string)ldapUrlsValue));
+                                                                }
+                                                            }
+                                                            
+                                                            JToken domainAdminUsernameValue = activeDirectoryConfigurationValue["domainAdminUsername"];
+                                                            if (domainAdminUsernameValue != null && domainAdminUsernameValue.Type != JTokenType.Null)
+                                                            {
+                                                                string domainAdminUsernameInstance = ((string)domainAdminUsernameValue);
+                                                                activeDirectoryConfigurationInstance.DomainAdminUsername = domainAdminUsernameInstance;
+                                                            }
+                                                            
+                                                            JToken domainAdminPasswordValue = activeDirectoryConfigurationValue["domainAdminPassword"];
+                                                            if (domainAdminPasswordValue != null && domainAdminPasswordValue.Type != JTokenType.Null)
+                                                            {
+                                                                string domainAdminPasswordInstance = ((string)domainAdminPasswordValue);
+                                                                activeDirectoryConfigurationInstance.DomainAdminPassword = domainAdminPasswordInstance;
+                                                            }
+                                                        }
+                                                        
+                                                        JToken roleAdminGroupDNValue = securityProfileValue["roleAdminGroupDN"];
+                                                        if (roleAdminGroupDNValue != null && roleAdminGroupDNValue.Type != JTokenType.Null)
+                                                        {
+                                                            string roleAdminGroupDNInstance = ((string)roleAdminGroupDNValue);
+                                                            securityProfileInstance.RoleAdminGroupDN = roleAdminGroupDNInstance;
+                                                        }
+                                                        
+                                                        JToken roleUsersGroupDNsArray = securityProfileValue["roleUsersGroupDNs"];
+                                                        if (roleUsersGroupDNsArray != null && roleUsersGroupDNsArray.Type != JTokenType.Null)
+                                                        {
+                                                            foreach (JToken roleUsersGroupDNsValue in ((JArray)roleUsersGroupDNsArray))
+                                                            {
+                                                                securityProfileInstance.RoleUsersGroupDNs.Add(((string)roleUsersGroupDNsValue));
+                                                            }
                                                         }
                                                     }
                                                     

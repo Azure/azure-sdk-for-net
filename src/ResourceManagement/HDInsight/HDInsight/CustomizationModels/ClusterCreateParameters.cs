@@ -178,6 +178,11 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         public Principal Principal { get; set; }
 
         /// <summary>
+        /// Gets or sets the security profile to be used for creating secure clusters.
+        /// </summary>
+        public SecurityProfile SecurityProfile { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the ClusterCreateParameters class.
         /// </summary>
         public ClusterCreateParameters()

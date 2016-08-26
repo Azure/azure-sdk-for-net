@@ -154,6 +154,8 @@ namespace Microsoft.Azure.Management.HDInsight
             createParamsExtended.Properties.ComputeProfile = new ComputeProfile();
             foreach (var role in roles)
             {
+                role.SecurityProfile = clusterCreateParameters.SecurityProfile;
+
                 createParamsExtended.Properties.ComputeProfile.Roles.Add(role);
             }
 
