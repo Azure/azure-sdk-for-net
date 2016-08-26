@@ -15,6 +15,7 @@ namespace Microsoft.Azure.KeyVault.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
+    using Microsoft.Azure.KeyVault.WebKey;
 
     /// <summary>
     /// The key import parameters

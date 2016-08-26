@@ -30,8 +30,9 @@ namespace Microsoft.Azure.KeyVault.Models
         /// Initializes a new instance of the KeyCreateParameters class.
         /// </summary>
         /// <param name="kty">The type of key to create. Valid key types, see
-        /// JsonWebKeyType. Possible values include: 'EC', 'RSA', 'RSA-HSM',
-        /// 'oct'</param>
+        /// JsonWebKeyType. Supported JsonWebKey key types (kty) for Elliptic
+        /// Curve, RSA, HSM, Octet. Possible values include: 'EC', 'RSA',
+        /// 'RSA-HSM', 'oct'</param>
         /// <param name="keySize">The key size in bytes. e.g. 1024 or
         /// 2048.</param>
         /// <param name="tags">Application-specific metadata in the form of
@@ -47,8 +48,9 @@ namespace Microsoft.Azure.KeyVault.Models
 
         /// <summary>
         /// Gets or sets the type of key to create. Valid key types, see
-        /// JsonWebKeyType. Possible values include: 'EC', 'RSA', 'RSA-HSM',
-        /// 'oct'
+        /// JsonWebKeyType. Supported JsonWebKey key types (kty) for Elliptic
+        /// Curve, RSA, HSM, Octet. Possible values include: 'EC', 'RSA',
+        /// 'RSA-HSM', 'oct'
         /// </summary>
         [JsonProperty(PropertyName = "kty")]
         public string Kty { get; set; }
