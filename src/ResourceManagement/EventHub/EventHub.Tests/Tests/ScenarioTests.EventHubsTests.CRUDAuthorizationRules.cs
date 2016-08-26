@@ -16,17 +16,17 @@
 
 namespace EventHub.Tests.ScenarioTests
 {
-    using Microsoft.Azure.Management.EventHub;
-    using Microsoft.Azure.Management.EventHub.Models;
-    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using Microsoft.Azure.Test.HttpRecorder;
-    using TestHelper;
     using System;
-    using Xunit;
-    using Microsoft.Rest.Azure;
-    using System.Net;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Net;
+    using Microsoft.Azure.Management.EventHub;
+    using Microsoft.Azure.Management.EventHub.Models;
+    using Microsoft.Azure.Test.HttpRecorder;
+    using Microsoft.Rest.Azure;
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using TestHelper;
+    using Xunit;
     public partial class ScenarioTests 
     {
         [Fact]
@@ -41,7 +41,7 @@ namespace EventHub.Tests.ScenarioTests
                 var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
                 if (string.IsNullOrWhiteSpace(resourceGroup))
                 {
-                    resourceGroup = TestUtilities.GenerateName(ServiceBusManagementHelper.ResourceGroupPrefix);
+                    resourceGroup = TestUtilities.GenerateName(EventHubManagementHelper.ResourceGroupPrefix);
                     this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
                 }
 

@@ -15,11 +15,11 @@
 
 namespace EventHub.Tests.ScenarioTests
 {
+    using System.Net;
     using Microsoft.Azure.Management.EventHub;
     using Microsoft.Azure.Management.Resources;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using TestHelper;
-    using System.Net;
 
     public partial class ScenarioTests 
     {

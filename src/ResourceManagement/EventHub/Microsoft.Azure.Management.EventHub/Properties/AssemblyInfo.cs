@@ -16,8 +16,8 @@
 using System.Reflection;
 using System.Resources;
 
-[assembly: AssemblyTitle("Microsoft Azure ServiceBus Management Library")]
-[assembly: AssemblyDescription("Provides Microsoft Azure ServiceBus management functions for managing the Microsoft Azure ServiceBus service.")]
+[assembly: AssemblyTitle("Microsoft Azure EventHub Management Library")]
+[assembly: AssemblyDescription("Provides Microsoft Azure EventHub management functions for managing the Microsoft Azure EventHub service.")]
 
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.0.2.0")]

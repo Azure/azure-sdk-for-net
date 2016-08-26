@@ -16,20 +16,20 @@
 
 namespace EventHub.Tests.ScenarioTests
 {
-    using Microsoft.Azure.Management.EventHub;
-    using Microsoft.Azure.Management.EventHub.Models;
-    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using Microsoft.Rest.Azure;
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Net;
+    using Microsoft.Azure.Management.EventHub;
+    using Microsoft.Azure.Management.EventHub.Models;
+    using Microsoft.Rest.Azure;
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using TestHelper;
     using Xunit;
-    using System.Collections.Generic;
     public partial class ScenarioTests 
     {
         [Fact]
-        public void SubscriptionsCreateGetUpdateDelete()
+        public void ConsumerGroupsCreateGetUpdateDelete()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
@@ -39,7 +39,7 @@ namespace EventHub.Tests.ScenarioTests
                 var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
                 if (string.IsNullOrWhiteSpace(resourceGroup))
                 {
-                    resourceGroup = TestUtilities.GenerateName(ServiceBusManagementHelper.ResourceGroupPrefix);
+                    resourceGroup = TestUtilities.GenerateName(EventHubManagementHelper.ResourceGroupPrefix);
                     this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
                 }
 

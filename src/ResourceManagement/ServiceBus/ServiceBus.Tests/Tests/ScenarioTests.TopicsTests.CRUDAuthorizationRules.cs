@@ -16,17 +16,17 @@
 
 namespace ServiceBus.Tests.ScenarioTests
 {
-    using Microsoft.Azure.Management.ServiceBus;
-    using Microsoft.Azure.Management.ServiceBus.Models;
-    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using Microsoft.Azure.Test.HttpRecorder;
-    using TestHelper;
     using System;
-    using Xunit;
-    using Microsoft.Rest.Azure;
-    using System.Net;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Net;
+    using Microsoft.Azure.Management.ServiceBus;
+    using Microsoft.Azure.Management.ServiceBus.Models;
+    using Microsoft.Azure.Test.HttpRecorder;
+    using Microsoft.Rest.Azure;
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using TestHelper;
+    using Xunit;
     public partial class ScenarioTests 
     {
         [Fact]

@@ -15,11 +15,11 @@
 
 namespace ServiceBus.Tests.ScenarioTests
 {
-    using Microsoft.Azure.Management.ServiceBus;
+    using System.Net;
     using Microsoft.Azure.Management.Resources;
+    using Microsoft.Azure.Management.ServiceBus;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using TestHelper;
-    using System.Net;
 
     public partial class ScenarioTests 
     {

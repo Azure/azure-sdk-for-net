@@ -39,7 +39,7 @@ namespace EventHub.Tests.ScenarioTests
                 var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
                 if (string.IsNullOrWhiteSpace(resourceGroup))
                 {
-                    resourceGroup = TestUtilities.GenerateName(ServiceBusManagementHelper.ResourceGroupPrefix);
+                    resourceGroup = TestUtilities.GenerateName(EventHubManagementHelper.ResourceGroupPrefix);
                     this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
                 }
 
