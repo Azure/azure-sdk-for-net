@@ -73,64 +73,19 @@ namespace ServiceBus.Tests.ScenarioTests
 
                 Assert.NotNull(createQueueResponse);
                 Assert.Equal(createQueueResponse.Name, queueName);
-
-                // Verify with invalid Queue name
-                string queueName_invalid = queueName + "12";
-                try
-                {
-                    var invalidQueueNameResponse = ServiceBusManagementClient.Queues.CreateOrUpdate(resourceGroup, namespaceName, queueName_invalid, new QueueCreateOrUpdateParameters()
-                    {
-                        Location = location                        
-                    }
-                    );                                    
-
-                }
-                catch (CloudException ex)
-                {
-                    Assert.Equal(ex.Response.StatusCode, HttpStatusCode.BadRequest);
-                }
-
-                // Verify with null parameters
-                try
-                {
-                    var invalidQueueNameResponse = ServiceBusManagementClient.Queues.CreateOrUpdate(resourceGroup, namespaceName, queueName, new QueueCreateOrUpdateParameters()
-                    {
-                        Location = "qwqw2_"                        
-                    }
-                        );
-                }
-                catch (CloudException ex)
-                {
-                    Assert.Equal(ex.Response.StatusCode, HttpStatusCode.BadRequest);
-                }
-                catch (Exception ex)
-                {
-                    string x = ex.Message;
-                }
-
+                
                 // Get the created Queue
                 var getQueueResponse = ServiceBusManagementClient.Queues.Get(resourceGroup, namespaceName, queueName);
                 Assert.NotNull(getQueueResponse);
                 Assert.Equal(EntityStatus.Active, getQueueResponse.Status);
                 Assert.Equal(getQueueResponse.Name, queueName);
-                                               
-                // Get Queue with invalid name
-                try
-                {
-                    var getQueueResponse1 = ServiceBusManagementClient.Queues.Get(resourceGroup, namespaceName, queueName_invalid);                    
-                }
-                catch (Exception ex)
-                {
-                    Assert.Equal(ex.Message, "The requested resource "+ queueName_invalid + " does not exist.");
-                }
-
-                // Get all Queues with valid parameters
+                  
+                // Get all Queues
                 var getQueueListAllResponse = ServiceBusManagementClient.Queues.ListAll(resourceGroup, namespaceName);
                 Assert.NotNull(getQueueListAllResponse);
                 Assert.True(getQueueListAllResponse.Count() >= 1);                
                 Assert.True(getQueueListAllResponse.All(ns => ns.Id.Contains(resourceGroup)));
                 
-
                 // Update Queue. 
                 var updateQueuesParameter = new QueueCreateOrUpdateParameters()
                 {
