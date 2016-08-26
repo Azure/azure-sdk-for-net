@@ -17,6 +17,7 @@ namespace Microsoft.Azure.KeyVault
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
+    using Microsoft.Azure.KeyVault.WebKey;
 
     /// <summary>
     /// Performs cryptographic key operations and vault operations against the
@@ -77,7 +78,8 @@ namespace Microsoft.Azure.KeyVault
         /// </param>
         /// <param name='kty'>
         /// The type of key to create. Valid key types, see JsonWebKeyType.
-        /// Possible values include: 'EC', 'RSA', 'RSA-HSM', 'oct'
+        /// Supported JsonWebKey key types (kty) for Elliptic Curve, RSA,
+        /// HSM, Octet. Possible values include: 'EC', 'RSA', 'RSA-HSM', 'oct'
         /// </param>
         /// <param name='keySize'>
         /// The key size in bytes. e.g. 1024 or 2048.
@@ -663,8 +665,17 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='issuerName'>
         /// The name of the issuer.
         /// </param>
-        /// <param name='issuer'>
-        /// The issuer bundle.
+        /// <param name='provider'>
+        /// The name of the issuer.
+        /// </param>
+        /// <param name='credentials'>
+        /// The credentials to be used for the issuer.
+        /// </param>
+        /// <param name='organizationDetails'>
+        /// Details of the organization as provided to the issuer.
+        /// </param>
+        /// <param name='attributes'>
+        /// Attributes of the issuer object.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -672,7 +683,7 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IssuerBundle>> SetCertificateIssuerWithHttpMessagesAsync(string vaultBaseUrl, string issuerName, IssuerBundle issuer, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IssuerBundle>> SetCertificateIssuerWithHttpMessagesAsync(string vaultBaseUrl, string issuerName, string provider, IssuerCredentials credentials = default(IssuerCredentials), OrganizationDetails organizationDetails = default(OrganizationDetails), IssuerAttributes attributes = default(IssuerAttributes), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Updates the specified certificate issuer.
@@ -683,8 +694,17 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='issuerName'>
         /// The name of the issuer.
         /// </param>
-        /// <param name='issuer'>
-        /// The issuer bundle.
+        /// <param name='provider'>
+        /// The name of the issuer.
+        /// </param>
+        /// <param name='credentials'>
+        /// The credentials to be used for the issuer.
+        /// </param>
+        /// <param name='organizationDetails'>
+        /// Details of the organization as provided to the issuer.
+        /// </param>
+        /// <param name='attributes'>
+        /// Attributes of the issuer object.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -692,7 +712,7 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IssuerBundle>> UpdateCertificateIssuerWithHttpMessagesAsync(string vaultBaseUrl, string issuerName, IssuerBundle issuer, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IssuerBundle>> UpdateCertificateIssuerWithHttpMessagesAsync(string vaultBaseUrl, string issuerName, string provider = default(string), IssuerCredentials credentials = default(IssuerCredentials), OrganizationDetails organizationDetails = default(OrganizationDetails), IssuerAttributes attributes = default(IssuerAttributes), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets the specified certificate issuer.
@@ -859,6 +879,9 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='certificateVersion'>
         /// The version of the certificate
         /// </param>
+        /// <param name='certificatePolicy'>
+        /// The management policy for the certificate
+        /// </param>
         /// <param name='certificateAttributes'>
         /// The attributes of the certificate (optional)
         /// </param>
@@ -871,7 +894,7 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<CertificateBundle>> UpdateCertificateWithHttpMessagesAsync(string vaultBaseUrl, string certificateName, string certificateVersion, CertificateAttributes certificateAttributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CertificateBundle>> UpdateCertificateWithHttpMessagesAsync(string vaultBaseUrl, string certificateName, string certificateVersion, CertificatePolicy certificatePolicy = default(CertificatePolicy), CertificateAttributes certificateAttributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets a Certificate.
@@ -902,8 +925,9 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='certificateName'>
         /// The name of the certificate
         /// </param>
-        /// <param name='certificateOperation'>
-        /// The certificate operation response.
+        /// <param name='cancellationRequested'>
+        /// Indicates if cancellation was requested on the certificate
+        /// operation.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -911,7 +935,7 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<CertificateOperation>> UpdateCertificateOperationWithHttpMessagesAsync(string vaultBaseUrl, string certificateName, CertificateOperation certificateOperation, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<CertificateOperation>> UpdateCertificateOperationWithHttpMessagesAsync(string vaultBaseUrl, string certificateName, bool cancellationRequested, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Gets the certificate operation response.

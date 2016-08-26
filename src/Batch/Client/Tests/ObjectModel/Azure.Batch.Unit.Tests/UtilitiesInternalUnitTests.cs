@@ -194,6 +194,23 @@
             Assert.Null(protoItem);
         }
 
+        [Fact]
+        [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.VeryShortDuration)]
+        public void IModifiableCollectionFromExistingCollectionIsNotChanged()
+        {
+            IEnumerable<Protocol.Models.MetadataItem> collection = new List<Protocol.Models.MetadataItem>()
+                {
+                    new Protocol.Models.MetadataItem("a", "b")
+                };
+
+            ConcurrentChangeTrackedModifiableList<MetadataItem> result = UtilitiesInternal.CollectionToThreadSafeCollectionIModifiable(
+                collection,
+                objectCreationFunc: o => new MetadataItem(o));
+
+            Assert.False(result.HasBeenModified);
+        }
+
+
         #endregion
 
         #region CertificateVisibilityTests

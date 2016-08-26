@@ -21,11 +21,7 @@ API reference can be found at http://go.microsoft.com/fwlink/?LinkId=717949.</de
     <summary>The client library for the Microsoft Azure Batch service.</summary>
     <releaseNotes>
 Bug fixes:
-- Fixed bug where CloudJob.Commit and CloudJob.CommitChanges would hit an exception when attempting to commit a job which had previously been gotten using an ODataDetail select clause.
-
-Documentation:
-- Improved comments for ExitCode on all task execution information objects (TaskExecutionInformation, JobPreparationTaskExecutionInformation, JobReleaseTaskExecutionInformation, StartTaskInformation, etc)
-- Improved documentation on ocp-range header format.
+- Fixed bug CommitChanges would incorrectly include elements in the request which did not actually change.
 
 This version of the Batch .NET client library targets version 2016-07-01.3.1 of the Azure Batch REST API.
         </releaseNotes>
