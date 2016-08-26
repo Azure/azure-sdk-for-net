@@ -199,7 +199,6 @@ namespace Microsoft.Azure.Management.Network
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<string>> GeneratevpnclientpackageWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkGatewayName, VpnClientParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
         /// <summary>
         /// The List VirtualNetworkGateways opertion retrieves all the virtual
         /// network gateways stored.
