@@ -17,7 +17,6 @@
 namespace ServiceBus.Tests.ScenarioTests
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Net;
     using Microsoft.Azure.Management.ServiceBus;
@@ -61,23 +60,18 @@ namespace ServiceBus.Tests.ScenarioTests
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
-                //// Create a Topics
-
+                // Create a Topic
                 var topicName = TestUtilities.GenerateName(ServiceBusManagementHelper.TopicPrefix);
-                // var namespaceName = "sdk-Namespace4037";
 
                 var createTopicResponse = this.ServiceBusManagementClient.Topics.CreateOrUpdate(resourceGroup, namespaceName, topicName,
                 new TopicCreateOrUpdateParameters()
                 {
                     Location = location                    
-                }
-                    );
-
+                });
                 Assert.NotNull(createTopicResponse);
                 Assert.Equal(createTopicResponse.Name, topicName);
 
-                //Get the created topic
-
+                // Get the created topic
                 var getTopicResponse = ServiceBusManagementClient.Topics.Get(resourceGroup, namespaceName, topicName);
                 Assert.NotNull(getTopicResponse);
                 Assert.Equal(EntityStatus.Active, getTopicResponse.Status);
@@ -88,8 +82,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 var createSubscriptionResponse = ServiceBusManagementClient.Subscriptions.CreateOrUpdate(resourceGroup, namespaceName, topicName, subscriptionName, new SubscriptionCreateOrUpdateParameters()
                 {
                     Location = location               
-                }
-                );
+                });
                 Assert.NotNull(createSubscriptionResponse);
                 Assert.Equal(createSubscriptionResponse.Name, subscriptionName);
 
@@ -106,34 +99,26 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.True(getSubscriptionsListAllResponse.All(ns => ns.Id.Contains(resourceGroup)));
 
                 // Update Subscription. 
-
-                // Set the Parameters to update the Subscription 
-
                 var updateSubscriptionParameter = new SubscriptionCreateOrUpdateParameters()
                 {
                     Location = location,
-                    EnableBatchedOperations = true,
-                   // RequiresSession = true
+                    EnableBatchedOperations = true
                 };
 
                 var updateSubscriptionsResponse = ServiceBusManagementClient.Subscriptions.CreateOrUpdate(resourceGroup, namespaceName, topicName,subscriptionName,updateSubscriptionParameter);
-
                 Assert.NotNull(updateSubscriptionsResponse);
                 Assert.True(updateSubscriptionsResponse.EnableBatchedOperations);
-               // Assert.True(updateSubscriptionsResponse.RequiresSession);
                 Assert.NotEqual(updateSubscriptionsResponse.UpdatedAt, subscriptionGetResponse.UpdatedAt);
 
-                //Get the updated subscription to check the Updated values. 
+                // Get the updated subscription to check the Updated values. 
                 var getSubscriptionsResponse = ServiceBusManagementClient.Subscriptions.Get(resourceGroup, namespaceName, topicName,subscriptionName);
                 Assert.NotNull(getSubscriptionsResponse);
                 Assert.Equal(EntityStatus.Active, getSubscriptionsResponse.Status);
                 Assert.Equal(getSubscriptionsResponse.Name, subscriptionName);
                 Assert.True(getSubscriptionsResponse.EnableBatchedOperations);
-                //Assert.True(getSubscriptionsResponse.RequiresSession);
                 Assert.NotEqual(getSubscriptionsResponse.UpdatedAt, createSubscriptionResponse.UpdatedAt);
 
-                //Delete Created Subscription and check for the NotFound exception 
-
+                // Delete Created Subscription and check for the NotFound exception 
                 ServiceBusManagementClient.Subscriptions.Delete(resourceGroup, namespaceName, topicName, subscriptionName);
                 try
                 {
@@ -144,8 +129,7 @@ namespace ServiceBus.Tests.ScenarioTests
                     Assert.Equal(HttpStatusCode.NotFound,ex.Response.StatusCode);
                 }
                 
-                //Delete Created Topics  and check for the NotFound exception 
-
+                // Delete Created Topics  and check for the NotFound exception
                 ServiceBusManagementClient.Topics.Delete(resourceGroup, namespaceName, topicName);
                 try
                 {
@@ -156,7 +140,7 @@ namespace ServiceBus.Tests.ScenarioTests
                     Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
                 }
 
-                //Delete namespace
+                // Delete namespace
                 try
                 {                    
                     ServiceBusManagementClient.Namespaces.Delete(resourceGroup, namespaceName);
@@ -165,7 +149,6 @@ namespace ServiceBus.Tests.ScenarioTests
                 {
                     Assert.True(ex.Message.Contains("NotFound"));
                 }
-                //Subscription end
             }
         }
     }

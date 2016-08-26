@@ -58,23 +58,17 @@ namespace ServiceBus.Tests.ScenarioTests
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
                 
-                //// Create a Topic
-
+                // Create a Topic
                 var topicName = TestUtilities.GenerateName(ServiceBusManagementHelper.TopicPrefix);
-                // var namespaceName = "sdk-Namespace4037";
-
                 var createTopicResponse = this.ServiceBusManagementClient.Topics.CreateOrUpdate(resourceGroup, namespaceName, topicName,
                 new TopicCreateOrUpdateParameters()
                 {
                     Location = location
-                }
-                    );
-
+                });
                 Assert.NotNull(createTopicResponse);
                 Assert.Equal(createTopicResponse.Name, topicName);
 
-                //Get the created topic
-
+                // Get the created topic
                 var getTopicResponse = ServiceBusManagementClient.Topics.Get(resourceGroup, namespaceName, topicName);
                 Assert.NotNull(getTopicResponse);
                 Assert.Equal(EntityStatus.Active, getTopicResponse.Status);
@@ -86,10 +80,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.True(getTopicsListAllResponse.Count() >= 1);                
                 Assert.True(getTopicsListAllResponse.All(ns => ns.Id.Contains(resourceGroup)));
 
-                // Update Topic. 
-
-                // Set the Parameters to update he Topic 
-
+                // Update Topic
                 var updateTopicsParameter = new TopicCreateOrUpdateParameters()
                 {
                     Location = location,
@@ -98,14 +89,12 @@ namespace ServiceBus.Tests.ScenarioTests
                 };
 
                 var updateTopicsResponse = ServiceBusManagementClient.Topics.CreateOrUpdate(resourceGroup, namespaceName, topicName, updateTopicsParameter);
-
                 Assert.NotNull(updateTopicsResponse);
                 Assert.True(updateTopicsResponse.EnableExpress);
                 Assert.True(updateTopicsResponse.IsAnonymousAccessible);
                 Assert.NotEqual(updateTopicsResponse.UpdatedAt, getTopicResponse.UpdatedAt);
 
-                //Get the created topic to check the Updated values. 
-
+                // Get the created topic to check the Updated values. 
                 getTopicResponse = ServiceBusManagementClient.Topics.Get(resourceGroup, namespaceName, topicName);
                 Assert.NotNull(getTopicResponse);
                 Assert.Equal(EntityStatus.Active, getTopicResponse.Status);
@@ -114,8 +103,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.True(updateTopicsResponse.IsAnonymousAccessible);
                 Assert.NotEqual(updateTopicsResponse.UpdatedAt, getTopicResponse.UpdatedAt);
 
-                //Delete Created Topics  and check for the NotFound exception 
-
+                // Delete Created Topics  and check for the NotFound exception 
                 ServiceBusManagementClient.Topics.Delete(resourceGroup, namespaceName, topicName);
                 try
                 {
@@ -126,7 +114,7 @@ namespace ServiceBus.Tests.ScenarioTests
                     Assert.Equal(ex.Message, "The requested resource " + topicName + " does not exist.");
                 }
 
-                //Delete namespace
+                // Delete namespace
                 try
                 {                    
                     ServiceBusManagementClient.Namespaces.Delete(resourceGroup, namespaceName);
@@ -135,8 +123,6 @@ namespace ServiceBus.Tests.ScenarioTests
                 {
                     Assert.True(ex.Message.Contains("NotFound"));
                 }
-                //Topics end
-
             }
         }
     }

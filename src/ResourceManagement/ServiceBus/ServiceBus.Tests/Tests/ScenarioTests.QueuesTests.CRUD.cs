@@ -68,8 +68,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 new QueueCreateOrUpdateParameters()
                 {
                     Location = location
-                }
-                    );
+                });
 
                 Assert.NotNull(createQueueResponse);
                 Assert.Equal(createQueueResponse.Name, queueName);
@@ -99,7 +98,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.True(updateQueueResponse.EnableExpress);
                 Assert.True(updateQueueResponse.IsAnonymousAccessible);
 
-                //Delete Created Queue  and check for the NotFound exception 
+                // Delete Created Queue  and check for the NotFound exception 
                 ServiceBusManagementClient.Queues.Delete(resourceGroup, namespaceName, queueName);
                 try
                 {

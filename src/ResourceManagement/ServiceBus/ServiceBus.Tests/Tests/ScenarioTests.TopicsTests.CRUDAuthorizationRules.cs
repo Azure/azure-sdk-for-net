@@ -64,7 +64,7 @@ namespace ServiceBus.Tests.ScenarioTests
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
                  
-                //Get the created namespace
+                // Get the created namespace
                 var getNamespaceResponse = ServiceBusManagementClient.Namespaces.Get(resourceGroup, namespaceName);
                 if (string.Compare(getNamespaceResponse.ProvisioningState, "Succeeded", true) != 0)
                     TestUtilities.Wait(TimeSpan.FromSeconds(5));
@@ -82,19 +82,17 @@ namespace ServiceBus.Tests.ScenarioTests
                 new TopicCreateOrUpdateParameters()
                 {
                     Location = location
-                }
-                 );
-
+                });
                 Assert.NotNull(createTopicResponse);
                 Assert.Equal(createTopicResponse.Name, topicName);
                 
-                //Get the created Topic
+                // Get the created Topic
                 var getTopicResponse = ServiceBusManagementClient.Topics.Get(resourceGroup, namespaceName, topicName);
                 Assert.NotNull(getTopicResponse);
                 Assert.Equal(EntityStatus.Active, createTopicResponse.Status);
                 Assert.Equal(getTopicResponse.Name, topicName);                
 
-                //Create a topic AuthorizationRule
+                // Create a topic AuthorizationRule
                 var authorizationRuleName = TestUtilities.GenerateName(ServiceBusManagementHelper.AuthorizationRulesPrefix);
                 string createPrimaryKey = HttpMockServer.GetVariable("CreatePrimaryKey", ServiceBusManagementHelper.GenerateRandomKey());
                 var createAutorizationRuleParameter = new SharedAccessAuthorizationRuleCreateOrUpdateParameters()
@@ -104,7 +102,6 @@ namespace ServiceBus.Tests.ScenarioTests
                 };
 
                 var jsonStr = ServiceBusManagementHelper.ConvertObjectToJSon(createAutorizationRuleParameter);
-
                 var createTopicAuthorizationRuleResponse = ServiceBusManagementClient.Topics.CreateOrUpdateAuthorizationRule(resourceGroup, namespaceName,topicName,
                     authorizationRuleName, createAutorizationRuleParameter);
                 Assert.NotNull(createTopicAuthorizationRuleResponse);
@@ -114,7 +111,7 @@ namespace ServiceBus.Tests.ScenarioTests
                     Assert.True(createTopicAuthorizationRuleResponse.Rights.Any(r => r == right));
                 }
 
-                //Get created Topics AuthorizationRules
+                // Get created Topics AuthorizationRules
                 var getTopicsAuthorizationRulesResponse = ServiceBusManagementClient.Topics.GetAuthorizationRule(resourceGroup, namespaceName, topicName, authorizationRuleName);
                 Assert.NotNull(getTopicsAuthorizationRulesResponse);
                 Assert.True(getTopicsAuthorizationRulesResponse.Rights.Count == createAutorizationRuleParameter.Rights.Count);
@@ -123,13 +120,13 @@ namespace ServiceBus.Tests.ScenarioTests
                     Assert.True(getTopicsAuthorizationRulesResponse.Rights.Any(r => r == right));
                 }
 
-                //Get all Topics AuthorizationRules
+                // Get all Topics AuthorizationRules
                 var getAllNamespaceAuthorizationRulesResponse = ServiceBusManagementClient.Topics.ListAuthorizationRules(resourceGroup, namespaceName, topicName);
                 Assert.NotNull(getAllNamespaceAuthorizationRulesResponse);
                 Assert.Equal(getAllNamespaceAuthorizationRulesResponse.Count(), 1);
                 Assert.True(getAllNamespaceAuthorizationRulesResponse.Any(ns => ns.Name == authorizationRuleName));                
 
-                //Update topics authorizationRule
+                // Update topics authorizationRule
                 string updatePrimaryKey = HttpMockServer.GetVariable("UpdatePrimaryKey", ServiceBusManagementHelper.GenerateRandomKey());
                 SharedAccessAuthorizationRuleCreateOrUpdateParameters updateTopicsAuthorizationRuleParameter = new SharedAccessAuthorizationRuleCreateOrUpdateParameters();
                 updateTopicsAuthorizationRuleParameter.Rights = new List<AccessRights?>() { AccessRights.Listen };
@@ -145,7 +142,7 @@ namespace ServiceBus.Tests.ScenarioTests
                     Assert.True(updateTopicAuthorizationRuleResponse.Rights.Any(r => r.Equals(right)));
                 }
 
-                //Get the updated Topics AuthorizationRule
+                // Get the updated Topics AuthorizationRule
                 var getTopicAuthorizationRuleResponse = ServiceBusManagementClient.Topics.GetAuthorizationRule(resourceGroup, namespaceName,topicName,
                     authorizationRuleName);
                 Assert.NotNull(getTopicAuthorizationRuleResponse);
@@ -156,7 +153,7 @@ namespace ServiceBus.Tests.ScenarioTests
                     Assert.True(getTopicAuthorizationRuleResponse.Rights.Any(r => r.Equals(right)));
                 }
 
-                //Get the connectionString to the Topics for a Authorization rule created
+                // Get the connectionString to the Topics for a Authorization rule created
                 var listKeysTopicsResponse = ServiceBusManagementClient.Topics.ListKeys(resourceGroup, namespaceName, topicName, authorizationRuleName);
                 Assert.NotNull(listKeysTopicsResponse);
                 Assert.NotNull(listKeysTopicsResponse.PrimaryConnectionString);
@@ -173,7 +170,6 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.NotNull(regenerateKeysTopicsResposnse.SecondaryKey);
 
                 regenerateKeysTopicsParameters.Policykey = Policykey.SecondaryKey;
-
                 regenerateKeysTopicsResposnse = ServiceBusManagementClient.Topics.RegenerateKeys(resourceGroup, namespaceName, topicName, authorizationRuleName, regenerateKeysTopicsParameters);
                 Assert.NotEqual(listKeysTopicsResponse.SecondaryKey, regenerateKeysTopicsResposnse.SecondaryKey);
                 Assert.NotNull(regenerateKeysTopicsResposnse.PrimaryConnectionString);
@@ -181,10 +177,11 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.NotNull(regenerateKeysTopicsResposnse.PrimaryKey);
                 
 
-                //Delete Topic authorizationRule
+                // Delete Topic authorizationRule
                 ServiceBusManagementClient.Topics.DeleteAuthorizationRule(resourceGroup, namespaceName, topicName, authorizationRuleName);
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
+
                 try
                 {
                     ServiceBusManagementClient.Topics.GetAuthorizationRule(resourceGroup, namespaceName, topicName, authorizationRuleName);
@@ -195,7 +192,7 @@ namespace ServiceBus.Tests.ScenarioTests
                     Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
                 }
 
-                //Delete Topic and check for the NotFound exception 
+                // Delete Topic and check for the NotFound exception 
                 ServiceBusManagementClient.Topics.Delete(resourceGroup, namespaceName, topicName);
                 try
                 {
@@ -206,7 +203,7 @@ namespace ServiceBus.Tests.ScenarioTests
                     Assert.Equal(HttpStatusCode.NotFound,ex.Response.StatusCode);
                 }
 
-                //Delete namespace and check for the NotFound exception 
+                // Delete namespace and check for the NotFound exception 
                 ServiceBusManagementClient.Namespaces.Delete(resourceGroup, namespaceName);
                 try
                 {
