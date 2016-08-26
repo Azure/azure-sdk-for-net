@@ -16,17 +16,17 @@
 
 namespace EventHub.Tests.ScenarioTests
 {
-    using Microsoft.Azure.Management.EventHub;
-    using Microsoft.Azure.Management.EventHub.Models;
-    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using Microsoft.Azure.Test.HttpRecorder;
-    using TestHelper;
     using System;
-    using Xunit;
-    using Microsoft.Rest.Azure;
-    using System.Net;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Net;
+    using Microsoft.Azure.Management.EventHub;
+    using Microsoft.Azure.Management.EventHub.Models;
+    using Microsoft.Azure.Test.HttpRecorder;
+    using Microsoft.Rest.Azure;
+    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using TestHelper;
+    using Xunit;
     public partial class ScenarioTests 
     {
         [Fact]
@@ -39,13 +39,15 @@ namespace EventHub.Tests.ScenarioTests
                 var location = EventHubManagementHelper.DefaultLocation;
 
                 var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
-                if (string.IsNullOrWhiteSpace(resourceGroup))
-                {
-                    resourceGroup = TestUtilities.GenerateName(EventHubManagementHelper.ResourceGroupPrefix);
-                    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
-                }
+                //if (string.IsNullOrWhiteSpace(resourceGroup))
+                //{
+                //    resourceGroup = TestUtilities.GenerateName(EventHubManagementHelper.ResourceGroupPrefix);
+                //    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
+                //}
 
-                //Create a namespace
+                resourceGroup = "Default-ServiceBus-WestUS";
+
+                // Create a namespace
                 var namespaceName = TestUtilities.GenerateName(EventHubManagementHelper.NamespacePrefix);
                 var createNamespaceResponse = EventHubManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
                     new NamespaceCreateOrUpdateParameters()
@@ -58,7 +60,7 @@ namespace EventHub.Tests.ScenarioTests
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
-                //Get the created namespace
+                // Get the created namespace
                 var getNamespaceResponse = EventHubManagementClient.Namespaces.Get(resourceGroup, namespaceName);
                 if (string.Compare(getNamespaceResponse.ProvisioningState, "Succeeded", true) != 0)
                     TestUtilities.Wait(TimeSpan.FromSeconds(5));
@@ -69,7 +71,7 @@ namespace EventHub.Tests.ScenarioTests
                 Assert.Equal(NamespaceState.Active , getNamespaceResponse.Status);
                 Assert.Equal(location, getNamespaceResponse.Location, StringComparer.CurrentCultureIgnoreCase);
 
-                //Create a namespace AuthorizationRule
+                // Create a namespace AuthorizationRule
                 var authorizationRuleName = TestUtilities.GenerateName(EventHubManagementHelper.AuthorizationRulesPrefix);
                 string createPrimaryKey = HttpMockServer.GetVariable("CreatePrimaryKey", EventHubManagementHelper.GenerateRandomKey());
                 var createAutorizationRuleParameter = new SharedAccessAuthorizationRuleCreateOrUpdateParameters()
@@ -89,7 +91,7 @@ namespace EventHub.Tests.ScenarioTests
                     Assert.True(createNamespaceAuthorizationRuleResponse.Rights.Any(r => r == right));
                 }
 
-                //Get default namespace AuthorizationRules
+                // Get default namespace AuthorizationRules
                 var getNamespaceAuthorizationRulesResponse = EventHubManagementClient.Namespaces.GetAuthorizationRule(resourceGroup, namespaceName, EventHubManagementHelper.DefaultNamespaceAuthorizationRule);
                 Assert.NotNull(getNamespaceAuthorizationRulesResponse);
                 Assert.Equal(getNamespaceAuthorizationRulesResponse.Name, EventHubManagementHelper.DefaultNamespaceAuthorizationRule);
@@ -97,7 +99,7 @@ namespace EventHub.Tests.ScenarioTests
                 Assert.True(getNamespaceAuthorizationRulesResponse.Rights.Any(r => r == AccessRights.Send));
                 Assert.True(getNamespaceAuthorizationRulesResponse.Rights.Any(r => r == AccessRights.Manage));
 
-                //Get created namespace AuthorizationRules
+                // Get created namespace AuthorizationRules
                 getNamespaceAuthorizationRulesResponse = EventHubManagementClient.Namespaces.GetAuthorizationRule(resourceGroup, namespaceName, authorizationRuleName);
                 Assert.NotNull(getNamespaceAuthorizationRulesResponse);
                 Assert.True(getNamespaceAuthorizationRulesResponse.Rights.Count == createAutorizationRuleParameter.Rights.Count);
@@ -106,14 +108,14 @@ namespace EventHub.Tests.ScenarioTests
                     Assert.True(getNamespaceAuthorizationRulesResponse.Rights.Any(r => r == right));
                 }
 
-                //Get all namespaces AuthorizationRules 
+                // Get all namespaces AuthorizationRules 
                 var getAllNamespaceAuthorizationRulesResponse = EventHubManagementClient.Namespaces.ListAuthorizationRules(resourceGroup, namespaceName);
                 Assert.NotNull(getAllNamespaceAuthorizationRulesResponse);
                 Assert.True(getAllNamespaceAuthorizationRulesResponse.Count() > 1);
                 Assert.True(getAllNamespaceAuthorizationRulesResponse.Any(ns => ns.Name == authorizationRuleName));
                 Assert.True(getAllNamespaceAuthorizationRulesResponse.Any(auth => auth.Name == EventHubManagementHelper.DefaultNamespaceAuthorizationRule));
 
-                //Update namespace authorizationRule
+                // Update namespace authorizationRule
                 string updatePrimaryKey = HttpMockServer.GetVariable("UpdatePrimaryKey", EventHubManagementHelper.GenerateRandomKey());
                 SharedAccessAuthorizationRuleCreateOrUpdateParameters updateNamespaceAuthorizationRuleParameter = new SharedAccessAuthorizationRuleCreateOrUpdateParameters();
                 updateNamespaceAuthorizationRuleParameter.Rights = new List<AccessRights?>() { AccessRights.Listen };
@@ -129,7 +131,7 @@ namespace EventHub.Tests.ScenarioTests
                     Assert.True(updateNamespaceAuthorizationRuleResponse.Rights.Any(r => r.Equals(right)));
                 }
 
-                //Get the updated namespace AuthorizationRule
+                // Get the updated namespace AuthorizationRule
                 var getNamespaceAuthorizationRuleResponse = EventHubManagementClient.Namespaces.GetAuthorizationRule(resourceGroup, namespaceName,
                     authorizationRuleName);
                 Assert.NotNull(getNamespaceAuthorizationRuleResponse);
@@ -140,13 +142,13 @@ namespace EventHub.Tests.ScenarioTests
                     Assert.True(getNamespaceAuthorizationRuleResponse.Rights.Any(r => r.Equals(right)));
                 }
 
-                //Get the connectionString to the namespace for a Authorization rule created
+                // Get the connectionString to the namespace for a Authorization rule created
                 var listKeysResponse = EventHubManagementClient.Namespaces.ListKeys(resourceGroup, namespaceName, authorizationRuleName);
                 Assert.NotNull(listKeysResponse);
                 Assert.NotNull(listKeysResponse.PrimaryConnectionString);
                 Assert.NotNull(listKeysResponse.SecondaryConnectionString);
 
-                //Delete namespace authorizationRule
+                // Delete namespace authorizationRule
                 EventHubManagementClient.Namespaces.DeleteAuthorizationRule(resourceGroup, namespaceName, authorizationRuleName);
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));

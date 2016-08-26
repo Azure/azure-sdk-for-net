@@ -97,32 +97,10 @@ namespace EventHub.Tests.ScenarioTests
 
                 // Get all ConsumerGroup   
                 var getSubscriptionsListAllResponse = EventHubManagementClient.ConsumerGroups.ListAll(resourceGroup, namespaceName,eventhubName);
-                Assert.NotNull(getSubscriptionsListAllResponse);
-                //Assert.True(getSubscriptionsListAllResponse.Count() >= 1);                
+                Assert.NotNull(getSubscriptionsListAllResponse);              
                 Assert.True(getSubscriptionsListAllResponse.All(ns => ns.Id.Contains(resourceGroup)));
 
-                //// Update ConsumerGroup. 
-
-                //// Set the Parameters to update the Subscription 
-
-                //var updateConsumergroupParameter = new ConsumerGroupCreateOrUpdateParameters()
-                //{
-                //    Location = location                    
-                //};
-
-                //var updateSubscriptionsResponse = EventHubManagementClient.ConsumerGroups.CreateOrUpdate(resourceGroup, namespaceName, eventhubName,consumergroupName, updateConsumergroupParameter);
-
-                //Assert.NotNull(updateSubscriptionsResponse);                
-                //Assert.NotEqual(updateSubscriptionsResponse.Properties.UpdatedAt, getConsumergroupGetResponse.Properties.UpdatedAt);
-
-                ////Get the updated subscription to check the Updated values. 
-                //var getConsumerGroupResponse = EventHubManagementClient.ConsumerGroups.Get(resourceGroup, namespaceName, eventhubName,consumergroupName);
-                //Assert.NotNull(getConsumerGroupResponse);
-                ////Assert.Equal(EntityStatus.Active, getConsumerGroupResponse.Status);
-                //Assert.Equal(getConsumerGroupResponse.Name, consumergroupName);
-                //Assert.NotEqual(getConsumerGroupResponse.Properties.UpdatedAt, createSubscriptionResponse.Properties.UpdatedAt);
-
-                //Delete Created ConsumerGroup and check for the NotFound exception 
+                // Delete Created ConsumerGroup and check for the NotFound exception 
                 EventHubManagementClient.ConsumerGroups.Delete(resourceGroup, namespaceName, eventhubName, consumergroupName);
                 try
                 {
@@ -133,7 +111,7 @@ namespace EventHub.Tests.ScenarioTests
                     Assert.Equal(HttpStatusCode.NotFound,ex.Response.StatusCode);
                 }
 
-                //Delete Created EventHub  and check for the NotFound exception 
+                // Delete Created EventHub  and check for the NotFound exception 
                 EventHubManagementClient.EventHubs.Delete(resourceGroup, namespaceName, eventhubName);
                 try
                 {
@@ -144,7 +122,7 @@ namespace EventHub.Tests.ScenarioTests
                     Assert.Equal(HttpStatusCode.NotFound, ex.Response.StatusCode);
                 }
 
-                //Delete namespace
+                // Delete namespace
                 try
                 {                    
                     EventHubManagementClient.Namespaces.Delete(resourceGroup, namespaceName);

@@ -18,10 +18,6 @@
     <Service Include="{82a7f48d-3b50-4b1e-b82e-3ada8210c358}" />
   </ItemGroup>
   <ItemGroup>
-    <DnxInvisibleCompile Include="Tests\ScenarioTests.NamespaceTests.CRUD.cs" />
-    <DnxInvisibleCompile Include="Tests\ScenarioTests.NamespaceTests.CRUDAuthorizationRules.cs" />
-    <DnxInvisibleCompile Include="Tests\ScenarioTests.SubscriptionsTests.CRUD.cs" />
-    <DnxInvisibleCompile Include="Tests\ScenarioTests.TopicsTests.CRUDAuthorizationRules.cs" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.targets" Condition="'$(VSToolsPath)' != ''" />
 </Project>

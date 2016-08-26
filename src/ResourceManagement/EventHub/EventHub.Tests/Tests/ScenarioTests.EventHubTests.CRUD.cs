@@ -36,11 +36,13 @@ namespace EventHub.Tests.ScenarioTests
                 var location = EventHubManagementHelper.DefaultLocation;
 
                 var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
-                if (string.IsNullOrWhiteSpace(resourceGroup))
-                {
-                    resourceGroup = TestUtilities.GenerateName(EventHubManagementHelper.ResourceGroupPrefix);
-                    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
-                }
+                //if (string.IsNullOrWhiteSpace(resourceGroup))
+                //{
+                //    resourceGroup = TestUtilities.GenerateName(EventHubManagementHelper.ResourceGroupPrefix);
+                //    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
+                //}
+
+                resourceGroup = "Default-ServiceBus-WestUS";
 
                 var namespaceName = TestUtilities.GenerateName(EventHubManagementHelper.NamespacePrefix);
 
@@ -60,40 +62,30 @@ namespace EventHub.Tests.ScenarioTests
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
-                //// Create a EventHub
-
+                // Create a EventHub
                 var eventhubName = TestUtilities.GenerateName(EventHubManagementHelper.EventHubPrefix);
-                //var namespaceName = "sdk-Namespace7429";
 
                 var createEventHubResponse = this.EventHubManagementClient.EventHubs.CreateOrUpdate(resourceGroup, namespaceName, eventhubName,
                 new EventHubCreateOrUpdateParameters()
                 {
                     Location = location
-                }
-                    );
+                });
 
                 Assert.NotNull(createEventHubResponse);
-                Assert.Equal(createEventHubResponse.Name, eventhubName);
-
-                //var eventhubName = "sdk-EventHub3991";
+                Assert.Equal(createEventHubResponse.Name, eventhubName);                
                 
-                
-                //Get the created EventHub
+                // Get the created EventHub
                 var getEventResponse = EventHubManagementClient.EventHubs.Get(resourceGroup, namespaceName, eventhubName);
                 Assert.NotNull(getEventResponse);
                 Assert.Equal(getEventResponse.Status, EntityStatus.Active);
 
 
                 // Get all Event Hubs for a given NameSpace
-
                 var getListEventHubResponse = EventHubManagementClient.EventHubs.ListAll(resourceGroup, namespaceName);
-
                 Assert.NotNull(getListEventHubResponse);
                 Assert.True(getListEventHubResponse.Count<EventHubResource>() >= 1 );
 
-
-                // Update the EventHub                 
-                // set the CreateOrUpdateParameters
+                // Update the EventHub
                 EventHubCreateOrUpdateParameters updateEventHubProperties = new EventHubCreateOrUpdateParameters()
                 {
                     Location = location,
@@ -101,18 +93,15 @@ namespace EventHub.Tests.ScenarioTests
                 };
 
                 var getUpdateEventhubPropertiesResponse = EventHubManagementClient.EventHubs.CreateOrUpdate(resourceGroup, namespaceName, eventhubName, updateEventHubProperties);
-
-                Assert.NotNull(getUpdateEventhubPropertiesResponse);              
+                Assert.NotNull(getUpdateEventhubPropertiesResponse);
                 
-
-                //Get the updated EventHub and verify the properties
+                // Get the updated EventHub and verify the properties
                 getEventResponse = EventHubManagementClient.EventHubs.Get(resourceGroup, namespaceName, eventhubName);
                 Assert.NotNull(getEventResponse);
                 Assert.Equal(getEventResponse.Status, EntityStatus.Active);
                 Assert.Equal(getEventResponse.MessageRetentionInDays, getEventResponse.MessageRetentionInDays);
 
                 // Delete the Evnet Hub
-
                 EventHubManagementClient.EventHubs.Delete(resourceGroup, namespaceName, eventhubName);
                 try
                 {
@@ -123,8 +112,7 @@ namespace EventHub.Tests.ScenarioTests
                     Assert.Equal(ex.Message, "The requested resource " + eventhubName + " does not exist.");
                 }
 
-
-                //Delete namespace and check for the NotFound exception 
+                // Delete namespace and check for the NotFound exception 
                 EventHubManagementClient.Namespaces.Delete(resourceGroup, namespaceName);
                 try
                 {

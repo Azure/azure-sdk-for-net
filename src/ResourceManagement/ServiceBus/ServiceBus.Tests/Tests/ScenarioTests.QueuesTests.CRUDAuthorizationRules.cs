@@ -167,7 +167,6 @@ namespace ServiceBus.Tests.ScenarioTests
                 
                 var regenerateKeysResposnse = ServiceBusManagementClient.Queues.RegenerateKeys(resourceGroup, namespaceName, queueName, authorizationRuleName, regenerateKeysParameters);
                 Assert.NotEqual(listKeysResponse.PrimaryKey, regenerateKeysResposnse.PrimaryKey);
-                Assert.NotNull(regenerateKeysResposnse.PrimaryConnectionString);
                 Assert.NotNull(regenerateKeysResposnse.SecondaryConnectionString);
                 Assert.NotNull(regenerateKeysResposnse.SecondaryKey);
 
