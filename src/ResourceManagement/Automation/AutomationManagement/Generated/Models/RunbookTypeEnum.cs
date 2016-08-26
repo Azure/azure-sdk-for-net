@@ -40,5 +40,11 @@ namespace Microsoft.Azure.Management.Automation.Models
         public const string GraphPowerShellWorkflow = "GraphPowerShellWorkflow";
         
         public const string GraphPowerShell = "GraphPowerShell";
+        
+        public const string Python2 = "Python2";
+        
+        public const string Python3 = "Python3";
+        
+        public const string Bash = "Bash";
     }
 }
