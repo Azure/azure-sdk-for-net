@@ -292,7 +292,7 @@
 
   <Target Name="SignAssembliesInNetCorePackages">
     <ItemGroup>
-      <_NetCorePackages Include="$(PackageOutputDir)\%(NetCore_AutoRestLibraries.PackageName)*.nupkg" />
+      <_NetCorePackages Include="$(PackageOutputDir)\%(NetCore_AutoRestLibraries.PackageName)*.nupkg" KeepDuplicates="false"/>
     </ItemGroup>
     <PropertyGroup>
       <_UnsignedFolder>$(PackageOutputDir)\unsigned</_UnsignedFolder>
