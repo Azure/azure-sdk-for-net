@@ -63,6 +63,7 @@ namespace StreamAnalytics.Tests.OperationTests
                         Name = "standard"
                     };
                     jobProperties.EventsOutOfOrderPolicy = EventsOutOfOrderPolicy.Drop;
+                    jobProperties.OutputErrorPolicy = OutputErrorPolicy.Drop;
                     jobProperties.EventsOutOfOrderMaxDelayInSeconds = 0;
 
                     // Construct the Input
@@ -151,6 +152,7 @@ namespace StreamAnalytics.Tests.OperationTests
                     Assert.Equal("Microsoft.Storage/Blob", streamInputProperties.DataSource.Type);
                     Assert.Equal("Json", streamInputProperties.Serialization.Type);
                     Assert.Equal(EventsOutOfOrderPolicy.Drop, jobGetResponse.Job.Properties.EventsOutOfOrderPolicy);
+                    Assert.Equal(OutputErrorPolicy.Drop, jobGetResponse.Job.Properties.OutputErrorPolicy);
                     Assert.NotNull(jobGetResponse.Job.Properties.Etag);
                     Assert.Equal(jobCreateOrUpdateResponse.Job.Properties.Etag, jobGetResponse.Job.Properties.Etag);
 
@@ -161,7 +163,8 @@ namespace StreamAnalytics.Tests.OperationTests
                         {
                             Properties = new JobProperties()
                             {
-                                EventsOutOfOrderPolicy = EventsOutOfOrderPolicy.Adjust
+                                EventsOutOfOrderPolicy = EventsOutOfOrderPolicy.Adjust,
+                                OutputErrorPolicy = OutputErrorPolicy.Stop
                             }
                         }
                     };
@@ -171,6 +174,8 @@ namespace StreamAnalytics.Tests.OperationTests
                     Assert.Equal(HttpStatusCode.OK, jobGetResponse.StatusCode);
                     Assert.Equal(EventsOutOfOrderPolicy.Adjust, jobPatchResponse.Job.Properties.EventsOutOfOrderPolicy);
                     Assert.Equal(EventsOutOfOrderPolicy.Adjust, jobGetResponse.Job.Properties.EventsOutOfOrderPolicy);
+                    Assert.Equal(OutputErrorPolicy.Stop, jobPatchResponse.Job.Properties.OutputErrorPolicy);
+                    Assert.Equal(OutputErrorPolicy.Stop, jobGetResponse.Job.Properties.OutputErrorPolicy);
 
                     JobListParameters parameters = new JobListParameters(string.Empty);
                     JobListResponse response = client.StreamingJobs.ListJobsInResourceGroup(resourceGroupName, parameters);
