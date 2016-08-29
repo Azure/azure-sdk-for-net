@@ -33,6 +33,23 @@ namespace Microsoft.Azure.Management.SiteRecovery
     public partial interface IFabricOperations
     {
         /// <summary>
+        /// Checks consistency of a fabric.
+        /// </summary>
+        /// <param name='fabricName'>
+        /// Fabric Name.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> BeginCheckConsistencyAsync(string fabricName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Creates a Fabric
         /// </summary>
         /// <param name='fabricName'>
@@ -144,6 +161,23 @@ namespace Microsoft.Azure.Management.SiteRecovery
         Task<LongRunningOperationResponse> BeginRenewCertificateAsync(string fabricName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Checks consistency of a fabric.
+        /// </summary>
+        /// <param name='fabricName'>
+        /// Fabric Name.
+        /// </param>
+        /// <param name='customRequestHeaders'>
+        /// Request header parameters.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> CheckConsistencyAsync(string fabricName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Creates a fabric
         /// </summary>
         /// <param name='fabricName'>
@@ -216,6 +250,23 @@ namespace Microsoft.Azure.Management.SiteRecovery
         /// The response model for the fabric object
         /// </returns>
         Task<FabricResponse> GetAsync(string fabricName, CustomRequestHeaders customRequestHeaders, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// The Get Operation Status operation returns the status of the
+        /// specified operation. After calling an asynchronous operation, you
+        /// can call Get Operation Status to determine whether the operation
+        /// has succeeded, failed, or is still in progress.
+        /// </summary>
+        /// <param name='operationStatusLink'>
+        /// Location value returned by the Begin operation.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response for long running operations.
+        /// </returns>
+        Task<LongRunningOperationResponse> GetCheckConsistencyStatusAsync(string operationStatusLink, CancellationToken cancellationToken);
         
         /// <summary>
         /// The Get Operation Status operation returns the status of the

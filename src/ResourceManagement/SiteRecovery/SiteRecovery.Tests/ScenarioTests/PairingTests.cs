@@ -494,5 +494,58 @@ namespace SiteRecovery.Tests
                 }
             }
         }
+
+        [Fact]
+        public void A2ACreatePolicy()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler, Constants.A2A);
+                string policyName = "A2A-Policy";
+                var input = new A2APolicyCreationInput
+                {
+                    AppConsistentFrequencyInMinutes = 15,
+                    CrashConsistentFrequencyInMinutes = 15,
+                    MultiVmSyncStatus = "Disable",
+                    RecoveryPointHistory = 15,
+                    RecoveryPointThresholdInMinutes = 30
+                };
+
+                CreatePolicyInputProperties createInputProp = new CreatePolicyInputProperties()
+                {
+                    ProviderSpecificInput = input
+                };
+
+                CreatePolicyInput policyInput = new CreatePolicyInput()
+                {
+                    Properties = createInputProp
+                };
+
+                var response = client.Policies.Create(policyName, policyInput, RequestHeaders);
+                Assert.NotNull(response);
+                Assert.Equal(response.Status, OperationStatus.Succeeded);
+
+                var policyResponse = response as CreatePolicyOperationResponse;
+                Assert.NotNull(policyResponse);
+                Assert.NotNull(policyResponse.Policy);
+                Assert.Equal(policyResponse.Policy.Name, policyName);
+            }
+        }
+
+        [Fact]
+        public void A2ADeletePolicy()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                var client = GetSiteRecoveryClient(CustomHttpHandler, Constants.A2A);
+                string policyName = "A2A-Policy";
+
+                var response = client.Policies.Delete(policyName, RequestHeaders);
+                Assert.NotNull(response);
+                Assert.Equal(response.Status, OperationStatus.Succeeded);
+            }
+        }
     }
 }

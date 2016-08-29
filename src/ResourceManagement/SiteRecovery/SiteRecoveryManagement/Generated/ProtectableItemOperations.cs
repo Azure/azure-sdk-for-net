@@ -241,6 +241,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                     propertiesInstance.ReplicationProtectedItemId = replicationProtectedItemIdInstance;
                                 }
                                 
+                                JToken recoveryServicesProviderIdValue = propertiesValue["recoveryServicesProviderId"];
+                                if (recoveryServicesProviderIdValue != null && recoveryServicesProviderIdValue.Type != JTokenType.Null)
+                                {
+                                    string recoveryServicesProviderIdInstance = ((string)recoveryServicesProviderIdValue);
+                                    propertiesInstance.RecoveryServicesProviderId = recoveryServicesProviderIdInstance;
+                                }
+                                
                                 JToken protectionReadinessErrorsArray = propertiesValue["protectionReadinessErrors"];
                                 if (protectionReadinessErrorsArray != null && protectionReadinessErrorsArray.Type != JTokenType.Null)
                                 {
@@ -849,6 +856,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             propertiesInstance.ReplicationProtectedItemId = replicationProtectedItemIdInstance;
                                         }
                                         
+                                        JToken recoveryServicesProviderIdValue = propertiesValue["recoveryServicesProviderId"];
+                                        if (recoveryServicesProviderIdValue != null && recoveryServicesProviderIdValue.Type != JTokenType.Null)
+                                        {
+                                            string recoveryServicesProviderIdInstance = ((string)recoveryServicesProviderIdValue);
+                                            propertiesInstance.RecoveryServicesProviderId = recoveryServicesProviderIdInstance;
+                                        }
+                                        
                                         JToken protectionReadinessErrorsArray = propertiesValue["protectionReadinessErrors"];
                                         if (protectionReadinessErrorsArray != null && protectionReadinessErrorsArray.Type != JTokenType.Null)
                                         {
@@ -1391,6 +1405,13 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         {
                                             string replicationProtectedItemIdInstance = ((string)replicationProtectedItemIdValue);
                                             propertiesInstance.ReplicationProtectedItemId = replicationProtectedItemIdInstance;
+                                        }
+                                        
+                                        JToken recoveryServicesProviderIdValue = propertiesValue["recoveryServicesProviderId"];
+                                        if (recoveryServicesProviderIdValue != null && recoveryServicesProviderIdValue.Type != JTokenType.Null)
+                                        {
+                                            string recoveryServicesProviderIdInstance = ((string)recoveryServicesProviderIdValue);
+                                            propertiesInstance.RecoveryServicesProviderId = recoveryServicesProviderIdInstance;
                                         }
                                         
                                         JToken protectionReadinessErrorsArray = propertiesValue["protectionReadinessErrors"];

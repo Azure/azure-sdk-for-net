@@ -76,6 +76,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._protectionStatus = value; }
         }
         
+        private string _recoveryServicesProviderId;
+        
+        /// <summary>
+        /// Optional. Gets or sets the recovery services provider name.
+        /// </summary>
+        public string RecoveryServicesProviderId
+        {
+            get { return this._recoveryServicesProviderId; }
+            set { this._recoveryServicesProviderId = value; }
+        }
+        
         private string _replicationProtectedItemId;
         
         /// <summary>

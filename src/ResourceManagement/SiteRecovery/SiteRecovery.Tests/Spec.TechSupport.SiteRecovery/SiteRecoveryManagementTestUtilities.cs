@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Test
         /// </summary>
         /// <param name="testBase">the test class</param>
         /// <returns>A site recovery management client, created from the current context (environment variables)</returns>
-        public static SiteRecoveryManagementClient GetSiteRecoveryManagementClient(this TestBase testBase)
+        public static SiteRecoveryManagementClient GetSiteRecoveryManagementClient(this TestBase testBase, String scenario = "")
         {
             if (ServicePointManager.ServerCertificateValidationCallback == null)
             {
@@ -63,53 +63,31 @@ namespace Microsoft.Azure.Test
             }
 
             TestEnvironment environment = new CSMTestEnvironmentFactory().GetTestEnvironment();
-            // TestEnvironment environment = new RDFETestEnvironmentFactory().GetTestEnvironment();
-            // environment.BaseUri = new Uri("https://localhost:8443/Rdfeproxy.svc");
-            // environment.BaseUri = new Uri("https://sea-bvtd2-srs1-t56tl.cloudapp.net");
 
-
-            SiteRecoveryTestsBase.MyCloudService = (HttpMockServer.Mode == HttpRecorderMode.Playback) ?
-                "RecoveryServices-WHNOWF6LI6NM4B55QDIYR3YG3YAEZNTDUOWHPQX7NJB2LHDGTXJA-West-US" :
-                Environment.GetEnvironmentVariable("CLOUD_SERVICE_NAME");
-
-            SiteRecoveryTestsBase.MyVaultName = (HttpMockServer.Mode == HttpRecorderMode.Playback) ?
-                "hydratest" :
-                Environment.GetEnvironmentVariable("RESOURCE_NAME");
-
-            SiteRecoveryTestsBase.VaultKey = (HttpMockServer.Mode == HttpRecorderMode.Playback) ?
-                "loMUdckuT9SEvpQKcSG07A==" :
-                Environment.GetEnvironmentVariable("CHANNEL_INTEGRITY_KEY");
-
-            SiteRecoveryTestsBase.MyResourceGroupName = (HttpMockServer.Mode == HttpRecorderMode.Playback) ?
-                "RecoveryServices-WHNOWF6LI6NM4B55QDIYR3YG3YAEZNTDUOWHPQX7NJB2LHDGTXJA-West-US" :
-                Environment.GetEnvironmentVariable("RESOURCE_GROUP_NAME");
-
-            if (string.IsNullOrEmpty(SiteRecoveryTestsBase.MyCloudService))
+            switch(scenario)
             {
-                throw new Exception("Please set CLOUD_SERVICE_NAME" + 
-                    " environment variable before running the tests in Live mode");
-            }
-            if (string.IsNullOrEmpty(SiteRecoveryTestsBase.MyVaultName))
-            {
-                throw new Exception("Please set RESOURCE_NAME" +
-                    " environment variable before running the tests in Live mode");
-            }
-            if (string.IsNullOrEmpty(SiteRecoveryTestsBase.VaultKey))
-            {
-                throw new Exception("Please set CHANNEL_INTEGRITY_KEY" +
-                    " environment variable before running the tests in Live mode");
-            }
-            if (string.IsNullOrEmpty(SiteRecoveryTestsBase.MyResourceGroupName))
-            {
-                throw new Exception("Please set RESOURCE_GROUP_NAME" +
-                    " environment variable before running the tests in Live mode");
-            }
+                case Constants.A2A:
+                    SiteRecoveryTestsBase.MyVaultName = "integrationTest1";
+                    SiteRecoveryTestsBase.MyResourceGroupName = "rg1";
+                    SiteRecoveryTestsBase.ResourceNamespace = "Microsoft.RecoveryServicesBVTD2";
+                    SiteRecoveryTestsBase.ResourceType = "RecoveryServicesVault";
+                    environment.BaseUri = new Uri("https://sriramvu:8443/Rdfeproxy.svc");
+                    break;
+                
+                default:
+                    SiteRecoveryTestsBase.MyVaultName = "hydratest";
+                    SiteRecoveryTestsBase.VaultKey = "loMUdckuT9SEvpQKcSG07A==";
+                    SiteRecoveryTestsBase.MyResourceGroupName = "RecoveryServices-WHNOWF6LI6NM4B55QDIYR3YG3YAEZNTDUOWHPQX7NJB2LHDGTXJA-West-US";
+                    SiteRecoveryTestsBase.ResourceNamespace = "Microsoft.SiteRecoveryBVTD2";
+                    SiteRecoveryTestsBase.ResourceType = "SiteRecoveryVault";
+                    break;
+            };
 
             return new SiteRecoveryManagementClient(
                 SiteRecoveryTestsBase.MyVaultName,
                 SiteRecoveryTestsBase.MyResourceGroupName,
-                "Microsoft.SiteRecoveryBVTD2",
-                "SiteRecoveryVault",
+                SiteRecoveryTestsBase.ResourceNamespace,
+                SiteRecoveryTestsBase.ResourceType,
                 (SubscriptionCloudCredentials)environment.Credentials,
                 environment.BaseUri).WithHandler(HttpMockServer.CreateInstance());
         }

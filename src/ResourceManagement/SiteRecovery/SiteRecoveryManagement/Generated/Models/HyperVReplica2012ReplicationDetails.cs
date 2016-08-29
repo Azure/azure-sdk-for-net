@@ -87,6 +87,28 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._vmNics = value; }
         }
         
+        private string _vmProtectionState;
+        
+        /// <summary>
+        /// Optional. Gets or sets the protection status for the VM.
+        /// </summary>
+        public string VmProtectionState
+        {
+            get { return this._vmProtectionState; }
+            set { this._vmProtectionState = value; }
+        }
+        
+        private string _vmProtectionStateDescription;
+        
+        /// <summary>
+        /// Optional. Gets or sets the protection state description for the VM.
+        /// </summary>
+        public string VmProtectionStateDescription
+        {
+            get { return this._vmProtectionStateDescription; }
+            set { this._vmProtectionStateDescription = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the
         /// HyperVReplica2012ReplicationDetails class.
