@@ -8,6 +8,9 @@ using System.Security.Cryptography;
 
 namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
 {
+    /// <summary>
+    /// Abstract base class for AESCBC-HMAC algorithms.
+    /// </summary>
     public abstract class AesCbcHmacSha2 : SymmetricEncryptionAlgorithm
     {
         internal static Aes Create( byte[] key, byte[] iv )

@@ -1,6 +1,8 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿//
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
+//
 
 using System;
 using System.Security.Cryptography;
@@ -9,6 +11,10 @@ using System.Threading.Tasks;
 using Microsoft.Azure.KeyVault.Core;
 using Microsoft.Azure.KeyVault.Cryptography;
 using Microsoft.Azure.KeyVault.Cryptography.Algorithms;
+
+#if PORTABLE
+using TaskException = System.Threading.Tasks.Task;
+#endif
 
 namespace Microsoft.Azure.KeyVault
 {
@@ -85,15 +91,6 @@ namespace Microsoft.Azure.KeyVault
             _key = keyBytes;
         }
  
-        [Obsolete("The Key property will be removed in a future release, please remove references to it")]
-        public byte[] Key
-        {
-            get
-            {
-                return _key;
-            }
-        }
- 
         #region IKey Implementation
 
         public string Kid { get; protected set; }
@@ -157,10 +154,8 @@ namespace Microsoft.Azure.KeyVault
             get { return null; }
         }
 
-        // Warning 1998: This async method lacks 'await' operators and will run synchronously. Consider using the 'await' operator to await non-blocking API calls, or 'await Task.Run(...)' to do CPU-bound work on a background thread.
-#pragma warning disable 1998
 
-        public async Task<byte[]> DecryptAsync( byte[] ciphertext, byte[] iv, byte[] authenticationData = null, byte[] authenticationTag = null, string algorithm = null, CancellationToken token = default(CancellationToken) )
+        public Task<byte[]> DecryptAsync( byte[] ciphertext, byte[] iv, byte[] authenticationData = null, byte[] authenticationTag = null, string algorithm = null, CancellationToken token = default(CancellationToken) )
         {
             if ( _isDisposed )
                 throw new ObjectDisposedException( string.Format( "SymmetricKey {0} is disposed", Kid ) );
@@ -185,7 +180,7 @@ namespace Microsoft.Azure.KeyVault
                 var transform = encryptor as IAuthenticatedCryptoTransform;
 
                 if ( transform == null )
-                    return result;
+                    return Task.FromResult( result );
 
                 if ( authenticationData == null || authenticationTag == null )
                     throw new CryptographicException( "AuthenticatingCryptoTransform requires authenticationData and authenticationTag" );
@@ -193,11 +188,11 @@ namespace Microsoft.Azure.KeyVault
                 if ( !authenticationTag.SequenceEqualConstantTime( transform.Tag ) )
                     throw new CryptographicException( "Data is not authentic" );
 
-                return result;
+                return Task.FromResult( result );
             }
         }
 
-        public async Task<Tuple<byte[], byte[], string>> EncryptAsync( byte[] plaintext, byte[] iv, byte[] authenticationData = null, string algorithm = null, CancellationToken token = default(CancellationToken) )
+        public Task<Tuple<byte[], byte[], string>> EncryptAsync( byte[] plaintext, byte[] iv, byte[] authenticationData = null, string algorithm = null, CancellationToken token = default(CancellationToken) )
         {
             if ( _isDisposed )
                 throw new ObjectDisposedException( string.Format( "SymmetricKey {0} is disposed", Kid ) );
@@ -227,11 +222,20 @@ namespace Microsoft.Azure.KeyVault
                     authenticationTag = transform.Tag.Clone() as byte[];
                 }
 
-                return new Tuple<byte[],byte[], string>( cipherText, authenticationTag, algorithm );
+                try
+                {
+                    var result = new Tuple<byte[], byte[], string>( cipherText, authenticationTag, algorithm );
+
+                    return Task.FromResult( result );
+                }
+                catch ( Exception ex )
+                {
+                    return TaskException.FromException<Tuple<byte[], byte[], string>>( ex );
+                }
             }
         }
 
-        public async Task<Tuple<byte[], string>> WrapKeyAsync( byte[] key, string algorithm = null, CancellationToken token = default(CancellationToken) )
+        public Task<Tuple<byte[], string>> WrapKeyAsync( byte[] key, string algorithm = null, CancellationToken token = default(CancellationToken) )
         {
             if ( _isDisposed )
                 throw new ObjectDisposedException( string.Format( "SymmetricKey {0} is disposed", Kid ) );
@@ -249,11 +253,20 @@ namespace Microsoft.Azure.KeyVault
  
             using ( var encryptor = algo.CreateEncryptor( _key, null ) )
             {
-                return new Tuple<byte[], string>( encryptor.TransformFinalBlock( key, 0, key.Length ), algorithm );
+                try
+                {
+                    var result = new Tuple<byte[], string>( encryptor.TransformFinalBlock( key, 0, key.Length ), algorithm );
+
+                    return Task.FromResult( result );
+                }
+                catch ( Exception ex )
+                {
+                    return TaskException.FromException<Tuple<byte[], string>>( ex );
+                }
             }
         }
 
-        public async Task<byte[]> UnwrapKeyAsync( byte[] encryptedKey, string algorithm = null, CancellationToken token = default(CancellationToken) )
+        public Task<byte[]> UnwrapKeyAsync( byte[] encryptedKey, string algorithm = null, CancellationToken token = default(CancellationToken) )
         {
             if ( _isDisposed )
                 throw new ObjectDisposedException( string.Format( "SymmetricKey {0} is disposed", Kid ) );
@@ -271,21 +284,28 @@ namespace Microsoft.Azure.KeyVault
  
             using ( var encryptor = algo.CreateDecryptor( _key, null ) )
             {
-                return encryptor.TransformFinalBlock( encryptedKey, 0, encryptedKey.Length );
+                try
+                {
+                    var result = encryptor.TransformFinalBlock( encryptedKey, 0, encryptedKey.Length );
+
+                    return Task.FromResult( result );
+                }
+                catch ( Exception ex )
+                {
+                    return TaskException.FromException<byte[]>( ex );
+                }
             }
         }
 
-        public async Task<Tuple<byte[], string>> SignAsync( byte[] digest, string algorithm = null, CancellationToken token = default(CancellationToken) )
+        public Task<Tuple<byte[], string>> SignAsync( byte[] digest, string algorithm = null, CancellationToken token = default(CancellationToken) )
         {
-            throw new NotImplementedException();
+            return TaskException.FromException<Tuple<byte[], string>>( new NotImplementedException() );
         }
 
-        public async Task<bool> VerifyAsync( byte[] digest, byte[] signature, string algorithm = null, CancellationToken token = default(CancellationToken) )
+        public Task<bool> VerifyAsync( byte[] digest, byte[] signature, string algorithm = null, CancellationToken token = default(CancellationToken) )
         {
-            throw new NotImplementedException();
+            return TaskException.FromException<bool>( new NotImplementedException() );
         }
-
-#pragma warning restore 1998
 
         #endregion
 

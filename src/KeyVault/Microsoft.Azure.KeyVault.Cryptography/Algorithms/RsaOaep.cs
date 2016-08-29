@@ -8,6 +8,9 @@ using System.Security.Cryptography;
 
 namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
 {
+    /// <summary>
+    /// RSA-OAEP Encryption.
+    /// </summary>
     public class RsaOaep : RsaEncryption
     {
         public const string AlgorithmName = "RSA-OAEP";
