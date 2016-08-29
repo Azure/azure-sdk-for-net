@@ -36,8 +36,8 @@ namespace Microsoft.Azure.Management.Automation
     {
         /// <summary>
         /// Retrieve the linked workspace for the account id.  (see
-        /// http://aka.ms/azureautomationsdk/usageoperations for more
-        /// information)
+        /// http://aka.ms/azureautomationsdk/linkedworkspaceoperations for
+        /// more information)
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group

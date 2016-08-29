@@ -25,9 +25,9 @@ using System.Linq;
 namespace Microsoft.Azure.Management.Automation.Models
 {
     /// <summary>
-    /// Definition of Workspace.
+    /// Definition of Workspace information.
     /// </summary>
-    public partial class Workspace
+    public partial class WorkspaceInformation
     {
         private string _id;
         
@@ -41,9 +41,9 @@ namespace Microsoft.Azure.Management.Automation.Models
         }
         
         /// <summary>
-        /// Initializes a new instance of the Workspace class.
+        /// Initializes a new instance of the WorkspaceInformation class.
         /// </summary>
-        public Workspace()
+        public WorkspaceInformation()
         {
         }
     }

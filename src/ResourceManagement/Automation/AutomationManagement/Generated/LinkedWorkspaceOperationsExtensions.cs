@@ -32,8 +32,8 @@ namespace Microsoft.Azure.Management.Automation
     {
         /// <summary>
         /// Retrieve the linked workspace for the account id.  (see
-        /// http://aka.ms/azureautomationsdk/usageoperations for more
-        /// information)
+        /// http://aka.ms/azureautomationsdk/linkedworkspaceoperations for
+        /// more information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -59,8 +59,8 @@ namespace Microsoft.Azure.Management.Automation
         
         /// <summary>
         /// Retrieve the linked workspace for the account id.  (see
-        /// http://aka.ms/azureautomationsdk/usageoperations for more
-        /// information)
+        /// http://aka.ms/azureautomationsdk/linkedworkspaceoperations for
+        /// more information)
         /// </summary>
         /// <param name='operations'>
         /// Reference to the

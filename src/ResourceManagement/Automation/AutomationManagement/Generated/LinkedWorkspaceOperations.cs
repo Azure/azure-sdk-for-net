@@ -64,8 +64,8 @@ namespace Microsoft.Azure.Management.Automation
         
         /// <summary>
         /// Retrieve the linked workspace for the account id.  (see
-        /// http://aka.ms/azureautomationsdk/usageoperations for more
-        /// information)
+        /// http://aka.ms/azureautomationsdk/linkedworkspaceoperations for
+        /// more information)
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group
@@ -197,14 +197,14 @@ namespace Microsoft.Azure.Management.Automation
                         
                         if (responseDoc != null && responseDoc.Type != JTokenType.Null)
                         {
-                            Workspace workspaceInstance = new Workspace();
-                            result.Workspace = workspaceInstance;
+                            WorkspaceInformation workspaceInformationInstance = new WorkspaceInformation();
+                            result.WorkspaceInformation = workspaceInformationInstance;
                             
                             JToken idValue = responseDoc["id"];
                             if (idValue != null && idValue.Type != JTokenType.Null)
                             {
                                 string idInstance = ((string)idValue);
-                                workspaceInstance.Id = idInstance;
+                                workspaceInformationInstance.Id = idInstance;
                             }
                         }
                         

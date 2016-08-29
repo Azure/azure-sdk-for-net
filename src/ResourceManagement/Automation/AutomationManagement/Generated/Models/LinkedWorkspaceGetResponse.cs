@@ -31,15 +31,15 @@ namespace Microsoft.Azure.Management.Automation.Models
     /// </summary>
     public partial class LinkedWorkspaceGetResponse : AzureOperationResponse
     {
-        private Workspace _workspace;
+        private WorkspaceInformation _workspaceInformation;
         
         /// <summary>
         /// Optional. Gets or sets a workspace.
         /// </summary>
-        public Workspace Workspace
+        public WorkspaceInformation WorkspaceInformation
         {
-            get { return this._workspace; }
-            set { this._workspace = value; }
+            get { return this._workspaceInformation; }
+            set { this._workspaceInformation = value; }
         }
         
         /// <summary>
