@@ -33,15 +33,15 @@ namespace EventHub.Tests.ScenarioTests
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 InitializeClients(context);
-                var location = EventHubManagementHelper.DefaultLocation;
 
-                var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
+                var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(EventHubManagementHelper.DefaultResourceGroupLocation);
                 if (string.IsNullOrWhiteSpace(resourceGroup))
                 {
                     resourceGroup = TestUtilities.GenerateName(EventHubManagementHelper.ResourceGroupPrefix);
-                    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
+                    this.ResourceManagementClient.TryRegisterResourceGroup(EventHubManagementHelper.DefaultResourceGroupLocation, resourceGroup);
                 }
 
+                var location = EventHubManagementHelper.DefaultLocation;
                 var namespaceName = TestUtilities.GenerateName(EventHubManagementHelper.NamespacePrefix);
 
                 var createNamespaceResponse = this.EventHubManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,

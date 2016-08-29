@@ -36,18 +36,15 @@ namespace EventHub.Tests.ScenarioTests
             {
                 InitializeClients(context);
 
-                var location = EventHubManagementHelper.DefaultLocation;
-
-                var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
-                //if (string.IsNullOrWhiteSpace(resourceGroup))
-                //{
-                //    resourceGroup = TestUtilities.GenerateName(EventHubManagementHelper.ResourceGroupPrefix);
-                //    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
-                //}
-
-                resourceGroup = "Default-ServiceBus-WestUS";
+                var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(EventHubManagementHelper.DefaultResourceGroupLocation);
+                if (string.IsNullOrWhiteSpace(resourceGroup))
+                {
+                    resourceGroup = TestUtilities.GenerateName(EventHubManagementHelper.ResourceGroupPrefix);
+                    this.ResourceManagementClient.TryRegisterResourceGroup(EventHubManagementHelper.DefaultResourceGroupLocation, resourceGroup);
+                }
 
                 // Create a namespace
+                var location = EventHubManagementHelper.DefaultLocation;
                 var namespaceName = TestUtilities.GenerateName(EventHubManagementHelper.NamespacePrefix);
                 var createNamespaceResponse = EventHubManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
                     new NamespaceCreateOrUpdateParameters()
