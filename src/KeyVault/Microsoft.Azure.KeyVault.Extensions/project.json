@@ -18,7 +18,7 @@
     "keyFile": "../../../tools/MSSharedLibKey.snk"
   },
   "dependencies": {
-    "Microsoft.Azure.KeyVault": "2.0.0-preview",
+    "Microsoft.Azure.KeyVault": "2.0.1-preview",
     "Microsoft.Azure.KeyVault.Core": "2.0.0-preview",
     "Microsoft.Azure.KeyVault.Cryptography": "2.0.0-preview",
     "Microsoft.Azure.KeyVault.WebKey": "2.0.0-preview"
