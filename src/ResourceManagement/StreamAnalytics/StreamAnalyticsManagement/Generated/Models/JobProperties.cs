@@ -163,6 +163,21 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
             set { this._lastOutputEventTime = value; }
         }
         
+        private string _outputErrorPolicy;
+        
+        /// <summary>
+        /// Optional. Gets or sets the output error policy of the stream
+        /// analytics job. Indicates the policy to apply to events that arrive
+        /// at the output and cannot be written to the external storage due to
+        /// being malformed (missing column values, column values of wrong
+        /// type or size). Defaults to "stop".
+        /// </summary>
+        public string OutputErrorPolicy
+        {
+            get { return this._outputErrorPolicy; }
+            set { this._outputErrorPolicy = value; }
+        }
+        
         private IList<Output> _outputs;
         
         /// <summary>
