@@ -30,13 +30,14 @@ namespace EventHub.Tests.TestHelper
 
     public static class EventHubManagementHelper
     {
-        internal const string DefaultLocation = "South Central US";
-        internal const string ResourceGroupPrefix = "Default-EventHub";
-        internal const string NamespacePrefix = "sdk-Namespace";
-        internal const string AuthorizationRulesPrefix = "sdk-Authrules";
+        internal const string DefaultLocation = "West US"; 
+        internal const string DefaultResourceGroupLocation = "WestUS";
+        internal const string ResourceGroupPrefix = "Default-EventHub-";
+        internal const string NamespacePrefix = "sdk-Namespace-";
+        internal const string AuthorizationRulesPrefix = "sdk-Authrules-";
         internal const string DefaultNamespaceAuthorizationRule = "RootManageSharedAccessKey";
-        internal const string EventHubPrefix = "sdk-EventHub";
-        internal const string ConsumerGroupPrefix = "sdk-ConsumerGroup";
+        internal const string EventHubPrefix = "sdk-EventHub-";
+        internal const string ConsumerGroupPrefix = "sdk-ConsumerGroup-";
 
 
         public static EventHubManagementClient GetEventHubManagementClient(MockContext context, RecordedDelegatingHandler handler)
