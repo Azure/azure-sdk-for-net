@@ -6,7 +6,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.MachineLearning.WebServices
+namespace Microsoft.Azure.Management.MachineLearning.CommitmentPlans
 {
     using System.Linq;
     using Microsoft.Rest;
@@ -14,18 +14,14 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
     using Models;
 
     /// <summary>
-    /// These APIs allow end users to operate on Azure Machine Learning Web
-    /// Services resources. They support the following
-    /// operations:&lt;ul&gt;&lt;li&gt;Create or update a web
-    /// service&lt;/li&gt;&lt;li&gt;Get a web
-    /// service&lt;/li&gt;&lt;li&gt;Patch a web
-    /// service&lt;/li&gt;&lt;li&gt;Delete a web
-    /// service&lt;/li&gt;&lt;li&gt;Get All Web Services in a Resource Group
-    /// &lt;/li&gt;&lt;li&gt;Get All Web Services in a
-    /// Subscription&lt;/li&gt;&lt;li&gt;Get Web Services
-    /// Keys&lt;/li&gt;&lt;/ul&gt;
+    /// These APIs allow end users to operate on Azure Machine Learning
+    /// Commitment Plans resources and their child Commitment Association
+    /// resources. They support CRUD operations for commitment plans, get and
+    /// list operations for commitment associations, moving commitment
+    /// associations between commitment plans, and retrieving commitment plan
+    /// usage history.
     /// </summary>
-    public partial class AzureMLWebServicesManagementClient : Microsoft.Rest.ServiceClient<AzureMLWebServicesManagementClient>, IAzureMLWebServicesManagementClient, IAzureClient
+    public partial class AzureMLCommitmentPlansManagementClient : Microsoft.Rest.ServiceClient<AzureMLCommitmentPlansManagementClient>, IAzureMLCommitmentPlansManagementClient, IAzureClient
     {
         /// <summary>
         /// The base URI of the service.
@@ -48,13 +44,12 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         public Microsoft.Rest.ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Azure subscription id.
+        /// Azure Subscription ID.
         /// </summary>
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// The versiong of the Microsoft.MachineLearning resource provider API to be
-        /// used.
+        /// The version of the Microsoft.MachineLearning resource provider API to use.
         /// </summary>
         public string ApiVersion { get; private set; }
 
@@ -76,23 +71,33 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         public bool? GenerateClientRequestId { get; set; }
 
         /// <summary>
-        /// Gets the IWebServicesOperations.
+        /// Gets the ICommitmentAssociationsOperations.
         /// </summary>
-        public virtual IWebServicesOperations WebServices { get; private set; }
+        public virtual ICommitmentAssociationsOperations CommitmentAssociations { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the AzureMLWebServicesManagementClient class.
+        /// Gets the ICommitmentPlansOperations.
+        /// </summary>
+        public virtual ICommitmentPlansOperations CommitmentPlans { get; private set; }
+
+        /// <summary>
+        /// Gets the IUsageHistoryOperations.
+        /// </summary>
+        public virtual IUsageHistoryOperations UsageHistory { get; private set; }
+
+        /// <summary>
+        /// Initializes a new instance of the AzureMLCommitmentPlansManagementClient class.
         /// </summary>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected AzureMLWebServicesManagementClient(params System.Net.Http.DelegatingHandler[] handlers) : base(handlers)
+        protected AzureMLCommitmentPlansManagementClient(params System.Net.Http.DelegatingHandler[] handlers) : base(handlers)
         {
             this.Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureMLWebServicesManagementClient class.
+        /// Initializes a new instance of the AzureMLCommitmentPlansManagementClient class.
         /// </summary>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -100,13 +105,13 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected AzureMLWebServicesManagementClient(System.Net.Http.HttpClientHandler rootHandler, params System.Net.Http.DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        protected AzureMLCommitmentPlansManagementClient(System.Net.Http.HttpClientHandler rootHandler, params System.Net.Http.DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             this.Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureMLWebServicesManagementClient class.
+        /// Initializes a new instance of the AzureMLCommitmentPlansManagementClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -117,7 +122,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        protected AzureMLWebServicesManagementClient(System.Uri baseUri, params System.Net.Http.DelegatingHandler[] handlers) : this(handlers)
+        protected AzureMLCommitmentPlansManagementClient(System.Uri baseUri, params System.Net.Http.DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -127,7 +132,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureMLWebServicesManagementClient class.
+        /// Initializes a new instance of the AzureMLCommitmentPlansManagementClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -141,7 +146,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        protected AzureMLWebServicesManagementClient(System.Uri baseUri, System.Net.Http.HttpClientHandler rootHandler, params System.Net.Http.DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        protected AzureMLCommitmentPlansManagementClient(System.Uri baseUri, System.Net.Http.HttpClientHandler rootHandler, params System.Net.Http.DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -151,7 +156,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureMLWebServicesManagementClient class.
+        /// Initializes a new instance of the AzureMLCommitmentPlansManagementClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Credentials needed for the client to connect to Azure.
@@ -162,7 +167,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public AzureMLWebServicesManagementClient(Microsoft.Rest.ServiceClientCredentials credentials, params System.Net.Http.DelegatingHandler[] handlers) : this(handlers)
+        public AzureMLCommitmentPlansManagementClient(Microsoft.Rest.ServiceClientCredentials credentials, params System.Net.Http.DelegatingHandler[] handlers) : this(handlers)
         {
             if (credentials == null)
             {
@@ -176,7 +181,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureMLWebServicesManagementClient class.
+        /// Initializes a new instance of the AzureMLCommitmentPlansManagementClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Credentials needed for the client to connect to Azure.
@@ -190,7 +195,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public AzureMLWebServicesManagementClient(Microsoft.Rest.ServiceClientCredentials credentials, System.Net.Http.HttpClientHandler rootHandler, params System.Net.Http.DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public AzureMLCommitmentPlansManagementClient(Microsoft.Rest.ServiceClientCredentials credentials, System.Net.Http.HttpClientHandler rootHandler, params System.Net.Http.DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (credentials == null)
             {
@@ -204,7 +209,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureMLWebServicesManagementClient class.
+        /// Initializes a new instance of the AzureMLCommitmentPlansManagementClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -218,7 +223,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public AzureMLWebServicesManagementClient(System.Uri baseUri, Microsoft.Rest.ServiceClientCredentials credentials, params System.Net.Http.DelegatingHandler[] handlers) : this(handlers)
+        public AzureMLCommitmentPlansManagementClient(System.Uri baseUri, Microsoft.Rest.ServiceClientCredentials credentials, params System.Net.Http.DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -237,7 +242,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         }
 
         /// <summary>
-        /// Initializes a new instance of the AzureMLWebServicesManagementClient class.
+        /// Initializes a new instance of the AzureMLCommitmentPlansManagementClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -254,7 +259,7 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public AzureMLWebServicesManagementClient(System.Uri baseUri, Microsoft.Rest.ServiceClientCredentials credentials, System.Net.Http.HttpClientHandler rootHandler, params System.Net.Http.DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public AzureMLCommitmentPlansManagementClient(System.Uri baseUri, Microsoft.Rest.ServiceClientCredentials credentials, System.Net.Http.HttpClientHandler rootHandler, params System.Net.Http.DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -281,7 +286,9 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         /// </summary>
         private void Initialize()
         {
-            this.WebServices = new WebServicesOperations(this);
+            this.CommitmentAssociations = new CommitmentAssociationsOperations(this);
+            this.CommitmentPlans = new CommitmentPlansOperations(this);
+            this.UsageHistory = new UsageHistoryOperations(this);
             this.BaseUri = new System.Uri("https://management.azure.com");
             this.ApiVersion = "2016-05-01-preview";
             this.AcceptLanguage = "en-US";
@@ -312,8 +319,6 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
                         new Microsoft.Rest.Serialization.Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new Microsoft.Rest.Serialization.PolymorphicSerializeJsonConverter<WebServiceProperties>("packageType"));
-            DeserializationSettings.Converters.Add(new Microsoft.Rest.Serialization.PolymorphicDeserializeJsonConverter<WebServiceProperties>("packageType"));
             CustomInitialize();
             DeserializationSettings.Converters.Add(new Microsoft.Rest.Azure.CloudErrorJsonConverter()); 
         }    

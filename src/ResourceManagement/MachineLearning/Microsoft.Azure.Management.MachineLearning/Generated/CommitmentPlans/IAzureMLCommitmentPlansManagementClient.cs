@@ -6,25 +6,21 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.MachineLearning.WebServices
+namespace Microsoft.Azure.Management.MachineLearning.CommitmentPlans
 {
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
 
     /// <summary>
-    /// These APIs allow end users to operate on Azure Machine Learning Web
-    /// Services resources. They support the following
-    /// operations:&lt;ul&gt;&lt;li&gt;Create or update a web
-    /// service&lt;/li&gt;&lt;li&gt;Get a web
-    /// service&lt;/li&gt;&lt;li&gt;Patch a web
-    /// service&lt;/li&gt;&lt;li&gt;Delete a web
-    /// service&lt;/li&gt;&lt;li&gt;Get All Web Services in a Resource Group
-    /// &lt;/li&gt;&lt;li&gt;Get All Web Services in a
-    /// Subscription&lt;/li&gt;&lt;li&gt;Get Web Services
-    /// Keys&lt;/li&gt;&lt;/ul&gt;
+    /// These APIs allow end users to operate on Azure Machine Learning
+    /// Commitment Plans resources and their child Commitment Association
+    /// resources. They support CRUD operations for commitment plans, get and
+    /// list operations for commitment associations, moving commitment
+    /// associations between commitment plans, and retrieving commitment plan
+    /// usage history.
     /// </summary>
-    public partial interface IAzureMLWebServicesManagementClient : System.IDisposable
+    public partial interface IAzureMLCommitmentPlansManagementClient : System.IDisposable
     {
         /// <summary>
         /// The base URI of the service.
@@ -47,13 +43,13 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
         Microsoft.Rest.ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Azure subscription id.
+        /// Azure Subscription ID.
         /// </summary>
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// The versiong of the Microsoft.MachineLearning resource provider
-        /// API to be used.
+        /// The version of the Microsoft.MachineLearning resource provider API
+        /// to use.
         /// </summary>
         string ApiVersion { get; }
 
@@ -76,9 +72,19 @@ namespace Microsoft.Azure.Management.MachineLearning.WebServices
 
 
         /// <summary>
-        /// Gets the IWebServicesOperations.
+        /// Gets the ICommitmentAssociationsOperations.
         /// </summary>
-        IWebServicesOperations WebServices { get; }
+        ICommitmentAssociationsOperations CommitmentAssociations { get; }
+
+        /// <summary>
+        /// Gets the ICommitmentPlansOperations.
+        /// </summary>
+        ICommitmentPlansOperations CommitmentPlans { get; }
+
+        /// <summary>
+        /// Gets the IUsageHistoryOperations.
+        /// </summary>
+        IUsageHistoryOperations UsageHistory { get; }
 
     }
 }
