@@ -292,8 +292,11 @@
 
   <Target Name="SignAssembliesInNetCorePackages">
     <ItemGroup>
-      <_NetCorePackages Include="$(PackageOutputDir)\%(NetCore_AutoRestLibraries.PackageName)*.nupkg" />
+      <_NetCorePackagesTemp Include="$(PackageOutputDir)\%(NetCore_AutoRestLibraries.PackageName)*.nupkg"/>
     </ItemGroup>
+    <RemoveDuplicates Inputs="@(_NetCorePackagesTemp)">
+      <Output TaskParameter="Filtered" ItemName="_NetCorePackages" />
+    </RemoveDuplicates>
     <PropertyGroup>
       <_UnsignedFolder>$(PackageOutputDir)\unsigned</_UnsignedFolder>
       <_SignedFolder>$(PackageOutputDir)\signed</_SignedFolder>
