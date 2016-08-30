@@ -181,7 +181,13 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                         int threadCount = Math.Min(allFiles.Count, this.Parameters.ConcurrentFileCount);
 
                         // add up to two threads, one for saving and one for progress, if necessary.
-                        var threads = new List<Thread>(threadCount + (progressThread != null ? 2 : 1)); 
+                        var threads = new List<Thread>(threadCount + (progressThread != null ? 2 : 1));
+
+                        if (progressThread != null)
+                        {
+                            progressThread.Start();
+                            threads.Add(progressThread);
+                        }
 
                         // break up the batch save into 100 even chunks. This is most important for very large directories
                         var filesPerSave = (int)Math.Ceiling((double)metadata.FileCount / 100);
@@ -255,7 +261,10 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                                         }
 
                                         // indicate we failed to tracking thread.
-                                        this.OnFileUploadThreadFailProgressUpdate?.Invoke(file);
+                                        if(this.OnFileUploadThreadFailProgressUpdate != null)
+                                        {
+                                            this.OnFileUploadThreadFailProgressUpdate(file);
+                                        }
                                     }
                                     finally
                                     {
@@ -322,12 +331,6 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
                         saveThread.Start();
                         threads.Add(saveThread);
-
-                        if(progressThread != null)
-                        {
-                            progressThread.Start();
-                            threads.Add(progressThread);
-                        }
 
                         foreach (var t in threads)
                         {
@@ -1020,7 +1023,6 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
             // register an event to ensure that, no matter what, we account for all file uploads.
             this.OnFileUploadThreadFailProgressUpdate += overallProgress.OnFileUploadThreadAborted;
-
             toStart = overallProgress.GetProgressTrackingThread(_token);
             return new Progress<UploadProgress>(
                 (sup) =>

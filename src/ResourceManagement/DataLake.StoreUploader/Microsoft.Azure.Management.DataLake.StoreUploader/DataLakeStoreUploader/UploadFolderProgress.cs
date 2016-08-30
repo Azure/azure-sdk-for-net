@@ -30,7 +30,9 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         
         #region Private
         private List<UploadProgress> _fileProgress;
+
         private ConcurrentQueue<UploadProgress> _progressBacklog;
+
         #endregion
 
         #region Constructor
@@ -145,17 +147,20 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// </summary>
         internal void OnFileUploadThreadAborted(UploadMetadata failedFile)
         {
-            lock(_fileProgress)
+            ++this.UploadedFileCount;
+            
+            var previousProgress = _fileProgress.Where(p => p.UploadId.Equals(failedFile.UploadId, StringComparison.InvariantCultureIgnoreCase)).First();
+            foreach (var segment in previousProgress._segmentProgress)
             {
-                var previousProgress = _fileProgress.Where(p => p.UploadId.Equals(failedFile.UploadId, StringComparison.InvariantCultureIgnoreCase)).First();
-                foreach (var segment in previousProgress._segmentProgress)
+                // only fail out segments that haven't been completed.
+                if (segment.Length != segment.UploadedByteCount)
                 {
                     segment.IsFailed = true;
-                    previousProgress.SetSegmentProgress(segment);
                 }
 
-                this.UploadedFileCount++;
+                previousProgress.SetSegmentProgress(segment);
             }
+            
         }
 
         /// <summary>
@@ -178,7 +183,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     // check to see if this upload is complete and that we haven't already marked it as complete
                     if (segmentProgress.UploadedByteCount == segmentProgress.TotalFileLength && deltaLength > 0)
                     {
-                        this.UploadedFileCount++;
+                        ++this.UploadedFileCount;
                     }
 
                     // Iterate through all the segments inside this upload we are setting to get them up-to-date

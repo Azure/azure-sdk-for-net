@@ -365,10 +365,10 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
         }
 
         /// <summary>
-        /// Tests the resume upload when only some segments were uploaded previously
+        /// Tests the resume upload when only some segments were uploaded previously with progress tracking enabled
         /// </summary>
         [Fact]
-        public void DataLakeUploader_ResumePartialFolderUpload()
+        public void DataLakeUploader_ResumePartialFolderUploadWithProgress()
         {
             //attempt to load the file fully, but only allow creating 1 target stream
             var backingFrontEnd = new InMemoryFrontEnd();
@@ -403,13 +403,79 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             uploader.DeleteMetadataFile();
 
             // Verifies that a bug in folder upload with progress hung on failure is fixed.
-            Assert.Throws<AggregateException>(() => uploader.Execute());
+            try
+            {
+                var uploadTask = Task.Run(() =>
+                {
+                    uploader.Execute();
+                });
+
+                uploadTask.Wait(TimeSpan.FromSeconds(60));
+                Assert.True(false, "Folder upload did not fail after error in less than 60 seconds");
+            }
+            catch(Exception ex)
+            {
+                Assert.True(ex is AggregateException, "The exception thrown by upload was not the expected aggregate exception.");
+            }
+
             Assert.Equal(1, frontEnd.ListDirectory(up.TargetStreamPath, false).Keys.Count);
             Assert.Equal(1, backingFrontEnd.StreamCount);
 
             //resume the upload but point it to the real back-end, which doesn't throw exceptions
             up = CreateParameters(isResume: true, isRecursive: true);
             uploader = new DataLakeStoreUploader(up, backingFrontEnd, folderProgressTracker: progressTracker);
+
+            try
+            {
+                var uploadTask = Task.Run(() =>
+                {
+                    uploader.Execute();
+                });
+
+                uploadTask.Wait(TimeSpan.FromSeconds(60));
+                Assert.True(uploadTask.IsCompleted, "Folder upload did not complete after error in less than 60 seconds");
+            }
+            finally
+            {
+                uploader.DeleteMetadataFile();
+            }
+
+            VerifyFileUploadedSuccessfully(up, backingFrontEnd);
+            VerifyFolderProgressStatus(progress, _largeFileData.Length + (_smallFileData.Length * 2), 3);
+        }
+
+        /// <summary>
+        /// Tests the resume upload when only some segments were uploaded previously
+        /// </summary>
+        [Fact]
+        public void DataLakeUploader_ResumePartialFolderUpload()
+        {
+            //attempt to load the file fully, but only allow creating 1 target stream
+            var backingFrontEnd = new InMemoryFrontEnd();
+            var frontEnd = new MockableFrontEnd(backingFrontEnd);
+            
+            int createStreamCount = 0;
+            frontEnd.CreateStreamImplementation = (path, overwrite, data, byteCount) =>
+            {
+                createStreamCount++;
+                if (createStreamCount > 1)
+                {
+                    //we only allow 1 file to be created
+                    throw new IntentionalException();
+                }
+                backingFrontEnd.CreateStream(path, overwrite, data, byteCount);
+            };
+            var up = CreateParameters(isResume: false, isRecursive: true);
+            var uploader = new DataLakeStoreUploader(up, frontEnd);
+            uploader.DeleteMetadataFile();
+
+            Assert.Throws<AggregateException>(() => uploader.Execute());
+            Assert.Equal(1, frontEnd.ListDirectory(up.TargetStreamPath, false).Keys.Count);
+            Assert.Equal(1, backingFrontEnd.StreamCount);
+
+            //resume the upload but point it to the real back-end, which doesn't throw exceptions
+            up = CreateParameters(isResume: true, isRecursive: true);
+            uploader = new DataLakeStoreUploader(up, backingFrontEnd);
 
             try
             {
@@ -421,7 +487,6 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
             }
 
             VerifyFileUploadedSuccessfully(up, backingFrontEnd);
-            VerifyFolderProgressStatus(progress, _largeFileData.Length + (_smallFileData.Length * 2), 3);
         }
 
         /// <summary>
