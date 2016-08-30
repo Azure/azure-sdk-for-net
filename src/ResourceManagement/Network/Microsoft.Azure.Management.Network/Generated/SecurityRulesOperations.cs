@@ -238,7 +238,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The Get NetworkSecurityRule operation retreives information about the
+        /// The Get NetworkSecurityRule operation retrieves information about the
         /// specified network security rule.
         /// </summary>
         /// <param name='resourceGroupName'>

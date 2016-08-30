@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Get virtual network peering operation retreives information about the
+            /// The Get virtual network peering operation retrieves information about the
             /// specified virtual network peering.
             /// </summary>
             /// <param name='operations'>
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Get virtual network peering operation retreives information about the
+            /// The Get virtual network peering operation retrieves information about the
             /// specified virtual network peering.
             /// </summary>
             /// <param name='operations'>

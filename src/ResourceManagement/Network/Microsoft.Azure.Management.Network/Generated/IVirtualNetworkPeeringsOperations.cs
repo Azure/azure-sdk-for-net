@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, string virtualNetworkPeeringName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The Get virtual network peering operation retreives information
+        /// The Get virtual network peering operation retrieves information
         /// about the specified virtual network peering.
         /// </summary>
         /// <param name='resourceGroupName'>

@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Get ntework interface operation retreives information about the
+            /// The Get network interface operation retrieves information about the
             /// specified network interface.
             /// </summary>
             /// <param name='operations'>
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Get ntework interface operation retreives information about the
+            /// The Get network interface operation retrieves information about the
             /// specified network interface.
             /// </summary>
             /// <param name='operations'>
@@ -327,7 +327,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Get ntework interface operation retreives information about the
+            /// The Get network interface operation retrieves information about the
             /// specified network interface in a virtual machine scale set.
             /// </summary>
             /// <param name='operations'>
@@ -354,7 +354,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Get ntework interface operation retreives information about the
+            /// The Get network interface operation retrieves information about the
             /// specified network interface in a virtual machine scale set.
             /// </summary>
             /// <param name='operations'>

@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string publicIpAddressName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The Get publicIpAddress operation retreives information about the
+        /// The Get publicIpAddress operation retrieves information about the
         /// specified pubicIpAddress
         /// </summary>
         /// <param name='resourceGroupName'>

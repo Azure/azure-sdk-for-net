@@ -52,13 +52,13 @@ namespace Microsoft.Azure.Management.Network.Models
         public IList<FrontendIPConfiguration> FrontendIPConfigurations { get; set; }
 
         /// <summary>
-        /// Gets or sets Pools of backend IP addresseses
+        /// Gets or sets Pools of backend IP addresses
         /// </summary>
         [JsonProperty(PropertyName = "properties.backendAddressPools")]
         public IList<BackendAddressPool> BackendAddressPools { get; set; }
 
         /// <summary>
-        /// Gets or sets loadbalancing rules
+        /// Gets or sets load balancing rules
         /// </summary>
         [JsonProperty(PropertyName = "properties.loadBalancingRules")]
         public IList<LoadBalancingRule> LoadBalancingRules { get; set; }

@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string circuitName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The Get ExpressRouteCircuit operation retreives information about
+        /// The Get ExpressRouteCircuit operation retrieves information about
         /// the specified ExpressRouteCircuit.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -260,7 +260,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<ExpressRouteCircuitsRoutesTableSummaryListResult>> BeginListRoutesTableSummaryWithHttpMessagesAsync(string resourceGroupName, string circuitName, string peeringName, string devicePath, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The Liststats ExpressRouteCircuit operation retrieves all the
+        /// The List stats ExpressRouteCircuit operation retrieves all the
         /// stats from a ExpressRouteCircuits in a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -277,7 +277,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<ExpressRouteCircuitStats>> GetStatsWithHttpMessagesAsync(string resourceGroupName, string circuitName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The Liststats ExpressRouteCircuit operation retrieves all the
+        /// The List stats ExpressRouteCircuit operation retrieves all the
         /// stats from a ExpressRouteCircuits in a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>

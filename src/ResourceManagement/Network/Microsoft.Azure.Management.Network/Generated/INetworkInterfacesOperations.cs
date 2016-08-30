@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string networkInterfaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The Get ntework interface operation retreives information about
+        /// The Get network interface operation retrieves information about
         /// the specified network interface.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<IPage<NetworkInterface>>> ListVirtualMachineScaleSetNetworkInterfacesWithHttpMessagesAsync(string resourceGroupName, string virtualMachineScaleSetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The Get ntework interface operation retreives information about
+        /// The Get network interface operation retrieves information about
         /// the specified network interface in a virtual machine scale set.
         /// </summary>
         /// <param name='resourceGroupName'>

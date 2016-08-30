@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Get route operation retreives information about the specified route
+            /// The Get route operation retrieves information about the specified route
             /// from the route table.
             /// </summary>
             /// <param name='operations'>
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Get route operation retreives information about the specified route
+            /// The Get route operation retrieves information about the specified route
             /// from the route table.
             /// </summary>
             /// <param name='operations'>
@@ -173,7 +173,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the route.
             /// </param>
             /// <param name='routeParameters'>
-            /// Parameters supplied to the create/update routeoperation
+            /// Parameters supplied to the create/update route operation
             /// </param>
             public static Route CreateOrUpdate(this IRoutesOperations operations, string resourceGroupName, string routeTableName, string routeName, Route routeParameters)
             {
@@ -197,7 +197,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the route.
             /// </param>
             /// <param name='routeParameters'>
-            /// Parameters supplied to the create/update routeoperation
+            /// Parameters supplied to the create/update route operation
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -227,7 +227,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the route.
             /// </param>
             /// <param name='routeParameters'>
-            /// Parameters supplied to the create/update routeoperation
+            /// Parameters supplied to the create/update route operation
             /// </param>
             public static Route BeginCreateOrUpdate(this IRoutesOperations operations, string resourceGroupName, string routeTableName, string routeName, Route routeParameters)
             {
@@ -251,7 +251,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the route.
             /// </param>
             /// <param name='routeParameters'>
-            /// Parameters supplied to the create/update routeoperation
+            /// Parameters supplied to the create/update route operation
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

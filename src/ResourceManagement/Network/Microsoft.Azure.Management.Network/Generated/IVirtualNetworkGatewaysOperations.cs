@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<VirtualNetworkGateway>> GetWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkGatewayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The Delete VirtualNetworkGateway operation deletes the specifed
+        /// The Delete VirtualNetworkGateway operation deletes the specified
         /// virtual network Gateway through Network resource provider.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkGatewayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The Delete VirtualNetworkGateway operation deletes the specifed
+        /// The Delete VirtualNetworkGateway operation deletes the specified
         /// virtual network Gateway through Network resource provider.
         /// </summary>
         /// <param name='resourceGroupName'>

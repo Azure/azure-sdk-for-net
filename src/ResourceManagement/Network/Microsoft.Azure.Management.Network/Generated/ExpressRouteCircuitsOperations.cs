@@ -226,7 +226,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The Get ExpressRouteCircuit operation retreives information about the
+        /// The Get ExpressRouteCircuit operation retrieves information about the
         /// specified ExpressRouteCircuit.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -1350,8 +1350,8 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The Liststats ExpressRouteCircuit operation retrieves all the stats from a
-        /// ExpressRouteCircuits in a resource group.
+        /// The List stats ExpressRouteCircuit operation retrieves all the stats from
+        /// a ExpressRouteCircuits in a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1533,8 +1533,8 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The Liststats ExpressRouteCircuit operation retrieves all the stats from a
-        /// ExpressRouteCircuits in a resource group.
+        /// The List stats ExpressRouteCircuit operation retrieves all the stats from
+        /// a ExpressRouteCircuits in a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

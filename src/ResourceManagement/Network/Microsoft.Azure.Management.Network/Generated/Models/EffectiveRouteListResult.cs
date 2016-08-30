@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Response for list effective route api servive call
+    /// Response for list effective route api service call
     /// </summary>
     public partial class EffectiveRouteListResult
     {

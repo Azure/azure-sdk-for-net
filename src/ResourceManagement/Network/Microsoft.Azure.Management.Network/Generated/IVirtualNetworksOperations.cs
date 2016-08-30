@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Network
     public partial interface IVirtualNetworksOperations
     {
         /// <summary>
-        /// The Delete VirtualNetwork operation deletes the specifed virtual
+        /// The Delete VirtualNetwork operation deletes the specified virtual
         /// network
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The Delete VirtualNetwork operation deletes the specifed virtual
+        /// The Delete VirtualNetwork operation deletes the specified virtual
         /// network
         /// </summary>
         /// <param name='resourceGroupName'>

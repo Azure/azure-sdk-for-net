@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Pool of backend IP addresseses
+    /// Pool of backend IP addresses
     /// </summary>
     [JsonTransformation]
     public partial class BackendAddressPool : SubResource

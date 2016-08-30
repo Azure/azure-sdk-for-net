@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Delete VirtualNetworkGateway operation deletes the specifed virtual
+            /// The Delete VirtualNetworkGateway operation deletes the specified virtual
             /// network Gateway through Network resource provider.
             /// </summary>
             /// <param name='operations'>
@@ -183,7 +183,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Delete VirtualNetworkGateway operation deletes the specifed virtual
+            /// The Delete VirtualNetworkGateway operation deletes the specified virtual
             /// network Gateway through Network resource provider.
             /// </summary>
             /// <param name='operations'>
@@ -204,7 +204,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Delete VirtualNetworkGateway operation deletes the specifed virtual
+            /// The Delete VirtualNetworkGateway operation deletes the specified virtual
             /// network Gateway through Network resource provider.
             /// </summary>
             /// <param name='operations'>
@@ -222,7 +222,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Delete VirtualNetworkGateway operation deletes the specifed virtual
+            /// The Delete VirtualNetworkGateway operation deletes the specified virtual
             /// network Gateway through Network resource provider.
             /// </summary>
             /// <param name='operations'>

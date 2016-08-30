@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string networkSecurityGroupName, string securityRuleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The Get NetworkSecurityRule operation retreives information about
+        /// The Get NetworkSecurityRule operation retrieves information about
         /// the specified network security rule.
         /// </summary>
         /// <param name='resourceGroupName'>

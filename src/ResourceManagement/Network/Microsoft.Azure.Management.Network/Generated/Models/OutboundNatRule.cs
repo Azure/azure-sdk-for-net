@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Outbound NAT pool of the loadbalancer
+    /// Outbound NAT pool of the load balancer
     /// </summary>
     [JsonTransformation]
     public partial class OutboundNatRule : SubResource

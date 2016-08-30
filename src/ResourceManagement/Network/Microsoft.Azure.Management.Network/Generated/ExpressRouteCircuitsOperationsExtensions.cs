@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Get ExpressRouteCircuit operation retreives information about the
+            /// The Get ExpressRouteCircuit operation retrieves information about the
             /// specified ExpressRouteCircuit.
             /// </summary>
             /// <param name='operations'>
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Get ExpressRouteCircuit operation retreives information about the
+            /// The Get ExpressRouteCircuit operation retrieves information about the
             /// specified ExpressRouteCircuit.
             /// </summary>
             /// <param name='operations'>
@@ -571,8 +571,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Liststats ExpressRouteCircuit operation retrieves all the stats from a
-            /// ExpressRouteCircuits in a resource group.
+            /// The List stats ExpressRouteCircuit operation retrieves all the stats from
+            /// a ExpressRouteCircuits in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -589,8 +589,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Liststats ExpressRouteCircuit operation retrieves all the stats from a
-            /// ExpressRouteCircuits in a resource group.
+            /// The List stats ExpressRouteCircuit operation retrieves all the stats from
+            /// a ExpressRouteCircuits in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -613,8 +613,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Liststats ExpressRouteCircuit operation retrieves all the stats from a
-            /// ExpressRouteCircuits in a resource group.
+            /// The List stats ExpressRouteCircuit operation retrieves all the stats from
+            /// a ExpressRouteCircuits in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -634,8 +634,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Liststats ExpressRouteCircuit operation retrieves all the stats from a
-            /// ExpressRouteCircuits in a resource group.
+            /// The List stats ExpressRouteCircuit operation retrieves all the stats from
+            /// a ExpressRouteCircuits in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
