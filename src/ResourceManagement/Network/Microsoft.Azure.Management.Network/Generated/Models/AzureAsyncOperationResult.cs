@@ -18,9 +18,9 @@ namespace Microsoft.Azure.Management.Network.Models
 
     /// <summary>
     /// The response body contains the status of the specified asynchronous
-    /// operation, indicating whether it has succeeded, is inprogress, or has
-    /// failed. Note that this status is distinct from the HTTP status code
-    /// returned for the Get Operation Status operation itself. If the
+    /// operation, indicating whether it has succeeded, is in progress, or
+    /// has failed. Note that this status is distinct from the HTTP status
+    /// code returned for the Get Operation Status operation itself. If the
     /// asynchronous operation succeeded, the response body includes the HTTP
     /// status code for the successful request. If the asynchronous operation
     /// failed, the response body includes the HTTP status code for the

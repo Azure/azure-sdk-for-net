@@ -161,8 +161,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Put Authorization operation creates/updates an authorization in
-            /// thespecified ExpressRouteCircuits
+            /// The Put Authorization operation creates/updates an authorization in the
+            /// specified ExpressRouteCircuits
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -186,8 +186,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Put Authorization operation creates/updates an authorization in
-            /// thespecified ExpressRouteCircuits
+            /// The Put Authorization operation creates/updates an authorization in the
+            /// specified ExpressRouteCircuits
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -217,8 +217,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Put Authorization operation creates/updates an authorization in
-            /// thespecified ExpressRouteCircuits
+            /// The Put Authorization operation creates/updates an authorization in the
+            /// specified ExpressRouteCircuits
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -242,8 +242,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Put Authorization operation creates/updates an authorization in
-            /// thespecified ExpressRouteCircuits
+            /// The Put Authorization operation creates/updates an authorization in the
+            /// specified ExpressRouteCircuits
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -283,7 +283,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the resource group.
             /// </param>
             /// <param name='circuitName'>
-            /// The name of the curcuit.
+            /// The name of the circuit.
             /// </param>
             public static IPage<ExpressRouteCircuitAuthorization> List(this IExpressRouteCircuitAuthorizationsOperations operations, string resourceGroupName, string circuitName)
             {
@@ -301,7 +301,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the resource group.
             /// </param>
             /// <param name='circuitName'>
-            /// The name of the curcuit.
+            /// The name of the circuit.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

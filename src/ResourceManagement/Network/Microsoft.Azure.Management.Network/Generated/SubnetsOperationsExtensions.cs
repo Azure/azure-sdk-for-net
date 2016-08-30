@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Get subnet operation retreives information about the specified subnet.
+            /// The Get subnet operation retrieves information about the specified subnet.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Get subnet operation retreives information about the specified subnet.
+            /// The Get subnet operation retrieves information about the specified subnet.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -161,7 +161,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Put Subnet operation creates/updates a subnet in thespecified virtual
+            /// The Put Subnet operation creates/updates a subnet in the specified virtual
             /// network
             /// </summary>
             /// <param name='operations'>
@@ -185,7 +185,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Put Subnet operation creates/updates a subnet in thespecified virtual
+            /// The Put Subnet operation creates/updates a subnet in the specified virtual
             /// network
             /// </summary>
             /// <param name='operations'>
@@ -215,7 +215,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Put Subnet operation creates/updates a subnet in thespecified virtual
+            /// The Put Subnet operation creates/updates a subnet in the specified virtual
             /// network
             /// </summary>
             /// <param name='operations'>
@@ -239,7 +239,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Put Subnet operation creates/updates a subnet in thespecified virtual
+            /// The Put Subnet operation creates/updates a subnet in the specified virtual
             /// network
             /// </summary>
             /// <param name='operations'>
@@ -269,7 +269,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List subnets opertion retrieves all the subnets in a virtual network.
+            /// The List subnets operation retrieves all the subnets in a virtual network.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -286,7 +286,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List subnets opertion retrieves all the subnets in a virtual network.
+            /// The List subnets operation retrieves all the subnets in a virtual network.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -309,7 +309,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List subnets opertion retrieves all the subnets in a virtual network.
+            /// The List subnets operation retrieves all the subnets in a virtual network.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -323,7 +323,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List subnets opertion retrieves all the subnets in a virtual network.
+            /// The List subnets operation retrieves all the subnets in a virtual network.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

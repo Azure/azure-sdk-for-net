@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Network
         public NetworkManagementClient Client { get; private set; }
 
         /// <summary>
-        /// The Delete NetworkSecurityGroup operation deletes the specifed network
+        /// The Delete NetworkSecurityGroup operation deletes the specified network
         /// security group
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The Delete NetworkSecurityGroup operation deletes the specifed network
+        /// The Delete NetworkSecurityGroup operation deletes the specified network
         /// security group
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -418,7 +418,7 @@ namespace Microsoft.Azure.Management.Network
 
         /// <summary>
         /// The Put NetworkSecurityGroup operation creates/updates a network security
-        /// groupin the specified resource group.
+        /// group in the specified resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -447,7 +447,7 @@ namespace Microsoft.Azure.Management.Network
 
         /// <summary>
         /// The Put NetworkSecurityGroup operation creates/updates a network security
-        /// groupin the specified resource group.
+        /// group in the specified resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
