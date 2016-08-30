@@ -238,7 +238,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The Get NetworkSecurityRule operation retreives information about the
+        /// The Get NetworkSecurityRule operation retrieves information about the
         /// specified network security rule.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -690,7 +690,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The List network security rule opertion retrieves all the security rules
+        /// The List network security rule operation retrieves all the security rules
         /// in a network security group.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -873,7 +873,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The List network security rule opertion retrieves all the security rules
+        /// The List network security rule operation retrieves all the security rules
         /// in a network security group.
         /// </summary>
         /// <param name='nextPageLink'>
