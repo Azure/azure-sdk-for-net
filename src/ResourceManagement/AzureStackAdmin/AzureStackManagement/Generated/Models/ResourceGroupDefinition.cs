@@ -28,14 +28,14 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Resource group definition
     /// </summary>
     public partial class ResourceGroupDefinition
     {
         private string _id;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Id of the resource group
         /// </summary>
         public string Id
         {
@@ -46,7 +46,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _location;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Location of the resource group
         /// </summary>
         public string Location
         {
@@ -57,7 +57,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _name;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Resource group name
         /// </summary>
         public string Name
         {
@@ -68,7 +68,7 @@ namespace Microsoft.AzureStack.Management.Models
         private ResourceGroupPropertiesDefinition _properties;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Properties of the resource group
         /// </summary>
         public ResourceGroupPropertiesDefinition Properties
         {
@@ -79,7 +79,7 @@ namespace Microsoft.AzureStack.Management.Models
         private IDictionary<string, string> _tags;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Tags associated with the resource group
         /// </summary>
         public IDictionary<string, string> Tags
         {

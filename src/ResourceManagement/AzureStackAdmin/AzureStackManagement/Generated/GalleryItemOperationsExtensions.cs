@@ -32,225 +32,175 @@ namespace Microsoft.AzureStack.Management
     public static partial class GalleryItemOperationsExtensions
     {
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Creates or updates the Gallery Item
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IGalleryItemOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='galleryItemId'>
-        /// Required. Your documentation here.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Your documentation here.
+        /// Required. Gallery item Upload parameters.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static AzureOperationResponse CreateOrUpdate(this IGalleryItemOperations operations, string resourceGroupName, string galleryItemId, GalleryItemCreateOrUpdateParameters parameters)
+        public static AzureOperationResponse CreateOrUpdate(this IGalleryItemOperations operations, GalleryItemCreateOrUpdateParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IGalleryItemOperations)s).CreateOrUpdateAsync(resourceGroupName, galleryItemId, parameters);
+                return ((IGalleryItemOperations)s).CreateOrUpdateAsync(parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Creates or updates the Gallery Item
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IGalleryItemOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='galleryItemId'>
-        /// Required. Your documentation here.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Your documentation here.
+        /// Required. Gallery item Upload parameters.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<AzureOperationResponse> CreateOrUpdateAsync(this IGalleryItemOperations operations, string resourceGroupName, string galleryItemId, GalleryItemCreateOrUpdateParameters parameters)
+        public static Task<AzureOperationResponse> CreateOrUpdateAsync(this IGalleryItemOperations operations, GalleryItemCreateOrUpdateParameters parameters)
         {
-            return operations.CreateOrUpdateAsync(resourceGroupName, galleryItemId, parameters, CancellationToken.None);
+            return operations.CreateOrUpdateAsync(parameters, CancellationToken.None);
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gallery item Delete operation.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IGalleryItemOperations.
         /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
-        /// </param>
         /// <param name='galleryItemId'>
-        /// Required. Your documentation here.
+        /// Required. Gallery item identity.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static AzureOperationResponse Delete(this IGalleryItemOperations operations, string resourceGroupName, string galleryItemId)
+        public static AzureOperationResponse Delete(this IGalleryItemOperations operations, string galleryItemId)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IGalleryItemOperations)s).DeleteAsync(resourceGroupName, galleryItemId);
+                return ((IGalleryItemOperations)s).DeleteAsync(galleryItemId);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gallery item Delete operation.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IGalleryItemOperations.
         /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
-        /// </param>
         /// <param name='galleryItemId'>
-        /// Required. Your documentation here.
+        /// Required. Gallery item identity.
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<AzureOperationResponse> DeleteAsync(this IGalleryItemOperations operations, string resourceGroupName, string galleryItemId)
+        public static Task<AzureOperationResponse> DeleteAsync(this IGalleryItemOperations operations, string galleryItemId)
         {
-            return operations.DeleteAsync(resourceGroupName, galleryItemId, CancellationToken.None);
+            return operations.DeleteAsync(galleryItemId, CancellationToken.None);
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gallery item Get operation.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IGalleryItemOperations.
         /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
-        /// </param>
         /// <param name='galleryItemId'>
-        /// Required. Your documentation here.
+        /// Required. Gallery item identity.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Gallery item Get operation result.
         /// </returns>
-        public static GalleryItemGetResult Get(this IGalleryItemOperations operations, string resourceGroupName, string galleryItemId)
+        public static GalleryItemGetResult Get(this IGalleryItemOperations operations, string galleryItemId)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IGalleryItemOperations)s).GetAsync(resourceGroupName, galleryItemId);
+                return ((IGalleryItemOperations)s).GetAsync(galleryItemId);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gallery item Get operation.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IGalleryItemOperations.
         /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
-        /// </param>
         /// <param name='galleryItemId'>
-        /// Required. Your documentation here.
+        /// Required. Gallery item identity.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Gallery item Get operation result.
         /// </returns>
-        public static Task<GalleryItemGetResult> GetAsync(this IGalleryItemOperations operations, string resourceGroupName, string galleryItemId)
+        public static Task<GalleryItemGetResult> GetAsync(this IGalleryItemOperations operations, string galleryItemId)
         {
-            return operations.GetAsync(resourceGroupName, galleryItemId, CancellationToken.None);
+            return operations.GetAsync(galleryItemId, CancellationToken.None);
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gallery items List operation.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IGalleryItemOperations.
         /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
-        /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Gallery item List operation result.
         /// </returns>
-        public static GalleryItemListResult List(this IGalleryItemOperations operations, string resourceGroupName)
+        public static GalleryItemListResult List(this IGalleryItemOperations operations)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IGalleryItemOperations)s).ListAsync(resourceGroupName);
+                return ((IGalleryItemOperations)s).ListAsync();
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gallery items List operation.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IGalleryItemOperations.
         /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
-        /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Gallery item List operation result.
         /// </returns>
-        public static Task<GalleryItemListResult> ListAsync(this IGalleryItemOperations operations, string resourceGroupName)
+        public static Task<GalleryItemListResult> ListAsync(this IGalleryItemOperations operations)
         {
-            return operations.ListAsync(resourceGroupName, CancellationToken.None);
+            return operations.ListAsync(CancellationToken.None);
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gallery items List operation.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IGalleryItemOperations.
         /// </param>
         /// <param name='nextLink'>
-        /// Required. Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Required. Gets or sets the URL to get the next set of results.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Gallery item List operation result.
         /// </returns>
         public static GalleryItemListResult ListNext(this IGalleryItemOperations operations, string nextLink)
         {
@@ -262,63 +212,21 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gallery items List operation.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IGalleryItemOperations.
         /// </param>
         /// <param name='nextLink'>
-        /// Required. Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Required. Gets or sets the URL to get the next set of results.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Gallery item List operation result.
         /// </returns>
         public static Task<GalleryItemListResult> ListNextAsync(this IGalleryItemOperations operations, string nextLink)
         {
             return operations.ListNextAsync(nextLink, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.Management.IGalleryItemOperations.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public static GalleryItemListResult ListWithoutResourceGroup(this IGalleryItemOperations operations)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IGalleryItemOperations)s).ListWithoutResourceGroupAsync();
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.Management.IGalleryItemOperations.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public static Task<GalleryItemListResult> ListWithoutResourceGroupAsync(this IGalleryItemOperations operations)
-        {
-            return operations.ListWithoutResourceGroupAsync(CancellationToken.None);
         }
     }
 }

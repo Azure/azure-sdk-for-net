@@ -24,6 +24,9 @@ using System.Linq;
 
 namespace Microsoft.WindowsAzure.Management.Storage.Models
 {
+    /// <summary>
+    /// Indicates whether the storage region is available.
+    /// </summary>
     public enum GeoRegionStatus
     {
         Available = 0,

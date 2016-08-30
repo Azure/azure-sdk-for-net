@@ -111,5 +111,22 @@ namespace Microsoft.Azure.Management.HDInsight.Job
         /// The error logs of an individual jobDetails by jobId.
         /// </returns>
         Task<Stream> GetJobErrorLogsAsync(string jobId, IStorageAccess storageAccess, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Wait for completion of a Job.
+        /// </summary>
+        /// <param name='jobId'>
+        /// Required. The id of the job.
+        /// </param>
+        /// <param name='duration'>
+        /// Optional. The maximum duration to wait for completion of job before returning to client. If not passed then wait till job is completed.
+        /// </param>
+        /// <param name='waitInterval'>
+        /// Optional. The interval to poll for job status. The default value is set from DefaultPollInterval property of HDInsight job management client.
+        /// </param>
+        /// <exception cref="TimeoutException">
+        /// Thrown when waiting for job completion exceeds the maximum duration specified by parameter duration.
+        /// </exception>
+        Task<JobGetResponse> WaitForJobCompletionAsync(string jobId, TimeSpan? duration, TimeSpan? waitInterval);
     }
 }

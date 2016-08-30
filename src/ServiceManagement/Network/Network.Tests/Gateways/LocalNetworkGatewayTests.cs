@@ -54,7 +54,16 @@ namespace Network.Tests.Gateways
                 Assert.NotNull(listLocalNetworkGatewaysResponse);
                 Assert.Equal(HttpStatusCode.OK, listLocalNetworkGatewaysResponse.StatusCode);
 
-                ListLocalNetworkGatewaysResponse.LocalNetworkGateway localNetworkGateway = listLocalNetworkGatewaysResponse.LocalNetworkGateways.First();
+                ListLocalNetworkGatewaysResponse.LocalNetworkGateway localNetworkGateway = null;
+                foreach (ListLocalNetworkGatewaysResponse.LocalNetworkGateway lng in listLocalNetworkGatewaysResponse.LocalNetworkGateways)
+                {
+                    if (localNetworkGatewayCreateResponse.LocalNetworkGatewayId.IndexOf(lng.Id.ToString(), StringComparison.OrdinalIgnoreCase) >= 0)
+                    {
+                        localNetworkGateway = lng;
+                    }
+                }
+
+                Assert.True(localNetworkGateway != null, "The created local network gateway's ID should show up when local network gateways are listed");
                 Assert.Equal(localnetGatewayName, localNetworkGateway.GatewayName);
                 Assert.Equal(localNetworkGatewayIpAddress, localNetworkGateway.IpAddress);
                 Assert.True(localNetworkGateway.AddressSpace.Contains(addressSpace), "CreateLocalNetworkGateway API failed as AddressSpace parameter is not set properly!");

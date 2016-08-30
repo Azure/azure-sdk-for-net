@@ -13,10 +13,10 @@
 // ----------------------------------------------------------------------------------
 
 using System;
-using Microsoft.AzureStack.Management.StorageAdmin.Models;
+using Microsoft.AzureStack.AzureConsistentStorage.Models;
 using Xunit;
 
-namespace Microsoft.AzureStack.Management.StorageAdmin.Tests
+namespace Microsoft.AzureStack.AzureConsistentStorage.Tests
 {
     internal class EventQueryResultValidator
     {
@@ -28,7 +28,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Tests
             Assert.Equal(new DateTime(2015, 5, 15, 18, 2, 0, DateTimeKind.Utc), eventQuery.TableInfos[0].StartTime);
             Assert.Equal(new DateTime(2015, 5, 25, 18, 2, 0, DateTimeKind.Utc), eventQuery.TableInfos[0].EndTime);
             Assert.Equal("WDEvent20150515", eventQuery.TableInfos[0].TableName);
-            Assert.Equal("sv=2014-02-14&sr=b&sig=pJL%2FWyed41tptiwBM5ymYre4qF8wzrO05tS5MCjkutc%3D&st=2015-01-02T01%3A40%3A51Z&se=2015-01-02T02%3A00%3A51Z&sp=r",
+            Assert.Equal("sv=2014-02-14&sr=b&st=2015-01-02T01%3A40%3A51Z&se=2015-01-02T02%3A00%3A51Z&sp=r",
                 eventQuery.TableInfos[0].SasToken);
         }
 

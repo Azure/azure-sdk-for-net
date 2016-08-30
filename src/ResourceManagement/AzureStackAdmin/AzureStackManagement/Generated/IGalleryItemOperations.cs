@@ -29,25 +29,17 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management
 {
     /// <summary>
-    /// Your documentation here.  (see
+    /// Gallery item operations.  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
     /// more information)
     /// </summary>
     public partial interface IGalleryItemOperations
     {
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Creates or updates the Gallery Item
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Your documentation here.
-        /// </param>
-        /// <param name='galleryItemId'>
-        /// Your documentation here.
-        /// </param>
         /// <param name='parameters'>
-        /// Your documentation here.
+        /// Gallery item Upload parameters.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -56,18 +48,13 @@ namespace Microsoft.AzureStack.Management
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<AzureOperationResponse> CreateOrUpdateAsync(string resourceGroupName, string galleryItemId, GalleryItemCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> CreateOrUpdateAsync(GalleryItemCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gallery item Delete operation.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Your documentation here.
-        /// </param>
         /// <param name='galleryItemId'>
-        /// Your documentation here.
+        /// Gallery item identity.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -76,72 +63,45 @@ namespace Microsoft.AzureStack.Management
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string galleryItemId, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> DeleteAsync(string galleryItemId, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gallery item Get operation.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Your documentation here.
-        /// </param>
         /// <param name='galleryItemId'>
-        /// Your documentation here.
+        /// Gallery item identity.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Gallery item Get operation result.
         /// </returns>
-        Task<GalleryItemGetResult> GetAsync(string resourceGroupName, string galleryItemId, CancellationToken cancellationToken);
+        Task<GalleryItemGetResult> GetAsync(string galleryItemId, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gallery items List operation.
         /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Your documentation here.
-        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Gallery item List operation result.
         /// </returns>
-        Task<GalleryItemListResult> ListAsync(string resourceGroupName, CancellationToken cancellationToken);
+        Task<GalleryItemListResult> ListAsync(CancellationToken cancellationToken);
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gallery items List operation.
         /// </summary>
         /// <param name='nextLink'>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets or sets the URL to get the next set of results.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Gallery item List operation result.
         /// </returns>
         Task<GalleryItemListResult> ListNextAsync(string nextLink, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        Task<GalleryItemListResult> ListWithoutResourceGroupAsync(CancellationToken cancellationToken);
     }
 }

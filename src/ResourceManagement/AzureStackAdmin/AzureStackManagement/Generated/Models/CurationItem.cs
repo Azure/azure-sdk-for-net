@@ -25,14 +25,14 @@ using System.Linq;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Gallery curation item model.
     /// </summary>
     public partial class CurationItem
     {
         private string _identity;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Identity of the curation item.
         /// </summary>
         public string Identity
         {
@@ -43,7 +43,7 @@ namespace Microsoft.AzureStack.Management.Models
         private bool _isDefault;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. If the curation is default for the Identity.
         /// </summary>
         public bool IsDefault
         {
@@ -54,7 +54,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _itemUri;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Uri of the curation.
         /// </summary>
         public string ItemUri
         {

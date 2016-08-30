@@ -29,35 +29,29 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management
 {
     /// <summary>
-    /// Your documentation here.  (see
-    /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
-    /// more information)
+    /// Operations on the resource group
     /// </summary>
     public partial interface IResourceGroupOperations
     {
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Creates or updates the resourcegroup
         /// </summary>
         /// <param name='parameters'>
-        /// Your documentation here.
+        /// Resource group creation or update parameters
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of resource group create or update operation
         /// </returns>
         Task<ResourceGroupCreateOrUpdateResult> CreateOrUpdateAsync(ResourceGroupCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Deletes the given resource group
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Your documentation here.
+        /// Resource group name
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -69,59 +63,49 @@ namespace Microsoft.AzureStack.Management
         Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets the resource group details for the given resource group name
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the resource group get operation
         /// </returns>
         Task<ResourceGroupGetResult> GetAsync(string resourceGroupName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the resource group under the subscription
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the resource group list operation
         /// </returns>
         Task<ResourceGroupListResult> ListAsync(CancellationToken cancellationToken);
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the next set of resource groups under the subscription
         /// </summary>
         /// <param name='nextLink'>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// The URL to get the next set of resource groups
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the resource group list operation
         /// </returns>
         Task<ResourceGroupListResult> ListNextAsync(string nextLink, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the resources under the given resource group
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of resources list operation
         /// </returns>
         Task<ResourceGroupListResourcesResult> ListResourcesAsync(string resourceGroupName, CancellationToken cancellationToken);
     }

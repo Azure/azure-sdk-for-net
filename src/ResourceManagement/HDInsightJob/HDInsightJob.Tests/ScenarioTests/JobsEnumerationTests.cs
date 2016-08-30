@@ -78,7 +78,7 @@ namespace HDInsightJob.Tests.ScenarioTests
                 Assert.True(allJobsResp.JobList.Count > 0);
 
                 int numOfEntries = 3;
-                int index = -1;
+                int index = 0;
                 string jobid = string.Empty;
                 while (true)
                 {
@@ -86,7 +86,7 @@ namespace HDInsightJob.Tests.ScenarioTests
                     jobid = t.JobList.Last().Id;
                     index += t.JobList.Count;
 
-                    var expectedJobId = allJobsResp.JobList.ElementAt(index).Id;
+                    var expectedJobId = allJobsResp.JobList.ElementAt(index-1).Id;
                     Assert.Equal(expectedJobId, jobid);
 
                     if (t.JobList.Count != numOfEntries || allJobsResp.JobList.Count <= index)

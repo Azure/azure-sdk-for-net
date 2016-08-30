@@ -20,44 +20,19 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
-using Microsoft.AzureStack.Management.Models;
 
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Offer contract
     /// </summary>
     public partial class OfferDefinition
     {
-        private IList<PlanReferenceDefinition> _addonPlans;
-        
-        /// <summary>
-        /// Optional. Your documentation here.
-        /// </summary>
-        public IList<PlanReferenceDefinition> AddonPlans
-        {
-            get { return this._addonPlans; }
-            set { this._addonPlans = value; }
-        }
-        
-        private string _delegatedProviderId;
-        
-        /// <summary>
-        /// Optional. The provider Id under which the offer exists
-        /// </summary>
-        public string DelegatedProviderId
-        {
-            get { return this._delegatedProviderId; }
-            set { this._delegatedProviderId = value; }
-        }
-        
         private string _description;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the description.
         /// </summary>
         public string Description
         {
@@ -68,7 +43,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _displayName;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the display name.
         /// </summary>
         public string DisplayName
         {
@@ -79,8 +54,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _id;
         
         /// <summary>
-        /// Optional. Full Id for the offer in the format
-        /// /delegatedProviders/{delegatedProviderId}/offers/{name}.
+        /// Optional. Full Id for the offer
         /// </summary>
         public string Id
         {
@@ -91,7 +65,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _name;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the name of the offer.
         /// </summary>
         public string Name
         {
@@ -99,24 +73,11 @@ namespace Microsoft.AzureStack.Management.Models
             set { this._name = value; }
         }
         
-        private IList<ServiceQuotaDefinition> _serviceQuotas;
-        
-        /// <summary>
-        /// Optional. Your documentation here.
-        /// </summary>
-        public IList<ServiceQuotaDefinition> ServiceQuotas
-        {
-            get { return this._serviceQuotas; }
-            set { this._serviceQuotas = value; }
-        }
-        
         /// <summary>
         /// Initializes a new instance of the OfferDefinition class.
         /// </summary>
         public OfferDefinition()
         {
-            this.AddonPlans = new LazyList<PlanReferenceDefinition>();
-            this.ServiceQuotas = new LazyList<ServiceQuotaDefinition>();
         }
     }
 }

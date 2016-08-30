@@ -379,7 +379,8 @@ namespace DataFactory.Tests.Framework.JsonSamples
         type: ""OnPremisesOdbc"",
         typeProperties: {
             connectionString: ""driver={SQL Server};server=myserver;database=mydb;"",
-            credential: ""uid=myuid;pwd=mypassword"",
+
+            credential: ""uid=myuid;pwd=PLACEHOLDER"",
             username: ""microsoft"",
             password: ""fakepassword"",
             gatewayName: ""MSourceDemoGateway"",
@@ -435,8 +436,43 @@ namespace DataFactory.Tests.Framework.JsonSamples
             url: ""http://myhost.com/"",
             authenticationType: ""Basic"",
             username: ""microsoft"",
-            password: ""fakepassword"",
-            apiKey: ""mykey""            
+            password: ""fakepassword""   
+        }
+    }
+}";
+        [JsonSample]
+        public const string OnPremisesCassandraLinkedService = @"
+{
+    name: ""LinkedService-OnPremisesCassandra"",
+    properties:
+    {
+        type: ""OnPremisesCassandra"",
+        description: ""test description"",
+        typeProperties:
+        {
+            authenticationType: ""Basic"",
+            host : ""http://localhost/webhdfs/v1/"", 
+            port : 1234,
+            username: ""admin"",
+            password : ""fakepassword"",
+            gatewayName : ""fakegateway"",
+            encryptedCredential : ""fake credential""
+        }
+    }
+}";
+        [JsonSample]
+        public const string SalesforceLinkedService = @"
+{
+    name: ""SalesforceLinkedService"",
+    properties:
+    {
+        type: ""Salesforce"",
+        description: ""test description"",
+        typeProperties:
+        {
+            userName: ""admin"",
+            password : ""fakepassword"",
+            securityToken: ""fakeToken""
         }
     }
 }";

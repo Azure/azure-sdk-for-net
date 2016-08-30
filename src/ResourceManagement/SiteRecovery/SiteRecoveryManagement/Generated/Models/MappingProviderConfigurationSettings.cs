@@ -29,6 +29,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// </summary>
     public partial class MappingProviderConfigurationSettings
     {
+        private string _instanceType;
+        
+        /// <summary>
+        /// Optional. Type of derived class
+        /// </summary>
+        public string InstanceType
+        {
+            get { return this._instanceType; }
+            set { this._instanceType = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the
         /// MappingProviderConfigurationSettings class.

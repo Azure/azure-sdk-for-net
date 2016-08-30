@@ -66,6 +66,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._eventCode = value; }
         }
         
+        private EventSpecificDetails _eventSpecificDetails;
+        
+        /// <summary>
+        /// Optional. The event specific settings.
+        /// </summary>
+        public EventSpecificDetails EventSpecificDetails
+        {
+            get { return this._eventSpecificDetails; }
+            set { this._eventSpecificDetails = value; }
+        }
+        
         private string _eventType;
         
         /// <summary>

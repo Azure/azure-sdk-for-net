@@ -87,6 +87,16 @@ namespace Microsoft.Azure.Management.OperationalInsights
             set { this._longRunningOperationRetryTimeout = value; }
         }
         
+        private IDataSourceOperations _dataSources;
+        
+        /// <summary>
+        /// Operations for managing data sources under Workspaces.
+        /// </summary>
+        public virtual IDataSourceOperations DataSources
+        {
+            get { return this._dataSources; }
+        }
+        
         private ISearchOperations _search;
         
         /// <summary>
@@ -124,6 +134,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         public OperationalInsightsManagementClient()
             : base()
         {
+            this._dataSources = new DataSourceOperations(this);
             this._search = new SearchOperations(this);
             this._storageInsights = new StorageInsightOperations(this);
             this._workspaces = new WorkspaceOperations(this);
@@ -195,6 +206,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         public OperationalInsightsManagementClient(HttpClient httpClient)
             : base(httpClient)
         {
+            this._dataSources = new DataSourceOperations(this);
             this._search = new SearchOperations(this);
             this._storageInsights = new StorageInsightOperations(this);
             this._workspaces = new WorkspaceOperations(this);

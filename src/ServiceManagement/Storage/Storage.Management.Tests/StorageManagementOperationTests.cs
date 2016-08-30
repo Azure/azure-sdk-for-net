@@ -16,6 +16,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.WindowsAzure.Management.Storage;
 using Microsoft.WindowsAzure.Management.Storage.Models;
@@ -128,6 +131,200 @@ namespace Microsoft.WindowsAzure.Management.Storage.Testing
 
                     Assert.True(!storage.StorageAccounts.List()
                                 .StorageAccounts.Any(s => s.Name == storageAccountName));
+                }
+                finally
+                {
+                    undoContext.Dispose();
+                    mgmt.Dispose();
+                    storage.Dispose();
+                    TestLogTracingInterceptor.Current.Stop();
+                }
+            }
+        }
+
+        [Fact]
+        public void CanValidateStorageAccountForMigration()
+        {
+            TestLogTracingInterceptor.Current.Start();
+
+            using (var undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+                var mgmt = TestBase.GetServiceClient<ManagementClient>();
+                var storage = TestBase.GetServiceClient<StorageManagementClient>();
+
+                try
+                {
+                    var location = mgmt.GetDefaultLocation("Storage");
+                    const string westUS = "West US";
+                    if (mgmt.Locations.List().Any(
+                        c => string.Equals(c.Name, westUS, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        location = westUS;
+                    }
+
+                    var storageAccountName = "foo";
+                    var response = storage.StorageAccounts.ValidateMigration(storageAccountName);
+
+                    Assert.NotNull(response);
+                    Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                    Assert.NotNull(response.ValidateStorageMessages);
+                    Assert.Equal(1, response.ValidateStorageMessages.Count);
+                    Assert.Equal(string.Format("The storage account '{0}' was not found.", storageAccountName), response.ValidateStorageMessages[0].Message);
+                }
+                finally
+                {
+                    undoContext.Dispose();
+                    mgmt.Dispose();
+                    storage.Dispose();
+                    TestLogTracingInterceptor.Current.Stop();
+                }
+            }
+        }
+
+        [Fact]
+        public void CanMigrateStorageAccountToSrp()
+        {
+            TestLogTracingInterceptor.Current.Start();
+
+            using (var undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+                var mgmt = TestBase.GetServiceClient<ManagementClient>();
+                var storage = TestBase.GetServiceClient<StorageManagementClient>();
+
+                try
+                {
+                    var location = mgmt.GetDefaultLocation("Storage");
+                    const string westUS = "West US";
+                    if (mgmt.Locations.List().Any(
+                        c => string.Equals(c.Name, westUS, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        location = westUS;
+                    }
+
+                    var storageAccountName = HttpMockServer.GetAssetName(
+                        "teststorage1234",
+                        "teststorage").ToLower();
+
+                    Assert.True(storage.StorageAccounts
+                               .CheckNameAvailability(storageAccountName).IsAvailable);
+
+                    // Create
+                    var storageCreateParams = new StorageAccountCreateParameters
+                    {
+                        Location = location,
+                        AffinityGroup = null,
+                        Label = "Test测试1",
+                        Description = "Test测试2",
+                        Name = storageAccountName,
+                        AccountType = StorageAccountTypes.StandardGRS,
+                        ExtendedProperties = new Dictionary<string, string>
+                        {
+                            { "foo1", "bar" },
+                            { "foo2", "baz" }
+                        }
+                    };
+                    var st1 = storage.StorageAccounts.Create(storageCreateParams);
+
+                    // Get
+                    var storageCreated = storage.StorageAccounts
+                                        .Get(storageAccountName).StorageAccount;
+                    VerifyStorageAccount(
+                        storageCreated,
+                        storageCreateParams.Name,
+                        storageCreateParams.Label,
+                        storageCreateParams.Description,
+                        storageCreateParams.Location,
+                        storageCreateParams.AccountType);
+                    Assert.True(storageCreated.ExtendedProperties["foo1"] == "bar");
+                    Assert.True(storageCreated.ExtendedProperties["foo2"] == "baz");
+
+                    var response = storage.StorageAccounts.PrepareMigration(storageAccountName);
+                    Assert.Equal(OperationStatus.Succeeded, response.Status);
+
+                    storageCreated = storage.StorageAccounts.Get(storageAccountName).StorageAccount;
+                    Assert.Equal(IaaSClassicToArmMigrationState.Prepared, storageCreated.MigrationState);
+
+                    response = storage.StorageAccounts.CommitMigration(storageAccountName);
+                    Assert.Equal(OperationStatus.Succeeded, response.Status);
+                }
+                finally
+                {
+                    undoContext.Dispose();
+                    mgmt.Dispose();
+                    storage.Dispose();
+                    TestLogTracingInterceptor.Current.Stop();
+                }
+            }
+        }
+
+        [Fact]
+        public void CanAbortStorageAccountMigrationToSrp()
+        {
+            TestLogTracingInterceptor.Current.Start();
+
+            using (var undoContext = UndoContext.Current)
+            {
+                undoContext.Start();
+                var mgmt = TestBase.GetServiceClient<ManagementClient>();
+                var storage = TestBase.GetServiceClient<StorageManagementClient>();
+
+                try
+                {
+                    var location = mgmt.GetDefaultLocation("Storage");
+                    const string westUS = "West US";
+                    if (mgmt.Locations.List().Any(
+                        c => string.Equals(c.Name, westUS, StringComparison.OrdinalIgnoreCase)))
+                    {
+                        location = westUS;
+                    }
+
+                    var storageAccountName = HttpMockServer.GetAssetName(
+                        "teststorage1234",
+                        "teststorage").ToLower();
+
+                    Assert.True(storage.StorageAccounts
+                               .CheckNameAvailability(storageAccountName).IsAvailable);
+
+                    // Create
+                    var storageCreateParams = new StorageAccountCreateParameters
+                    {
+                        Location = location,
+                        AffinityGroup = null,
+                        Label = "Test测试1",
+                        Description = "Test测试2",
+                        Name = storageAccountName,
+                        AccountType = StorageAccountTypes.StandardGRS,
+                        ExtendedProperties = new Dictionary<string, string>
+                        {
+                            { "foo1", "bar" },
+                            { "foo2", "baz" }
+                        }
+                    };
+                    var st1 = storage.StorageAccounts.Create(storageCreateParams);
+
+                    // Get
+                    var storageCreated = storage.StorageAccounts
+                                        .Get(storageAccountName).StorageAccount;
+                    VerifyStorageAccount(
+                        storageCreated,
+                        storageCreateParams.Name,
+                        storageCreateParams.Label,
+                        storageCreateParams.Description,
+                        storageCreateParams.Location,
+                        storageCreateParams.AccountType);
+                    Assert.True(storageCreated.ExtendedProperties["foo1"] == "bar");
+                    Assert.True(storageCreated.ExtendedProperties["foo2"] == "baz");
+
+                    var response = storage.StorageAccounts.PrepareMigration(storageAccountName);
+                    Assert.Equal(OperationStatus.Succeeded, response.Status);
+
+                    storageCreated = storage.StorageAccounts.Get(storageAccountName).StorageAccount;
+                    Assert.Equal(IaaSClassicToArmMigrationState.Prepared, storageCreated.MigrationState);
+
+                    response = storage.StorageAccounts.AbortMigration(storageAccountName);
+                    Assert.Equal(OperationStatus.Succeeded, response.Status);
                 }
                 finally
                 {

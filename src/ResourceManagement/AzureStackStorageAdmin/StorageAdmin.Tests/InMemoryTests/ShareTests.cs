@@ -22,11 +22,10 @@ using System;
 using System.Net;
 using System.Net.Http;
 using Microsoft.Azure;
-using Microsoft.AzureStack.Management.StorageAdmin;
-using Microsoft.AzureStack.Management.StorageAdmin.Models;
+using Microsoft.AzureStack.AzureConsistentStorage.Models;
 using Xunit;
 
-namespace Microsoft.AzureStack.Management.StorageAdmin.Tests
+namespace Microsoft.AzureStack.AzureConsistentStorage.Tests
 {
     public class ShareTests : TestBase
     {
@@ -58,9 +57,6 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Tests
 
             var result = client.Shares.Get(Constants.ResourceGroupName, Constants.FarmId, Constants.ShareAName);
 
-            // validate requestor
-            Assert.Equal(handler.Method, HttpMethod.Get);
-
             var expectedUri = string.Format(
                 GetUriTemplate,
                 Constants.BaseUri,
@@ -72,7 +68,6 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Tests
 
             Assert.Equal(handler.Uri.AbsoluteUri, expectedUri);
 
-            // Validate headers 
             Assert.Equal(HttpMethod.Get, handler.Method);
             
             CompareExpectedResult(result.Share);
@@ -98,9 +93,6 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Tests
 
             var result = client.Shares.List(Constants.ResourceGroupName, Constants.FarmId);
 
-            // validate requestor
-            Assert.Equal(handler.Method, HttpMethod.Get);
-
             var expectedUri = string.Format(
                 ListUriTemplate,
                 Constants.BaseUri,
@@ -110,7 +102,6 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Tests
 
             Assert.Equal(handler.Uri.AbsoluteUri, expectedUri);
 
-            // Validate headers 
             Assert.Equal(HttpMethod.Get, handler.Method);
 
             Assert.True(result.Shares.Count > 1);
@@ -118,19 +109,55 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Tests
             CompareExpectedResult(result.Shares[0]);
         }
 
+        [Fact]
+        public void PutShare()
+        {
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(ExpectedResults.ShareGetResponse)
+            };
+
+            var handler = new RecordedDelegatingHandler(response)
+            {
+                StatusCodeToReturn = HttpStatusCode.OK
+            };
+
+            var subscriptionId = Guid.NewGuid().ToString();
+
+            var token = new TokenCloudCredentials(subscriptionId, Constants.TokenString);
+            var client = GetClient(handler, token);
+
+            var result = client.Shares.Put(Constants.ResourceGroupName, Constants.FarmId, Constants.ShareAName);
+
+            var expectedUri = string.Format(
+                GetUriTemplate,
+                Constants.BaseUri,
+                subscriptionId,
+                Constants.ResourceGroupName,
+                Constants.FarmId,
+                Uri.EscapeDataString(Constants.ShareAName)
+                );
+
+            Assert.Equal(expectedUri, handler.Uri.AbsoluteUri);
+
+            Assert.Equal(HttpMethod.Put, handler.Method);
+
+            CompareExpectedResult(result.Share);
+        }
+
         private void CompareExpectedResult(ShareModel result)
         {
-            Assert.Equal(result.Properties.ShareName, "smb1");
+            Assert.Equal("||localhost|smb1", result.Properties.ShareName);
 
-            Assert.Equal(result.Properties.UncPath, "\\\\localhost\\smb1");
+            Assert.Equal("\\\\localhost\\smb1", result.Properties.UncPath);
 
-            Assert.Equal(result.Properties.HealthStatus, HealthStatus.Warning);
+            Assert.Equal(HealthStatus.Warning, result.Properties.HealthStatus);
 
-            Assert.Equal(result.Properties.TotalCapacity, (ulong)500);
+            Assert.Equal((ulong)500, result.Properties.TotalCapacity);
 
-            Assert.Equal(result.Properties.UsedCapacity, (ulong)40);
+            Assert.Equal((ulong)40, result.Properties.UsedCapacity);
 
-            Assert.Equal(result.Properties.FreeCapacity, (ulong)460);
+            Assert.Equal((ulong)460, result.Properties.FreeCapacity);
         }
     }
 }

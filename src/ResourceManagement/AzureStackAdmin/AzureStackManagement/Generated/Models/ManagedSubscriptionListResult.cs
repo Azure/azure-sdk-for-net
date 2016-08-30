@@ -29,7 +29,7 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Result of the list operations
     /// </summary>
     public partial class ManagedSubscriptionListResult : AzureOperationResponse
     {
@@ -44,12 +44,12 @@ namespace Microsoft.AzureStack.Management.Models
             set { this._nextLink = value; }
         }
         
-        private IList<SubscriptionDefinition> _subscriptions;
+        private IList<AdminSubscriptionDefinition> _subscriptions;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Admin subscription definition
         /// </summary>
-        public IList<SubscriptionDefinition> Subscriptions
+        public IList<AdminSubscriptionDefinition> Subscriptions
         {
             get { return this._subscriptions; }
             set { this._subscriptions = value; }
@@ -61,7 +61,7 @@ namespace Microsoft.AzureStack.Management.Models
         /// </summary>
         public ManagedSubscriptionListResult()
         {
-            this.Subscriptions = new LazyList<SubscriptionDefinition>();
+            this.Subscriptions = new LazyList<AdminSubscriptionDefinition>();
         }
         
         /// <summary>

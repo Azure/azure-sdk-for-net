@@ -35,6 +35,29 @@ namespace Microsoft.WindowsAzure.Management.Network
     public partial interface INetworkSecurityGroupOperations
     {
         /// <summary>
+        /// Abort resservedIP migration api validates and aborts the given
+        /// network security group for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='networkSecurityGroupName'>
+        /// Name of the network security group to be migrated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<OperationStatusResponse> AbortMigrationAsync(string networkSecurityGroupName, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Adds a Network Security Group to a network interface.
         /// </summary>
         /// <param name='parameters'>
@@ -104,6 +127,22 @@ namespace Microsoft.WindowsAzure.Management.Network
         Task<OperationStatusResponse> AddToSubnetAsync(string virtualNetworkName, string subnetName, NetworkSecurityGroupAddAssociationParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
+        /// Abort resservedIP migration api validates and aborts the given
+        /// network security group for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='networkSecurityGroupName'>
+        /// Name of the network security group to be migrated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> BeginAbortMigrationAsync(string networkSecurityGroupName, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Adds a Network Security Group to a network interface.
         /// </summary>
         /// <param name='parameters'>
@@ -171,6 +210,22 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// information regarding the failure.
         /// </returns>
         Task<OperationStatusResponse> BeginAddingToSubnetAsync(string virtualNetworkName, string subnetName, NetworkSecurityGroupAddAssociationParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Commit resservedIP migration api validates and commits the given
+        /// network security group for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='networkSecurityGroupName'>
+        /// Name of the network security group to be migrated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> BeginCommitMigrationAsync(string networkSecurityGroupName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Creates a new Network Security Group.
@@ -243,6 +298,22 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// information regarding the failure.
         /// </returns>
         Task<OperationStatusResponse> BeginDeletingRuleAsync(string networkSecurityGroupName, string ruleName, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Prepare resservedIP migration api validates and prepares the given
+        /// network security group for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='networkSecurityGroupName'>
+        /// Name of the network security group to be migrated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        Task<AzureOperationResponse> BeginPrepareMigrationAsync(string networkSecurityGroupName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Removes a Network Security Group from a network interface.
@@ -322,6 +393,29 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// information regarding the failure.
         /// </returns>
         Task<OperationStatusResponse> BeginSettingRuleAsync(string networkSecurityGroupName, string ruleName, NetworkSecuritySetRuleParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Commit resservedIP migration api validates and commits the given
+        /// network security group for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='networkSecurityGroupName'>
+        /// Name of the network security group to be migrated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<OperationStatusResponse> CommitMigrationAsync(string networkSecurityGroupName, CancellationToken cancellationToken);
         
         /// <summary>
         /// Creates a new Network Security Group.
@@ -464,6 +558,29 @@ namespace Microsoft.WindowsAzure.Management.Network
         Task<NetworkSecurityGroupListResponse> ListAsync(CancellationToken cancellationToken);
         
         /// <summary>
+        /// Prepare resservedIP migration api validates and prepares the given
+        /// network security group for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='networkSecurityGroupName'>
+        /// Name of the network security group to be migrated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        Task<OperationStatusResponse> PrepareMigrationAsync(string networkSecurityGroupName, CancellationToken cancellationToken);
+        
+        /// <summary>
         /// Removes a Network Security Group from a network interface.
         /// </summary>
         /// <param name='cancellationToken'>
@@ -541,5 +658,20 @@ namespace Microsoft.WindowsAzure.Management.Network
         /// information regarding the failure.
         /// </returns>
         Task<OperationStatusResponse> SetRuleAsync(string networkSecurityGroupName, string ruleName, NetworkSecuritySetRuleParameters parameters, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Validate network security group migration api validates the given
+        /// network security group for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='networkSecurityGroupName'>
+        /// Name of the network security group to be migrated.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The Validate Network Migration operation response.
+        /// </returns>
+        Task<NetworkMigrationValidationResponse> ValidateMigrationAsync(string networkSecurityGroupName, CancellationToken cancellationToken);
     }
 }

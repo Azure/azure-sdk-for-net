@@ -20,7 +20,9 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 using Microsoft.Azure.Management.SiteRecovery.Models;
 
 namespace Microsoft.Azure.Management.SiteRecovery.Models
@@ -30,6 +32,29 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// </summary>
     public partial class HyperVReplicaAzureEnableProtectionInput : EnableProtectionProviderSpecificInput
     {
+        private IList<string> _disksToInclude;
+        
+        /// <summary>
+        /// Optional. List of VHD IDs of disks to be protected.
+        /// </summary>
+        public IList<string> DisksToInclude
+        {
+            get { return this._disksToInclude; }
+            set { this._disksToInclude = value; }
+        }
+        
+        private string _enableRDPOnTargetOption;
+        
+        /// <summary>
+        /// Optional. Gets or sets the option to enable RDP on target vm after
+        /// failover.Value can be Never, OnlyOnTestFailover or Always.
+        /// </summary>
+        public string EnableRDPOnTargetOption
+        {
+            get { return this._enableRDPOnTargetOption; }
+            set { this._enableRDPOnTargetOption = value; }
+        }
+        
         private string _hvHostVmId;
         
         /// <summary>
@@ -50,6 +75,39 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         {
             get { return this._oSType; }
             set { this._oSType = value; }
+        }
+        
+        private string _targetAzureNetworkId;
+        
+        /// <summary>
+        /// Optional. The target Azure network ID.
+        /// </summary>
+        public string TargetAzureNetworkId
+        {
+            get { return this._targetAzureNetworkId; }
+            set { this._targetAzureNetworkId = value; }
+        }
+        
+        private string _targetAzureSubnetId;
+        
+        /// <summary>
+        /// Optional. The target Azure subnet ID.
+        /// </summary>
+        public string TargetAzureSubnetId
+        {
+            get { return this._targetAzureSubnetId; }
+            set { this._targetAzureSubnetId = value; }
+        }
+        
+        private string _targetAzureVmName;
+        
+        /// <summary>
+        /// Optional. The target Azure VM Name.
+        /// </summary>
+        public string TargetAzureVmName
+        {
+            get { return this._targetAzureVmName; }
+            set { this._targetAzureVmName = value; }
         }
         
         private string _targetStorageAccountId;
@@ -91,6 +149,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         /// </summary>
         public HyperVReplicaAzureEnableProtectionInput()
         {
+            this.DisksToInclude = new LazyList<string>();
         }
     }
 }

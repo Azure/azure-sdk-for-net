@@ -28,64 +28,28 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management
 {
     /// <summary>
-    /// Your documentation here.  (see
+    /// Operations on the plan  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
     /// more information)
     /// </summary>
     public partial interface IPlanOperations
     {
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets the plan for a given plan id
         /// </summary>
         /// <param name='planId'>
-        /// Your documentation here.
+        /// Id of the plan
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Resul of the plan get operation
         /// </returns>
         Task<PlanGetResult> GetAsync(string planId, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Get the availability of the plan.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='planName'>
-        /// The plan name.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The plan availability result.
-        /// </returns>
-        Task<PlanGetAvailabilityResult> GetAvailabilityAsync(string planName, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Gets the plan price.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='planName'>
-        /// the plan name
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Plan get price result.
-        /// </returns>
-        Task<PlanGetPriceResult> GetPriceAsync(string planName, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Add on plans available for that subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Add on plans available for that subscription.
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.

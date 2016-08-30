@@ -48,8 +48,8 @@ namespace Microsoft.Azure.Management.StreamAnalytics.Models
         
         /// <summary>
         /// Optional. Gets or sets the maximum number of rows for every Azure
-        /// ML web service execute request. Value between 10 and 1000. Default
-        /// is 10.
+        /// ML web service execute request. Value between 1 and 10000. Default
+        /// is 1000.
         /// </summary>
         public int? BatchSize
         {

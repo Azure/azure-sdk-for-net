@@ -32,22 +32,20 @@ namespace Microsoft.AzureStack.Management
     public static partial class ProviderRegistrationOperationsExtensions
     {
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Registers a resource provider manifest
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IProviderRegistrationOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='parameters'>
-        /// Required. Your documentation here.
+        /// Required. Resource provider manifest definition
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the create or update of resource provider manifest
         /// </returns>
         public static ProviderRegistrationCreateOrUpdateResult CreateOrUpdate(this IProviderRegistrationOperations operations, string resourceGroupName, ProviderRegistrationCreateOrUpdateParameters parameters)
         {
@@ -59,22 +57,20 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Registers a resource provider manifest
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IProviderRegistrationOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='parameters'>
-        /// Required. Your documentation here.
+        /// Required. Resource provider manifest definition
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the create or update of resource provider manifest
         /// </returns>
         public static Task<ProviderRegistrationCreateOrUpdateResult> CreateOrUpdateAsync(this IProviderRegistrationOperations operations, string resourceGroupName, ProviderRegistrationCreateOrUpdateParameters parameters)
         {
@@ -82,19 +78,17 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Deletes the resource provider registration
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IProviderRegistrationOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='providerregistrationId'>
-        /// Required. Your documentation here.
+        /// Required. Resource provider manifest Id
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -110,19 +104,17 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Deletes the resource provider registration
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IProviderRegistrationOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='providerregistrationId'>
-        /// Required. Your documentation here.
+        /// Required. Resource provider manifest Id
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -134,22 +126,21 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets the manifest registration for the specified manifest
+        /// registration id
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IProviderRegistrationOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='providerregistrationId'>
-        /// Required. Your documentation here.
+        /// Required. Resource provider manifest registration Id
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Get result of the resource provider manifest registration
         /// </returns>
         public static ProviderRegistrationGetResult Get(this IProviderRegistrationOperations operations, string resourceGroupName, string providerregistrationId)
         {
@@ -161,22 +152,21 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets the manifest registration for the specified manifest
+        /// registration id
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IProviderRegistrationOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='providerregistrationId'>
-        /// Required. Your documentation here.
+        /// Required. Resource provider manifest registration Id
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Get result of the resource provider manifest registration
         /// </returns>
         public static Task<ProviderRegistrationGetResult> GetAsync(this IProviderRegistrationOperations operations, string resourceGroupName, string providerregistrationId)
         {
@@ -184,19 +174,17 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the registered provider manifest given a resource group
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IProviderRegistrationOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the resource provider manifest list operation
         /// </returns>
         public static ProviderRegistrationListResult List(this IProviderRegistrationOperations operations, string resourceGroupName)
         {
@@ -208,153 +196,21 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the registered provider manifest given a resource group
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IProviderRegistrationOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the resource provider manifest list operation
         /// </returns>
         public static Task<ProviderRegistrationListResult> ListAsync(this IProviderRegistrationOperations operations, string resourceGroupName)
         {
             return operations.ListAsync(resourceGroupName, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.Management.IProviderRegistrationOperations.
-        /// </param>
-        /// <param name='nextLink'>
-        /// Required. Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public static ProviderRegistrationListResult ListNext(this IProviderRegistrationOperations operations, string nextLink)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IProviderRegistrationOperations)s).ListNextAsync(nextLink);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.Management.IProviderRegistrationOperations.
-        /// </param>
-        /// <param name='nextLink'>
-        /// Required. Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public static Task<ProviderRegistrationListResult> ListNextAsync(this IProviderRegistrationOperations operations, string nextLink)
-        {
-            return operations.ListNextAsync(nextLink, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.Management.IProviderRegistrationOperations.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public static ProviderRegistrationListResult ListWithoutResourceGroup(this IProviderRegistrationOperations operations)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IProviderRegistrationOperations)s).ListWithoutResourceGroupAsync();
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.Management.IProviderRegistrationOperations.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public static Task<ProviderRegistrationListResult> ListWithoutResourceGroupAsync(this IProviderRegistrationOperations operations)
-        {
-            return operations.ListWithoutResourceGroupAsync(CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Validate provider registration.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.Management.IProviderRegistrationOperations.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. Provider registration validation parameters.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public static ProviderRegistrationValidateResult Validate(this IProviderRegistrationOperations operations, ProviderRegistrationValidateParameters parameters)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IProviderRegistrationOperations)s).ValidateAsync(parameters);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Validate provider registration.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.Management.IProviderRegistrationOperations.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. Provider registration validation parameters.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public static Task<ProviderRegistrationValidateResult> ValidateAsync(this IProviderRegistrationOperations operations, ProviderRegistrationValidateParameters parameters)
-        {
-            return operations.ValidateAsync(parameters, CancellationToken.None);
         }
     }
 }

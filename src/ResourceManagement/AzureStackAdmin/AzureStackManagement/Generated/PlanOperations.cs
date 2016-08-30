@@ -34,7 +34,7 @@ using Newtonsoft.Json.Linq;
 namespace Microsoft.AzureStack.Management
 {
     /// <summary>
-    /// Your documentation here.  (see
+    /// Operations on the plan  (see
     /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXX.aspx for
     /// more information)
     /// </summary>
@@ -63,18 +63,16 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets the plan for a given plan id
         /// </summary>
         /// <param name='planId'>
-        /// Required. Your documentation here.
+        /// Required. Id of the plan
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Resul of the plan get operation
         /// </returns>
         public async Task<PlanGetResult> GetAsync(string planId, CancellationToken cancellationToken)
         {
@@ -198,56 +196,11 @@ namespace Microsoft.AzureStack.Management
                                 planInstance.Description = descriptionInstance;
                             }
                             
-                            JToken serviceQuotasArray = responseDoc["serviceQuotas"];
-                            if (serviceQuotasArray != null && serviceQuotasArray.Type != JTokenType.Null)
+                            JToken remainingAcquisitionsValue = responseDoc["remainingAcquisitions"];
+                            if (remainingAcquisitionsValue != null && remainingAcquisitionsValue.Type != JTokenType.Null)
                             {
-                                foreach (JToken serviceQuotasValue in ((JArray)serviceQuotasArray))
-                                {
-                                    ServiceQuotaDefinition serviceQuotaDefinitionInstance = new ServiceQuotaDefinition();
-                                    planInstance.ServiceQuotas.Add(serviceQuotaDefinitionInstance);
-                                    
-                                    JToken resourceProviderIdValue = serviceQuotasValue["resourceProviderId"];
-                                    if (resourceProviderIdValue != null && resourceProviderIdValue.Type != JTokenType.Null)
-                                    {
-                                        string resourceProviderIdInstance = ((string)resourceProviderIdValue);
-                                        serviceQuotaDefinitionInstance.ResourceProviderId = resourceProviderIdInstance;
-                                    }
-                                    
-                                    JToken resourceProviderNamespaceValue = serviceQuotasValue["resourceProviderNamespace"];
-                                    if (resourceProviderNamespaceValue != null && resourceProviderNamespaceValue.Type != JTokenType.Null)
-                                    {
-                                        string resourceProviderNamespaceInstance = ((string)resourceProviderNamespaceValue);
-                                        serviceQuotaDefinitionInstance.ResourceProviderNamespace = resourceProviderNamespaceInstance;
-                                    }
-                                    
-                                    JToken resourceProviderDisplayNameValue = serviceQuotasValue["resourceProviderDisplayName"];
-                                    if (resourceProviderDisplayNameValue != null && resourceProviderDisplayNameValue.Type != JTokenType.Null)
-                                    {
-                                        string resourceProviderDisplayNameInstance = ((string)resourceProviderDisplayNameValue);
-                                        serviceQuotaDefinitionInstance.ResourceProviderDisplayName = resourceProviderDisplayNameInstance;
-                                    }
-                                    
-                                    JToken locationValue = serviceQuotasValue["location"];
-                                    if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                    {
-                                        string locationInstance = ((string)locationValue);
-                                        serviceQuotaDefinitionInstance.Location = locationInstance;
-                                    }
-                                    
-                                    JToken quotaSyncStateValue = serviceQuotasValue["quotaSyncState"];
-                                    if (quotaSyncStateValue != null && quotaSyncStateValue.Type != JTokenType.Null)
-                                    {
-                                        QuotaSyncState quotaSyncStateInstance = ((QuotaSyncState)Enum.Parse(typeof(QuotaSyncState), ((string)quotaSyncStateValue), true));
-                                        serviceQuotaDefinitionInstance.QuotaSyncState = quotaSyncStateInstance;
-                                    }
-                                    
-                                    JToken quotaSettingsValue = serviceQuotasValue["quotaSettings"];
-                                    if (quotaSettingsValue != null && quotaSettingsValue.Type != JTokenType.Null)
-                                    {
-                                        string quotaSettingsInstance = quotaSettingsValue.ToString(Newtonsoft.Json.Formatting.Indented);
-                                        serviceQuotaDefinitionInstance.QuotaSettings = quotaSettingsInstance;
-                                    }
-                                }
+                                int remainingAcquisitionsInstance = ((int)remainingAcquisitionsValue);
+                                planInstance.RemainingAcquisitions = remainingAcquisitionsInstance;
                             }
                         }
                         
@@ -278,412 +231,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Get the availability of the plan.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='planName'>
-        /// Required. The plan name.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The plan availability result.
-        /// </returns>
-        public async Task<PlanGetAvailabilityResult> GetAvailabilityAsync(string planName, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (planName == null)
-            {
-                throw new ArgumentNullException("planName");
-            }
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("planName", planName);
-                TracingAdapter.Enter(invocationId, this, "GetAvailabilityAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/plans/";
-            url = url + Uri.EscapeDataString(planName);
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=" + Uri.EscapeDataString(this.Client.ApiVersion));
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Get;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    PlanGetAvailabilityResult result = null;
-                    // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new PlanGetAvailabilityResult();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            PlanAvailabilityDefinition planAvailabilityInstance = new PlanAvailabilityDefinition();
-                            result.PlanAvailability = planAvailabilityInstance;
-                            
-                            JToken planValue = responseDoc["plan"];
-                            if (planValue != null && planValue.Type != JTokenType.Null)
-                            {
-                                PlanDefinition planInstance = new PlanDefinition();
-                                planAvailabilityInstance.Plan = planInstance;
-                                
-                                JToken nameValue = planValue["name"];
-                                if (nameValue != null && nameValue.Type != JTokenType.Null)
-                                {
-                                    string nameInstance = ((string)nameValue);
-                                    planInstance.Name = nameInstance;
-                                }
-                                
-                                JToken displayNameValue = planValue["displayName"];
-                                if (displayNameValue != null && displayNameValue.Type != JTokenType.Null)
-                                {
-                                    string displayNameInstance = ((string)displayNameValue);
-                                    planInstance.DisplayName = displayNameInstance;
-                                }
-                                
-                                JToken descriptionValue = planValue["description"];
-                                if (descriptionValue != null && descriptionValue.Type != JTokenType.Null)
-                                {
-                                    string descriptionInstance = ((string)descriptionValue);
-                                    planInstance.Description = descriptionInstance;
-                                }
-                                
-                                JToken serviceQuotasArray = planValue["serviceQuotas"];
-                                if (serviceQuotasArray != null && serviceQuotasArray.Type != JTokenType.Null)
-                                {
-                                    foreach (JToken serviceQuotasValue in ((JArray)serviceQuotasArray))
-                                    {
-                                        ServiceQuotaDefinition serviceQuotaDefinitionInstance = new ServiceQuotaDefinition();
-                                        planInstance.ServiceQuotas.Add(serviceQuotaDefinitionInstance);
-                                        
-                                        JToken resourceProviderIdValue = serviceQuotasValue["resourceProviderId"];
-                                        if (resourceProviderIdValue != null && resourceProviderIdValue.Type != JTokenType.Null)
-                                        {
-                                            string resourceProviderIdInstance = ((string)resourceProviderIdValue);
-                                            serviceQuotaDefinitionInstance.ResourceProviderId = resourceProviderIdInstance;
-                                        }
-                                        
-                                        JToken resourceProviderNamespaceValue = serviceQuotasValue["resourceProviderNamespace"];
-                                        if (resourceProviderNamespaceValue != null && resourceProviderNamespaceValue.Type != JTokenType.Null)
-                                        {
-                                            string resourceProviderNamespaceInstance = ((string)resourceProviderNamespaceValue);
-                                            serviceQuotaDefinitionInstance.ResourceProviderNamespace = resourceProviderNamespaceInstance;
-                                        }
-                                        
-                                        JToken resourceProviderDisplayNameValue = serviceQuotasValue["resourceProviderDisplayName"];
-                                        if (resourceProviderDisplayNameValue != null && resourceProviderDisplayNameValue.Type != JTokenType.Null)
-                                        {
-                                            string resourceProviderDisplayNameInstance = ((string)resourceProviderDisplayNameValue);
-                                            serviceQuotaDefinitionInstance.ResourceProviderDisplayName = resourceProviderDisplayNameInstance;
-                                        }
-                                        
-                                        JToken locationValue = serviceQuotasValue["location"];
-                                        if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                        {
-                                            string locationInstance = ((string)locationValue);
-                                            serviceQuotaDefinitionInstance.Location = locationInstance;
-                                        }
-                                        
-                                        JToken quotaSyncStateValue = serviceQuotasValue["quotaSyncState"];
-                                        if (quotaSyncStateValue != null && quotaSyncStateValue.Type != JTokenType.Null)
-                                        {
-                                            QuotaSyncState quotaSyncStateInstance = ((QuotaSyncState)Enum.Parse(typeof(QuotaSyncState), ((string)quotaSyncStateValue), true));
-                                            serviceQuotaDefinitionInstance.QuotaSyncState = quotaSyncStateInstance;
-                                        }
-                                        
-                                        JToken quotaSettingsValue = serviceQuotasValue["quotaSettings"];
-                                        if (quotaSettingsValue != null && quotaSettingsValue.Type != JTokenType.Null)
-                                        {
-                                            string quotaSettingsInstance = quotaSettingsValue.ToString(Newtonsoft.Json.Formatting.Indented);
-                                            serviceQuotaDefinitionInstance.QuotaSettings = quotaSettingsInstance;
-                                        }
-                                    }
-                                }
-                            }
-                            
-                            JToken countValue = responseDoc["count"];
-                            if (countValue != null && countValue.Type != JTokenType.Null)
-                            {
-                                int countInstance = ((int)countValue);
-                                planAvailabilityInstance.Count = countInstance;
-                            }
-                        }
-                        
-                    }
-                    result.StatusCode = statusCode;
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Gets the plan price.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='planName'>
-        /// Required. the plan name
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// Plan get price result.
-        /// </returns>
-        public async Task<PlanGetPriceResult> GetPriceAsync(string planName, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (planName == null)
-            {
-                throw new ArgumentNullException("planName");
-            }
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("planName", planName);
-                TracingAdapter.Enter(invocationId, this, "GetPriceAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/plans/";
-            url = url + Uri.EscapeDataString(planName);
-            url = url + "/estimatePrice";
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=" + Uri.EscapeDataString(this.Client.ApiVersion));
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Post;
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.NoContent)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    PlanGetPriceResult result = null;
-                    // Deserialize Response
-                    if (statusCode == HttpStatusCode.OK || statusCode == HttpStatusCode.NoContent)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        result = new PlanGetPriceResult();
-                        JToken responseDoc = null;
-                        if (string.IsNullOrEmpty(responseContent) == false)
-                        {
-                            responseDoc = JToken.Parse(responseContent);
-                        }
-                        
-                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
-                        {
-                            PriceDefinition priceInstance = new PriceDefinition();
-                            result.Price = priceInstance;
-                            
-                            JToken amountValue = responseDoc["amount"];
-                            if (amountValue != null && amountValue.Type != JTokenType.Null)
-                            {
-                                decimal amountInstance = ((decimal)amountValue);
-                                priceInstance.Amount = amountInstance;
-                            }
-                            
-                            JToken currencyCodeValue = responseDoc["currencyCode"];
-                            if (currencyCodeValue != null && currencyCodeValue.Type != JTokenType.Null)
-                            {
-                                string currencyCodeInstance = ((string)currencyCodeValue);
-                                priceInstance.CurrencyCode = currencyCodeInstance;
-                            }
-                            
-                            JToken captionValue = responseDoc["caption"];
-                            if (captionValue != null && captionValue.Type != JTokenType.Null)
-                            {
-                                string captionInstance = ((string)captionValue);
-                                priceInstance.Caption = captionInstance;
-                            }
-                        }
-                        
-                    }
-                    result.StatusCode = statusCode;
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Add on plans available for that subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Add on plans available for that subscription.
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -823,56 +371,11 @@ namespace Microsoft.AzureStack.Management
                                             planInstance.Description = descriptionInstance;
                                         }
                                         
-                                        JToken serviceQuotasArray = planValue["serviceQuotas"];
-                                        if (serviceQuotasArray != null && serviceQuotasArray.Type != JTokenType.Null)
+                                        JToken remainingAcquisitionsValue = planValue["remainingAcquisitions"];
+                                        if (remainingAcquisitionsValue != null && remainingAcquisitionsValue.Type != JTokenType.Null)
                                         {
-                                            foreach (JToken serviceQuotasValue in ((JArray)serviceQuotasArray))
-                                            {
-                                                ServiceQuotaDefinition serviceQuotaDefinitionInstance = new ServiceQuotaDefinition();
-                                                planInstance.ServiceQuotas.Add(serviceQuotaDefinitionInstance);
-                                                
-                                                JToken resourceProviderIdValue = serviceQuotasValue["resourceProviderId"];
-                                                if (resourceProviderIdValue != null && resourceProviderIdValue.Type != JTokenType.Null)
-                                                {
-                                                    string resourceProviderIdInstance = ((string)resourceProviderIdValue);
-                                                    serviceQuotaDefinitionInstance.ResourceProviderId = resourceProviderIdInstance;
-                                                }
-                                                
-                                                JToken resourceProviderNamespaceValue = serviceQuotasValue["resourceProviderNamespace"];
-                                                if (resourceProviderNamespaceValue != null && resourceProviderNamespaceValue.Type != JTokenType.Null)
-                                                {
-                                                    string resourceProviderNamespaceInstance = ((string)resourceProviderNamespaceValue);
-                                                    serviceQuotaDefinitionInstance.ResourceProviderNamespace = resourceProviderNamespaceInstance;
-                                                }
-                                                
-                                                JToken resourceProviderDisplayNameValue = serviceQuotasValue["resourceProviderDisplayName"];
-                                                if (resourceProviderDisplayNameValue != null && resourceProviderDisplayNameValue.Type != JTokenType.Null)
-                                                {
-                                                    string resourceProviderDisplayNameInstance = ((string)resourceProviderDisplayNameValue);
-                                                    serviceQuotaDefinitionInstance.ResourceProviderDisplayName = resourceProviderDisplayNameInstance;
-                                                }
-                                                
-                                                JToken locationValue = serviceQuotasValue["location"];
-                                                if (locationValue != null && locationValue.Type != JTokenType.Null)
-                                                {
-                                                    string locationInstance = ((string)locationValue);
-                                                    serviceQuotaDefinitionInstance.Location = locationInstance;
-                                                }
-                                                
-                                                JToken quotaSyncStateValue = serviceQuotasValue["quotaSyncState"];
-                                                if (quotaSyncStateValue != null && quotaSyncStateValue.Type != JTokenType.Null)
-                                                {
-                                                    QuotaSyncState quotaSyncStateInstance = ((QuotaSyncState)Enum.Parse(typeof(QuotaSyncState), ((string)quotaSyncStateValue), true));
-                                                    serviceQuotaDefinitionInstance.QuotaSyncState = quotaSyncStateInstance;
-                                                }
-                                                
-                                                JToken quotaSettingsValue = serviceQuotasValue["quotaSettings"];
-                                                if (quotaSettingsValue != null && quotaSettingsValue.Type != JTokenType.Null)
-                                                {
-                                                    string quotaSettingsInstance = quotaSettingsValue.ToString(Newtonsoft.Json.Formatting.Indented);
-                                                    serviceQuotaDefinitionInstance.QuotaSettings = quotaSettingsInstance;
-                                                }
-                                            }
+                                            int remainingAcquisitionsInstance = ((int)remainingAcquisitionsValue);
+                                            planInstance.RemainingAcquisitions = remainingAcquisitionsInstance;
                                         }
                                     }
                                     

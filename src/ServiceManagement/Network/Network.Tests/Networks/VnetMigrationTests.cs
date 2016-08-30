@@ -14,9 +14,6 @@
 
 using System.Linq;
 using Microsoft.Azure;
-using Microsoft.Azure.Test;
-using Microsoft.Data.Edm.Csdl;
-using Network.Tests.Networks.TestOperations;
 
 namespace Network.Tests.Networks
 {
@@ -27,6 +24,23 @@ namespace Network.Tests.Networks
 
     public class VnetMigrationTests
     {
+        [Fact]
+        [Trait("Feature", "Networks")]
+        public void ValidateVNetForMigration()
+        {
+            using (NetworkTestClient networkTestClient = new NetworkTestClient())
+            {
+                string virtualNetworkName = "foo";
+                var response = networkTestClient.ValidateVnetMigration(virtualNetworkName);
+                Assert.NotNull(response);
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+                Assert.NotNull(response.ValidationMessages);
+                Assert.Equal(1, response.ValidationMessages.Count);
+                Assert.Equal("The virtual network foo does not exist.", response.ValidationMessages[0].Message);
+            }
+        }
+
         [Fact]
         [Trait("Feature", "Networks")]
         public void MigrateSimpleVNetConfiguration()

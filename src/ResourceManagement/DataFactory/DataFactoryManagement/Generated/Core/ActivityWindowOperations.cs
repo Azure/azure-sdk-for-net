@@ -173,10 +173,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 JObject activityWindowsByDataFactoryListParametersValue = new JObject();
                 requestDoc = activityWindowsByDataFactoryListParametersValue;
                 
-                activityWindowsByDataFactoryListParametersValue["resourceGroupName"] = parameters.ResourceGroupName;
-                
-                activityWindowsByDataFactoryListParametersValue["dataFactoryName"] = parameters.DataFactoryName;
-                
                 if (parameters.Top != null)
                 {
                     activityWindowsByDataFactoryListParametersValue["top"] = parameters.Top.Value;
@@ -576,10 +572,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 JObject activityWindowsByDatasetListParametersValue = new JObject();
                 requestDoc = activityWindowsByDatasetListParametersValue;
                 
-                activityWindowsByDatasetListParametersValue["resourceGroupName"] = parameters.ResourceGroupName;
-                
-                activityWindowsByDatasetListParametersValue["dataFactoryName"] = parameters.DataFactoryName;
-                
                 if (parameters.Top != null)
                 {
                     activityWindowsByDatasetListParametersValue["top"] = parameters.Top.Value;
@@ -978,10 +970,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 
                 JObject activityWindowsByPipelineListParametersValue = new JObject();
                 requestDoc = activityWindowsByPipelineListParametersValue;
-                
-                activityWindowsByPipelineListParametersValue["resourceGroupName"] = parameters.ResourceGroupName;
-                
-                activityWindowsByPipelineListParametersValue["dataFactoryName"] = parameters.DataFactoryName;
                 
                 if (parameters.Top != null)
                 {
@@ -1396,10 +1384,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 JObject activityWindowsByActivityListParametersValue = new JObject();
                 requestDoc = activityWindowsByActivityListParametersValue;
                 
-                activityWindowsByActivityListParametersValue["resourceGroupName"] = parameters.ResourceGroupName;
-                
-                activityWindowsByActivityListParametersValue["dataFactoryName"] = parameters.DataFactoryName;
-                
                 if (parameters.Top != null)
                 {
                     activityWindowsByActivityListParametersValue["top"] = parameters.Top.Value;
@@ -1766,10 +1750,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 
                 JObject activityWindowsByDataFactoryListParametersValue = new JObject();
                 requestDoc = activityWindowsByDataFactoryListParametersValue;
-                
-                activityWindowsByDataFactoryListParametersValue["resourceGroupName"] = parameters.ResourceGroupName;
-                
-                activityWindowsByDataFactoryListParametersValue["dataFactoryName"] = parameters.DataFactoryName;
                 
                 if (parameters.Top != null)
                 {
@@ -2150,10 +2130,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 JObject activityWindowsByDatasetListParametersValue = new JObject();
                 requestDoc = activityWindowsByDatasetListParametersValue;
                 
-                activityWindowsByDatasetListParametersValue["resourceGroupName"] = parameters.ResourceGroupName;
-                
-                activityWindowsByDatasetListParametersValue["dataFactoryName"] = parameters.DataFactoryName;
-                
                 if (parameters.Top != null)
                 {
                     activityWindowsByDatasetListParametersValue["top"] = parameters.Top.Value;
@@ -2532,10 +2508,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 
                 JObject activityWindowsByPipelineListParametersValue = new JObject();
                 requestDoc = activityWindowsByPipelineListParametersValue;
-                
-                activityWindowsByPipelineListParametersValue["resourceGroupName"] = parameters.ResourceGroupName;
-                
-                activityWindowsByPipelineListParametersValue["dataFactoryName"] = parameters.DataFactoryName;
                 
                 if (parameters.Top != null)
                 {
@@ -2927,10 +2899,6 @@ namespace Microsoft.Azure.Management.DataFactories.Core
                 
                 JObject activityWindowsByActivityListParametersValue = new JObject();
                 requestDoc = activityWindowsByActivityListParametersValue;
-                
-                activityWindowsByActivityListParametersValue["resourceGroupName"] = parameters.ResourceGroupName;
-                
-                activityWindowsByActivityListParametersValue["dataFactoryName"] = parameters.DataFactoryName;
                 
                 if (parameters.Top != null)
                 {

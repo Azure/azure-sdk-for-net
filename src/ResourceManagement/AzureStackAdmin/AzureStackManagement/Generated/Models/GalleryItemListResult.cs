@@ -29,14 +29,14 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Gallery item List operation result.
     /// </summary>
     public partial class GalleryItemListResult : AzureOperationResponse
     {
         private IList<GalleryItemModel> _galleryItems;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. List of gallery items.
         /// </summary>
         public IList<GalleryItemModel> GalleryItems
         {

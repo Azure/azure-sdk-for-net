@@ -162,6 +162,30 @@ namespace Microsoft.Azure.Management.DataFactories
         /// <returns>
         /// The List activity windows operation response.
         /// </returns>
+        public static ActivityWindowListResponse List(this IActivityWindowOperations operations, ActivityWindowsByActivityListParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) =>
+            {
+                return ((IActivityWindowOperations)s).ListAsync(parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Use List(ActivityWindowsByActivityListParameters parameters) instead. This will be deprecated soon.
+        /// Gets the first page of activity window instances for a pipeline
+        /// activity with the link to the next page.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.Azure.Management.DataFactories.Core.IActivityWindowOperations.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Activity windows list by pipeline activity parameters.
+        /// </param>
+        /// <returns>
+        /// The List activity windows operation response.
+        /// </returns>
         public static ActivityWindowListResponse ListByPipelineActivity(this IActivityWindowOperations operations, ActivityWindowsByActivityListParameters parameters)
         {
             return Task.Factory.StartNew((object s) =>
