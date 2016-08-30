@@ -30,9 +30,13 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// <summary>
         /// Initializes a new instance of the RedisResource class.
         /// </summary>
-        public RedisResource(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string redisVersion = default(string), IDictionary<string, string> redisConfiguration = default(IDictionary<string, string>), bool? enableNonSslPort = default(bool?), IDictionary<string, string> tenantSettings = default(IDictionary<string, string>), int? shardCount = default(int?), string subnetId = default(string), string staticIP = default(string), string provisioningState = default(string), string hostName = default(string), int? port = default(int?), int? sslPort = default(int?))
+        public RedisResource(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), string hostName = default(string), int? port = default(int?), int? sslPort = default(int?), string redisVersion = default(string), IDictionary<string, string> redisConfiguration = default(IDictionary<string, string>), bool? enableNonSslPort = default(bool?), IDictionary<string, string> tenantSettings = default(IDictionary<string, string>), int? shardCount = default(int?), string subnetId = default(string), string staticIP = default(string))
             : base(location, id, name, type, tags)
         {
+            ProvisioningState = provisioningState;
+            HostName = hostName;
+            Port = port;
+            SslPort = sslPort;
             RedisVersion = redisVersion;
             Sku = sku;
             RedisConfiguration = redisConfiguration;
@@ -41,11 +45,31 @@ namespace Microsoft.Azure.Management.Redis.Models
             ShardCount = shardCount;
             SubnetId = subnetId;
             StaticIP = staticIP;
-            ProvisioningState = provisioningState;
-            HostName = hostName;
-            Port = port;
-            SslPort = sslPort;
         }
+
+        /// <summary>
+        /// Gets or sets redis instance provisioning status
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.provisioningState")]
+        public string ProvisioningState { get; set; }
+
+        /// <summary>
+        /// Gets or sets redis host name
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.hostName")]
+        public string HostName { get; set; }
+
+        /// <summary>
+        /// Gets or sets redis non-ssl port
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.port")]
+        public int? Port { get; set; }
+
+        /// <summary>
+        /// Gets or sets redis ssl port
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.sslPort")]
+        public int? SslPort { get; set; }
 
         /// <summary>
         /// Gets or sets redisVersion parameter has been deprecated. As such,
@@ -105,30 +129,6 @@ namespace Microsoft.Azure.Management.Redis.Models
         public string StaticIP { get; set; }
 
         /// <summary>
-        /// Gets or sets redis instance provisioning status
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
-
-        /// <summary>
-        /// Gets or sets redis host name
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.hostName")]
-        public string HostName { get; set; }
-
-        /// <summary>
-        /// Gets or sets redis non-ssl port
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.port")]
-        public int? Port { get; set; }
-
-        /// <summary>
-        /// Gets or sets redis ssl port
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.sslPort")]
-        public int? SslPort { get; set; }
-
-        /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.
         /// </summary>
         public override void Validate()
@@ -141,6 +141,20 @@ namespace Microsoft.Azure.Management.Redis.Models
             if (this.Sku != null)
             {
                 this.Sku.Validate();
+            }
+            if (this.SubnetId != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(this.SubnetId, "^/subscriptions/[^/]*/resourceGroups/[^/]*/providers/Microsoft.(ClassicNetwork|Network)/virtualNetworks/[^/]*/subnets/[^/]*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "SubnetId", "^/subscriptions/[^/]*/resourceGroups/[^/]*/providers/Microsoft.(ClassicNetwork|Network)/virtualNetworks/[^/]*/subnets/[^/]*$");
+                }
+            }
+            if (this.StaticIP != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(this.StaticIP, "^\\d+\\.\\d+\\.\\d+\\.\\d+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "StaticIP", "^\\d+\\.\\d+\\.\\d+\\.\\d+$");
+                }
             }
         }
     }

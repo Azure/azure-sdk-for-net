@@ -116,6 +116,20 @@ namespace Microsoft.Azure.Management.Redis.Models
             {
                 this.Sku.Validate();
             }
+            if (this.SubnetId != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(this.SubnetId, "^/subscriptions/[^/]*/resourceGroups/[^/]*/providers/Microsoft.(ClassicNetwork|Network)/virtualNetworks/[^/]*/subnets/[^/]*$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "SubnetId", "^/subscriptions/[^/]*/resourceGroups/[^/]*/providers/Microsoft.(ClassicNetwork|Network)/virtualNetworks/[^/]*/subnets/[^/]*$");
+                }
+            }
+            if (this.StaticIP != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(this.StaticIP, "^\\d+\\.\\d+\\.\\d+\\.\\d+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "StaticIP", "^\\d+\\.\\d+\\.\\d+\\.\\d+$");
+                }
+            }
         }
     }
 }
