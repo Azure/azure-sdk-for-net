@@ -38,11 +38,11 @@ namespace ServiceBus.Tests.ScenarioTests
 
                 var location = ServiceBusManagementHelper.DefaultLocation;
 
-                var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
+                var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(ServiceBusManagementHelper.DefaultResourceGroupLocation);
                 if (string.IsNullOrWhiteSpace(resourceGroup))
                 {
                     resourceGroup = TestUtilities.GenerateName(ServiceBusManagementHelper.ResourceGroupPrefix);
-                    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
+                    this.ResourceManagementClient.TryRegisterResourceGroup(ServiceBusManagementHelper.DefaultResourceGroupLocation, resourceGroup);
                 }
 
                 // Create a namespace

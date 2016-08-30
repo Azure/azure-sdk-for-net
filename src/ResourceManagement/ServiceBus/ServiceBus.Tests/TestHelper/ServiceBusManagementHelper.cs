@@ -30,14 +30,15 @@ namespace ServiceBus.Tests.TestHelper
 
     public static class ServiceBusManagementHelper
     {
-        internal const string DefaultLocation = "South Central US";
-        internal const string ResourceGroupPrefix = "Default-ServiceBus";
-        internal const string NamespacePrefix = "sdk-Namespace";
-        internal const string AuthorizationRulesPrefix = "sdk-Authrules";
+        internal const string DefaultLocation = "West US";
+        internal const string DefaultResourceGroupLocation = "WestUS";
+        internal const string ResourceGroupPrefix = "Default-ServiceBu-";
+        internal const string NamespacePrefix = "sdk-Namespace-";
+        internal const string AuthorizationRulesPrefix = "sdk-Authrules-";
         internal const string DefaultNamespaceAuthorizationRule = "RootManageSharedAccessKey";
-        internal const string QueuesPrefix = "sdk-Queues";
-        internal const string TopicPrefix = "sdk-Topics";
-        internal const string SubscritpitonPrefix = "sdk-Subscriptions";
+        internal const string QueuesPrefix = "sdk-Queues-";
+        internal const string TopicPrefix = "sdk-Topics-";
+        internal const string SubscritpitonPrefix = "sdk-Subscriptions-";
 
         public static ServiceBusManagementClient GetServiceBusManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
