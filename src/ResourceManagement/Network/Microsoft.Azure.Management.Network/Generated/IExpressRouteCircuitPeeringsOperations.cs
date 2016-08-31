@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<ExpressRouteCircuitPeering>> GetWithHttpMessagesAsync(string resourceGroupName, string circuitName, string peeringName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The Put Pering operation creates/updates an peering in the
+        /// The Put Peering operation creates/updates an peering in the
         /// specified ExpressRouteCircuits
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<ExpressRouteCircuitPeering>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string circuitName, string peeringName, ExpressRouteCircuitPeering peeringParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The Put Pering operation creates/updates an peering in the
+        /// The Put Peering operation creates/updates an peering in the
         /// specified ExpressRouteCircuits
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the resource group.
         /// </param>
         /// <param name='circuitName'>
-        /// The name of the curcuit.
+        /// The name of the circuit.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

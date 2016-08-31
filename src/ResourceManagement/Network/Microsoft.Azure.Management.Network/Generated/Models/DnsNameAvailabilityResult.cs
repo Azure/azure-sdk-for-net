@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Response for CheckDnsNameAvailability Api servive call
+    /// Response for CheckDnsNameAvailability Api service call
     /// </summary>
     public partial class DnsNameAvailabilityResult
     {

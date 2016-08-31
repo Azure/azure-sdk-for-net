@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Network
     public static partial class NetworkSecurityGroupsOperationsExtensions
     {
             /// <summary>
-            /// The Delete NetworkSecurityGroup operation deletes the specifed network
+            /// The Delete NetworkSecurityGroup operation deletes the specified network
             /// security group
             /// </summary>
             /// <param name='operations'>
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Delete NetworkSecurityGroup operation deletes the specifed network
+            /// The Delete NetworkSecurityGroup operation deletes the specified network
             /// security group
             /// </summary>
             /// <param name='operations'>
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Delete NetworkSecurityGroup operation deletes the specifed network
+            /// The Delete NetworkSecurityGroup operation deletes the specified network
             /// security group
             /// </summary>
             /// <param name='operations'>
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Delete NetworkSecurityGroup operation deletes the specifed network
+            /// The Delete NetworkSecurityGroup operation deletes the specified network
             /// security group
             /// </summary>
             /// <param name='operations'>
@@ -150,7 +150,7 @@ namespace Microsoft.Azure.Management.Network
 
             /// <summary>
             /// The Put NetworkSecurityGroup operation creates/updates a network security
-            /// groupin the specified resource group.
+            /// group in the specified resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -171,7 +171,7 @@ namespace Microsoft.Azure.Management.Network
 
             /// <summary>
             /// The Put NetworkSecurityGroup operation creates/updates a network security
-            /// groupin the specified resource group.
+            /// group in the specified resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -198,7 +198,7 @@ namespace Microsoft.Azure.Management.Network
 
             /// <summary>
             /// The Put NetworkSecurityGroup operation creates/updates a network security
-            /// groupin the specified resource group.
+            /// group in the specified resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -219,7 +219,7 @@ namespace Microsoft.Azure.Management.Network
 
             /// <summary>
             /// The Put NetworkSecurityGroup operation creates/updates a network security
-            /// groupin the specified resource group.
+            /// group in the specified resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

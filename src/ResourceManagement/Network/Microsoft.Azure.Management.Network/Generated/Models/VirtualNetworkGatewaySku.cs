@@ -37,15 +37,17 @@ namespace Microsoft.Azure.Management.Network.Models
         }
 
         /// <summary>
-        /// Gateway sku name -Basic/HighPerformance/Standard. Possible values
-        /// include: 'Basic', 'HighPerformance', 'Standard'
+        /// Gateway sku name -Basic/HighPerformance/Standard/UltraPerformance.
+        /// Possible values include: 'Basic', 'HighPerformance', 'Standard',
+        /// 'UltraPerformance'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gateway sku tier -Basic/HighPerformance/Standard. Possible values
-        /// include: 'Basic', 'HighPerformance', 'Standard'
+        /// Gateway sku tier -Basic/HighPerformance/Standard/UltraPerformance.
+        /// Possible values include: 'Basic', 'HighPerformance', 'Standard',
+        /// 'UltraPerformance'
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
         public string Tier { get; set; }

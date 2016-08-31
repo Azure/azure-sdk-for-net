@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Network.Models
         }
 
         /// <summary>
-        /// Reference of the subnet resource. A subnet from where appliation
+        /// Reference of the subnet resource. A subnet from where application
         /// gateway gets its private address
         /// </summary>
         [JsonProperty(PropertyName = "properties.subnet")]

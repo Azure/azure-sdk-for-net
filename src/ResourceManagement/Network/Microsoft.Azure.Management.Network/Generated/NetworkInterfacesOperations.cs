@@ -224,7 +224,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The Get ntework interface operation retreives information about the
+        /// The Get network interface operation retrieves information about the
         /// specified network interface.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -1032,7 +1032,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The Get ntework interface operation retreives information about the
+        /// The Get network interface operation retrieves information about the
         /// specified network interface in a virtual machine scale set.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -1241,8 +1241,8 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The List networkInterfaces opertion retrieves all the networkInterfaces in
-        /// a subscription.
+        /// The List networkInterfaces operation retrieves all the networkInterfaces
+        /// in a subscription.
         /// </summary>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1406,8 +1406,8 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The List networkInterfaces opertion retrieves all the networkInterfaces in
-        /// a resource group.
+        /// The List networkInterfaces operation retrieves all the networkInterfaces
+        /// in a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -2314,8 +2314,8 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The List networkInterfaces opertion retrieves all the networkInterfaces in
-        /// a subscription.
+        /// The List networkInterfaces operation retrieves all the networkInterfaces
+        /// in a subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -2474,8 +2474,8 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The List networkInterfaces opertion retrieves all the networkInterfaces in
-        /// a resource group.
+        /// The List networkInterfaces operation retrieves all the networkInterfaces
+        /// in a resource group.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

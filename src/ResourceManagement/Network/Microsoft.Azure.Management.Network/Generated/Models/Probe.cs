@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets the protocol of the end point. Possible values are
-        /// http pr Tcp. If Tcp is specified, a received ACK is required for
+        /// http or Tcp. If Tcp is specified, a received ACK is required for
         /// the probe to be successful. If http is specified,a 200 OK
         /// response from the specifies URI is required for the probe to be
         /// successful. Possible values include: 'Http', 'Tcp'
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets the number of probes where if no response, will
         /// result in stopping further traffic from being delivered to the
-        /// endpoint. This values allows endponints to be taken out of
+        /// endpoint. This values allows endpoints to be taken out of
         /// rotation faster or slower than the typical times used in Azure.
         /// </summary>
         [JsonProperty(PropertyName = "properties.numberOfProbes")]
