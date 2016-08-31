@@ -90,8 +90,6 @@ namespace Microsoft.Azure.Management.ResourceManager
 
         public virtual IDeploymentOperationsOperations DeploymentOperations { get; private set; }
 
-        public virtual IResourceProviderOperationDetailsOperations ResourceProviderOperationDetails { get; private set; }
-
         /// <summary>
         /// Initializes a new instance of the ResourceManagementClient class.
         /// </summary>
@@ -277,9 +275,8 @@ namespace Microsoft.Azure.Management.ResourceManager
             this.Resources = new ResourcesOperations(this);
             this.Tags = new TagsOperations(this);
             this.DeploymentOperations = new DeploymentOperationsOperations(this);
-            this.ResourceProviderOperationDetails = new ResourceProviderOperationDetailsOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
-            this.ApiVersion = "2016-02-01";
+            this.ApiVersion = "2016-07-01";
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;
             this.GenerateClientRequestId = true;

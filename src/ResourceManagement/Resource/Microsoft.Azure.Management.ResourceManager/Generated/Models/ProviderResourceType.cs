@@ -29,35 +29,49 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the ProviderResourceType class.
         /// </summary>
-        public ProviderResourceType(string resourceType = default(string), IList<string> locations = default(IList<string>), IList<string> apiVersions = default(IList<string>), IDictionary<string, string> properties = default(IDictionary<string, string>))
+        public ProviderResourceType(string resourceType = default(string), IList<string> locations = default(IList<string>), IList<AliasType> aliases = default(IList<AliasType>), IList<string> apiVersions = default(IList<string>), IList<ZoneMappingType> zoneMappings = default(IList<ZoneMappingType>), IDictionary<string, string> properties = default(IDictionary<string, string>))
         {
             ResourceType = resourceType;
             Locations = locations;
+            Aliases = aliases;
             ApiVersions = apiVersions;
+            ZoneMappings = zoneMappings;
             Properties = properties;
         }
 
         /// <summary>
-        /// Gets or sets the resource type.
+        /// The resource type.
         /// </summary>
         [JsonProperty(PropertyName = "resourceType")]
         public string ResourceType { get; set; }
 
         /// <summary>
-        /// Gets or sets the collection of locations where this resource type
-        /// can be created in.
+        /// The collection of locations where this resource type can be
+        /// created in.
         /// </summary>
         [JsonProperty(PropertyName = "locations")]
         public IList<string> Locations { get; set; }
 
         /// <summary>
-        /// Gets or sets the api version.
+        /// The aliases that are supported by this resource type.
+        /// </summary>
+        [JsonProperty(PropertyName = "aliases")]
+        public IList<AliasType> Aliases { get; set; }
+
+        /// <summary>
+        /// The api version.
         /// </summary>
         [JsonProperty(PropertyName = "apiVersions")]
         public IList<string> ApiVersions { get; set; }
 
         /// <summary>
-        /// Gets or sets the properties.
+        /// The zone mappings supported by this resource type.
+        /// </summary>
+        [JsonProperty(PropertyName = "zoneMappings")]
+        public IList<ZoneMappingType> ZoneMappings { get; set; }
+
+        /// <summary>
+        /// The properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public IDictionary<string, string> Properties { get; set; }

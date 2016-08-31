@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the DeploymentProperties class.
         /// </summary>
-        public DeploymentProperties(object template = default(object), TemplateLink templateLink = default(TemplateLink), object parameters = default(object), ParametersLink parametersLink = default(ParametersLink), DeploymentMode? mode = default(DeploymentMode?), DebugSetting debugSetting = default(DebugSetting))
+        public DeploymentProperties(DeploymentMode? mode, object template = default(object), TemplateLink templateLink = default(TemplateLink), object parameters = default(object), ParametersLink parametersLink = default(ParametersLink), DebugSetting debugSetting = default(DebugSetting))
         {
             Template = template;
             TemplateLink = templateLink;
@@ -40,42 +40,40 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets the template content. Use only one of Template or
-        /// TemplateLink.
+        /// The template content. It can be a JObject or a well formed JSON
+        /// string. Use only one of Template or TemplateLink.
         /// </summary>
         [JsonProperty(PropertyName = "template")]
         public object Template { get; set; }
 
         /// <summary>
-        /// Gets or sets the URI referencing the template. Use only one of
-        /// Template or TemplateLink.
+        /// The template URI. Use only one of Template or TemplateLink.
         /// </summary>
         [JsonProperty(PropertyName = "templateLink")]
         public TemplateLink TemplateLink { get; set; }
 
         /// <summary>
-        /// Deployment parameters. Use only one of Parameters or
-        /// ParametersLink.
+        /// Deployment parameters. It can be a JObject or a well formed JSON
+        /// string. Use only one of Parameters or ParametersLink.
         /// </summary>
         [JsonProperty(PropertyName = "parameters")]
         public object Parameters { get; set; }
 
         /// <summary>
-        /// Gets or sets the URI referencing the parameters. Use only one of
-        /// Parameters or ParametersLink.
+        /// The parameters URI. Use only one of Parameters or ParametersLink.
         /// </summary>
         [JsonProperty(PropertyName = "parametersLink")]
         public ParametersLink ParametersLink { get; set; }
 
         /// <summary>
-        /// Gets or sets the deployment mode. Possible values for this
-        /// property include: 'Incremental', 'Complete'.
+        /// The deployment mode. Possible values for this property include:
+        /// 'Incremental', 'Complete'.
         /// </summary>
         [JsonProperty(PropertyName = "mode")]
         public DeploymentMode? Mode { get; set; }
 
         /// <summary>
-        /// Gets or sets the debug setting of the deployment.
+        /// The debug setting of the deployment.
         /// </summary>
         [JsonProperty(PropertyName = "debugSetting")]
         public DebugSetting DebugSetting { get; set; }
@@ -85,6 +83,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// </summary>
         public virtual void Validate()
         {
+            if (Mode == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Mode");
+            }
             if (this.TemplateLink != null)
             {
                 this.TemplateLink.Validate();

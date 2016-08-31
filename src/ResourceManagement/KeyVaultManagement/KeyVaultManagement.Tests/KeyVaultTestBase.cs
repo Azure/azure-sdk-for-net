@@ -1,10 +1,15 @@
-﻿using System;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
+// 
+
+using System;
 using System.Linq;
 using Microsoft.Azure.Graph.RBAC;
 using Microsoft.Azure.Management.KeyVault;
-using Microsoft.Azure.Management.Resources;
-using Microsoft.Azure.Test;
+using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 
 namespace KeyVault.Management.Tests
 {
@@ -24,20 +29,22 @@ namespace KeyVault.Management.Tests
 
         public KeyVaultManagementClient client { get; set; }
         public ResourceManagementClient resourcesClient { get; set; }
-        public KeyVaultTestBase()
+        public KeyVaultTestBase(MockContext context)
         {
-            var testFactory = new CSMTestEnvironmentFactory();
-            var testEnv = testFactory.GetTestEnvironment();
-            this.client = GetServiceClient<KeyVaultManagementClient>(testFactory);
-            this.resourcesClient = GetServiceClient<ResourceManagementClient>(testFactory);
-            
+            var testEnv = TestEnvironmentFactory.GetTestEnvironment();
+
+            this.client = context.GetServiceClient<KeyVaultManagementClient>();
+            this.resourcesClient = context.GetServiceClient<ResourceManagementClient>();
+
             if (HttpMockServer.Mode == HttpRecorderMode.Record)
             {
-                this.tenantId = testEnv.AuthorizationContext.TenantId;
+                this.tenantId = testEnv.Tenant;
                 this.subscriptionId = testEnv.SubscriptionId;
-                var graphClient = GetGraphServiceClient<GraphRbacManagementClient>(testFactory, tenantId);
-                this.objectId = graphClient.User.Get(testEnv.AuthorizationContext.UserId).User.ObjectId;
-                this.applicationId = Guid.NewGuid().ToString();                
+                var graphClient = context.GetServiceClient<GraphRbacManagementClient>();
+                graphClient.TenantID = this.tenantId;
+                graphClient.BaseUri = new Uri("https://graph.windows.net");
+                this.objectId = graphClient.User.Get(testEnv.UserName).ObjectId;
+                this.applicationId = Guid.NewGuid().ToString();
                 HttpMockServer.Variables[TenantIdKey] = tenantId;
                 HttpMockServer.Variables[ObjectIdKey] = objectId;
                 HttpMockServer.Variables[SubIdKey] = subscriptionId;
@@ -51,11 +58,11 @@ namespace KeyVault.Management.Tests
                 applicationId = HttpMockServer.Variables[ApplicationIdKey];
             }
 
-            var providers = resourcesClient.Providers.Get("Microsoft.KeyVault");
-            this.location = providers.Provider.ResourceTypes.Where(
+            var provider = resourcesClient.Providers.Get("Microsoft.KeyVault");
+            this.location = provider.ResourceTypes.Where(
                 (resType) =>
                 {
-                    if (resType.Name == "vaults")
+                    if (resType.ResourceType == "vaults")
                         return true;
                     else
                         return false;

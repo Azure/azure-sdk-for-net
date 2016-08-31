@@ -4,6 +4,7 @@
 using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Client;
 using System;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -40,11 +41,17 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication
             Environment.SetEnvironmentVariable("TEST_CONNECTION_STRING", "");
             Environment.SetEnvironmentVariable("AZURE_TEST_MODE", mode);
             Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", envString);
+            HttpMockServer.RecordsDirectory = "SessionRecords";
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
-                var client = context.GetServiceClient<SimpleClient>(TestEnvironmentFactory.GetTestEnvironment());
+                var testEnv = TestEnvironmentFactory.GetTestEnvironment();
+                var client = context.GetServiceClient<SimpleClient>(testEnv);
+                var graphClient = context.GetGraphServiceClient<SimpleClient>(testEnv);
                 var response = client.CsmGetLocation();
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+                Assert.Equal(testEnv.Endpoints.ResourceManagementUri, client.BaseUri);
+                Assert.Equal(testEnv.Endpoints.GraphUri, graphClient.BaseUri);
             }
         }
 
@@ -107,7 +114,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication
             Environment.SetEnvironmentVariable("TEST_ORGID_AUTHENTICATION", "");
             Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "Environment=Next;SubscriptionId=ee39cb6d-d45b-4694-825a-f4d6f87ed72a;RawToken=abc");
             HttpMockServer.Initialize("Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication.Subscription", "CsmTests.json");
-            var client = MockContext.Start((this.GetType().FullName)).GetServiceClient<SimpleClient>();
+            var client = MockContext.Start((this.GetType().FullName), "CsmTests.json").GetServiceClient<SimpleClient>();
             Assert.Equal(4, client.HttpMessageHandlers.Count());
             Assert.True(client.HttpMessageHandlers.First() is HttpMockServer);
         }
@@ -119,8 +126,9 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication
             Environment.SetEnvironmentVariable("TEST_CONNECTION_STRING", "");
             Environment.SetEnvironmentVariable("TEST_ORGID_AUTHENTICATION", "");
             Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "Environment=Next;SubscriptionId=ee39cb6d-d45b-4694-825a-f4d6f87ed72a;RawToken=abc");
+            HttpMockServer.RecordsDirectory = "SessionRecords";
             HttpMockServer.Initialize("Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication.Subscription", "CsmTests.json");
-            var client = MockContext.Start((this.GetType().FullName)).GetServiceClient<SimpleClient>(handlers: new MockHandler());
+            var client = MockContext.Start((this.GetType().FullName), "CsmTests.json").GetServiceClient<SimpleClient>(handlers: new MockHandler());
             Assert.Equal(5, client.HttpMessageHandlers.Count());
             Assert.True(client.HttpMessageHandlers.First() is MockHandler);
         }
@@ -133,7 +141,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication
             Environment.SetEnvironmentVariable("TEST_ORGID_AUTHENTICATION", "");
             Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "Environment=Next;SubscriptionId=None;RawToken=abc");
             HttpMockServer.Initialize("Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication.Subscription", "CsmClientSubscriptionNone.json");
-            var client = MockContext.Start((this.GetType().FullName)).GetServiceClient<SimpleClient>(handlers: new MockHandler());
+            var client = MockContext.Start((this.GetType().FullName), "CsmClientSubscriptionNone").GetServiceClient<SimpleClient>(handlers: new MockHandler());
             Assert.Equal(5, client.HttpMessageHandlers.Count());
             Assert.True(client.HttpMessageHandlers.First() is MockHandler);
         }
@@ -145,11 +153,12 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication
             Environment.SetEnvironmentVariable("TEST_CONNECTION_STRING", "");
             Environment.SetEnvironmentVariable("TEST_ORGID_AUTHENTICATION", "");
             Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "Environment=Next;SubscriptionId=ee39cb6d-d45b-4694-825a-f4d6f87ed72a;RawToken=abc");
+            HttpMockServer.RecordsDirectory = "SessionRecords";
             HttpMockServer.Initialize("Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication.Subscription", "CsmTests.json");
             var handler = new MockHandler();
-            var client1 = MockContext.Start(this.GetType().FullName).GetServiceClient<SimpleClient>(handlers: handler);
+            var client1 = MockContext.Start(this.GetType().FullName, "CsmTests.json").GetServiceClient<SimpleClient>(handlers: handler);
             Assert.Equal(1, CountMockServers(handler));
-            var client2 = MockContext.Start(this.GetType().FullName).GetServiceClient<SimpleClient>(handlers: handler);
+            var client2 = MockContext.Start(this.GetType().FullName, "CsmTests.json").GetServiceClient<SimpleClient>(handlers: handler);
             Assert.Equal(1, CountMockServers(handler));
         }
 

@@ -82,6 +82,24 @@ namespace Microsoft.Azure.Search.Tests
         }
 
         [Fact]
+        public void CanSearchWithRegex()
+        {
+            Run(TestCanSearchWithRegex);
+        }
+
+        [Fact]
+        public void CanSearchWithSpecialCharsInRegex()
+        {
+            Run(TestCanSearchWithEscapedSpecialCharsInRegex);
+        }
+
+        [Fact]
+        public void SearchThrowsWhenSpecialCharInRegexIsUnescaped()
+        {
+            Run(TestSearchThrowsWhenSpecialCharInRegexIsUnescaped);
+        }
+
+        [Fact]
         public void CanUseTopAndSkipForClientSidePaging()
         {
             Run(TestCanUseTopAndSkipForClientSidePaging);

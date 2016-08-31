@@ -134,8 +134,11 @@
         <!-- <string>\\Test[s]?\\</string> -->
         <string>\\OneBox\\</string>
         <string>ART\\TSATest</string>
-	<string>KeyVault\\KeyVault.Tests\\Resources\\localhost.pfx</string>
+        <string>ART\\TSATest</string>
+        <string>KeyVault\\Microsoft.Azure.KeyVault.Tests\\SessionRecords</string>
 	<string>ApiManagement\\ApiManagement.Tests\\Resources\\testcertificate.pfx</string>
+	<string>ResourceManagement\\Network\\Network.Tests\\SessionRecords\\Networks.Tests.ApplicationGatewayTests\\ApplicationGatewayApiTest.json</string>
+	<string>ResourceManagement\\Network\\Network.Tests\\Tests\\Data\\ApplicationGatewayAuthCert.cer</string>
 	<string>Authentication\\Common.Authentication.Tests\\Resources\\InvalidProfile.PublishSettings</string>
 	<string>Authentication\\Common.Authentication.Tests\\Resources\\ValidProfile.PublishSettings</string>
 	<string>Authentication\\Common.Authentication.Tests\\Resources\\Azure.PublishSettings</string>
@@ -143,6 +146,10 @@
 	<string>Authentication\\Common.Authentication.Tests\\Resources\\ValidProfileChinaOld.PublishSettings</string>
 	<string>Authentication\\Common.Authentication.Tests\\Resources\\ValidProfile3.PublishSettings</string>
 	<string>Authentication\\Common.Authentication.Tests\\Resources\\ValidProfile2.PublishSettings</string>
+	<string>ResourceManagement\\Graph.RBAC\\Graph.RBAC.Tests\\SessionRecords\\Microsoft.Azure.Graph.RBAC.Tests.ApplicationAndServicePrincipalTests\\CreateDeleteAppCredentialTest.json</string>
+	<string>ResourceManagement\\Graph.RBAC\\Graph.RBAC.Tests\\SessionRecords\\Microsoft.Azure.Graph.RBAC.Tests.ApplicationAndServicePrincipalTests\\CreateDeleteSpCredentialTest.json</string>
+	<string>ResourceManagement\\Graph.RBAC\\Graph.RBAC.Tests\\SessionRecords\\Microsoft.Azure.Graph.RBAC.Tests.ApplicationAndServicePrincipalTests\\CRUDApplicationTest.json</string>
+	<string>ResourceManagement\\Graph.RBAC\\Graph.RBAC.Tests\\SessionRecords\\Microsoft.Azure.Graph.RBAC.Tests.ApplicationAndServicePrincipalTests\\NegativeCredentialTest.json</string>
       </Filters>
     </ResourceFilter>
   </ResourceSearchFilters>

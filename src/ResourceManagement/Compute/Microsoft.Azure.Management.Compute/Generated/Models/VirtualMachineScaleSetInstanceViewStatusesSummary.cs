@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets the extensions information.
+        /// the extensions information.
         /// </summary>
         [JsonProperty(PropertyName = "statusesSummary")]
         public IList<VirtualMachineStatusCodeCount> StatusesSummary { get; private set; }

@@ -55,15 +55,21 @@ namespace DataLakeAnalytics.Tests
                         // TODO: figure out why this is no longer showing up as a property
                         // Type = JobType.USql, 
                         Script = "DROP DATABASE IF EXISTS testdb; CREATE DATABASE testdb;"
-                    }
+                    },
+                    JobId = jobId
                 };
 
+                // check to make sure the job doesn't already exist
+                Assert.False(clientToUse.Job.Exists(commonData.SecondDataLakeAnalyticsAccountName, jobId));
                 var jobCreateResponse = clientToUse.Job.Create(commonData.SecondDataLakeAnalyticsAccountName, jobId, jobToSubmit);
 
                 Assert.NotNull(jobCreateResponse);
 
                 // Cancel the job
                 clientToUse.Job.Cancel(commonData.SecondDataLakeAnalyticsAccountName, jobCreateResponse.JobId.GetValueOrDefault());
+
+                // check to make sure the job does exist now
+                Assert.True(clientToUse.Job.Exists(commonData.SecondDataLakeAnalyticsAccountName, jobId));
 
                 // Get the job and ensure that it says it was cancelled.
                 var getCancelledJobResponse = clientToUse.Job.Get(commonData.SecondDataLakeAnalyticsAccountName, jobCreateResponse.JobId.GetValueOrDefault());
@@ -73,6 +79,7 @@ namespace DataLakeAnalytics.Tests
                 Assert.NotEmpty(getCancelledJobResponse.ErrorMessage);
 
                 // Resubmit the job
+                jobToSubmit.JobId = secondId;
                 jobCreateResponse = clientToUse.Job.Create(commonData.SecondDataLakeAnalyticsAccountName, secondId, jobToSubmit);
 
                 Assert.NotNull(jobCreateResponse);

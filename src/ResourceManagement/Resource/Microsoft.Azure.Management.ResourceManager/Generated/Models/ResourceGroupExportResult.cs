@@ -35,13 +35,13 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets the template content.
+        /// The template content.
         /// </summary>
         [JsonProperty(PropertyName = "template")]
         public object Template { get; set; }
 
         /// <summary>
-        /// Gets or sets the error.
+        /// The error.
         /// </summary>
         [JsonProperty(PropertyName = "error")]
         public ResourceManagementErrorWithDetails Error { get; set; }

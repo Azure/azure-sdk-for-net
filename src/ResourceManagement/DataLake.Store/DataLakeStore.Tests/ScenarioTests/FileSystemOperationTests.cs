@@ -201,7 +201,7 @@ namespace DataLakeStore.Tests
             }
         }
 
-        [Fact]
+        //[Fact] commenting this out until we have a good test for validating access denied within the same tenant
         public void DataLakeStoreFileSystemTestAccessDenied()
         {
             using (var context = MockContext.Start(this.GetType().FullName))
@@ -233,6 +233,47 @@ namespace DataLakeStore.Tests
                 {
                     var filePath = CreateFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, false, true);
                     GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.FILE, 0);
+                }
+            }
+        }
+
+        [Fact]
+        public void DataLakeStoreFileSystemTestFile()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                commonData = new CommonTestFixture(context);
+                using (
+                    commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
+                {
+                    Assert.False(commonData.DataLakeStoreFileSystemClient.FileSystem.PathExists(commonData.DataLakeStoreFileSystemAccountName, "nonexistentfile"));
+                    var filePath = CreateFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, false, true);
+                    Assert.True(commonData.DataLakeStoreFileSystemClient.FileSystem.PathExists(commonData.DataLakeStoreFileSystemAccountName, filePath));
+                }
+            }
+        }
+
+        [Fact]
+        public void DataLakeStoreFileSystemFileAlreadyExists()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                commonData = new CommonTestFixture(context);
+                using (
+                    commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
+                {
+                    var filePath = CreateFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, false, true);
+                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.FILE, 0);
+                    // now try to recreate the file
+                    try
+                    {
+                        commonData.DataLakeStoreFileSystemClient.FileSystem.Create(commonData.DataLakeStoreFileSystemAccountName, filePath, new MemoryStream());
+                        Assert.True(false, "Recreation of an existing file without overwrite should have failed and did not.");
+                    }
+                    catch (AdlsErrorException ex)
+                    {
+                        Assert.Equal(typeof(AdlsFileAlreadyExistsException), ex.Body.RemoteException.GetType());
+                    }
                 }
             }
         }
@@ -273,6 +314,55 @@ namespace DataLakeStore.Tests
 
                     GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.FILE,
                         fileContentsToAppend.Length);
+                }
+            }
+        }
+
+        [Fact]
+        public void DataLakeStoreFileSystemAppendToFileWithOffset()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                commonData = new CommonTestFixture(context);
+                using (
+                    commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
+                {
+                    var filePath = CreateFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, true, true);
+                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.FILE, fileContentsToAdd.Length);
+
+                    // Append to the file that we created, but starting at the beginning of the file, which should wipe out the data.
+                    commonData.DataLakeStoreFileSystemClient.FileSystem.Append(commonData.DataLakeStoreFileSystemAccountName, filePath,
+                        new MemoryStream(Encoding.UTF8.GetBytes(fileContentsToAdd)), fileContentsToAdd.Length);
+
+                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.FILE,
+                        fileContentsToAdd.Length*2);
+                }
+            }
+        }
+
+        [Fact]
+        public void DataLakeStoreFileSystemAppendToFileWithBadOffset()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                commonData = new CommonTestFixture(context);
+                using (
+                    commonData.DataLakeStoreFileSystemClient = commonData.GetDataLakeStoreFileSystemManagementClient(context))
+                {
+                    var filePath = CreateFile(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, true, true);
+                    GetAndCompareFileOrFolder(commonData.DataLakeStoreFileSystemClient, commonData.DataLakeStoreFileSystemAccountName, filePath, FileType.FILE, fileContentsToAdd.Length);
+
+                    try
+                    {
+                        // Append to the file that we created, but starting at the beginning of the file, which should wipe out the data.
+                        commonData.DataLakeStoreFileSystemClient.FileSystem.Append(commonData.DataLakeStoreFileSystemAccountName, filePath,
+                            new MemoryStream(Encoding.UTF8.GetBytes(fileContentsToAdd)), 0);
+                        Assert.True(false, "Successfully appended content at an offset where content already exists. This should have thrown.");
+                    }
+                    catch (AdlsErrorException ex)
+                    {
+                        Assert.Equal(typeof(AdlsBadOffsetException), ex.Body.RemoteException.GetType());
+                    }
                 }
             }
         }

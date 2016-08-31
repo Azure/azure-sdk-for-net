@@ -170,12 +170,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
         public void SingleSegmentUploader_VerifyUploadStreamFails()
         {
             //create a mock front end which doesn't do anything
-            var fe = new MockableFrontEnd();
+            var workingFrontEnd = new InMemoryFrontEnd();
+            var fe = new MockableFrontEnd(workingFrontEnd);
+            
             fe.CreateStreamImplementation = (streamPath, overwrite, data, byteCount) => { };
-            fe.DeleteStreamImplementation = (streamPath, recurse) => { };
-            fe.StreamExistsImplementation = (streamPath) => { return true; };
+            fe.DeleteStreamImplementation = (streamPath, recurse, isDownload) => { };
+            fe.StreamExistsImplementation = (streamPath, isDownload) => { return true; };
             fe.AppendToStreamImplementation = (streamPath, data, offset, byteCount) => { };
-            fe.GetStreamLengthImplementation = (streamPath) => { return 0; };
+            fe.GetStreamLengthImplementation = (streamPath, isDownload) => { return 0; };
 
             //upload some data
             var metadata = CreateMetadata(_smallFilePath, _smallFileContents.Length);

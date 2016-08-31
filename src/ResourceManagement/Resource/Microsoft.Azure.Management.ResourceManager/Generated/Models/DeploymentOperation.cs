@@ -37,19 +37,19 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets full deployment operation id.
+        /// Full deployment operation id.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets deployment operation id.
+        /// Deployment operation id.
         /// </summary>
         [JsonProperty(PropertyName = "operationId")]
         public string OperationId { get; set; }
 
         /// <summary>
-        /// Gets or sets deployment properties.
+        /// Deployment properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public DeploymentOperationProperties Properties { get; set; }

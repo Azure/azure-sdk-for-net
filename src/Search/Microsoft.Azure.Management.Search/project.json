@@ -1,0 +1,78 @@
+{
+  "version": "0.9.0-preview",
+  "title": "Microsoft Azure Search Management Library",
+  "description": "Makes it easy to manage Azure Search services from a .NET application.",
+  "authors": [ "Microsoft" ],
+
+  "packOptions": {
+    "summary": "Class library for managing Azure Search services.",
+    "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+    "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
+    "tags": [ "Microsoft Azure Search", "Microsoft Azure Search Management", "REST HTTP client", "search", "azureofficial", "windowsazureofficial" ],
+    "requireLicenseAcceptance":  true,
+    "releaseNotes": "This is a preview release of the Azure Search Management SDK for .NET, based on version 2015-02-28 of the Azure Search Management REST API."
+  },
+
+  "buildOptions": {
+    "delaySign": true,
+    "publicSign": false,
+    "keyFile": "../../../tools/MSSharedLibKey.snk"
+  },
+
+  "frameworks": {
+    "net45": {
+      "dependencies": {
+        "Microsoft.Rest.ClientRuntime.Azure": "[3.1.0,4.0.0)"
+      }
+    },
+    "netstandard1.5": {
+      "buildOptions": { "define": [ "PORTABLE" ] },
+      "imports": ["dnxcore50"],
+      "dependencies": {
+        "Microsoft.NETCore.Platforms": "1.0.1",
+        "System.Collections": "4.0.11",
+        "System.Collections.Concurrent": "4.0.12",
+        "System.Diagnostics.Debug": "4.0.11",
+        "System.Diagnostics.Tools": "4.0.1",
+        "System.Diagnostics.Tracing": "4.1.0",
+        "System.Globalization": "4.0.11",
+        "System.IO": "4.1.0",
+        "System.IO.Compression": "4.1.0",
+        "System.Linq": "4.1.0",
+        "System.Net.Http": "4.1.0",
+        "System.Net.Primitives": "4.0.11",
+        "System.ObjectModel": "4.0.12",
+        "System.Reflection": "4.1.0",
+        "System.Reflection.Extensions": "4.0.1",
+        "System.Reflection.Primitives": "4.0.1",
+        "System.Resources.ResourceManager": "4.0.1",
+        "System.Runtime": "4.1.0",
+        "System.Runtime.Extensions": "4.1.0",
+        "System.Runtime.InteropServices": "4.1.0",
+        "System.Runtime.InteropServices.RuntimeInformation": "4.0.0",
+        "System.Runtime.Numerics": "4.0.1",
+        "System.Text.Encoding": "4.0.11",
+        "System.Text.Encoding.Extensions": "4.0.11",
+        "System.Text.RegularExpressions": "4.1.0",
+        "System.Threading": "4.0.11",
+        "System.Threading.Tasks": "4.0.11",
+        "System.Xml.ReaderWriter": "4.0.11",
+        "System.Xml.XDocument": "4.0.11",
+        "System.Runtime.Serialization.Primitives": "4.1.1",
+        "System.Dynamic.Runtime": "4.0.11",
+        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.1,4.0.0)"
+      }
+    },
+    "netstandard1.1": {
+      "buildOptions": { "define": [ "PORTABLE" ] },
+      "imports": ["dnxcore50", "portable-net45+win8"],
+      "dependencies": {
+        "NETStandard.Library": "1.6.0",
+        "System.Runtime.Serialization.Primitives": "4.1.1",
+        "System.Dynamic.Runtime": "4.0.11",
+        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.1,4.0.0)"
+      }
+    }
+  }
+}

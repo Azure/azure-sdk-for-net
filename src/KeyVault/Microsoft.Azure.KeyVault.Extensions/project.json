@@ -1,0 +1,58 @@
+{
+  "version": "2.0.0-preview",
+  "title": "Microsoft Azure Key Vault Extensions",
+  "description": "Microsoft Azure Key Vault Extensions Class Library",
+  "authors": [ "Microsoft" ],
+
+  "packOptions": {
+    "summary": "Class library for Azure Key Vault Extensions",
+    "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+    "tags": [ "Microsoft Azure key vault extensions" ],
+    "requireLicenseAcceptance": true,
+    "releaseNotes": ""
+  },
+  "buildOptions": {
+    "delaySign": true,
+    "publicSign": false,
+    "keyFile": "../../../tools/MSSharedLibKey.snk"
+  },
+  "dependencies": {
+    "Microsoft.Azure.KeyVault": "2.0.1-preview",
+    "Microsoft.Azure.KeyVault.Core": "2.0.0-preview",
+    "Microsoft.Azure.KeyVault.Cryptography": "2.0.0-preview",
+    "Microsoft.Azure.KeyVault.WebKey": "2.0.0-preview"
+  },
+  "frameworks": {
+    "netstandard1.5": {
+      "buildOptions": { "define": [ "PORTABLE" ] },
+      "imports": [ "dnxcore50" ],
+      "dependencies": {
+        "Microsoft.NETCore.Platforms": "1.0.1",
+        "System.Threading.Thread": "4.0.0",
+        "System.Threading.Timer": "4.0.1",
+        "System.Collections": "4.0.11",
+        "System.Diagnostics.Debug": "4.0.11",
+        "System.Diagnostics.Tools": "4.0.1",
+        "System.Diagnostics.Tracing": "4.1.0",
+        "System.Linq": "4.1.0",
+        "System.Net.Http": "4.1.0",
+        "System.Runtime": "4.1.0",
+        "System.Threading.Tasks": "4.0.11",
+        "Microsoft.CSharp": "4.0.1",
+        "System.Collections.Concurrent": "4.0.12",
+        "System.Runtime.Serialization.Primitives": "4.1.1"
+      }
+    },
+    "net45": {
+      "frameworkAssemblies": {
+        "System": { "type": "build" },
+        "System.Security": { "type": "default" }
+      },
+      "dependencies": {
+      }
+    }
+  },
+  "configurations": {
+  }
+}

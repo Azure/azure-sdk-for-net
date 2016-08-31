@@ -35,8 +35,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the upgrade mode. Possible values include:
-        /// 'Automatic', 'Manual'
+        /// the upgrade mode. Possible values include: 'Automatic', 'Manual'
         /// </summary>
         [JsonProperty(PropertyName = "mode")]
         public UpgradeMode? Mode { get; set; }

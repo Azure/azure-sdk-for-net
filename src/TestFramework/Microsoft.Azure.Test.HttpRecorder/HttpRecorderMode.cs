@@ -20,6 +20,11 @@ namespace Microsoft.Azure.Test.HttpRecorder
     public enum HttpRecorderMode
     {
         /// <summary>
+        /// The mock server does not do anything.
+        /// </summary>
+        None, 
+
+        /// <summary>
         /// In this mode the mock server watches the out-going requests and records
         /// their corresponding responses.
         /// </summary>
@@ -30,11 +35,6 @@ namespace Microsoft.Azure.Test.HttpRecorder
         /// The mock server matches the given requests and return their stored 
         /// corresponding responses.
         /// </summary>
-        Playback,
-
-        /// <summary>
-        /// The mock server does not do anything.
-        /// </summary>
-        None
+        Playback
     }
 }

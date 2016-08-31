@@ -85,6 +85,11 @@ namespace Microsoft.Azure.Management.Redis
         public virtual IRedisOperations Redis { get; private set; }
 
         /// <summary>
+        /// Gets the IPatchSchedulesOperations.
+        /// </summary>
+        public virtual IPatchSchedulesOperations PatchSchedules { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the RedisManagementClient class.
         /// </summary>
         /// <param name='handlers'>
@@ -264,6 +269,7 @@ namespace Microsoft.Azure.Management.Redis
         private void Initialize()
         {
             this.Redis = new RedisOperations(this);
+            this.PatchSchedules = new PatchSchedulesOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
             this.ApiVersion = "2016-04-01";
             this.AcceptLanguage = "en-US";

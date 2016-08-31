@@ -37,19 +37,19 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets the ID of the dependency.
+        /// The ID of the dependency.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the dependency resource type.
+        /// The dependency resource type.
         /// </summary>
         [JsonProperty(PropertyName = "resourceType")]
         public string ResourceType { get; set; }
 
         /// <summary>
-        /// Gets or sets the dependency resource name.
+        /// The dependency resource name.
         /// </summary>
         [JsonProperty(PropertyName = "resourceName")]
         public string ResourceName { get; set; }

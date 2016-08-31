@@ -1,0 +1,320 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/19b520e4-39a7-4fac-b1da-d940f2d39a38/resourceGroups/sunnyjapan/providers/Microsoft.Cache/Redis/sunny-scheduling-dv2?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTliNTIwZTQtMzlhNy00ZmFjLWIxZGEtZDk0MGYyZDM5YTM4L3Jlc291cmNlR3JvdXBzL3N1bm55amFwYW4vcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9zdW5ueS1zY2hlZHVsaW5nLWR2Mj9hcGktdmVyc2lvbj0yMDE2LTA0LTAx",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "6c6ffe87-da67-4ffb-9105-0107029a1d2f"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/19b520e4-39a7-4fac-b1da-d940f2d39a38/resourceGroups/sunnyjapan/providers/Microsoft.Cache/Redis/sunny-scheduling-dv2\",\r\n  \"location\": \"Japan West\",\r\n  \"name\": \"sunny-scheduling-dv2\",\r\n  \"type\": \"Microsoft.Cache/Redis\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"redisVersion\": \"3.0\",\r\n    \"sku\": {\r\n      \"name\": \"Premium\",\r\n      \"family\": \"P\",\r\n      \"capacity\": 1\r\n    },\r\n    \"enableNonSslPort\": false,\r\n    \"redisConfiguration\": {\r\n      \"maxclients\": \"7500\",\r\n      \"maxmemory-reserved\": \"200\",\r\n      \"maxmemory-delta\": \"200\"\r\n    },\r\n    \"accessKeys\": null,\r\n    \"hostName\": \"sunny-scheduling-dv2.cache.icbbvt.windows-int.net\",\r\n    \"port\": 6379,\r\n    \"sslPort\": 6380\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jun 2016 22:00:00 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "24266861-545f-4824-bfcb-8e1a9368ad17"
+        ],
+        "x-rp-server-mvid": [
+          "aff7acdf-d05c-4710-84c3-64ee03a46883"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14696"
+        ],
+        "x-ms-correlation-request-id": [
+          "0a2abe78-ec09-4afe-b5d5-11fa315b510e"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20160608T220000Z:0a2abe78-ec09-4afe-b5d5-11fa315b510e"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/19b520e4-39a7-4fac-b1da-d940f2d39a38/resourceGroups/sunnyjapan/providers/Microsoft.Cache/Redis/sunny-scheduling-dv2/patchSchedules/default?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTliNTIwZTQtMzlhNy00ZmFjLWIxZGEtZDk0MGYyZDM5YTM4L3Jlc291cmNlR3JvdXBzL3N1bm55amFwYW4vcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9zdW5ueS1zY2hlZHVsaW5nLWR2Mi9wYXRjaFNjaGVkdWxlcy9kZWZhdWx0P2FwaS12ZXJzaW9uPTIwMTYtMDQtMDE=",
+      "RequestMethod": "PUT",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"scheduleEntries\": [\r\n      {\r\n        \"dayOfWeek\": \"Monday\",\r\n        \"startHourUtc\": 10,\r\n        \"maintenanceWindow\": \"PT10H\"\r\n      },\r\n      {\r\n        \"dayOfWeek\": \"Tuesday\",\r\n        \"startHourUtc\": 11,\r\n        \"maintenanceWindow\": \"PT11H\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "RequestHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Content-Length": [
+          "297"
+        ],
+        "x-ms-client-request-id": [
+          "9707a43a-2632-40ff-bc06-e9b2f56a85f8"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/19b520e4-39a7-4fac-b1da-d940f2d39a38/resourceGroups/sunnyjapan/providers/Microsoft.Cache/Redis/sunny-scheduling-dv2/patchSchedules/default\",\r\n  \"location\": \"Japan West\",\r\n  \"name\": \"sunny-scheduling-dv2/default\",\r\n  \"type\": \"Microsoft.Cache/Redis/PatchSchedules\",\r\n  \"properties\": {\r\n    \"scheduleEntries\": [\r\n      {\r\n        \"dayOfWeek\": \"Monday\",\r\n        \"startHourUtc\": 10,\r\n        \"maintenanceWindow\": \"PT10H\"\r\n      },\r\n      {\r\n        \"dayOfWeek\": \"Tuesday\",\r\n        \"startHourUtc\": 11,\r\n        \"maintenanceWindow\": \"PT11H\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jun 2016 22:00:00 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "e296c7e4-a5cc-44c3-beb6-2a0e2df4c5e2"
+        ],
+        "x-rp-server-mvid": [
+          "aff7acdf-d05c-4710-84c3-64ee03a46883"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1193"
+        ],
+        "x-ms-correlation-request-id": [
+          "414d4e48-599d-4601-97aa-eec66c818c91"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20160608T220001Z:414d4e48-599d-4601-97aa-eec66c818c91"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/19b520e4-39a7-4fac-b1da-d940f2d39a38/resourceGroups/sunnyjapan/providers/Microsoft.Cache/Redis/sunny-scheduling-dv2/patchSchedules/default?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTliNTIwZTQtMzlhNy00ZmFjLWIxZGEtZDk0MGYyZDM5YTM4L3Jlc291cmNlR3JvdXBzL3N1bm55amFwYW4vcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9zdW5ueS1zY2hlZHVsaW5nLWR2Mi9wYXRjaFNjaGVkdWxlcy9kZWZhdWx0P2FwaS12ZXJzaW9uPTIwMTYtMDQtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "41e13a55-2cb8-499c-b725-24072b30c971"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/19b520e4-39a7-4fac-b1da-d940f2d39a38/resourceGroups/sunnyjapan/providers/Microsoft.Cache/Redis/sunny-scheduling-dv2/patchSchedules/default\",\r\n  \"location\": \"Japan West\",\r\n  \"name\": \"sunny-scheduling-dv2/default\",\r\n  \"type\": \"Microsoft.Cache/Redis/PatchSchedules\",\r\n  \"properties\": {\r\n    \"scheduleEntries\": [\r\n      {\r\n        \"dayOfWeek\": \"Monday\",\r\n        \"startHourUtc\": 10,\r\n        \"maintenanceWindow\": \"PT10H\"\r\n      },\r\n      {\r\n        \"dayOfWeek\": \"Tuesday\",\r\n        \"startHourUtc\": 11,\r\n        \"maintenanceWindow\": \"PT11H\"\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jun 2016 22:00:01 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "06bf1665-4bc9-4611-a4f8-4a846bb4390a"
+        ],
+        "x-rp-server-mvid": [
+          "aff7acdf-d05c-4710-84c3-64ee03a46883"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14695"
+        ],
+        "x-ms-correlation-request-id": [
+          "80ae6c33-897b-4faa-9157-cd3a5dc394c8"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20160608T220001Z:80ae6c33-897b-4faa-9157-cd3a5dc394c8"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/19b520e4-39a7-4fac-b1da-d940f2d39a38/resourceGroups/sunnyjapan/providers/Microsoft.Cache/Redis/sunny-scheduling-dv2/patchSchedules/default?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTliNTIwZTQtMzlhNy00ZmFjLWIxZGEtZDk0MGYyZDM5YTM4L3Jlc291cmNlR3JvdXBzL3N1bm55amFwYW4vcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9zdW5ueS1zY2hlZHVsaW5nLWR2Mi9wYXRjaFNjaGVkdWxlcy9kZWZhdWx0P2FwaS12ZXJzaW9uPTIwMTYtMDQtMDE=",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "1fd93b8e-b0a4-41a4-b8e5-223eafe4e617"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"There are no patch schedules found for redis cache 'sunny-scheduling-dv2'.\\r\\nRequestID=fc2b111e-de8b-4a33-b072-876c7d4f4f8a\",\r\n    \"target\": null\r\n  }\r\n}",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "188"
+        ],
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jun 2016 22:00:02 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "fc2b111e-de8b-4a33-b072-876c7d4f4f8a"
+        ],
+        "x-rp-server-mvid": [
+          "aff7acdf-d05c-4710-84c3-64ee03a46883"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14694"
+        ],
+        "x-ms-correlation-request-id": [
+          "6395b352-cb3b-4841-9881-fb471a4fce31"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20160608T220002Z:6395b352-cb3b-4841-9881-fb471a4fce31"
+        ]
+      },
+      "StatusCode": 404
+    },
+    {
+      "RequestUri": "/subscriptions/19b520e4-39a7-4fac-b1da-d940f2d39a38/resourceGroups/sunnyjapan/providers/Microsoft.Cache/Redis/sunny-scheduling-dv2/patchSchedules/default?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTliNTIwZTQtMzlhNy00ZmFjLWIxZGEtZDk0MGYyZDM5YTM4L3Jlc291cmNlR3JvdXBzL3N1bm55amFwYW4vcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9zdW5ueS1zY2hlZHVsaW5nLWR2Mi9wYXRjaFNjaGVkdWxlcy9kZWZhdWx0P2FwaS12ZXJzaW9uPTIwMTYtMDQtMDE=",
+      "RequestMethod": "DELETE",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "d075943e-03c1-4adf-b177-85abf4527e12"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/2.0.0.0"
+        ]
+      },
+      "ResponseBody": "",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "0"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 08 Jun 2016 22:00:01 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Server": [
+          "Microsoft-HTTPAPI/2.0"
+        ],
+        "x-ms-request-id": [
+          "697c141b-f549-4e39-b06d-bc0961071182"
+        ],
+        "x-rp-server-mvid": [
+          "aff7acdf-d05c-4710-84c3-64ee03a46883"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1192"
+        ],
+        "x-ms-correlation-request-id": [
+          "b9e0df69-285a-43cf-83c8-4a48d3992e34"
+        ],
+        "x-ms-routing-request-id": [
+          "NORTHEUROPE:20160608T220002Z:b9e0df69-285a-43cf-83c8-4a48d3992e34"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "19b520e4-39a7-4fac-b1da-d940f2d39a38"
+  }
+}

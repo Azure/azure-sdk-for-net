@@ -13,9 +13,15 @@ namespace Networks.Tests
     using System.Linq;
 
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
+    using Microsoft.Azure.Test.HttpRecorder;
 
     public class UsageTests
     {
+        public UsageTests()
+        {
+            HttpMockServer.RecordsDirectory = "SessionRecords";
+        }
+
         [Fact]
         public void UsageTest()
         {

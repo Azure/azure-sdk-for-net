@@ -18,6 +18,7 @@ namespace Microsoft.Azure.Search.Models
 
     /// <summary>
     /// Represents an Azure Search indexer.
+    /// <see href="https://msdn.microsoft.com/library/azure/dn946891.aspx" />
     /// </summary>
     public partial class Indexer
     {
@@ -29,7 +30,7 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Initializes a new instance of the Indexer class.
         /// </summary>
-        public Indexer(string name, string dataSourceName, string targetIndexName, string description = default(string), IndexingSchedule schedule = default(IndexingSchedule), IndexingParameters parameters = default(IndexingParameters))
+        public Indexer(string name, string dataSourceName, string targetIndexName, string description = default(string), IndexingSchedule schedule = default(IndexingSchedule), IndexingParameters parameters = default(IndexingParameters), IList<FieldMapping> fieldMappings = default(IList<FieldMapping>), bool? isDisabled = default(bool?), string eTag = default(string))
         {
             Name = name;
             Description = description;
@@ -37,6 +38,9 @@ namespace Microsoft.Azure.Search.Models
             TargetIndexName = targetIndexName;
             Schedule = schedule;
             Parameters = parameters;
+            FieldMappings = fieldMappings;
+            IsDisabled = isDisabled;
+            ETag = eTag;
         }
 
         /// <summary>
@@ -78,8 +82,31 @@ namespace Microsoft.Azure.Search.Models
         public IndexingParameters Parameters { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Gets or sets defines mappings between fields in the data source
+        /// and corresponding target fields in the index.
         /// </summary>
+        [JsonProperty(PropertyName = "fieldMappings")]
+        public IList<FieldMapping> FieldMappings { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the indexer is disabled.
+        /// Default is false.
+        /// </summary>
+        [JsonProperty(PropertyName = "disabled")]
+        public bool? IsDisabled { get; set; }
+
+        /// <summary>
+        /// Gets or sets the ETag of the Indexer.
+        /// </summary>
+        [JsonProperty(PropertyName = "@odata.etag")]
+        public string ETag { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public virtual void Validate()
         {
             if (Name == null)
@@ -97,6 +124,16 @@ namespace Microsoft.Azure.Search.Models
             if (this.Schedule != null)
             {
                 this.Schedule.Validate();
+            }
+            if (this.FieldMappings != null)
+            {
+                foreach (var element in this.FieldMappings)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
             }
         }
     }

@@ -1,0 +1,50 @@
+{
+  "version": "2.0.0-preview",
+  "title": "Microsoft Azure Key Vault Management",
+  "description": "Provides resource group and resource management capabilities for Microsoft Azure.",
+  "authors": [ "Microsoft" ],
+
+  "packOptions": {
+    "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+    "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
+    "tags": [ "Microsoft Azure key vault management", "Key Vault", "REST HTTP client", "azureofficial", "windowsazureofficial" ],
+    "requireLicenseAcceptance": true,
+    "releaseNotes": "This is a preview release of the Azure Key Vault .NET SDK, based on version 2015-06-01 of the Azure Key Vault REST API."
+  },
+
+  "buildOptions": {
+    "delaySign": true,
+    "publicSign": false,
+    "keyFile": "../../../../tools/MSSharedLibKey.snk"
+  },
+
+  "dependencies": {
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.1, 4.0)"
+  },
+
+  "frameworks": {
+    "net45": {
+    },
+    "netstandard1.5": {
+      "buildOptions": { "define": [ "PORTABLE" ] },
+      "imports": [ "dnxcore50" ],
+      "dependencies": {
+        "Microsoft.NETCore.Platforms": "1.0.1",
+        "Microsoft.CSharp": "4.0.1",
+        "System.Threading.Thread": "4.0.0", 
+        "System.Threading.Tasks": "4.0.11",
+        "System.Collections": "4.0.11",
+        "System.Runtime.Serialization.Primitives": "4.1.1",
+        "System.Linq": "4.1.0",
+        "System.Runtime": "4.1.0"
+      }
+    },
+    "netstandard1.1": {
+      "imports": [ "dnxcore50" ],
+      "dependencies": {
+        "System.Runtime.Serialization.Primitives": "4.1.1"
+      }
+    }
+  }
+}

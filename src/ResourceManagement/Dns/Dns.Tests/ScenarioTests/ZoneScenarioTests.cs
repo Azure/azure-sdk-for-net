@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                         resourcesHandler);
 
                 string zoneName =
-                    TestUtilities.GenerateName("hydratestdnszone.com");
+                    TestUtilities.GenerateName("hydratest.dnszone.com");
                 string location =
                     ResourceGroupHelper.GetResourceLocation(
                         resourceManagementClient,
@@ -205,8 +205,8 @@ namespace Microsoft.Azure.Management.Dns.Testing
 
                 var zoneNames = new[]
                 {
-                    TestUtilities.GenerateName("hydratestdnszone.com"),
-                    TestUtilities.GenerateName("hydratestdnszone.com")
+                    TestUtilities.GenerateName("hydratest.dnszone.com"),
+                    TestUtilities.GenerateName("hydratest.dnszone.com")
                 };
                 var resourceManagementClient =
                     ResourceGroupHelper.GetResourcesClient(
@@ -263,8 +263,8 @@ namespace Microsoft.Azure.Management.Dns.Testing
 
                 var zoneNames = new[]
                 {
-                    TestUtilities.GenerateName("hydratestdnszone.com"),
-                    TestUtilities.GenerateName("hydratestdnszone.com")
+                    TestUtilities.GenerateName("hydratest.dnszone.com"),
+                    TestUtilities.GenerateName("hydratest.dnszone.com")
                 };
                 var resourceManagementClient =
                     ResourceGroupHelper.GetResourcesClient(
@@ -320,8 +320,8 @@ namespace Microsoft.Azure.Management.Dns.Testing
 
                 var zoneNames = new[]
                 {
-                    TestUtilities.GenerateName("hydratestdnszone") + ".com",
-                    TestUtilities.GenerateName("hydratestdnszone") + ".com"
+                    TestUtilities.GenerateName("hydratest.dnszone") + ".com",
+                    TestUtilities.GenerateName("hydratest.dnszone") + ".com"
                 };
                 var resourceManagementClient =
                     ResourceGroupHelper.GetResourcesClient(
@@ -372,8 +372,8 @@ namespace Microsoft.Azure.Management.Dns.Testing
 
                 var zoneNames = new[]
                 {
-                    TestUtilities.GenerateName("hydratestdnszone.com"),
-                    TestUtilities.GenerateName("hydratestdnszone.com")
+                    TestUtilities.GenerateName("hydratest.dnszone.com"),
+                    TestUtilities.GenerateName("hydratest.dnszone.com")
                 };
                 var resourceManagementClient =
                     ResourceGroupHelper.GetResourcesClient(
@@ -425,7 +425,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     ResourceGroupHelper.GetDnsClient(context, dnsHandler);
 
                 string zoneName =
-                    TestUtilities.GenerateName("hydratestdnszone.com");
+                    TestUtilities.GenerateName("hydratest.dnszone.com");
                 var resourceManagementClient =
                     ResourceGroupHelper.GetResourcesClient(
                         context,
@@ -490,7 +490,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     ResourceGroupHelper.GetDnsClient(context, dnsHandler);
 
                 string zoneName =
-                    TestUtilities.GenerateName("hydratestdnszone.com");
+                    TestUtilities.GenerateName("hydratest.dnszone.com");
                 var resourceManagementClient =
                     ResourceGroupHelper.GetResourcesClient(
                         context,
@@ -529,7 +529,7 @@ namespace Microsoft.Azure.Management.Dns.Testing
                     ResourceGroupHelper.GetDnsClient(context, dnsHandler);
 
                 string zoneName =
-                    TestUtilities.GenerateName("hydratestdnszone.com");
+                    TestUtilities.GenerateName("hydratest.dnszone.com");
                 var resourceManagementClient =
                     ResourceGroupHelper.GetResourcesClient(
                         context,

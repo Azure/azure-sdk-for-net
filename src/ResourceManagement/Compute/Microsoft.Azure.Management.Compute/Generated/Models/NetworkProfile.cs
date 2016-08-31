@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the network interfaces.
+        /// the network interfaces.
         /// </summary>
         [JsonProperty(PropertyName = "networkInterfaces")]
         public IList<NetworkInterfaceReference> NetworkInterfaces { get; set; }

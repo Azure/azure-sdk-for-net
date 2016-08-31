@@ -243,7 +243,7 @@ namespace ResourceGroups.Tests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = GetResourceManagementClient(handler);
 
-            client.ResourceGroups.Get("foo-123_bar");
+            client.ResourceGroups.Get("foo-123_(bar)");
         }
 
         [Fact(Skip = "Parameter validation using pattern match is not supported yet at code-gen, the work is on-going.")]

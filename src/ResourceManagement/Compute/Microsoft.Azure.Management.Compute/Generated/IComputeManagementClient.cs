@@ -44,9 +44,9 @@ namespace Microsoft.Azure.Management.Compute
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Gets subscription credentials which uniquely identify Microsoft
-        /// Azure subscription. The subscription ID forms part of the URI for
-        /// every service call.
+        /// subscription credentials which uniquely identify Microsoft Azure
+        /// subscription. The subscription ID forms part of the URI for every
+        /// service call.
         /// </summary>
         string SubscriptionId { get; set; }
 

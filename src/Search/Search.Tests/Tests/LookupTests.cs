@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Search.Tests
 {
     using System;
     using System.Net;
-    using Microsoft.AspNet.WebUtilities;
+    using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.Azure.Search.Models;
     using Microsoft.Azure.Search.Tests.Utilities;
     using Microsoft.Rest.Azure;
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Search.Tests
                 SearchTestUtilities.WaitForIndexing();
 
                 Document actualDoc = client.Documents.Get("1");
-                SearchAssert.DocumentsEqual(expectedDoc, actualDoc);
+                Assert.Equal(expectedDoc, actualDoc);
             });
         }
 
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Search.Tests
                 SearchTestUtilities.WaitForIndexing();
 
                 Document actualDoc = client.Documents.Get("1", expectedDoc.Keys);
-                SearchAssert.DocumentsEqual(expectedDoc, actualDoc);
+                Assert.Equal(expectedDoc, actualDoc);
             });
         }
 
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Search.Tests
                 SearchTestUtilities.WaitForIndexing();
 
                 Document actualDoc = client.Documents.Get("1", indexedDoc.Keys);
-                SearchAssert.DocumentsEqual(expectedDoc, actualDoc);
+                Assert.Equal(expectedDoc, actualDoc);
             });
         }
 
@@ -163,7 +163,7 @@ namespace Microsoft.Azure.Search.Tests
                 SearchTestUtilities.WaitForIndexing();
 
                 Document actualDoc = client.Documents.Get(complexKey, expectedDoc.Keys);
-                SearchAssert.DocumentsEqual(expectedDoc, actualDoc);
+                Assert.Equal(expectedDoc, actualDoc);
             });
         }
 
@@ -291,11 +291,7 @@ namespace Microsoft.Azure.Search.Tests
             Run(() =>
             {
                 SearchIndexClient client = Data.GetSearchIndexClient();
-
-                CloudException e = 
-                    Assert.Throws<CloudException>(() => client.Documents.Get("ThisDocumentDoesNotExist"));
-
-                Assert.Equal(HttpStatusCode.NotFound, e.Response.StatusCode);
+                SearchAssert.ThrowsCloudException(() => client.Documents.Get("ThisDocumentDoesNotExist"), HttpStatusCode.NotFound);
             });
         }
 
@@ -319,12 +315,10 @@ namespace Microsoft.Azure.Search.Tests
 
                 string[] selectedFields = new[] { "hotelId", "ThisFieldDoesNotExist" };
 
-                CloudException e = Assert.Throws<CloudException>(() => client.Documents.Get("3", selectedFields));
-
-                Assert.Equal(HttpStatusCode.BadRequest, e.Response.StatusCode);
-                Assert.Contains(
-                    "Invalid expression: Could not find a property named 'ThisFieldDoesNotExist' on type 'search.document'.",
-                    e.Message);
+                SearchAssert.ThrowsCloudException(
+                    () => client.Documents.Get("3", selectedFields),
+                    HttpStatusCode.BadRequest,
+                    "Invalid expression: Could not find a property named 'ThisFieldDoesNotExist' on type 'search.document'.");
             });
         }
     }
