@@ -33,8 +33,12 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// Initializes a new instance of the AdlsFileAlreadyExistsException
         /// class.
         /// </summary>
-        /// <param name="javaClassName">the full class package name for the exception thrown, such as 'java.lang.IllegalArgumentException'.</param>
-        /// <param name="message">the message associated with the exception that was thrown, such as 'Invalid value for webhdfs parameter "permission":...'.</param>
+        /// <param name="javaClassName">the full class package name for the
+        /// exception thrown, such as
+        /// 'java.lang.IllegalArgumentException'.</param>
+        /// <param name="message">the message associated with the exception
+        /// that was thrown, such as 'Invalid value for webhdfs parameter
+        /// "permission":...'.</param>
         public AdlsFileAlreadyExistsException(string javaClassName = default(string), string message = default(string))
             : base(javaClassName, message)
         {

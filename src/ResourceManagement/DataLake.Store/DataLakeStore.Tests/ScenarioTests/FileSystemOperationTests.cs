@@ -683,7 +683,7 @@ namespace DataLakeStore.Tests
                 {
                     var currentAcl = commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus(
                         commonData.DataLakeStoreFileSystemAccountName, "/");
-
+                    var originalPermission = currentAcl.AclStatus.Permission;
                     var aclToReplaceWith = new List<string>(currentAcl.AclStatus.Entries);
                     var originalOther = string.Empty;
                     var toReplace = "other::rwx";
@@ -707,8 +707,8 @@ namespace DataLakeStore.Tests
 
                     var newAcl = commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus(
                         commonData.DataLakeStoreFileSystemAccountName, "/");
+                    
                     // verify the ACL actually changed
-
                     // Check the access first and assert that it returns OK (note: this is currently only for the user making the request, so it is not testing "other")
                     commonData.DataLakeStoreFileSystemClient.FileSystem.CheckAccess(
                         commonData.DataLakeStoreFileSystemAccountName, "/", "rwx");
@@ -722,6 +722,7 @@ namespace DataLakeStore.Tests
                     }
 
                     Assert.True(foundIt);
+                    Assert.NotEqual(originalPermission, newAcl.AclStatus.Permission);
 
                     // Set it back using specific entry
                     commonData.DataLakeStoreFileSystemClient.FileSystem.ModifyAclEntries(
@@ -729,9 +730,10 @@ namespace DataLakeStore.Tests
                         originalOther);
 
                     // Now confirm that it equals the original ACL
-                    var finalEntries = commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus(
+                    var finalAclStatus = commonData.DataLakeStoreFileSystemClient.FileSystem.GetAclStatus(
                         commonData.DataLakeStoreFileSystemAccountName, "/")
-                        .AclStatus.Entries;
+                        .AclStatus;
+                    var finalEntries = finalAclStatus.Entries;
                     foreach (var entry in finalEntries)
                     {
                         Assert.True(
@@ -740,6 +742,7 @@ namespace DataLakeStore.Tests
                     }
 
                     Assert.Equal(finalEntries.Count, currentAcl.AclStatus.Entries.Count);
+                    Assert.Equal(originalPermission, finalAclStatus.Permission);
                 }
             }
         }
