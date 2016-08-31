@@ -35,16 +35,17 @@ namespace EventHub.Tests.ScenarioTests
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 InitializeClients(context);
-                
-                var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(EventHubManagementHelper.DefaultResourceGroupLocation);
+
+                var location = this.ResourceManagementClient.GetLocationFromProvider();
+
+                var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
                 if (string.IsNullOrWhiteSpace(resourceGroup))
                 {
                     resourceGroup = TestUtilities.GenerateName(EventHubManagementHelper.ResourceGroupPrefix);
-                    this.ResourceManagementClient.TryRegisterResourceGroup(EventHubManagementHelper.DefaultResourceGroupLocation, resourceGroup);
+                    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
                 }
 
                 // Create a namespace
-                var location = EventHubManagementHelper.DefaultLocation;
                 var namespaceName = TestUtilities.GenerateName(EventHubManagementHelper.NamespacePrefix);
 
                 var createNamespaceResponse = this.EventHubManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
@@ -158,26 +159,6 @@ namespace EventHub.Tests.ScenarioTests
                 Assert.NotNull(listKeysResponse);
                 Assert.NotNull(listKeysResponse.PrimaryConnectionString);
                 Assert.NotNull(listKeysResponse.SecondaryConnectionString);
-
-                /// RegenerateKeys - Commented due to issue. Will be uncommented after the Fix. 
-                // Regenerate Keys for the create Authorization rules
-                //var regenerateKeysParameters = new RegenerateKeysParameters();
-                //regenerateKeysParameters.Policykey = Policykey.PrimaryKey;
-
-                //var regenerateKeysResposnse = EventHubManagementClient.EventHubs.RegenerateKeys(resourceGroup, namespaceName, eventhubName, authorizationRuleName, regenerateKeysParameters);
-                //Assert.NotEqual(listKeysResponse.PrimaryKey, regenerateKeysResposnse.PrimaryKey);
-                //Assert.NotNull(regenerateKeysResposnse.PrimaryConnectionString);
-                //Assert.NotNull(regenerateKeysResposnse.SecondaryConnectionString);
-                //Assert.NotNull(regenerateKeysResposnse.SecondaryKey);
-
-                //regenerateKeysParameters.Policykey = Policykey.SecondaryKey;
-
-                //regenerateKeysResposnse = EventHubManagementClient.EventHubs.RegenerateKeys(resourceGroup, namespaceName, eventhubName, authorizationRuleName, regenerateKeysParameters);
-                //Assert.NotEqual(listKeysResponse.SecondaryKey, regenerateKeysResposnse.SecondaryKey);
-                //Assert.NotNull(regenerateKeysResposnse.PrimaryConnectionString);
-                //Assert.NotNull(regenerateKeysResposnse.SecondaryConnectionString);
-                //Assert.NotNull(regenerateKeysResposnse.PrimaryKey);
-
 
                 // Delete Eventhub authorizationRule
                 EventHubManagementClient.EventHubs.DeleteAuthorizationRule(resourceGroup, namespaceName, eventhubName, authorizationRuleName);

@@ -27,11 +27,10 @@ namespace EventHub.Tests.TestHelper
     using System.Threading.Tasks;
     using Newtonsoft.Json.Serialization;
     using Newtonsoft.Json.Converters;
+    using Xunit;
 
     public static class EventHubManagementHelper
     {
-        internal const string DefaultLocation = "West US"; 
-        internal const string DefaultResourceGroupLocation = "WestUS";
         internal const string ResourceGroupPrefix = "Default-EventHub-";
         internal const string NamespacePrefix = "sdk-Namespace-";
         internal const string AuthorizationRulesPrefix = "sdk-Authrules-";
@@ -64,19 +63,11 @@ namespace EventHub.Tests.TestHelper
             return null;
         }
 
-        private static void ThrowIfTrue(bool condition, string message)
-        {
-            if (condition)
-            {
-                throw new Exception(message);
-            }
-        }
-
         public static string TryGetResourceGroup(this ResourceManagementClient resourceManagementClient, string location)
         {
             var resourceGroup =
                 resourceManagementClient.ResourceGroups
-                    .List().Where(group => string.IsNullOrWhiteSpace(location) || group.Location.Equals(location, StringComparison.OrdinalIgnoreCase))
+                    .List().Where(group => string.IsNullOrWhiteSpace(location) || group.Location.Equals(location.Replace(" ", string.Empty), StringComparison.OrdinalIgnoreCase))
                     .FirstOrDefault(group => group.Name.Contains(""));
 
             return resourceGroup != null
@@ -89,26 +80,20 @@ namespace EventHub.Tests.TestHelper
         {
             resourceManagementClient.ResourceGroups.CreateOrUpdate(resourceGroupName, new ResourceGroup(location));
         }
-        
-        public static void TryCreateNamespace(
-            this EventHubManagementClient client,
-            string resourceGroupName,
-            string namespaceName,
-            string location,
-            string scaleUnit = null)
+
+        public static string GetLocationFromProvider(this ResourceManagementClient resourceManagementClient)
         {
-            var namespaceParameter = new NamespaceCreateOrUpdateParameters()
-            {
-                Location = location
-            };            
-
-            client.Namespaces.CreateOrUpdate(
-                resourceGroupName,
-                namespaceName, namespaceParameter
-               );
-
-            var response = client.Namespaces.Get(resourceGroupName, namespaceName);
-            ThrowIfTrue(!response.Name.Equals(namespaceName), string.Format("Namespace name is not equal to {0}", namespaceName));
+            var providers = resourceManagementClient.Providers.Get("Microsoft.EventHub");
+            var location = providers.ResourceTypes.Where(
+                (resType) =>
+                {
+                    if (resType.ResourceType == "namespaces")
+                        return true;
+                    else
+                        return false;
+                }
+                ).First().Locations.FirstOrDefault();
+            return location;
         }
 
         public static string GenerateRandomKey()

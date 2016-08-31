@@ -63,21 +63,6 @@ namespace EventHub.Tests.ScenarioTests
             {               
                 return _EventHubManagementClient;
             }
-        }
-
-        protected void TryCreateNamespace()
-        {
-            this.ResourceGroupName = this.ResourceManagementClient.TryGetResourceGroup(Location);
-            this.Location = EventHubManagementHelper.DefaultLocation;
-
-            if (string.IsNullOrWhiteSpace(ResourceGroupName))
-            {
-                ResourceGroupName = TestUtilities.GenerateName(EventHubManagementHelper.ResourceGroupPrefix);
-                this.ResourceManagementClient.TryRegisterResourceGroup(Location, ResourceGroupName);
-            }
-
-            NamespaceName = TestUtilities.GenerateName(EventHubManagementHelper.NamespacePrefix);
-            this.EventHubManagementClient.TryCreateNamespace(ResourceGroupName, NamespaceName, Location);
-        }        
+        }       
     }
 }
