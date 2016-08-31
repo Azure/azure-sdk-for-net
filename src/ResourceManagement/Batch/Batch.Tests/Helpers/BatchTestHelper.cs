@@ -14,6 +14,7 @@
 //
 
 using Microsoft.Azure.Management.Batch;
+using Microsoft.Azure.Test.HttpRecorder;
 using Microsoft.Rest;
 
 namespace Batch.Tests.Helpers
@@ -25,6 +26,10 @@ namespace Batch.Tests.Helpers
             handler.IsPassThrough = false;
             var client = new BatchManagementClient(new TokenCredentials("xyz"), handler);
             client.SubscriptionId = "00000000-0000-0000-0000-000000000000";
+            if (HttpMockServer.Mode != HttpRecorderMode.Record)
+            {
+                client.LongRunningOperationRetryTimeout = 0;
+            }
             return client;
         }
     }
