@@ -31,44 +31,12 @@ namespace Microsoft.Azure.Management.Resources.Models
     /// </summary>
     public partial class GenericResourceExtended : ResourceBaseExtended
     {
-        private Plan _plan;
-        
-        /// <summary>
-        /// Optional. Gets or sets the plan of the resource.
-        /// </summary>
-        public Plan Plan
-        {
-            get { return this._plan; }
-            set { this._plan = value; }
-        }
-        
-        private string _properties;
-        
-        /// <summary>
-        /// Optional. Gets or sets the resource properties.
-        /// </summary>
-        public string Properties
-        {
-            get { return this._properties; }
-            set { this._properties = value; }
-        }
-        
-        private string _provisioningState;
-        
-        /// <summary>
-        /// Optional. Gets or sets resource provisioning state.
-        /// </summary>
-        public string ProvisioningState
-        {
-            get { return this._provisioningState; }
-            set { this._provisioningState = value; }
-        }
-        
         /// <summary>
         /// Initializes a new instance of the GenericResourceExtended class.
         /// </summary>
-        public GenericResourceExtended()
+        public GenericResourceExtended(string location): this()
         {
+            this.Location = location;
         }
     }
 }

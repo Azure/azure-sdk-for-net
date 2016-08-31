@@ -20,46 +20,23 @@
 // code is regenerated.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Resources.Models;
 
 namespace Microsoft.Azure.Management.Resources.Models
 {
     /// <summary>
-    /// The deployment preflight resource.
+    /// Resource information.
     /// </summary>
-    public partial class DeploymentPreFlightResource : GenericResourceExtended
+    public partial class GenericResource : ResourceBase
     {
-        private string _apiVersion;
-        
         /// <summary>
-        /// Optional. Gets or sets the api version of the resource.
+        /// Initializes a new instance of the GenericResource class.
         /// </summary>
-        public string ApiVersion
+        public GenericResource(string location): this()
         {
-            get { return this._apiVersion; }
-            set { this._apiVersion = value; }
-        }
-        
-        private IList<string> _dependsOn;
-        
-        /// <summary>
-        /// Optional. Gets the list of depends on.
-        /// </summary>
-        public IList<string> DependsOn
-        {
-            get { return this._dependsOn; }
-            set { this._dependsOn = value; }
-        }
-        
-        /// <summary>
-        /// Initializes a new instance of the DeploymentPreFlightResource class.
-        /// </summary>
-        public DeploymentPreFlightResource()
-        {
-            this.DependsOn = new LazyList<string>();
+            this.Location = location;
         }
     }
 }
