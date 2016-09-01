@@ -39,16 +39,27 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// after provisioning has completed. Possible values include:
         /// 'active', 'suspended'</param>
         /// <param name="creationTime">the account creation time.</param>
+        /// <param name="encryptionState">The current state of encryption for
+        /// this Data Lake store account. Possible values include: 'Enabled',
+        /// 'Disabled'</param>
+        /// <param name="encryptionProvisioningState">The current state of
+        /// encryption provisioning for this Data Lake store account.
+        /// Possible values include: 'Creating', 'Succeeded'</param>
+        /// <param name="encryptionConfig">The Key vault encryption
+        /// configuration.</param>
         /// <param name="lastModifiedTime">the account last modified
         /// time.</param>
         /// <param name="endpoint">the gateway host.</param>
         /// <param name="defaultGroup">the default owner group for all new
         /// folders and files created in the Data Lake Store account.</param>
-        public DataLakeStoreAccountProperties(DataLakeStoreAccountStatus? provisioningState = default(DataLakeStoreAccountStatus?), DataLakeStoreAccountState? state = default(DataLakeStoreAccountState?), DateTime? creationTime = default(DateTime?), DateTime? lastModifiedTime = default(DateTime?), string endpoint = default(string), string defaultGroup = default(string))
+        public DataLakeStoreAccountProperties(DataLakeStoreAccountStatus? provisioningState = default(DataLakeStoreAccountStatus?), DataLakeStoreAccountState? state = default(DataLakeStoreAccountState?), DateTime? creationTime = default(DateTime?), EncryptionState? encryptionState = default(EncryptionState?), EncryptionProvisioningState? encryptionProvisioningState = default(EncryptionProvisioningState?), EncryptionConfig encryptionConfig = default(EncryptionConfig), DateTime? lastModifiedTime = default(DateTime?), string endpoint = default(string), string defaultGroup = default(string))
         {
             ProvisioningState = provisioningState;
             State = state;
             CreationTime = creationTime;
+            EncryptionState = encryptionState;
+            EncryptionProvisioningState = encryptionProvisioningState;
+            EncryptionConfig = encryptionConfig;
             LastModifiedTime = lastModifiedTime;
             Endpoint = endpoint;
             DefaultGroup = defaultGroup;
@@ -75,6 +86,27 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// </summary>
         [JsonProperty(PropertyName = "creationTime")]
         public DateTime? CreationTime { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the current state of encryption for this Data Lake
+        /// store account. Possible values include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "encryptionState")]
+        public EncryptionState? EncryptionState { get; set; }
+
+        /// <summary>
+        /// Gets the current state of encryption provisioning for this Data
+        /// Lake store account. Possible values include: 'Creating',
+        /// 'Succeeded'
+        /// </summary>
+        [JsonProperty(PropertyName = "encryptionProvisioningState")]
+        public EncryptionProvisioningState? EncryptionProvisioningState { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the Key vault encryption configuration.
+        /// </summary>
+        [JsonProperty(PropertyName = "encryptionConfig")]
+        public EncryptionConfig EncryptionConfig { get; set; }
 
         /// <summary>
         /// Gets the account last modified time.
