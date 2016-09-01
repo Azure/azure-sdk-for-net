@@ -10,7 +10,7 @@ set source=-Source https://www.myget.org/F/autorest/api/v2
 
 set accountSpecFile="https://raw.githubusercontent.com/begoldsm/azure-rest-api-specs/master/arm-datalake-analytics/account/2015-10-01-preview/swagger/account.json"
 set jobSpecFile="https://raw.githubusercontent.com/begoldsm/azure-rest-api-specs/master/arm-datalake-analytics/job/2016-03-20-preview/swagger/job.json"
-set catalogSpecFile="https://raw.githubusercontent.com/begoldsm/azure-rest-api-specs/master/arm-datalake-analytics/catalog/2015-10-01-preview/swagger/catalog.json"
+set catalogSpecFile="https://raw.githubusercontent.com/begoldsm/azure-rest-api-specs/master/arm-datalake-analytics/catalog/2016-06-01-preview/swagger/catalog.json"
 
 set repoRoot=%~dp0..\..\..\..
 set generateFolder=%~dp0Generated
