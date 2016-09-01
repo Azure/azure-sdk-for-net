@@ -23,8 +23,8 @@ namespace Microsoft.Azure.Management.Network
     public partial interface ILoadBalancersOperations
     {
         /// <summary>
-        /// The delete loadbalancer operation deletes the specified
-        /// loadbalancer.
+        /// The delete LoadBalancer operation deletes the specified load
+        /// balancer.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -40,8 +40,8 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string loadBalancerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The delete loadbalancer operation deletes the specified
-        /// loadbalancer.
+        /// The delete LoadBalancer operation deletes the specified load
+        /// balancer.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -57,8 +57,8 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string loadBalancerName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The Get ntework interface operation retreives information about
-        /// the specified network interface.
+        /// The Get LoadBalancer operation retrieves information about the
+        /// specified LoadBalancer.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -115,8 +115,8 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<LoadBalancer>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string loadBalancerName, LoadBalancer parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The List loadBalancer opertion retrieves all the loadbalancers in
-        /// a subscription.
+        /// The List loadBalancer operation retrieves all the load balancers
+        /// in a subscription.
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -126,8 +126,8 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<IPage<LoadBalancer>>> ListAllWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The List loadBalancer opertion retrieves all the loadbalancers in
-        /// a resource group.
+        /// The List loadBalancer operation retrieves all the load balancers
+        /// in a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -140,8 +140,8 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<IPage<LoadBalancer>>> ListWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The List loadBalancer opertion retrieves all the loadbalancers in
-        /// a subscription.
+        /// The List loadBalancer operation retrieves all the load balancers
+        /// in a subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -154,8 +154,8 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<IPage<LoadBalancer>>> ListAllNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The List loadBalancer opertion retrieves all the loadbalancers in
-        /// a resource group.
+        /// The List loadBalancer operation retrieves all the load balancers
+        /// in a resource group.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

@@ -2843,7 +2843,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
-            string op = "GETACLSTATUS";
+            string op = "MSGETACLSTATUS";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

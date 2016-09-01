@@ -43,6 +43,26 @@ namespace Microsoft.Azure.Management.Redis
         /// </param>
         Task<AzureOperationResponse<RedisResourceWithAccessKey>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string name, RedisCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Create a redis cache, or replace (overwrite/recreate, with
+        /// potential downtime) an existing cache
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='name'>
+        /// The name of the redis cache.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to the CreateOrUpdate redis operation.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<RedisResourceWithAccessKey>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string name, RedisCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Deletes a redis cache. This operation takes a while to complete.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -58,6 +78,22 @@ namespace Microsoft.Azure.Management.Redis
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Deletes a redis cache. This operation takes a while to complete.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='name'>
+        /// The name of the redis cache.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a redis cache (resource description).
         /// </summary>

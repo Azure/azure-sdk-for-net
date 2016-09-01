@@ -29,7 +29,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the TypeFieldInfo class.
         /// </summary>
-        /// <param name="name">the name of the field associated with this type.</param>
+        /// <param name="name">the name of the field associated with this
+        /// type.</param>
         /// <param name="type">the type of the field.</param>
         public TypeFieldInfo(string name = default(string), string type = default(string))
         {

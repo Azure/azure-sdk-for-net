@@ -16,11 +16,13 @@
 
 using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
@@ -65,7 +67,9 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             this.TargetStreamFolderPath = uploadParameters.TargetStreamPath.TrimEnd('/');
             this.IsRecursive = uploadParameters.IsRecursive;
             // get this list of all files in the source directory, depending on if this is recursive or not.
-            IEnumerable<string> allFiles;
+            ConcurrentQueue<string> allFiles;
+            ConcurrentQueue<Exception> exceptions = new ConcurrentQueue<Exception>();
+
             Dictionary<string, long> downloadFiles = new Dictionary<string, long>();
             if (uploadParameters.IsDownload)
             {
@@ -74,50 +78,83 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     downloadFiles.Add(entry.Key, entry.Value);
                 }
 
-                allFiles = downloadFiles.Keys;
+                allFiles = new ConcurrentQueue<string>(downloadFiles.Keys);
                 this.TotalFileBytes = downloadFiles.Values.Sum();
             }
             else
             {
-                allFiles = this.IsRecursive ? Directory.EnumerateFiles(this.InputFolderPath, "*.*", SearchOption.AllDirectories) :
-                    Directory.EnumerateFiles(this.InputFolderPath, "*.*", SearchOption.TopDirectoryOnly);
-                this.TotalFileBytes = GetByteCountInDirectory(this.InputFolderPath, uploadParameters.IsRecursive);
+                allFiles = new ConcurrentQueue<string>(this.IsRecursive ? Directory.EnumerateFiles(this.InputFolderPath, "*.*", SearchOption.AllDirectories) :
+                    Directory.EnumerateFiles(this.InputFolderPath, "*.*", SearchOption.TopDirectoryOnly));
+
+                this.TotalFileBytes = GetByteCountFromFileList(allFiles);
             }
 
             this.FileCount = allFiles.Count();
             this.Files = new UploadMetadata[this.FileCount];
-            Parallel.For(0, this.FileCount, i =>
-            {
-                // construct upload metadata based on this information.
-                // first we need to change the input file path to match the folder path structure of the source directory.
-                // for example, if the source is "C:\temp\foo", the target path is "/my/folder" and the file we are adding is "C:\temp\foo\bar\baz.txt"
-                // then the structure maintained is "bar\baz.txt" and that is joined with the targetStream path into: "/my/folder/bar/baz.txt"
-                var curFile = allFiles.ElementAt(i);
-                var relativeFilePath = curFile.Replace(this.InputFolderPath, "").TrimStart('\\').TrimStart('/');
-                var paramsPerFile = new UploadParameters
-                (
-                    curFile,
-                    String.Format("{0}{1}{2}", this.TargetStreamFolderPath, uploadParameters.IsDownload ? "\\" : "/", relativeFilePath),
-                    uploadParameters.AccountName,
-                    uploadParameters.PerFileThreadCount,
-                    uploadParameters.ConcurrentFileCount,
-                    uploadParameters.IsOverwrite,
-                    uploadParameters.IsResume,
-                    uploadParameters.IsBinary,
-                    uploadParameters.IsRecursive,
-                    uploadParameters.IsDownload,
-                    uploadParameters.MaxSegementLength,
-                    uploadParameters.LocalMetadataLocation
-                );
+            // explicitly set the thread pool start amount to at most 500
+            int threadCount = Math.Min(this.FileCount, 500);
+            var threads = new List<Thread>(threadCount);
 
-                long size = -1;
-                if (uploadParameters.IsDownload && downloadFiles != null)
-                {
-                    size = downloadFiles[curFile];
-                }
-                var uploadMetadataPath = Path.Combine(uploadParameters.LocalMetadataLocation, string.Format("{0}.upload.xml", Path.GetFileName(curFile)));
-                this.Files[i] = new UploadMetadata(uploadMetadataPath, paramsPerFile, frontend, size);
-            });
+            //start a bunch of new threads that will create the metadata and ensure a protected index.
+            int currentIndex = 0;
+            object indexIncrementLock = new object();
+            for (int i = 0; i < threadCount; i++)
+            {
+                var t = new Thread(() => {
+                    string curFile;
+                    while (allFiles.TryDequeue(out curFile))
+                    {
+                        try
+                        {
+                            var relativeFilePath = curFile.Replace(this.InputFolderPath, "").TrimStart('\\').TrimStart('/');
+                            var paramsPerFile = new UploadParameters
+                            (
+                                curFile,
+                                String.Format("{0}{1}{2}", this.TargetStreamFolderPath, uploadParameters.IsDownload ? "\\" : "/", relativeFilePath),
+                                uploadParameters.AccountName,
+                                uploadParameters.PerFileThreadCount,
+                                uploadParameters.ConcurrentFileCount,
+                                uploadParameters.IsOverwrite,
+                                uploadParameters.IsResume,
+                                uploadParameters.IsBinary,
+                                uploadParameters.IsRecursive,
+                                uploadParameters.IsDownload,
+                                uploadParameters.MaxSegementLength,
+                                uploadParameters.LocalMetadataLocation
+                            );
+
+                            long size = -1;
+                            if (uploadParameters.IsDownload && downloadFiles != null)
+                            {
+                                size = downloadFiles[curFile];
+                            }
+                            var uploadMetadataPath = Path.Combine(uploadParameters.LocalMetadataLocation, string.Format("{0}.upload.xml", Path.GetFileName(curFile)));
+                            var eachFileMetadata = new UploadMetadata(uploadMetadataPath, paramsPerFile, frontend, size);
+                            lock (indexIncrementLock)
+                            {
+                                this.Files[currentIndex] = eachFileMetadata;
+                                currentIndex++;
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            exceptions.Enqueue(e);
+                        }
+                    }
+                });
+                t.Start();
+                threads.Add(t);
+            }
+
+            foreach (var t in threads)
+            {
+                t.Join();
+            }
+
+            if (exceptions.Count > 0)
+            {
+                throw new AggregateException("At least one file failed to have metadata generated", exceptions.ToArray());
+            }
         }
 
         #endregion
@@ -224,7 +261,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
                         // populate all child metadata file paths as well
                         var localMetadataFolder = Path.GetDirectoryName(filePath);
-                        Parallel.ForEach(result.Files, file =>
+                        Parallel.ForEach(result.Files, new ParallelOptions { MaxDegreeOfParallelism = -1 }, file =>
                         {
                             var uploadMetadataPath = Path.Combine(localMetadataFolder, string.Format("{0}.upload.xml", Path.GetFileName(file.InputFilePath)));
                             file.MetadataFilePath = uploadMetadataPath;
@@ -303,29 +340,16 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         }
 
         /// <summary>
-        /// Gets the byte count in directory.
+        /// Gets the byte count in the given list of files.
         /// </summary>
-        /// <param name="directory">The directory.</param>
-        /// <param name="recursive">if set to <c>true</c> [recursive].</param>
-        /// <returns></returns>
-        internal long GetByteCountInDirectory(string directory, bool recursive)
+        /// <param name="fileList">The file list.</param>
+        /// <returns>The total byte count for the file list</returns>
+        internal long GetByteCountFromFileList(IEnumerable<string> fileList)
         {
             long count = 0;
-            directory = directory.TrimEnd('\\');
-            directory += "\\";
-            foreach (var entry in Directory.GetFileSystemEntries(directory))
+            foreach (var entry in fileList)
             {
-                if (Directory.Exists(entry))
-                {
-                    if (recursive)
-                    {
-                        count += GetByteCountInDirectory(entry, true);
-                    }
-                }
-                else
-                {
-                    count += new FileInfo(entry).Length;
-                }
+                count += new FileInfo(entry).Length;
             }
 
             return count;

@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Network
         public NetworkManagementClient Client { get; private set; }
 
         /// <summary>
-        /// The delete loadbalancer operation deletes the specified loadbalancer.
+        /// The delete LoadBalancer operation deletes the specified load balancer.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The delete loadbalancer operation deletes the specified loadbalancer.
+        /// The delete LoadBalancer operation deletes the specified load balancer.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -224,8 +224,8 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The Get ntework interface operation retreives information about the
-        /// specified network interface.
+        /// The Get LoadBalancer operation retrieves information about the specified
+        /// LoadBalancer.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -657,7 +657,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The List loadBalancer opertion retrieves all the loadbalancers in a
+        /// The List loadBalancer operation retrieves all the load balancers in a
         /// subscription.
         /// </summary>
         /// <param name='customHeaders'>
@@ -822,7 +822,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The List loadBalancer opertion retrieves all the loadbalancers in a
+        /// The List loadBalancer operation retrieves all the load balancers in a
         /// resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -996,7 +996,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The List loadBalancer opertion retrieves all the loadbalancers in a
+        /// The List loadBalancer operation retrieves all the load balancers in a
         /// subscription.
         /// </summary>
         /// <param name='nextPageLink'>
@@ -1156,7 +1156,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The List loadBalancer opertion retrieves all the loadbalancers in a
+        /// The List loadBalancer operation retrieves all the load balancers in a
         /// resource group.
         /// </summary>
         /// <param name='nextPageLink'>

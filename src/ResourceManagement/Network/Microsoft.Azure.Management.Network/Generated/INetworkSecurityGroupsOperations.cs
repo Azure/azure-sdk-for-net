@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Network
     public partial interface INetworkSecurityGroupsOperations
     {
         /// <summary>
-        /// The Delete NetworkSecurityGroup operation deletes the specifed
+        /// The Delete NetworkSecurityGroup operation deletes the specified
         /// network security group
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string networkSecurityGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The Delete NetworkSecurityGroup operation deletes the specifed
+        /// The Delete NetworkSecurityGroup operation deletes the specified
         /// network security group
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -78,7 +78,7 @@ namespace Microsoft.Azure.Management.Network
         Task<AzureOperationResponse<NetworkSecurityGroup>> GetWithHttpMessagesAsync(string resourceGroupName, string networkSecurityGroupName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The Put NetworkSecurityGroup operation creates/updates a network
-        /// security groupin the specified resource group.
+        /// security group in the specified resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.Network
         Task<AzureOperationResponse<NetworkSecurityGroup>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string networkSecurityGroupName, NetworkSecurityGroup parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The Put NetworkSecurityGroup operation creates/updates a network
-        /// security groupin the specified resource group.
+        /// security group in the specified resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

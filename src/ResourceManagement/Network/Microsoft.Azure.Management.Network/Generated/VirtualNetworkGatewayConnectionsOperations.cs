@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the resource group.
         /// </param>
         /// <param name='virtualNetworkGatewayConnectionName'>
-        /// The name of the virtual network gateway conenction.
+        /// The name of the virtual network gateway connection.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Begin Create or update Virtual Network Gateway
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the resource group.
         /// </param>
         /// <param name='virtualNetworkGatewayConnectionName'>
-        /// The name of the virtual network gateway conenction.
+        /// The name of the virtual network gateway connection.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Begin Create or update Virtual Network Gateway
@@ -482,7 +482,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The Delete VirtualNetworkGatewayConnection operation deletes the specifed
+        /// The Delete VirtualNetworkGatewayConnection operation deletes the specified
         /// virtual network Gateway connection through Network resource provider.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -506,7 +506,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The Delete VirtualNetworkGatewayConnection operation deletes the specifed
+        /// The Delete VirtualNetworkGatewayConnection operation deletes the specified
         /// virtual network Gateway connection through Network resource provider.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -1258,7 +1258,7 @@ namespace Microsoft.Azure.Management.Network
         /// The virtual network gateway connection name.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Begin Set Virtual Network Gateway conection
+        /// Parameters supplied to the Begin Set Virtual Network Gateway connection
         /// Shared key operation throughNetwork resource provider.
         /// </param>
         /// <param name='customHeaders'>
@@ -1290,7 +1290,7 @@ namespace Microsoft.Azure.Management.Network
         /// The virtual network gateway connection name.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Begin Set Virtual Network Gateway conection
+        /// Parameters supplied to the Begin Set Virtual Network Gateway connection
         /// Shared key operation throughNetwork resource provider.
         /// </param>
         /// <param name='customHeaders'>

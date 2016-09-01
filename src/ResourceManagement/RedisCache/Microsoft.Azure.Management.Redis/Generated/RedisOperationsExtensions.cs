@@ -71,6 +71,54 @@ namespace Microsoft.Azure.Management.Redis
             }
 
             /// <summary>
+            /// Create a redis cache, or replace (overwrite/recreate, with potential
+            /// downtime) an existing cache
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the redis cache.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the CreateOrUpdate redis operation.
+            /// </param>
+            public static RedisResourceWithAccessKey BeginCreateOrUpdate(this IRedisOperations operations, string resourceGroupName, string name, RedisCreateOrUpdateParameters parameters)
+            {
+                return Task.Factory.StartNew(s => ((IRedisOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create a redis cache, or replace (overwrite/recreate, with potential
+            /// downtime) an existing cache
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the redis cache.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the CreateOrUpdate redis operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<RedisResourceWithAccessKey> BeginCreateOrUpdateAsync(this IRedisOperations operations, string resourceGroupName, string name, RedisCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Deletes a redis cache. This operation takes a while to complete.
             /// </summary>
             /// <param name='operations'>
@@ -105,6 +153,43 @@ namespace Microsoft.Azure.Management.Redis
             public static async Task DeleteAsync(this IRedisOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 await operations.DeleteWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Deletes a redis cache. This operation takes a while to complete.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the redis cache.
+            /// </param>
+            public static void BeginDelete(this IRedisOperations operations, string resourceGroupName, string name)
+            {
+                Task.Factory.StartNew(s => ((IRedisOperations)s).BeginDeleteAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a redis cache. This operation takes a while to complete.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the redis cache.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginDeleteAsync(this IRedisOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
