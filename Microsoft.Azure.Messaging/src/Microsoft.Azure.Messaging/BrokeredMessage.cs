@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using Microsoft.Azure.Messaging.Primitives;
+
 namespace Microsoft.Azure.Messaging
 {
     using System;
@@ -269,11 +271,11 @@ namespace Microsoft.Azure.Messaging
         /// <see cref="BrokeredMessage" /> class from a given object by using DataContractSerializer with a binary XmlDictionaryWriter.</summary> 
         ///<param name="serializableObject">The serializable object.</param>
         /// TODO: 
-        //public BrokeredMessage(object serializableObject)
-        //    : this(serializableObject, serializableObject == null ? null : new DataContractBinarySerializer(GetObjectType(serializableObject)))
-        //{
-        //    this.bodyObject = serializableObject;
-        //}
+        public BrokeredMessage(object serializableObject)
+            : this(serializableObject, serializableObject == null ? null : new DataContractBinarySerializer(GetObjectType(serializableObject)))
+        {
+            this.bodyObject = serializableObject;
+        }
 
         /// <summary> Constructor that creates a BrokeredMessage from a given object using the provided XmlObjectSerializer </summary>
         /// <remarks> You should be aware of the exceptions that their provided Serializer can throw and take appropriate
@@ -284,25 +286,25 @@ namespace Microsoft.Azure.Messaging
         /// <exception cref="ArgumentNullException">Thrown when null serializer is passed to the method 
         /// TODO: 
         /// with a non-null serializableObject</exception>
-        //public BrokeredMessage(object serializableObject, XmlObjectSerializer serializer)
-        //    : this(BrokeredMessage.NewMessageId())
-        //{
-        //    if (serializableObject != null)
-        //    {
-        //        if (serializer == null)
-        //        {
-        //            //throw FxTrace.Exception.AsError(new ArgumentNullException("serializer"));
-        //            throw new ArgumentNullException("serializer");
-        //        }
+        public BrokeredMessage(object serializableObject, XmlObjectSerializer serializer)
+            : this(BrokeredMessage.NewMessageId())
+        {
+            if (serializableObject != null)
+            {
+                if (serializer == null)
+                {
+                    //throw FxTrace.Exception.AsError(new ArgumentNullException("serializer"));
+                    throw new ArgumentNullException("serializer");
+                }
 
-        //        MemoryStream stream = new MemoryStream(256);
-        //        serializer.WriteObject(stream, serializableObject);
-        //        stream.Flush();
-        //        stream.Position = 0;
-        //        this.BodyStream = stream;
-        //        this.ownsBodyStream = true;
-        //    }
-        //}
+                MemoryStream stream = new MemoryStream(256);
+                serializer.WriteObject(stream, serializableObject);
+                stream.Flush();
+                stream.Position = 0;
+                this.BodyStream = stream;
+                this.ownsBodyStream = true;
+            }
+        }
 
         /// <summary>Initializes a new instance of the <see cref="BrokeredMessage" /> class.</summary>
         /// <param name="messageBodyStream">The message body stream.</param>

@@ -31,9 +31,11 @@ namespace Microsoft.Azure.Messaging.UnitTests
         async Task QueueClientSend()
         {
             WriteLine("Sending single mesage via QueueClient.SendAsync(brokeredMessage)");
-            var message = new BrokeredMessage();
+            
             for (int i = 0; i < 10; i++)
             {
+                BrokeredMessage message = new BrokeredMessage("test" + i);
+                message.Label = "test" + i;
                 await this.QueueClient.SendAsync(message); 
             }
             WriteLine("Sent 10 messages using QueueClient.SendAsync()");
