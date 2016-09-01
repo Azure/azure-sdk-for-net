@@ -81,14 +81,13 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                                 testEnv.Endpoints)
                                 .ConfigureAwait(false).GetAwaiter().GetResult();
                         }
-                        //else if (testEnv.ServicePrincipal != null && password != null)
+                        
                         else if (testEnv.AADClientId != null && password != null)
                         {
                             TestEnvironmentFactory.LoginServicePrincipalAsync(
                                 testEnv.TokenInfo,
                                 testEnv.Tenant,
                                 testEnv.AADClientId,
-                                //testEnv.ServicePrincipal, 
                                 password, 
                                 testEnv.Endpoints)
                                 .ConfigureAwait(false).GetAwaiter().GetResult();

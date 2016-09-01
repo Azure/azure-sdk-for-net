@@ -35,12 +35,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// The resource management endpoint name
         /// </summary>
         public const string ResourceManagementUri = "ResourceManagementUri";
-
-        /// <summary>
-        /// Service principal key
-        /// </summary>
-        //public const string ServicePrincipalKey = ConnectionStringFields.ServicePrincipal;
-
+        
         /// <summary>
         /// The key inside the connection string for the userId identifier
         /// </summary>
@@ -291,8 +286,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         }
 
         public Dictionary<TokenAudience,TokenCredentials> TokenInfo { get; private set; }
-
-        //public string ServicePrincipal { get; set; }
 
         public string UserName { get; set; }
 

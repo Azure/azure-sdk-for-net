@@ -63,12 +63,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// The key inside the connection string for a Microsoft ID (OrgId or LiveId)
         /// </summary>
         public const string UserId = "UserId";
-
-        /// <summary>
-        /// Service principal key
-        /// </summary>
-        //public const string ServicePrincipal = "ServicePrincipal";
-
+        
         /// <summary>
         /// The key inside the connection string for a user password matching the Microsoft ID
         /// </summary>
