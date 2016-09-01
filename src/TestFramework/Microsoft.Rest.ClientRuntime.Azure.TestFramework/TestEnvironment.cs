@@ -39,7 +39,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// <summary>
         /// Service principal key
         /// </summary>
-        public const string ServicePrincipalKey = ConnectionStringFields.ServicePrincipal;
+        //public const string ServicePrincipalKey = ConnectionStringFields.ServicePrincipal;
 
         /// <summary>
         /// The key inside the connection string for the userId identifier
@@ -58,8 +58,13 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// <summary>
         /// The key inside the connection string for the AAD client ID"
         /// </summary>
-        public const string ClientIdKey = ConnectionStringFields.AADClientId;
-        public const string ClientIdDefault = "1950a258-227b-4e31-a9cf-717495945fc2";
+        public const string AADClientIdKey = ConnectionStringFields.AADClientId;
+        public const string AADClientIdDefault = "1950a258-227b-4e31-a9cf-717495945fc2";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string AADClientSecretKey = ConnectionStringFields.AADClientSecret;
 
         /// <summary>
         /// The key inside the connection string for the AAD Tenant
@@ -157,7 +162,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             this.Endpoints = TestEnvironment.EnvEndpoints[EnvironmentDefault];
 
             this.BaseUri = this.Endpoints.ResourceManagementUri;
-            this.ClientId = TestEnvironment.ClientIdDefault;
+            this.AADClientId = TestEnvironment.AADClientIdDefault;
             this.Tenant = TestEnvironment.AADTenantDefault;
 
             if (connection != null)
@@ -171,10 +176,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                         this.Tenant = splitUser[1];
                     }
                 }
-                if (connection.ContainsKey(TestEnvironment.ServicePrincipalKey))
-                {
-                    this.ServicePrincipal = connection[TestEnvironment.ServicePrincipalKey];
-                }
                 if (connection.ContainsKey(TestEnvironment.AADTenantKey))
                 {
                     this.Tenant = connection[TestEnvironment.AADTenantKey];
@@ -183,10 +184,16 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 {
                     this.SubscriptionId = connection[TestEnvironment.SubscriptionIdKey];
                 }
-                if (connection.ContainsKey(TestEnvironment.ClientIdKey))
+                if (connection.ContainsKey(TestEnvironment.AADClientIdKey))
                 {
-                    this.ClientId = connection[TestEnvironment.ClientIdKey];
+                    this.AADClientId = connection[TestEnvironment.AADClientIdKey];
                 }
+
+                if (connection.ContainsKey(TestEnvironment.AADClientSecretKey))
+                {
+                    this.AADClientSecret = connection[TestEnvironment.AADClientSecretKey];
+                }
+
                 if (connection.ContainsKey(TestEnvironment.EnvironmentKey))
                 {
                     if (ConnectionStringContainsEndpoint(connection))
@@ -285,13 +292,15 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
         public Dictionary<TokenAudience,TokenCredentials> TokenInfo { get; private set; }
 
-        public string ServicePrincipal { get; set; }
+        //public string ServicePrincipal { get; set; }
 
         public string UserName { get; set; }
 
         public string Tenant { get; set; }
 
-        public string ClientId { get; set; }
+        public string AADClientId { get; set; }
+
+        public string AADClientSecret { get; set; }
 
         public string SubscriptionId { get; set; }
         
