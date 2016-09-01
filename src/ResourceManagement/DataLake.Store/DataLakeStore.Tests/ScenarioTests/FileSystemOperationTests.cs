@@ -24,6 +24,7 @@ using Microsoft.Azure.Management.DataLake.Store;
 using Microsoft.Azure.Management.DataLake.Store.Models;
 using Xunit;
 using Microsoft.Azure.Test.HttpRecorder;
+using System.Diagnostics;
 
 namespace DataLakeStore.Tests
 {
@@ -1022,9 +1023,13 @@ namespace DataLakeStore.Tests
 
         internal long ToUnixTimeStampMs(string date)
         {
+            Console.WriteLine(string.Format("Date string returned: {0}", date));
             var convertedDate = Convert.ToDateTime(date);
-            return (long)(convertedDate.ToUniversalTime() - new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
-            
+            var convertedMs = (long)(convertedDate.ToUniversalTime() - new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
+            Console.WriteLine(string.Format("Date converted to UTC in milliseconds: {0}", convertedMs));
+            return convertedMs;
+
+
         }
 
         internal DateTime FromUnixTimestampMs(long unixTimestampInMs)
