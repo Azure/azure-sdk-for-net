@@ -7,7 +7,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "8af51b90-8cf2-45f0-9402-ba31ac679fef"
+          "87c656ce-d4a1-4c49-8f4f-5acf4a349ae3"
         ],
         "accept-language": [
           "en-US"
@@ -28,7 +28,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 01 Sep 2016 20:46:10 GMT"
+          "Thu, 01 Sep 2016 21:30:38 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -37,16 +37,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1165"
         ],
         "x-ms-request-id": [
-          "2bac3736-4140-4a1c-80bf-9b4576cd29dc"
+          "8506f7cb-43e0-4431-a0d3-4fce080a7e3f"
         ],
         "x-ms-correlation-request-id": [
-          "2bac3736-4140-4a1c-80bf-9b4576cd29dc"
+          "8506f7cb-43e0-4431-a0d3-4fce080a7e3f"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160901T204610Z:2bac3736-4140-4a1c-80bf-9b4576cd29dc"
+          "CENTRALUS:20160901T213039Z:8506f7cb-43e0-4431-a0d3-4fce080a7e3f"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -61,7 +61,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9abda405-c794-4441-a356-48513baf9466"
+          "a649ec65-ba29-434e-9f5f-90742824552f"
         ],
         "accept-language": [
           "en-US"
@@ -82,7 +82,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 01 Sep 2016 20:46:10 GMT"
+          "Thu, 01 Sep 2016 21:30:38 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -91,16 +91,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14999"
+          "14916"
         ],
         "x-ms-request-id": [
-          "4eb4cd0d-7b6f-41a4-aea6-367b7d83b721"
+          "ca6c59d9-f299-427f-8896-1e1a7dcd6f8e"
         ],
         "x-ms-correlation-request-id": [
-          "4eb4cd0d-7b6f-41a4-aea6-367b7d83b721"
+          "ca6c59d9-f299-427f-8896-1e1a7dcd6f8e"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160901T204611Z:4eb4cd0d-7b6f-41a4-aea6-367b7d83b721"
+          "CENTRALUS:20160901T213039Z:ca6c59d9-f299-427f-8896-1e1a7dcd6f8e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -115,7 +115,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9b44400b-7c92-44aa-84fd-ed8609c5420d"
+          "648f3cd3-2375-4519-9d4e-9726d6f0ebfa"
         ],
         "accept-language": [
           "en-US"
@@ -136,7 +136,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 01 Sep 2016 20:46:10 GMT"
+          "Thu, 01 Sep 2016 21:30:39 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -145,16 +145,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1164"
         ],
         "x-ms-request-id": [
-          "e6db385b-e5cd-4772-8d17-791a5b523277"
+          "08c05666-be82-48ff-afe5-7d084fd58029"
         ],
         "x-ms-correlation-request-id": [
-          "e6db385b-e5cd-4772-8d17-791a5b523277"
+          "08c05666-be82-48ff-afe5-7d084fd58029"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160901T204611Z:e6db385b-e5cd-4772-8d17-791a5b523277"
+          "CENTRALUS:20160901T213039Z:08c05666-be82-48ff-afe5-7d084fd58029"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -169,7 +169,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0bd01f65-a5ba-4a73-9016-13ad2d61ddd5"
+          "754b0b57-dd89-477b-8ab0-bca88f4fac71"
         ],
         "accept-language": [
           "en-US"
@@ -190,7 +190,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 01 Sep 2016 20:46:10 GMT"
+          "Thu, 01 Sep 2016 21:30:39 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -199,16 +199,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14998"
+          "14915"
         ],
         "x-ms-request-id": [
-          "e6a163ee-cac4-469a-8bfd-60c403ba417a"
+          "6a0f7841-8511-4644-b35f-5fce48edd9da"
         ],
         "x-ms-correlation-request-id": [
-          "e6a163ee-cac4-469a-8bfd-60c403ba417a"
+          "6a0f7841-8511-4644-b35f-5fce48edd9da"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160901T204611Z:e6a163ee-cac4-469a-8bfd-60c403ba417a"
+          "CENTRALUS:20160901T213040Z:6a0f7841-8511-4644-b35f-5fce48edd9da"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -217,13 +217,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/90585f39-ab85-4921-bb37-0468f7efd1dd/resourcegroups/datalakerg1849?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTA1ODVmMzktYWI4NS00OTIxLWJiMzctMDQ2OGY3ZWZkMWRkL3Jlc291cmNlZ3JvdXBzL2RhdGFsYWtlcmcxODQ5P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestUri": "/subscriptions/90585f39-ab85-4921-bb37-0468f7efd1dd/resourcegroups/datalakerg15484?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTA1ODVmMzktYWI4NS00OTIxLWJiMzctMDQ2OGY3ZWZkMWRkL3Jlc291cmNlZ3JvdXBzL2RhdGFsYWtlcmcxNTQ4ND9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "71693c7b-b85f-4e38-8d53-018cdca3ab8c"
+          "e489ff89-b4b7-4a04-83f4-f61a7784fe06"
         ],
         "accept-language": [
           "en-US"
@@ -232,10 +232,10 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceGroupNotFound\",\r\n    \"message\": \"Resource group 'datalakerg1849' could not be found.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceGroupNotFound\",\r\n    \"message\": \"Resource group 'datalakerg15484' could not be found.\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "106"
+          "107"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -247,7 +247,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 01 Sep 2016 20:46:10 GMT"
+          "Thu, 01 Sep 2016 21:30:39 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -256,16 +256,16 @@
           "gateway"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14997"
+          "14914"
         ],
         "x-ms-request-id": [
-          "856a0487-2910-40d5-9e2f-4bd8294c4deb"
+          "ddf479c4-d5d4-4351-bf29-7f9b482d779b"
         ],
         "x-ms-correlation-request-id": [
-          "856a0487-2910-40d5-9e2f-4bd8294c4deb"
+          "ddf479c4-d5d4-4351-bf29-7f9b482d779b"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160901T204611Z:856a0487-2910-40d5-9e2f-4bd8294c4deb"
+          "CENTRALUS:20160901T213040Z:ddf479c4-d5d4-4351-bf29-7f9b482d779b"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -274,13 +274,13 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/90585f39-ab85-4921-bb37-0468f7efd1dd/resourcegroups/datalakerg1849?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTA1ODVmMzktYWI4NS00OTIxLWJiMzctMDQ2OGY3ZWZkMWRkL3Jlc291cmNlZ3JvdXBzL2RhdGFsYWtlcmcxODQ5P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestUri": "/subscriptions/90585f39-ab85-4921-bb37-0468f7efd1dd/resourcegroups/datalakerg15484?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTA1ODVmMzktYWI4NS00OTIxLWJiMzctMDQ2OGY3ZWZkMWRkL3Jlc291cmNlZ3JvdXBzL2RhdGFsYWtlcmcxNTQ4ND9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "352241c9-7904-4656-a35a-051984e5cba8"
+          "5b93f217-3355-45a0-ae6e-a7e1f8e74fa6"
         ],
         "accept-language": [
           "en-US"
@@ -289,7 +289,7 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/90585f39-ab85-4921-bb37-0468f7efd1dd/resourceGroups/datalakerg1849\",\r\n  \"name\": \"datalakerg1849\",\r\n  \"location\": \"eastus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/90585f39-ab85-4921-bb37-0468f7efd1dd/resourceGroups/datalakerg15484\",\r\n  \"name\": \"datalakerg15484\",\r\n  \"location\": \"eastus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -301,7 +301,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 01 Sep 2016 20:46:11 GMT"
+          "Thu, 01 Sep 2016 21:30:39 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -310,16 +310,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14996"
+          "14913"
         ],
         "x-ms-request-id": [
-          "3b81d624-03e9-471b-8ec9-82daf725252b"
+          "ba5982ab-f1c4-4dfc-b056-81b0ba2b3a89"
         ],
         "x-ms-correlation-request-id": [
-          "3b81d624-03e9-471b-8ec9-82daf725252b"
+          "ba5982ab-f1c4-4dfc-b056-81b0ba2b3a89"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160901T204611Z:3b81d624-03e9-471b-8ec9-82daf725252b"
+          "CENTRALUS:20160901T213040Z:ba5982ab-f1c4-4dfc-b056-81b0ba2b3a89"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -328,8 +328,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/90585f39-ab85-4921-bb37-0468f7efd1dd/resourcegroups/datalakerg1849?api-version=2015-11-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTA1ODVmMzktYWI4NS00OTIxLWJiMzctMDQ2OGY3ZWZkMWRkL3Jlc291cmNlZ3JvdXBzL2RhdGFsYWtlcmcxODQ5P2FwaS12ZXJzaW9uPTIwMTUtMTEtMDE=",
+      "RequestUri": "/subscriptions/90585f39-ab85-4921-bb37-0468f7efd1dd/resourcegroups/datalakerg15484?api-version=2015-11-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTA1ODVmMzktYWI4NS00OTIxLWJiMzctMDQ2OGY3ZWZkMWRkL3Jlc291cmNlZ3JvdXBzL2RhdGFsYWtlcmcxNTQ4ND9hcGktdmVyc2lvbj0yMDE1LTExLTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"East US 2\"\r\n}",
       "RequestHeaders": {
@@ -340,7 +340,7 @@
           "31"
         ],
         "x-ms-client-request-id": [
-          "25d03c92-0b67-4d80-8c3a-08f6da762572"
+          "be241b61-cd97-473e-b058-8f8af549b76a"
         ],
         "accept-language": [
           "en-US"
@@ -349,10 +349,10 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/1.0.0-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/90585f39-ab85-4921-bb37-0468f7efd1dd/resourceGroups/datalakerg1849\",\r\n  \"name\": \"datalakerg1849\",\r\n  \"location\": \"eastus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/90585f39-ab85-4921-bb37-0468f7efd1dd/resourceGroups/datalakerg15484\",\r\n  \"name\": \"datalakerg15484\",\r\n  \"location\": \"eastus2\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "182"
+          "184"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -364,22 +364,22 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 01 Sep 2016 20:46:11 GMT"
+          "Thu, 01 Sep 2016 21:30:39 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
+          "1163"
         ],
         "x-ms-request-id": [
-          "9a15cf3d-dcee-4e74-bbd2-01c09c987800"
+          "3e703216-0b32-4320-bd23-04cd6a864ca9"
         ],
         "x-ms-correlation-request-id": [
-          "9a15cf3d-dcee-4e74-bbd2-01c09c987800"
+          "3e703216-0b32-4320-bd23-04cd6a864ca9"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160901T204611Z:9a15cf3d-dcee-4e74-bbd2-01c09c987800"
+          "CENTRALUS:20160901T213040Z:3e703216-0b32-4320-bd23-04cd6a864ca9"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -388,13 +388,13 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/90585f39-ab85-4921-bb37-0468f7efd1dd/resourceGroups/datalakerg1849/providers/Microsoft.DataLakeStore/accounts/testadlfs1168?api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTA1ODVmMzktYWI4NS00OTIxLWJiMzctMDQ2OGY3ZWZkMWRkL3Jlc291cmNlR3JvdXBzL2RhdGFsYWtlcmcxODQ5L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUxha2VTdG9yZS9hY2NvdW50cy90ZXN0YWRsZnMxMTY4P2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/90585f39-ab85-4921-bb37-0468f7efd1dd/resourceGroups/datalakerg15484/providers/Microsoft.DataLakeStore/accounts/testadlfs127?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTA1ODVmMzktYWI4NS00OTIxLWJiMzctMDQ2OGY3ZWZkMWRkL3Jlc291cmNlR3JvdXBzL2RhdGFsYWtlcmcxNTQ4NC9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFMYWtlU3RvcmUvYWNjb3VudHMvdGVzdGFkbGZzMTI3P2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "8872f017-6fb0-4342-8abe-9747fc10b69b"
+          "ffbb9f47-b40c-464d-9af2-778d46e8a894"
         ],
         "accept-language": [
           "en-US"
@@ -403,7 +403,7 @@
           "Microsoft.Azure.Management.DataLake.Store.DataLakeStoreAccountManagementClient/0.12.5-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.DataLakeStore/accounts/testadlfs1168' under resource group 'datalakerg1849' was not found.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.DataLakeStore/accounts/testadlfs127' under resource group 'datalakerg15484' was not found.\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "164"
@@ -418,7 +418,7 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 01 Sep 2016 20:46:11 GMT"
+          "Thu, 01 Sep 2016 21:30:39 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -427,13 +427,13 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "62a9d2b9-4f35-482c-a435-7ce29ea22dcb"
+          "4853bc94-f3f5-49fe-893d-ab6f191c2bd1"
         ],
         "x-ms-correlation-request-id": [
-          "62a9d2b9-4f35-482c-a435-7ce29ea22dcb"
+          "4853bc94-f3f5-49fe-893d-ab6f191c2bd1"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160901T204612Z:62a9d2b9-4f35-482c-a435-7ce29ea22dcb"
+          "CENTRALUS:20160901T213040Z:4853bc94-f3f5-49fe-893d-ab6f191c2bd1"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -442,8 +442,8 @@
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/90585f39-ab85-4921-bb37-0468f7efd1dd/resourceGroups/datalakerg1849/providers/Microsoft.DataLakeStore/accounts/testadlfs1168?api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTA1ODVmMzktYWI4NS00OTIxLWJiMzctMDQ2OGY3ZWZkMWRkL3Jlc291cmNlR3JvdXBzL2RhdGFsYWtlcmcxODQ5L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUxha2VTdG9yZS9hY2NvdW50cy90ZXN0YWRsZnMxMTY4P2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/90585f39-ab85-4921-bb37-0468f7efd1dd/resourceGroups/datalakerg15484/providers/Microsoft.DataLakeStore/accounts/testadlfs127?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTA1ODVmMzktYWI4NS00OTIxLWJiMzctMDQ2OGY3ZWZkMWRkL3Jlc291cmNlR3JvdXBzL2RhdGFsYWtlcmcxNTQ4NC9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFMYWtlU3RvcmUvYWNjb3VudHMvdGVzdGFkbGZzMTI3P2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -451,7 +451,7 @@
           "Microsoft.Azure.Management.DataLake.Store.DataLakeStoreAccountManagementClient/0.12.5-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"firewallState\": \"Disabled\",\r\n    \"firewallRules\": [],\r\n    \"trustedIdProviderState\": \"Disabled\",\r\n    \"trustedIdProviders\": [],\r\n    \"encryptionConfig\": {},\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"state\": \"Active\",\r\n    \"endpoint\": \"testadlfs1168.caboaccountdogfood.net\",\r\n    \"accountId\": \"301672c5-4178-49c6-a7d2-7d6187e5c28c\",\r\n    \"creationTime\": \"2016-09-01T20:46:15.1710525Z\",\r\n    \"lastModifiedTime\": \"2016-09-01T20:46:15.1710525Z\"\r\n  },\r\n  \"location\": \"East US 2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/90585f39-ab85-4921-bb37-0468f7efd1dd/resourceGroups/datalakerg1849/providers/Microsoft.DataLakeStore/accounts/testadlfs1168\",\r\n  \"name\": \"testadlfs1168\",\r\n  \"type\": \"Microsoft.DataLakeStore/accounts\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"firewallState\": \"Disabled\",\r\n    \"firewallRules\": [],\r\n    \"trustedIdProviderState\": \"Disabled\",\r\n    \"trustedIdProviders\": [],\r\n    \"encryptionConfig\": {},\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"state\": \"Active\",\r\n    \"endpoint\": \"testadlfs127.caboaccountdogfood.net\",\r\n    \"accountId\": \"48ec421b-408e-47bf-b7ed-ebea99cffeee\",\r\n    \"creationTime\": \"2016-09-01T21:30:43.6986482Z\",\r\n    \"lastModifiedTime\": \"2016-09-01T21:30:43.6986482Z\"\r\n  },\r\n  \"location\": \"East US 2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/90585f39-ab85-4921-bb37-0468f7efd1dd/resourceGroups/datalakerg15484/providers/Microsoft.DataLakeStore/accounts/testadlfs127\",\r\n  \"name\": \"testadlfs127\",\r\n  \"type\": \"Microsoft.DataLakeStore/accounts\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -466,7 +466,7 @@
           "close"
         ],
         "Date": [
-          "Thu, 01 Sep 2016 20:46:43 GMT"
+          "Thu, 01 Sep 2016 21:31:11 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -478,7 +478,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "2abd5aa3-b938-4f66-8ad6-1f4151e3c303"
+          "226af3af-aa77-4ff0-b27c-61bafe52d771"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -487,13 +487,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14995"
+          "14930"
         ],
         "x-ms-correlation-request-id": [
-          "2832c00c-46aa-4960-b9cd-5c0478424a1d"
+          "13e695aa-156d-480a-bc4d-68b9046a3679"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160901T204644Z:2832c00c-46aa-4960-b9cd-5c0478424a1d"
+          "CENTRALUS:20160901T213112Z:13e695aa-156d-480a-bc4d-68b9046a3679"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -502,13 +502,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/90585f39-ab85-4921-bb37-0468f7efd1dd/resourceGroups/datalakerg1849/providers/Microsoft.DataLakeStore/accounts/testadlfs1168?api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTA1ODVmMzktYWI4NS00OTIxLWJiMzctMDQ2OGY3ZWZkMWRkL3Jlc291cmNlR3JvdXBzL2RhdGFsYWtlcmcxODQ5L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUxha2VTdG9yZS9hY2NvdW50cy90ZXN0YWRsZnMxMTY4P2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/90585f39-ab85-4921-bb37-0468f7efd1dd/resourceGroups/datalakerg15484/providers/Microsoft.DataLakeStore/accounts/testadlfs127?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTA1ODVmMzktYWI4NS00OTIxLWJiMzctMDQ2OGY3ZWZkMWRkL3Jlc291cmNlR3JvdXBzL2RhdGFsYWtlcmcxNTQ4NC9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFMYWtlU3RvcmUvYWNjb3VudHMvdGVzdGFkbGZzMTI3P2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a786846f-e5dd-4fda-9990-8dd9cfd7f430"
+          "78166820-e6bd-45de-9b37-21864303778c"
         ],
         "accept-language": [
           "en-US"
@@ -517,7 +517,7 @@
           "Microsoft.Azure.Management.DataLake.Store.DataLakeStoreAccountManagementClient/0.12.5-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"firewallState\": \"Disabled\",\r\n    \"firewallRules\": [],\r\n    \"trustedIdProviderState\": \"Disabled\",\r\n    \"trustedIdProviders\": [],\r\n    \"encryptionConfig\": {},\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"state\": \"Active\",\r\n    \"endpoint\": \"testadlfs1168.caboaccountdogfood.net\",\r\n    \"accountId\": \"301672c5-4178-49c6-a7d2-7d6187e5c28c\",\r\n    \"creationTime\": \"2016-09-01T20:46:15.1710525Z\",\r\n    \"lastModifiedTime\": \"2016-09-01T20:46:15.1710525Z\"\r\n  },\r\n  \"location\": \"East US 2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/90585f39-ab85-4921-bb37-0468f7efd1dd/resourceGroups/datalakerg1849/providers/Microsoft.DataLakeStore/accounts/testadlfs1168\",\r\n  \"name\": \"testadlfs1168\",\r\n  \"type\": \"Microsoft.DataLakeStore/accounts\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"firewallState\": \"Disabled\",\r\n    \"firewallRules\": [],\r\n    \"trustedIdProviderState\": \"Disabled\",\r\n    \"trustedIdProviders\": [],\r\n    \"encryptionConfig\": {},\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"state\": \"Active\",\r\n    \"endpoint\": \"testadlfs127.caboaccountdogfood.net\",\r\n    \"accountId\": \"48ec421b-408e-47bf-b7ed-ebea99cffeee\",\r\n    \"creationTime\": \"2016-09-01T21:30:43.6986482Z\",\r\n    \"lastModifiedTime\": \"2016-09-01T21:30:43.6986482Z\"\r\n  },\r\n  \"location\": \"East US 2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/90585f39-ab85-4921-bb37-0468f7efd1dd/resourceGroups/datalakerg15484/providers/Microsoft.DataLakeStore/accounts/testadlfs127\",\r\n  \"name\": \"testadlfs127\",\r\n  \"type\": \"Microsoft.DataLakeStore/accounts\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -532,7 +532,7 @@
           "close"
         ],
         "Date": [
-          "Thu, 01 Sep 2016 20:46:43 GMT"
+          "Thu, 01 Sep 2016 21:31:12 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -544,7 +544,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "583342d5-603e-4d4a-a412-db6d3d52e7f8"
+          "fe7ccc5d-ed65-41e9-a300-3caad649f21a"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -553,13 +553,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14994"
+          "14929"
         ],
         "x-ms-correlation-request-id": [
-          "37a8552a-5b4a-4026-9c86-c212024ce86a"
+          "5c2aac7f-a77a-4b71-8305-7e977b208b12"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160901T204644Z:37a8552a-5b4a-4026-9c86-c212024ce86a"
+          "CENTRALUS:20160901T213112Z:5c2aac7f-a77a-4b71-8305-7e977b208b12"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -568,19 +568,19 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/90585f39-ab85-4921-bb37-0468f7efd1dd/resourceGroups/datalakerg1849/providers/Microsoft.DataLakeStore/accounts/testadlfs1168?api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTA1ODVmMzktYWI4NS00OTIxLWJiMzctMDQ2OGY3ZWZkMWRkL3Jlc291cmNlR3JvdXBzL2RhdGFsYWtlcmcxODQ5L3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUxha2VTdG9yZS9hY2NvdW50cy90ZXN0YWRsZnMxMTY4P2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/90585f39-ab85-4921-bb37-0468f7efd1dd/resourceGroups/datalakerg15484/providers/Microsoft.DataLakeStore/accounts/testadlfs127?api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTA1ODVmMzktYWI4NS00OTIxLWJiMzctMDQ2OGY3ZWZkMWRkL3Jlc291cmNlR3JvdXBzL2RhdGFsYWtlcmcxNTQ4NC9wcm92aWRlcnMvTWljcm9zb2Z0LkRhdGFMYWtlU3RvcmUvYWNjb3VudHMvdGVzdGFkbGZzMTI3P2FwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"East US 2\",\r\n  \"name\": \"testadlfs1168\"\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"East US 2\",\r\n  \"name\": \"testadlfs127\"\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "59"
+          "58"
         ],
         "x-ms-client-request-id": [
-          "b69efd57-fd50-42be-b998-c9ac5ac0e84f"
+          "64a9addb-a5d3-4220-a156-d9fbc46faf91"
         ],
         "accept-language": [
           "en-US"
@@ -589,10 +589,10 @@
           "Microsoft.Azure.Management.DataLake.Store.DataLakeStoreAccountManagementClient/0.12.5-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"state\": null,\r\n    \"endpoint\": null,\r\n    \"accountId\": \"301672c5-4178-49c6-a7d2-7d6187e5c28c\",\r\n    \"creationTime\": null,\r\n    \"lastModifiedTime\": null\r\n  },\r\n  \"location\": \"East US 2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/90585f39-ab85-4921-bb37-0468f7efd1dd/resourceGroups/datalakerg1849/providers/Microsoft.DataLakeStore/accounts/testadlfs1168\",\r\n  \"name\": \"testadlfs1168\",\r\n  \"type\": \"Microsoft.DataLakeStore/accounts\"\r\n}",
+      "ResponseBody": "{\r\n  \"properties\": {\r\n    \"provisioningState\": \"Creating\",\r\n    \"state\": null,\r\n    \"endpoint\": null,\r\n    \"accountId\": \"48ec421b-408e-47bf-b7ed-ebea99cffeee\",\r\n    \"creationTime\": null,\r\n    \"lastModifiedTime\": null\r\n  },\r\n  \"location\": \"East US 2\",\r\n  \"tags\": null,\r\n  \"id\": \"/subscriptions/90585f39-ab85-4921-bb37-0468f7efd1dd/resourceGroups/datalakerg15484/providers/Microsoft.DataLakeStore/accounts/testadlfs127\",\r\n  \"name\": \"testadlfs127\",\r\n  \"type\": \"Microsoft.DataLakeStore/accounts\"\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "417"
+          "416"
         ],
         "Content-Type": [
           "application/json"
@@ -607,13 +607,13 @@
           "close"
         ],
         "Date": [
-          "Thu, 01 Sep 2016 20:46:13 GMT"
+          "Thu, 01 Sep 2016 21:30:41 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/90585f39-ab85-4921-bb37-0468f7efd1dd/resourcegroups/datalakerg1849/providers/Microsoft.DataLakeStore/accounts/testadlfs1168/operationresults/0?api-version=2015-10-01-preview"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/90585f39-ab85-4921-bb37-0468f7efd1dd/resourcegroups/datalakerg15484/providers/Microsoft.DataLakeStore/accounts/testadlfs127/operationresults/0?api-version=2015-10-01-preview"
         ],
         "Retry-After": [
           "10"
@@ -622,10 +622,10 @@
           "Microsoft-IIS/8.5"
         ],
         "Azure-AsyncOperation": [
-          "https://api-dogfood.resources.windows-int.net/subscriptions/90585f39-ab85-4921-bb37-0468f7efd1dd/providers/Microsoft.DataLakeStore/locations/EastUS2/operationResults/301672c5-4178-49c6-a7d2-7d6187e5c28c0?api-version=2015-10-01-preview&expanded=true"
+          "https://api-dogfood.resources.windows-int.net/subscriptions/90585f39-ab85-4921-bb37-0468f7efd1dd/providers/Microsoft.DataLakeStore/locations/EastUS2/operationResults/48ec421b-408e-47bf-b7ed-ebea99cffeee0?api-version=2015-10-01-preview&expanded=true"
         ],
         "x-ms-request-id": [
-          "f1d297cf-26e4-4f1b-b012-776e74c2db33"
+          "da79f648-fd8f-4cd2-9ed1-82fe0a5d6ce6"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -634,13 +634,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1162"
         ],
         "x-ms-correlation-request-id": [
-          "572f12e1-5206-495e-9f71-9519ce1d09a3"
+          "346313ff-b3cd-48f3-b737-8a912860be9e"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160901T204613Z:572f12e1-5206-495e-9f71-9519ce1d09a3"
+          "CENTRALUS:20160901T213041Z:346313ff-b3cd-48f3-b737-8a912860be9e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -649,8 +649,8 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/90585f39-ab85-4921-bb37-0468f7efd1dd/providers/Microsoft.DataLakeStore/locations/EastUS2/operationResults/301672c5-4178-49c6-a7d2-7d6187e5c28c0?api-version=2015-10-01-preview&expanded=true",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTA1ODVmMzktYWI4NS00OTIxLWJiMzctMDQ2OGY3ZWZkMWRkL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUxha2VTdG9yZS9sb2NhdGlvbnMvRWFzdFVTMi9vcGVyYXRpb25SZXN1bHRzLzMwMTY3MmM1LTQxNzgtNDljNi1hN2QyLTdkNjE4N2U1YzI4YzA/YXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3JmV4cGFuZGVkPXRydWU=",
+      "RequestUri": "/subscriptions/90585f39-ab85-4921-bb37-0468f7efd1dd/providers/Microsoft.DataLakeStore/locations/EastUS2/operationResults/48ec421b-408e-47bf-b7ed-ebea99cffeee0?api-version=2015-10-01-preview&expanded=true",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTA1ODVmMzktYWI4NS00OTIxLWJiMzctMDQ2OGY3ZWZkMWRkL3Byb3ZpZGVycy9NaWNyb3NvZnQuRGF0YUxha2VTdG9yZS9sb2NhdGlvbnMvRWFzdFVTMi9vcGVyYXRpb25SZXN1bHRzLzQ4ZWM0MjFiLTQwOGUtNDdiZi1iN2VkLWViZWE5OWNmZmVlZTA/YXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3JmV4cGFuZGVkPXRydWU=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -673,7 +673,7 @@
           "close"
         ],
         "Date": [
-          "Thu, 01 Sep 2016 20:46:43 GMT"
+          "Thu, 01 Sep 2016 21:31:11 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -685,7 +685,7 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "85338251-a28b-43df-a900-18f1f942ba8e"
+          "04934726-6a07-403c-85c2-815b23db2ed8"
         ],
         "X-AspNet-Version": [
           "4.0.30319"
@@ -694,13 +694,13 @@
           "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14995"
+          "14931"
         ],
         "x-ms-correlation-request-id": [
-          "d1ea0908-6a44-44c2-8d41-c2cc597d2cd7"
+          "b9dd3179-53da-4466-9dcd-96a7f6e736aa"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160901T204644Z:d1ea0908-6a44-44c2-8d41-c2cc597d2cd7"
+          "CENTRALUS:20160901T213112Z:b9dd3179-53da-4466-9dcd-96a7f6e736aa"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -709,8 +709,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile01.txt5990?op=CREATE&write=true&api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQ1OTkwP29wPUNSRUFURSZ3cml0ZT10cnVlJmFwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile01.txt407?op=CREATE&write=true&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQ0MDc/b3A9Q1JFQVRFJndyaXRlPXRydWUmYXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "",
       "RequestHeaders": {
@@ -718,7 +718,7 @@
           "application/octet-stream"
         ],
         "x-ms-client-request-id": [
-          "f5ba9b07-38f6-4b0a-825a-384a248e0271"
+          "38501182-79b1-4c07-b3c4-9ea114a85460"
         ],
         "Transfer-Encoding": [
           "chunked"
@@ -742,22 +742,22 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 01 Sep 2016 20:46:46 GMT"
+          "Thu, 01 Sep 2016 21:31:13 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "Location": [
-          "https://testadlfs1168.caboaccountdogfood.net/webhdfs/v1/SDKTestFolder01/SDKTestFile01.txt5990?op=CREATE&write=true&api-version=2015-10-01-preview"
+          "https://testadlfs127.caboaccountdogfood.net/webhdfs/v1/SDKTestFolder01/SDKTestFile01.txt407?op=CREATE&write=true&api-version=2015-10-01-preview"
         ],
         "x-ms-request-id": [
-          "2d4bf0cd-9740-400f-a553-eb69c042f55e"
+          "f8a43a2a-04ec-4f25-9277-4ba4dbff4b1b"
         ],
         "ContentLength": [
           "0"
         ],
         "Server-Perf": [
-          "[2d4bf0cd-9740-400f-a553-eb69c042f55e][ AuthTime::1238.17690746606::PostAuthTime::329.752813698214 ][S-HdfsGetFileStatusV2 :: 00:00:115 ms]%0a[S-FsOpenStream :: 00:00:154 ms]%0a[BufferingTime :: 00:00:001 ms]%0a[WriteTime :: 00:00:000 ms]%0a[S-FsAppendStream :: 00:00:021 ms]%0a[S-FsCloseHandle :: 00:00:001 ms]%0a[CREATE :: 00:00:296 ms]%0a"
+          "[f8a43a2a-04ec-4f25-9277-4ba4dbff4b1b][ AuthTime::1294.61104786083::PostAuthTime::339.584133465974 ][S-HdfsGetFileStatusV2 :: 00:00:067 ms]%0a[S-FsOpenStream :: 00:00:154 ms]%0a[BufferingTime :: 00:00:000 ms]%0a[WriteTime :: 00:00:000 ms]%0a[S-FsAppendStream :: 00:00:019 ms]%0a[S-FsCloseHandle :: 00:00:001 ms]%0a[CREATE :: 00:00:248 ms]%0a"
         ],
         "x-ms-webhdfs-version": [
           "16.07.18.01"
@@ -775,13 +775,13 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile01.txt5990?op=MSGETFILESTATUS&api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQ1OTkwP29wPU1TR0VURklMRVNUQVRVUyZhcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXc=",
+      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile01.txt407?op=MSGETFILESTATUS&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQ0MDc/b3A9TVNHRVRGSUxFU1RBVFVTJmFwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "8af30e5a-d663-4a4f-8a96-60dfac01bacc"
+          "e0738ad2-8546-49d6-be9d-37ca5720973b"
         ],
         "accept-language": [
           "en-US"
@@ -790,7 +790,7 @@
           "Microsoft.Azure.Management.DataLake.Store.DataLakeStoreFileSystemManagementClient/0.12.5-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"FileStatus\": {\r\n    \"length\": 0,\r\n    \"pathSuffix\": \"\",\r\n    \"type\": \"FILE\",\r\n    \"blockSize\": 268435456,\r\n    \"accessTime\": 1472762807124,\r\n    \"modificationTime\": 1472762807124,\r\n    \"replication\": 1,\r\n    \"permission\": \"770\",\r\n    \"owner\": \"6c239a52-63a0-4219-bcdc-c1ce354f95d4\",\r\n    \"group\": \"6c239a52-63a0-4219-bcdc-c1ce354f95d4\",\r\n    \"expirationTime\": 0\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"FileStatus\": {\r\n    \"length\": 0,\r\n    \"pathSuffix\": \"\",\r\n    \"type\": \"FILE\",\r\n    \"blockSize\": 268435456,\r\n    \"accessTime\": 1472765474378,\r\n    \"modificationTime\": 1472765474378,\r\n    \"replication\": 1,\r\n    \"permission\": \"770\",\r\n    \"owner\": \"6c239a52-63a0-4219-bcdc-c1ce354f95d4\",\r\n    \"group\": \"6c239a52-63a0-4219-bcdc-c1ce354f95d4\",\r\n    \"expirationTime\": 0\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "287"
@@ -805,16 +805,16 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 01 Sep 2016 20:46:47 GMT"
+          "Thu, 01 Sep 2016 21:31:14 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "9d993d29-d925-47d5-8eb2-3ac5924f3a69"
+          "36b7b40a-36ad-4418-96df-613fe6729d41"
         ],
         "Server-Perf": [
-          "[9d993d29-d925-47d5-8eb2-3ac5924f3a69][ AuthTime::0::PostAuthTime::0 ][S-HdfsGetFileStatusV2 :: 00:00:079 ms]%0a[MSGETFILESTATUS :: 00:00:080 ms]%0a"
+          "[36b7b40a-36ad-4418-96df-613fe6729d41][ AuthTime::0::PostAuthTime::0 ][S-HdfsGetFileStatusV2 :: 00:00:124 ms]%0a[MSGETFILESTATUS :: 00:00:125 ms]%0a"
         ],
         "x-ms-webhdfs-version": [
           "16.07.18.01"
@@ -832,13 +832,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile01.txt5990?op=MSGETFILESTATUS&api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQ1OTkwP29wPU1TR0VURklMRVNUQVRVUyZhcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXc=",
+      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile01.txt407?op=MSGETFILESTATUS&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQ0MDc/b3A9TVNHRVRGSUxFU1RBVFVTJmFwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "279ca922-d62c-4d9c-9bd6-fee5a55b374c"
+          "72a44a53-3ad9-473b-adbd-32822d1f82ad"
         ],
         "accept-language": [
           "en-US"
@@ -847,7 +847,7 @@
           "Microsoft.Azure.Management.DataLake.Store.DataLakeStoreFileSystemManagementClient/0.12.5-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"FileStatus\": {\r\n    \"length\": 0,\r\n    \"pathSuffix\": \"\",\r\n    \"type\": \"FILE\",\r\n    \"blockSize\": 268435456,\r\n    \"accessTime\": 1472762807124,\r\n    \"modificationTime\": 1472762807124,\r\n    \"replication\": 1,\r\n    \"permission\": \"770\",\r\n    \"owner\": \"6c239a52-63a0-4219-bcdc-c1ce354f95d4\",\r\n    \"group\": \"6c239a52-63a0-4219-bcdc-c1ce354f95d4\",\r\n    \"expirationTime\": 0\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"FileStatus\": {\r\n    \"length\": 0,\r\n    \"pathSuffix\": \"\",\r\n    \"type\": \"FILE\",\r\n    \"blockSize\": 268435456,\r\n    \"accessTime\": 1472765474378,\r\n    \"modificationTime\": 1472765474378,\r\n    \"replication\": 1,\r\n    \"permission\": \"770\",\r\n    \"owner\": \"6c239a52-63a0-4219-bcdc-c1ce354f95d4\",\r\n    \"group\": \"6c239a52-63a0-4219-bcdc-c1ce354f95d4\",\r\n    \"expirationTime\": 0\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "287"
@@ -862,16 +862,16 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 01 Sep 2016 20:46:47 GMT"
+          "Thu, 01 Sep 2016 21:31:14 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "4e324fcb-f3c0-46e1-87db-f87aafeb8303"
+          "076481d1-e283-4cf3-8d94-b31578353e30"
         ],
         "Server-Perf": [
-          "[4e324fcb-f3c0-46e1-87db-f87aafeb8303][ AuthTime::0::PostAuthTime::0 ][S-HdfsGetFileStatusV2 :: 00:00:022 ms]%0a[MSGETFILESTATUS :: 00:00:022 ms]%0a"
+          "[076481d1-e283-4cf3-8d94-b31578353e30][ AuthTime::0::PostAuthTime::0 ][S-HdfsGetFileStatusV2 :: 00:00:021 ms]%0a[MSGETFILESTATUS :: 00:00:021 ms]%0a"
         ],
         "x-ms-webhdfs-version": [
           "16.07.18.01"
@@ -889,13 +889,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile01.txt5990?op=MSGETFILESTATUS&api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQ1OTkwP29wPU1TR0VURklMRVNUQVRVUyZhcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXc=",
+      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile01.txt407?op=MSGETFILESTATUS&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQ0MDc/b3A9TVNHRVRGSUxFU1RBVFVTJmFwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "65e263a4-6ad5-4d3e-9358-14265f3eb765"
+          "d2ba345b-a9aa-40e8-9b9f-c410702dc245"
         ],
         "accept-language": [
           "en-US"
@@ -904,7 +904,7 @@
           "Microsoft.Azure.Management.DataLake.Store.DataLakeStoreFileSystemManagementClient/0.12.5-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"FileStatus\": {\r\n    \"length\": 0,\r\n    \"pathSuffix\": \"\",\r\n    \"type\": \"FILE\",\r\n    \"blockSize\": 268435456,\r\n    \"accessTime\": 1472762807124,\r\n    \"modificationTime\": 1472762807124,\r\n    \"replication\": 1,\r\n    \"permission\": \"770\",\r\n    \"owner\": \"6c239a52-63a0-4219-bcdc-c1ce354f95d4\",\r\n    \"group\": \"6c239a52-63a0-4219-bcdc-c1ce354f95d4\",\r\n    \"expirationTime\": 1472762927015\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"FileStatus\": {\r\n    \"length\": 0,\r\n    \"pathSuffix\": \"\",\r\n    \"type\": \"FILE\",\r\n    \"blockSize\": 268435456,\r\n    \"accessTime\": 1472765474378,\r\n    \"modificationTime\": 1472765474378,\r\n    \"replication\": 1,\r\n    \"permission\": \"770\",\r\n    \"owner\": \"6c239a52-63a0-4219-bcdc-c1ce354f95d4\",\r\n    \"group\": \"6c239a52-63a0-4219-bcdc-c1ce354f95d4\",\r\n    \"expirationTime\": 1472765595015\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "299"
@@ -919,16 +919,16 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 01 Sep 2016 20:46:48 GMT"
+          "Thu, 01 Sep 2016 21:31:15 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "f0a47b03-ccbb-4d1e-ae4e-21a1fa4fa85e"
+          "7e8dda33-5925-4564-a4d6-8aaf9133a01e"
         ],
         "Server-Perf": [
-          "[f0a47b03-ccbb-4d1e-ae4e-21a1fa4fa85e][ AuthTime::0::PostAuthTime::0 ][S-HdfsGetFileStatusV2 :: 00:00:045 ms]%0a[MSGETFILESTATUS :: 00:00:045 ms]%0a"
+          "[7e8dda33-5925-4564-a4d6-8aaf9133a01e][ AuthTime::0::PostAuthTime::0 ][S-HdfsGetFileStatusV2 :: 00:00:055 ms]%0a[MSGETFILESTATUS :: 00:00:056 ms]%0a"
         ],
         "x-ms-webhdfs-version": [
           "16.07.18.01"
@@ -946,13 +946,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile01.txt5990?op=MSGETFILESTATUS&api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQ1OTkwP29wPU1TR0VURklMRVNUQVRVUyZhcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXc=",
+      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile01.txt407?op=MSGETFILESTATUS&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQ0MDc/b3A9TVNHRVRGSUxFU1RBVFVTJmFwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "64b652f2-79f9-4ab8-9d39-a793972568ba"
+          "10fb2572-13d1-4e5c-b3e0-3c377e8a989b"
         ],
         "accept-language": [
           "en-US"
@@ -961,7 +961,7 @@
           "Microsoft.Azure.Management.DataLake.Store.DataLakeStoreFileSystemManagementClient/0.12.5-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"FileStatus\": {\r\n    \"length\": 0,\r\n    \"pathSuffix\": \"\",\r\n    \"type\": \"FILE\",\r\n    \"blockSize\": 268435456,\r\n    \"accessTime\": 1472762807124,\r\n    \"modificationTime\": 1472762807124,\r\n    \"replication\": 1,\r\n    \"permission\": \"770\",\r\n    \"owner\": \"6c239a52-63a0-4219-bcdc-c1ce354f95d4\",\r\n    \"group\": \"6c239a52-63a0-4219-bcdc-c1ce354f95d4\",\r\n    \"expirationTime\": 1472762929060\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"FileStatus\": {\r\n    \"length\": 0,\r\n    \"pathSuffix\": \"\",\r\n    \"type\": \"FILE\",\r\n    \"blockSize\": 268435456,\r\n    \"accessTime\": 1472765474378,\r\n    \"modificationTime\": 1472765474378,\r\n    \"replication\": 1,\r\n    \"permission\": \"770\",\r\n    \"owner\": \"6c239a52-63a0-4219-bcdc-c1ce354f95d4\",\r\n    \"group\": \"6c239a52-63a0-4219-bcdc-c1ce354f95d4\",\r\n    \"expirationTime\": 1472765596395\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "299"
@@ -976,16 +976,16 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 01 Sep 2016 20:46:49 GMT"
+          "Thu, 01 Sep 2016 21:31:15 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "2354d0b8-160c-474a-8fd3-e80d5588db3c"
+          "c305480a-1d32-4576-9acd-2c2c4cbf5fe7"
         ],
         "Server-Perf": [
-          "[2354d0b8-160c-474a-8fd3-e80d5588db3c][ AuthTime::0::PostAuthTime::0 ][S-HdfsGetFileStatusV2 :: 00:00:052 ms]%0a[MSGETFILESTATUS :: 00:00:052 ms]%0a"
+          "[c305480a-1d32-4576-9acd-2c2c4cbf5fe7][ AuthTime::0::PostAuthTime::0 ][S-HdfsGetFileStatusV2 :: 00:00:053 ms]%0a[MSGETFILESTATUS :: 00:00:054 ms]%0a"
         ],
         "x-ms-webhdfs-version": [
           "16.07.18.01"
@@ -1003,13 +1003,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile01.txt5990?op=MSGETFILESTATUS&api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQ1OTkwP29wPU1TR0VURklMRVNUQVRVUyZhcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXc=",
+      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile01.txt407?op=MSGETFILESTATUS&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQ0MDc/b3A9TVNHRVRGSUxFU1RBVFVTJmFwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "10bfb041-3c90-4926-804b-11054160d64d"
+          "e584e886-64a2-4073-ac33-1a36d627d390"
         ],
         "accept-language": [
           "en-US"
@@ -1018,7 +1018,7 @@
           "Microsoft.Azure.Management.DataLake.Store.DataLakeStoreFileSystemManagementClient/0.12.5-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"FileStatus\": {\r\n    \"length\": 0,\r\n    \"pathSuffix\": \"\",\r\n    \"type\": \"FILE\",\r\n    \"blockSize\": 268435456,\r\n    \"accessTime\": 1472762807124,\r\n    \"modificationTime\": 1472762807124,\r\n    \"replication\": 1,\r\n    \"permission\": \"770\",\r\n    \"owner\": \"6c239a52-63a0-4219-bcdc-c1ce354f95d4\",\r\n    \"group\": \"6c239a52-63a0-4219-bcdc-c1ce354f95d4\",\r\n    \"expirationTime\": 1472762927140\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"FileStatus\": {\r\n    \"length\": 0,\r\n    \"pathSuffix\": \"\",\r\n    \"type\": \"FILE\",\r\n    \"blockSize\": 268435456,\r\n    \"accessTime\": 1472765474378,\r\n    \"modificationTime\": 1472765474378,\r\n    \"replication\": 1,\r\n    \"permission\": \"770\",\r\n    \"owner\": \"6c239a52-63a0-4219-bcdc-c1ce354f95d4\",\r\n    \"group\": \"6c239a52-63a0-4219-bcdc-c1ce354f95d4\",\r\n    \"expirationTime\": 1472765594393\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "299"
@@ -1033,16 +1033,16 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 01 Sep 2016 20:46:49 GMT"
+          "Thu, 01 Sep 2016 21:31:16 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "5f28e321-5f5f-4bb8-a013-0c878882d58b"
+          "97bf8d33-56c8-4f45-ad7c-4192a0c1e201"
         ],
         "Server-Perf": [
-          "[5f28e321-5f5f-4bb8-a013-0c878882d58b][ AuthTime::0::PostAuthTime::0 ][S-HdfsGetFileStatusV2 :: 00:00:039 ms]%0a[MSGETFILESTATUS :: 00:00:039 ms]%0a"
+          "[97bf8d33-56c8-4f45-ad7c-4192a0c1e201][ AuthTime::0::PostAuthTime::0 ][S-HdfsGetFileStatusV2 :: 00:00:042 ms]%0a[MSGETFILESTATUS :: 00:00:043 ms]%0a"
         ],
         "x-ms-webhdfs-version": [
           "16.07.18.01"
@@ -1060,13 +1060,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile01.txt5990?op=MSGETFILESTATUS&api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQ1OTkwP29wPU1TR0VURklMRVNUQVRVUyZhcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXc=",
+      "RequestUri": "/webhdfs/v1/SDKTestFolder01%2FSDKTestFile01.txt407?op=MSGETFILESTATUS&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L3dlYmhkZnMvdjEvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQ0MDc/b3A9TVNHRVRGSUxFU1RBVFVTJmFwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "fc79cc92-19da-442c-afa4-e731e82d7d33"
+          "02719ccc-d21e-4cdd-b45b-9b599d164c57"
         ],
         "accept-language": [
           "en-US"
@@ -1075,7 +1075,7 @@
           "Microsoft.Azure.Management.DataLake.Store.DataLakeStoreFileSystemManagementClient/0.12.5-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"FileStatus\": {\r\n    \"length\": 0,\r\n    \"pathSuffix\": \"\",\r\n    \"type\": \"FILE\",\r\n    \"blockSize\": 268435456,\r\n    \"accessTime\": 1472762807124,\r\n    \"modificationTime\": 1472762807124,\r\n    \"replication\": 1,\r\n    \"permission\": \"770\",\r\n    \"owner\": \"6c239a52-63a0-4219-bcdc-c1ce354f95d4\",\r\n    \"group\": \"6c239a52-63a0-4219-bcdc-c1ce354f95d4\",\r\n    \"expirationTime\": 0\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"FileStatus\": {\r\n    \"length\": 0,\r\n    \"pathSuffix\": \"\",\r\n    \"type\": \"FILE\",\r\n    \"blockSize\": 268435456,\r\n    \"accessTime\": 1472765474378,\r\n    \"modificationTime\": 1472765474378,\r\n    \"replication\": 1,\r\n    \"permission\": \"770\",\r\n    \"owner\": \"6c239a52-63a0-4219-bcdc-c1ce354f95d4\",\r\n    \"group\": \"6c239a52-63a0-4219-bcdc-c1ce354f95d4\",\r\n    \"expirationTime\": 0\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "287"
@@ -1090,16 +1090,16 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 01 Sep 2016 20:46:49 GMT"
+          "Thu, 01 Sep 2016 21:31:16 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "61ef47fa-7bc1-4642-9fc4-575ac413e2bd"
+          "bd6b7bd8-6b5e-4c7c-8c0d-c0959d13e754"
         ],
         "Server-Perf": [
-          "[61ef47fa-7bc1-4642-9fc4-575ac413e2bd][ AuthTime::0::PostAuthTime::0 ][S-HdfsGetFileStatusV2 :: 00:00:039 ms]%0a[MSGETFILESTATUS :: 00:00:039 ms]%0a"
+          "[bd6b7bd8-6b5e-4c7c-8c0d-c0959d13e754][ AuthTime::0::PostAuthTime::0 ][S-HdfsGetFileStatusV2 :: 00:00:055 ms]%0a[MSGETFILESTATUS :: 00:00:055 ms]%0a"
         ],
         "x-ms-webhdfs-version": [
           "16.07.18.01"
@@ -1117,13 +1117,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/WebHdfsExt/SDKTestFolder01%2FSDKTestFile01.txt5990?expiryOption=Absolute&expireTime=1472762927000&op=SETEXPIRY&api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L1dlYkhkZnNFeHQvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQ1OTkwP2V4cGlyeU9wdGlvbj1BYnNvbHV0ZSZleHBpcmVUaW1lPTE0NzI3NjI5MjcwMDAmb3A9U0VURVhQSVJZJmFwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
+      "RequestUri": "/WebHdfsExt/SDKTestFolder01%2FSDKTestFile01.txt407?expiryOption=Absolute&expireTime=1472765595000&op=SETEXPIRY&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L1dlYkhkZnNFeHQvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQ0MDc/ZXhwaXJ5T3B0aW9uPUFic29sdXRlJmV4cGlyZVRpbWU9MTQ3Mjc2NTU5NTAwMCZvcD1TRVRFWFBJUlkmYXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "440b84bd-6990-49e4-960c-085ebe4975a5"
+          "46aa8f60-93c7-4fd7-ac9a-339d97421fc5"
         ],
         "accept-language": [
           "en-US"
@@ -1144,13 +1144,13 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 01 Sep 2016 20:46:48 GMT"
+          "Thu, 01 Sep 2016 21:31:15 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "52947590-c3ac-4113-adcd-7a1606cc766e"
+          "b28cc76d-14b1-4860-9ffa-ccdfda070f21"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -1162,13 +1162,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/WebHdfsExt/SDKTestFolder01%2FSDKTestFile01.txt5990?expiryOption=RelativeToNow&expireTime=120000&op=SETEXPIRY&api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L1dlYkhkZnNFeHQvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQ1OTkwP2V4cGlyeU9wdGlvbj1SZWxhdGl2ZVRvTm93JmV4cGlyZVRpbWU9MTIwMDAwJm9wPVNFVEVYUElSWSZhcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXc=",
+      "RequestUri": "/WebHdfsExt/SDKTestFolder01%2FSDKTestFile01.txt407?expiryOption=RelativeToNow&expireTime=120000&op=SETEXPIRY&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L1dlYkhkZnNFeHQvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQ0MDc/ZXhwaXJ5T3B0aW9uPVJlbGF0aXZlVG9Ob3cmZXhwaXJlVGltZT0xMjAwMDAmb3A9U0VURVhQSVJZJmFwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "d63b1cf8-aba3-4bcc-95af-b28ee5820e60"
+          "e4fddd25-1de6-44db-8c88-c91a714acd86"
         ],
         "accept-language": [
           "en-US"
@@ -1189,13 +1189,13 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 01 Sep 2016 20:46:49 GMT"
+          "Thu, 01 Sep 2016 21:31:15 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "2308b09b-02e3-405d-8d80-b5bcb46e00f2"
+          "88634f06-340a-4bf8-941b-12dabb912b65"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -1207,13 +1207,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/WebHdfsExt/SDKTestFolder01%2FSDKTestFile01.txt5990?expiryOption=RelativeToCreationDate&expireTime=120000&op=SETEXPIRY&api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L1dlYkhkZnNFeHQvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQ1OTkwP2V4cGlyeU9wdGlvbj1SZWxhdGl2ZVRvQ3JlYXRpb25EYXRlJmV4cGlyZVRpbWU9MTIwMDAwJm9wPVNFVEVYUElSWSZhcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXc=",
+      "RequestUri": "/WebHdfsExt/SDKTestFolder01%2FSDKTestFile01.txt407?expiryOption=RelativeToCreationDate&expireTime=120000&op=SETEXPIRY&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L1dlYkhkZnNFeHQvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQ0MDc/ZXhwaXJ5T3B0aW9uPVJlbGF0aXZlVG9DcmVhdGlvbkRhdGUmZXhwaXJlVGltZT0xMjAwMDAmb3A9U0VURVhQSVJZJmFwaS12ZXJzaW9uPTIwMTUtMTAtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "bf656ec9-1228-4547-9679-d83bdde8e52c"
+          "537b0e08-8f2e-42bd-b942-76b9c8b62aad"
         ],
         "accept-language": [
           "en-US"
@@ -1234,13 +1234,13 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 01 Sep 2016 20:46:49 GMT"
+          "Thu, 01 Sep 2016 21:31:16 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "598e04b7-9ddf-406f-9d34-5cca7e7f5fe8"
+          "e1347246-b225-43ce-b8f7-4143fd094236"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -1252,13 +1252,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/WebHdfsExt/SDKTestFolder01%2FSDKTestFile01.txt5990?expiryOption=NeverExpire&op=SETEXPIRY&api-version=2015-10-01-preview",
-      "EncodedRequestUri": "L1dlYkhkZnNFeHQvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQ1OTkwP2V4cGlyeU9wdGlvbj1OZXZlckV4cGlyZSZvcD1TRVRFWFBJUlkmYXBpLXZlcnNpb249MjAxNS0xMC0wMS1wcmV2aWV3",
+      "RequestUri": "/WebHdfsExt/SDKTestFolder01%2FSDKTestFile01.txt407?expiryOption=NeverExpire&op=SETEXPIRY&api-version=2015-10-01-preview",
+      "EncodedRequestUri": "L1dlYkhkZnNFeHQvU0RLVGVzdEZvbGRlcjAxJTJGU0RLVGVzdEZpbGUwMS50eHQ0MDc/ZXhwaXJ5T3B0aW9uPU5ldmVyRXhwaXJlJm9wPVNFVEVYUElSWSZhcGktdmVyc2lvbj0yMDE1LTEwLTAxLXByZXZpZXc=",
       "RequestMethod": "PUT",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "026926b3-5013-458f-9706-b4416114d87d"
+          "e22ea91b-3c74-49f1-ad0f-f7b5003ce21c"
         ],
         "accept-language": [
           "en-US"
@@ -1279,13 +1279,13 @@
           "no-cache"
         ],
         "Date": [
-          "Thu, 01 Sep 2016 20:46:49 GMT"
+          "Thu, 01 Sep 2016 21:31:16 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-request-id": [
-          "8005a837-8fb7-499b-9115-2803b3ddb9f0"
+          "fa66befe-af52-4e2f-b8e3-6ab83534af25"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -1299,17 +1299,17 @@
   ],
   "Names": {
     ".ctor": [
-      "datalakerg1849",
-      "testdatalake18851",
-      "testadlfs1168"
+      "datalakerg15484",
+      "testdatalake16754",
+      "testadlfs127"
     ],
     "CreateFile": [
-      "SDKTestFolder01/SDKTestFile01.txt5990"
+      "SDKTestFolder01/SDKTestFile01.txt407"
     ]
   },
   "Variables": {
     "SubscriptionId": "90585f39-ab85-4921-bb37-0468f7efd1dd",
-    "absoluteTime": "9/1/2016 1:48:47 PM",
-    "relativeTime": "9/1/2016 1:48:49 PM"
+    "absoluteTime": "9/1/2016 9:33:15 PM",
+    "relativeTime": "9/1/2016 9:33:16 PM"
   }
 }
