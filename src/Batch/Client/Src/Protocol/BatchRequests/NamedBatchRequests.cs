@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class AccountListNodeAgentSkusBatchRequest : Protocol.BatchRequest<
         AccountListNodeAgentSkusOptions,
-        AzureOperationResponse<IPage<NodeAgentSku>,AccountListNodeAgentSkusHeaders>>
+        AzureOperationResponse<IPage<NodeAgentSku>, AccountListNodeAgentSkusHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AccountListNodeAgentSkusBatchRequest" /> class.
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class AccountListNodeAgentSkusNextBatchRequest : Protocol.BatchRequest<
         AccountListNodeAgentSkusNextOptions,
-        AzureOperationResponse<IPage<NodeAgentSku>,AccountListNodeAgentSkusHeaders>>
+        AzureOperationResponse<IPage<NodeAgentSku>, AccountListNodeAgentSkusHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="AccountListNodeAgentSkusNextBatchRequest" /> class.
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class ApplicationListBatchRequest : Protocol.BatchRequest<
         ApplicationListOptions,
-        AzureOperationResponse<IPage<ApplicationSummary>,ApplicationListHeaders>>
+        AzureOperationResponse<IPage<ApplicationSummary>, ApplicationListHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ApplicationListBatchRequest" /> class.
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class ApplicationGetBatchRequest : Protocol.BatchRequest<
         ApplicationGetOptions,
-        AzureOperationResponse<ApplicationSummary,ApplicationGetHeaders>>
+        AzureOperationResponse<ApplicationSummary, ApplicationGetHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ApplicationGetBatchRequest" /> class.
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class ApplicationListNextBatchRequest : Protocol.BatchRequest<
         ApplicationListNextOptions,
-        AzureOperationResponse<IPage<ApplicationSummary>,ApplicationListHeaders>>
+        AzureOperationResponse<IPage<ApplicationSummary>, ApplicationListHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ApplicationListNextBatchRequest" /> class.
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class CertificateListBatchRequest : Protocol.BatchRequest<
         CertificateListOptions,
-        AzureOperationResponse<IPage<Certificate>,CertificateListHeaders>>
+        AzureOperationResponse<IPage<Certificate>, CertificateListHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CertificateListBatchRequest" /> class.
@@ -195,7 +195,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class CertificateGetBatchRequest : Protocol.BatchRequest<
         CertificateGetOptions,
-        AzureOperationResponse<Certificate,CertificateGetHeaders>>
+        AzureOperationResponse<Certificate, CertificateGetHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CertificateGetBatchRequest" /> class.
@@ -214,7 +214,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class CertificateListNextBatchRequest : Protocol.BatchRequest<
         CertificateListNextOptions,
-        AzureOperationResponse<IPage<Certificate>,CertificateListHeaders>>
+        AzureOperationResponse<IPage<Certificate>, CertificateListHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CertificateListNextBatchRequest" /> class.
@@ -300,7 +300,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class ComputeNodeGetBatchRequest : Protocol.BatchRequest<
         ComputeNodeGetOptions,
-        AzureOperationResponse<ComputeNode,ComputeNodeGetHeaders>>
+        AzureOperationResponse<ComputeNode, ComputeNodeGetHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ComputeNodeGetBatchRequest" /> class.
@@ -404,7 +404,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class ComputeNodeGetRemoteLoginSettingsBatchRequest : Protocol.BatchRequest<
         ComputeNodeGetRemoteLoginSettingsOptions,
-        AzureOperationResponse<ComputeNodeGetRemoteLoginSettingsResult,ComputeNodeGetRemoteLoginSettingsHeaders>>
+        AzureOperationResponse<ComputeNodeGetRemoteLoginSettingsResult, ComputeNodeGetRemoteLoginSettingsHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ComputeNodeGetRemoteLoginSettingsBatchRequest" /> class.
@@ -423,7 +423,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class ComputeNodeGetRemoteDesktopBatchRequest : Protocol.BatchRequest<
         ComputeNodeGetRemoteDesktopOptions,
-        AzureOperationResponse<System.IO.Stream,ComputeNodeGetRemoteDesktopHeaders>>
+        AzureOperationResponse<System.IO.Stream, ComputeNodeGetRemoteDesktopHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ComputeNodeGetRemoteDesktopBatchRequest" /> class.
@@ -442,7 +442,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class ComputeNodeListBatchRequest : Protocol.BatchRequest<
         ComputeNodeListOptions,
-        AzureOperationResponse<IPage<ComputeNode>,ComputeNodeListHeaders>>
+        AzureOperationResponse<IPage<ComputeNode>, ComputeNodeListHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ComputeNodeListBatchRequest" /> class.
@@ -461,7 +461,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class ComputeNodeListNextBatchRequest : Protocol.BatchRequest<
         ComputeNodeListNextOptions,
-        AzureOperationResponse<IPage<ComputeNode>,ComputeNodeListHeaders>>
+        AzureOperationResponse<IPage<ComputeNode>, ComputeNodeListHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ComputeNodeListNextBatchRequest" /> class.
@@ -506,7 +506,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class FileGetFromTaskBatchRequest : Protocol.BatchRequest<
         FileGetFromTaskOptions,
-        AzureOperationResponse<System.IO.Stream,FileGetFromTaskHeaders>>
+        AzureOperationResponse<System.IO.Stream, FileGetFromTaskHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FileGetFromTaskBatchRequest" /> class.
@@ -566,7 +566,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class FileGetFromComputeNodeBatchRequest : Protocol.BatchRequest<
         FileGetFromComputeNodeOptions,
-        AzureOperationResponse<System.IO.Stream,FileGetFromComputeNodeHeaders>>
+        AzureOperationResponse<System.IO.Stream, FileGetFromComputeNodeHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FileGetFromComputeNodeBatchRequest" /> class.
@@ -605,7 +605,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     public class FileListFromTaskBatchRequest : Protocol.BatchRequest<
         bool?,
         FileListFromTaskOptions,
-        AzureOperationResponse<IPage<NodeFile>,FileListFromTaskHeaders>>
+        AzureOperationResponse<IPage<NodeFile>, FileListFromTaskHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FileListFromTaskBatchRequest" /> class.
@@ -627,7 +627,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     public class FileListFromComputeNodeBatchRequest : Protocol.BatchRequest<
         bool?,
         FileListFromComputeNodeOptions,
-        AzureOperationResponse<IPage<NodeFile>,FileListFromComputeNodeHeaders>>
+        AzureOperationResponse<IPage<NodeFile>, FileListFromComputeNodeHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FileListFromComputeNodeBatchRequest" /> class.
@@ -648,7 +648,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class FileListFromTaskNextBatchRequest : Protocol.BatchRequest<
         FileListFromTaskNextOptions,
-        AzureOperationResponse<IPage<NodeFile>,FileListFromTaskHeaders>>
+        AzureOperationResponse<IPage<NodeFile>, FileListFromTaskHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FileListFromTaskNextBatchRequest" /> class.
@@ -667,7 +667,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class FileListFromComputeNodeNextBatchRequest : Protocol.BatchRequest<
         FileListFromComputeNodeNextOptions,
-        AzureOperationResponse<IPage<NodeFile>,FileListFromComputeNodeHeaders>>
+        AzureOperationResponse<IPage<NodeFile>, FileListFromComputeNodeHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="FileListFromComputeNodeNextBatchRequest" /> class.
@@ -690,7 +690,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class JobGetAllJobsLifetimeStatisticsBatchRequest : Protocol.BatchRequest<
         JobGetAllJobsLifetimeStatisticsOptions,
-        AzureOperationResponse<JobStatistics,JobGetAllJobsLifetimeStatisticsHeaders>>
+        AzureOperationResponse<JobStatistics, JobGetAllJobsLifetimeStatisticsHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="JobGetAllJobsLifetimeStatisticsBatchRequest" /> class.
@@ -728,7 +728,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class JobGetBatchRequest : Protocol.BatchRequest<
         JobGetOptions,
-        AzureOperationResponse<CloudJob,JobGetHeaders>>
+        AzureOperationResponse<CloudJob, JobGetHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="JobGetBatchRequest" /> class.
@@ -876,7 +876,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class JobListBatchRequest : Protocol.BatchRequest<
         JobListOptions,
-        AzureOperationResponse<IPage<CloudJob>,JobListHeaders>>
+        AzureOperationResponse<IPage<CloudJob>, JobListHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="JobListBatchRequest" /> class.
@@ -895,7 +895,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class JobListFromJobScheduleBatchRequest : Protocol.BatchRequest<
         JobListFromJobScheduleOptions,
-        AzureOperationResponse<IPage<CloudJob>,JobListFromJobScheduleHeaders>>
+        AzureOperationResponse<IPage<CloudJob>, JobListFromJobScheduleHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="JobListFromJobScheduleBatchRequest" /> class.
@@ -914,7 +914,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class JobListPreparationAndReleaseTaskStatusBatchRequest : Protocol.BatchRequest<
         JobListPreparationAndReleaseTaskStatusOptions,
-        AzureOperationResponse<IPage<JobPreparationAndReleaseTaskExecutionInformation>,JobListPreparationAndReleaseTaskStatusHeaders>>
+        AzureOperationResponse<IPage<JobPreparationAndReleaseTaskExecutionInformation>, JobListPreparationAndReleaseTaskStatusHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="JobListPreparationAndReleaseTaskStatusBatchRequest" /> class.
@@ -933,7 +933,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class JobListNextBatchRequest : Protocol.BatchRequest<
         JobListNextOptions,
-        AzureOperationResponse<IPage<CloudJob>,JobListHeaders>>
+        AzureOperationResponse<IPage<CloudJob>, JobListHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="JobListNextBatchRequest" /> class.
@@ -952,7 +952,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class JobListFromJobScheduleNextBatchRequest : Protocol.BatchRequest<
         JobListFromJobScheduleNextOptions,
-        AzureOperationResponse<IPage<CloudJob>,JobListFromJobScheduleHeaders>>
+        AzureOperationResponse<IPage<CloudJob>, JobListFromJobScheduleHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="JobListFromJobScheduleNextBatchRequest" /> class.
@@ -971,7 +971,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class JobListPreparationAndReleaseTaskStatusNextBatchRequest : Protocol.BatchRequest<
         JobListPreparationAndReleaseTaskStatusNextOptions,
-        AzureOperationResponse<IPage<JobPreparationAndReleaseTaskExecutionInformation>,JobListPreparationAndReleaseTaskStatusHeaders>>
+        AzureOperationResponse<IPage<JobPreparationAndReleaseTaskExecutionInformation>, JobListPreparationAndReleaseTaskStatusHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="JobListPreparationAndReleaseTaskStatusNextBatchRequest" /> class.
@@ -994,7 +994,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class JobScheduleExistsBatchRequest : Protocol.BatchRequest<
         JobScheduleExistsOptions,
-        AzureOperationResponse<bool,JobScheduleExistsHeaders>>
+        AzureOperationResponse<bool, JobScheduleExistsHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="JobScheduleExistsBatchRequest" /> class.
@@ -1032,7 +1032,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class JobScheduleGetBatchRequest : Protocol.BatchRequest<
         JobScheduleGetOptions,
-        AzureOperationResponse<CloudJobSchedule,JobScheduleGetHeaders>>
+        AzureOperationResponse<CloudJobSchedule, JobScheduleGetHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="JobScheduleGetBatchRequest" /> class.
@@ -1174,7 +1174,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class JobScheduleListBatchRequest : Protocol.BatchRequest<
         JobScheduleListOptions,
-        AzureOperationResponse<IPage<CloudJobSchedule>,JobScheduleListHeaders>>
+        AzureOperationResponse<IPage<CloudJobSchedule>, JobScheduleListHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="JobScheduleListBatchRequest" /> class.
@@ -1193,7 +1193,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class JobScheduleListNextBatchRequest : Protocol.BatchRequest<
         JobScheduleListNextOptions,
-        AzureOperationResponse<IPage<CloudJobSchedule>,JobScheduleListHeaders>>
+        AzureOperationResponse<IPage<CloudJobSchedule>, JobScheduleListHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="JobScheduleListNextBatchRequest" /> class.
@@ -1216,7 +1216,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class PoolListPoolUsageMetricsBatchRequest : Protocol.BatchRequest<
         PoolListPoolUsageMetricsOptions,
-        AzureOperationResponse<IPage<PoolUsageMetrics>,PoolListPoolUsageMetricsHeaders>>
+        AzureOperationResponse<IPage<PoolUsageMetrics>, PoolListPoolUsageMetricsHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PoolListPoolUsageMetricsBatchRequest" /> class.
@@ -1235,7 +1235,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class PoolGetAllPoolsLifetimeStatisticsBatchRequest : Protocol.BatchRequest<
         PoolGetAllPoolsLifetimeStatisticsOptions,
-        AzureOperationResponse<PoolStatistics,PoolGetAllPoolsLifetimeStatisticsHeaders>>
+        AzureOperationResponse<PoolStatistics, PoolGetAllPoolsLifetimeStatisticsHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PoolGetAllPoolsLifetimeStatisticsBatchRequest" /> class.
@@ -1276,7 +1276,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class PoolListBatchRequest : Protocol.BatchRequest<
         PoolListOptions,
-        AzureOperationResponse<IPage<CloudPool>,PoolListHeaders>>
+        AzureOperationResponse<IPage<CloudPool>, PoolListHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PoolListBatchRequest" /> class.
@@ -1314,7 +1314,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class PoolExistsBatchRequest : Protocol.BatchRequest<
         PoolExistsOptions,
-        AzureOperationResponse<bool,PoolExistsHeaders>>
+        AzureOperationResponse<bool, PoolExistsHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PoolExistsBatchRequest" /> class.
@@ -1333,7 +1333,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class PoolGetBatchRequest : Protocol.BatchRequest<
         PoolGetOptions,
-        AzureOperationResponse<CloudPool,PoolGetHeaders>>
+        AzureOperationResponse<CloudPool, PoolGetHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PoolGetBatchRequest" /> class.
@@ -1416,7 +1416,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     public class PoolEvaluateAutoScaleBatchRequest : Protocol.BatchRequest<
         string,
         PoolEvaluateAutoScaleOptions,
-        AzureOperationResponse<AutoScaleRun,PoolEvaluateAutoScaleHeaders>>
+        AzureOperationResponse<AutoScaleRun, PoolEvaluateAutoScaleHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PoolEvaluateAutoScaleBatchRequest" /> class.
@@ -1544,7 +1544,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class PoolListPoolUsageMetricsNextBatchRequest : Protocol.BatchRequest<
         PoolListPoolUsageMetricsNextOptions,
-        AzureOperationResponse<IPage<PoolUsageMetrics>,PoolListPoolUsageMetricsHeaders>>
+        AzureOperationResponse<IPage<PoolUsageMetrics>, PoolListPoolUsageMetricsHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PoolListPoolUsageMetricsNextBatchRequest" /> class.
@@ -1563,7 +1563,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class PoolListNextBatchRequest : Protocol.BatchRequest<
         PoolListNextOptions,
-        AzureOperationResponse<IPage<CloudPool>,PoolListHeaders>>
+        AzureOperationResponse<IPage<CloudPool>, PoolListHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PoolListNextBatchRequest" /> class.
@@ -1608,7 +1608,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class TaskListBatchRequest : Protocol.BatchRequest<
         TaskListOptions,
-        AzureOperationResponse<IPage<CloudTask>,TaskListHeaders>>
+        AzureOperationResponse<IPage<CloudTask>, TaskListHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TaskListBatchRequest" /> class.
@@ -1626,9 +1626,9 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// An <see cref="IBatchRequest"/> for the TaskAddCollection operation.
     /// </summary>
     public class TaskAddCollectionBatchRequest : Protocol.BatchRequest<
-        IList<TaskAddParameter>,
+        System.Collections.Generic.IList<TaskAddParameter>,
         TaskAddCollectionOptions,
-        AzureOperationResponse<TaskAddCollectionResult,TaskAddCollectionHeaders>>
+        AzureOperationResponse<TaskAddCollectionResult, TaskAddCollectionHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TaskAddCollectionBatchRequest" /> class.
@@ -1638,7 +1638,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
         /// <param name="cancellationToken">A <see cref="CancellationToken"/> controlling the request lifetime.</param>
         public TaskAddCollectionBatchRequest(
             BatchServiceClient serviceClient,
-            IList<TaskAddParameter> parameters,
+            System.Collections.Generic.IList<TaskAddParameter> parameters,
             CancellationToken cancellationToken) : base(serviceClient, parameters, cancellationToken)
         {
         }
@@ -1668,7 +1668,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class TaskGetBatchRequest : Protocol.BatchRequest<
         TaskGetOptions,
-        AzureOperationResponse<CloudTask,TaskGetHeaders>>
+        AzureOperationResponse<CloudTask, TaskGetHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TaskGetBatchRequest" /> class.
@@ -1709,7 +1709,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class TaskListSubtasksBatchRequest : Protocol.BatchRequest<
         TaskListSubtasksOptions,
-        AzureOperationResponse<CloudTaskListSubtasksResult,TaskListSubtasksHeaders>>
+        AzureOperationResponse<CloudTaskListSubtasksResult, TaskListSubtasksHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TaskListSubtasksBatchRequest" /> class.
@@ -1766,7 +1766,7 @@ namespace Microsoft.Azure.Batch.Protocol.BatchRequests
     /// </summary>
     public class TaskListNextBatchRequest : Protocol.BatchRequest<
         TaskListNextOptions,
-        AzureOperationResponse<IPage<CloudTask>,TaskListHeaders>>
+        AzureOperationResponse<IPage<CloudTask>, TaskListHeaders>>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="TaskListNextBatchRequest" /> class.
