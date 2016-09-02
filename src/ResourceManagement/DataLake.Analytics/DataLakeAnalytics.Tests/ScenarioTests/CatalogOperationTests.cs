@@ -163,98 +163,6 @@ namespace DataLakeAnalytics.Tests
             }
         }
 
-        // TODO: enable this test once all features are live in prod.
-        // [Fact]
-        public void CredentialCRUDTest()
-        {
-            using (var context = MockContext.Start(this.GetType().FullName))
-            {
-                commonData = new CommonTestFixture(context);
-                commonData.HostUrl =
-                    commonData.DataLakeAnalyticsManagementHelper.TryCreateDataLakeAnalyticsAccount(commonData.ResourceGroupName,
-                        commonData.Location, commonData.DataLakeStoreAccountName, commonData.SecondDataLakeAnalyticsAccountName);
-                TestUtilities.Wait(120000); // Sleep for two minutes to give the account a chance to provision the queue
-                commonData.DataLakeAnalyticsManagementHelper.CreateCatalog(commonData.ResourceGroupName,
-                    commonData.SecondDataLakeAnalyticsAccountName, commonData.DatabaseName, commonData.TableName, commonData.TvfName, commonData.ViewName, commonData.ProcName);
-                using (var clientToUse = commonData.GetDataLakeAnalyticsCatalogManagementClient(context))
-                {
-                    // create the credential
-                    clientToUse.Catalog.CreateCredential(
-                        commonData.SecondDataLakeAnalyticsAccountName,
-                        commonData.DatabaseName, commonData.SecretName,
-                        new DataLakeAnalyticsCatalogCredentialCreateParameters
-                        {
-                            Password = commonData.SecretPwd,
-                            Uri = "https://adlasecrettest.contoso.com:443",
-                            UserId = TestUtilities.GenerateGuid("fakeUserId01").ToString()
-                        });
-
-                    // Attempt to create the secret again, which should throw
-                    Assert.Throws<CloudException>(
-                        () => clientToUse.Catalog.CreateCredential(
-                                commonData.SecondDataLakeAnalyticsAccountName,
-                                commonData.DatabaseName, commonData.SecretName,
-                                new DataLakeAnalyticsCatalogCredentialCreateParameters
-                                {
-                                    Password = commonData.SecretPwd,
-                                    Uri = "https://adlasecrettest.contoso.com:443",
-                                    UserId = TestUtilities.GenerateGuid("fakeUserId02").ToString()
-                                }));
-
-                    // create another credential
-                    var secondSecretName = commonData.SecretName + "dup";
-                    clientToUse.Catalog.CreateCredential(
-                    commonData.SecondDataLakeAnalyticsAccountName,
-                    commonData.DatabaseName, secondSecretName,
-                    new DataLakeAnalyticsCatalogCredentialCreateParameters
-                    {
-                        Password = commonData.SecretPwd,
-                        Uri = "https://adlasecrettest.contoso.com:443",
-                        UserId = TestUtilities.GenerateGuid("fakeUserId03").ToString()
-                    });
-
-                    // Get the credential and ensure the response contains a date.
-                    var secretGetResponse = clientToUse.Catalog.GetCredential(
-                        commonData.SecondDataLakeAnalyticsAccountName,
-                        commonData.DatabaseName, commonData.SecretName);
-
-                    Assert.NotNull(secretGetResponse);
-                    Assert.NotNull(secretGetResponse.Name);
-
-                    // Get the Credential list
-                    // TODO: enable when list support exists.
-                    /*
-                    var credListResponse = clientToUse.Catalog.ListCredentials(
-                        commonData.SecondDataLakeAnalyticsAccountName,
-                        commonData.DatabaseName);
-                    Assert.True(credListResponse.Count() >= 1);
-
-                    // look for the credential we created
-                    Assert.True(credListResponse.Any(cred => cred.Name.Equals(commonData.CredentialName)));
-                    */
-
-                    // Get the specific credential as well
-                    var credGetResponse = clientToUse.Catalog.GetCredential(
-                        commonData.SecondDataLakeAnalyticsAccountName,
-                        commonData.DatabaseName, commonData.CredentialName);
-                    Assert.Equal(commonData.CredentialName, credGetResponse.Name);
-
-                    // Delete the credential
-                    clientToUse.Catalog.DeleteCredential(
-                        commonData.SecondDataLakeAnalyticsAccountName,
-                        commonData.DatabaseName, commonData.SecretName, 
-                        new DataLakeAnalyticsCatalogCredentialDeleteParameters(commonData.SecretPwd));
-
-                    // Try to get the credential which should throw
-                    Assert.Throws<CloudException>(() => clientToUse.Catalog.GetCredential(
-                        commonData.SecondDataLakeAnalyticsAccountName,
-                        commonData.DatabaseName, commonData.SecretName));
-
-                    // TODO: once support is available for delete all credentials add tests here for that.
-                }
-            }
-        }
-
         [Fact]
         public void SecretAndCredentialCRUDTest()
         {
@@ -321,11 +229,6 @@ namespace DataLakeAnalytics.Tests
                             credentialCreationScript);
 
                         // Get the Credential list
-                        // This funcitonality is removed in this release
-                        // since listing credentials in the new model is not ready yet.
-                        // all of this test functionality will be removed in a future release
-                        // so commenting this out for now with this note as an FYI.
-                        /*
                         var credListResponse = clientToUse.Catalog.ListCredentials(
                             commonData.SecondDataLakeAnalyticsAccountName,
                             commonData.DatabaseName);
@@ -333,7 +236,6 @@ namespace DataLakeAnalytics.Tests
 
                         // look for the credential we created
                         Assert.True(credListResponse.Any(cred => cred.Name.Equals(commonData.CredentialName)));
-                        */
 
                         // Get the specific credential as well
                         var credGetResponse = clientToUse.Catalog.GetCredential(
