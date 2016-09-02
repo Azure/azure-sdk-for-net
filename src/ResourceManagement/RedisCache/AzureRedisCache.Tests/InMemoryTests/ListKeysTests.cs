@@ -24,7 +24,7 @@ namespace AzureRedisCache.Tests
             ");
             string requestIdHeader = "0d33aff8-8a4e-4565-b893-a10e52260de0";
             RedisManagementClient client = Utility.GetRedisManagementClient(responseString, requestIdHeader, HttpStatusCode.OK);
-            RedisListKeysResult response = client.Redis.ListKeys(resourceGroupName: "resource-group", name: "cachename");
+            var response = client.Redis.ListKeys(resourceGroupName: "resource-group", name: "cachename");
 
             Assert.Equal("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=", response.PrimaryKey);
             Assert.Equal("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=", response.SecondaryKey);
@@ -60,7 +60,7 @@ namespace AzureRedisCache.Tests
         {
             string responseString = (@"{}");
             RedisManagementClient client = Utility.GetRedisManagementClient(responseString, null, HttpStatusCode.OK);
-            RedisListKeysResult response = client.Redis.ListKeys(resourceGroupName: "resource-group", name: "cachename");
+            var response = client.Redis.ListKeys(resourceGroupName: "resource-group", name: "cachename");
             Assert.Null(response.PrimaryKey);
             Assert.Null(response.SecondaryKey);
         }

@@ -47,7 +47,7 @@ namespace AzureRedisCache.Tests
             ");
             string requestIdHeader = "0d33aff8-8a4e-4565-b893-a10e52260de0";
             RedisManagementClient client = Utility.GetRedisManagementClient(responseString, requestIdHeader, HttpStatusCode.Created);
-            RedisResourceWithAccessKey response = client.Redis.CreateOrUpdate(resourceGroupName: "resource-group", name: "cachename",
+            var response = client.Redis.CreateOrUpdate(resourceGroupName: "resource-group", name: "cachename",
                                                                             parameters: new RedisCreateOrUpdateParameters
                                                                             {
                                                                                 Location = "North Europe",
@@ -85,7 +85,7 @@ namespace AzureRedisCache.Tests
         {
             string responseString = (@"{}");
             RedisManagementClient client = Utility.GetRedisManagementClient(responseString, null, HttpStatusCode.OK);
-            RedisResourceWithAccessKey response = client.Redis.CreateOrUpdate(resourceGroupName: "resource-group", name: "cachename",
+            var response = client.Redis.CreateOrUpdate(resourceGroupName: "resource-group", name: "cachename",
                                                                             parameters: new RedisCreateOrUpdateParameters
                                                                             {
                                                                                 Location = "North Europe",
@@ -237,7 +237,7 @@ namespace AzureRedisCache.Tests
             string requestIdHeader = "0d33aff8-8a4e-4565-b893-a10e52260de0";
 
             RedisManagementClient client = Utility.GetRedisManagementClient(responseString, requestIdHeader, HttpStatusCode.Created);
-            RedisResourceWithAccessKey response = client.Redis.CreateOrUpdate(resourceGroupName: "resource-group", name: "cachename",
+            var response = client.Redis.CreateOrUpdate(resourceGroupName: "resource-group", name: "cachename",
                                                                             parameters: new RedisCreateOrUpdateParameters
                                                                             {
                                                                                 Location = "North Europe",

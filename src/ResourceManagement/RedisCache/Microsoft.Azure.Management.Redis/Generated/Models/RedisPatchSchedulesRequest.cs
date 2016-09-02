@@ -8,18 +8,12 @@
 
 namespace Microsoft.Azure.Management.Redis.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Parameters to set patch schedules for redis cache.
     /// </summary>
-    [JsonTransformation]
+    [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class RedisPatchSchedulesRequest
     {
         /// <summary>
@@ -30,7 +24,9 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// <summary>
         /// Initializes a new instance of the RedisPatchSchedulesRequest class.
         /// </summary>
-        public RedisPatchSchedulesRequest(IList<ScheduleEntry> scheduleEntries)
+        /// <param name="scheduleEntries">List of patch schedules for redis
+        /// cache.</param>
+        public RedisPatchSchedulesRequest(System.Collections.Generic.IList<ScheduleEntry> scheduleEntries)
         {
             ScheduleEntries = scheduleEntries;
         }
@@ -38,17 +34,20 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// <summary>
         /// Gets or sets list of patch schedules for redis cache.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.scheduleEntries")]
-        public IList<ScheduleEntry> ScheduleEntries { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.scheduleEntries")]
+        public System.Collections.Generic.IList<ScheduleEntry> ScheduleEntries { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public virtual void Validate()
         {
             if (ScheduleEntries == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ScheduleEntries");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "ScheduleEntries");
             }
             if (this.ScheduleEntries != null)
             {
