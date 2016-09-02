@@ -6,7 +6,6 @@ namespace Microsoft.Azure.Messaging.UnitTests
     using System;
     using Microsoft.Azure.Messaging;
     using System.Diagnostics;
-    using System.Text;
     using System.Threading.Tasks;
     using Xunit;
 
@@ -28,17 +27,24 @@ namespace Microsoft.Azure.Messaging.UnitTests
         QueueClient QueueClient { get; }
 
         [Fact]
-        async Task QueueClientSend()
+        async Task QueueClientBasicSendReceiveTest()
         {
+            const int messageCount = 10;
+            //Send 10 messages
             WriteLine("Sending single mesage via QueueClient.SendAsync(brokeredMessage)");
-            
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < messageCount; i++)
             {
                 BrokeredMessage message = new BrokeredMessage("test" + i);
                 message.Label = "test" + i;
                 await this.QueueClient.SendAsync(message); 
             }
-            WriteLine("Sent 10 messages using QueueClient.SendAsync()");
+            WriteLine(string.Format("Sent {0} messages using QueueClient.SendAsync()", messageCount));
+
+            //Receive 10 messages
+            WriteLine(string.Format("Receiving {0} messages via QueueClient.ReceiveAsync()", messageCount));
+            var receivedMessages =  await this.QueueClient.ReceiveAsync(messageCount);
+            Assert.True(receivedMessages.Count == messageCount);
+            WriteLine(string.Format("Received {0} messages via QueueClient.ReceiveAsync()", messageCount));
         }
 
         static void WriteLine(string message)

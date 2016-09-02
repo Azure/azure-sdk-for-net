@@ -24,7 +24,6 @@ namespace Microsoft.Azure.Messaging
             get; private set;
         }
 
-
         public abstract Task CloseAsync();
 
         public void Close()

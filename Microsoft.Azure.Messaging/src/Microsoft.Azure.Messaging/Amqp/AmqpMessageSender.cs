@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Messaging.Amqp
     using Microsoft.Azure.Amqp;
     using Microsoft.Azure.Amqp.Framing;
 
-    class AmqpMessageSender : MessageSender
+    sealed class AmqpMessageSender : MessageSender
     {
         int deliveryCount;
 
@@ -65,15 +65,15 @@ namespace Microsoft.Azure.Messaging.Amqp
 
         async Task<SendingAmqpLink> CreateLinkAsync(TimeSpan timeout)
         {
-            var AmqpQueueClient = ((AmqpQueueClient)this.QueueClient);
-            var connectionSettings = AmqpQueueClient.ConnectionSettings;
+            var amqpQueueClient = ((AmqpQueueClient)this.QueueClient);
+            var connectionSettings = amqpQueueClient.ConnectionSettings;
             var timeoutHelper = new TimeoutHelper(connectionSettings.OperationTimeout);
-            AmqpConnection connection = await AmqpQueueClient.ConnectionManager.GetOrCreateAsync(timeoutHelper.RemainingTime());
+            AmqpConnection connection = await amqpQueueClient.ConnectionManager.GetOrCreateAsync(timeoutHelper.RemainingTime());
 
             // Authenticate over CBS
             var cbsLink = connection.Extensions.Find<AmqpCbsLink>();
 
-            ICbsTokenProvider cbsTokenProvider = AmqpQueueClient.CbsTokenProvider;
+            ICbsTokenProvider cbsTokenProvider = amqpQueueClient.CbsTokenProvider;
             Uri address = new Uri(connectionSettings.Endpoint, this.Path);
             string audience = address.AbsoluteUri;
             string resource = address.AbsoluteUri;
@@ -98,7 +98,7 @@ namespace Microsoft.Azure.Messaging.Amqp
                 linkSettings.Source = new Source { Address = this.ClientId };
 
                 var link = new SendingAmqpLink(linkSettings);
-                linkSettings.LinkName = $"{AmqpQueueClient.ContainerId};{connection.Identifier}:{session.Identifier}:{link.Identifier}";
+                linkSettings.LinkName = $"{amqpQueueClient.ContainerId};{connection.Identifier}:{session.Identifier}:{link.Identifier}";
                 link.AttachTo(session);
 
                 await link.OpenAsync(timeoutHelper.RemainingTime());

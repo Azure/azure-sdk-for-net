@@ -40,7 +40,6 @@ namespace Microsoft.Azure.Messaging.Amqp
         public const string UriName = AmqpConstants.Vendor + ":uri";
         public const string DateTimeOffsetName = AmqpConstants.Vendor + ":datetime-offset";
 
-
         public static AmqpMessage BrokeredMessagesToAmqpMessage(IEnumerable<BrokeredMessage> brokeredMessages, bool batchable)
         {
             AmqpMessage amqpMessage;
@@ -88,6 +87,17 @@ namespace Microsoft.Azure.Messaging.Amqp
             return amqpMessage;
         }
 
+        public static BrokeredMessage AmqpMessageToBrokeredMessage(AmqpMessage amqpMessage)
+        {
+            if (amqpMessage == null)
+            {
+                throw Fx.Exception.ArgumentNull("amqpMessage");
+            }
+
+            BrokeredMessage message = new BrokeredMessage(StreamToBytes(amqpMessage.BodyStream));
+            UpdateBrokeredMessageHeaderAndProperties(amqpMessage, message);
+            return message;
+        }
 
         public static void UpdateBrokeredMessageHeaderAndProperties(AmqpMessage amqpMessage, BrokeredMessage message)
         {

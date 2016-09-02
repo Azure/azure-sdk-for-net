@@ -42,7 +42,5 @@ namespace Microsoft.Azure.Messaging
             }
             return count;
         }
-
-
     }
 }

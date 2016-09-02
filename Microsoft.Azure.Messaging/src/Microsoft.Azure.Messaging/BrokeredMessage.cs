@@ -1,8 +1,6 @@
 ﻿// Copyright (c) Microsoft. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using Microsoft.Azure.Messaging.Primitives;
-
 namespace Microsoft.Azure.Messaging
 {
     using System;
@@ -13,10 +11,11 @@ namespace Microsoft.Azure.Messaging
     using System.Text;
     using System.Runtime.Serialization;
     using System.Threading;
-    using Microsoft.Azure.Messaging.Amqp;
     using System.Xml;
     using System.Xml.Schema;
     using System.Xml.Serialization;
+    using Microsoft.Azure.Messaging.Amqp;
+    using Microsoft.Azure.Messaging.Primitives;
 
     /// <summary>Represents the unit of communication between AppFabric ServiceBus clients.</summary>
     [XmlRoot("BrokeredMessage", Namespace = Constants.Namespace)]
@@ -1951,13 +1950,10 @@ namespace Microsoft.Azure.Messaging
                 this.SetGetBodyCalled();
                 return (T)this.bodyObject;
             }
-
-            throw new InvalidOperationException("No DataContractBinarySerializer");
-            //TODO:
-            //else
-            //{
-            //    return this.GetBody<T>(new DataContractBinarySerializer(typeof(T)));
-            //}
+            else
+            {
+                return this.GetBody<T>(new DataContractBinarySerializer(typeof(T)));
+            }
         }
 
         /// <summary>Deserializes the BrokeredMessage body into an object of the specified type using 
@@ -1970,48 +1966,44 @@ namespace Microsoft.Azure.Messaging
         /// <exception cref="InvalidOperationException"> Thrown if the message contains a Null body stream, contains no data, 
         /// or if the stream has been read once (through any GetBody() calls). </exception>
         // TODO:
-        //public T GetBody<T>(XmlObjectSerializer serializer)
-        //{
-        //    if (serializer == null)
-        //    {
-        //        //TODO: throw FxTrace.Exception.AsError(new ArgumentNullException("serializer"));
-        //        throw new ArgumentNullException("serializer");
-        //    }
+        public T GetBody<T>(XmlObjectSerializer serializer)
+        {
+            if (serializer == null)
+            {
+                //TODO: throw FxTrace.Exception.AsError(new ArgumentNullException("serializer"));
+                throw new ArgumentNullException("serializer");
+            }
 
-        //    this.ThrowIfDisposed();
-        //    this.SetGetBodyCalled();
+            this.ThrowIfDisposed();
+            this.SetGetBodyCalled();
 
-        //    if (this.BodyStream == null)
-        //    {
-        //        // BodyStream is null only if 
-        //        // (a) user create message with null object or
-        //        // (b) internal code set BodyStream to null
-        //        // We assume case (b) is treated like case (a).
-        //        if (typeof(T).IsValueType)
-        //        {
-        //            //TODO: throw FxTrace.Exception.AsError(new InvalidOperationException(SRClient.MessageBodyNull));
-        //            throw new InvalidOperationException("MessageBodyNull");
-        //        }
+            if (this.BodyStream == null)
+            {
+                //TODO: Should use IsValueType??
+                if (typeof(T) == typeof(ValueType))
+                {
+                    throw new InvalidOperationException("MessageBodyNull");
+                }
+                
+                return default(T);
+            }
+            else if (this.BodyStream.CanSeek)
+            {
+                if (this.BodyStream.Length == 0)
+                {
+                    // There are 2 cases where there is a stream in the first place:
+                    // (a) user called Message.CreateMessage(object/stream)
+                    // (b) internal code set Message.BodyStream to non-null stream
+                    // Either case, someone now force stream to be empty. We should always throw
+                    // in these cases.
+                    throw Fx.Exception.AsError(new InvalidOperationException("MessageBodyNull"));
+                }
 
-        //        return default(T);
-        //    }
-        //    else if (this.BodyStream.CanSeek)
-        //    {
-        //        if (this.BodyStream.Length == 0)
-        //        {
-        //            // There are 2 cases where there is a stream in the first place:
-        //            // (a) user called Message.CreateMessage(object/stream)
-        //            // (b) internal code set Message.BodyStream to non-null stream
-        //            // Either case, someone now force stream to be empty. We should always throw
-        //            // in these cases.
-        //            throw FxTrace.Exception.AsError(new InvalidOperationException(SRClient.MessageBodyNull));
-        //        }
+                this.BodyStream.Position = 0;
+            }
 
-        //        this.BodyStream.Position = 0;
-        //    }
-
-        //    return (T)serializer.ReadObject(this.BodyStream);
-        //}
+            return (T)serializer.ReadObject(this.BodyStream);
+        }
 
         //TODO:
         /// <summary>Abandons the lock on a peek-locked message.</summary>

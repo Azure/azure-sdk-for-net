@@ -46,12 +46,10 @@ namespace Microsoft.Azure.Messaging.Amqp
             return new AmqpMessageSender(this);
         }
 
-        //protected override PartitionReceiver OnCreateReceiver(
-        //    string consumerGroupName, string partitionId, string startOffset, bool offsetInclusive, DateTime? startTime, long? epoch)
-        //{
-        //    return new AmqpPartitionReceiver(
-        //        this, consumerGroupName, partitionId, startOffset, offsetInclusive, startTime, epoch);
-        //}
+        internal override MessageReceiver OnCreateMessageReceiver()
+        {
+            return new AmqpMessageReceiver(this);
+        }
 
         protected override Task OnCloseAsync()
         {

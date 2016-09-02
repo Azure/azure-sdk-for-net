@@ -14,6 +14,7 @@ namespace Microsoft.Azure.Messaging
     public abstract class QueueClient : ClientEntity
     {
         MessageSender innerSender;
+        MessageReceiver innerReceiver;
 
         internal QueueClient(ServiceBusConnectionSettings connectionSettings)
             : base($"{nameof(QueueClient)}{ClientEntity.GetNextId()}({connectionSettings.EntityPath})")
@@ -44,6 +45,25 @@ namespace Microsoft.Azure.Messaging
                 }
 
                 return this.innerSender;
+            }
+        }
+
+        MessageReceiver InnerReceiver
+        {
+            get
+            {
+                if(this.innerReceiver == null)
+                {
+                    lock(this.ThisLock)
+                    {
+                        if(this.innerReceiver == null)
+                        {
+                            this.innerReceiver = this.CreateMessageReceiver();
+                        }
+                    }
+                }
+
+                return this.innerReceiver;
             }
         }
 
@@ -110,12 +130,32 @@ namespace Microsoft.Azure.Messaging
             }
         }
 
+        public async Task<IList<BrokeredMessage>> ReceiveAsync(int maxMessageCount)
+        {
+            try
+            {
+                return await this.InnerReceiver.ReceiveAsync(maxMessageCount);
+            }
+            catch(Exception)
+            {
+                //TODO: Log Receive Exception
+                throw;
+            }
+        }
+
         internal MessageSender CreateMessageSender()
         {
             return this.OnCreateMessageSender();
         }
 
+        internal MessageReceiver CreateMessageReceiver()
+        {
+            return this.OnCreateMessageReceiver();
+        }
+
         internal abstract MessageSender OnCreateMessageSender();
+
+        internal abstract MessageReceiver OnCreateMessageReceiver();
 
         protected abstract Task OnCloseAsync();
     }
