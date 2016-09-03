@@ -1,17 +1,17 @@
-﻿using Microsoft.Rest;
+﻿using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Microsoft.Rest;
+using Microsoft.Rest.Azure.Authentication;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
-using Microsoft.Rest.Azure.Authentication;
-using System.IO;
 
 namespace Microsoft.Azure.Management.V2.Resource.Authentication
 {
-    public class ApplicationTokenCredentails : ServiceClientCredentials
+    public class ApplicationTokenCredentials : ServiceClientCredentials
     {
         private string tenantId;
         private string clientId;
@@ -21,24 +21,25 @@ namespace Microsoft.Azure.Management.V2.Resource.Authentication
 
         private ActiveDirectoryServiceSettings activeDirectoryServiceSettings;
 
-        public ApplicationTokenCredentails(AzureEnvironment environment, string tenantId, string clientId, string clientSecret)
+        public ApplicationTokenCredentials(AzureEnvironment environment, string tenantId, string clientId, string clientSecret)
         {
             Init(environment, tenantId, clientId, clientSecret);
         }
 
-        public ApplicationTokenCredentails(string tenantId, string clientId, string clientSecret) : this(AzureEnvironment.AzureGlobalCloud, tenantId, clientId, clientSecret)
+        public ApplicationTokenCredentials(string tenantId, string clientId, string clientSecret) : this(AzureEnvironment.AzureGlobalCloud, tenantId, clientId, clientSecret)
         { }
 
-        public ApplicationTokenCredentails(string authFile)
+        public ApplicationTokenCredentials(string authFile)
         {
             Dictionary<string, string> config = new Dictionary<string, string>() {
                 { "authurl", AzureEnvironment.AzureGlobalCloud.AuthenticationEndpoint },
                 { "baseurl", AzureEnvironment.AzureGlobalCloud.ResourceManagerEndpoint },
-                { "managementuri", AzureEnvironment.AzureGlobalCloud.TokenAuidence }
+                { "managementuri", AzureEnvironment.AzureGlobalCloud.TokenAudience }
             };
 
             File.ReadLines(authFile)
-                .All(line => {
+                .All(line =>
+                {
                     var keyVal = line.Trim().Split(new char[] { '=' }, 2);
                     config[keyVal[0].ToLowerInvariant()] = keyVal[1];
                     return true;
@@ -47,7 +48,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Authentication
             Init(new AzureEnvironment
             {
                 AuthenticationEndpoint = config["authurl"].Replace("\\", ""),
-                TokenAuidence = config["managementuri"].Replace("\\", ""),
+                TokenAudience = config["managementuri"].Replace("\\", ""),
                 ResourceManagerEndpoint = config["baseurl"].Replace("\\", "")
             }, config["tenant"], config["client"], config["key"]);
             WithDefaultSubscription(config["subscription"]);
@@ -61,19 +62,19 @@ namespace Microsoft.Azure.Management.V2.Resource.Authentication
             activeDirectoryServiceSettings = new ActiveDirectoryServiceSettings
             {
                 AuthenticationEndpoint = new Uri(environment.AuthenticationEndpoint),
-                TokenAudience = new Uri(environment.TokenAuidence),
+                TokenAudience = new Uri(environment.TokenAudience),
                 ValidateAuthority = true
             };
             TokenCache = new TokenCache(); // Default to in-memory cache
         }
 
-        public ApplicationTokenCredentails withTokenCache(TokenCache tokenCache)
+        public ApplicationTokenCredentials withTokenCache(TokenCache tokenCache)
         {
             TokenCache = tokenCache;
             return this;
         }
 
-        public ApplicationTokenCredentails WithDefaultSubscription(string subscriptionId)
+        public ApplicationTokenCredentials WithDefaultSubscription(string subscriptionId)
         {
             DefaultSubscriptionId = subscriptionId;
             return this;
