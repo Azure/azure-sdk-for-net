@@ -29,16 +29,16 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <summary>
         /// Initializes a new instance of the IssuerReference class.
         /// </summary>
-        /// <param name="name">Name of the referenced issuer object e.g.
-        /// 'Self', 'Unknown'.</param>
+        /// <param name="name">Name of the referenced issuer object or
+        /// reserved names e.g. 'Self', 'Unknown'.</param>
         public IssuerReference(string name = default(string))
         {
             Name = name;
         }
 
         /// <summary>
-        /// Gets or sets name of the referenced issuer object e.g. 'Self',
-        /// 'Unknown'.
+        /// Gets or sets name of the referenced issuer object or reserved
+        /// names e.g. 'Self', 'Unknown'.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

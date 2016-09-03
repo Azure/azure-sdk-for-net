@@ -17,7 +17,6 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
         {
             foreach (var kty in JsonWebKeyType.AllTypes)
             {
-                Console.WriteLine("Checking JsonWebKey with " + kty);
                 CheckInstance(new JsonWebKey(), kty);
             }
         }
@@ -64,7 +63,7 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
             {
                 if (property.PropertyType != typeof(byte[]))
                 {
-                    Console.WriteLine("Not checking property " + property.Name);
+                    // Ignoring the property
                     continue;
                 }
                 // Assume the property is writable.
@@ -87,7 +86,6 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
             foreach (var octet in array)
                 if (octet != 0)
                     throw new Exception("The array of property " + propName + " was not cleared.");
-            Console.WriteLine("Property " + propName + " was cleared.");
         }
     }
 }
