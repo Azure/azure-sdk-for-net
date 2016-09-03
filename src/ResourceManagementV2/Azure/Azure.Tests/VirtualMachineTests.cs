@@ -1,10 +1,6 @@
 ﻿using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.V2.Compute;
 using Microsoft.Azure.Management.V2.Resource;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Azure.Tests
@@ -18,7 +14,7 @@ namespace Azure.Tests
         [Fact]
         public void CanCreateVirtualMachine()
         {
-            IComputeManager computeManager = TestHelper.CreatComputeManager();
+            IComputeManager computeManager = TestHelper.CreateComputeManager();
             IResourceManager resourceManager = TestHelper.CreateResourceManager();
 
             // Create
@@ -39,7 +35,8 @@ namespace Azure.Tests
 
             IVirtualMachine foundedVM = null;
             var vms = computeManager.VirtualMachines.ListByGroup(RG_NAME);
-            foreach (IVirtualMachine vm1 in vms) {
+            foreach (IVirtualMachine vm1 in vms)
+            {
                 if (vm1.Name.Equals(VMNAME))
                 {
                     foundedVM = vm1;

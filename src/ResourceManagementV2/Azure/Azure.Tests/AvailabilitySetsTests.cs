@@ -3,9 +3,6 @@ using Microsoft.Azure.Management.V2.Resource;
 using Microsoft.Azure.Management.V2.Resource.Authentication;
 using Microsoft.Azure.Management.V2.Resource.Core;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Azure.Tests
@@ -52,9 +49,9 @@ namespace Azure.Tests
                 // Delete
                 computeManager.AvailabilitySets.Delete(availabilitySet.Id);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                // 
+                //
             }
             finally
             {
@@ -63,13 +60,13 @@ namespace Azure.Tests
                     var resourceManager = CreateResourceManager();
                     resourceManager.ResourceGroups.Delete(rgName);
                 }
-                catch {}
+                catch { }
             }
         }
 
         private IComputeManager CreatComputeManager()
         {
-            ApplicationTokenCredentails credentials = new ApplicationTokenCredentails(@"C:\my.azureauth");
+            ApplicationTokenCredentials credentials = new ApplicationTokenCredentials(@"C:\my.azureauth");
             return ComputeManager
                 .Configure()
                 .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
@@ -78,7 +75,7 @@ namespace Azure.Tests
 
         private IResourceManager CreateResourceManager()
         {
-            ApplicationTokenCredentails credentials = new ApplicationTokenCredentails(@"C:\my.azureauth");
+            ApplicationTokenCredentials credentials = new ApplicationTokenCredentials(@"C:\my.azureauth");
             IResourceManager resourceManager = ResourceManager2.Configure()
                 .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                 .Authenticate(credentials)

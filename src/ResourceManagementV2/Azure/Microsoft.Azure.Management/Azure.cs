@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management
 
         public static IAuthenticated Authenticate(string authFile)
         {
-            ApplicationTokenCredentails credentils = new ApplicationTokenCredentails(authFile);
+            ApplicationTokenCredentials credentils = new ApplicationTokenCredentials(authFile);
             var authenticated = new Authenticated(RestClient.Configure()
                     .withEnvironment(AzureEnvironment.AzureGlobalCloud)
                     .withCredentials(credentils)

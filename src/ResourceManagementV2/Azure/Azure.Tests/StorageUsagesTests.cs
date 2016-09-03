@@ -20,7 +20,7 @@ namespace Azure.Tests
 
         private IStorageManager CreateStorageManager()
         {
-            ApplicationTokenCredentails credentials = new ApplicationTokenCredentails(@"C:\my.azureauth");
+            ApplicationTokenCredentials credentials = new ApplicationTokenCredentials(@"C:\my.azureauth");
             return StorageManager
                 .Configure()
                 .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
