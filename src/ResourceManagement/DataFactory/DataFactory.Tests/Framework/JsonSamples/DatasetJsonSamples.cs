@@ -123,7 +123,59 @@ namespace DataFactory.Tests.Framework.JsonSamples
             },
             partitionedBy:
             [
-		        { name: ""PartitionKey"", value: { type: ""DateTime"", date: ""SliceStart"", format: ""yyyy-MM-dd"" } },
+                { name: ""PartitionKey"", value: { type: ""DateTime"", date: ""SliceStart"", format: ""yyyy-MM-dd"" } },
+            ]
+        },
+        availability:
+        {
+            interval: 1, 
+            frequency: ""Hour"",
+            style: ""StartOfInterval""     
+        },
+        policy:
+        {
+                validation:
+                {   
+                    minimumSizeMB: 200.0
+                }
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string BlobDatasetWithFullFormat = @"
+{
+    name: ""MyDemoBlob"",
+    properties:
+    {
+        type: ""AzureBlob"",
+        linkedServiceName: ""MyLinkedServiceName"",
+        structure:
+        [
+            { name: ""PartitionKey"", type: ""Guid"" },
+            { name: ""RowKey"", type: ""String"" }, 
+            { name: ""Timestamp"", type: ""String"" },
+            { name: ""game_id "", type: ""String"" },
+        ],
+        typeProperties:
+        {        
+            folderPath: ""MyContainer\\MySubFolder\\$Date\\$Time\\FileName$Date$Time\\{PartitionKey}"",
+            fileName: ""TestBlobName"",       
+            format:
+            {
+                type: ""TextFormat"",
+                columnDelimiter: "","",
+                rowDelimiter: "";"",
+                escapeChar: ""#"",
+                nullValue: ""\\N"",
+                encodingName: ""utf-8"",
+                treatEmptyAsNull: true,
+                firstRowAsHeader: false,
+                skipLineCount: 1
+            },
+            partitionedBy:
+            [
+                { name: ""PartitionKey"", value: { type: ""DateTime"", date: ""SliceStart"", format: ""yyyy-MM-dd"" } },
             ]
         },
         availability:
