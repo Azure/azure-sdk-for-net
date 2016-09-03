@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Additional parameters for the Pool_ListPoolUsageMetrics operation.
@@ -41,15 +35,27 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the PoolListPoolUsageMetricsOptions
         /// class.
         /// </summary>
-        /// <param name="startTime">The earliest time from which to include metrics. This must be at least two and a half hours before the current time.</param>
-        /// <param name="endTime">The latest time from which to include metrics. This must be at least two hours before the current time.</param>
+        /// <param name="startTime">The earliest time from which to include
+        /// metrics. This must be at least two and a half hours before the
+        /// current time.</param>
+        /// <param name="endTime">The latest time from which to include
+        /// metrics. This must be at least two hours before the current
+        /// time.</param>
         /// <param name="filter">An OData $filter clause.</param>
-        /// <param name="maxResults">The maximum number of items to return in the response.</param>
-        /// <param name="timeout">The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds.</param>
-        /// <param name="clientRequestId">The caller-generated request identity, in the form of a GUID with no decoration such as curly braces, e.g. 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.</param>
-        /// <param name="returnClientRequestId">Whether the server should return the client-request-id identifier in the response.</param>
-        /// <param name="ocpDate">The time the request was issued. If not specified, this header will be automatically populated with the current system clock time.</param>
-        public PoolListPoolUsageMetricsOptions(DateTime? startTime = default(DateTime?), DateTime? endTime = default(DateTime?), string filter = default(string), int? maxResults = default(int?), int? timeout = default(int?), string clientRequestId = default(string), bool? returnClientRequestId = default(bool?), DateTime? ocpDate = default(DateTime?))
+        /// <param name="maxResults">The maximum number of items to return in
+        /// the response.</param>
+        /// <param name="timeout">The maximum time that the server can spend
+        /// processing the request, in seconds. The default is 30
+        /// seconds.</param>
+        /// <param name="clientRequestId">The caller-generated request
+        /// identity, in the form of a GUID with no decoration such as curly
+        /// braces, e.g. 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.</param>
+        /// <param name="returnClientRequestId">Whether the server should
+        /// return the client-request-id identifier in the response.</param>
+        /// <param name="ocpDate">The time the request was issued. If not
+        /// specified, this header will be automatically populated with the
+        /// current system clock time.</param>
+        public PoolListPoolUsageMetricsOptions(System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), string filter = default(string), int? maxResults = default(int?), int? timeout = default(int?), string clientRequestId = default(string), bool? returnClientRequestId = default(bool?), System.DateTime? ocpDate = default(System.DateTime?))
         {
             StartTime = startTime;
             EndTime = endTime;
@@ -65,33 +71,33 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the earliest time from which to include metrics. This
         /// must be at least two and a half hours before the current time.
         /// </summary>
-        [JsonProperty(PropertyName = "")]
-        public DateTime? StartTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "")]
+        public System.DateTime? StartTime { get; set; }
 
         /// <summary>
         /// Gets or sets the latest time from which to include metrics. This
         /// must be at least two hours before the current time.
         /// </summary>
-        [JsonProperty(PropertyName = "")]
-        public DateTime? EndTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "")]
+        public System.DateTime? EndTime { get; set; }
 
         /// <summary>
         /// Gets or sets an OData $filter clause.
         /// </summary>
-        [JsonProperty(PropertyName = "")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "")]
         public string Filter { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum number of items to return in the response.
         /// </summary>
-        [JsonProperty(PropertyName = "")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "")]
         public int? MaxResults { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum time that the server can spend processing
         /// the request, in seconds. The default is 30 seconds.
         /// </summary>
-        [JsonProperty(PropertyName = "")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "")]
         public int? Timeout { get; set; }
 
         /// <summary>
@@ -99,14 +105,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// a GUID with no decoration such as curly braces, e.g.
         /// 9C4D50EE-2D56-4CD3-8152-34347DC9F2B0.
         /// </summary>
-        [JsonProperty(PropertyName = "")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "")]
         public string ClientRequestId { get; set; }
 
         /// <summary>
         /// Gets or sets whether the server should return the
         /// client-request-id identifier in the response.
         /// </summary>
-        [JsonProperty(PropertyName = "")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "")]
         public bool? ReturnClientRequestId { get; set; }
 
         /// <summary>
@@ -114,9 +120,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// this header will be automatically populated with the current
         /// system clock time.
         /// </summary>
-        [JsonConverter(typeof(DateTimeRfc1123JsonConverter))]
-        [JsonProperty(PropertyName = "")]
-        public DateTime? OcpDate { get; set; }
+        [Newtonsoft.Json.JsonConverter(typeof(Microsoft.Rest.Serialization.DateTimeRfc1123JsonConverter))]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "")]
+        public System.DateTime? OcpDate { get; set; }
 
     }
 }

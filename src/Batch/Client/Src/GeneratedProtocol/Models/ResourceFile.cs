@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A file to be downloaded from Azure blob storage to a compute node.
@@ -39,9 +33,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the ResourceFile class.
         /// </summary>
-        /// <param name="blobSource">The URL of the file within Azure Blob Storage. This URL should include a shared access signature if the blob is not publicly readable.</param>
-        /// <param name="filePath">The location to which to download the file, relative to the task's working directory.</param>
-        /// <param name="fileMode">The file mode attribute in octal format.</param>
+        /// <param name="blobSource">The URL of the file within Azure Blob
+        /// Storage. This URL should include a shared access signature if the
+        /// blob is not publicly readable.</param>
+        /// <param name="filePath">The location to which to download the file,
+        /// relative to the task's working directory.</param>
+        /// <param name="fileMode">The file mode attribute in octal
+        /// format.</param>
         public ResourceFile(string blobSource, string filePath, string fileMode = default(string))
         {
             BlobSource = blobSource;
@@ -54,14 +52,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// URL should include a shared access signature if the blob is not
         /// publicly readable.
         /// </summary>
-        [JsonProperty(PropertyName = "blobSource")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "blobSource")]
         public string BlobSource { get; set; }
 
         /// <summary>
         /// Gets or sets the location to which to download the file, relative
         /// to the task's working directory.
         /// </summary>
-        [JsonProperty(PropertyName = "filePath")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "filePath")]
         public string FilePath { get; set; }
 
         /// <summary>
@@ -71,24 +69,24 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// This property will be ignored if it is specified for a
         /// resourceFile which will be downloaded to a Windows compute node.
         /// </remarks>
-        [JsonProperty(PropertyName = "fileMode")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "fileMode")]
         public string FileMode { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (BlobSource == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "BlobSource");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "BlobSource");
             }
             if (FilePath == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "FilePath");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "FilePath");
             }
         }
     }

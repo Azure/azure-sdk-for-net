@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A collection of Azure Batch tasks to add.
@@ -40,7 +34,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the TaskAddCollectionParameter class.
         /// </summary>
         /// <param name="value">The collection of tasks to add.</param>
-        public TaskAddCollectionParameter(IList<TaskAddParameter> value)
+        public TaskAddCollectionParameter(System.Collections.Generic.IList<TaskAddParameter> value)
         {
             Value = value;
         }
@@ -48,26 +42,26 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the collection of tasks to add.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<TaskAddParameter> Value { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
+        public System.Collections.Generic.IList<TaskAddParameter> Value { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (Value == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Value");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Value");
             }
             if (this.Value != null)
             {
                 if (this.Value.Count > 100)
                 {
-                    throw new ValidationException(ValidationRules.MaxItems, "Value", 100);
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MaxItems, "Value", 100);
                 }
                 foreach (var element in this.Value)
                 {

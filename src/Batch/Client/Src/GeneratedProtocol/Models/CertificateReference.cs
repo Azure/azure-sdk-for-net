@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A reference to a certificate to be installed on compute nodes in a
@@ -41,11 +35,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the CertificateReference class.
         /// </summary>
         /// <param name="thumbprint">The thumbprint of the certificate.</param>
-        /// <param name="thumbprintAlgorithm">The algorithm with which the thumbprint is associated. This must be sha1.</param>
-        /// <param name="storeLocation">The location of the certificate store on the compute node into which to install the certificate.</param>
-        /// <param name="storeName">The name of the certificate store on the compute node into which to install the certificate.</param>
-        /// <param name="visibility">Which user accounts on the compute node should have access to the private data of the certificate.</param>
-        public CertificateReference(string thumbprint, string thumbprintAlgorithm, CertificateStoreLocation? storeLocation = default(CertificateStoreLocation?), string storeName = default(string), IList<CertificateVisibility?> visibility = default(IList<CertificateVisibility?>))
+        /// <param name="thumbprintAlgorithm">The algorithm with which the
+        /// thumbprint is associated. This must be sha1.</param>
+        /// <param name="storeLocation">The location of the certificate store
+        /// on the compute node into which to install the certificate.</param>
+        /// <param name="storeName">The name of the certificate store on the
+        /// compute node into which to install the certificate.</param>
+        /// <param name="visibility">Which user accounts on the compute node
+        /// should have access to the private data of the certificate.</param>
+        public CertificateReference(string thumbprint, string thumbprintAlgorithm, CertificateStoreLocation? storeLocation = default(CertificateStoreLocation?), string storeName = default(string), System.Collections.Generic.IList<CertificateVisibility?> visibility = default(System.Collections.Generic.IList<CertificateVisibility?>))
         {
             Thumbprint = thumbprint;
             ThumbprintAlgorithm = thumbprintAlgorithm;
@@ -57,14 +55,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the thumbprint of the certificate.
         /// </summary>
-        [JsonProperty(PropertyName = "thumbprint")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "thumbprint")]
         public string Thumbprint { get; set; }
 
         /// <summary>
         /// Gets or sets the algorithm with which the thumbprint is
         /// associated. This must be sha1.
         /// </summary>
-        [JsonProperty(PropertyName = "thumbprintAlgorithm")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "thumbprintAlgorithm")]
         public string ThumbprintAlgorithm { get; set; }
 
         /// <summary>
@@ -75,7 +73,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// The default value is CurrentUser. Possible values include:
         /// 'currentuser', 'localmachine', 'unmapped'
         /// </remarks>
-        [JsonProperty(PropertyName = "storeLocation")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "storeLocation")]
         public CertificateStoreLocation? StoreLocation { get; set; }
 
         /// <summary>
@@ -85,7 +83,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// The default value is My.
         /// </remarks>
-        [JsonProperty(PropertyName = "storeName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "storeName")]
         public string StoreName { get; set; }
 
         /// <summary>
@@ -95,24 +93,24 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// The default is all accounts.
         /// </remarks>
-        [JsonProperty(PropertyName = "visibility")]
-        public IList<CertificateVisibility?> Visibility { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "visibility")]
+        public System.Collections.Generic.IList<CertificateVisibility?> Visibility { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (Thumbprint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Thumbprint");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Thumbprint");
             }
             if (ThumbprintAlgorithm == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ThumbprintAlgorithm");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "ThumbprintAlgorithm");
             }
         }
     }

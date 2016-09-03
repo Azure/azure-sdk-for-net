@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// An user account on a compute node.
@@ -40,11 +34,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the ComputeNodeUser class.
         /// </summary>
         /// <param name="name">The user name of the account.</param>
-        /// <param name="isAdmin">Whether the account should be an administrator on the compute node.</param>
-        /// <param name="expiryTime">The time at which the account should expire.</param>
+        /// <param name="isAdmin">Whether the account should be an
+        /// administrator on the compute node.</param>
+        /// <param name="expiryTime">The time at which the account should
+        /// expire.</param>
         /// <param name="password">The password of the account.</param>
-        /// <param name="sshPublicKey">The SSH public key that can be used for remote login to the compute node.</param>
-        public ComputeNodeUser(string name, bool? isAdmin = default(bool?), DateTime? expiryTime = default(DateTime?), string password = default(string), string sshPublicKey = default(string))
+        /// <param name="sshPublicKey">The SSH public key that can be used for
+        /// remote login to the compute node.</param>
+        public ComputeNodeUser(string name, bool? isAdmin = default(bool?), System.DateTime? expiryTime = default(System.DateTime?), string password = default(string), string sshPublicKey = default(string))
         {
             Name = name;
             IsAdmin = isAdmin;
@@ -56,14 +53,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the user name of the account.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets whether the account should be an administrator on the
         /// compute node.
         /// </summary>
-        [JsonProperty(PropertyName = "isAdmin")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "isAdmin")]
         public bool? IsAdmin { get; set; }
 
         /// <summary>
@@ -72,33 +69,33 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// If omitted, the default is 1 day from the current time.
         /// </remarks>
-        [JsonProperty(PropertyName = "expiryTime")]
-        public DateTime? ExpiryTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "expiryTime")]
+        public System.DateTime? ExpiryTime { get; set; }
 
         /// <summary>
         /// Gets or sets the password of the account.
         /// </summary>
-        [JsonProperty(PropertyName = "password")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "password")]
         public string Password { get; set; }
 
         /// <summary>
         /// Gets or sets the SSH public key that can be used for remote login
         /// to the compute node.
         /// </summary>
-        [JsonProperty(PropertyName = "sshPublicKey")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "sshPublicKey")]
         public string SshPublicKey { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (Name == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Name");
             }
         }
     }

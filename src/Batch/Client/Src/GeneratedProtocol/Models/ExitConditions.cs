@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Specifies how the Batch service should respond when the task completes.
@@ -39,11 +33,18 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the ExitConditions class.
         /// </summary>
-        /// <param name="exitCodes">A list of individual task exit codes and how the Batch service should respond to them.</param>
-        /// <param name="exitCodeRanges">A list of task exit codes ranges and how the Batch service should respond to them.</param>
-        /// <param name="schedulingError">How the Batch service should respond if the task fails with a scheduling error.</param>
-        /// <param name="defaultProperty">How the Batch service should respond if the task fails with an exit condition not covered by any of the other properties – that is, any nonzero exit code not listed in the exitCodes or exitCodeRanges collection, or a scheduling error if the schedulingError property is not present.</param>
-        public ExitConditions(IList<ExitCodeMapping> exitCodes = default(IList<ExitCodeMapping>), IList<ExitCodeRangeMapping> exitCodeRanges = default(IList<ExitCodeRangeMapping>), ExitOptions schedulingError = default(ExitOptions), ExitOptions defaultProperty = default(ExitOptions))
+        /// <param name="exitCodes">A list of individual task exit codes and
+        /// how the Batch service should respond to them.</param>
+        /// <param name="exitCodeRanges">A list of task exit codes ranges and
+        /// how the Batch service should respond to them.</param>
+        /// <param name="schedulingError">How the Batch service should respond
+        /// if the task fails with a scheduling error.</param>
+        /// <param name="defaultProperty">How the Batch service should respond
+        /// if the task fails with an exit condition not covered by any of
+        /// the other properties – that is, any nonzero exit code not listed
+        /// in the exitCodes or exitCodeRanges collection, or a scheduling
+        /// error if the schedulingError property is not present.</param>
+        public ExitConditions(System.Collections.Generic.IList<ExitCodeMapping> exitCodes = default(System.Collections.Generic.IList<ExitCodeMapping>), System.Collections.Generic.IList<ExitCodeRangeMapping> exitCodeRanges = default(System.Collections.Generic.IList<ExitCodeRangeMapping>), ExitOptions schedulingError = default(ExitOptions), ExitOptions defaultProperty = default(ExitOptions))
         {
             ExitCodes = exitCodes;
             ExitCodeRanges = exitCodeRanges;
@@ -55,21 +56,21 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets a list of individual task exit codes and how the
         /// Batch service should respond to them.
         /// </summary>
-        [JsonProperty(PropertyName = "exitCodes")]
-        public IList<ExitCodeMapping> ExitCodes { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "exitCodes")]
+        public System.Collections.Generic.IList<ExitCodeMapping> ExitCodes { get; set; }
 
         /// <summary>
         /// Gets or sets a list of task exit codes ranges and how the Batch
         /// service should respond to them.
         /// </summary>
-        [JsonProperty(PropertyName = "exitCodeRanges")]
-        public IList<ExitCodeRangeMapping> ExitCodeRanges { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "exitCodeRanges")]
+        public System.Collections.Generic.IList<ExitCodeRangeMapping> ExitCodeRanges { get; set; }
 
         /// <summary>
         /// Gets or sets how the Batch service should respond if the task
         /// fails with a scheduling error.
         /// </summary>
-        [JsonProperty(PropertyName = "schedulingError")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "schedulingError")]
         public ExitOptions SchedulingError { get; set; }
 
         /// <summary>
@@ -79,7 +80,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// exitCodes or exitCodeRanges collection, or a scheduling error if
         /// the schedulingError property is not present.
         /// </summary>
-        [JsonProperty(PropertyName = "default")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "default")]
         public ExitOptions DefaultProperty { get; set; }
 
     }

@@ -18,14 +18,9 @@
 
 namespace Microsoft.Azure.Batch.Protocol
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
-    using Models;
+   using Microsoft.Rest.Azure;
+   using Models;
 
     /// <summary>
     /// Extension methods for CertificateOperations.
@@ -46,7 +41,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static CertificateAddHeaders Add(this ICertificateOperations operations, CertificateAddParameter certificate, CertificateAddOptions certificateAddOptions = default(CertificateAddOptions))
             {
-                return Task.Factory.StartNew(s => ((ICertificateOperations)s).AddAsync(certificate, certificateAddOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICertificateOperations)s).AddAsync(certificate, certificateAddOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -64,7 +59,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CertificateAddHeaders> AddAsync(this ICertificateOperations operations, CertificateAddParameter certificate, CertificateAddOptions certificateAddOptions = default(CertificateAddOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<CertificateAddHeaders> AddAsync(this ICertificateOperations operations, CertificateAddParameter certificate, CertificateAddOptions certificateAddOptions = default(CertificateAddOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.AddWithHttpMessagesAsync(certificate, certificateAddOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -82,9 +77,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='certificateListOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static IPage<Certificate> List(this ICertificateOperations operations, CertificateListOptions certificateListOptions = default(CertificateListOptions))
+            public static Microsoft.Rest.Azure.IPage<Certificate> List(this ICertificateOperations operations, CertificateListOptions certificateListOptions = default(CertificateListOptions))
             {
-                return Task.Factory.StartNew(s => ((ICertificateOperations)s).ListAsync(certificateListOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICertificateOperations)s).ListAsync(certificateListOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -100,7 +95,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Certificate>> ListAsync(this ICertificateOperations operations, CertificateListOptions certificateListOptions = default(CertificateListOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<Certificate>> ListAsync(this ICertificateOperations operations, CertificateListOptions certificateListOptions = default(CertificateListOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(certificateListOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -125,7 +120,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static CertificateCancelDeletionHeaders CancelDeletion(this ICertificateOperations operations, string thumbprintAlgorithm, string thumbprint, CertificateCancelDeletionOptions certificateCancelDeletionOptions = default(CertificateCancelDeletionOptions))
             {
-                return Task.Factory.StartNew(s => ((ICertificateOperations)s).CancelDeletionAsync(thumbprintAlgorithm, thumbprint, certificateCancelDeletionOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICertificateOperations)s).CancelDeletionAsync(thumbprintAlgorithm, thumbprint, certificateCancelDeletionOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -146,7 +141,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CertificateCancelDeletionHeaders> CancelDeletionAsync(this ICertificateOperations operations, string thumbprintAlgorithm, string thumbprint, CertificateCancelDeletionOptions certificateCancelDeletionOptions = default(CertificateCancelDeletionOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<CertificateCancelDeletionHeaders> CancelDeletionAsync(this ICertificateOperations operations, string thumbprintAlgorithm, string thumbprint, CertificateCancelDeletionOptions certificateCancelDeletionOptions = default(CertificateCancelDeletionOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.CancelDeletionWithHttpMessagesAsync(thumbprintAlgorithm, thumbprint, certificateCancelDeletionOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -171,7 +166,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static CertificateDeleteHeaders Delete(this ICertificateOperations operations, string thumbprintAlgorithm, string thumbprint, CertificateDeleteOptions certificateDeleteOptions = default(CertificateDeleteOptions))
             {
-                return Task.Factory.StartNew(s => ((ICertificateOperations)s).DeleteAsync(thumbprintAlgorithm, thumbprint, certificateDeleteOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICertificateOperations)s).DeleteAsync(thumbprintAlgorithm, thumbprint, certificateDeleteOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -192,7 +187,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<CertificateDeleteHeaders> DeleteAsync(this ICertificateOperations operations, string thumbprintAlgorithm, string thumbprint, CertificateDeleteOptions certificateDeleteOptions = default(CertificateDeleteOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<CertificateDeleteHeaders> DeleteAsync(this ICertificateOperations operations, string thumbprintAlgorithm, string thumbprint, CertificateDeleteOptions certificateDeleteOptions = default(CertificateDeleteOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.DeleteWithHttpMessagesAsync(thumbprintAlgorithm, thumbprint, certificateDeleteOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -217,7 +212,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static Certificate Get(this ICertificateOperations operations, string thumbprintAlgorithm, string thumbprint, CertificateGetOptions certificateGetOptions = default(CertificateGetOptions))
             {
-                return Task.Factory.StartNew(s => ((ICertificateOperations)s).GetAsync(thumbprintAlgorithm, thumbprint, certificateGetOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICertificateOperations)s).GetAsync(thumbprintAlgorithm, thumbprint, certificateGetOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -238,7 +233,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Certificate> GetAsync(this ICertificateOperations operations, string thumbprintAlgorithm, string thumbprint, CertificateGetOptions certificateGetOptions = default(CertificateGetOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<Certificate> GetAsync(this ICertificateOperations operations, string thumbprintAlgorithm, string thumbprint, CertificateGetOptions certificateGetOptions = default(CertificateGetOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(thumbprintAlgorithm, thumbprint, certificateGetOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -259,9 +254,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='certificateListNextOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static IPage<Certificate> ListNext(this ICertificateOperations operations, string nextPageLink, CertificateListNextOptions certificateListNextOptions = default(CertificateListNextOptions))
+            public static Microsoft.Rest.Azure.IPage<Certificate> ListNext(this ICertificateOperations operations, string nextPageLink, CertificateListNextOptions certificateListNextOptions = default(CertificateListNextOptions))
             {
-                return Task.Factory.StartNew(s => ((ICertificateOperations)s).ListNextAsync(nextPageLink, certificateListNextOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICertificateOperations)s).ListNextAsync(nextPageLink, certificateListNextOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -280,7 +275,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Certificate>> ListNextAsync(this ICertificateOperations operations, string nextPageLink, CertificateListNextOptions certificateListNextOptions = default(CertificateListNextOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<Certificate>> ListNextAsync(this ICertificateOperations operations, string nextPageLink, CertificateListNextOptions certificateListNextOptions = default(CertificateListNextOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, certificateListNextOptions, null, cancellationToken).ConfigureAwait(false))
                 {

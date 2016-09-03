@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Specifies characteristics for a temporary 'auto pool'. The Batch
@@ -40,10 +34,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the AutoPoolSpecification class.
         /// </summary>
-        /// <param name="poolLifetimeOption">The minimum lifetime of created auto pools, and how multiple jobs on a schedule are assigned to pools.</param>
-        /// <param name="autoPoolIdPrefix">A prefix to be added to the unique identifier when a pool is automatically created.</param>
-        /// <param name="keepAlive">Whether to keep an auto pool alive after its lifetime expires.</param>
-        /// <param name="pool">The pool specification for the auto pool.</param>
+        /// <param name="poolLifetimeOption">The minimum lifetime of created
+        /// auto pools, and how multiple jobs on a schedule are assigned to
+        /// pools.</param>
+        /// <param name="autoPoolIdPrefix">A prefix to be added to the unique
+        /// identifier when a pool is automatically created.</param>
+        /// <param name="keepAlive">Whether to keep an auto pool alive after
+        /// its lifetime expires.</param>
+        /// <param name="pool">The pool specification for the auto
+        /// pool.</param>
         public AutoPoolSpecification(PoolLifetimeOption poolLifetimeOption, string autoPoolIdPrefix = default(string), bool? keepAlive = default(bool?), PoolSpecification pool = default(PoolSpecification))
         {
             AutoPoolIdPrefix = autoPoolIdPrefix;
@@ -59,7 +58,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// The prefix can be up to 20 characters long.
         /// </remarks>
-        [JsonProperty(PropertyName = "autoPoolIdPrefix")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "autoPoolIdPrefix")]
         public string AutoPoolIdPrefix { get; set; }
 
         /// <summary>
@@ -69,26 +68,26 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// Possible values include: 'jobschedule', 'job', 'unmapped'
         /// </remarks>
-        [JsonProperty(PropertyName = "poolLifetimeOption")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "poolLifetimeOption")]
         public PoolLifetimeOption PoolLifetimeOption { get; set; }
 
         /// <summary>
         /// Gets or sets whether to keep an auto pool alive after its lifetime
         /// expires.
         /// </summary>
-        [JsonProperty(PropertyName = "keepAlive")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "keepAlive")]
         public bool? KeepAlive { get; set; }
 
         /// <summary>
         /// Gets or sets the pool specification for the auto pool.
         /// </summary>
-        [JsonProperty(PropertyName = "pool")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "pool")]
         public PoolSpecification Pool { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

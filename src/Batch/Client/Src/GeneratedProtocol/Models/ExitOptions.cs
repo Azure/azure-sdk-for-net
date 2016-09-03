@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// How the Batch service should respond to a particular exit condition.
@@ -39,7 +33,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the ExitOptions class.
         /// </summary>
-        /// <param name="jobAction">An action to take on the job containing the task, if the task completes with the given exit condition and the job’s onTaskFailed property is 'performexitoptionsjobaction'. Possible values include: 'none', 'disable', 'terminate'</param>
+        /// <param name="jobAction">An action to take on the job containing
+        /// the task, if the task completes with the given exit condition and
+        /// the job’s onTaskFailed property is 'performexitoptionsjobaction'.
+        /// Possible values include: 'none', 'disable', 'terminate'</param>
         public ExitOptions(JobAction? jobAction = default(JobAction?))
         {
             JobAction = jobAction;
@@ -51,7 +48,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// onTaskFailed property is 'performexitoptionsjobaction'. Possible
         /// values include: 'none', 'disable', 'terminate'
         /// </summary>
-        [JsonProperty(PropertyName = "jobAction")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "jobAction")]
         public JobAction? JobAction { get; set; }
 
     }

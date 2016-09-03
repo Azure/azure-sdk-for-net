@@ -18,21 +18,18 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for CertificateStoreLocation.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum CertificateStoreLocation
     {
-        [EnumMember(Value = "currentuser")]
+        [System.Runtime.Serialization.EnumMember(Value = "currentuser")]
         Currentuser,
-        [EnumMember(Value = "localmachine")]
+        [System.Runtime.Serialization.EnumMember(Value = "localmachine")]
         Localmachine,
-        [EnumMember(Value = "unmapped")]
+        [System.Runtime.Serialization.EnumMember(Value = "unmapped")]
         Unmapped
     }
 }

@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A locality hint that can be used by the Batch service to select a
@@ -40,7 +34,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the AffinityInformation class.
         /// </summary>
-        /// <param name="affinityId">An opaque string representing the location of a compute node or a task that has run previously.</param>
+        /// <param name="affinityId">An opaque string representing the
+        /// location of a compute node or a task that has run
+        /// previously.</param>
         public AffinityInformation(string affinityId)
         {
             AffinityId = affinityId;
@@ -54,20 +50,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// You can pass the affinityId of a compute node or task to indicate
         /// that this task needs to be placed close to the node or task.
         /// </remarks>
-        [JsonProperty(PropertyName = "affinityId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "affinityId")]
         public string AffinityId { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (AffinityId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "AffinityId");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "AffinityId");
             }
         }
     }

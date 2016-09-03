@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Parameters for a CloudJobScheduleOperations.Update request.
@@ -39,10 +33,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobScheduleUpdateParameter class.
         /// </summary>
-        /// <param name="schedule">The schedule according to which jobs will be created.</param>
-        /// <param name="jobSpecification">Details of the jobs to be created on this schedule.</param>
-        /// <param name="metadata">A list of name-value pairs associated with the job schedule as metadata.</param>
-        public JobScheduleUpdateParameter(Schedule schedule, JobSpecification jobSpecification, IList<MetadataItem> metadata = default(IList<MetadataItem>))
+        /// <param name="schedule">The schedule according to which jobs will
+        /// be created.</param>
+        /// <param name="jobSpecification">Details of the jobs to be created
+        /// on this schedule.</param>
+        /// <param name="metadata">A list of name-value pairs associated with
+        /// the job schedule as metadata.</param>
+        public JobScheduleUpdateParameter(Schedule schedule, JobSpecification jobSpecification, System.Collections.Generic.IList<MetadataItem> metadata = default(System.Collections.Generic.IList<MetadataItem>))
         {
             Schedule = schedule;
             JobSpecification = jobSpecification;
@@ -57,13 +54,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the default schedule: that is, a single job scheduled to run
         /// immediately.
         /// </remarks>
-        [JsonProperty(PropertyName = "schedule")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "schedule")]
         public Schedule Schedule { get; set; }
 
         /// <summary>
         /// Gets or sets details of the jobs to be created on this schedule.
         /// </summary>
-        [JsonProperty(PropertyName = "jobSpecification")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "jobSpecification")]
         public JobSpecification JobSpecification { get; set; }
 
         /// <summary>
@@ -74,24 +71,24 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// If you do not specify this element, it takes the default value of
         /// an empty list; in effect, any existing metadata is deleted.
         /// </remarks>
-        [JsonProperty(PropertyName = "metadata")]
-        public IList<MetadataItem> Metadata { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "metadata")]
+        public System.Collections.Generic.IList<MetadataItem> Metadata { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (Schedule == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Schedule");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Schedule");
             }
             if (JobSpecification == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "JobSpecification");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "JobSpecification");
             }
             if (this.JobSpecification != null)
             {

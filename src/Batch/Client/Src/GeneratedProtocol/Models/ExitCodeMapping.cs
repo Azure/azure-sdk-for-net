@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// How the Batch service should respond if a task exits with a particular
@@ -41,7 +35,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the ExitCodeMapping class.
         /// </summary>
         /// <param name="code">A process exit code.</param>
-        /// <param name="exitOptions">How the Batch service should respond if the task exits with this exit code.</param>
+        /// <param name="exitOptions">How the Batch service should respond if
+        /// the task exits with this exit code.</param>
         public ExitCodeMapping(int code, ExitOptions exitOptions)
         {
             Code = code;
@@ -51,27 +46,27 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets a process exit code.
         /// </summary>
-        [JsonProperty(PropertyName = "code")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "code")]
         public int Code { get; set; }
 
         /// <summary>
         /// Gets or sets how the Batch service should respond if the task
         /// exits with this exit code.
         /// </summary>
-        [JsonProperty(PropertyName = "exitOptions")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "exitOptions")]
         public ExitOptions ExitOptions { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (ExitOptions == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ExitOptions");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "ExitOptions");
             }
         }
     }

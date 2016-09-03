@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Response to a CloudTaskOperations.ListSubtasks request.
@@ -42,7 +36,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// class.
         /// </summary>
         /// <param name="value">The list of information of subtasks.</param>
-        public CloudTaskListSubtasksResult(IList<SubtaskInformation> value = default(IList<SubtaskInformation>))
+        public CloudTaskListSubtasksResult(System.Collections.Generic.IList<SubtaskInformation> value = default(System.Collections.Generic.IList<SubtaskInformation>))
         {
             Value = value;
         }
@@ -50,8 +44,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the list of information of subtasks.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<SubtaskInformation> Value { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
+        public System.Collections.Generic.IList<SubtaskInformation> Value { get; set; }
 
     }
 }

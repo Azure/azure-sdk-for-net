@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Constraints to apply to the Job Manager task.
@@ -39,10 +33,18 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskConstraints class.
         /// </summary>
-        /// <param name="maxWallClockTime">The maximum elapsed time that the task may run, measured from the time the task starts. If the task does not complete within the time limit, the Batch service terminates it.</param>
-        /// <param name="retentionTime">The minimum time to retain the working directory for the task on the compute node where it ran, from the time it completes execution. After this time, the Batch service may delete the working directory and all its contents.</param>
-        /// <param name="maxTaskRetryCount">The maximum number of times the task may be retried. The Batch service retries a task if its exit code is nonzero.</param>
-        public TaskConstraints(TimeSpan? maxWallClockTime = default(TimeSpan?), TimeSpan? retentionTime = default(TimeSpan?), int? maxTaskRetryCount = default(int?))
+        /// <param name="maxWallClockTime">The maximum elapsed time that the
+        /// task may run, measured from the time the task starts. If the task
+        /// does not complete within the time limit, the Batch service
+        /// terminates it.</param>
+        /// <param name="retentionTime">The minimum time to retain the working
+        /// directory for the task on the compute node where it ran, from the
+        /// time it completes execution. After this time, the Batch service
+        /// may delete the working directory and all its contents.</param>
+        /// <param name="maxTaskRetryCount">The maximum number of times the
+        /// task may be retried. The Batch service retries a task if its exit
+        /// code is nonzero.</param>
+        public TaskConstraints(System.TimeSpan? maxWallClockTime = default(System.TimeSpan?), System.TimeSpan? retentionTime = default(System.TimeSpan?), int? maxTaskRetryCount = default(int?))
         {
             MaxWallClockTime = maxWallClockTime;
             RetentionTime = retentionTime;
@@ -54,8 +56,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// measured from the time the task starts. If the task does not
         /// complete within the time limit, the Batch service terminates it.
         /// </summary>
-        [JsonProperty(PropertyName = "maxWallClockTime")]
-        public TimeSpan? MaxWallClockTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "maxWallClockTime")]
+        public System.TimeSpan? MaxWallClockTime { get; set; }
 
         /// <summary>
         /// Gets or sets the minimum time to retain the working directory for
@@ -66,14 +68,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// The default is infinite.
         /// </remarks>
-        [JsonProperty(PropertyName = "retentionTime")]
-        public TimeSpan? RetentionTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "retentionTime")]
+        public System.TimeSpan? RetentionTime { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum number of times the task may be retried.
         /// The Batch service retries a task if its exit code is nonzero.
         /// </summary>
-        [JsonProperty(PropertyName = "maxTaskRetryCount")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "maxTaskRetryCount")]
         public int? MaxTaskRetryCount { get; set; }
 
     }

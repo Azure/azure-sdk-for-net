@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Parameters for a CloudJobOperations.Terminate request.
@@ -39,7 +33,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobTerminateParameter class.
         /// </summary>
-        /// <param name="terminateReason">The text you want to appear as the job's TerminateReason. The default is 'UserTerminate'.</param>
+        /// <param name="terminateReason">The text you want to appear as the
+        /// job's TerminateReason. The default is 'UserTerminate'.</param>
         public JobTerminateParameter(string terminateReason = default(string))
         {
             TerminateReason = terminateReason;
@@ -49,7 +44,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the text you want to appear as the job's
         /// TerminateReason. The default is 'UserTerminate'.
         /// </summary>
-        [JsonProperty(PropertyName = "terminateReason")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "terminateReason")]
         public string TerminateReason { get; set; }
 
     }
