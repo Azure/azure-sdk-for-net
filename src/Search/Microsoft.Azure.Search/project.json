@@ -22,7 +22,7 @@
     "nowarn": [ "1591" ]
   },
   "dependencies": {
-    "Microsoft.Spatial": "[6.15.0,7.0)"
+    "Microsoft.Spatial": "6.15.0"
   },
 
   "frameworks": {
