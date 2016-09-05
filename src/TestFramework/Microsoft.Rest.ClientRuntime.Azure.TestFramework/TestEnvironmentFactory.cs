@@ -1,20 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using Newtonsoft.Json.Linq;
-using System.Threading;
-using Microsoft.Azure.Test.HttpRecorder;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
-using System.Threading.Tasks;
-using System.Net.Http.Headers;
-using Microsoft.Rest.Azure.Authentication;
-
 namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Net.Http;
+    using Newtonsoft.Json.Linq;
+    using System.Threading;
+    using Microsoft.Azure.Test.HttpRecorder;
+    using Microsoft.IdentityModel.Clients.ActiveDirectory;
+    using System.Threading.Tasks;
+    using System.Net.Http.Headers;
+    using Microsoft.Rest.Azure.Authentication;
+
     public static class TestEnvironmentFactory
     {        
         /// <summary>
