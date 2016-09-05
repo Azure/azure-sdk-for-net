@@ -423,8 +423,16 @@ namespace Microsoft.Azure.Search.Tests
                     new NGramTokenizer(generateSimpleName(i++), minGram: 1, maxGram: 2),
                     new ClassicTokenizer(generateSimpleName(i++), maxTokenLength: 255),
                     new KeywordTokenizer(generateSimpleName(i++), bufferSize: 256),
-                    new MicrosoftLanguageStemmingTokenizer(generateSimpleName(i++), maxTokenLength: 255),
-                    new MicrosoftLanguageTokenizer(generateSimpleName(i++), maxTokenLength: 255),
+                    new MicrosoftLanguageStemmingTokenizer(
+                        generateSimpleName(i++), 
+                        maxTokenLength: 255, 
+                        isSearchTokenizer: false, 
+                        language: MicrosoftStemmingTokenizerLanguage.English),
+                    new MicrosoftLanguageTokenizer(
+                        generateSimpleName(i++), 
+                        maxTokenLength: 255,
+                        isSearchTokenizer: false,
+                        language: MicrosoftTokenizerLanguage.English),
                     new PathHierarchyTokenizer(generateSimpleName(i++), delimiter: '/', replacement: '/', bufferSize: 1024),
                     new PatternTokenizer(generateSimpleName(i++), pattern: @"\W+", group: -1),
                     new StandardTokenizer(generateSimpleName(i++), maxTokenLength: 255),
