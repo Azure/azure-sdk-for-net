@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/providers/Microsoft.Compute/locations/SoutheastAsia/vmSizes?api-version=2016-03-30",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMzZjM2MWItNTNjMi00Y2M3LWI4MjktNzg5MDY3MDgzODdiL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvU291dGhlYXN0QXNpYS92bVNpemVzP2FwaS12ZXJzaW9uPTIwMTYtMDMtMzA=",
+      "RequestUri": "/subscriptions/e33f361b-53c2-4cc7-b829-78906708387b/providers/Microsoft.Compute/locations/SoutheastAsia/vmSizes?api-version=2016-09-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvZTMzZjM2MWItNTNjMi00Y2M3LWI4MjktNzg5MDY3MDgzODdiL3Byb3ZpZGVycy9NaWNyb3NvZnQuQ29tcHV0ZS9sb2NhdGlvbnMvU291dGhlYXN0QXNpYS92bVNpemVzP2FwaS12ZXJzaW9uPTIwMTYtMDktMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
