@@ -741,6 +741,23 @@
             return asyncTask;
         }
 
+        public Task<AzureOperationHeaderResponse<Models.TaskReactivateHeaders>> ReactivateTask(string jobId, string taskId, BehaviorManager bhMgr, CancellationToken cancellationToken)
+        {
+            var request = new TaskReactivateBatchRequest(this._client, cancellationToken);
+
+            request.ServiceRequestFunc = (lambdaCancelToken) => request.RestClient.Task.ReactivateWithHttpMessagesAsync(
+                    jobId,
+                    taskId,
+                    request.Options,
+                    request.CustomHeaders,
+                    lambdaCancelToken);
+
+            var asyncTask = ProcessAndExecuteBatchRequest(request, bhMgr);
+
+            return asyncTask;
+        }
+
+
         public Task<AzureOperationResponse<IPage<Models.CloudPool>, Models.PoolListHeaders>> ListPools(string skipToken, BehaviorManager bhMgr, DetailLevel detailLevel, CancellationToken cancellationToken)
         {
             Task<AzureOperationResponse<IPage<Models.CloudPool>, Models.PoolListHeaders>> asyncTask;

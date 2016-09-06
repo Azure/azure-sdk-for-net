@@ -18,21 +18,18 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for DisableJobOption.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum DisableJobOption
     {
-        [EnumMember(Value = "requeue")]
+        [System.Runtime.Serialization.EnumMember(Value = "requeue")]
         Requeue,
-        [EnumMember(Value = "terminate")]
+        [System.Runtime.Serialization.EnumMember(Value = "terminate")]
         Terminate,
-        [EnumMember(Value = "wait")]
+        [System.Runtime.Serialization.EnumMember(Value = "wait")]
         Wait
     }
 }

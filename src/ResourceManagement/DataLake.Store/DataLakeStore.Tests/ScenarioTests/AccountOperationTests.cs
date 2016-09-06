@@ -46,6 +46,18 @@ namespace DataLakeStore.Tests
                             Tags = new Dictionary<string, string>
                             {
                             { "testkey","testvalue" }
+                            },
+                            Identity = new EncryptionIdentity
+                            {
+                                Type = EncryptionIdentityType.SystemAssigned
+                            },
+                            Properties = new DataLakeStoreAccountProperties
+                            {
+                                EncryptionConfig = new EncryptionConfig
+                                {
+                                    Type = EncryptionConfigType.ServiceManaged
+                                },
+                                EncryptionState = EncryptionState.Enabled
                             }
                         });
 
@@ -77,6 +89,13 @@ namespace DataLakeStore.Tests
 
                 // Confirm that the account creation did succeed
                 Assert.True(responseGet.Properties.ProvisioningState == DataLakeStoreAccountStatus.Succeeded);
+
+                // Validate the encryption state is set
+                Assert.Equal(EncryptionState.Enabled, responseGet.Properties.EncryptionState.GetValueOrDefault());
+                Assert.Equal(EncryptionIdentityType.SystemAssigned, responseGet.Identity.Type.GetValueOrDefault());
+                Assert.True(responseGet.Identity.PrincipalId.HasValue);
+                Assert.True(responseGet.Identity.TenantId.HasValue);
+                Assert.Equal(EncryptionConfigType.ServiceManaged, responseGet.Properties.EncryptionConfig.Type.GetValueOrDefault());
 
                 // Update the account and confirm the updates make it in.
                 var newAccount = responseGet;

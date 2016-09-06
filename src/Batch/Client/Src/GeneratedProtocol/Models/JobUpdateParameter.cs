@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Parameters for a CloudJobOperations.Update request.
@@ -39,12 +33,18 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobUpdateParameter class.
         /// </summary>
-        /// <param name="poolInfo">The pool on which the Batch service runs the job's tasks.</param>
+        /// <param name="poolInfo">The pool on which the Batch service runs
+        /// the job's tasks.</param>
         /// <param name="priority">The priority of the job.</param>
-        /// <param name="constraints">The execution constraints for the job.</param>
-        /// <param name="metadata">A list of name-value pairs associated with the job as metadata.</param>
-        /// <param name="onAllTasksComplete">Specifies an action the Batch service should take when all tasks in the job are in the completed state. Possible values include: 'noAction', 'terminateJob'</param>
-        public JobUpdateParameter(PoolInformation poolInfo, int? priority = default(int?), JobConstraints constraints = default(JobConstraints), IList<MetadataItem> metadata = default(IList<MetadataItem>), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?))
+        /// <param name="constraints">The execution constraints for the
+        /// job.</param>
+        /// <param name="metadata">A list of name-value pairs associated with
+        /// the job as metadata.</param>
+        /// <param name="onAllTasksComplete">Specifies an action the Batch
+        /// service should take when all tasks in the job are in the
+        /// completed state. Possible values include: 'noAction',
+        /// 'terminateJob'</param>
+        public JobUpdateParameter(PoolInformation poolInfo, int? priority = default(int?), JobConstraints constraints = default(JobConstraints), System.Collections.Generic.IList<MetadataItem> metadata = default(System.Collections.Generic.IList<MetadataItem>), OnAllTasksComplete? onAllTasksComplete = default(OnAllTasksComplete?))
         {
             Priority = priority;
             Constraints = constraints;
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// lowest priority and 1000 being the highest priority. If omitted,
         /// it is set to the default value 0.
         /// </remarks>
-        [JsonProperty(PropertyName = "priority")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "priority")]
         public int? Priority { get; set; }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// If omitted, the constraints are cleared.
         /// </remarks>
-        [JsonProperty(PropertyName = "constraints")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "constraints")]
         public JobConstraints Constraints { get; set; }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// keepAlive property can be updated, and then only if the auto pool
         /// has a poolLifetimeOption of job.
         /// </remarks>
-        [JsonProperty(PropertyName = "poolInfo")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "poolInfo")]
         public PoolInformation PoolInfo { get; set; }
 
         /// <summary>
@@ -96,28 +96,28 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// If omitted, it takes the default value of an empty list; in
         /// effect, any existing metadata is deleted.
         /// </remarks>
-        [JsonProperty(PropertyName = "metadata")]
-        public IList<MetadataItem> Metadata { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "metadata")]
+        public System.Collections.Generic.IList<MetadataItem> Metadata { get; set; }
 
         /// <summary>
         /// Gets or sets specifies an action the Batch service should take
         /// when all tasks in the job are in the completed state. Possible
         /// values include: 'noAction', 'terminateJob'
         /// </summary>
-        [JsonProperty(PropertyName = "onAllTasksComplete")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "onAllTasksComplete")]
         public OnAllTasksComplete? OnAllTasksComplete { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (PoolInfo == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "PoolInfo");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "PoolInfo");
             }
             if (this.PoolInfo != null)
             {

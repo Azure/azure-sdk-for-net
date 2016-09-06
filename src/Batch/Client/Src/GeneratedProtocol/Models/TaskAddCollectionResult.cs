@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Response to a TaskOperations.AddCollection request.
@@ -39,8 +33,9 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskAddCollectionResult class.
         /// </summary>
-        /// <param name="value">The results of the add task collection operation.</param>
-        public TaskAddCollectionResult(IList<TaskAddResult> value = default(IList<TaskAddResult>))
+        /// <param name="value">The results of the add task collection
+        /// operation.</param>
+        public TaskAddCollectionResult(System.Collections.Generic.IList<TaskAddResult> value = default(System.Collections.Generic.IList<TaskAddResult>))
         {
             Value = value;
         }
@@ -48,8 +43,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the results of the add task collection operation.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<TaskAddResult> Value { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
+        public System.Collections.Generic.IList<TaskAddResult> Value { get; set; }
 
     }
 }

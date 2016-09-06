@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A pool in the Azure Batch service to add.
@@ -39,25 +33,42 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the PoolAddParameter class.
         /// </summary>
-        /// <param name="id">A string that uniquely identifies the pool within the account.</param>
-        /// <param name="vmSize">The size of virtual machines in the pool. All virtual machines in a pool are the same size.</param>
+        /// <param name="id">A string that uniquely identifies the pool within
+        /// the account.</param>
+        /// <param name="vmSize">The size of virtual machines in the pool. All
+        /// virtual machines in a pool are the same size.</param>
         /// <param name="displayName">The display name for the pool.</param>
-        /// <param name="cloudServiceConfiguration">The cloud service configuration for the pool.</param>
-        /// <param name="virtualMachineConfiguration">The virtual machine configuration for the pool.</param>
-        /// <param name="resizeTimeout">The timeout for allocation of compute nodes to the pool.</param>
-        /// <param name="targetDedicated">The desired number of compute nodes in the pool.</param>
-        /// <param name="enableAutoScale">Whether the pool size should automatically adjust over time.</param>
-        /// <param name="autoScaleFormula">A formula for the desired number of compute nodes in the pool.</param>
-        /// <param name="autoScaleEvaluationInterval">A time interval for the desired autoscale evaluation period in the pool.</param>
-        /// <param name="enableInterNodeCommunication">Whether the pool permits direct communication between nodes.</param>
-        /// <param name="networkConfiguration">The network configuration for the pool.</param>
-        /// <param name="startTask">A task specified to run on each compute node as it joins the pool.</param>
-        /// <param name="certificateReferences">The list of certificates to be installed on each compute node in the pool.</param>
-        /// <param name="applicationPackageReferences">The list of application packages to be installed on each compute node in the pool.</param>
-        /// <param name="maxTasksPerNode">The maximum number of tasks that can run concurrently on a single compute node in the pool.</param>
-        /// <param name="taskSchedulingPolicy">How the Batch service distributes tasks between compute nodes in the pool.</param>
-        /// <param name="metadata">A list of name-value pairs associated with the pool as metadata.</param>
-        public PoolAddParameter(string id, string vmSize, string displayName = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), TimeSpan? resizeTimeout = default(TimeSpan?), int? targetDedicated = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), TimeSpan? autoScaleEvaluationInterval = default(TimeSpan?), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), IList<CertificateReference> certificateReferences = default(IList<CertificateReference>), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>), int? maxTasksPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), IList<MetadataItem> metadata = default(IList<MetadataItem>))
+        /// <param name="cloudServiceConfiguration">The cloud service
+        /// configuration for the pool.</param>
+        /// <param name="virtualMachineConfiguration">The virtual machine
+        /// configuration for the pool.</param>
+        /// <param name="resizeTimeout">The timeout for allocation of compute
+        /// nodes to the pool.</param>
+        /// <param name="targetDedicated">The desired number of compute nodes
+        /// in the pool.</param>
+        /// <param name="enableAutoScale">Whether the pool size should
+        /// automatically adjust over time.</param>
+        /// <param name="autoScaleFormula">A formula for the desired number of
+        /// compute nodes in the pool.</param>
+        /// <param name="autoScaleEvaluationInterval">A time interval for the
+        /// desired autoscale evaluation period in the pool.</param>
+        /// <param name="enableInterNodeCommunication">Whether the pool
+        /// permits direct communication between nodes.</param>
+        /// <param name="networkConfiguration">The network configuration for
+        /// the pool.</param>
+        /// <param name="startTask">A task specified to run on each compute
+        /// node as it joins the pool.</param>
+        /// <param name="certificateReferences">The list of certificates to be
+        /// installed on each compute node in the pool.</param>
+        /// <param name="applicationPackageReferences">The list of application
+        /// packages to be installed on each compute node in the pool.</param>
+        /// <param name="maxTasksPerNode">The maximum number of tasks that can
+        /// run concurrently on a single compute node in the pool.</param>
+        /// <param name="taskSchedulingPolicy">How the Batch service
+        /// distributes tasks between compute nodes in the pool.</param>
+        /// <param name="metadata">A list of name-value pairs associated with
+        /// the pool as metadata.</param>
+        public PoolAddParameter(string id, string vmSize, string displayName = default(string), CloudServiceConfiguration cloudServiceConfiguration = default(CloudServiceConfiguration), VirtualMachineConfiguration virtualMachineConfiguration = default(VirtualMachineConfiguration), System.TimeSpan? resizeTimeout = default(System.TimeSpan?), int? targetDedicated = default(int?), bool? enableAutoScale = default(bool?), string autoScaleFormula = default(string), System.TimeSpan? autoScaleEvaluationInterval = default(System.TimeSpan?), bool? enableInterNodeCommunication = default(bool?), NetworkConfiguration networkConfiguration = default(NetworkConfiguration), StartTask startTask = default(StartTask), System.Collections.Generic.IList<CertificateReference> certificateReferences = default(System.Collections.Generic.IList<CertificateReference>), System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences = default(System.Collections.Generic.IList<ApplicationPackageReference>), int? maxTasksPerNode = default(int?), TaskSchedulingPolicy taskSchedulingPolicy = default(TaskSchedulingPolicy), System.Collections.Generic.IList<MetadataItem> metadata = default(System.Collections.Generic.IList<MetadataItem>))
         {
             Id = id;
             DisplayName = displayName;
@@ -88,20 +99,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// including hyphens and underscores, and cannot contain more than
         /// 64 characters. It is common to use a GUID for the id.
         /// </remarks>
-        [JsonProperty(PropertyName = "id")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets the display name for the pool.
         /// </summary>
-        [JsonProperty(PropertyName = "displayName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
         /// Gets or sets the size of virtual machines in the pool. All virtual
         /// machines in a pool are the same size.
         /// </summary>
-        [JsonProperty(PropertyName = "vmSize")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "vmSize")]
         public string VmSize { get; set; }
 
         /// <summary>
@@ -111,7 +122,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// This property and virtualMachineConfiguration are mutually
         /// exclusive and one of the properties must be specified.
         /// </remarks>
-        [JsonProperty(PropertyName = "cloudServiceConfiguration")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "cloudServiceConfiguration")]
         public CloudServiceConfiguration CloudServiceConfiguration { get; set; }
 
         /// <summary>
@@ -121,7 +132,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// This property and cloudServiceConfiguration are mutually exclusive
         /// and one of the properties must be specified.
         /// </remarks>
-        [JsonProperty(PropertyName = "virtualMachineConfiguration")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "virtualMachineConfiguration")]
         public VirtualMachineConfiguration VirtualMachineConfiguration { get; set; }
 
         /// <summary>
@@ -131,8 +142,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// The default value is 10 minutes.
         /// </remarks>
-        [JsonProperty(PropertyName = "resizeTimeout")]
-        public TimeSpan? ResizeTimeout { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "resizeTimeout")]
+        public System.TimeSpan? ResizeTimeout { get; set; }
 
         /// <summary>
         /// Gets or sets the desired number of compute nodes in the pool.
@@ -141,7 +152,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// This property must have the default value if enableAutoScale is
         /// true. It is required if enableAutoScale is false.
         /// </remarks>
-        [JsonProperty(PropertyName = "targetDedicated")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "targetDedicated")]
         public int? TargetDedicated { get; set; }
 
         /// <summary>
@@ -152,93 +163,93 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// If true, the autoScaleFormula property must be set. If false, the
         /// targetDedicated property must be set.
         /// </remarks>
-        [JsonProperty(PropertyName = "enableAutoScale")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "enableAutoScale")]
         public bool? EnableAutoScale { get; set; }
 
         /// <summary>
         /// Gets or sets a formula for the desired number of compute nodes in
         /// the pool.
         /// </summary>
-        [JsonProperty(PropertyName = "autoScaleFormula")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "autoScaleFormula")]
         public string AutoScaleFormula { get; set; }
 
         /// <summary>
         /// Gets or sets a time interval for the desired autoscale evaluation
         /// period in the pool.
         /// </summary>
-        [JsonProperty(PropertyName = "autoScaleEvaluationInterval")]
-        public TimeSpan? AutoScaleEvaluationInterval { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "autoScaleEvaluationInterval")]
+        public System.TimeSpan? AutoScaleEvaluationInterval { get; set; }
 
         /// <summary>
         /// Gets or sets whether the pool permits direct communication between
         /// nodes.
         /// </summary>
-        [JsonProperty(PropertyName = "enableInterNodeCommunication")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "enableInterNodeCommunication")]
         public bool? EnableInterNodeCommunication { get; set; }
 
         /// <summary>
         /// Gets or sets the network configuration for the pool.
         /// </summary>
-        [JsonProperty(PropertyName = "networkConfiguration")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "networkConfiguration")]
         public NetworkConfiguration NetworkConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets a task specified to run on each compute node as it
         /// joins the pool.
         /// </summary>
-        [JsonProperty(PropertyName = "startTask")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "startTask")]
         public StartTask StartTask { get; set; }
 
         /// <summary>
         /// Gets or sets the list of certificates to be installed on each
         /// compute node in the pool.
         /// </summary>
-        [JsonProperty(PropertyName = "certificateReferences")]
-        public IList<CertificateReference> CertificateReferences { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "certificateReferences")]
+        public System.Collections.Generic.IList<CertificateReference> CertificateReferences { get; set; }
 
         /// <summary>
         /// Gets or sets the list of application packages to be installed on
         /// each compute node in the pool.
         /// </summary>
-        [JsonProperty(PropertyName = "applicationPackageReferences")]
-        public IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "applicationPackageReferences")]
+        public System.Collections.Generic.IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
 
         /// <summary>
         /// Gets or sets the maximum number of tasks that can run concurrently
         /// on a single compute node in the pool.
         /// </summary>
-        [JsonProperty(PropertyName = "maxTasksPerNode")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "maxTasksPerNode")]
         public int? MaxTasksPerNode { get; set; }
 
         /// <summary>
         /// Gets or sets how the Batch service distributes tasks between
         /// compute nodes in the pool.
         /// </summary>
-        [JsonProperty(PropertyName = "taskSchedulingPolicy")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "taskSchedulingPolicy")]
         public TaskSchedulingPolicy TaskSchedulingPolicy { get; set; }
 
         /// <summary>
         /// Gets or sets a list of name-value pairs associated with the pool
         /// as metadata.
         /// </summary>
-        [JsonProperty(PropertyName = "metadata")]
-        public IList<MetadataItem> Metadata { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "metadata")]
+        public System.Collections.Generic.IList<MetadataItem> Metadata { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (Id == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Id");
             }
             if (VmSize == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "VmSize");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "VmSize");
             }
             if (this.CloudServiceConfiguration != null)
             {

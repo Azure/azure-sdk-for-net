@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// An error response received from the Azure Batch service.
@@ -39,10 +33,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the BatchError class.
         /// </summary>
-        /// <param name="code">An identifier for the error. Codes are invariant and are intended to be consumed programmatically.</param>
-        /// <param name="message">A message describing the error, intended to be suitable for display in a user interface.</param>
-        /// <param name="values">A collection of key-value pairs containing additional details about the error.</param>
-        public BatchError(string code = default(string), ErrorMessage message = default(ErrorMessage), IList<BatchErrorDetail> values = default(IList<BatchErrorDetail>))
+        /// <param name="code">An identifier for the error. Codes are
+        /// invariant and are intended to be consumed
+        /// programmatically.</param>
+        /// <param name="message">A message describing the error, intended to
+        /// be suitable for display in a user interface.</param>
+        /// <param name="values">A collection of key-value pairs containing
+        /// additional details about the error.</param>
+        public BatchError(string code = default(string), ErrorMessage message = default(ErrorMessage), System.Collections.Generic.IList<BatchErrorDetail> values = default(System.Collections.Generic.IList<BatchErrorDetail>))
         {
             Code = code;
             Message = message;
@@ -53,22 +51,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets an identifier for the error. Codes are invariant and
         /// are intended to be consumed programmatically.
         /// </summary>
-        [JsonProperty(PropertyName = "code")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "code")]
         public string Code { get; set; }
 
         /// <summary>
         /// Gets or sets a message describing the error, intended to be
         /// suitable for display in a user interface.
         /// </summary>
-        [JsonProperty(PropertyName = "message")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "message")]
         public ErrorMessage Message { get; set; }
 
         /// <summary>
         /// Gets or sets a collection of key-value pairs containing additional
         /// details about the error.
         /// </summary>
-        [JsonProperty(PropertyName = "values")]
-        public IList<BatchErrorDetail> Values { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "values")]
+        public System.Collections.Generic.IList<BatchErrorDetail> Values { get; set; }
 
     }
 }

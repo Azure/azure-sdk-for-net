@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A job schedule that allows recurring jobs by specifying when to run
@@ -40,12 +34,17 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobScheduleAddParameter class.
         /// </summary>
-        /// <param name="id">A string that uniquely identifies the schedule within the account.</param>
-        /// <param name="schedule">The schedule according to which jobs will be created.</param>
-        /// <param name="jobSpecification">The details of the jobs to be created on this schedule.</param>
-        /// <param name="displayName">The display name for the schedule.</param>
-        /// <param name="metadata">A list of name-value pairs associated with the schedule as metadata.</param>
-        public JobScheduleAddParameter(string id, Schedule schedule, JobSpecification jobSpecification, string displayName = default(string), IList<MetadataItem> metadata = default(IList<MetadataItem>))
+        /// <param name="id">A string that uniquely identifies the schedule
+        /// within the account.</param>
+        /// <param name="schedule">The schedule according to which jobs will
+        /// be created.</param>
+        /// <param name="jobSpecification">The details of the jobs to be
+        /// created on this schedule.</param>
+        /// <param name="displayName">The display name for the
+        /// schedule.</param>
+        /// <param name="metadata">A list of name-value pairs associated with
+        /// the schedule as metadata.</param>
+        public JobScheduleAddParameter(string id, Schedule schedule, JobSpecification jobSpecification, string displayName = default(string), System.Collections.Generic.IList<MetadataItem> metadata = default(System.Collections.Generic.IList<MetadataItem>))
         {
             Id = id;
             DisplayName = displayName;
@@ -58,54 +57,54 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets a string that uniquely identifies the schedule within
         /// the account.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets the display name for the schedule.
         /// </summary>
-        [JsonProperty(PropertyName = "displayName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
         /// Gets or sets the schedule according to which jobs will be created.
         /// </summary>
-        [JsonProperty(PropertyName = "schedule")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "schedule")]
         public Schedule Schedule { get; set; }
 
         /// <summary>
         /// Gets or sets the details of the jobs to be created on this
         /// schedule.
         /// </summary>
-        [JsonProperty(PropertyName = "jobSpecification")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "jobSpecification")]
         public JobSpecification JobSpecification { get; set; }
 
         /// <summary>
         /// Gets or sets a list of name-value pairs associated with the
         /// schedule as metadata.
         /// </summary>
-        [JsonProperty(PropertyName = "metadata")]
-        public IList<MetadataItem> Metadata { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "metadata")]
+        public System.Collections.Generic.IList<MetadataItem> Metadata { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (Id == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Id");
             }
             if (Schedule == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Schedule");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Schedule");
             }
             if (JobSpecification == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "JobSpecification");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "JobSpecification");
             }
             if (this.JobSpecification != null)
             {

@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
         /// The Azure Data Lake Analytics account to execute job operations on.
         /// </param>
         /// <param name='jobIdentity'>
-        /// JobInfo ID.
+        /// Job Information ID.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

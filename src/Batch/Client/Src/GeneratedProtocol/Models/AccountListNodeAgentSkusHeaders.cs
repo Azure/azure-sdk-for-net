@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Defines headers for ListNodeAgentSkus operation.
@@ -41,11 +35,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the AccountListNodeAgentSkusHeaders
         /// class.
         /// </summary>
-        /// <param name="clientRequestId">The ClientRequestId provided by the client during the request, if present and requested to be returned.</param>
-        /// <param name="requestId">The value that uniquely identifies a request.</param>
-        /// <param name="eTag">The content of the ETag HTTP response header.</param>
-        /// <param name="lastModified">The content of the Last-Modified HTTP response header.</param>
-        public AccountListNodeAgentSkusHeaders(string clientRequestId = default(string), string requestId = default(string), string eTag = default(string), DateTime? lastModified = default(DateTime?))
+        /// <param name="clientRequestId">The ClientRequestId provided by the
+        /// client during the request, if present and requested to be
+        /// returned.</param>
+        /// <param name="requestId">The value that uniquely identifies a
+        /// request.</param>
+        /// <param name="eTag">The content of the ETag HTTP response
+        /// header.</param>
+        /// <param name="lastModified">The content of the Last-Modified HTTP
+        /// response header.</param>
+        public AccountListNodeAgentSkusHeaders(string clientRequestId = default(string), string requestId = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?))
         {
             ClientRequestId = clientRequestId;
             RequestId = requestId;
@@ -57,27 +56,27 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the ClientRequestId provided by the client during the
         /// request, if present and requested to be returned.
         /// </summary>
-        [JsonProperty(PropertyName = "client-request-id")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "client-request-id")]
         public string ClientRequestId { get; set; }
 
         /// <summary>
         /// Gets or sets the value that uniquely identifies a request.
         /// </summary>
-        [JsonProperty(PropertyName = "request-id")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "request-id")]
         public string RequestId { get; set; }
 
         /// <summary>
         /// Gets or sets the content of the ETag HTTP response header.
         /// </summary>
-        [JsonProperty(PropertyName = "ETag")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "ETag")]
         public string ETag { get; set; }
 
         /// <summary>
         /// Gets or sets the content of the Last-Modified HTTP response header.
         /// </summary>
-        [JsonConverter(typeof(DateTimeRfc1123JsonConverter))]
-        [JsonProperty(PropertyName = "Last-Modified")]
-        public DateTime? LastModified { get; set; }
+        [Newtonsoft.Json.JsonConverter(typeof(Microsoft.Rest.Serialization.DateTimeRfc1123JsonConverter))]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "Last-Modified")]
+        public System.DateTime? LastModified { get; set; }
 
     }
 }

@@ -18,19 +18,16 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for JobReleaseTaskState.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum JobReleaseTaskState
     {
-        [EnumMember(Value = "running")]
+        [System.Runtime.Serialization.EnumMember(Value = "running")]
         Running,
-        [EnumMember(Value = "completed")]
+        [System.Runtime.Serialization.EnumMember(Value = "completed")]
         Completed
     }
 }

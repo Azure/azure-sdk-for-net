@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The status of the Job Preparation and Job Release tasks on a compute
@@ -42,11 +36,18 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the
         /// JobPreparationAndReleaseTaskExecutionInformation class.
         /// </summary>
-        /// <param name="poolId">The id of the pool containing the compute node to which this entry refers.</param>
-        /// <param name="nodeId">The id of the compute node to which this entry refers.</param>
-        /// <param name="nodeUrl">The URL of the compute node to which this entry refers.</param>
-        /// <param name="jobPreparationTaskExecutionInfo">Information about the execution status of the Job Preparation task on this compute node.</param>
-        /// <param name="jobReleaseTaskExecutionInfo">Information about the execution status of the Job Release task on this compute node.</param>
+        /// <param name="poolId">The id of the pool containing the compute
+        /// node to which this entry refers.</param>
+        /// <param name="nodeId">The id of the compute node to which this
+        /// entry refers.</param>
+        /// <param name="nodeUrl">The URL of the compute node to which this
+        /// entry refers.</param>
+        /// <param name="jobPreparationTaskExecutionInfo">Information about
+        /// the execution status of the Job Preparation task on this compute
+        /// node.</param>
+        /// <param name="jobReleaseTaskExecutionInfo">Information about the
+        /// execution status of the Job Release task on this compute
+        /// node.</param>
         public JobPreparationAndReleaseTaskExecutionInformation(string poolId = default(string), string nodeId = default(string), string nodeUrl = default(string), JobPreparationTaskExecutionInformation jobPreparationTaskExecutionInfo = default(JobPreparationTaskExecutionInformation), JobReleaseTaskExecutionInformation jobReleaseTaskExecutionInfo = default(JobReleaseTaskExecutionInformation))
         {
             PoolId = poolId;
@@ -60,27 +61,27 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the id of the pool containing the compute node to
         /// which this entry refers.
         /// </summary>
-        [JsonProperty(PropertyName = "poolId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "poolId")]
         public string PoolId { get; set; }
 
         /// <summary>
         /// Gets or sets the id of the compute node to which this entry refers.
         /// </summary>
-        [JsonProperty(PropertyName = "nodeId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "nodeId")]
         public string NodeId { get; set; }
 
         /// <summary>
         /// Gets or sets the URL of the compute node to which this entry
         /// refers.
         /// </summary>
-        [JsonProperty(PropertyName = "nodeUrl")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "nodeUrl")]
         public string NodeUrl { get; set; }
 
         /// <summary>
         /// Gets or sets information about the execution status of the Job
         /// Preparation task on this compute node.
         /// </summary>
-        [JsonProperty(PropertyName = "jobPreparationTaskExecutionInfo")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "jobPreparationTaskExecutionInfo")]
         public JobPreparationTaskExecutionInformation JobPreparationTaskExecutionInfo { get; set; }
 
         /// <summary>
@@ -91,13 +92,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// This property is set only if the Job Release task has run on the
         /// node.
         /// </remarks>
-        [JsonProperty(PropertyName = "jobReleaseTaskExecutionInfo")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "jobReleaseTaskExecutionInfo")]
         public JobReleaseTaskExecutionInformation JobReleaseTaskExecutionInfo { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

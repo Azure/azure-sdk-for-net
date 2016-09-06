@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A certificate that can be installed on compute nodes and can be used
@@ -40,11 +34,17 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the CertificateAddParameter class.
         /// </summary>
-        /// <param name="thumbprint">The X.509 thumbprint of the certificate. This is a sequence of up to 40 hex digits (it may include spaces but these are removed).</param>
-        /// <param name="thumbprintAlgorithm">The algorithm used to derive the thumbprint. This must be sha1.</param>
-        /// <param name="data">The base64-encoded contents of the certificate. The maximum size is 10KB.</param>
-        /// <param name="certificateFormat">The format of the certificate data.</param>
-        /// <param name="password">The password to access the certificate's private key.</param>
+        /// <param name="thumbprint">The X.509 thumbprint of the certificate.
+        /// This is a sequence of up to 40 hex digits (it may include spaces
+        /// but these are removed).</param>
+        /// <param name="thumbprintAlgorithm">The algorithm used to derive the
+        /// thumbprint. This must be sha1.</param>
+        /// <param name="data">The base64-encoded contents of the certificate.
+        /// The maximum size is 10KB.</param>
+        /// <param name="certificateFormat">The format of the certificate
+        /// data.</param>
+        /// <param name="password">The password to access the certificate's
+        /// private key.</param>
         public CertificateAddParameter(string thumbprint, string thumbprintAlgorithm, string data, CertificateFormat? certificateFormat = default(CertificateFormat?), string password = default(string))
         {
             Thumbprint = thumbprint;
@@ -59,21 +59,21 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// sequence of up to 40 hex digits (it may include spaces but these
         /// are removed).
         /// </summary>
-        [JsonProperty(PropertyName = "thumbprint")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "thumbprint")]
         public string Thumbprint { get; set; }
 
         /// <summary>
         /// Gets or sets the algorithm used to derive the thumbprint. This
         /// must be sha1.
         /// </summary>
-        [JsonProperty(PropertyName = "thumbprintAlgorithm")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "thumbprintAlgorithm")]
         public string ThumbprintAlgorithm { get; set; }
 
         /// <summary>
         /// Gets or sets the base64-encoded contents of the certificate. The
         /// maximum size is 10KB.
         /// </summary>
-        [JsonProperty(PropertyName = "data")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "data")]
         public string Data { get; set; }
 
         /// <summary>
@@ -82,34 +82,34 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// Possible values include: 'pfx', 'cer', 'unmapped'
         /// </remarks>
-        [JsonProperty(PropertyName = "certificateFormat")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "certificateFormat")]
         public CertificateFormat? CertificateFormat { get; set; }
 
         /// <summary>
         /// Gets or sets the password to access the certificate's private key.
         /// </summary>
-        [JsonProperty(PropertyName = "password")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "password")]
         public string Password { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (Thumbprint == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Thumbprint");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Thumbprint");
             }
             if (ThumbprintAlgorithm == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ThumbprintAlgorithm");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "ThumbprintAlgorithm");
             }
             if (Data == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Data");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Data");
             }
         }
     }

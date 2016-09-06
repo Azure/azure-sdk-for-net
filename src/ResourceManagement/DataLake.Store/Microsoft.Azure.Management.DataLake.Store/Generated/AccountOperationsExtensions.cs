@@ -535,6 +535,49 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
+            /// Attempts to enable a user managed key vault for encryption of the
+            /// specified Data Lake Store account.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group that contains the Data Lake Store
+            /// account.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Store account to attempt to enable the Key Vault
+            /// for.
+            /// </param>
+            public static void EnableKeyVault(this IAccountOperations operations, string resourceGroupName, string accountName)
+            {
+                Task.Factory.StartNew(s => ((IAccountOperations)s).EnableKeyVaultAsync(resourceGroupName, accountName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Attempts to enable a user managed key vault for encryption of the
+            /// specified Data Lake Store account.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the Azure resource group that contains the Data Lake Store
+            /// account.
+            /// </param>
+            /// <param name='accountName'>
+            /// The name of the Data Lake Store account to attempt to enable the Key Vault
+            /// for.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task EnableKeyVaultAsync(this IAccountOperations operations, string resourceGroupName, string accountName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.EnableKeyVaultWithHttpMessagesAsync(resourceGroupName, accountName, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
             /// Lists the Data Lake Store accounts within a specific resource group. The
             /// response includes a link to the next page of results, if any.
             /// </summary>

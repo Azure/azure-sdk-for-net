@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// An item of additional information included in an Azure Batch error
@@ -40,8 +34,10 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the BatchErrorDetail class.
         /// </summary>
-        /// <param name="key">An identifier specifying the meaning of the Value property.</param>
-        /// <param name="value">The additional information included with the error response.</param>
+        /// <param name="key">An identifier specifying the meaning of the
+        /// Value property.</param>
+        /// <param name="value">The additional information included with the
+        /// error response.</param>
         public BatchErrorDetail(string key = default(string), string value = default(string))
         {
             Key = key;
@@ -52,14 +48,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets an identifier specifying the meaning of the Value
         /// property.
         /// </summary>
-        [JsonProperty(PropertyName = "key")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "key")]
         public string Key { get; set; }
 
         /// <summary>
         /// Gets or sets the additional information included with the error
         /// response.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
         public string Value { get; set; }
 
     }

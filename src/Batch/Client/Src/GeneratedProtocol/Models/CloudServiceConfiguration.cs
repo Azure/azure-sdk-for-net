@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The configuration for nodes in a pool based on the Azure Cloud
@@ -40,9 +34,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the CloudServiceConfiguration class.
         /// </summary>
-        /// <param name="osFamily">The Azure Guest OS family to be installed on the virtual machines in the pool.</param>
-        /// <param name="targetOSVersion">The Azure Guest OS version to be installed on the virtual machines in the pool.</param>
-        /// <param name="currentOSVersion">The Azure Guest OS Version currently installed on the virtual machines in the pool. This may differ from targetOSVersion if the pool state is Upgrading.</param>
+        /// <param name="osFamily">The Azure Guest OS family to be installed
+        /// on the virtual machines in the pool.</param>
+        /// <param name="targetOSVersion">The Azure Guest OS version to be
+        /// installed on the virtual machines in the pool.</param>
+        /// <param name="currentOSVersion">The Azure Guest OS Version
+        /// currently installed on the virtual machines in the pool. This may
+        /// differ from targetOSVersion if the pool state is
+        /// Upgrading.</param>
         public CloudServiceConfiguration(string osFamily, string targetOSVersion = default(string), string currentOSVersion = default(string))
         {
             OsFamily = osFamily;
@@ -54,7 +53,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the Azure Guest OS family to be installed on the
         /// virtual machines in the pool.
         /// </summary>
-        [JsonProperty(PropertyName = "osFamily")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "osFamily")]
         public string OsFamily { get; set; }
 
         /// <summary>
@@ -65,7 +64,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// The default value is * which specifies the latest operating system
         /// version for the specified OS family.
         /// </remarks>
-        [JsonProperty(PropertyName = "targetOSVersion")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "targetOSVersion")]
         public string TargetOSVersion { get; set; }
 
         /// <summary>
@@ -73,20 +72,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// virtual machines in the pool. This may differ from
         /// targetOSVersion if the pool state is Upgrading.
         /// </summary>
-        [JsonProperty(PropertyName = "currentOSVersion")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "currentOSVersion")]
         public string CurrentOSVersion { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (OsFamily == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "OsFamily");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "OsFamily");
             }
         }
     }

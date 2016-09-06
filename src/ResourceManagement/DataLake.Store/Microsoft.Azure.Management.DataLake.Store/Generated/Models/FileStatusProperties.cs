@@ -34,6 +34,9 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <param name="blockSize">the block size for the file.</param>
         /// <param name="childrenNum">the number of children in the
         /// directory.</param>
+        /// <param name="expirationTime">Gets the expiration time, if any, as
+        /// ticks since the epoch. If this is set to 0 or DateTime.MaxValue
+        /// there is no expiration.</param>
         /// <param name="group">the group owner.</param>
         /// <param name="length">the number of bytes in a file.</param>
         /// <param name="modificationTime">the modification time as ticks
@@ -44,11 +47,12 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// string.</param>
         /// <param name="type">the type of the path object. Possible values
         /// include: 'FILE', 'DIRECTORY'</param>
-        public FileStatusProperties(long? accessTime = default(long?), long? blockSize = default(long?), long? childrenNum = default(long?), string group = default(string), long? length = default(long?), long? modificationTime = default(long?), string owner = default(string), string pathSuffix = default(string), string permission = default(string), FileType? type = default(FileType?))
+        public FileStatusProperties(long? accessTime = default(long?), long? blockSize = default(long?), long? childrenNum = default(long?), long? expirationTime = default(long?), string group = default(string), long? length = default(long?), long? modificationTime = default(long?), string owner = default(string), string pathSuffix = default(string), string permission = default(string), FileType? type = default(FileType?))
         {
             AccessTime = accessTime;
             BlockSize = blockSize;
             ChildrenNum = childrenNum;
+            ExpirationTime = expirationTime;
             Group = group;
             Length = length;
             ModificationTime = modificationTime;
@@ -75,6 +79,13 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// </summary>
         [JsonProperty(PropertyName = "childrenNum")]
         public long? ChildrenNum { get; private set; }
+
+        /// <summary>
+        /// Gets the expiration time, if any, as ticks since the epoch. If
+        /// this is set to 0 or DateTime.MaxValue there is no expiration.
+        /// </summary>
+        [JsonProperty(PropertyName = "expirationTime")]
+        public long? ExpirationTime { get; private set; }
 
         /// <summary>
         /// Gets the group owner.

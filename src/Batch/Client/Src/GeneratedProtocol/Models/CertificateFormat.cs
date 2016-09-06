@@ -18,21 +18,18 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for CertificateFormat.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum CertificateFormat
     {
-        [EnumMember(Value = "pfx")]
+        [System.Runtime.Serialization.EnumMember(Value = "pfx")]
         Pfx,
-        [EnumMember(Value = "cer")]
+        [System.Runtime.Serialization.EnumMember(Value = "cer")]
         Cer,
-        [EnumMember(Value = "unmapped")]
+        [System.Runtime.Serialization.EnumMember(Value = "unmapped")]
         Unmapped
     }
 }

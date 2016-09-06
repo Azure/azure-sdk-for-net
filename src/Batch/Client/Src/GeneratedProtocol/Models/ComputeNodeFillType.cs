@@ -18,21 +18,18 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ComputeNodeFillType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum ComputeNodeFillType
     {
-        [EnumMember(Value = "spread")]
+        [System.Runtime.Serialization.EnumMember(Value = "spread")]
         Spread,
-        [EnumMember(Value = "pack")]
+        [System.Runtime.Serialization.EnumMember(Value = "pack")]
         Pack,
-        [EnumMember(Value = "unmapped")]
+        [System.Runtime.Serialization.EnumMember(Value = "unmapped")]
         Unmapped
     }
 }

@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Specifies how tasks should be run in a job associated with a job
@@ -42,10 +36,12 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the JobScheduleExecutionInformation
         /// class.
         /// </summary>
-        /// <param name="nextRunTime">The next time at which a job will be created under this schedule.</param>
-        /// <param name="recentJob">Information about the most recent job under the job schedule.</param>
+        /// <param name="nextRunTime">The next time at which a job will be
+        /// created under this schedule.</param>
+        /// <param name="recentJob">Information about the most recent job
+        /// under the job schedule.</param>
         /// <param name="endTime">The time at which the schedule ended.</param>
-        public JobScheduleExecutionInformation(DateTime? nextRunTime = default(DateTime?), RecentJob recentJob = default(RecentJob), DateTime? endTime = default(DateTime?))
+        public JobScheduleExecutionInformation(System.DateTime? nextRunTime = default(System.DateTime?), RecentJob recentJob = default(RecentJob), System.DateTime? endTime = default(System.DateTime?))
         {
             NextRunTime = nextRunTime;
             RecentJob = recentJob;
@@ -56,14 +52,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the next time at which a job will be created under
         /// this schedule.
         /// </summary>
-        [JsonProperty(PropertyName = "nextRunTime")]
-        public DateTime? NextRunTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "nextRunTime")]
+        public System.DateTime? NextRunTime { get; set; }
 
         /// <summary>
         /// Gets or sets information about the most recent job under the job
         /// schedule.
         /// </summary>
-        [JsonProperty(PropertyName = "recentJob")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "recentJob")]
         public RecentJob RecentJob { get; set; }
 
         /// <summary>
@@ -73,8 +69,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// This property is set only if the job schedule is in the completed
         /// state.
         /// </remarks>
-        [JsonProperty(PropertyName = "endTime")]
-        public DateTime? EndTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "endTime")]
+        public System.DateTime? EndTime { get; set; }
 
     }
 }
