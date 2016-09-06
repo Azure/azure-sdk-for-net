@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 
         public void Visit(Action<NodeT> visitor)
         {
-            foreach(KeyValuePair<string, NodeT> item in graph)
+            foreach (KeyValuePair<string, NodeT> item in graph)
             {
                 if (!visited.Contains(item.Key))
                 {
@@ -56,12 +56,13 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
         {
             visitor(node);
             visited.Add(node.Key);
-            foreach(string childKey in node.Children)
+            foreach (string childKey in node.Children)
             {
-                if (!visited.Contains(childKey))
+                var lowerCaseChildKey = childKey.ToLowerInvariant();
+                if (!visited.Contains(lowerCaseChildKey))
                 {
                     NodeT childNode;
-                    if (!graph.TryGetValue(childKey, out childNode))
+                    if (!graph.TryGetValue(lowerCaseChildKey, out childNode))
                     {
                         // TODO: Better exception for errors due to internal logic error
                         throw new Exception("unexpected state: the node " + childKey + " is marked as the child node of " + node.Key + ",but graph does not contain a node with key " + childKey);
