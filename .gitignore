@@ -16,7 +16,7 @@ binaries/
 build/
 src/NuGet.Config
 tools/7-zip/
-
+*msbuild*
 [Tt]est[Rr]esult
 [Bb]uild[Ll]og.*
 
