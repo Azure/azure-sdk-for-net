@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
         #region Private
 
-        internal const decimal BufferLength = 32 * 1024 * 1024; // 32MB
+        internal const decimal BufferLength = 16 * 1024 * 1024; // 16MB
         private const int MaximumBackoffWaitSeconds = 32;
         internal const int MaxBufferDownloadAttemptCount = 4;
 

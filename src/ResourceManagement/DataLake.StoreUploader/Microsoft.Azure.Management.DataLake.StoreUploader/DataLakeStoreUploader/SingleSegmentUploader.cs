@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
         #region Private
 
-        internal const int BufferLength = 4 * 1024 * 1024;
+        internal const int BufferLength = 16 * 1024 * 1024; // 16mb
 
         // 4MB is the maximum length of a single extent. So if one record is longer than this,
         // then we will fast fail, since that record will cross extent boundaries.
