@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/64229c92-175a-4eba-a2fd-ee1f9e29766e/providers/Microsoft.Network?api-version=2015-09-01",
+      "RequestUri": "/subscriptions/64229c92-175a-4eba-a2fd-ee1f9e29766e/providers/Microsoft.Network?api-version=2016-09-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
