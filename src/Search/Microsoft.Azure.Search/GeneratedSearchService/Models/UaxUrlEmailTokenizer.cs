@@ -39,8 +39,9 @@ namespace Microsoft.Azure.Search.Models
         }
 
         /// <summary>
-        /// Gets or sets the maximum token length. Tokens longer than the
-        /// maximum length are split. Default is 255.
+        /// Gets or sets the maximum token length. Default is 255. Tokens
+        /// longer than the maximum length are split. The maximum token
+        /// length that can be used is 300 characters.
         /// </summary>
         [JsonProperty(PropertyName = "maxTokenLength")]
         public int? MaxTokenLength { get; set; }

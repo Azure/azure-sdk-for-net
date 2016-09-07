@@ -24,9 +24,9 @@ namespace Microsoft.Azure.Search.Models
         Bulgarian,
         [EnumMember(Value = "catalan")]
         Catalan,
-        [EnumMember(Value = "chinese_simplified")]
+        [EnumMember(Value = "chineseSimplified")]
         ChineseSimplified,
-        [EnumMember(Value = "chinese_traditional")]
+        [EnumMember(Value = "chineseTraditional")]
         ChineseTraditional,
         [EnumMember(Value = "croatian")]
         Croatian,
@@ -66,13 +66,13 @@ namespace Microsoft.Azure.Search.Models
         Malayalam,
         [EnumMember(Value = "marathi")]
         Marathi,
-        [EnumMember(Value = "norwegian_bokmaal")]
+        [EnumMember(Value = "norwegianBokmaal")]
         NorwegianBokmaal,
         [EnumMember(Value = "polish")]
         Polish,
         [EnumMember(Value = "portuguese")]
         Portuguese,
-        [EnumMember(Value = "portuguese_brazilian")]
+        [EnumMember(Value = "portugueseBrazilian")]
         PortugueseBrazilian,
         [EnumMember(Value = "punjabi")]
         Punjabi,
@@ -80,9 +80,9 @@ namespace Microsoft.Azure.Search.Models
         Romanian,
         [EnumMember(Value = "russian")]
         Russian,
-        [EnumMember(Value = "serbian_cyrillic")]
+        [EnumMember(Value = "serbianCyrillic")]
         SerbianCyrillic,
-        [EnumMember(Value = "serbian_latin")]
+        [EnumMember(Value = "serbianLatin")]
         SerbianLatin,
         [EnumMember(Value = "slovenian")]
         Slovenian,

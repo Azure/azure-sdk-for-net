@@ -79,12 +79,33 @@ namespace Microsoft.Azure.Search.Tests
 
                 AnalyzerName[] allAnalyzers = GetAllExtensibleEnumValues<AnalyzerName>();
 
+                int fieldNumber = 0;
+
+                // All analyzer names can be set on the analyzer property.
                 for (int i = 0; i < allAnalyzers.Length; i++)
                 {
-                    string fieldName = String.Format("field{0}", i);
-
                     DataType fieldType = (i % 2 == 0) ? DataType.String : DataType.Collection(DataType.String);
-                    index.Fields.Add(new Field(fieldName, fieldType, allAnalyzers[i]));
+                    index.Fields.Add(new Field($"field{fieldNumber++}", fieldType, allAnalyzers[i]));
+                }
+
+                // Only non-language analyzer names can be set on the searchAnalyzer and indexAnalyzer properties.
+                // ASSUMPTION: Only language analyzers end in .lucene or .microsoft.
+                var allNonLanguageAnalyzers = 
+                    allAnalyzers.Where(a => !a.ToString().EndsWith(".lucene") && !a.ToString().EndsWith(".microsoft")).ToArray();
+
+                for (int i = 0; i < allNonLanguageAnalyzers.Length; i++)
+                {
+                    DataType fieldType = (i % 2 == 0) ? DataType.String : DataType.Collection(DataType.String);
+
+                    var field = 
+                        new Field($"field{fieldNumber++}", fieldType)
+                        {
+                            IsSearchable = true,
+                            SearchAnalyzer = allNonLanguageAnalyzers[i],
+                            IndexAnalyzer = allNonLanguageAnalyzers[i]
+                        };
+
+                    index.Fields.Add(field);
                 }
 
                 client.Indexes.Create(index);
@@ -423,8 +444,16 @@ namespace Microsoft.Azure.Search.Tests
                     new NGramTokenizer(generateSimpleName(i++), minGram: 1, maxGram: 2),
                     new ClassicTokenizer(generateSimpleName(i++), maxTokenLength: 255),
                     new KeywordTokenizer(generateSimpleName(i++), bufferSize: 256),
-                    new MicrosoftLanguageStemmingTokenizer(generateSimpleName(i++), maxTokenLength: 255),
-                    new MicrosoftLanguageTokenizer(generateSimpleName(i++), maxTokenLength: 255),
+                    new MicrosoftLanguageStemmingTokenizer(
+                        generateSimpleName(i++), 
+                        maxTokenLength: 255, 
+                        isSearchTokenizer: false, 
+                        language: MicrosoftStemmingTokenizerLanguage.English),
+                    new MicrosoftLanguageTokenizer(
+                        generateSimpleName(i++), 
+                        maxTokenLength: 255,
+                        isSearchTokenizer: false,
+                        language: MicrosoftTokenizerLanguage.English),
                     new PathHierarchyTokenizer(generateSimpleName(i++), delimiter: '/', replacement: '/', bufferSize: 1024),
                     new PatternTokenizer(generateSimpleName(i++), pattern: @"\W+", group: -1),
                     new StandardTokenizer(generateSimpleName(i++), maxTokenLength: 255),

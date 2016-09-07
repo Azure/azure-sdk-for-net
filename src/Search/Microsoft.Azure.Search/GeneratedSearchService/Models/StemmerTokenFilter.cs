@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Search.Models
         /// 'minimalFrench', 'galician', 'minimalGalician', 'german',
         /// 'german2', 'lightGerman', 'minimalGerman', 'greek', 'hindi',
         /// 'hungarian', 'lightHungarian', 'indonesian', 'irish', 'italian',
-        /// 'light_italian', 'sorani', 'latvian', 'norwegian',
+        /// 'lightItalian', 'sorani', 'latvian', 'norwegian',
         /// 'lightNorwegian', 'minimalNorwegian', 'lightNynorsk',
         /// 'minimalNynorsk', 'portuguese', 'lightPortuguese',
         /// 'minimalPortuguese', 'portugueseRslp', 'romanian', 'russian',
