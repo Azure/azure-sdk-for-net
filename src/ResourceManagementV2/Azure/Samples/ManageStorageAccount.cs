@@ -1,6 +1,6 @@
-﻿using Microsoft.Azure.Management.V2.Resource.Authentication;
+﻿using Microsoft.Azure.Management;
+using Microsoft.Azure.Management.V2.Resource.Authentication;
 using Microsoft.Azure.Management.V2.Resource.Core;
-using Microsoft.Azure.Management.V2.Storage;
 using System;
 
 namespace Samples
@@ -26,13 +26,13 @@ namespace Samples
             {
                 var tokenCredentials = new ApplicationTokenCredentials(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
-                var storageManager = StorageManager
+                var azure = Azure
                     .Configure()
                     .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                    .Authenticate(tokenCredentials, tokenCredentials.DefaultSubscriptionId);
+                    .Authenticate(tokenCredentials).WithSubscription(tokenCredentials.DefaultSubscriptionId);
 
                 // Print selected subscription
-                Console.WriteLine("Selected subscription: " + tokenCredentials.DefaultSubscriptionId);
+                Console.WriteLine("Selected subscription: " + azure.SubscriptionId);
 
                 try
                 {
@@ -41,7 +41,7 @@ namespace Samples
 
                     Console.WriteLine("Creating a Storage Account");
 
-                    var storageAccount = storageManager.StorageAccounts.Define(storageAccountName)
+                    var storageAccount = azure.StorageAccounts.Define(storageAccountName)
                             .WithRegion(Region.US_EAST)
                             .WithNewResourceGroup(rgName)
                             .Create();
@@ -69,7 +69,7 @@ namespace Samples
 
                     Console.WriteLine("Creating a 2nd Storage Account");
 
-                    var storageAccount2 = storageManager.StorageAccounts.Define(storageAccountName2)
+                    var storageAccount2 = azure.StorageAccounts.Define(storageAccountName2)
                             .WithRegion(Region.US_EAST)
                             .WithNewResourceGroup(rgName)
                             .Create();
@@ -82,7 +82,7 @@ namespace Samples
 
                     Console.WriteLine("Listing storage accounts");
 
-                    var storageAccounts = storageManager.StorageAccounts;
+                    var storageAccounts = azure.StorageAccounts;
 
                     var accounts = storageAccounts.ListByGroup(rgName);
 
@@ -96,7 +96,7 @@ namespace Samples
 
                     Console.WriteLine($"Deleting a storage account - {accounts[0].Name} created @ {accounts[0].CreationTime}");
 
-                    storageManager.StorageAccounts.Delete(accounts[0].Id);
+                    azure.StorageAccounts.Delete(accounts[0].Id);
 
                     Console.WriteLine("Deleted storage account");
                 }
@@ -106,10 +106,10 @@ namespace Samples
                 }
                 finally
                 {
-                    if (storageManager.ResourceManager.ResourceGroups.GetByName(rgName) != null)
+                    if (azure.ResourceGroups.GetByName(rgName) != null)
                     {
                         Console.WriteLine("Deleting Resource Group: " + rgName);
-                        storageManager.ResourceManager.ResourceGroups.Delete(rgName);
+                        azure.ResourceGroups.Delete(rgName);
                         Console.WriteLine("Deleted Resource Group: " + rgName);
                     }
                     else

@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.Management.Compute.Models;
+﻿using Microsoft.Azure.Management;
+using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.V2.Compute;
 using Microsoft.Azure.Management.V2.Network;
 using Microsoft.Azure.Management.V2.Resource.Authentication;
@@ -39,13 +40,13 @@ namespace Samples
 
                 var tokenCredentials = new ApplicationTokenCredentials(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
-                var computeManager = ComputeManager
+                var azure = Azure
                     .Configure()
                     .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                    .Authenticate(tokenCredentials, tokenCredentials.DefaultSubscriptionId);
+                    .Authenticate(tokenCredentials).WithSubscription(tokenCredentials.DefaultSubscriptionId);
 
                 // Print selected subscription
-                Console.WriteLine("Selected subscription: " + tokenCredentials.DefaultSubscriptionId);
+                Console.WriteLine("Selected subscription: " + azure.SubscriptionId);
 
                 try
                 {
@@ -54,7 +55,7 @@ namespace Samples
 
                     Console.WriteLine("Creating an availability set");
 
-                    var availSet1 = computeManager.AvailabilitySets.Define(availSetName1)
+                    var availSet1 = azure.AvailabilitySets.Define(availSetName1)
                             .WithRegion(Region.US_EAST)
                             .WithNewResourceGroup(rgName)
                             .WithFaultDomainCount(2)
@@ -83,7 +84,7 @@ namespace Samples
 
                     Console.WriteLine("Creating a Windows VM in the availability set");
 
-                    var vm1 = computeManager.VirtualMachines.Define(vm1Name)
+                    var vm1 = azure.VirtualMachines.Define(vm1Name)
                             .WithRegion(Region.US_EAST)
                             .WithExistingResourceGroup(rgName)
                             .WithNewPrimaryNetwork(network)
@@ -104,7 +105,7 @@ namespace Samples
 
                     Console.WriteLine("Creating a Linux VM in the availability set");
 
-                    var vm2 = computeManager.VirtualMachines.Define(vm2Name)
+                    var vm2 = azure.VirtualMachines.Define(vm2Name)
                             .WithRegion(Region.US_EAST)
                             .WithExistingResourceGroup(rgName)
                             .WithNewPrimaryNetwork(network)
@@ -136,7 +137,7 @@ namespace Samples
 
                     Console.WriteLine("Creating an availability set");
 
-                    var availSet2 = computeManager.AvailabilitySets.Define(availSetName2)
+                    var availSet2 = azure.AvailabilitySets.Define(availSetName2)
                             .WithRegion(Region.US_EAST)
                             .WithExistingResourceGroup(rgName)
                             .Create();
@@ -151,7 +152,7 @@ namespace Samples
 
                     Console.WriteLine("Printing list of availability sets  =======");
 
-                    foreach (var availabilitySet in computeManager.AvailabilitySets.ListByGroup(resourceGroupName))
+                    foreach (var availabilitySet in azure.AvailabilitySets.ListByGroup(resourceGroupName))
                     {
                         Utilities.PrintAvailabilitySet(availabilitySet);
                     }
@@ -161,7 +162,7 @@ namespace Samples
 
                     Console.WriteLine("Deleting an availability set: " + availSet2.Id);
 
-                    computeManager.AvailabilitySets.Delete(availSet2.Id);
+                    azure.AvailabilitySets.Delete(availSet2.Id);
 
                     Console.WriteLine("Deleted availability set: " + availSet2.Id);
                 }
@@ -174,7 +175,7 @@ namespace Samples
                     try
                     {
                         Console.WriteLine("Deleting Resource Group: " + rgName);
-                        computeManager.ResourceManager.ResourceGroups.Delete(rgName);
+                        azure.ResourceGroups.Delete(rgName);
                         Console.WriteLine("Deleted Resource Group: " + rgName);
                     }
                     catch (Exception ex)

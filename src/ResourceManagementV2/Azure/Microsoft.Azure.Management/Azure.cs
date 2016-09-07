@@ -1,12 +1,11 @@
-﻿using System;
-using Microsoft.Azure.Management.V2.Compute;
+﻿using Microsoft.Azure.Management.V2.Compute;
+using Microsoft.Azure.Management.V2.Network;
 using Microsoft.Azure.Management.V2.Resource;
 using Microsoft.Azure.Management.V2.Resource.Authentication;
 using Microsoft.Azure.Management.V2.Resource.Core;
 using Microsoft.Azure.Management.V2.Storage;
 using Microsoft.Rest;
 using System.Linq;
-using Microsoft.Azure.Management.V2.Network;
 
 namespace Microsoft.Azure.Management
 {
@@ -19,7 +18,7 @@ namespace Microsoft.Azure.Management
         private IComputeManager computeManager;
         private INetworkManager networkManager;
 
-        #endregion
+        #endregion Service Managers
 
         #region Getters
 
@@ -84,7 +83,31 @@ namespace Microsoft.Azure.Management
             }
         }
 
-        #endregion
+        public IDeployments Deployments
+        {
+            get
+            {
+                return resourceManager.Deployments;
+            }
+        }
+
+        public IVirtualMachineImages VirtualMachineImages
+        {
+            get
+            {
+                return computeManager.VirtualMachineImages;
+            }
+        }
+
+        public IAvailabilitySets AvailabilitySets
+        {
+            get
+            {
+                return computeManager.AvailabilitySets;
+            }
+        }
+
+        #endregion Getters
 
         #region ctrs
 
@@ -97,7 +120,7 @@ namespace Microsoft.Azure.Management
             SubscriptionId = subscriptionId;
         }
 
-        #endregion
+        #endregion ctrs
 
         #region Azure builder
 
@@ -110,18 +133,16 @@ namespace Microsoft.Azure.Management
                 );
         }
 
-
         public static IAuthenticated Authenticate(string authFile)
         {
-            ApplicationTokenCredentials credentils = new ApplicationTokenCredentials(authFile);
+            ApplicationTokenCredentials credentials = new ApplicationTokenCredentials(authFile);
             var authenticated = new Authenticated(RestClient.Configure()
                     .withEnvironment(AzureEnvironment.AzureGlobalCloud)
-                    .withCredentials(credentils)
+                    .withCredentials(credentials)
                     .build());
-            authenticated.SetDefaultSubscription(credentils.DefaultSubscriptionId);
+            authenticated.SetDefaultSubscription(credentials.DefaultSubscriptionId);
             return authenticated;
         }
-
 
         public static IAuthenticated Authenticate(RestClient restClient)
         {
@@ -133,14 +154,16 @@ namespace Microsoft.Azure.Management
             return new Configurable();
         }
 
-        #endregion
+        #endregion Azure builder
 
         #region IAuthenticated and it's implementation
 
         public interface IAuthenticated
         {
             ITenants Tenants { get; }
+
             ISubscriptions Subscriptions { get; }
+
             IAzure WithSubscription(string subscriptionId);
 
             IAzure WithDefaultSubscription();
@@ -196,7 +219,8 @@ namespace Microsoft.Azure.Management
                     if (subscription != null)
                     {
                         return WithSubscription(subscription.SubscriptionId);
-                    } else
+                    }
+                    else
                     {
                         return WithSubscription(null);
                     }
@@ -204,7 +228,7 @@ namespace Microsoft.Azure.Management
             }
         }
 
-        #endregion
+        #endregion IAuthenticated and it's implementation
 
         #region IConfigurable and it's implementation
 
@@ -223,11 +247,11 @@ namespace Microsoft.Azure.Management
             }
         }
 
-        #endregion
-
+        #endregion IConfigurable and it's implementation
     }
 
-    public interface IAzure {
+    public interface IAzure
+    {
         string SubscriptionId { get; }
 
         IResourceGroups ResourceGroups { get; }
@@ -243,5 +267,11 @@ namespace Microsoft.Azure.Management
         IPublicIpAddresses PublicIpAddresses { get; }
 
         INetworkInterfaces NetworkInterfaces { get; }
+
+        IDeployments Deployments { get; }
+
+        IVirtualMachineImages VirtualMachineImages { get; }
+
+        IAvailabilitySets AvailabilitySets { get; }
     }
 }

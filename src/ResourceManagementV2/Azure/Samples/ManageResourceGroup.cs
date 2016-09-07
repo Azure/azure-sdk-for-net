@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.Management.V2.Resource;
+﻿using Microsoft.Azure.Management;
+using Microsoft.Azure.Management.V2.Resource;
 using Microsoft.Azure.Management.V2.Resource.Authentication;
 using Microsoft.Azure.Management.V2.Resource.Core;
 using System;
@@ -32,7 +33,7 @@ namespace Samples
 
                     var tokenCredentials = new ApplicationTokenCredentials(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
-                    var resourceManager = ResourceManager2
+                    var azure = Azure
                         .Configure()
                         .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                         .Authenticate(tokenCredentials).WithSubscription(tokenCredentials.DefaultSubscriptionId);
@@ -44,7 +45,7 @@ namespace Samples
 
                         Console.WriteLine("Creating a resource group with name: " + rgName);
 
-                        var resourceGroup = resourceManager.ResourceGroups
+                        var resourceGroup = azure.ResourceGroups
                                 .Define(rgName)
                                 .WithRegion(Region.US_WEST)
                                 .Create();
@@ -67,7 +68,7 @@ namespace Samples
 
                         Console.WriteLine("Creating another resource group with name: " + rgName2);
 
-                        var resourceGroup2 = resourceManager.ResourceGroups
+                        var resourceGroup2 = azure.ResourceGroups
                             .Define(rgName)
                             .WithRegion(Region.US_WEST)
                             .Create();
@@ -79,7 +80,7 @@ namespace Samples
 
                         Console.WriteLine("Listing all resource groups");
 
-                        foreach (var rGroup in resourceManager.ResourceGroups.List())
+                        foreach (var rGroup in azure.ResourceGroups.List())
                         {
                             Console.WriteLine("Resource group: " + rGroup.Name);
                         }
@@ -89,7 +90,7 @@ namespace Samples
 
                         Console.WriteLine("Deleting resource group: " + rgName2);
 
-                        resourceManager.ResourceGroups.Delete(rgName2);
+                        azure.ResourceGroups.Delete(rgName2);
 
                         Console.WriteLine("Deleted resource group: " + rgName2);
                     }
@@ -102,7 +103,7 @@ namespace Samples
                         try
                         {
                             Console.WriteLine("Deleting Resource Group: " + rgName);
-                            resourceManager.ResourceGroups.Delete(rgName);
+                            azure.ResourceGroups.Delete(rgName);
                             Console.WriteLine("Deleted Resource Group: " + rgName);
                         }
                         catch (Exception ex)
