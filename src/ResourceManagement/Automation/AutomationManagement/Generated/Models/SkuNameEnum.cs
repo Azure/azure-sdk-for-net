@@ -36,5 +36,7 @@ namespace Microsoft.Azure.Management.Automation.Models
         public const string Standard = "Standard";
         
         public const string Premium = "Premium";
+        
+        public const string OMS = "OMS";
     }
 }
