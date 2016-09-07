@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Microsoft.Azure.Management.V2.Compute
 {
-    public partial class VirtualMachineOffersImpl : 
+    public partial class VirtualMachineOffersImpl :
         ReadableWrappers<IVirtualMachineOffer, VirtualMachineOfferImpl, VirtualMachineImageResourceInner>,
         IVirtualMachineOffers
     {
@@ -15,6 +15,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         internal VirtualMachineOffersImpl(IVirtualMachineImagesOperations innerCollection, IVirtualMachinePublisher publisher)
         {
             this.publisher = publisher;
+            this.innerCollection = innerCollection;
         }
 
         public PagedList<IVirtualMachineOffer> List()
