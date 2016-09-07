@@ -121,6 +121,12 @@
             {
                 KeyValuePairs[ConnectionStringKeys.ServicePrincipalSecretKey.ToLower()] = password;
             }
+
+            //Initialize default values if found empty
+            if (string.IsNullOrEmpty(clientId) && (string.IsNullOrEmpty(spn)))
+            {
+                KeyValuePairs[ConnectionStringKeys.ServicePrincipalKey.ToLower()] = "1950a258-227b-4e31-a9cf-717495945fc2";
+            }
             
         }
 

@@ -19,6 +19,91 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
     public class TestEndpoints
     {
+        internal TestEndpoints() { }
+        internal TestEndpoints(EnvironmentNames testEnvName)
+        {
+            #region environment switch
+            switch (testEnvName)
+            {
+                case EnvironmentNames.Prod:
+                    {
+                        #region
+                        Name = EnvironmentNames.Prod;
+                        AADAuthUri = new Uri("https://login.microsoftonline.com");
+                        GalleryUri = new Uri("https://gallery.azure.com/");
+                        GraphUri = new Uri("https://graph.windows.net/");
+                        IbizaPortalUri = new Uri("https://portal.azure.com/");
+                        RdfePortalUri = new Uri("http://go.microsoft.com/fwlink/?LinkId=254433");
+                        ResourceManagementUri = new Uri("https://management.azure.com/");
+                        ServiceManagementUri = new Uri("https://management.core.windows.net");
+                        AADTokenAudienceUri = new Uri("https://management.core.windows.net");
+                        GraphTokenAudienceUri = new Uri("https://graph.windows.net/");
+                        DataLakeStoreServiceUri = new Uri("https://azuredatalakestore.net");
+                        DataLakeAnalyticsJobAndCatalogServiceUri = new Uri("https://azuredatalakeanalytics.net");
+                        break;
+                        #endregion
+                    }
+
+                case EnvironmentNames.Dogfood:
+                    {
+                        #region
+                        Name = EnvironmentNames.Dogfood;
+                        AADAuthUri = new Uri("https://login.windows-ppe.net");
+                        GalleryUri = new Uri("https://df.gallery.azure-test.net/");
+                        GraphUri = new Uri("https://graph.ppe.windows.net/");
+                        IbizaPortalUri = new Uri("http://df.onecloud.azure-test.net");
+                        RdfePortalUri = new Uri("https://windows.azure-test.net");
+                        ResourceManagementUri = new Uri("https://api-dogfood.resources.windows-int.net/");
+                        ServiceManagementUri = new Uri("https://management-preview.core.windows-int.net");
+                        AADTokenAudienceUri = new Uri("https://management.core.windows.net");
+                        GraphTokenAudienceUri = new Uri("https://graph.ppe.windows.net/");
+                        DataLakeStoreServiceUri = new Uri("https://caboaccountdogfood.net");
+                        DataLakeAnalyticsJobAndCatalogServiceUri = new Uri("https://konaaccountdogfood.net");
+                        break;
+                        #endregion
+                    }
+
+                case EnvironmentNames.Next:
+                    {
+                        #region
+                        Name = EnvironmentNames.Next;
+                        AADAuthUri = new Uri("https://login.windows-ppe.net");
+                        GalleryUri = new Uri("https://next.gallery.azure-test.net/");
+                        GraphUri = new Uri("https://graph.ppe.windows.net/");
+                        IbizaPortalUri = new Uri("http://next.onecloud.azure-test.net");
+                        RdfePortalUri = new Uri("https://auxnext.windows.azure-test.net");
+                        ResourceManagementUri = new Uri("https://api-next.resources.windows-int.net/");
+                        ServiceManagementUri = new Uri("https://managementnext.rdfetest.dnsdemo4.com");
+                        AADTokenAudienceUri = new Uri("https://management.core.windows.net");
+                        GraphTokenAudienceUri = new Uri("https://graph.ppe.windows.net/");
+                        DataLakeStoreServiceUri = new Uri("https://caboaccountdogfood.net"); // TODO: change once a "next" environment is published
+                        DataLakeAnalyticsJobAndCatalogServiceUri = new Uri("https://konaaccountdogfood.net"); // TODO: change once a "next" environment is published
+                        break;
+                        #endregion
+                    }
+
+                case EnvironmentNames.Current:
+                    {
+                        #region
+                        Name = EnvironmentNames.Current;
+                        AADAuthUri = new Uri("https://login.windows-ppe.net");
+                        GalleryUri = new Uri("https://current.gallery.azure-test.net/");
+                        GraphUri = new Uri("https://graph.ppe.windows.net/");
+                        IbizaPortalUri = new Uri("http://current.onecloud.azure-test.net");
+                        RdfePortalUri = new Uri("https://auxcurrent.windows.azure-test.net");
+                        ResourceManagementUri = new Uri("https://api-current.resources.windows-int.net/");
+                        ServiceManagementUri = new Uri("https://management.rdfetest.dnsdemo4.com");
+                        AADTokenAudienceUri = new Uri("https://management.core.windows.net");
+                        GraphTokenAudienceUri = new Uri("https://graph.ppe.windows.net/");
+                        DataLakeStoreServiceUri = new Uri("https://caboaccountdogfood.net"); // TODO: change once a "Current" environment is published
+                        DataLakeAnalyticsJobAndCatalogServiceUri = new Uri("https://konaaccountdogfood.net"); // TODO: change once a "Current" environment is published
+                        break;
+                        #endregion
+                    }
+            }
+            #endregion
+        }
+
         //TestEnvironment Name
         public EnvironmentNames Name { get; set; }
 

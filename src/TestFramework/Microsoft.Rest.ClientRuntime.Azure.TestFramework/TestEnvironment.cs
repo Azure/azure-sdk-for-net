@@ -1,83 +1,114 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Rest;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
-
 namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 {
-    public class TestEnvironment
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Microsoft.Rest;
+    using Microsoft.IdentityModel.Clients.ActiveDirectory;
+    
+    public partial class TestEnvironment
     {
+        #region internal
         /// <summary>
         /// The key inside the connection string for the management certificate
         /// </summary>
-        public const string ManagementCertificateKey = ConnectionStringFields.ManagementCertificate;
+        internal const string ManagementCertificateKey = ConnectionStringFields.ManagementCertificate;
 
         /// <summary>
         /// The key inside the connection string for the subscription identifier
         /// </summary>
-        public const string SubscriptionIdKey = ConnectionStringFields.SubscriptionId;
+        internal const string SubscriptionIdKey = ConnectionStringFields.SubscriptionId;
 
         /// <summary>
         /// The key inside the connection string for the base uri
         /// </summary>
-        public const string BaseUriKey = ConnectionStringFields.BaseUri;
+        internal const string BaseUriKey = ConnectionStringFields.BaseUri;
 
         /// <summary>
         /// The service management endpoint name
         /// </summary>
-        public const string ServiceManagementUri = "ServiceManagementUri";
+        internal const string ServiceManagementUri = "ServiceManagementUri";
 
         /// <summary>
         /// The resource management endpoint name
         /// </summary>
-        public const string ResourceManagementUri = "ResourceManagementUri";
+        internal const string ResourceManagementUri = "ResourceManagementUri";
 
         /// <summary>
         /// Service principal key
         /// </summary>
-        public const string ServicePrincipalKey = ConnectionStringFields.ServicePrincipal;
+        internal const string ServicePrincipalKey = ConnectionStringFields.ServicePrincipal;
 
         /// <summary>
         /// The key inside the connection string for the userId identifier
         /// </summary>
-        public const string UserIdKey = ConnectionStringFields.UserId;
-        public const string UserIdDefault = "user@example.com";
+        internal const string UserIdKey = ConnectionStringFields.UserId;
+        internal const string UserIdDefault = "user@example.com";
 
         /// <summary>
         /// The key inside the connection string for the AADPassword identifier
         /// </summary>
-        public const string AADPasswordKey = ConnectionStringFields.Password;
+        internal const string AADPasswordKey = ConnectionStringFields.Password;
 
-        public const string EnvironmentKey = ConnectionStringFields.Environment;
-        public const EnvironmentNames EnvironmentDefault = EnvironmentNames.Prod;
+        internal const string EnvironmentKey = ConnectionStringFields.Environment;
+        internal const EnvironmentNames EnvironmentDefault = EnvironmentNames.Prod;
 
         /// <summary>
         /// The key inside the connection string for the AAD client ID"
         /// </summary>
-        public const string ClientIdKey = ConnectionStringFields.AADClientId;
-        public const string ClientIdDefault = "1950a258-227b-4e31-a9cf-717495945fc2";
+        internal const string ClientIdKey = ConnectionStringFields.AADClientId;
+        internal const string ClientIdDefault = "1950a258-227b-4e31-a9cf-717495945fc2";
 
         /// <summary>
         /// The key inside the connection string for the AAD Tenant
         /// </summary>
-        public const string AADTenantKey = ConnectionStringFields.AADTenant;
-        public const string AADTenantDefault = "common";
+        internal const string AADTenantKey = ConnectionStringFields.AADTenant;
+        internal const string AADTenantDefault = "common";
 
         /// <summary>
         /// A raw token to be used for authentication with the give subscription ID
         /// </summary>
-        public const string RawToken = ConnectionStringFields.RawToken;
-        public const string RawGraphToken = ConnectionStringFields.RawGraphToken;
-        public static string RawTokenDefault = Guid.NewGuid().ToString();
+        internal const string RawToken = ConnectionStringFields.RawToken;
+        internal const string RawGraphToken = ConnectionStringFields.RawGraphToken;
+        internal static string RawTokenDefault = Guid.NewGuid().ToString();
+
+        internal string ServicePrincipal { get; set; }
+
+        private string ClientId { get; set; }
+
+        private IDictionary<string, string> RawParameters { get; set; }
+
+        //private bool UsesCustomUri()
+        //{
+        //    return this.CustomUri;
+        //}        
+
+        private static bool MatchEnvironmentBaseUri(TestEndpoints testEndpoint, string endpointValue)
+        {
+            endpointValue = EnsureTrailingSlash(endpointValue);
+            return string.Equals(testEndpoint.ResourceManagementUri.ToString(), endpointValue, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static string EnsureTrailingSlash(string uri)
+        {
+            if (uri.EndsWith("/"))
+            {
+                return uri;
+            }
+
+            return string.Format("{0}/", uri);
+        }
+
+        #endregion
 
         public TestEndpoints Endpoints { get; set; }
 
         public static IDictionary<EnvironmentNames, TestEndpoints> EnvEndpoints;
 
+        /*
         static TestEnvironment()
         {
             EnvEndpoints = new Dictionary<EnvironmentNames, TestEndpoints>();
@@ -142,13 +173,14 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 DataLakeAnalyticsJobAndCatalogServiceUri = new Uri("https://konaaccountdogfood.net") // TODO: change once a "Current" environment is published
             });
         }
+        */
 
-        public TestEnvironment()
-            : this(null)
-        {
-        }
+        //public TestEnvironment()
+        //    : this(null)
+        //{
+        //}
 
-        public TestEnvironment(IDictionary<string, string> connection)
+        internal TestEnvironment(IDictionary<string, string> connection)
         {
             this.TokenInfo = new Dictionary<TokenAudience, TokenCredentials>();
             // Instantiate dictionary of parameters
@@ -266,9 +298,9 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             }.Any(connection.ContainsKey);
         }
 
-        private bool CustomUri = false;
+        //private bool CustomUri = false;
         private Uri _BaseUri;
-
+        
         public Uri BaseUri
         {
             get
@@ -278,35 +310,24 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
             set
             {
-                this.CustomUri = true;
+                //this.CustomUri = true;
                 this._BaseUri = value;
             }
         }
 
-        public Dictionary<TokenAudience,TokenCredentials> TokenInfo { get; private set; }
-
-        public string ServicePrincipal { get; set; }
-
+        public Dictionary<TokenAudience, TokenCredentials> TokenInfo { get; private set; }
+        
         public string UserName { get; set; }
 
-        public string Tenant { get; set; }
-
-        public string ClientId { get; set; }
+        public string Tenant { get; set; }        
 
         public string SubscriptionId { get; set; }
-        
-        public IDictionary<string, string> RawParameters { get; set; }
 
-        public bool UsesCustomUri()
+        public EnvironmentNames LookupEnvironmentFromBaseUri(string resourceManagementUri)
         {
-            return this.CustomUri;
-        }
-
-        public EnvironmentNames LookupEnvironmentFromBaseUri(string endpointValue)
-        {
-            foreach(TestEndpoints testEndpoint in EnvEndpoints.Values)
+            foreach (TestEndpoints testEndpoint in EnvEndpoints.Values)
             {
-                if (MatchEnvironmentBaseUri(testEndpoint, endpointValue))
+                if (MatchEnvironmentBaseUri(testEndpoint, resourceManagementUri))
                 {
                     return testEndpoint.Name;
                 }
@@ -314,20 +335,5 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             return EnvironmentNames.Prod;
         }
 
-        private static bool MatchEnvironmentBaseUri(TestEndpoints testEndpoint, string endpointValue)
-        {
-            endpointValue = EnsureTrailingSlash(endpointValue);
-            return string.Equals(testEndpoint.ResourceManagementUri.ToString(), endpointValue, StringComparison.OrdinalIgnoreCase);
-        }
-
-        private static string EnsureTrailingSlash(string uri)
-        {
-            if(uri.EndsWith("/"))
-            {
-                return uri;
-            }
-
-            return string.Format("{0}/", uri);
-        }
     }
 }

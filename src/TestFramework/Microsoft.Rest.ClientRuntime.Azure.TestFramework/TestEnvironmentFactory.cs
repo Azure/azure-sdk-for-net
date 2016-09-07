@@ -15,7 +15,12 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
     using Microsoft.Rest.Azure.Authentication;
 
     public static class TestEnvironmentFactory
-    {        
+    {
+        public static TestEnvironment GetTestEnvironment()
+        {
+            return new TestEnvironment();
+        }
+
         /// <summary>
         /// The environment variable name for CSM OrgId authentication
         /// 
@@ -36,7 +41,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// Return test credentials and URI using AAD auth for an OrgID account.  Use this method with caution, it may take a dependency on ADAL
         /// </summary>
         /// <returns>The test credentials, or null if the appropriate environment variable is not set.</returns>
-        public static TestEnvironment GetTestEnvironment()
+        private static TestEnvironment GetTestEnvironmentFoo()
         {
             string connectionString = Environment.GetEnvironmentVariable(TestCSMOrgIdConnectionStringKey);
             TestEnvironment testEnv = new TestEnvironment(TestUtilities.ParseConnectionString(connectionString));
@@ -157,8 +162,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
             return testEnv;
         }
-
-        public static void SetEnvironmentSubscriptionId(TestEnvironment testEnv, string connectionString)
+        
+        private static void SetEnvironmentSubscriptionId(TestEnvironment testEnv, string connectionString)
         {
             if (HttpMockServer.Mode == HttpRecorderMode.Playback)
             {
@@ -188,8 +193,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 HttpMockServer.Variables[TestEnvironment.SubscriptionIdKey] = testEnv.SubscriptionId;
             }
         }
-
-        public static List<SubscriptionInfo> ListSubscriptions(string baseuri, TokenCredentials credentials)
+        
+        private static List<SubscriptionInfo> ListSubscriptions(string baseuri, TokenCredentials credentials)
         {
             var request = new HttpRequestMessage
             {
