@@ -180,13 +180,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                         var allFiles = new ConcurrentQueue<UploadMetadata>(metadata.Files);
                         int threadCount = Math.Min(allFiles.Count, this.Parameters.ConcurrentFileCount);
 
-                        // add up to two threads, one for saving and one for progress, if necessary.
-                        var threads = new List<Thread>(threadCount + (progressThread != null ? 2 : 1));
+                        var executionThreads = new List<Thread>(threadCount);
 
+                        // add up to two threads, one for saving and one for progress, if necessary.
+                        var trackingThreads = new List<Thread>(progressThread != null ? 2 : 1);
                         if (progressThread != null)
                         {
                             progressThread.Start();
-                            threads.Add(progressThread);
+                            trackingThreads.Add(progressThread);
                         }
 
                         // break up the batch save into 100 even chunks. This is most important for very large directories
@@ -288,7 +289,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                                 }
                             });
                             t.Start();
-                            threads.Add(t);
+                            executionThreads.Add(t);
                         }
 
                         // create a thread that handles saving of the metadata so that there is no locking happening in the upload threads
@@ -330,9 +331,9 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                         });
 
                         saveThread.Start();
-                        threads.Add(saveThread);
+                        trackingThreads.Add(saveThread);
 
-                        foreach (var t in threads)
+                        foreach (var t in executionThreads)
                         {
                             t.Join();
                         }
@@ -343,6 +344,15 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                         }
 
                         metadata.DeleteFile();
+
+                        foreach(var t in trackingThreads)
+                        {
+                            if (t.ThreadState == ThreadState.Running)
+                            {
+                                // TODO: Log that the thread is still running when it should have finished
+                                t.Abort();
+                            }
+                        }
                     }
                     catch (OperationCanceledException)
                     {
