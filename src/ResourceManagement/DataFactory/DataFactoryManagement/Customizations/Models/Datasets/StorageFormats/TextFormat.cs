@@ -52,5 +52,20 @@ namespace Microsoft.Azure.Management.DataFactories.Models
         /// https://msdn.microsoft.com/library/system.text.encoding.aspx. 
         /// </summary>
         public string EncodingName { get; set; }
+
+        /// <summary>
+        /// Optional. Treat empty column values in the text files as null.
+        /// </summary>
+        public bool? TreatEmptyAsNull { get; set; }
+
+        /// <summary>
+        /// Optional. The count of lines/rows to be skipped when parsing text files.
+        /// </summary>
+        public int? SkipLineCount { get; set; }
+
+        /// <summary>
+        /// Optional. When the dataset that this format object is defining is used as input, treat the first row of data as headers, when it's used as output, write the headers into the output as the first row of data.
+        /// </summary>
+        public bool? FirstRowAsHeader { get; set; }
     }
 }
