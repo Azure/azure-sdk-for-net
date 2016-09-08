@@ -84,6 +84,10 @@ namespace Microsoft.Azure.Search.Models
         public override void Validate()
         {
             base.Validate();
+            if (this.MaxTokenLength > 300)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "MaxTokenLength", 300);
+            }
         }
     }
 }
