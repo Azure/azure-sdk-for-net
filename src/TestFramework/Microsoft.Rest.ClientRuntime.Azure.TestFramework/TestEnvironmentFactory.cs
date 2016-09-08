@@ -85,12 +85,13 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                                 testEnv.Endpoints)
                                 .ConfigureAwait(false).GetAwaiter().GetResult();
                         }
-                        else if (testEnv.ServicePrincipal != null && password != null)
+                        
+                        else if (testEnv.AADClientId != null && password != null)
                         {
                             TestEnvironmentFactory.LoginServicePrincipalAsync(
                                 testEnv.TokenInfo,
                                 testEnv.Tenant,
-                                testEnv.ServicePrincipal, 
+                                testEnv.AADClientId,
                                 password, 
                                 testEnv.Endpoints)
                                 .ConfigureAwait(false).GetAwaiter().GetResult();
@@ -198,7 +199,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         {
             var request = new HttpRequestMessage
             {
-                RequestUri = new Uri(string.Format("{0}/subscriptions?api-version=2014-04-01-preview", baseuri))
+                RequestUri = new Uri(string.Format("{0}subscriptions?api-version=2014-04-01-preview", baseuri))
             };
 
             HttpClient client = new HttpClient();
@@ -234,13 +235,13 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             };
 
             var mgmAuthResult = (TokenCredentials) await UserTokenProvider
-                                .LoginSilentAsync(TestEnvironment.ClientIdDefault, domain, username, password, mgmSettings)
+                                .LoginSilentAsync(TestEnvironment.AADClientIdDefault, domain, username, password, mgmSettings)
                                 .ConfigureAwait(false);
 
             try
             {
                 var graphAuthResult = (TokenCredentials)await UserTokenProvider
-                                .LoginSilentAsync(TestEnvironment.ClientIdDefault, domain, username, password, grpSettings)
+                                .LoginSilentAsync(TestEnvironment.AADClientIdDefault, domain, username, password, grpSettings)
                                 .ConfigureAwait(false);
                 tokens[TokenAudience.Graph] = graphAuthResult;
             }
@@ -254,31 +255,31 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
         private static async Task LoginServicePrincipalAsync(
             Dictionary<TokenAudience, TokenCredentials> tokens,
-            string domain, 
-            string servicePrincipalId, 
-            string key,
+            string aadTenantId, 
+            string aadClientId, 
+            string aadClientSecret,
             TestEndpoints endpoints)
         {
             var mgmSettings = new ActiveDirectoryServiceSettings()
             {
-                AuthenticationEndpoint = new Uri(endpoints.AADAuthUri.ToString() + domain),
+                AuthenticationEndpoint = new Uri(endpoints.AADAuthUri.ToString() + aadTenantId),
                 TokenAudience = endpoints.AADTokenAudienceUri
             };
 
             var mgmAuthResult = (TokenCredentials) await ApplicationTokenProvider
-                            .LoginSilentAsync(domain, servicePrincipalId, key, mgmSettings)
+                            .LoginSilentAsync(aadTenantId, aadClientId, aadClientSecret, mgmSettings)
                             .ConfigureAwait(false);
 
             var grpSettings = new ActiveDirectoryServiceSettings()
             {
-                AuthenticationEndpoint = new Uri(endpoints.AADAuthUri.ToString() + domain),
+                AuthenticationEndpoint = new Uri(endpoints.AADAuthUri.ToString() + aadTenantId),
                 TokenAudience = endpoints.GraphTokenAudienceUri
             };
 
             try
             {
                 var graphAuthResult = (TokenCredentials)await ApplicationTokenProvider
-                                .LoginSilentAsync(domain, servicePrincipalId, key, grpSettings)
+                                .LoginSilentAsync(aadTenantId, aadClientId, aadClientSecret, grpSettings)
                                 .ConfigureAwait(false);
                 tokens[TokenAudience.Graph] = graphAuthResult;
             }
@@ -293,35 +294,35 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 #if NET45
         private static void LoginWithPromptAsync(
             Dictionary<TokenAudience, TokenCredentials> tokens,
-            string domain,
+            string aadTenantId,
             TestEndpoints endpoints)
         {
             var mgmSettings = new ActiveDirectoryServiceSettings()
             {
-                AuthenticationEndpoint = new Uri(endpoints.AADAuthUri.ToString() + domain),
+                AuthenticationEndpoint = new Uri(endpoints.AADAuthUri.ToString() + aadTenantId),
                 TokenAudience = endpoints.AADTokenAudienceUri
             };
             var grpSettings = new ActiveDirectoryServiceSettings()
             {
-                AuthenticationEndpoint = new Uri(endpoints.AADAuthUri.ToString() + domain),
+                AuthenticationEndpoint = new Uri(endpoints.AADAuthUri.ToString() + aadTenantId),
                 TokenAudience = endpoints.GraphTokenAudienceUri
             };
 
             var clientSettings = new ActiveDirectoryClientSettings()
             {
-                ClientId = TestEnvironment.ClientIdDefault,
+                ClientId = TestEnvironment.AADClientIdDefault,
                 ClientRedirectUri = new Uri("urn:ietf:wg:oauth:2.0:oob"),
                 PromptBehavior = PromptBehavior.Auto
             };
 
             var mgmAuthResult = (TokenCredentials) UserTokenProvider
-                          .LoginWithPromptAsync(domain, clientSettings, mgmSettings)
+                          .LoginWithPromptAsync(aadTenantId, clientSettings, mgmSettings)
                           .ConfigureAwait(false)
                           .GetAwaiter().GetResult();
             try
             {
                 var graphAuthResult = (TokenCredentials)UserTokenProvider
-                               .LoginWithPromptAsync(domain, clientSettings, grpSettings)
+                               .LoginWithPromptAsync(aadTenantId, clientSettings, grpSettings)
                               .GetAwaiter().GetResult();
                 tokens[TokenAudience.Graph] = graphAuthResult;
             }
