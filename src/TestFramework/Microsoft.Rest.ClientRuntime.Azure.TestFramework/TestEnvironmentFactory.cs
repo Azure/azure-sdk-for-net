@@ -37,6 +37,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// </summary>
         public static Dictionary<string, string> CustomEnvValues = new Dictionary<string, string>();
 
+        /*
         /// <summary>
         /// Return test credentials and URI using AAD auth for an OrgID account.  Use this method with caution, it may take a dependency on ADAL
         /// </summary>
@@ -333,5 +334,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             tokens[TokenAudience.Management] = mgmAuthResult;
         }
 #endif
+        */
     }
 }
