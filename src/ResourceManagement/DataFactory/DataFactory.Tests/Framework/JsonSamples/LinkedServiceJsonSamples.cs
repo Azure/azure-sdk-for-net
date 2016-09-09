@@ -499,5 +499,24 @@ namespace DataFactory.Tests.Framework.JsonSamples
         }
     }
 }";
+
+        [JsonSample]
+        public const string AmazonRedshiftLinkedService = @"
+{
+    name: ""AmazonRedshiftLinkedService"",
+    properties:
+    {
+        type: ""AmazonRedshift"",
+        description: ""test description"",
+        typeProperties:
+        {
+            server : ""http://localhost/fakeredshiftserver.com"", 
+            port : 5439,
+            username: ""rsadmin"",
+            password : ""fakepassword"",
+            database : ""fakedatabase""
+        }
+    }
+}";
     }
 }

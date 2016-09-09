@@ -42,6 +42,7 @@
     <Compile Include="Customizations\Models\Datasets\StorageFormats\JsonFormat.cs" />
     <Compile Include="Customizations\Models\Datasets\StorageFormats\JsonFormatFilePattern.cs" />
     <Compile Include="Customizations\Models\IRegisteredType.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\AmazonRedshiftLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AuthenticationType\ODataAuthenticationType.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AzureDataLakeAnalyticsLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AzureDataLakeStoreLinkedService.cs" />
