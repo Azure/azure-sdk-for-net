@@ -33,6 +33,7 @@
     <Compile Include="Customizations\Models\Activities\CopySources\SqlDWSource.cs" />
     <Compile Include="Customizations\Models\Activities\HDInsightActivityDebugInfoOption.cs" />
     <Compile Include="Customizations\Conversion\GenericRegisteredTypeConverter.cs" />
+    <Compile Include="Customizations\Models\Datasets\AmazonS3Dataset.cs" />
     <Compile Include="Customizations\Models\Datasets\AzureDataLakeStoreDataset.cs" />
     <Compile Include="Customizations\Models\Datasets\MongoDbCollectionDataset.cs" />
     <Compile Include="Customizations\Models\Datasets\ODataResourceDataset.cs" />
@@ -44,6 +45,7 @@
     <Compile Include="Customizations\Models\IRegisteredType.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AmazonRedshiftLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AuthenticationType\ODataAuthenticationType.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\AwsAccessKeyLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AzureDataLakeAnalyticsLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AzureDataLakeStoreLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AzureSqlDataWarehouseLinkedService.cs" />

@@ -518,5 +518,21 @@ namespace DataFactory.Tests.Framework.JsonSamples
         }
     }
 }";
+
+        [JsonSample]
+        public const string AwsAccessKeyLinkedService = @"
+{
+    name: ""AwsAccessKeyLinkedService"",
+    properties:
+    {
+        type: ""AwsAccessKey"",
+        description: ""test description"",
+        typeProperties:
+        {
+            accessKeyId : ""fakeaccess"",
+            secretAccessKey : ""fakesecret""
+        }
+    }
+}";
     }
 }
