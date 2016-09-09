@@ -941,6 +941,11 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <param name="metadata"></param>
         private void DownloadFile(UploadMetadata metadata, IProgress<SegmentUploadProgress> segmentProgressTracker = null)
         {
+            if (!_frontEnd.StreamExists(metadata.InputFilePath))
+            {
+                throw new FileNotFoundException("Unable to locate remote file", metadata.InputFilePath);
+            }
+
             try
             {
                 segmentProgressTracker = segmentProgressTracker ?? CreateSegmentProgressTracker(metadata);

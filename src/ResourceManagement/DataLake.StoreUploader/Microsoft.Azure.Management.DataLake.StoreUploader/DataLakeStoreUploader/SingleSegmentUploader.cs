@@ -336,7 +336,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 return;
             }
 
-            int intervalSeconds = Math.Max(MaximumBackoffWaitSeconds, (int)Math.Pow(2, attemptCount));
+            int intervalSeconds = Math.Min(MaximumBackoffWaitSeconds, (int)Math.Pow(2, attemptCount));
             Thread.Sleep(TimeSpan.FromSeconds(intervalSeconds));
         }
 

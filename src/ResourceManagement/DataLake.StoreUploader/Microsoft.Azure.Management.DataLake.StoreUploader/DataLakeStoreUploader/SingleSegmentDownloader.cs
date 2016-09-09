@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
         #region Private
 
-        internal const decimal BufferLength = 16 * 1024 * 1024; // 16MB
+        internal const decimal BufferLength = 32 * 1024 * 1024; // 32MB
         private const int MaximumBackoffWaitSeconds = 32;
         internal const int MaxBufferDownloadAttemptCount = 4;
 
@@ -97,11 +97,6 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <returns></returns>
         public void Download()
         {
-            if (!_frontEnd.StreamExists(_metadata.InputFilePath, !_metadata.IsDownload))
-            {
-                throw new FileNotFoundException("Unable to locate input file", _metadata.InputFilePath);
-            }
-
             if (_token.IsCancellationRequested)
             {
                 _token.ThrowIfCancellationRequested();
@@ -196,7 +191,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
                             using (var readStream = _frontEnd.ReadStream(_metadata.InputFilePath, curOffset, lengthToDownload, _metadata.IsDownload))
                             {
-                                readStream.CopyTo(outputStream);
+                                readStream.CopyTo(outputStream, (int)BufferLength);
                             }
 
                             downloadCompleted = true;
@@ -239,7 +234,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 return;
             }
 
-            int intervalSeconds = Math.Max(MaximumBackoffWaitSeconds, (int)Math.Pow(2, attemptCount));
+            int intervalSeconds = Math.Min(MaximumBackoffWaitSeconds, (int)Math.Pow(2, attemptCount));
             Thread.Sleep(TimeSpan.FromSeconds(intervalSeconds));
         }
 
