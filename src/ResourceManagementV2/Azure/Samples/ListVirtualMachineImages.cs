@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.Management.V2.Compute;
+﻿using Microsoft.Azure.Management;
 using Microsoft.Azure.Management.V2.Resource.Authentication;
 using Microsoft.Azure.Management.V2.Resource.Core;
 using System;
@@ -22,10 +22,10 @@ namespace Samples
 
                 var tokenCredentials = new ApplicationTokenCredentials(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
-                var computeManager = ComputeManager
+                var azure = Azure
                     .Configure()
                     .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                    .Authenticate(tokenCredentials, tokenCredentials.DefaultSubscriptionId);
+                    .Authenticate(tokenCredentials).WithSubscription(tokenCredentials.DefaultSubscriptionId);
 
                 //=================================================================
                 // List all virtual machine image publishers and
@@ -33,12 +33,10 @@ namespace Samples
                 // published by Canonical, Red Hat and SUSE
                 // by browsing through locations, publishers, offers, SKUs and images
 
-                var publishers = computeManager
+                var publishers = azure
                         .VirtualMachineImages
                         .Publishers()
                         .ListByRegion(Region.US_EAST);
-
-                IVirtualMachinePublisher chosenPublisher;
 
                 Console.WriteLine("US East data center: printing list of \n"
                         + "a) Publishers and\n"

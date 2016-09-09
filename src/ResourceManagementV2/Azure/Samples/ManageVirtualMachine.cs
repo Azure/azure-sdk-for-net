@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.Management.Compute.Models;
+﻿using Microsoft.Azure.Management;
+using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.V2.Compute;
 using Microsoft.Azure.Management.V2.Resource;
 using Microsoft.Azure.Management.V2.Resource.Authentication;
@@ -41,18 +42,19 @@ namespace Samples
 
                 var tokenCredentials = new ApplicationTokenCredentials(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
-                var computeManager = ComputeManager
+                var azure = Azure
                     .Configure()
                     .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                    .Authenticate(tokenCredentials, tokenCredentials.DefaultSubscriptionId);
+                    .Authenticate(tokenCredentials).WithSubscription(tokenCredentials.DefaultSubscriptionId);
 
                 // Print selected subscription
-                Console.WriteLine("Selected subscription: " + tokenCredentials.DefaultSubscriptionId);
+                Console.WriteLine("Selected subscription: " + azure.SubscriptionId);
+
                 try
                 {
                     var startTime = DateTimeOffset.Now.UtcDateTime;
 
-                    var windowsVM = computeManager.VirtualMachines.Define(windowsVMName)
+                    var windowsVM = azure.VirtualMachines.Define(windowsVMName)
                             .WithRegion(Region.US_EAST)
                             .WithNewResourceGroup(rgName)
                             .WithNewPrimaryNetwork("10.0.0.0/28")
@@ -167,7 +169,7 @@ namespace Samples
 
                     Console.WriteLine("Creating a Linux VM in the network");
 
-                    var linuxVM = computeManager.VirtualMachines.Define(linuxVMName)
+                    var linuxVM = azure.VirtualMachines.Define(linuxVMName)
                             .WithRegion(Region.US_EAST)
                             .WithExistingResourceGroup(rgName)
                             .WithExistingPrimaryNetwork(network)
@@ -190,7 +192,7 @@ namespace Samples
 
                     Console.WriteLine("Printing list of VMs =======");
 
-                    foreach (var virtualMachine in computeManager.VirtualMachines.ListByGroup(resourceGroupName))
+                    foreach (var virtualMachine in azure.VirtualMachines.ListByGroup(resourceGroupName))
                     {
                         Utilities.PrintVirtualMachine(virtualMachine);
                     }
@@ -199,7 +201,7 @@ namespace Samples
                     // Delete the virtual machine
                     Console.WriteLine("Deleting VM: " + windowsVM.Id);
 
-                    computeManager.VirtualMachines.Delete(windowsVM.Id);
+                    azure.VirtualMachines.Delete(windowsVM.Id);
 
                     Console.WriteLine("Deleted VM: " + windowsVM.Id);
                 }
@@ -210,7 +212,7 @@ namespace Samples
                 finally
                 {
                     Console.WriteLine($"Deleting resource group : {rgName}");
-                    computeManager.ResourceManager.ResourceGroups.Delete(rgName);
+                    azure.ResourceGroups.Delete(rgName);
                     Console.WriteLine($"Deleted resource group : {rgName}");
                 }
             }

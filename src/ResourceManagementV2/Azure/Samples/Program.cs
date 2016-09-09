@@ -20,6 +20,12 @@ namespace Samples
 
             Console.WriteLine("Virtual machine tests");
             ManageVirtualMachine.TestVirtualMachine();
+
+            Console.WriteLine("Resource group deployment");
+            DeployUsingArmTemplate.Deploy();
+
+            Console.WriteLine("Manage resources");
+            ManageResource.TestManageResource();
         }
     }
 }

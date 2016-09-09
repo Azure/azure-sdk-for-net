@@ -2,9 +2,8 @@
 using Microsoft.Azure.Management.V2.Resource.Core;
 using Microsoft.Rest.Azure;
 using System;
-using System.Threading.Tasks;
-using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.V2.Resource
 {
@@ -16,21 +15,6 @@ namespace Microsoft.Azure.Management.V2.Resource
         internal SubscriptionsImpl(ISubscriptionsOperations client)
         {
             this.innerCollection = client;
-        }
-
-        PagedList<ISubscription> ISupportsListing<ISubscription>.List()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ISubscription> GetByName(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<ISubscription> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            throw new NotImplementedException();
         }
 
         public PagedList<ISubscription> List()
@@ -49,7 +33,12 @@ namespace Microsoft.Azure.Management.V2.Resource
             });
         }
 
-        ISubscription ISupportsGettingByName<ISubscription>.GetByName(string name)
+        public ISubscription GetByName(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ISubscription> GetByNameAsync(string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             throw new NotImplementedException();
         }
