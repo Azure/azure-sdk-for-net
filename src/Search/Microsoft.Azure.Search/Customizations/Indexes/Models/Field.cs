@@ -62,6 +62,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets the name of the field.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn857353.aspx" />
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
@@ -73,10 +74,35 @@ namespace Microsoft.Azure.Search.Models
         public DataType Type { get; set; }
 
         /// <summary>
-        /// Name of the text analyzer to use.
+        /// Gets or sets the name of the analyzer to use for the field at search time and 
+        /// indexing time. This option can be used only with searchable fields
+        /// and it can't be set together with either SearchAnalyzer or
+        /// IndexAnalyzer. Once the analyzer is chosen, it cannot be changed
+        /// for the field.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn879793.aspx" /> 
         /// </summary>
         [JsonProperty(PropertyName = "analyzer")]
         public AnalyzerName Analyzer { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the analyzer used at search time for the field. This
+        /// option can be used only with searchable fields. It must be set together
+        /// with IndexAnalyzer and it cannot be set together with the Analyzer
+        /// option. This analyzer can be updated on an existing field.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn879793.aspx" /> 
+        /// </summary>
+        [JsonProperty(PropertyName = "searchAnalyzer")]
+        public AnalyzerName SearchAnalyzer { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the analyzer used at indexing time for the field. This
+        /// option can be used only with searchable fields. It must be set together
+        /// with SearchAnalyzer and it cannot be set together with the Analyzer
+        /// option. Once the analyzer is chosen, it cannot be changed for the field.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn879793.aspx" /> 
+        /// </summary>
+        [JsonProperty(PropertyName = "indexAnalyzer")]
+        public AnalyzerName IndexAnalyzer { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the field is the key of

@@ -1,5 +1,5 @@
 {
-  "version": "2.0.1-preview",
+  "version": "2.0.4-preview",
   "title": "Microsoft Azure Search Library",
   "description": "Makes it easy to develop a .NET application that uses Azure Search.",
   "authors": [ "Microsoft" ],
@@ -22,7 +22,7 @@
     "nowarn": [ "1591" ]
   },
   "dependencies": {
-    "Microsoft.Spatial": "[6.15.0,7.0)"
+    "Microsoft.Spatial": "6.15.0"
   },
 
   "frameworks": {
