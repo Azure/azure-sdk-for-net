@@ -476,5 +476,28 @@ namespace DataFactory.Tests.Framework.JsonSamples
         }
     }
 }";
+
+        [JsonSample]
+        public const string MongoDbLinkedService = @"
+{
+    name: ""OnPremisesMongoDbLinkedService"",
+    properties:
+    {
+        type: ""OnPremisesMongoDb"",
+        description: ""test description"",
+        typeProperties:
+        {
+            authenticationType: ""Basic"",
+            server : ""fakeserver.com"", 
+            port : 666,
+            username: ""fakeuser"",
+            password : ""fakepwd"",
+            authSource : ""fackadmindb"",
+            databaseName : ""fakedb"",
+            gatewayName : ""fakegw"",
+            encryptedCredential : ""fakecred""
+        }
+    }
+}";
     }
 }

@@ -18,6 +18,7 @@
     <Compile Include="Customizations\Models\Activities\AzureMLBatchExecutionActivity .cs" />
     <Compile Include="Customizations\Models\Activities\CopySources\CassandraSource.cs" />
     <Compile Include="Customizations\Models\Activities\CopySources\CassandraSourceReadConsistencyLevel.cs" />
+    <Compile Include="Customizations\Models\Activities\CopySources\MongoDbSource.cs" />
     <Compile Include="Customizations\Models\Activities\CopySources\WebSource.cs" />
     <Compile Include="Customizations\Models\Activities\CopySinks\PolyBaseRejectType.cs" />
     <Compile Include="Customizations\Models\Activities\CopySinks\PolyBaseSettings.cs" />
@@ -33,6 +34,7 @@
     <Compile Include="Customizations\Models\Activities\HDInsightActivityDebugInfoOption.cs" />
     <Compile Include="Customizations\Conversion\GenericRegisteredTypeConverter.cs" />
     <Compile Include="Customizations\Models\Datasets\AzureDataLakeStoreDataset.cs" />
+    <Compile Include="Customizations\Models\Datasets\MongoDbCollectionDataset.cs" />
     <Compile Include="Customizations\Models\Datasets\ODataResourceDataset.cs" />
     <Compile Include="Customizations\Models\Datasets\OnPremisesCassandraTableDataset.cs" />
     <Compile Include="Customizations\Models\Datasets\StorageFormats\OrcFormat.cs" />
@@ -46,6 +48,7 @@
     <Compile Include="Customizations\Models\LinkedServices\AzureSqlDataWarehouseLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\AzureStorageSasLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\OnPremisesCassandraLinkedService.cs" />
+    <Compile Include="Customizations\Models\LinkedServices\OnPremisesMongoDbLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\SalesforceLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\WebLinkedService.cs" />
     <Compile Include="Customizations\Models\LinkedServices\HDInsightSchemaGenerationProperties.cs" />

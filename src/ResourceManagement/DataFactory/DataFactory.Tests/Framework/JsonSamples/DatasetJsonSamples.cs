@@ -640,5 +640,23 @@ namespace DataFactory.Tests.Framework.JsonSamples
     } 
 } 
 ";
+
+        [JsonSample]
+        public const string MongoDbDataset = @"
+{ 
+    name: ""MongoDbTable"", 
+    properties: { 
+        type: ""MongoDbCollection"", 
+        linkedServiceName: ""fake ls"",
+        typeProperties: { 
+            collectionName: ""fake table""
+        }, 
+        availability: { 
+            frequency: ""Hour"", 
+            interval: 1
+        } 
+    }
+}
+";
     }
 }
