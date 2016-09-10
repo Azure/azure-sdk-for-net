@@ -104,6 +104,92 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             #endregion
         }
 
+        /// <summary>
+        /// Copy Constructor
+        /// </summary>
+        /// <param name="testEndpoint">endPoint instance</param>
+        private TestEndpoints(TestEndpoints testEndpoint)
+        {
+            Name = testEndpoint.Name;
+            ServiceManagementUri = testEndpoint.ServiceManagementUri;
+            ResourceManagementUri = testEndpoint.ResourceManagementUri;
+            GraphUri = testEndpoint.GraphUri;
+            GalleryUri = testEndpoint.GalleryUri;
+            AADAuthUri = testEndpoint.AADAuthUri;
+            RdfePortalUri = testEndpoint.RdfePortalUri;
+            IbizaPortalUri = testEndpoint.IbizaPortalUri;
+            DataLakeStoreServiceUri = testEndpoint.DataLakeStoreServiceUri;
+            DataLakeAnalyticsJobAndCatalogServiceUri = testEndpoint.DataLakeAnalyticsJobAndCatalogServiceUri;
+            AADTokenAudienceUri = testEndpoint.AADTokenAudienceUri;
+            GraphTokenAudienceUri = testEndpoint.GraphTokenAudienceUri;
+        }
+
+        /// <summary>
+        /// Copy constructor
+        /// Updates endpoint URI provided as part of the connection string
+        /// </summary>
+        /// <param name="testEndpoint">endPoint that needs to be updated according to connection string</param>
+        /// <param name="connString">User provided connection string</param>
+        internal TestEndpoints(TestEndpoints testEndpoint, ConnectionString connString): this(testEndpoint)
+        {
+            //FIND OUT MAPPING FROM CONNECTION STRING
+            //if (!string.IsNullOrEmpty(connString.GetValue(ConnectionStringKeys.RdfePortalUriKey)))
+            //{
+            //    ServiceManagementUri = new Uri(connString.GetValue(ConnectionStringKeys.RdfePortalUriKey));
+            //}
+
+            if (!string.IsNullOrEmpty(connString.GetValue(ConnectionStringKeys.BaseUriKey)))
+            {
+                ResourceManagementUri = new Uri(connString.GetValue(ConnectionStringKeys.BaseUriKey));
+            }
+
+            if (!string.IsNullOrEmpty(connString.GetValue(ConnectionStringKeys.GraphUriKey)))
+            {
+                GraphUri = new Uri(connString.GetValue(ConnectionStringKeys.GraphUriKey));
+            }
+
+            if (!string.IsNullOrEmpty(connString.GetValue(ConnectionStringKeys.GalleryUriKey)))
+            {
+                GalleryUri = new Uri(connString.GetValue(ConnectionStringKeys.GalleryUriKey));
+            }
+
+            if (!string.IsNullOrEmpty(connString.GetValue(ConnectionStringKeys.AADAuthenticationEndpointKey)))
+            {
+                AADAuthUri = new Uri(connString.GetValue(ConnectionStringKeys.AADAuthenticationEndpointKey));
+            }
+
+            if (!string.IsNullOrEmpty(connString.GetValue(ConnectionStringKeys.RdfePortalUriKey)))
+            {
+                RdfePortalUri = new Uri(connString.GetValue(ConnectionStringKeys.RdfePortalUriKey));
+            }
+
+            if (!string.IsNullOrEmpty(connString.GetValue(ConnectionStringKeys.IbizaPortalUriKey)))
+            {
+                IbizaPortalUri = new Uri(connString.GetValue(ConnectionStringKeys.IbizaPortalUriKey));
+            }
+
+            if (!string.IsNullOrEmpty(connString.GetValue(ConnectionStringKeys.DataLakeStoreServiceUriKey)))
+            {
+                DataLakeStoreServiceUri = new Uri(connString.GetValue(ConnectionStringKeys.DataLakeStoreServiceUriKey));
+            }
+
+            if (!string.IsNullOrEmpty(connString.GetValue(ConnectionStringKeys.DataLakeAnalyticsJobAndCatalogServiceUriKey)))
+            {
+                DataLakeAnalyticsJobAndCatalogServiceUri = new Uri(connString.GetValue(ConnectionStringKeys.DataLakeAnalyticsJobAndCatalogServiceUriKey));
+            }
+
+            if (!string.IsNullOrEmpty(connString.GetValue(ConnectionStringKeys.AADTokenAudienceUriKey)))
+            {
+                AADTokenAudienceUri = new Uri(connString.GetValue(ConnectionStringKeys.AADTokenAudienceUriKey));
+            }
+
+            //if (!string.IsNullOrEmpty(connString.GetValue(ConnectionStringKeys.RawGraphTokenKey)))
+            //{
+            //    GraphTokenAudienceUri = new Uri(connString.GetValue(ConnectionStringKeys.RawGraphTokenKey));
+            //}
+
+        }
+
         //TestEnvironment Name
         public EnvironmentNames Name { get; set; }
 

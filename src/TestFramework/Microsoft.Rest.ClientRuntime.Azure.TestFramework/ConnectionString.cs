@@ -21,6 +21,10 @@
 
         #region Properties
 
+        private bool CheckViolation { get; set; }
+
+        
+
         /// <summary>
         /// Represents key values pairs for the parsed connection string
         /// </summary>
@@ -84,19 +88,30 @@
         }
 
         /// <summary>
-        /// 
+        /// Initialize Connection string object using provided connectionString
         /// </summary>
         /// <param name="connString">Semicolon separated KeyValue pair connection string</param>
-        public ConnectionString(string connString) : this()
+        public ConnectionString(string connString) : this(connString, true)
+        { }
+
+        public ConnectionString(string connString, bool checkViolation):this()
         {
             _connString = connString;
-            Parse();
+            CheckViolation = checkViolation;
+            Parse(_connString);
+            NormalizeKeyValuePairs();
+
+            if (CheckViolation)
+            {
+                DetectViolations();
+            }
         }
         #endregion
 
         #region private
         /// <summary>
-        /// Update values for ServicePrincipal/ServicePrincipalSecret values
+        /// Update values to either default values or normalize values across key/value pairs
+        /// For e.g. If ServicePrincipal is provided and password is provided, we assume password is ServicePrincipalSecret
         /// </summary>
         private void NormalizeKeyValuePairs()
         {
@@ -125,18 +140,80 @@
             //Initialize default values if found empty
             if (string.IsNullOrEmpty(clientId) && (string.IsNullOrEmpty(spn)))
             {
-                KeyValuePairs[ConnectionStringKeys.ServicePrincipalKey.ToLower()] = "1950a258-227b-4e31-a9cf-717495945fc2";
+                KeyValuePairs.UpdateDictionary(ConnectionStringKeys.ServicePrincipalKey, "1950a258-227b-4e31-a9cf-717495945fc2");
             }
-            
+
+            //Initialize raw tokens to a non-null/non-empty strings
+            KeyValuePairs.UpdateDictionary(ConnectionStringKeys.RawTokenKey, ConnectionStringKeys.RawTokenKey);
+            KeyValuePairs.UpdateDictionary(ConnectionStringKeys.RawGraphTokenKey, ConnectionStringKeys.RawGraphTokenKey);
         }
 
         /// <summary>
-        /// Parse connection string provided to constructor
+        /// Detect any connection string violations
         /// </summary>
-        private void Parse()
+        private void DetectViolations()
         {
-            Parse(_connString);
+            //So far only 1 violation is being checked
+            //We should also check if a supported Environment is provided in connection string (but seems we do not throw exception for unsupported environment)
+            bool envSet = IsEnvironmentSet();
+            string nonEmptyUriKey = FirstNonNullUriInConnectionString();
+
+            if(envSet)
+            {
+                if(!string.IsNullOrEmpty(nonEmptyUriKey))
+                {
+                    string envName = KeyValuePairs.GetValueUsingCaseInsensitiveKey(ConnectionStringKeys.EnvironmentKey);
+                    string uriKeyValue = KeyValuePairs.GetValueUsingCaseInsensitiveKey(nonEmptyUriKey);
+                    string envAndUriConflictError = string.Format("Connection string contains Environment '{0}' and '{1}={2}'. Any Uri and environment cannot co-exist. Either set any environment or provide Uris", envName, nonEmptyUriKey, uriKeyValue);
+                    throw new ArgumentException(envAndUriConflictError);
+                }
+            }
         }
+
+        /// <summary>
+        /// Find if any of the URI values has been set in the connection string
+        /// </summary>
+        /// <returns>First non empty URI value</returns>
+        private string FirstNonNullUriInConnectionString()
+        {
+            string nonEmptyUriKeyName = string.Empty;
+            var nonEmptyUriList = KeyValuePairs.Where(item =>
+            {
+                return ((item.Key.Contains("uri") || (item.Key.Equals(ConnectionStringKeys.AADAuthenticationEndpointKey.ToLower()))) && (!string.IsNullOrEmpty(item.Value)));
+            });
+            
+            if(nonEmptyUriList.IsAny<KeyValuePair<string,string>>())
+            {
+                nonEmptyUriKeyName = nonEmptyUriList.FirstOrDefault().Key;
+            }
+
+            return nonEmptyUriKeyName;
+        }
+
+        /// <summary>
+        /// Detects if Environment was set in the connection string
+        /// </summary>
+        /// <returns>True: If valid environment was set. False:If environment was empty or invalid</returns>
+        private bool IsEnvironmentSet()
+        {
+            bool envSet = false;            
+            string envNameString = KeyValuePairs.GetValueUsingCaseInsensitiveKey(ConnectionStringKeys.EnvironmentKey);
+            if (!string.IsNullOrEmpty(envNameString))
+            {
+                EnvironmentNames envName;
+                if (!Enum.TryParse<EnvironmentNames>(envNameString, out envName))
+                {
+                    string envError = string.Format("Environment '{0}' is not valid. Possible values:'{1}'", envNameString, envName.ListValues());
+                    ParseErrors = envError;
+                    throw new ArgumentException(envError);
+                }
+
+                envSet = !string.IsNullOrEmpty(envName.ToString());
+            }
+
+            return envSet;
+        }
+       
         #endregion
 
         #region Public Functions
@@ -195,6 +272,16 @@
         }
         
         /// <summary>
+        /// Returns value for the key set in the connection string
+        /// </summary>
+        /// <param name="keyName">KeyName set in connection string</param>
+        /// <returns>Value for the key provided</returns>
+        public string GetValue(string keyName)
+        {
+            return KeyValuePairs.GetValueUsingCaseInsensitiveKey(keyName);
+        }
+
+        /// <summary>
         /// Returns conneciton string
         /// </summary>
         /// <returns>ConnectionString</returns>
@@ -206,10 +293,11 @@
         #endregion
     }
 
+    /*
     /// <summary>
     /// Extension method class
     /// </summary>
-    public static class ExtMethods
+    public static partial class ExtMethods
     {
         /// <summary>
         /// Allows you to clear only values or key/value both
@@ -232,5 +320,18 @@
                 dictionary.Clear();
             }
         }
+
+        public static string ListValues(this EnvironmentNames env)
+        {
+            List<string> enumValues = (from ev in typeof(EnvironmentNames).GetMembers(BindingFlags.Public | BindingFlags.Static) select ev.Name).ToList();
+            return string.Join(",", enumValues.Select((item) => item));
+        }
+
+        public static bool IsAny<T>(this IEnumerable<T> collection)
+        {
+            return (collection != null && collection.Any());
+        }
     }
+
+    */
 }

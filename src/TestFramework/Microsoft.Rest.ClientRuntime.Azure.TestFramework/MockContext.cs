@@ -162,7 +162,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
             ConstructorInfo constructor = null;
             //if (currentEnvironment.UsesCustomUri() && !internalBaseUri)
-            if (!string.IsNullOrEmpty(currentEnvironment.BaseUri.AbsoluteUri) && !internalBaseUri)
+            if ((currentEnvironment.BaseUri != null) && !internalBaseUri)
             {
                 foreach (var c in constructors)
                 {

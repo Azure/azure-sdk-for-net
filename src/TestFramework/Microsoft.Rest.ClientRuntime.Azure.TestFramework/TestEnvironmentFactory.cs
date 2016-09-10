@@ -16,9 +16,16 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
     public static class TestEnvironmentFactory
     {
+        /// <summary>
+        /// This is provided for existing testcase
+        /// TODO: Find a way to replace this call from all test cases.
+        /// We want to eliminate this Factory class
+        /// </summary>
+        /// <returns></returns>
         public static TestEnvironment GetTestEnvironment()
         {
-            return new TestEnvironment();
+            string envStr = Environment.GetEnvironmentVariable(TestCSMOrgIdConnectionStringKey);
+            return new TestEnvironment(envStr);
         }
 
         /// <summary>
@@ -35,14 +42,14 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// <summary>
         /// Custom values that should override environment variables during runtime 
         /// </summary>
-        public static Dictionary<string, string> CustomEnvValues = new Dictionary<string, string>();
+        //public static Dictionary<string, string> CustomEnvValues = new Dictionary<string, string>();
 
         /*
         /// <summary>
         /// Return test credentials and URI using AAD auth for an OrgID account.  Use this method with caution, it may take a dependency on ADAL
         /// </summary>
         /// <returns>The test credentials, or null if the appropriate environment variable is not set.</returns>
-        private static TestEnvironment GetTestEnvironmentFoo()
+        public static TestEnvironment GetTestEnvironment()
         {
             string connectionString = Environment.GetEnvironmentVariable(TestCSMOrgIdConnectionStringKey);
             TestEnvironment testEnv = new TestEnvironment(TestUtilities.ParseConnectionString(connectionString));
@@ -87,12 +94,12 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                                 .ConfigureAwait(false).GetAwaiter().GetResult();
                         }
                         
-                        else if (testEnv.AADClientId != null && password != null)
+                        else if (testEnv.ServicePrincipal != null && password != null)
                         {
                             TestEnvironmentFactory.LoginServicePrincipalAsync(
                                 testEnv.TokenInfo,
                                 testEnv.Tenant,
-                                testEnv.AADClientId,
+                                testEnv.ServicePrincipal,
                                 password, 
                                 testEnv.Endpoints)
                                 .ConfigureAwait(false).GetAwaiter().GetResult();
@@ -236,13 +243,13 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             };
 
             var mgmAuthResult = (TokenCredentials) await UserTokenProvider
-                                .LoginSilentAsync(TestEnvironment.AADClientIdDefault, domain, username, password, mgmSettings)
+                                .LoginSilentAsync(TestEnvironment.ClientIdDefault, domain, username, password, mgmSettings)
                                 .ConfigureAwait(false);
 
             try
             {
                 var graphAuthResult = (TokenCredentials)await UserTokenProvider
-                                .LoginSilentAsync(TestEnvironment.AADClientIdDefault, domain, username, password, grpSettings)
+                                .LoginSilentAsync(TestEnvironment.ClientIdDefault, domain, username, password, grpSettings)
                                 .ConfigureAwait(false);
                 tokens[TokenAudience.Graph] = graphAuthResult;
             }
@@ -311,7 +318,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
             var clientSettings = new ActiveDirectoryClientSettings()
             {
-                ClientId = TestEnvironment.AADClientIdDefault,
+                ClientId = TestEnvironment.ClientIdDefault,
                 ClientRedirectUri = new Uri("urn:ietf:wg:oauth:2.0:oob"),
                 PromptBehavior = PromptBehavior.Auto
             };
@@ -334,6 +341,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             tokens[TokenAudience.Management] = mgmAuthResult;
         }
 #endif
+        
         */
     }
 }

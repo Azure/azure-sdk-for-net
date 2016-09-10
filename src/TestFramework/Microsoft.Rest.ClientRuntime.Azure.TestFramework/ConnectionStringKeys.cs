@@ -5,70 +5,73 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
     using System;
 
     /// <summary>
-    /// This class represents KeyNames for all the keys currently supported in Connection string
+    /// This class represents KeyNames for all the keys currently supported in Connection string    
+    /// !!!!!!ALERT!!!!!
+    /// If you add a public const field, it will be used/assumed as key as part of the connection string
+    /// This class is being used to reflect on all the key names supported in connection string.
     /// </summary>
     public class ConnectionStringKeys
     {
         // <summary>
         /// The key inside the connection string for the management certificate
         /// </summary>
-        public const string ManagementCertificateKey = "managementcertificate";
+        public const string ManagementCertificateKey = "ManagementCertificate";
 
         /// <summary>
         /// The key inside the connection string for the subscription identifier
         /// </summary>
-        public const string SubscriptionIdKey = "subscriptionid";
+        public const string SubscriptionIdKey = "SubscriptionId";
 
         /// <summary>
         /// If a tenant other than common is to be used with the subscription, specifies the tenant
         /// </summary>
-        public const string AADTenantKey = "aadtenant";
+        public const string AADTenantKey = "AADTenant";
 
         /// <summary>
         /// The key inside the connection string for a Microsoft ID (OrgId or LiveId)
         /// </summary>
-        public const string UserIdKey = "userid";
+        public const string UserIdKey = "UserId";
 
         /// <summary>
         /// The key inside the connection string for a user password matching the Microsoft ID
         /// </summary>
-        public const string PasswordKey = "password";
+        public const string PasswordKey = "Password";
 
         /// <summary>
         /// Service principal key
         /// </summary>
-        public const string ServicePrincipalKey = "serviceprincipal";
+        public const string ServicePrincipalKey = "ServicePrincipal";
 
         /// <summary>
         /// The client ID to use when authenticating with AAD
         /// </summary>
-        public const string AADClientIdKey = "aadclientid";
+        public const string AADClientIdKey = "AADClientId";
 
         /// <summary>
         /// ServicePrincipal Secret Key
         /// </summary>
-        public const string ServicePrincipalSecretKey = "serviceprincipalsecret";
+        public const string ServicePrincipalSecretKey = "ServicePrincipalSecret";
 
         /// <summary>
         /// Environment name
         /// </summary>
-        public const string EnvironmentKey = "environment";
+        public const string EnvironmentKey = "Environment";
 
         #region Tokens
         /// <summary>
         /// A raw JWT token for AAD authentication
         /// </summary>
-        public const string RawTokenKey = "rawtoken";
+        public const string RawTokenKey = "RawToken";
 
         /// <summary>
         /// A raw JWT token for Graph authentication
         /// </summary>
-        public const string RawGraphTokenKey = "rawgraphtoken";
+        public const string RawGraphTokenKey = "RawGraphToken";
 
         /// <summary>
         /// 
         /// </summary>
-        public const string HttpRecorderModeKey = "httprecordermode";
+        public const string HttpRecorderModeKey = "HttpRecorderMode";
         #endregion
         
         #region URI's
@@ -76,47 +79,47 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// <summary>
         /// AAD token Audience Uri 
         /// </summary>
-        public const string AADTokenAudienceUriKey = "aadtokenaudienceuri";
+        public const string AADTokenAudienceUriKey = "AADTokenAudienceUri";
 
         /// <summary>
         /// The key inside the connection string for the base management URI
         /// </summary>
-        public const string BaseUriKey = "baseuri";
+        public const string BaseUriKey = "BaseUri";
 
         /// <summary>
         /// The key inside the connection string for AD Graph URI
         /// </summary>
-        public const string GraphUriKey = "graphuri";
+        public const string GraphUriKey = "GraphUri";
 
         /// <summary>
         /// The key inside the connection string for AD Gallery URI
         /// </summary>
-        public const string GalleryUriKey = "galleryuri";
+        public const string GalleryUriKey = "GalleryUri";
 
         /// <summary>
         /// The key inside the connection string for the Ibiza Portal URI
         /// </summary>
-        public const string IbizaPortalUriKey = "ibizaportaluri";
+        public const string IbizaPortalUriKey = "IbizaPortalUri";
 
         /// <summary>
         /// The key inside the connection string for the RDFE Portal URI
         /// </summary>
-        public const string RdfePortalUriKey = "rdfeportaluri";
+        public const string RdfePortalUriKey = "RdfePortalUri";
 
         /// <summary>
         /// The key inside the connection string for the DataLake FileSystem URI suffix
         /// </summary>
-        public const string DataLakeStoreServiceUriKey = "datalakestoreserviceuri";
+        public const string DataLakeStoreServiceUriKey = "DataLakeStoreServiceUri";
 
         /// <summary>
         /// The key inside the connection string for the Kona Catalog URI
         /// </summary>
-        public const string DataLakeAnalyticsJobAndCatalogServiceUriKey = "datalakeanalyticsjobandcatalogserviceuri";
+        public const string DataLakeAnalyticsJobAndCatalogServiceUriKey = "DataLakeAnalyticsJobAndCatalogServiceUri";
 
         /// <summary>
         /// Endpoint to use for AAD authentication
         /// </summary>
-        public const string AADAuthenticationEndpointKey = "aadauthendpoint";
+        public const string AADAuthenticationEndpointKey = "AADAuthEndpoint";
 
         #endregion
     }

@@ -21,7 +21,7 @@
         {
             //Legal Connection string
             string legalStr = CreateConnStrWithAllPossibleValues();
-            ConnectionString cs = new ConnectionString(legalStr);
+            ConnectionString cs = new ConnectionString(legalStr, false);
             cs.Parse(legalStr);
             foreach(KeyValuePair<string, string> kv in cs.KeyValuePairs)
             {
@@ -53,11 +53,7 @@
         {
             // missingKeyValue Connection string
             string missingKeyValue = @";;;;;;;;;;;";
-            connStr.Parse(missingKeyValue);
-            foreach (KeyValuePair<string, string> kv in connStr.KeyValuePairs)
-            {
-                Assert.Empty(kv.Value);
-            }
+            connStr.Parse(missingKeyValue);            
             Assert.True(string.IsNullOrEmpty(connStr.ParseErrors));
         }
 
@@ -124,7 +120,7 @@
             string sampleStrValue = "34rghytukbnju7HelloWorld!!lkjdfuhgghj";
             string sampleNumericValue = "3476834rghh9876";
 
-            ConnectionString cnnStr = new ConnectionString("");
+            ConnectionString cnnStr = new ConnectionString("", false);
             StringBuilder sb = new StringBuilder();
             foreach(KeyValuePair<string, string> kv in cnnStr.KeyValuePairs)
             {

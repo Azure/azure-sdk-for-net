@@ -76,9 +76,10 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication
             Environment.SetEnvironmentVariable("TEST_CONNECTION_STRING", "");
             Environment.SetEnvironmentVariable("TEST_ORGID_AUTHENTICATION", "");
             Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "BaseUri=https://foo.net;SubscriptionId=ee39cb6d-d45b-4694-825a-f4d6f87ed72a;RawToken=123");
+            TestEnvironment testEnv = new TestEnvironment();
             var environment = TestEnvironmentFactory.GetTestEnvironment();
             Assert.Equal("https://foo.net/", environment.BaseUri.ToString());
-            Assert.Equal(TestEnvironment.EnvEndpoints[EnvironmentNames.Prod].GalleryUri, environment.Endpoints.GalleryUri);
+            Assert.Equal(testEnv.EnvEndpoints[EnvironmentNames.Prod].GalleryUri, environment.Endpoints.GalleryUri);
         }
 
         [Fact]
@@ -100,9 +101,10 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication
             Environment.SetEnvironmentVariable("TEST_CONNECTION_STRING", "");
             Environment.SetEnvironmentVariable("TEST_ORGID_AUTHENTICATION", "");
             Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "GraphUri=https://www.graph.net;BaseUri=https://foo.net;SubscriptionId=ee39cb6d-d45b-4694-825a-f4d6f87ed72a");
+            TestEnvironment testEnv = new TestEnvironment();
             var environment = TestEnvironmentFactory.GetTestEnvironment();
             Assert.Equal("https://foo.net/", environment.BaseUri.ToString());
-            Assert.Equal(TestEnvironment.EnvEndpoints[EnvironmentNames.Prod].GalleryUri, environment.Endpoints.GalleryUri);
+            Assert.Equal(testEnv.EnvEndpoints[EnvironmentNames.Prod].GalleryUri, environment.Endpoints.GalleryUri);
             Assert.Equal("https://www.graph.net/", environment.Endpoints.GraphUri.ToString());
         }
 
