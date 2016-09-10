@@ -189,7 +189,7 @@ namespace Networks.Tests
             }
         }
 
-        [Fact (Skip = "It will fail in NRP because no such field exists, will enable once NRP is redeployed"]
+        [Fact (Skip="It will fail in NRP because no such field exists, will enable once NRP is redeployed")]
         
         public void NetworkInterfaceWithAcceleratedNetworkingTest()
         {
