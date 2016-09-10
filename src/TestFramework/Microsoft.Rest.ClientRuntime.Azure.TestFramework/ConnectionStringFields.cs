@@ -63,12 +63,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// The key inside the connection string for a Microsoft ID (OrgId or LiveId)
         /// </summary>
         public const string UserId = "UserId";
-
-        /// <summary>
-        /// Service principal key
-        /// </summary>
-        public const string ServicePrincipal = "ServicePrincipal";
-
+        
         /// <summary>
         /// The key inside the connection string for a user password matching the Microsoft ID
         /// </summary>
@@ -88,6 +83,11 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// The client ID to use when authenticating with AAD
         /// </summary>
         public const string AADClientId = "AADClientId";
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public const string AADClientSecret = "AADClientSecret";
 
         /// <summary>
         /// Endpoint to use for AAD authentication
