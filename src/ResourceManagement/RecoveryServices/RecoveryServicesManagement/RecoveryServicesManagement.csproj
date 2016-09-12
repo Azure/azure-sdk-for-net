@@ -20,9 +20,10 @@
     <NoWarn>$(NoWarn);0108</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-	  <Compile Include="Generated\Models\**\*.cs" />
-	  <Compile Include="Generated\*.cs" />
-	  <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Generated\Models\**\*.cs" />
+    <Compile Include="Generated\*.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QueryHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Microsoft.Azure.Management.RecoveryServices.nuget.proj">

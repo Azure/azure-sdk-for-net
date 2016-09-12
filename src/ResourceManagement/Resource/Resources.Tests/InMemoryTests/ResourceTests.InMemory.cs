@@ -34,10 +34,10 @@ namespace ResourceGroups.Tests
             handler.IsPassThrough = false;
             return new ResourceManagementClient(token).WithHandler(handler);
         }
-        
+
         [Fact]
         public void ResourceGetValidateMessage()
-        { 
+        {
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(@"{
@@ -57,12 +57,12 @@ namespace ResourceGroups.Tests
             var client = GetResourceManagementClient(handler);
 
             var result = client.Resources.Get("foo", new ResourceIdentity
-                {
-                    ResourceName = "site1",
-                    ResourceProviderNamespace = "Microsoft.Web",
-                    ResourceProviderApiVersion = "2014-01-04",
-                    ResourceType = "Sites"
-                });
+            {
+                ResourceName = "site1",
+                ResourceProviderNamespace = "Microsoft.Web",
+                ResourceProviderApiVersion = "2014-01-04",
+                ResourceType = "Sites"
+            });
 
             // Validate headers
             Assert.Equal(HttpMethod.Get, handler.Method);
@@ -155,7 +155,7 @@ namespace ResourceGroups.Tests
             var client = GetResourceManagementClient(handler);
 
             var result = client.Resources.List(new ResourceListParameters
-            {              
+            {
                 ResourceType = "Sites"
             });
 
@@ -270,12 +270,12 @@ namespace ResourceGroups.Tests
             var client = GetResourceManagementClient(handler);
 
             var result = client.Resources.CreateOrUpdate("foo", new ResourceIdentity
-                {
-                    ResourceName = "site3",
-                    ResourceProviderNamespace = "Microsoft.Web",
-                    ResourceProviderApiVersion = "2014-01-04",
-                    ResourceType = "sites",
-                }, 
+            {
+                ResourceName = "site3",
+                ResourceProviderNamespace = "Microsoft.Web",
+                ResourceProviderApiVersion = "2014-01-04",
+                ResourceType = "sites",
+            },
                 new GenericResource
                 {
                     Location = "South Central US",
@@ -308,6 +308,59 @@ namespace ResourceGroups.Tests
         }
 
         [Fact]
+        public void ResourceCreateOrUpdateWithoutLocation()
+        {
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(@"{
+                    'tags' : {
+                        'department':'finance',
+                        'tagname':'tagvalue'
+                    },
+                    'properties': {
+                        'foo':'bar',
+                        'provisioningState':'Running'
+                    }
+                }")
+            };
+            response.Headers.Add("x-ms-request-id", "1");
+            var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
+            var client = GetResourceManagementClient(handler);
+
+            var result = client.Resources.CreateOrUpdate("foo", new ResourceIdentity
+            {
+                ResourceName = "test",
+                ResourceProviderNamespace = "Providers.Test",
+                ResourceProviderApiVersion = "2014-04-01",
+                ResourceType = "statefulResources",
+            },
+                new GenericResource
+                {
+                    Tags = new Dictionary<string, string>() { { "department", "finance" }, { "tagname", "tagvalue" } },
+                    Properties = @"{
+                        'foo':'bar'
+                    }"
+                }
+            );
+
+            JObject json = JObject.Parse(handler.Request);
+
+            // Validate headers
+            Assert.Equal(HttpMethod.Put, handler.Method);
+            Assert.NotNull(handler.RequestHeaders.GetValues("Authorization"));
+
+            // Validate payload
+            Assert.Equal("finance", json["tags"]["department"].Value<string>());
+            Assert.Equal("tagvalue", json["tags"]["tagname"].Value<string>());
+
+            // Validate result
+            Assert.Equal("Running", result.Resource.ProvisioningState);
+            Assert.Equal("finance", result.Resource.Tags["department"]);
+            Assert.Equal("tagvalue", result.Resource.Tags["tagname"]);
+        }
+
+
+        [Fact]
         public void ResourceCreateForWebsiteValidatePayload()
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK)
@@ -319,21 +372,21 @@ namespace ResourceGroups.Tests
             var client = GetResourceManagementClient(handler);
 
             var result = client.Resources.CreateOrUpdate("foo", new ResourceIdentity
-                {
-                    ResourceName = "csmr14v5efk0",
-                    ResourceProviderNamespace = "Microsoft.Web",
-                    ResourceProviderApiVersion = "2014-01-04",
-                    ResourceType = "sites",
-                }, 
+            {
+                ResourceName = "csmr14v5efk0",
+                ResourceProviderNamespace = "Microsoft.Web",
+                ResourceProviderApiVersion = "2014-01-04",
+                ResourceType = "sites",
+            },
                 new GenericResource
-                    {
-                        Location = "South Central US",
-                        Properties = @"{
+                {
+                    Location = "South Central US",
+                    Properties = @"{
                             'name':'csmr14v5efk0',
 	                        'siteMode': 'Standard',
                             'computeMode':'Dedicated'
                         }"
-                    }
+                }
                 );
 
             // Validate result
@@ -348,22 +401,22 @@ namespace ResourceGroups.Tests
             var client = GetResourceManagementClient(handler);
 
             var identity = new ResourceIdentity
-                {
-                    ResourceName = "site3",
-                    ResourceProviderNamespace = "Microsoft.Web",
-                    ResourceProviderApiVersion = null,
-                    ResourceType = "sites",
-                };
+            {
+                ResourceName = "site3",
+                ResourceProviderNamespace = "Microsoft.Web",
+                ResourceProviderApiVersion = null,
+                ResourceType = "sites",
+            };
 
             var resource = new GenericResource
-                {
-                    Location = "South Central US",
-                    Properties = @"{
+            {
+                Location = "South Central US",
+                Properties = @"{
                                 'name':'site3',
 	                            'siteMode': 'Standard',
                                 'computeMode':'Dedicated'
                             }"
-                };
+            };
 
 
             Assert.Throws<ArgumentNullException>(() => client.Resources.Get("foo",
@@ -371,7 +424,7 @@ namespace ResourceGroups.Tests
             Assert.Throws<ArgumentNullException>(() => client.Resources.CheckExistence("foo",
                 identity));
             Assert.Throws<ArgumentNullException>(() => client.Resources.CreateOrUpdate("foo",
-                identity, resource ));
+                identity, resource));
             Assert.Throws<ArgumentNullException>(() => client.Resources.Delete("foo",
                 identity));
         }
@@ -391,9 +444,9 @@ namespace ResourceGroups.Tests
                 ResourceProviderNamespace = "Microsoft.Web",
                 ResourceType = "sites",
             }, new GenericResource
-                {
-                    Location = "",
-                }
+            {
+                Location = "",
+            }
             ));
             Assert.Throws<ArgumentNullException>(() => client.Resources.CreateOrUpdate("foo", new ResourceIdentity
             {
@@ -401,9 +454,9 @@ namespace ResourceGroups.Tests
                 ResourceProviderNamespace = null,
                 ResourceType = "sites",
             }, new GenericResource
-                {
-                    Location = "",
-                }
+            {
+                Location = "",
+            }
             ));
             Assert.Throws<ArgumentNullException>(() => client.Resources.CreateOrUpdate("foo", new ResourceIdentity
             {
@@ -411,9 +464,9 @@ namespace ResourceGroups.Tests
                 ResourceProviderNamespace = "Microsoft.Web",
                 ResourceType = null,
             }, new GenericResource
-                    {
-                        Location = "",
-                    }
+            {
+                Location = "",
+            }
             ));
             Assert.Throws<ArgumentNullException>(() => client.Resources.CreateOrUpdate("foo", new ResourceIdentity
             {
@@ -427,9 +480,9 @@ namespace ResourceGroups.Tests
                 ResourceProviderNamespace = "Microsoft.Web",
                 ResourceType = "sites",
             }, new GenericResource
-                {
-                    Location = null,
-                }
+            {
+                Location = null,
+            }
             ));
             Assert.Throws<ArgumentOutOfRangeException>(() => client.Resources.CreateOrUpdate("~123", new ResourceIdentity
             {
@@ -437,10 +490,10 @@ namespace ResourceGroups.Tests
                 ResourceProviderNamespace = "Microsoft.Web",
                 ResourceType = "sites",
             }, new GenericResource
-                {
-                    Location = "",
-                    Properties = "",
-                }
+            {
+                Location = "",
+                Properties = "",
+            }
             ));
         }
 
@@ -518,7 +571,7 @@ namespace ResourceGroups.Tests
         public void ResourceDeleteValidateMessage()
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK);
-            
+
             response.Headers.Add("x-ms-request-id", "1");
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = GetResourceManagementClient(handler);
@@ -601,7 +654,7 @@ namespace ResourceGroups.Tests
                 StatusCodeToReturn = HttpStatusCode.Accepted,
                 SubsequentStatusCodeToReturn = HttpStatusCode.NoContent
             };
-           
+
             var client = GetResourceManagementClient(handler);
 
             var resourceToMove = new ResourcesMoveInfo();
@@ -621,8 +674,8 @@ namespace ResourceGroups.Tests
 
             // Valid response
             Assert.Equal(moveResult.StatusCode, HttpStatusCode.NoContent);
-           
-           
+
+
         }
     }
 }

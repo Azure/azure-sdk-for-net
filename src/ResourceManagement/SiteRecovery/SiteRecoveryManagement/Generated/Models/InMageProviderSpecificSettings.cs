@@ -32,15 +32,18 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// </summary>
     public partial class InMageProviderSpecificSettings : ReplicationProviderSpecificSettings
     {
-        private string _activeLocation;
+        private string _activeSiteType;
         
         /// <summary>
-        /// Optional. Indicates whether vm is active on azure or onPrem.
+        /// Optional. Gets or sets the active site type of the VM. If the VM is
+        /// being protected from Azure, this field will take values from {
+        /// Azure, OnPrem }. If the VM is being protected between two
+        /// data-centers, this field will be OnPrem.
         /// </summary>
-        public string ActiveLocation
+        public string ActiveSiteType
         {
-            get { return this._activeLocation; }
-            set { this._activeLocation = value; }
+            get { return this._activeSiteType; }
+            set { this._activeSiteType = value; }
         }
         
         private InMageAgentDetails _agentDetails;
@@ -52,6 +55,19 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         {
             get { return this._agentDetails; }
             set { this._agentDetails = value; }
+        }
+        
+        private string _azureStorageAccountId;
+        
+        /// <summary>
+        /// Optional. Gets or sets a value indicating the underlying Azure
+        /// storage account. If the VM is not running in Azure, this value
+        /// shall be set to null.
+        /// </summary>
+        public string AzureStorageAccountId
+        {
+            get { return this._azureStorageAccountId; }
+            set { this._azureStorageAccountId = value; }
         }
         
         private double _compressedDataRateInMB;
@@ -329,6 +345,28 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         {
             get { return this._vMNics; }
             set { this._vMNics = value; }
+        }
+        
+        private string _vmProtectionState;
+        
+        /// <summary>
+        /// Optional. Gets or sets the protection status for the VM.
+        /// </summary>
+        public string VmProtectionState
+        {
+            get { return this._vmProtectionState; }
+            set { this._vmProtectionState = value; }
+        }
+        
+        private string _vmProtectionStateDescription;
+        
+        /// <summary>
+        /// Optional. Gets or sets the protection state description for the VM.
+        /// </summary>
+        public string VmProtectionStateDescription
+        {
+            get { return this._vmProtectionStateDescription; }
+            set { this._vmProtectionStateDescription = value; }
         }
         
         /// <summary>

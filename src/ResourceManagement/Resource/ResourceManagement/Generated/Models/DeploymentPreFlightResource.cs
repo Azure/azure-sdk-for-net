@@ -61,19 +61,5 @@ namespace Microsoft.Azure.Management.Resources.Models
         {
             this.DependsOn = new LazyList<string>();
         }
-        
-        /// <summary>
-        /// Initializes a new instance of the DeploymentPreFlightResource class
-        /// with required arguments.
-        /// </summary>
-        public DeploymentPreFlightResource(string location)
-            : this()
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
-        }
     }
 }

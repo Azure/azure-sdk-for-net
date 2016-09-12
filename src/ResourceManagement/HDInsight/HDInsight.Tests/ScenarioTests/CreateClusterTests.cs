@@ -95,6 +95,40 @@ namespace HDInsight.Tests
         }
 
         [Fact]
+        public void TestAdJoinedIaasCreateGetDeleteCluster()
+        {
+            var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (var context = UndoContext.Current)
+            {
+                context.Start();
+
+                var client = HDInsightManagementTestUtilities.GetHDInsightManagementClient(handler);
+                var resourceManagementClient = HDInsightManagementTestUtilities.GetResourceManagementClient(handler);
+                var resourceGroup = HDInsightManagementTestUtilities.CreateResourceGroup(resourceManagementClient, "East US 2");
+                
+                var cluster = GetClusterSpecHelpers.GetAdJoinedCreateParametersIaas();
+                const string dnsname = "hdisdk-adcluster";
+
+                var createresponse = client.Clusters.Create(resourceGroup, dnsname, cluster);
+                Assert.Equal(cluster.Location, createresponse.Cluster.Location);
+                Assert.Equal(cluster.ClusterType, createresponse.Cluster.Properties.ClusterDefinition.ClusterType);
+                Assert.Null(createresponse.Cluster.Properties.ClusterDefinition.Configurations);
+                Assert.Equal(createresponse.StatusCode, HttpStatusCode.OK);
+                Assert.Equal(createresponse.Cluster.Properties.ProvisioningState, HDInsightClusterProvisioningState.Succeeded);
+                Assert.Equal(createresponse.Cluster.Properties.ClusterState, "Running");
+
+                var getresponse = client.Clusters.Get(resourceGroup, dnsname);
+                Assert.Equal(createresponse.Cluster.Properties.ComputeProfile.Roles.Count, getresponse.Cluster.Properties.ComputeProfile.Roles.Count);
+                Assert.Equal(createresponse.Cluster.Properties.CreatedDate, getresponse.Cluster.Properties.CreatedDate);
+
+                var result = client.Clusters.Delete(resourceGroup, dnsname);
+                Assert.Equal(result.StatusCode, HttpStatusCode.OK);
+                Assert.Equal(result.State, AsyncOperationState.Succeeded);
+            }
+        }
+
+        [Fact]
         public void TestCreateWithEmptyParameters()
         {
             var handler = new RecordedDelegatingHandler {StatusCodeToReturn = HttpStatusCode.OK};

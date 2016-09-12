@@ -212,7 +212,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Required. Filter data sources by Kind.
         /// </param>
         /// <param name='skiptoken'>
-        /// Required. Token for paging support.
+        /// Optional. Token for paging support.
         /// </param>
         /// <returns>
         /// The list data source operation response.
@@ -244,7 +244,7 @@ namespace Microsoft.Azure.Management.OperationalInsights
         /// Required. Filter data sources by Kind.
         /// </param>
         /// <param name='skiptoken'>
-        /// Required. Token for paging support.
+        /// Optional. Token for paging support.
         /// </param>
         /// <returns>
         /// The list data source operation response.

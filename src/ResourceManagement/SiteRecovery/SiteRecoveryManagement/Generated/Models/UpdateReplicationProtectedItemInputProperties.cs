@@ -32,6 +32,41 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// </summary>
     public partial class UpdateReplicationProtectedItemInputProperties
     {
+        private string _enableRDPOnTargetOption;
+        
+        /// <summary>
+        /// Optional. Gets or sets the option to enable RDP on target vm after
+        /// failover.Value can be Never, OnlyOnTestFailover or Always.
+        /// </summary>
+        public string EnableRDPOnTargetOption
+        {
+            get { return this._enableRDPOnTargetOption; }
+            set { this._enableRDPOnTargetOption = value; }
+        }
+        
+        private string _licenseType;
+        
+        /// <summary>
+        /// Optional. Gets or sets License Type of the VM to be used for HUB
+        /// https://azure.microsoft.com/en-in/pricing/hybrid-use-benefit/.
+        /// </summary>
+        public string LicenseType
+        {
+            get { return this._licenseType; }
+            set { this._licenseType = value; }
+        }
+        
+        private string _recoveryAvailabilitySetId;
+        
+        /// <summary>
+        /// Optional. Gets or sets the target availability set Id.
+        /// </summary>
+        public string RecoveryAvailabilitySetId
+        {
+            get { return this._recoveryAvailabilitySetId; }
+            set { this._recoveryAvailabilitySetId = value; }
+        }
+        
         private string _recoveryAzureVMName;
         
         /// <summary>
@@ -52,6 +87,28 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         {
             get { return this._recoveryAzureVMSize; }
             set { this._recoveryAzureVMSize = value; }
+        }
+        
+        private string _recoveryCloudServiceId;
+        
+        /// <summary>
+        /// Optional. Gets or sets the target cloud service ARM Id (for V1).
+        /// </summary>
+        public string RecoveryCloudServiceId
+        {
+            get { return this._recoveryCloudServiceId; }
+            set { this._recoveryCloudServiceId = value; }
+        }
+        
+        private string _recoveryResourceGroupId;
+        
+        /// <summary>
+        /// Optional. Gets or sets the target resource group ARM Id (for V2).
+        /// </summary>
+        public string RecoveryResourceGroupId
+        {
+            get { return this._recoveryResourceGroupId; }
+            set { this._recoveryResourceGroupId = value; }
         }
         
         private string _selectedRecoveryAzureNetworkId;

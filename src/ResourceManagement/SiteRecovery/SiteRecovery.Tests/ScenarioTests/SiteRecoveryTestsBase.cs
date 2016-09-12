@@ -37,15 +37,11 @@ namespace SiteRecovery.Tests
 {
     public class SiteRecoveryTestsBase : TestBase
     {
-        public static string MyCloudService;
         public static string MyVaultName;
         public static string MyResourceGroupName;
         public static string VaultKey;
-        public static string VaultLocation = "Southeast Asia";
-        public static readonly string HyperVReplicaAzure = "HyperVReplicaAzure";
-        public static readonly string HyperVReplica = "HyperVReplica";
-
-
+        public static string ResourceNamespace;
+        public static string ResourceType;
 
         protected static CustomRequestHeaders RequestHeaders = new CustomRequestHeaders
         {
@@ -62,10 +58,10 @@ namespace SiteRecovery.Tests
             return this.GetSiteRecoveryVaultManagementClient().WithHandler(handler); ;
         }
 
-        public SiteRecoveryManagementClient GetSiteRecoveryClient(RecordedDelegationHandler handler)
+        public SiteRecoveryManagementClient GetSiteRecoveryClient(RecordedDelegationHandler handler, String scenario = "")
         {
             handler.IsPassThrough = true;
-            return this.GetSiteRecoveryManagementClient().WithHandler(handler);
+            return this.GetSiteRecoveryManagementClient(scenario).WithHandler(handler);
         }
 
         public string GenerateAgentAuthenticationHeader(string clientRequestId)
