@@ -87,6 +87,16 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Represents all the operations to manage Azure SQL Database and
+        /// Server blob auditing. Contains operations to: Create, Retrieve and
+        /// Update blob auditing settings.
+        /// </summary>
+        IBlobAuditingOperations BlobAuditing
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Represents all the operations for determining the set of
         /// capabilites available in a specified region.
         /// </summary>
@@ -167,6 +177,16 @@ namespace Microsoft.Azure.Management.Sql
         }
         
         /// <summary>
+        /// Represents all the operations for operating on Azure SQL Job
+        /// Accounts. Contains operations to: Create, Retrieve, Update, and
+        /// Delete Job Accounts
+        /// </summary>
+        IJobAccountOperations JobAccounts
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Represents all the operations for operating on Azure SQL
         /// Recommended Elastic Pools.  Contains operations to: Retrieve.
         /// </summary>
@@ -238,8 +258,8 @@ namespace Microsoft.Azure.Management.Sql
         
         /// <summary>
         /// Represents all the operations for operating on Azure SQL Server
-        /// disaster recovery configurations.  Contains operations to: Create,
-        /// Retrieve, Update, and Delete.
+        /// disaster recovery configurations. Contains operations to: Create,
+        /// Retrieve, Update, Failover, and Delete.
         /// </summary>
         IServerDisasterRecoveryConfigurationOperations ServerDisasterRecoveryConfigurations
         {

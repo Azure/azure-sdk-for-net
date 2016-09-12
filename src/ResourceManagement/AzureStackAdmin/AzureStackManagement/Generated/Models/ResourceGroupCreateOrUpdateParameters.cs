@@ -26,14 +26,14 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Resource group creation or update parameters
     /// </summary>
     public partial class ResourceGroupCreateOrUpdateParameters
     {
         private ResourceGroupDefinition _resourceGroup;
         
         /// <summary>
-        /// Required. Your documentation here.
+        /// Required. Resource group definiton
         /// </summary>
         public ResourceGroupDefinition ResourceGroup
         {

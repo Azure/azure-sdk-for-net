@@ -13,23 +13,23 @@
 // limitations under the License.
 //
 
-using Microsoft.Azure;
-using Microsoft.WindowsAzure.Testing;
-
 namespace Microsoft.WindowsAzure.Management.Compute.Testing
 {
-    using Microsoft.WindowsAzure.Management.Compute.Models;
+    using Microsoft.Azure;
     using Microsoft.Azure.Test;
+    using Microsoft.WindowsAzure.Management.Compute.Models;
+    using Microsoft.WindowsAzure.Testing;
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Net;
-    using System.Collections.Generic;
     using Xunit;
 
     public class ComputeOperationsTests : TestBase, IUseFixture<TestFixtureData>
     {
         private TestFixtureData fixture;
+        private const string PLACEHOLDER = "PLACEHOLDER";
 
         public void SetFixture(TestFixtureData data)
         {
@@ -69,7 +69,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                 parameters.Roles[0].ConfigurationSets.Add(new ConfigurationSet
                 {
                     AdminUserName = "testuser",
-                    AdminPassword = "@zur3R0ck5",
+                    AdminPassword = PLACEHOLDER,
                     ConfigurationSetType = ConfigurationSetTypes.WindowsProvisioningConfiguration,
                     ComputerName = serviceName,
                     HostName = string.Format("{0}.cloudapp.net", serviceName),
@@ -152,7 +152,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                 parameters.Roles[0].ConfigurationSets.Add(new ConfigurationSet
                 {
                     UserName = "testuser",
-                    UserPassword = "@zur3R0ck5",
+                    UserPassword = PLACEHOLDER,
                     ConfigurationSetType = ConfigurationSetTypes.LinuxProvisioningConfiguration,
                     ComputerName = serviceName,
                     HostName = string.Format("{0}.cloudapp.net", serviceName),
@@ -264,7 +264,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                 parameters.Roles[0].ConfigurationSets.Add(new ConfigurationSet
                 {
                     UserName = "testuser",
-                    UserPassword = "@zur3R0ck5",
+                    UserPassword = PLACEHOLDER,
                     ConfigurationSetType = ConfigurationSetTypes.LinuxProvisioningConfiguration,
                     ComputerName = serviceName,
                     HostName = string.Format("{0}.cloudapp.net", serviceName),
@@ -354,7 +354,7 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
                 parameters.Roles[0].ConfigurationSets.Add(new ConfigurationSet
                 {
                     UserName = "testuser",
-                    UserPassword = "@zur3R0ck5",
+                    UserPassword = PLACEHOLDER,
                     ConfigurationSetType = ConfigurationSetTypes.LinuxProvisioningConfiguration,
                     ComputerName = serviceName,
                     HostName = string.Format("{0}.cloudapp.net", serviceName),
@@ -441,6 +441,33 @@ namespace Microsoft.WindowsAzure.Management.Compute.Testing
             }
 
             TestUtilities.EndTest();
+        }
+
+        [Fact]
+        public void CanValidateDeploymentForMigration()
+        {
+            TestUtilities.StartTest();
+            using (fixture.ComputeClient = fixture.GetComputeManagementClient())
+            {
+                var serviceName = TestUtilities.GenerateName();
+                var deploymentName = TestUtilities.GenerateName();
+
+                var prepareParameters = new PrepareDeploymentMigrationParameters
+                {
+                    DestinationVirtualNetwork = "New",
+                    ResourceGroupName = string.Empty,
+                    SubNetName = string.Empty,
+                    VirtualNetworkName = string.Empty
+                };
+
+                var response = fixture.ComputeClient.Deployments.ValidateMigration(serviceName, deploymentName, prepareParameters);
+
+                Assert.NotNull(response);
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                Assert.NotNull(response.ValidateDeploymentMessages);
+                Assert.Equal(1, response.ValidateDeploymentMessages.Count);
+                Assert.Equal(string.Format("The deployment name '{0}' does not exist.", deploymentName), response.ValidateDeploymentMessages[0].Message);
+            }
         }
 
         [Fact]

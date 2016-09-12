@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Azure;
 
-namespace Microsoft.AzureStack.Management.StorageAdmin.Tests
+namespace Microsoft.AzureStack.AzureConsistentStorage.Tests
 {
     public class TestBase
     {

@@ -29,7 +29,7 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Result of the resource provider manifest list operation
     /// </summary>
     public partial class ProviderRegistrationListResult : AzureOperationResponse
     {
@@ -47,7 +47,7 @@ namespace Microsoft.AzureStack.Management.Models
         private IList<ProviderRegistrationModel> _providerRegistrations;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. List of resource provider manifests
         /// </summary>
         public IList<ProviderRegistrationModel> ProviderRegistrations
         {

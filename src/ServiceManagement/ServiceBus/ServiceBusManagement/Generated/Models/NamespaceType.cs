@@ -29,5 +29,7 @@ namespace Microsoft.WindowsAzure.Management.ServiceBus.Models
         Messaging = 0,
         
         NotificationHub = 1,
+        
+        EventHub = 3,
     }
 }

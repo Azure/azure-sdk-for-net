@@ -13,24 +13,17 @@
 // limitations under the License.
 //
 
-using Hyak.Common;
 using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 using Microsoft.Azure.Test;
-using RecoveryServices.Tests.Helpers;
-using System;
-using System.Collections.Generic;
+using RecoveryServices.Backup.Tests.Helpers;
 using System.Configuration;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
-namespace RecoveryServices.Tests
+namespace RecoveryServices.Backup.Tests
 {
-    public class BackupEngineTest : RecoveryServicesTestsBase
+    public class BackupEngineTest : RecoveryServicesBackupTestsBase
     {
         [Fact]
         public void ListDPMBakcupEngineTest()

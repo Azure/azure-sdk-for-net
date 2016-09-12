@@ -26,14 +26,14 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Subscription definition for creating or updating the subscription
     /// </summary>
     public partial class SubscriptionCreateOrUpdateParameters
     {
         private SubscriptionDefinition _subscription;
         
         /// <summary>
-        /// Required. Your documentation here.
+        /// Required. Subscription definition
         /// </summary>
         public SubscriptionDefinition Subscription
         {

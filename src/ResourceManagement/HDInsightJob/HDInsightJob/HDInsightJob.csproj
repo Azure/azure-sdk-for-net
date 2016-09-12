@@ -29,10 +29,12 @@
     <Compile Include="Customizations\IJobOperations.Customizations.cs" />
     <Compile Include="Customizations\JobOperationsExtensions.Customizations.cs" />
     <Compile Include="Customizations\JobOperations.Customizations.cs" />
+    <Compile Include="Customizations\Models\AppState.cs" />
     <Compile Include="Customizations\Models\HiveJobSubmissionParameters.cs" />
     <Compile Include="Customizations\Models\MapReduceJobSubmissionParameters.cs" />
     <Compile Include="Customizations\Models\MapReduceStreamingJobSubmissionParameters.cs" />
     <Compile Include="Customizations\Models\Storage\IStorageAccess.cs" />
+    <Compile Include="Customizations\HDInsightJobManagementClient.Config.cs" />
     <Compile Include="Helpers\ModelHelper.cs" />
     <Compile Include="Customizations\Models\PigJobSubmissionParameters.cs" />
     <Compile Include="Customizations\Models\SqoopJobSubmissionParameters.cs" />
@@ -40,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Customizations\Models\Storage\AzureStorageAccess.cs" />
+    <Compile Include="Helpers\MockSupport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

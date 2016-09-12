@@ -32,19 +32,17 @@ namespace Microsoft.AzureStack.Management
     public static partial class ResourceGroupOperationsExtensions
     {
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Creates or updates the resourcegroup
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IResourceGroupOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Your documentation here.
+        /// Required. Resource group creation or update parameters
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of resource group create or update operation
         /// </returns>
         public static ResourceGroupCreateOrUpdateResult CreateOrUpdate(this IResourceGroupOperations operations, ResourceGroupCreateOrUpdateParameters parameters)
         {
@@ -56,19 +54,17 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Creates or updates the resourcegroup
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IResourceGroupOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Your documentation here.
+        /// Required. Resource group creation or update parameters
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of resource group create or update operation
         /// </returns>
         public static Task<ResourceGroupCreateOrUpdateResult> CreateOrUpdateAsync(this IResourceGroupOperations operations, ResourceGroupCreateOrUpdateParameters parameters)
         {
@@ -76,16 +72,14 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Deletes the given resource group
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IResourceGroupOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -101,16 +95,14 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Deletes the given resource group
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IResourceGroupOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -122,9 +114,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets the resource group details for the given resource group name
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -134,7 +124,7 @@ namespace Microsoft.AzureStack.Management
         /// Optional.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the resource group get operation
         /// </returns>
         public static ResourceGroupGetResult Get(this IResourceGroupOperations operations, string resourceGroupName)
         {
@@ -146,9 +136,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets the resource group details for the given resource group name
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -158,7 +146,7 @@ namespace Microsoft.AzureStack.Management
         /// Optional.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the resource group get operation
         /// </returns>
         public static Task<ResourceGroupGetResult> GetAsync(this IResourceGroupOperations operations, string resourceGroupName)
         {
@@ -166,16 +154,14 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the resource group under the subscription
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IResourceGroupOperations.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the resource group list operation
         /// </returns>
         public static ResourceGroupListResult List(this IResourceGroupOperations operations)
         {
@@ -187,16 +173,14 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the resource group under the subscription
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IResourceGroupOperations.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the resource group list operation
         /// </returns>
         public static Task<ResourceGroupListResult> ListAsync(this IResourceGroupOperations operations)
         {
@@ -204,21 +188,17 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the next set of resource groups under the subscription
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IResourceGroupOperations.
         /// </param>
         /// <param name='nextLink'>
-        /// Required. Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Required. The URL to get the next set of resource groups
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the resource group list operation
         /// </returns>
         public static ResourceGroupListResult ListNext(this IResourceGroupOperations operations, string nextLink)
         {
@@ -230,21 +210,17 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the next set of resource groups under the subscription
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IResourceGroupOperations.
         /// </param>
         /// <param name='nextLink'>
-        /// Required. Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Required. The URL to get the next set of resource groups
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the resource group list operation
         /// </returns>
         public static Task<ResourceGroupListResult> ListNextAsync(this IResourceGroupOperations operations, string nextLink)
         {
@@ -252,9 +228,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the resources under the given resource group
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -264,7 +238,7 @@ namespace Microsoft.AzureStack.Management
         /// Optional.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of resources list operation
         /// </returns>
         public static ResourceGroupListResourcesResult ListResources(this IResourceGroupOperations operations, string resourceGroupName)
         {
@@ -276,9 +250,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the resources under the given resource group
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -288,7 +260,7 @@ namespace Microsoft.AzureStack.Management
         /// Optional.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of resources list operation
         /// </returns>
         public static Task<ResourceGroupListResourcesResult> ListResourcesAsync(this IResourceGroupOperations operations, string resourceGroupName)
         {

@@ -38,6 +38,64 @@ namespace Microsoft.WindowsAzure.Management.Network
     public static partial class RouteOperationsExtensions
     {
         /// <summary>
+        /// Abort routetable migration api validates and aborts the given
+        /// routetable for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IRouteOperations.
+        /// </param>
+        /// <param name='routeTableName'>
+        /// Required. Name of the routetable to be migrated.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static OperationStatusResponse AbortMigration(this IRouteOperations operations, string routeTableName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRouteOperations)s).AbortMigrationAsync(routeTableName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Abort routetable migration api validates and aborts the given
+        /// routetable for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IRouteOperations.
+        /// </param>
+        /// <param name='routeTableName'>
+        /// Required. Name of the routetable to be migrated.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> AbortMigrationAsync(this IRouteOperations operations, string routeTableName)
+        {
+            return operations.AbortMigrationAsync(routeTableName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Set the specified route table for the provided subnet in the
         /// provided virtual network in this subscription.
         /// </summary>
@@ -114,6 +172,50 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
+        /// Abort routetable migration api validates and aborts the given
+        /// routetable for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IRouteOperations.
+        /// </param>
+        /// <param name='routeTableName'>
+        /// Required. Name of the routetable to be migrated.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse BeginAbortMigration(this IRouteOperations operations, string routeTableName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRouteOperations)s).BeginAbortMigrationAsync(routeTableName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Abort routetable migration api validates and aborts the given
+        /// routetable for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IRouteOperations.
+        /// </param>
+        /// <param name='routeTableName'>
+        /// Required. Name of the routetable to be migrated.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> BeginAbortMigrationAsync(this IRouteOperations operations, string routeTableName)
+        {
+            return operations.BeginAbortMigrationAsync(routeTableName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Set the specified route table for the provided subnet in the
         /// provided virtual network in this subscription.
         /// </summary>
@@ -173,6 +275,50 @@ namespace Microsoft.WindowsAzure.Management.Network
         public static Task<AzureOperationResponse> BeginAddRouteTableToSubnetAsync(this IRouteOperations operations, string vnetName, string subnetName, AddRouteTableToSubnetParameters parameters)
         {
             return operations.BeginAddRouteTableToSubnetAsync(vnetName, subnetName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Commit routetable migration api validates and commits the given
+        /// routetable for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IRouteOperations.
+        /// </param>
+        /// <param name='routeTableName'>
+        /// Required. Name of the routetable to be migrated.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse BeginCommitMigration(this IRouteOperations operations, string routeTableName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRouteOperations)s).BeginCommitMigrationAsync(routeTableName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Commit routetable migration api validates and commits the given
+        /// routetable for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IRouteOperations.
+        /// </param>
+        /// <param name='routeTableName'>
+        /// Required. Name of the routetable to be migrated.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> BeginCommitMigrationAsync(this IRouteOperations operations, string routeTableName)
+        {
+            return operations.BeginCommitMigrationAsync(routeTableName, CancellationToken.None);
         }
         
         /// <summary>
@@ -312,6 +458,50 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
+        /// Prepare routetable migration api validates and prepares the given
+        /// routetable for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IRouteOperations.
+        /// </param>
+        /// <param name='routeTableName'>
+        /// Required. Name of the routetable to be migrated.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static AzureOperationResponse BeginPrepareMigration(this IRouteOperations operations, string routeTableName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRouteOperations)s).BeginPrepareMigrationAsync(routeTableName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Prepare routetable migration api validates and prepares the given
+        /// routetable for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IRouteOperations.
+        /// </param>
+        /// <param name='routeTableName'>
+        /// Required. Name of the routetable to be migrated.
+        /// </param>
+        /// <returns>
+        /// A standard service response including an HTTP status code and
+        /// request ID.
+        /// </returns>
+        public static Task<AzureOperationResponse> BeginPrepareMigrationAsync(this IRouteOperations operations, string routeTableName)
+        {
+            return operations.BeginPrepareMigrationAsync(routeTableName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Remove the route table from the provided subnet in the provided
         /// virtual network in this subscription.
         /// </summary>
@@ -421,6 +611,64 @@ namespace Microsoft.WindowsAzure.Management.Network
         public static Task<AzureOperationResponse> BeginSetRouteAsync(this IRouteOperations operations, string routeTableName, string routeName, SetRouteParameters parameters)
         {
             return operations.BeginSetRouteAsync(routeTableName, routeName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Commit routetable migration api validates and commits the given
+        /// routetable for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IRouteOperations.
+        /// </param>
+        /// <param name='routeTableName'>
+        /// Required. Name of the routetable to be migrated.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static OperationStatusResponse CommitMigration(this IRouteOperations operations, string routeTableName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRouteOperations)s).CommitMigrationAsync(routeTableName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Commit routetable migration api validates and commits the given
+        /// routetable for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IRouteOperations.
+        /// </param>
+        /// <param name='routeTableName'>
+        /// Required. Name of the routetable to be migrated.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> CommitMigrationAsync(this IRouteOperations operations, string routeTableName)
+        {
+            return operations.CommitMigrationAsync(routeTableName, CancellationToken.None);
         }
         
         /// <summary>
@@ -904,6 +1152,64 @@ namespace Microsoft.WindowsAzure.Management.Network
         }
         
         /// <summary>
+        /// Prepare routetable migration api validates and prepares the given
+        /// routetable for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IRouteOperations.
+        /// </param>
+        /// <param name='routeTableName'>
+        /// Required. Name of the routetable to be migrated.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static OperationStatusResponse PrepareMigration(this IRouteOperations operations, string routeTableName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRouteOperations)s).PrepareMigrationAsync(routeTableName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Prepare routetable migration api validates and prepares the given
+        /// routetable for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IRouteOperations.
+        /// </param>
+        /// <param name='routeTableName'>
+        /// Required. Name of the routetable to be migrated.
+        /// </param>
+        /// <returns>
+        /// The response body contains the status of the specified asynchronous
+        /// operation, indicating whether it has succeeded, is inprogress, or
+        /// has failed. Note that this status is distinct from the HTTP status
+        /// code returned for the Get Operation Status operation itself. If
+        /// the asynchronous operation succeeded, the response body includes
+        /// the HTTP status code for the successful request. If the
+        /// asynchronous operation failed, the response body includes the HTTP
+        /// status code for the failed request, and also includes error
+        /// information regarding the failure.
+        /// </returns>
+        public static Task<OperationStatusResponse> PrepareMigrationAsync(this IRouteOperations operations, string routeTableName)
+        {
+            return operations.PrepareMigrationAsync(routeTableName, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// Remove the route table from the provided subnet in the provided
         /// virtual network in this subscription.
         /// </summary>
@@ -1041,6 +1347,48 @@ namespace Microsoft.WindowsAzure.Management.Network
         public static Task<OperationStatusResponse> SetRouteAsync(this IRouteOperations operations, string routeTableName, string routeName, SetRouteParameters parameters)
         {
             return operations.SetRouteAsync(routeTableName, routeName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Validate routetable migration api validates the given routetable
+        /// for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IRouteOperations.
+        /// </param>
+        /// <param name='routeTableName'>
+        /// Required. Name of the routetable to be migrated.
+        /// </param>
+        /// <returns>
+        /// The Validate Network Migration operation response.
+        /// </returns>
+        public static NetworkMigrationValidationResponse ValidateMigration(this IRouteOperations operations, string routeTableName)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IRouteOperations)s).ValidateMigrationAsync(routeTableName);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Validate routetable migration api validates the given routetable
+        /// for IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Network.IRouteOperations.
+        /// </param>
+        /// <param name='routeTableName'>
+        /// Required. Name of the routetable to be migrated.
+        /// </param>
+        /// <returns>
+        /// The Validate Network Migration operation response.
+        /// </returns>
+        public static Task<NetworkMigrationValidationResponse> ValidateMigrationAsync(this IRouteOperations operations, string routeTableName)
+        {
+            return operations.ValidateMigrationAsync(routeTableName, CancellationToken.None);
         }
     }
 }

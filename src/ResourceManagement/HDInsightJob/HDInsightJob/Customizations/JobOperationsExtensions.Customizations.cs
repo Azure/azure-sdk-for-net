@@ -14,6 +14,7 @@
 // limitations under the License.
 // 
 
+using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -305,6 +306,50 @@ namespace Microsoft.Azure.Management.HDInsight.Job
             IStorageAccess storageAccess)
         {
             return operations.GetJobErrorLogsAsync(jobId, storageAccess, CancellationToken.None);
+        }
+
+        /// <summary>
+        /// Wait for completion of a Job.
+        /// </summary>
+        /// <param name='jobId'>
+        /// Required. The id of the job.
+        /// </param>
+        /// <param name='duration'>
+        /// Optional. The maximum duration to wait for completion of job before returning to client. If not passed then wait till job is completed.
+        /// </param>
+        /// <param name='waitInterval'>
+        /// Optional. The interval to poll for job status. The default value is set from DefaultPollInterval property of HDInsight job management client.
+        /// </param>
+        /// <exception cref="TimeoutException">
+        /// Thrown when waiting for job completion exceeds the maximum duration specified by parameter duration.
+        /// </exception>
+        public static JobGetResponse WaitForJobCompletion(this IJobOperations operations, string jobId, TimeSpan? duration = null, TimeSpan? waitInterval = null)
+        {
+            return Task.Factory.StartNew((object s) =>
+            {
+                return ((IJobOperations)s).WaitForJobCompletionAsync(jobId, duration, waitInterval);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+
+        /// <summary>
+        /// Wait for completion of a Job.
+        /// </summary>
+        /// <param name='jobId'>
+        /// Required. The id of the job.
+        /// </param>
+        /// <param name='duration'>
+        /// Optional. The maximum duration to wait for completion of job before returning to client. If not passed then wait till job is completed.
+        /// </param>
+        /// <param name='waitInterval'>
+        /// Optional. The interval to poll for job status. The default value is set from DefaultPollInterval property of HDInsight job management client.
+        /// </param>
+        /// <exception cref="TimeoutException">
+        /// Thrown when waiting for job completion exceeds the maximum duration specified by parameter duration.
+        /// </exception>
+        public static Task<JobGetResponse> WaitForJobCompletionAsync(this IJobOperations operations, string jobId, TimeSpan? duration = null, TimeSpan? waitInterval = null)
+        {
+            return operations.WaitForJobCompletionAsync(jobId, duration, waitInterval);
         }
     }
 }

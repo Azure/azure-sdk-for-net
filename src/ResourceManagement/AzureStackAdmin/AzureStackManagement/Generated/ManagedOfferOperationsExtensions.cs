@@ -32,22 +32,20 @@ namespace Microsoft.AzureStack.Management
     public static partial class ManagedOfferOperationsExtensions
     {
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Returns the created or updated offer
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IManagedOfferOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='parameters'>
-        /// Required. Your documentation here.
+        /// Required. Offer properties
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the create or update operation of offer
         /// </returns>
         public static ManagedOfferCreateOrUpdateResult CreateOrUpdate(this IManagedOfferOperations operations, string resourceGroupName, ManagedOfferCreateOrUpdateParameters parameters)
         {
@@ -59,22 +57,20 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Returns the created or updated offer
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IManagedOfferOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='parameters'>
-        /// Required. Your documentation here.
+        /// Required. Offer properties
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the create or update operation of offer
         /// </returns>
         public static Task<ManagedOfferCreateOrUpdateResult> CreateOrUpdateAsync(this IManagedOfferOperations operations, string resourceGroupName, ManagedOfferCreateOrUpdateParameters parameters)
         {
@@ -82,19 +78,17 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Delete operation on the offer
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IManagedOfferOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='offerId'>
-        /// Required. Your documentation here.
+        /// Required. Offer name
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -110,19 +104,17 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Delete operation on the offer
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IManagedOfferOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='offerId'>
-        /// Required. Your documentation here.
+        /// Required. Offer name
         /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
@@ -134,22 +126,20 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets the administrator view of the offer
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IManagedOfferOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='offerId'>
-        /// Required. Your documentation here.
+        /// Required. Offer name
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the offer Get operation
         /// </returns>
         public static ManagedOfferGetResult Get(this IManagedOfferOperations operations, string resourceGroupName, string offerId)
         {
@@ -161,22 +151,20 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets the administrator view of the offer
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IManagedOfferOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='offerId'>
-        /// Required. Your documentation here.
+        /// Required. Offer name
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the offer Get operation
         /// </returns>
         public static Task<ManagedOfferGetResult> GetAsync(this IManagedOfferOperations operations, string resourceGroupName, string offerId)
         {
@@ -184,202 +172,20 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the offers under the specified resource group
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IManagedOfferOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='offerId'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='metricDefinitionId'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='filter'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public static ManagedOfferGetMetricDefinitionsResult GetMetricDefinitions(this IManagedOfferOperations operations, string resourceGroupName, string offerId, string metricDefinitionId, string filter)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IManagedOfferOperations)s).GetMetricDefinitionsAsync(resourceGroupName, offerId, metricDefinitionId, filter);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.Management.IManagedOfferOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='offerId'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='metricDefinitionId'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='filter'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public static Task<ManagedOfferGetMetricDefinitionsResult> GetMetricDefinitionsAsync(this IManagedOfferOperations operations, string resourceGroupName, string offerId, string metricDefinitionId, string filter)
-        {
-            return operations.GetMetricDefinitionsAsync(resourceGroupName, offerId, metricDefinitionId, filter, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.Management.IManagedOfferOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='offerId'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='metricId'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='filter'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public static ManagedOfferGetMetricsResult GetMetrics(this IManagedOfferOperations operations, string resourceGroupName, string offerId, string metricId, string filter)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IManagedOfferOperations)s).GetMetricsAsync(resourceGroupName, offerId, metricId, filter);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.Management.IManagedOfferOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='offerId'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='metricId'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='filter'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public static Task<ManagedOfferGetMetricsResult> GetMetricsAsync(this IManagedOfferOperations operations, string resourceGroupName, string offerId, string metricId, string filter)
-        {
-            return operations.GetMetricsAsync(resourceGroupName, offerId, metricId, filter, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.Management.IManagedOfferOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='offerName'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public static ManagedOfferLinkResult Link(this IManagedOfferOperations operations, string resourceGroupName, string offerName, ManagedOfferLinkParameters parameters)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IManagedOfferOperations)s).LinkAsync(resourceGroupName, offerName, parameters);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.Management.IManagedOfferOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='offerName'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public static Task<ManagedOfferLinkResult> LinkAsync(this IManagedOfferOperations operations, string resourceGroupName, string offerName, ManagedOfferLinkParameters parameters)
-        {
-            return operations.LinkAsync(resourceGroupName, offerName, parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.Management.IManagedOfferOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='includeDetails'>
-        /// Required. Your documentation here.
+        /// Required. Flag to specify whether to include details
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the offer list operation
         /// </returns>
         public static ManagedOfferListResult List(this IManagedOfferOperations operations, string resourceGroupName, bool includeDetails)
         {
@@ -391,174 +197,24 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the offers under the specified resource group
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IManagedOfferOperations.
         /// </param>
         /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
+        /// Required. Resource group name
         /// </param>
         /// <param name='includeDetails'>
-        /// Required. Your documentation here.
+        /// Required. Flag to specify whether to include details
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the offer list operation
         /// </returns>
         public static Task<ManagedOfferListResult> ListAsync(this IManagedOfferOperations operations, string resourceGroupName, bool includeDetails)
         {
             return operations.ListAsync(resourceGroupName, includeDetails, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.Management.IManagedOfferOperations.
-        /// </param>
-        /// <param name='nextLink'>
-        /// Required. Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public static ManagedOfferListResult ListNext(this IManagedOfferOperations operations, string nextLink)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IManagedOfferOperations)s).ListNextAsync(nextLink);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.Management.IManagedOfferOperations.
-        /// </param>
-        /// <param name='nextLink'>
-        /// Required. Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public static Task<ManagedOfferListResult> ListNextAsync(this IManagedOfferOperations operations, string nextLink)
-        {
-            return operations.ListNextAsync(nextLink, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.Management.IManagedOfferOperations.
-        /// </param>
-        /// <param name='includeDetails'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public static ManagedOfferListResult ListWithoutResourceGroup(this IManagedOfferOperations operations, bool includeDetails)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IManagedOfferOperations)s).ListWithoutResourceGroupAsync(includeDetails);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.Management.IManagedOfferOperations.
-        /// </param>
-        /// <param name='includeDetails'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public static Task<ManagedOfferListResult> ListWithoutResourceGroupAsync(this IManagedOfferOperations operations, bool includeDetails)
-        {
-            return operations.ListWithoutResourceGroupAsync(includeDetails, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.Management.IManagedOfferOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='offerName'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public static ManagedOfferUnlinkResult Unlink(this IManagedOfferOperations operations, string resourceGroupName, string offerName, ManagedOfferUnlinkParameters parameters)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IManagedOfferOperations)s).UnlinkAsync(resourceGroupName, offerName, parameters);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.AzureStack.Management.IManagedOfferOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='offerName'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. Your documentation here.
-        /// </param>
-        /// <returns>
-        /// Your documentation here.
-        /// </returns>
-        public static Task<ManagedOfferUnlinkResult> UnlinkAsync(this IManagedOfferOperations operations, string resourceGroupName, string offerName, ManagedOfferUnlinkParameters parameters)
-        {
-            return operations.UnlinkAsync(resourceGroupName, offerName, parameters, CancellationToken.None);
         }
     }
 }

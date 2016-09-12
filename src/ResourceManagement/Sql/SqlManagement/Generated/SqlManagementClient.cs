@@ -102,6 +102,18 @@ namespace Microsoft.Azure.Management.Sql
             get { return this._auditingPolicy; }
         }
         
+        private IBlobAuditingOperations _blobAuditing;
+        
+        /// <summary>
+        /// Represents all the operations to manage Azure SQL Database and
+        /// Server blob auditing. Contains operations to: Create, Retrieve and
+        /// Update blob auditing settings.
+        /// </summary>
+        public virtual IBlobAuditingOperations BlobAuditing
+        {
+            get { return this._blobAuditing; }
+        }
+        
         private ICapabilitiesOperations _capabilities;
         
         /// <summary>
@@ -198,6 +210,18 @@ namespace Microsoft.Azure.Management.Sql
             get { return this._importExport; }
         }
         
+        private IJobAccountOperations _jobAccounts;
+        
+        /// <summary>
+        /// Represents all the operations for operating on Azure SQL Job
+        /// Accounts. Contains operations to: Create, Retrieve, Update, and
+        /// Delete Job Accounts
+        /// </summary>
+        public virtual IJobAccountOperations JobAccounts
+        {
+            get { return this._jobAccounts; }
+        }
+        
         private IRecommendedElasticPoolOperations _recommendedElasticPools;
         
         /// <summary>
@@ -286,8 +310,8 @@ namespace Microsoft.Azure.Management.Sql
         
         /// <summary>
         /// Represents all the operations for operating on Azure SQL Server
-        /// disaster recovery configurations.  Contains operations to: Create,
-        /// Retrieve, Update, and Delete.
+        /// disaster recovery configurations. Contains operations to: Create,
+        /// Retrieve, Update, Failover, and Delete.
         /// </summary>
         public virtual IServerDisasterRecoveryConfigurationOperations ServerDisasterRecoveryConfigurations
         {
@@ -358,6 +382,7 @@ namespace Microsoft.Azure.Management.Sql
             : base()
         {
             this._auditingPolicy = new AuditingPolicyOperations(this);
+            this._blobAuditing = new BlobAuditingOperations(this);
             this._capabilities = new CapabilitiesOperations(this);
             this._databaseActivation = new DatabaseActivationOperations(this);
             this._databaseBackup = new DatabaseBackupOperations(this);
@@ -366,6 +391,7 @@ namespace Microsoft.Azure.Management.Sql
             this._elasticPools = new ElasticPoolOperations(this);
             this._firewallRules = new FirewallRuleOperations(this);
             this._importExport = new ImportExportOperations(this);
+            this._jobAccounts = new JobAccountOperations(this);
             this._recommendedElasticPools = new RecommendedElasticPoolOperations(this);
             this._recommendedIndexes = new RecommendedIndexOperations(this);
             this._databaseReplicationLinks = new ReplicationLinkOperations(this);
@@ -445,6 +471,7 @@ namespace Microsoft.Azure.Management.Sql
             : base(httpClient)
         {
             this._auditingPolicy = new AuditingPolicyOperations(this);
+            this._blobAuditing = new BlobAuditingOperations(this);
             this._capabilities = new CapabilitiesOperations(this);
             this._databaseActivation = new DatabaseActivationOperations(this);
             this._databaseBackup = new DatabaseBackupOperations(this);
@@ -453,6 +480,7 @@ namespace Microsoft.Azure.Management.Sql
             this._elasticPools = new ElasticPoolOperations(this);
             this._firewallRules = new FirewallRuleOperations(this);
             this._importExport = new ImportExportOperations(this);
+            this._jobAccounts = new JobAccountOperations(this);
             this._recommendedElasticPools = new RecommendedElasticPoolOperations(this);
             this._recommendedIndexes = new RecommendedIndexOperations(this);
             this._databaseReplicationLinks = new ReplicationLinkOperations(this);

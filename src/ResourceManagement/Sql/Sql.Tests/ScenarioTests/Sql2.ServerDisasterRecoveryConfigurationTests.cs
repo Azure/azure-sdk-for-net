@@ -32,7 +32,6 @@ namespace Sql2.Tests.ScenarioTests
     /// </summary>
     public class Sql2ServerDisasterRecoveryConfigurationScenarioTests : TestBase
     {
-        [Fact]
         public void ServerDisasterRecoveryConfigurationCrud()
         {
             var handler = new BasicDelegatingHandler();

@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/0a4ae132-d38b-487e-9051-a22d852b2834/services/networking/ApplicationGateways?api-version=2016-03-01",
-      "EncodedRequestUri": "LzBhNGFlMTMyLWQzOGItNDg3ZS05MDUxLWEyMmQ4NTJiMjgzNC9zZXJ2aWNlcy9uZXR3b3JraW5nL0FwcGxpY2F0aW9uR2F0ZXdheXM/YXBpLXZlcnNpb249MjAxNi0wMy0wMQ==",
+      "RequestUri": "/0a4ae132-d38b-487e-9051-a22d852b2834/services/networking/ApplicationGateways?api-version=2016-07-01",
+      "EncodedRequestUri": "LzBhNGFlMTMyLWQzOGItNDg3ZS05MDUxLWEyMmQ4NTJiMjgzNC9zZXJ2aWNlcy9uZXR3b3JraW5nL0FwcGxpY2F0aW9uR2F0ZXdheXM/YXBpLXZlcnNpb249MjAxNi0wNy0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "<CreateApplicationGatewayParameters xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <Description>Application Gateway created to test hyak spec</Description>\r\n  <InstanceCount>0</InstanceCount>\r\n  <Name>HyakSpecTesting</Name>\r\n  <Subnets>\r\n    <Subnet>Subnet-1</Subnet>\r\n  </Subnets>\r\n  <VnetName>kagavnet1</VnetName>\r\n</CreateApplicationGatewayParameters>",
       "RequestHeaders": {
@@ -13,7 +13,7 @@
           "361"
         ],
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -57,7 +57,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -101,7 +101,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -145,7 +145,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -183,13 +183,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/0a4ae132-d38b-487e-9051-a22d852b2834/services/networking/ApplicationGateways/HyakSpecTesting?api-version=2016-03-01",
-      "EncodedRequestUri": "LzBhNGFlMTMyLWQzOGItNDg3ZS05MDUxLWEyMmQ4NTJiMjgzNC9zZXJ2aWNlcy9uZXR3b3JraW5nL0FwcGxpY2F0aW9uR2F0ZXdheXMvSHlha1NwZWNUZXN0aW5nP2FwaS12ZXJzaW9uPTIwMTYtMDMtMDE=",
+      "RequestUri": "/0a4ae132-d38b-487e-9051-a22d852b2834/services/networking/ApplicationGateways/HyakSpecTesting?api-version=2016-07-01",
+      "EncodedRequestUri": "LzBhNGFlMTMyLWQzOGItNDg3ZS05MDUxLWEyMmQ4NTJiMjgzNC9zZXJ2aWNlcy9uZXR3b3JraW5nL0FwcGxpY2F0aW9uR2F0ZXdheXMvSHlha1NwZWNUZXN0aW5nP2FwaS12ZXJzaW9uPTIwMTYtMDctMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -227,8 +227,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/0a4ae132-d38b-487e-9051-a22d852b2834/services/networking/ApplicationGateways/HyakSpecTesting/configuration?api-version=2016-03-01",
-      "EncodedRequestUri": "LzBhNGFlMTMyLWQzOGItNDg3ZS05MDUxLWEyMmQ4NTJiMjgzNC9zZXJ2aWNlcy9uZXR3b3JraW5nL0FwcGxpY2F0aW9uR2F0ZXdheXMvSHlha1NwZWNUZXN0aW5nL2NvbmZpZ3VyYXRpb24/YXBpLXZlcnNpb249MjAxNi0wMy0wMQ==",
+      "RequestUri": "/0a4ae132-d38b-487e-9051-a22d852b2834/services/networking/ApplicationGateways/HyakSpecTesting/configuration?api-version=2016-07-01",
+      "EncodedRequestUri": "LzBhNGFlMTMyLWQzOGItNDg3ZS05MDUxLWEyMmQ4NTJiMjgzNC9zZXJ2aWNlcy9uZXR3b3JraW5nL0FwcGxpY2F0aW9uR2F0ZXdheXMvSHlha1NwZWNUZXN0aW5nL2NvbmZpZ3VyYXRpb24/YXBpLXZlcnNpb249MjAxNi0wNy0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "<ApplicationGatewayConfiguration xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <FrontendIPConfigurations>\r\n    <FrontendIPConfiguration>\r\n      <Name>FrontendIP1</Name>\r\n      <Type>Private</Type>\r\n    </FrontendIPConfiguration>\r\n  </FrontendIPConfigurations>\r\n  <FrontendPorts>\r\n    <FrontendPort>\r\n      <Name>Port1</Name>\r\n      <Port>80</Port>\r\n    </FrontendPort>\r\n  </FrontendPorts>\r\n  <Probes>\r\n    <Probe>\r\n      <Name>Probe1</Name>\r\n      <Protocol>Http</Protocol>\r\n      <Host>127.0.0.1</Host>\r\n      <Path>/</Path>\r\n      <Interval>45</Interval>\r\n      <Timeout>25</Timeout>\r\n      <UnhealthyThreshold>2</UnhealthyThreshold>\r\n    </Probe>\r\n  </Probes>\r\n  <BackendAddressPools>\r\n    <BackendAddressPool>\r\n      <Name>Pool1</Name>\r\n      <IPAddresses>\r\n        <IPAddress>10.0.0.1</IPAddress>\r\n        <IPAddress>10.0.0.2</IPAddress>\r\n      </IPAddresses>\r\n    </BackendAddressPool>\r\n  </BackendAddressPools>\r\n  <BackendHttpSettingsList>\r\n    <BackendHttpSettings>\r\n      <Name>Setting1</Name>\r\n      <Port>80</Port>\r\n      <Protocol>Http</Protocol>\r\n      <CookieBasedAffinity>Enabled</CookieBasedAffinity>\r\n      <RequestTimeout>45</RequestTimeout>\r\n      <Probe>Probe1</Probe>\r\n    </BackendHttpSettings>\r\n  </BackendHttpSettingsList>\r\n  <HttpListeners>\r\n    <HttpListener>\r\n      <Name>Listener1</Name>\r\n      <FrontendIP>FrontendIP1</FrontendIP>\r\n      <FrontendPort>Port1</FrontendPort>\r\n      <Protocol>Http</Protocol>\r\n    </HttpListener>\r\n  </HttpListeners>\r\n  <HttpLoadBalancingRules>\r\n    <HttpLoadBalancingRule>\r\n      <Name>Rule1</Name>\r\n      <Type>Basic</Type>\r\n      <BackendHttpSettings>Setting1</BackendHttpSettings>\r\n      <Listener>Listener1</Listener>\r\n      <BackendAddressPool>Pool1</BackendAddressPool>\r\n    </HttpLoadBalancingRule>\r\n  </HttpLoadBalancingRules>\r\n</ApplicationGatewayConfiguration>",
       "RequestHeaders": {
@@ -239,7 +239,7 @@
           "1838"
         ],
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -283,7 +283,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -327,7 +327,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -365,8 +365,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/0a4ae132-d38b-487e-9051-a22d852b2834/services/networking/ApplicationGateways/HyakSpecTesting/Operations?api-version=2016-03-01",
-      "EncodedRequestUri": "LzBhNGFlMTMyLWQzOGItNDg3ZS05MDUxLWEyMmQ4NTJiMjgzNC9zZXJ2aWNlcy9uZXR3b3JraW5nL0FwcGxpY2F0aW9uR2F0ZXdheXMvSHlha1NwZWNUZXN0aW5nL09wZXJhdGlvbnM/YXBpLXZlcnNpb249MjAxNi0wMy0wMQ==",
+      "RequestUri": "/0a4ae132-d38b-487e-9051-a22d852b2834/services/networking/ApplicationGateways/HyakSpecTesting/Operations?api-version=2016-07-01",
+      "EncodedRequestUri": "LzBhNGFlMTMyLWQzOGItNDg3ZS05MDUxLWEyMmQ4NTJiMjgzNC9zZXJ2aWNlcy9uZXR3b3JraW5nL0FwcGxpY2F0aW9uR2F0ZXdheXMvSHlha1NwZWNUZXN0aW5nL09wZXJhdGlvbnM/YXBpLXZlcnNpb249MjAxNi0wNy0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "<ApplicationGatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <OperationType>start</OperationType>\r\n</ApplicationGatewayOperation>",
       "RequestHeaders": {
@@ -377,7 +377,7 @@
           "151"
         ],
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -415,8 +415,8 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/0a4ae132-d38b-487e-9051-a22d852b2834/services/networking/ApplicationGateways/HyakSpecTesting/Operations?api-version=2016-03-01",
-      "EncodedRequestUri": "LzBhNGFlMTMyLWQzOGItNDg3ZS05MDUxLWEyMmQ4NTJiMjgzNC9zZXJ2aWNlcy9uZXR3b3JraW5nL0FwcGxpY2F0aW9uR2F0ZXdheXMvSHlha1NwZWNUZXN0aW5nL09wZXJhdGlvbnM/YXBpLXZlcnNpb249MjAxNi0wMy0wMQ==",
+      "RequestUri": "/0a4ae132-d38b-487e-9051-a22d852b2834/services/networking/ApplicationGateways/HyakSpecTesting/Operations?api-version=2016-07-01",
+      "EncodedRequestUri": "LzBhNGFlMTMyLWQzOGItNDg3ZS05MDUxLWEyMmQ4NTJiMjgzNC9zZXJ2aWNlcy9uZXR3b3JraW5nL0FwcGxpY2F0aW9uR2F0ZXdheXMvSHlha1NwZWNUZXN0aW5nL09wZXJhdGlvbnM/YXBpLXZlcnNpb249MjAxNi0wNy0wMQ==",
       "RequestMethod": "POST",
       "RequestBody": "<ApplicationGatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <OperationType>stop</OperationType>\r\n</ApplicationGatewayOperation>",
       "RequestHeaders": {
@@ -427,7 +427,7 @@
           "150"
         ],
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -471,7 +471,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -515,7 +515,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -559,7 +559,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -603,7 +603,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -647,7 +647,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -691,7 +691,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -735,7 +735,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -779,7 +779,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -823,7 +823,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -867,7 +867,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -911,7 +911,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -955,7 +955,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -999,7 +999,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -1043,7 +1043,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -1087,7 +1087,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -1131,7 +1131,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -1175,7 +1175,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -1219,7 +1219,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -1263,7 +1263,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -1307,7 +1307,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -1351,7 +1351,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -1395,7 +1395,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -1439,7 +1439,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -1483,7 +1483,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -1527,7 +1527,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -1571,7 +1571,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -1615,7 +1615,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -1659,7 +1659,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -1703,7 +1703,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -1747,7 +1747,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -1791,7 +1791,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -1835,7 +1835,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -1879,7 +1879,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -1923,7 +1923,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -1961,13 +1961,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/0a4ae132-d38b-487e-9051-a22d852b2834/services/networking/ApplicationGateways/HyakSpecTesting/configuration?api-version=2016-03-01",
-      "EncodedRequestUri": "LzBhNGFlMTMyLWQzOGItNDg3ZS05MDUxLWEyMmQ4NTJiMjgzNC9zZXJ2aWNlcy9uZXR3b3JraW5nL0FwcGxpY2F0aW9uR2F0ZXdheXMvSHlha1NwZWNUZXN0aW5nL2NvbmZpZ3VyYXRpb24/YXBpLXZlcnNpb249MjAxNi0wMy0wMQ==",
+      "RequestUri": "/0a4ae132-d38b-487e-9051-a22d852b2834/services/networking/ApplicationGateways/HyakSpecTesting/configuration?api-version=2016-07-01",
+      "EncodedRequestUri": "LzBhNGFlMTMyLWQzOGItNDg3ZS05MDUxLWEyMmQ4NTJiMjgzNC9zZXJ2aWNlcy9uZXR3b3JraW5nL0FwcGxpY2F0aW9uR2F0ZXdheXMvSHlha1NwZWNUZXN0aW5nL2NvbmZpZ3VyYXRpb24/YXBpLXZlcnNpb249MjAxNi0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -2011,7 +2011,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -2055,7 +2055,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -2099,7 +2099,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -2143,7 +2143,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -2181,13 +2181,13 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/0a4ae132-d38b-487e-9051-a22d852b2834/services/networking/ApplicationGateways/HyakSpecTesting?api-version=2016-03-01",
-      "EncodedRequestUri": "LzBhNGFlMTMyLWQzOGItNDg3ZS05MDUxLWEyMmQ4NTJiMjgzNC9zZXJ2aWNlcy9uZXR3b3JraW5nL0FwcGxpY2F0aW9uR2F0ZXdheXMvSHlha1NwZWNUZXN0aW5nP2FwaS12ZXJzaW9uPTIwMTYtMDMtMDE=",
+      "RequestUri": "/0a4ae132-d38b-487e-9051-a22d852b2834/services/networking/ApplicationGateways/HyakSpecTesting?api-version=2016-07-01",
+      "EncodedRequestUri": "LzBhNGFlMTMyLWQzOGItNDg3ZS05MDUxLWEyMmQ4NTJiMjgzNC9zZXJ2aWNlcy9uZXR3b3JraW5nL0FwcGxpY2F0aW9uR2F0ZXdheXMvSHlha1NwZWNUZXN0aW5nP2FwaS12ZXJzaW9uPTIwMTYtMDctMDE=",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -2231,7 +2231,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -2275,7 +2275,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"
@@ -2319,7 +2319,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-version": [
-          "2016-03-01"
+          "2016-07-01"
         ],
         "User-Agent": [
           "Microsoft.WindowsAzure.Management.Network.NetworkManagementClient/7.0.0.0"

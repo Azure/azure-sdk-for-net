@@ -29,14 +29,14 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Result of the curation list operation
     /// </summary>
     public partial class CurationListResult : AzureOperationResponse
     {
         private IList<CurationItem> _curationItems;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. List of curation item
         /// </summary>
         public IList<CurationItem> CurationItems
         {

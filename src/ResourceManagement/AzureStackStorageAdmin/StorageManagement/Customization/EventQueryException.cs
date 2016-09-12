@@ -15,7 +15,7 @@ using System;
 using System.Globalization;
 using System.Runtime.Serialization;
 
-namespace Microsoft.AzureStack.Management.StorageAdmin
+namespace Microsoft.AzureStack.AzureConsistentStorage
 {
     /// <summary>
     /// Exception thrown when query event by azure sdk.

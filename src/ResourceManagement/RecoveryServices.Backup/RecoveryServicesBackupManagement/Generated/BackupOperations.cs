@@ -24,6 +24,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
@@ -89,13 +91,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
         /// <param name='protectedItemName'>
         /// Optional. Name of the protected item which has to be backed up.
         /// </param>
+        /// <param name='request'>
+        /// Optional. Backup request for the backup item.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
         /// Base recovery job response for all the asynchronous operations.
         /// </returns>
-        public async Task<BaseRecoveryServicesJobResponse> TriggerBackupAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, CancellationToken cancellationToken)
+        public async Task<BaseRecoveryServicesJobResponse> TriggerBackupAsync(string resourceGroupName, string resourceName, CustomRequestHeaders customRequestHeaders, string fabricName, string containerName, string protectedItemName, TriggerBackupRequest request, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -109,6 +114,16 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
             if (customRequestHeaders == null)
             {
                 throw new ArgumentNullException("customRequestHeaders");
+            }
+            if (request != null)
+            {
+                if (request.Item != null)
+                {
+                    if (request.Item.Properties == null)
+                    {
+                        throw new ArgumentNullException("request.Item.Properties");
+                    }
+                }
             }
             
             // Tracing
@@ -124,6 +139,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 tracingParameters.Add("fabricName", fabricName);
                 tracingParameters.Add("containerName", containerName);
                 tracingParameters.Add("protectedItemName", protectedItemName);
+                tracingParameters.Add("request", request);
                 TracingAdapter.Enter(invocationId, this, "TriggerBackupAsync", tracingParameters);
             }
             
@@ -196,6 +212,36 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                 cancellationToken.ThrowIfCancellationRequested();
                 await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
                 
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                if (request != null)
+                {
+                    if (request.Item != null)
+                    {
+                        JObject itemValue = new JObject();
+                        requestDoc = itemValue;
+                        
+                        JObject propertiesValue = new JObject();
+                        itemValue["properties"] = propertiesValue;
+                        if (request.Item.Properties is IaaSVMBackupRequest)
+                        {
+                            propertiesValue["objectType"] = "IaasVMBackupRequest";
+                            IaaSVMBackupRequest derived = ((IaaSVMBackupRequest)request.Item.Properties);
+                            
+                            if (derived.RecoveryPointExpiryTimeInUTC != null)
+                            {
+                                propertiesValue["recoveryPointExpiryTimeInUTC"] = derived.RecoveryPointExpiryTimeInUTC.Value;
+                            }
+                        }
+                    }
+                }
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
+                
                 // Send Request
                 HttpResponseMessage httpResponse = null;
                 try
@@ -214,7 +260,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Backup
                     if (statusCode != HttpStatusCode.Accepted)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             TracingAdapter.Error(invocationId, ex);

@@ -27,14 +27,14 @@ using Hyak.Common;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Definition template.
     /// </summary>
     public partial class DefinitionTemplates
     {
         private string _defaultDeploymentTemplateId;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Default deployment template identity.
         /// </summary>
         public string DefaultDeploymentTemplateId
         {
@@ -45,7 +45,7 @@ namespace Microsoft.AzureStack.Management.Models
         private IDictionary<string, string> _deploymentFragmentFileUris;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Deployment fragment file uris.
         /// </summary>
         public IDictionary<string, string> DeploymentFragmentFileUris
         {
@@ -56,7 +56,7 @@ namespace Microsoft.AzureStack.Management.Models
         private IDictionary<string, string> _deploymentTemplateFileUris;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Deployment template file uris.
         /// </summary>
         public IDictionary<string, string> DeploymentTemplateFileUris
         {
@@ -67,7 +67,7 @@ namespace Microsoft.AzureStack.Management.Models
         private string _uiDefinitionFileUri;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. UiDefinition file uri.
         /// </summary>
         public string UiDefinitionFileUri
         {

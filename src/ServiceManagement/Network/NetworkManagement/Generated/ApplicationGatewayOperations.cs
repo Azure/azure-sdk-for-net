@@ -230,7 +230,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             url = url + "/sslcertificates/";
             url = url + Uri.EscapeDataString(certificateName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-03-01");
+            queryParameters.Add("api-version=2016-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -257,7 +257,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -417,7 +417,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             url = url + "/services/networking/ApplicationGateways";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-03-01");
+            queryParameters.Add("api-version=2016-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -444,7 +444,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -630,7 +630,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             url = url + "/services/networking/ApplicationGateways/";
             url = url + Uri.EscapeDataString(gatewayName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-03-01");
+            queryParameters.Add("api-version=2016-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -657,7 +657,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -794,7 +794,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             url = url + "/sslcertificates/";
             url = url + Uri.EscapeDataString(certificateName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-03-01");
+            queryParameters.Add("api-version=2016-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -821,7 +821,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -959,7 +959,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             url = url + Uri.EscapeDataString(gatewayName);
             url = url + "/Operations";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-03-01");
+            queryParameters.Add("api-version=2016-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -986,7 +986,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1142,7 +1142,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             url = url + Uri.EscapeDataString(gatewayName);
             url = url + "/configuration";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-03-01");
+            queryParameters.Add("api-version=2016-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1169,7 +1169,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1613,7 +1613,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             url = url + "/services/networking/ApplicationGateways/";
             url = url + Uri.EscapeDataString(gatewayName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-03-01");
+            queryParameters.Add("api-version=2016-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1640,7 +1640,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2189,7 +2189,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             url = url + "/services/networking/ApplicationGateways/";
             url = url + Uri.EscapeDataString(gatewayName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-03-01");
+            queryParameters.Add("api-version=2016-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2216,7 +2216,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2413,7 +2413,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             url = url + "/sslcertificates/";
             url = url + Uri.EscapeDataString(certificateName);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-03-01");
+            queryParameters.Add("api-version=2016-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2440,7 +2440,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2582,7 +2582,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             url = url + Uri.EscapeDataString(gatewayName);
             url = url + "/configuration";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-03-01");
+            queryParameters.Add("api-version=2016-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -2609,7 +2609,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3048,7 +3048,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3208,7 +3208,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             }
             url = url + "/services/networking/ApplicationGateways";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-03-01");
+            queryParameters.Add("api-version=2016-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3235,7 +3235,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3428,7 +3428,7 @@ namespace Microsoft.WindowsAzure.Management.Network
             url = url + Uri.EscapeDataString(gatewayName);
             url = url + "/sslcertificates";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2016-03-01");
+            queryParameters.Add("api-version=2016-07-01");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -3455,7 +3455,7 @@ namespace Microsoft.WindowsAzure.Management.Network
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("x-ms-version", "2016-03-01");
+                httpRequest.Headers.Add("x-ms-version", "2016-07-01");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();

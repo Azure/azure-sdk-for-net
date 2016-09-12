@@ -39,8 +39,8 @@ namespace Microsoft.Azure.Management.Sql
 {
     /// <summary>
     /// Represents all the operations for operating on Azure SQL Server
-    /// disaster recovery configurations.  Contains operations to: Create,
-    /// Retrieve, Update, and Delete.
+    /// disaster recovery configurations. Contains operations to: Create,
+    /// Retrieve, Update, Failover, and Delete.
     /// </summary>
     internal partial class ServerDisasterRecoveryConfigurationOperations : IServiceOperations<SqlManagementClient>, IServerDisasterRecoveryConfigurationOperations
     {
@@ -671,7 +671,7 @@ namespace Microsoft.Azure.Management.Sql
                         TracingAdapter.ReceiveResponse(invocationId, httpResponse);
                     }
                     HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.NoContent)
+                    if (statusCode != HttpStatusCode.OK)
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));

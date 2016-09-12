@@ -13,49 +13,49 @@
 // limitations under the License.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
-using Hyak.Common;
+using Microsoft.Azure;
 using Microsoft.Azure.Management.RecoveryServices.Backup;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 using Microsoft.Azure.Test;
-using RecoveryServices.Tests.Helpers;
-using Microsoft.Azure;
+using RecoveryServices.Backup.Tests.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Net;
+using Xunit;
 
-namespace RecoveryServices.Tests
+namespace RecoveryServices.Backup.Tests
 {
-    public class IaaSVMPolicyTests : RecoveryServicesTestsBase
+    public class IaaSVMPolicyTests : RecoveryServicesBackupTestsBase
     {
         [Fact]
-        public void ListRecoveryServicesProtectionPolicyTest()
+        public void ListProtectionPolicyTest()
         {
             using (UndoContext context = UndoContext.Current)
             {
                 context.Start();
 
                 string resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
+                string resourceGroupName = ConfigurationManager.AppSettings["RsVaultRgNameRP"];
+                string resourceName = ConfigurationManager.AppSettings["RsVaultNameRP"];
+                string location = ConfigurationManager.AppSettings["vaultLocationRP"];
+
                 var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
-                PolicyTestHelper policyTestHelper = new PolicyTestHelper(client);
+
+                // 1. Create vault
+                VaultTestHelpers vaultTestHelper = new VaultTestHelpers(client);
+                vaultTestHelper.CreateVault(resourceGroupName, resourceName, location);
+
+                // ACTION: List policies
+                PolicyTestHelpers policyTestHelper = new PolicyTestHelpers(client);
                 ProtectionPolicyQueryParameters queryParams = new ProtectionPolicyQueryParameters();
+                ProtectionPolicyListResponse response = policyTestHelper.ListProtectionPolicy(resourceGroupName, resourceName, queryParams);
 
-                ProtectionPolicyListResponse response = policyTestHelper.ListProtectionPolicy(queryParams);
-
-                // atleast one default policy is expected
+                // VALIDATION: At least default policy is expected
                 Assert.NotNull(response.ItemList);
                 Assert.NotNull(response.ItemList.Value);
-
-                IList<ProtectionPolicyResource> policyList = response.ItemList.Value;
-
-                // atleast one default policy should be there
-                Assert.NotEmpty(policyList);
-
-                foreach (ProtectionPolicyResource resource in policyList)
+                Assert.NotEmpty(response.ItemList.Value);
+                foreach (ProtectionPolicyResource resource in response.ItemList.Value)
                 {
                     Assert.NotNull(resource.Id);
                     Assert.NotNull(resource.Name);
@@ -63,55 +63,58 @@ namespace RecoveryServices.Tests
                     Assert.NotNull(resource.Properties);
                 }
             }
-        }       
+        }
 
         [Fact]
-        public void GetAddUpdateDeleteIaaSVMPolicyTest()
+        public void PolicyCrudTest()
         {
             using (UndoContext context = UndoContext.Current)
             {
                 context.Start();
 
                 string resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
-                var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
-                PolicyTestHelper policyTestHelper = new PolicyTestHelper(client);
-                string policyName = ConfigurationManager.AppSettings["IaaSVMPolicyName"];
+                string resourceGroupName = ConfigurationManager.AppSettings["RsVaultRgNameRP"];
+                string resourceName = ConfigurationManager.AppSettings["RsVaultNameRP"];
+                string location = ConfigurationManager.AppSettings["vaultLocationRP"];
+                string defaultPolicyName = ConfigurationManager.AppSettings["DefaultPolicyName"];
 
-                // get policy
-                ProtectionPolicyResponse response = policyTestHelper.GetProtectionPolicy(policyName);
+                var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
+
+                // 1. Create vault
+                VaultTestHelpers vaultTestHelper = new VaultTestHelpers(client);
+                vaultTestHelper.CreateVault(resourceGroupName, resourceName, location);
+
+                PolicyTestHelpers policyTestHelper = new PolicyTestHelpers(client);
+
+                // ACTION: Get default policy
+                ProtectionPolicyResponse response = policyTestHelper.GetProtectionPolicy(resourceGroupName, resourceName, defaultPolicyName);
+
+                // VALIDATION: Name should match
                 Assert.NotNull(response.Item.Name);
-                Assert.Equal(response.Item.Name, policyName);
+                Assert.Equal(response.Item.Name, defaultPolicyName);
                 Assert.NotNull(response.Item.Id);
                 Assert.NotNull(response.Item.Type);
                 Assert.NotNull(response.Item.Properties);
 
-                // now add new policy
-                ProtectionPolicyRequest request = new ProtectionPolicyRequest()
-                {
-                    Item = new ProtectionPolicyResource()
-                    {
-                        Properties = response.Item.Properties
-                    }
-                };
+                // ACTION: Add new policy
+                ProtectionPolicyRequest request = new ProtectionPolicyRequest();
+                request.Item = new ProtectionPolicyResource();
+                request.Item.Properties = response.Item.Properties;
+                string newPolicyName = defaultPolicyName + "_updated";
+                response = policyTestHelper.AddOrUpdateProtectionPolicy(resourceGroupName, resourceName, newPolicyName, request);
 
-                string newPolicyName = ConfigurationManager.AppSettings["IaaSVMModifiedPolicyName"];
-                response = policyTestHelper.AddOrUpdateProtectionPolicy(
-                                                       newPolicyName,
-                                                       request);
-                // now update the policy
-                response = policyTestHelper.AddOrUpdateProtectionPolicy(
-                                                       newPolicyName,
-                                                       request);
-                // validations
+                // ACTION: Update the policy
+                response = policyTestHelper.AddOrUpdateProtectionPolicy(resourceGroupName, resourceName, newPolicyName, request);
+
+                // VALIDATION: Name should match
                 Assert.NotNull(response.Item.Name);
                 Assert.Equal(response.Item.Name, newPolicyName);
                 Assert.NotNull(response.Item.Id);
                 Assert.NotNull(response.Item.Type);
                 Assert.NotNull(response.Item.Properties);
 
-
-                // delete the policy
-                AzureOperationResponse deleteResponse = policyTestHelper.DeleteProtectionPolicy(newPolicyName);
+                // ACTION: Delete the policy
+                AzureOperationResponse deleteResponse = policyTestHelper.DeleteProtectionPolicy(resourceGroupName, resourceName, newPolicyName);
                 Assert.Equal(deleteResponse.StatusCode, HttpStatusCode.OK);
             }
         }
@@ -122,19 +125,17 @@ namespace RecoveryServices.Tests
         {
             SimpleSchedulePolicy schPolicy = new SimpleSchedulePolicy()
             {
-                ScheduleRunTimes = new List<DateTime> { DateTime.Parse(
-                                       ConfigurationManager.AppSettings["ScheduleRunTime"]) },
+                ScheduleRunTimes = new List<DateTime> { DateTime.UtcNow.AddDays(2) },
                 ScheduleRunFrequency = ConfigurationManager.AppSettings["ScheduleRunType"],
                 ScheduleRunDays = new List<string> { ConfigurationManager.AppSettings["ScheduleRunDay"] }
-            };            
+            };
 
             return schPolicy;
         }
 
         private LongTermRetentionPolicy GetRandomLTRRetentionPolicy()
-        {            
-            List<DateTime> retTimes = new List<DateTime> { DateTime.Parse(
-                                       ConfigurationManager.AppSettings["ScheduleRunTime"]) };
+        {
+            List<DateTime> retTimes = new List<DateTime> { DateTime.UtcNow.AddDays(2) };
 
             DailyRetentionSchedule dailyRetention = new DailyRetentionSchedule()
             {
@@ -180,7 +181,7 @@ namespace RecoveryServices.Tests
                             Date = 2,
                             IsLast = true
                         },
-                    }                   
+                    }
                 }
             };
 

@@ -13,24 +13,18 @@
 // limitations under the License.
 //
 
-using Hyak.Common;
 using Microsoft.Azure.Management.RecoveryServices.Backup;
 using Microsoft.Azure.Management.RecoveryServices.Backup.Models;
 using Microsoft.Azure.Test;
-using RecoveryServices.Tests.Helpers;
-using System;
-using System.Collections.Generic;
+using RecoveryServices.Backup.Tests.Helpers;
 using System.Configuration;
 using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
-namespace RecoveryServices.Tests
+namespace RecoveryServices.Backup.Tests
 {
-    public class ContainerTests : RecoveryServicesTestsBase
-    {        
+    public class ContainerTests : RecoveryServicesBackupTestsBase
+    {
         [Fact]
         public void ListContainersTest()
         {
@@ -39,28 +33,49 @@ namespace RecoveryServices.Tests
                 context.Start();
 
                 string resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
+                string resourceGroupName = ConfigurationManager.AppSettings["RsVaultRgNameRP"];
+                string resourceName = ConfigurationManager.AppSettings["RsVaultNameRP"];
+                string location = ConfigurationManager.AppSettings["vaultLocationRP"];
+                // TODO: Create VM instead of taking these parameters from config
+                string containerUniqueName = ConfigurationManager.AppSettings["RsVaultIaasVMContainerUniqueNameRP"];
+                string itemUniqueName = ConfigurationManager.AppSettings["RsVaultIaasVMItemUniqueNameRP"];
+                string containeType = ConfigurationManager.AppSettings["IaaSVMContainerType"];
+                string itemType = ConfigurationManager.AppSettings["IaaSVMItemType"];
+                string containerUri = containeType + ";" + containerUniqueName;
+                string itemUri = itemType + ";" + itemUniqueName;
 
                 var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
 
+                // 1. Create vault
+                VaultTestHelpers vaultTestHelper = new VaultTestHelpers(client);
+                vaultTestHelper.CreateVault(resourceGroupName, resourceName, location);
+
+                // 2. Get default policy
+                PolicyTestHelpers policyTestHelper = new PolicyTestHelpers(client);
+                string policyId = policyTestHelper.GetDefaultPolicyId(resourceGroupName, resourceName);
+
+                // 3. Enable protection
+                ProtectedItemTestHelpers protectedItemTestHelper = new ProtectedItemTestHelpers(client);
+                protectedItemTestHelper.EnableProtection(resourceGroupName, resourceName, policyId, containerUri, itemUri);
+
+                // ACTION: List containers
                 ProtectionContainerListQueryParams queryParams = new ProtectionContainerListQueryParams();
                 queryParams.BackupManagementType = CommonTestHelper.GetSetting(TestConstants.ProviderTypeAzureIaasVM);
-
                 ContainerTestHelper containerTestHelper = new ContainerTestHelper(client);
-                ProtectionContainerListResponse response = containerTestHelper.ListContainers(queryParams);
+                ProtectionContainerListResponse response = containerTestHelper.ListContainers(resourceGroupName, resourceName, queryParams);
 
-                string containerName = ConfigurationManager.AppSettings["RsVaultIaasV1ContainerUniqueName"]; ;
-                Assert.True(
-                    response.ItemList.ProtectionContainers.Any(
-                        protectionContainer =>
-                        {
-                            return protectionContainer.Properties.GetType().IsSubclassOf(typeof(AzureIaaSVMProtectionContainer)) &&
-                                   protectionContainer.Name.Contains(containerName);
-                        }),
-                        "Retrieved list of containers doesn't contain AzureIaaSClassicComputeVMProtectionContainer test container");
+                // VALIDATION: VM should be found in the list
+                Assert.True(response.ItemList.ProtectionContainers.Any(
+                    protectionContainer =>
+                    {
+                        return protectionContainer.Properties.GetType().IsSubclassOf(typeof(AzureIaaSVMProtectionContainer)) &&
+                            protectionContainer.Name.Contains(containerUniqueName);
+                    }),
+                    "Retrieved list of containers doesn't contain AzureIaaSVMProtectionContainer test container");
             }
         }
-        
-       [Fact]
+
+        [Fact]
         public void RefreshContainerTest()
         {
             using (UndoContext context = UndoContext.Current)
@@ -68,11 +83,20 @@ namespace RecoveryServices.Tests
                 context.Start();
 
                 string resourceNamespace = ConfigurationManager.AppSettings["ResourceNamespace"];
+                string resourceGroupName = ConfigurationManager.AppSettings["RsVaultRgNameRP"];
+                string resourceName = ConfigurationManager.AppSettings["RsVaultNameRP"];
+                string location = ConfigurationManager.AppSettings["vaultLocationRP"];
+                string fabricName = ConfigurationManager.AppSettings["AzureBackupFabricName"];
 
                 var client = GetServiceClient<RecoveryServicesBackupManagementClient>(resourceNamespace);
-                string fabricName = ConfigurationManager.AppSettings["AzureBackupFabricName"];
+
+                // 1. Create vault
+                VaultTestHelpers vaultTestHelper = new VaultTestHelpers(client);
+                vaultTestHelper.CreateVault(resourceGroupName, resourceName, location);
+
+                // ACTION: Trigger refresh containers
                 ContainerTestHelper containerTestHelper = new ContainerTestHelper(client);
-                var response = containerTestHelper.RefreshContainer(fabricName);
+                var response = containerTestHelper.RefreshContainer(resourceGroupName, resourceName, fabricName);
             }
         }
     }

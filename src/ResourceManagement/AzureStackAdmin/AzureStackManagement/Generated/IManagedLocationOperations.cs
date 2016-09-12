@@ -36,12 +36,10 @@ namespace Microsoft.AzureStack.Management
     public partial interface IManagedLocationOperations
     {
         /// <summary>
-        /// Create / Update the location.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Create / Update the location.
         /// </summary>
         /// <param name='parameters'>
-        /// Your documentation here.
+        /// Location properties
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -52,9 +50,7 @@ namespace Microsoft.AzureStack.Management
         Task<ManagedLocationCreateOrUpdateResult> CreateOrUpdateAsync(ManagedLocationCreateOrUpdateParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Delete a location.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Delete a location.
         /// </summary>
         /// <param name='locationName'>
         /// Name of location to delete.
@@ -69,9 +65,7 @@ namespace Microsoft.AzureStack.Management
         Task<AzureOperationResponse> DeleteAsync(string locationName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Get the location.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Get the location.
         /// </summary>
         /// <param name='locationName'>
         /// The location name.
@@ -85,9 +79,7 @@ namespace Microsoft.AzureStack.Management
         Task<ManagedLocationGetResult> GetAsync(string locationName, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Get locations under subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Get locations under subscription.
         /// </summary>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -98,14 +90,10 @@ namespace Microsoft.AzureStack.Management
         Task<ManagedLocationListResult> ListAsync(CancellationToken cancellationToken);
         
         /// <summary>
-        /// Get locations with the next link.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets locations with the next link.
         /// </summary>
         /// <param name='nextLink'>
-        /// The next link.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// The url to get the next set of results.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.

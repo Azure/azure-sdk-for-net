@@ -4,6 +4,7 @@
   <PropertyGroup>
     <ProjectGuid>{0F495F37-C031-4827-9EA6-3E19A4930A70}</ProjectGuid>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Microsoft.AzureStack.Management</RootNamespace>
     <AssemblyName>Microsoft.AzureStack.Management</AssemblyName>

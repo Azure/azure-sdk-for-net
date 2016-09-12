@@ -17,11 +17,11 @@ using System.Globalization;
 using System.Net;
 using System.Net.Http;
 using Microsoft.Azure;
-using Microsoft.AzureStack.Management.StorageAdmin;
-using Microsoft.AzureStack.Management.StorageAdmin.Models;
+using Microsoft.AzureStack.AzureConsistentStorage;
+using Microsoft.AzureStack.AzureConsistentStorage.Models;
 using Xunit;
 
-namespace Microsoft.AzureStack.Management.StorageAdmin.Tests.InMemoryTests
+namespace Microsoft.AzureStack.AzureConsistentStorage.Tests.InMemoryTests
 {
     public class FaultTests : TestBase
     {
@@ -40,7 +40,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Tests.InMemoryTests
             "resourceUri eq '{0}'";
 
         private const string HistoryFaultFilterUriTemplate =
-            "startTime eq '{0}' and endTime eq '{1}'";
+            "startTime eq '{0}' and endTime eq '{1}' and resourceUri eq '{2}'";
 
         private const string FaultGetUriTemplate =
             FaultsBaseTemplate
@@ -72,12 +72,14 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Tests.InMemoryTests
             var client = GetClient(handler, token);
             var startTime = new DateTime(2015, 3, 18);
             var endTime = new DateTime(2015, 3, 18);
+            var ResourceUri = "/subscriptions/serviceAdmin/resourceGroups/system/providers/Microsoft.Storage.Admin/farms/WEST_US_1/tableserverinstances/woss-node1";
 
             var result = client.Faults.ListHistoryFaults(
                 Constants.ResourceGroupName,
                 Constants.FarmId,
                 startTime.ToString("o"),
-                endTime.ToString("o"));
+                endTime.ToString("o"),
+                ResourceUri);
 
             // validate requestor
             Assert.Equal(handler.Method, HttpMethod.Get);
@@ -92,7 +94,8 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Tests.InMemoryTests
             var expectedFilterUri = string.Format(
                 HistoryFaultFilterUriTemplate,
                 Uri.EscapeDataString(startTime.ToString("o")),
-                Uri.EscapeDataString(endTime.ToString("o")));
+                Uri.EscapeDataString(endTime.ToString("o")),
+                Uri.EscapeDataString(ResourceUri));
 
             expectedUri = string.Concat(expectedUri, expectedFilterUri);
             expectedUri = expectedUri.Replace(" ", "%20");
@@ -217,6 +220,7 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Tests.InMemoryTests
         private void CompareExpectedResult(FaultModel result, bool isCurrentActive)
         {
             // Validate response 
+            Assert.Equal(result.Properties.FaultId, Guid.Parse("c8e6bfe487b4b8eceb5dc36ff6a24521"));
             Assert.Equal(result.Properties.ActivatedTime, DateTime.Parse("2015-05-18T18:02:00Z", DateTimeFormatInfo.InvariantInfo, DateTimeStyles.RoundtripKind));
             Assert.Equal(result.Properties.Description, "TBD");
             Assert.Equal(result.Properties.FaultRuleName, "faultRule1");

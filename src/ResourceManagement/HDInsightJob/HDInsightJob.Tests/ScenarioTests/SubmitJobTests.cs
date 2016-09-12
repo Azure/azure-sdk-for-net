@@ -31,6 +31,14 @@ namespace HDInsightJob.Tests
 {
     public class SubmitJobTests
     {
+        public SubmitJobTests()
+        {
+            if (HttpMockServer.GetCurrentMode() != HttpRecorderMode.Record)
+            {
+                MockSupport.RunningMocked = true;
+            }
+        }
+
         [Fact]
         public void CheckEmptySdkVersion()
         {
@@ -131,81 +139,39 @@ namespace HDInsightJob.Tests
             }
         }
 
-        [Fact(Skip = "<Needed to fix Thread.Sleep issues before enabling>")]
-        public void KillMapReduceJobTimeOut()
-        {
-            using (var context = UndoContext.Current)
-            {
-                context.Start();
-
-                var client = TestUtils.GetHDInsightJobManagementClient();
-
-                var parameters = GetMapReduceJobParameters();
-
-                var jobId = client.JobManagement.SubmitMapReduceJob(parameters).JobSubmissionJsonResponse.Id;
-
-                string exceptionMessage = string.Empty;
-                var startTime = DateTime.UtcNow;
-
-                try
-                {
-                    // Generate Cloud Exception due to timeout and check if Job is killed.
-                    WaitForJobCompletion(client, jobId, TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(10), true);
-                }
-                catch (CloudException ex)
-                {
-                    exceptionMessage = ex.Message;
-                }
-
-                var duration = (DateTime.UtcNow - startTime).Seconds;
-
-                Assert.True(duration >= 10);
-                Assert.True(exceptionMessage.Contains("The requested task failed to complete in the allotted time"));
-                Assert.True(exceptionMessage.Contains(string.Format(CultureInfo.InvariantCulture, "Killed the Job {0}", jobId)));
-
-                var response = client.JobManagement.GetJob(jobId);
-                Assert.NotNull(response);
-                Assert.Equal(response.StatusCode, HttpStatusCode.OK);
-                Assert.Equal(response.JobDetail.Status.State, "KILLED");
-            }
-        }
-
-        [Fact(Skip ="<Needed to fix Thread.Sleep issues before enabling>")]
+        [Fact]
         public void MapReduceJobTimeOut()
         {
-            using (var context = UndoContext.Current)
+            if (HttpMockServer.GetCurrentMode() == HttpRecorderMode.Record)
             {
-                context.Start();
-
-                var client = TestUtils.GetHDInsightJobManagementClient();
-
-                var parameters = GetMapReduceJobParameters();
-
-                var jobId = client.JobManagement.SubmitMapReduceJob(parameters).JobSubmissionJsonResponse.Id;
-
-                string exceptionMessage = string.Empty;
-                var startTime = DateTime.UtcNow;
-
-                try
+                using (var context = UndoContext.Current)
                 {
-                    // Generate Cloud Exception due to timeout and check if Job is killed.
-                    WaitForJobCompletion(client, jobId, TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(10));
+                    context.Start();
+
+                    var client = TestUtils.GetHDInsightJobManagementClient();
+
+                    var parameters = GetMapReduceJobParameters();
+
+                    var jobId = client.JobManagement.SubmitMapReduceJob(parameters).JobSubmissionJsonResponse.Id;
+
+                    string exceptionMessage = string.Empty;
+                    var startTime = DateTime.UtcNow;
+
+                    try
+                    {
+                        // Generate Cloud Exception due to timeout and check if Job is killed.
+                        client.JobManagement.WaitForJobCompletion(jobId, duration: TimeSpan.FromSeconds(10), waitInterval: TimeSpan.FromSeconds(10));
+                    }
+                    catch (TimeoutException ex)
+                    {
+                        exceptionMessage = ex.Message;
+                    }
+
+                    var duration = (DateTime.UtcNow - startTime).Seconds;
+
+                    Assert.True(duration >= 10);
+                    Assert.True(exceptionMessage.Contains("The requested task failed to complete in the allotted time"));
                 }
-                catch (CloudException ex)
-                {
-                    exceptionMessage = ex.Message;
-                }
-
-                var duration = (DateTime.UtcNow - startTime).Seconds;
-
-                Assert.True(duration >= 10);
-                Assert.True(exceptionMessage.Contains("The requested task failed to complete in the allotted time"));
-                Assert.False(exceptionMessage.Contains("Killed the Job "));
-
-                var response = client.JobManagement.GetJob(jobId);
-                Assert.NotNull(response);
-                Assert.Equal(response.StatusCode, HttpStatusCode.OK);
-                Assert.NotEqual(response.JobDetail.Status.State, "KILLED");
             }
         }
 
@@ -304,15 +270,13 @@ namespace HDInsightJob.Tests
                 var jobId = response.JobSubmissionJsonResponse.Id;
                 Assert.Contains("job_", jobId, StringComparison.InvariantCulture);
 
-                WaitForJobCompletion(client, jobId, TestUtils.JobPollInterval, TestUtils.JobWaitInterval);
-
-                var jobStatus = client.JobManagement.GetJob(jobId);
+                var jobStatus = client.JobManagement.WaitForJobCompletion(jobId, TestUtils.JobWaitInterval, TestUtils.JobPollInterval);
 
                 var storageAccess = GetStorageAccessObject(isWindowsCluster);
 
                 if (jobStatus.JobDetail.ExitValue == 0)
                 {
-                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    if (HttpMockServer.GetCurrentMode() == HttpRecorderMode.Record)
                     {
                         // Retrieve Job Output
                         var output = client.JobManagement.GetJobOutput(jobId, storageAccess);
@@ -322,7 +286,7 @@ namespace HDInsightJob.Tests
                 }
                 else
                 {
-                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    if (HttpMockServer.GetCurrentMode() == HttpRecorderMode.Record)
                     {
                         var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
                         string errorTextOutput = Convert(output);
@@ -379,15 +343,13 @@ namespace HDInsightJob.Tests
                 var jobId = response.JobSubmissionJsonResponse.Id;
                 Assert.Contains("job_", jobId, StringComparison.InvariantCulture);
 
-                WaitForJobCompletion(client, jobId, TestUtils.JobPollInterval, TestUtils.JobWaitInterval);
-
-                var jobStatus = client.JobManagement.GetJob(jobId);
+                var jobStatus = client.JobManagement.WaitForJobCompletion(jobId, TestUtils.JobWaitInterval, TestUtils.JobPollInterval);
 
                 var storageAccess = GetStorageAccessObject(isWindowsCluster);
 
                 if (jobStatus.JobDetail.ExitValue == 0)
                 {
-                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    if (HttpMockServer.GetCurrentMode() == HttpRecorderMode.Record)
                     {
                         // Retrieve Job Output
                         var output = client.JobManagement.GetJobOutput(jobId, storageAccess);
@@ -397,7 +359,7 @@ namespace HDInsightJob.Tests
                 }
                 else
                 {
-                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    if (HttpMockServer.GetCurrentMode() == HttpRecorderMode.Record)
                     {
                         var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
                         string errorTextOutput = Convert(output);
@@ -478,15 +440,13 @@ namespace HDInsightJob.Tests
                 var jobId = response.JobSubmissionJsonResponse.Id;
                 Assert.Contains("job_", jobId, StringComparison.InvariantCulture);
 
-                WaitForJobCompletion(client, jobId, TestUtils.JobPollInterval, TestUtils.JobWaitInterval);
-
-                var jobStatus = client.JobManagement.GetJob(jobId);
+                var jobStatus = client.JobManagement.WaitForJobCompletion(jobId, TestUtils.JobWaitInterval, TestUtils.JobPollInterval);
 
                 var storageAccess = GetStorageAccessObject(isWindowsCluster);
 
                 if (jobStatus.JobDetail.ExitValue == 0)
                 {
-                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    if (HttpMockServer.GetCurrentMode() == HttpRecorderMode.Record)
                     {
                         // Retrieve Job Output
                         var output = client.JobManagement.GetJobOutput(jobId, storageAccess);
@@ -496,7 +456,7 @@ namespace HDInsightJob.Tests
                 }
                 else
                 {
-                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    if (HttpMockServer.GetCurrentMode() == HttpRecorderMode.Record)
                     {
                         var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
                         string errorTextOutput = Convert(output);
@@ -569,16 +529,14 @@ namespace HDInsightJob.Tests
                 var jobId = response.JobSubmissionJsonResponse.Id;
                 Assert.Contains("job_", jobId, StringComparison.InvariantCulture);
 
-                WaitForJobCompletion(client, jobId, TestUtils.JobPollInterval, TestUtils.JobWaitInterval);
-
-                var jobStatus = client.JobManagement.GetJob(jobId);
+                var jobStatus = client.JobManagement.WaitForJobCompletion(jobId, TestUtils.JobWaitInterval, TestUtils.JobPollInterval);
 
                 var storageAccess = GetStorageAccessObject(isWindowsCluster);
 
                 if (jobStatus.JobDetail.ExitValue == 0)
                 {
                     // Retrieve Job Output
-                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    if (HttpMockServer.GetCurrentMode() == HttpRecorderMode.Record)
                     {
                         var output = client.JobManagement.GetJobOutput(jobId, storageAccess);
                         string textOutput = Convert(output);
@@ -587,7 +545,7 @@ namespace HDInsightJob.Tests
                 }
                 else
                 {
-                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    if (HttpMockServer.GetCurrentMode() == HttpRecorderMode.Record)
                     {
                         var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
                         string errorTextOutput = Convert(output);
@@ -639,12 +597,6 @@ namespace HDInsightJob.Tests
                 StatusDir = "SqoopStatus",
             };
             
-            if (!isWindowsCluster)
-            {
-                // This line is required for Linux-based cluster.
-                parameters.Files = new List<string> { "/user/oozie/share/lib/sqoop/sqljdbc41.jar" };
-            }
-
             return parameters;
         }
 
@@ -665,15 +617,13 @@ namespace HDInsightJob.Tests
                 var jobId = response.JobSubmissionJsonResponse.Id;
                 Assert.Contains("job_", jobId, StringComparison.InvariantCulture);
 
-                WaitForJobCompletion(client, jobId, TestUtils.JobPollInterval, TestUtils.JobWaitInterval);
-
-                var jobStatus = client.JobManagement.GetJob(jobId);
+                var jobStatus = client.JobManagement.WaitForJobCompletion(jobId, TestUtils.JobWaitInterval, TestUtils.JobPollInterval);
 
                 var storageAccess = GetStorageAccessObject(isWindowsCluster);
 
                 if (jobStatus.JobDetail.ExitValue == 0)
                 {
-                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    if (HttpMockServer.GetCurrentMode() == HttpRecorderMode.Record)
                     {
                         // Retrieve Job Output
                         var output = client.JobManagement.GetJobOutput(jobId, storageAccess);
@@ -683,7 +633,7 @@ namespace HDInsightJob.Tests
                 }
                 else
                 {
-                    if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                    if (HttpMockServer.GetCurrentMode() == HttpRecorderMode.Record)
                     {
                         var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
                         string errorTextOutput = Convert(output);
@@ -717,15 +667,13 @@ namespace HDInsightJob.Tests
                 var jobId = response.JobSubmissionJsonResponse.Id;
                 Assert.Contains("job_", jobId, StringComparison.InvariantCulture);
 
-                WaitForJobCompletion(client, jobId, TestUtils.JobPollInterval, TestUtils.JobWaitInterval);
-
-                var jobStatus = client.JobManagement.GetJob(jobId);
+                var jobStatus = client.JobManagement.WaitForJobCompletionAsync(jobId).Result;
 
                 Assert.True(jobStatus.JobDetail.ExitValue > 0);
 
                 var storageAccess = GetStorageAccessObject();
 
-                if (HttpMockServer.Mode == HttpRecorderMode.Record)
+                if (HttpMockServer.GetCurrentMode() == HttpRecorderMode.Record)
                 {
                     var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
                     Assert.NotNull(output);
@@ -733,30 +681,6 @@ namespace HDInsightJob.Tests
                     string errorTextOutput = Convert(output);
                     Assert.True(!string.IsNullOrEmpty(errorTextOutput));
                 }
-            }
-        }
-
-        internal void WaitForJobCompletion(HDInsightJobManagementClient client, string jobId, TimeSpan pollingInterval, TimeSpan duration, bool cancelJob = false)
-        {
-            var startTime = DateTime.UtcNow;
-            var endTime = DateTime.UtcNow;
-
-            var jobDetail = client.JobManagement.GetJob(jobId);
-            while (!jobDetail.JobDetail.Status.JobComplete)
-            {
-                if (((endTime = DateTime.UtcNow) - startTime) > duration)
-                {
-                    string exceptionMessage = string.Format(CultureInfo.InvariantCulture, "The requested task failed to complete in the allotted time ({0})", duration); ;
-                    if (cancelJob)
-                    {
-                        client.JobManagement.KillJob(jobId);
-                        exceptionMessage = string.Format(CultureInfo.InvariantCulture, "{0} Killed the Job {1}", exceptionMessage, jobId);
-                    }
-
-                    throw new CloudException(exceptionMessage);
-                }
-
-                jobDetail = client.JobManagement.GetJob(jobId);
             }
         }
 

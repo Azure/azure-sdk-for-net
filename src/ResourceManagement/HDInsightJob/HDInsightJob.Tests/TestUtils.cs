@@ -76,16 +76,16 @@ namespace HDInsightJob.Tests
                 HttpMockServer.Initialize("TestEnvironment", "InitialCreation");
                 server = HttpMockServer.CreateInstance();
             }
-            
+
             var method = typeof(T).GetMethod("WithHandler", new Type[] { typeof(DelegatingHandler) });
             client = method.Invoke(client, new object[] { server }) as T;
-            
+
             if (HttpMockServer.Mode != HttpRecorderMode.Playback) return client;
-            
+
             var initialTimeout = typeof(T).GetProperty("LongRunningOperationInitialTimeout", typeof(int));
             var retryTimeout = typeof(T).GetProperty("LongRunningOperationRetryTimeout", typeof(int));
             if (initialTimeout == null || retryTimeout == null) return client;
-            
+
             initialTimeout.SetValue(client, 0);
             retryTimeout.SetValue(client, 0);
             return client;

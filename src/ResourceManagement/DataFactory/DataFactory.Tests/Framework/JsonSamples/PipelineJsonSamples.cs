@@ -327,6 +327,13 @@ namespace DataFactory.Tests.Framework.JsonSamples
                             useTypeDefault: true
                         }
                     },
+                    enableStaging: true,
+                    stagingSettings: 
+                    {
+                        linkedServiceName: ""MyStagingBlob"",
+                        path: ""stagingcontainer/path"",
+                        enableCompression: true
+                    }
                 },
                 inputs: 
                 [ 

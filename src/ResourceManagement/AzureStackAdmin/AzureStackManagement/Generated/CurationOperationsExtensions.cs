@@ -31,16 +31,14 @@ namespace Microsoft.AzureStack.Management
     public static partial class CurationOperationsExtensions
     {
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the curation results
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.ICurationOperations.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the curation list operation
         /// </returns>
         public static CurationListResult List(this ICurationOperations operations)
         {
@@ -52,16 +50,14 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Lists the curation results
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.ICurationOperations.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Result of the curation list operation
         /// </returns>
         public static Task<CurationListResult> ListAsync(this ICurationOperations operations)
         {

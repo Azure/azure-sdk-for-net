@@ -26,14 +26,14 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Resource provider manifest registration parameters
     /// </summary>
     public partial class ProviderRegistrationCreateOrUpdateParameters
     {
         private ProviderRegistrationModel _providerRegistration;
         
         /// <summary>
-        /// Required. Your documentation here.
+        /// Required. Resource provider registration model
         /// </summary>
         public ProviderRegistrationModel ProviderRegistration
         {

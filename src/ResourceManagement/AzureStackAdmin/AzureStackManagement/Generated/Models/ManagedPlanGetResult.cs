@@ -27,14 +27,14 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Administrator view of plan for the get operation
     /// </summary>
     public partial class ManagedPlanGetResult : AzureOperationResponse
     {
         private AdminPlanModel _plan;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Plan definition
         /// </summary>
         public AdminPlanModel Plan
         {

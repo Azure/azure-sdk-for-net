@@ -54,6 +54,17 @@ namespace Microsoft.Azure.Management.Insights.Models
             set { this._metrics = value; }
         }
         
+        private string _serviceBusRuleId;
+        
+        /// <summary>
+        /// Optional. Gets or sets the id of the service bus rule.
+        /// </summary>
+        public string ServiceBusRuleId
+        {
+            get { return this._serviceBusRuleId; }
+            set { this._serviceBusRuleId = value; }
+        }
+        
         private string _storageAccountId;
         
         /// <summary>

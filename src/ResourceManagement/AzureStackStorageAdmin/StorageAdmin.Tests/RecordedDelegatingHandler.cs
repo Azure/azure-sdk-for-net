@@ -20,7 +20,7 @@ using System.Net.Http.Headers;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.AzureStack.Management.StorageAdmin.Tests
+namespace Microsoft.AzureStack.AzureConsistentStorage.Tests
 {
     public class RecordedDelegatingHandler : DelegatingHandler
     {
