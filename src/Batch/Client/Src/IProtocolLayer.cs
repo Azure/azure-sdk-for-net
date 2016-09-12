@@ -130,6 +130,8 @@ namespace Microsoft.Azure.Batch
 
         Task<AzureOperationHeaderResponse<Models.TaskDeleteHeaders>> DeleteTask(string jobId, string taskId, BehaviorManager bhMgr, CancellationToken cancellationToken);
 
+        Task<AzureOperationHeaderResponse<Models.TaskReactivateHeaders>> ReactivateTask(string jobId, string taskId, BehaviorManager bhMgr, CancellationToken cancellationToken);
+
         Task<AzureOperationResponse<Models.NodeFile, Models.FileGetFromTaskHeaders>> GetNodeFileByTask(string jobId, string taskId, string fileName, Stream stream, BehaviorManager bhMgr, CancellationToken cancellationToken);
 
         Task<AzureOperationResponse<Models.NodeFile, Models.FileGetNodeFilePropertiesFromTaskHeaders>> GetNodeFilePropertiesByTask(string jobId, string taskId, string fileName, BehaviorManager bhMgr, CancellationToken cancellationToken);

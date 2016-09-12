@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the NetworkInterface class.
         /// </summary>
-        public NetworkInterface(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualMachine = default(SubResource), NetworkSecurityGroup networkSecurityGroup = default(NetworkSecurityGroup), IList<NetworkInterfaceIPConfiguration> ipConfigurations = default(IList<NetworkInterfaceIPConfiguration>), NetworkInterfaceDnsSettings dnsSettings = default(NetworkInterfaceDnsSettings), string macAddress = default(string), bool? primary = default(bool?), bool? enableIPForwarding = default(bool?), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        public NetworkInterface(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SubResource virtualMachine = default(SubResource), NetworkSecurityGroup networkSecurityGroup = default(NetworkSecurityGroup), IList<NetworkInterfaceIPConfiguration> ipConfigurations = default(IList<NetworkInterfaceIPConfiguration>), NetworkInterfaceDnsSettings dnsSettings = default(NetworkInterfaceDnsSettings), string macAddress = default(string), bool? primary = default(bool?), bool? enableAcceleratedNetworking = default(bool?), bool? enableIPForwarding = default(bool?), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             VirtualMachine = virtualMachine;
@@ -39,6 +39,7 @@ namespace Microsoft.Azure.Management.Network.Models
             DnsSettings = dnsSettings;
             MacAddress = macAddress;
             Primary = primary;
+            EnableAcceleratedNetworking = enableAcceleratedNetworking;
             EnableIPForwarding = enableIPForwarding;
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
@@ -80,6 +81,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.primary")]
         public bool? Primary { get; set; }
+
+        /// <summary>
+        /// Gets or sets if the network interface is accelerated networking
+        /// enabled
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.enableAcceleratedNetworking")]
+        public bool? EnableAcceleratedNetworking { get; set; }
 
         /// <summary>
         /// Gets or sets whether IPForwarding is enabled on the NIC

@@ -18,21 +18,18 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for SchedulingErrorCategory.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum SchedulingErrorCategory
     {
-        [EnumMember(Value = "usererror")]
+        [System.Runtime.Serialization.EnumMember(Value = "usererror")]
         Usererror,
-        [EnumMember(Value = "servererror")]
+        [System.Runtime.Serialization.EnumMember(Value = "servererror")]
         Servererror,
-        [EnumMember(Value = "unmapped")]
+        [System.Runtime.Serialization.EnumMember(Value = "unmapped")]
         Unmapped
     }
 }

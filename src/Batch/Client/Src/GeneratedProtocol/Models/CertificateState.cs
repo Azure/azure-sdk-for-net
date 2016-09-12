@@ -18,21 +18,18 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for CertificateState.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum CertificateState
     {
-        [EnumMember(Value = "active")]
+        [System.Runtime.Serialization.EnumMember(Value = "active")]
         Active,
-        [EnumMember(Value = "deleting")]
+        [System.Runtime.Serialization.EnumMember(Value = "deleting")]
         Deleting,
-        [EnumMember(Value = "deletefailed")]
+        [System.Runtime.Serialization.EnumMember(Value = "deletefailed")]
         Deletefailed
     }
 }

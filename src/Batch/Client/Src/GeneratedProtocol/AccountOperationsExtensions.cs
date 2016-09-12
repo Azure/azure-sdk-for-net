@@ -18,14 +18,9 @@
 
 namespace Microsoft.Azure.Batch.Protocol
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
-    using Models;
+   using Microsoft.Rest.Azure;
+   using Models;
 
     /// <summary>
     /// Extension methods for AccountOperations.
@@ -41,9 +36,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='accountListNodeAgentSkusOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static IPage<NodeAgentSku> ListNodeAgentSkus(this IAccountOperations operations, AccountListNodeAgentSkusOptions accountListNodeAgentSkusOptions = default(AccountListNodeAgentSkusOptions))
+            public static Microsoft.Rest.Azure.IPage<NodeAgentSku> ListNodeAgentSkus(this IAccountOperations operations, AccountListNodeAgentSkusOptions accountListNodeAgentSkusOptions = default(AccountListNodeAgentSkusOptions))
             {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).ListNodeAgentSkusAsync(accountListNodeAgentSkusOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IAccountOperations)s).ListNodeAgentSkusAsync(accountListNodeAgentSkusOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -58,7 +53,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<NodeAgentSku>> ListNodeAgentSkusAsync(this IAccountOperations operations, AccountListNodeAgentSkusOptions accountListNodeAgentSkusOptions = default(AccountListNodeAgentSkusOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<NodeAgentSku>> ListNodeAgentSkusAsync(this IAccountOperations operations, AccountListNodeAgentSkusOptions accountListNodeAgentSkusOptions = default(AccountListNodeAgentSkusOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListNodeAgentSkusWithHttpMessagesAsync(accountListNodeAgentSkusOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -78,9 +73,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='accountListNodeAgentSkusNextOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static IPage<NodeAgentSku> ListNodeAgentSkusNext(this IAccountOperations operations, string nextPageLink, AccountListNodeAgentSkusNextOptions accountListNodeAgentSkusNextOptions = default(AccountListNodeAgentSkusNextOptions))
+            public static Microsoft.Rest.Azure.IPage<NodeAgentSku> ListNodeAgentSkusNext(this IAccountOperations operations, string nextPageLink, AccountListNodeAgentSkusNextOptions accountListNodeAgentSkusNextOptions = default(AccountListNodeAgentSkusNextOptions))
             {
-                return Task.Factory.StartNew(s => ((IAccountOperations)s).ListNodeAgentSkusNextAsync(nextPageLink, accountListNodeAgentSkusNextOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IAccountOperations)s).ListNodeAgentSkusNextAsync(nextPageLink, accountListNodeAgentSkusNextOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -98,7 +93,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<NodeAgentSku>> ListNodeAgentSkusNextAsync(this IAccountOperations operations, string nextPageLink, AccountListNodeAgentSkusNextOptions accountListNodeAgentSkusNextOptions = default(AccountListNodeAgentSkusNextOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<NodeAgentSku>> ListNodeAgentSkusNextAsync(this IAccountOperations operations, string nextPageLink, AccountListNodeAgentSkusNextOptions accountListNodeAgentSkusNextOptions = default(AccountListNodeAgentSkusNextOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListNodeAgentSkusNextWithHttpMessagesAsync(nextPageLink, accountListNodeAgentSkusNextOptions, null, cancellationToken).ConfigureAwait(false))
                 {

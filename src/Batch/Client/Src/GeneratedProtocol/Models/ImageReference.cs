@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A reference to an Azure Virtual Machines Marketplace image.
@@ -39,10 +33,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the ImageReference class.
         /// </summary>
-        /// <param name="publisher">The publisher of the Azure Virtual Machines Marketplace image.</param>
-        /// <param name="offer">The offer type of the Azure Virtual Machines Marketplace image.</param>
-        /// <param name="sku">The SKU of the Azure Virtual Machines Marketplace image.</param>
-        /// <param name="version">The version of the Azure Virtual Machines Marketplace image.</param>
+        /// <param name="publisher">The publisher of the Azure Virtual
+        /// Machines Marketplace image.</param>
+        /// <param name="offer">The offer type of the Azure Virtual Machines
+        /// Marketplace image.</param>
+        /// <param name="sku">The SKU of the Azure Virtual Machines
+        /// Marketplace image.</param>
+        /// <param name="version">The version of the Azure Virtual Machines
+        /// Marketplace image.</param>
         public ImageReference(string publisher, string offer, string sku, string version = default(string))
         {
             Publisher = publisher;
@@ -58,7 +56,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// For example, Canonical or MicrosoftWindowsServer.
         /// </remarks>
-        [JsonProperty(PropertyName = "publisher")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "publisher")]
         public string Publisher { get; set; }
 
         /// <summary>
@@ -68,7 +66,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// For example, UbuntuServer or WindowsServer.
         /// </remarks>
-        [JsonProperty(PropertyName = "offer")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "offer")]
         public string Offer { get; set; }
 
         /// <summary>
@@ -78,7 +76,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// For example, 14.04.0-LTS or 2012-R2-Datacenter.
         /// </remarks>
-        [JsonProperty(PropertyName = "sku")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "sku")]
         public string Sku { get; set; }
 
         /// <summary>
@@ -89,28 +87,28 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// A value of 'latest' can be specified to select the latest version
         /// of an image. If omitted, the default is 'latest'.
         /// </remarks>
-        [JsonProperty(PropertyName = "version")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "version")]
         public string Version { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (Publisher == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Publisher");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Publisher");
             }
             if (Offer == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Offer");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Offer");
             }
             if (Sku == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Sku");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Sku");
             }
         }
     }

@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Statistics related to resource consumption by compute nodes in a pool.
@@ -39,20 +33,34 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the ResourceStatistics class.
         /// </summary>
-        /// <param name="startTime">The start time of the time range covered by the statistics.</param>
-        /// <param name="lastUpdateTime">The time at which the statistics were last updated. All statistics are limited to the range between startTime and lastUpdateTime.</param>
-        /// <param name="avgCPUPercentage">The average CPU usage across all nodes in the pool (percentage per node).</param>
-        /// <param name="avgMemoryGiB">The average memory usage in GiB across all nodes in the pool.</param>
-        /// <param name="peakMemoryGiB">The peak memory usage in GiB across all nodes in the pool.</param>
-        /// <param name="avgDiskGiB">The average used disk space in GiB across all nodes in the pool.</param>
-        /// <param name="peakDiskGiB">The peak used disk space in GiB across all nodes in the pool.</param>
-        /// <param name="diskReadIOps">The total number of disk read operations across all nodes in the pool.</param>
-        /// <param name="diskWriteIOps">The total number of disk write operations across all nodes in the pool.</param>
-        /// <param name="diskReadGiB">The total amount of data in GiB of disk reads across all nodes in the pool.</param>
-        /// <param name="diskWriteGiB">The total amount of data in GiB of disk writes across all nodes in the pool.</param>
-        /// <param name="networkReadGiB">The total amount of data in GiB of network reads across all nodes in the pool.</param>
-        /// <param name="networkWriteGiB">The total amount of data in GiB of network writes across all nodes in the pool.</param>
-        public ResourceStatistics(DateTime startTime, DateTime lastUpdateTime, double avgCPUPercentage, double avgMemoryGiB, double peakMemoryGiB, double avgDiskGiB, double peakDiskGiB, long diskReadIOps, long diskWriteIOps, double diskReadGiB, double diskWriteGiB, double networkReadGiB, double networkWriteGiB)
+        /// <param name="startTime">The start time of the time range covered
+        /// by the statistics.</param>
+        /// <param name="lastUpdateTime">The time at which the statistics were
+        /// last updated. All statistics are limited to the range between
+        /// startTime and lastUpdateTime.</param>
+        /// <param name="avgCPUPercentage">The average CPU usage across all
+        /// nodes in the pool (percentage per node).</param>
+        /// <param name="avgMemoryGiB">The average memory usage in GiB across
+        /// all nodes in the pool.</param>
+        /// <param name="peakMemoryGiB">The peak memory usage in GiB across
+        /// all nodes in the pool.</param>
+        /// <param name="avgDiskGiB">The average used disk space in GiB across
+        /// all nodes in the pool.</param>
+        /// <param name="peakDiskGiB">The peak used disk space in GiB across
+        /// all nodes in the pool.</param>
+        /// <param name="diskReadIOps">The total number of disk read
+        /// operations across all nodes in the pool.</param>
+        /// <param name="diskWriteIOps">The total number of disk write
+        /// operations across all nodes in the pool.</param>
+        /// <param name="diskReadGiB">The total amount of data in GiB of disk
+        /// reads across all nodes in the pool.</param>
+        /// <param name="diskWriteGiB">The total amount of data in GiB of disk
+        /// writes across all nodes in the pool.</param>
+        /// <param name="networkReadGiB">The total amount of data in GiB of
+        /// network reads across all nodes in the pool.</param>
+        /// <param name="networkWriteGiB">The total amount of data in GiB of
+        /// network writes across all nodes in the pool.</param>
+        public ResourceStatistics(System.DateTime startTime, System.DateTime lastUpdateTime, double avgCPUPercentage, double avgMemoryGiB, double peakMemoryGiB, double avgDiskGiB, double peakDiskGiB, long diskReadIOps, long diskWriteIOps, double diskReadGiB, double diskWriteGiB, double networkReadGiB, double networkWriteGiB)
         {
             StartTime = startTime;
             LastUpdateTime = lastUpdateTime;
@@ -73,98 +81,98 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the start time of the time range covered by the
         /// statistics.
         /// </summary>
-        [JsonProperty(PropertyName = "startTime")]
-        public DateTime StartTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "startTime")]
+        public System.DateTime StartTime { get; set; }
 
         /// <summary>
         /// Gets or sets the time at which the statistics were last updated.
         /// All statistics are limited to the range between startTime and
         /// lastUpdateTime.
         /// </summary>
-        [JsonProperty(PropertyName = "lastUpdateTime")]
-        public DateTime LastUpdateTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "lastUpdateTime")]
+        public System.DateTime LastUpdateTime { get; set; }
 
         /// <summary>
         /// Gets or sets the average CPU usage across all nodes in the pool
         /// (percentage per node).
         /// </summary>
-        [JsonProperty(PropertyName = "avgCPUPercentage")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "avgCPUPercentage")]
         public double AvgCPUPercentage { get; set; }
 
         /// <summary>
         /// Gets or sets the average memory usage in GiB across all nodes in
         /// the pool.
         /// </summary>
-        [JsonProperty(PropertyName = "avgMemoryGiB")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "avgMemoryGiB")]
         public double AvgMemoryGiB { get; set; }
 
         /// <summary>
         /// Gets or sets the peak memory usage in GiB across all nodes in the
         /// pool.
         /// </summary>
-        [JsonProperty(PropertyName = "peakMemoryGiB")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "peakMemoryGiB")]
         public double PeakMemoryGiB { get; set; }
 
         /// <summary>
         /// Gets or sets the average used disk space in GiB across all nodes
         /// in the pool.
         /// </summary>
-        [JsonProperty(PropertyName = "avgDiskGiB")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "avgDiskGiB")]
         public double AvgDiskGiB { get; set; }
 
         /// <summary>
         /// Gets or sets the peak used disk space in GiB across all nodes in
         /// the pool.
         /// </summary>
-        [JsonProperty(PropertyName = "peakDiskGiB")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "peakDiskGiB")]
         public double PeakDiskGiB { get; set; }
 
         /// <summary>
         /// Gets or sets the total number of disk read operations across all
         /// nodes in the pool.
         /// </summary>
-        [JsonProperty(PropertyName = "diskReadIOps")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "diskReadIOps")]
         public long DiskReadIOps { get; set; }
 
         /// <summary>
         /// Gets or sets the total number of disk write operations across all
         /// nodes in the pool.
         /// </summary>
-        [JsonProperty(PropertyName = "diskWriteIOps")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "diskWriteIOps")]
         public long DiskWriteIOps { get; set; }
 
         /// <summary>
         /// Gets or sets the total amount of data in GiB of disk reads across
         /// all nodes in the pool.
         /// </summary>
-        [JsonProperty(PropertyName = "diskReadGiB")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "diskReadGiB")]
         public double DiskReadGiB { get; set; }
 
         /// <summary>
         /// Gets or sets the total amount of data in GiB of disk writes across
         /// all nodes in the pool.
         /// </summary>
-        [JsonProperty(PropertyName = "diskWriteGiB")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "diskWriteGiB")]
         public double DiskWriteGiB { get; set; }
 
         /// <summary>
         /// Gets or sets the total amount of data in GiB of network reads
         /// across all nodes in the pool.
         /// </summary>
-        [JsonProperty(PropertyName = "networkReadGiB")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "networkReadGiB")]
         public double NetworkReadGiB { get; set; }
 
         /// <summary>
         /// Gets or sets the total amount of data in GiB of network writes
         /// across all nodes in the pool.
         /// </summary>
-        [JsonProperty(PropertyName = "networkWriteGiB")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "networkWriteGiB")]
         public double NetworkWriteGiB { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

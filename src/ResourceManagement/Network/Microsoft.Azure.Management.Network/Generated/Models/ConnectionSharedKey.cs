@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Response for GetConnectionSharedKey Api servive call
+    /// Response for GetConnectionSharedKey Api service call
     /// </summary>
     public partial class ConnectionSharedKey
     {

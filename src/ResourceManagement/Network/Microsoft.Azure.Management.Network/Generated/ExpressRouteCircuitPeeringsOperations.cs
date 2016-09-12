@@ -430,7 +430,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The Put Pering operation creates/updates an peering in the specified
+        /// The Put Peering operation creates/updates an peering in the specified
         /// ExpressRouteCircuits
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -463,7 +463,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The Put Pering operation creates/updates an peering in the specified
+        /// The Put Peering operation creates/updates an peering in the specified
         /// ExpressRouteCircuits
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -695,7 +695,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the resource group.
         /// </param>
         /// <param name='circuitName'>
-        /// The name of the curcuit.
+        /// The name of the circuit.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

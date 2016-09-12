@@ -331,6 +331,31 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// </exception>
         Task<AzureOperationResponse<DataLakeStoreAccount>> GetWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Attempts to enable a user managed key vault for encryption of the
+        /// specified Data Lake Store account.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the Azure resource group that contains the Data Lake
+        /// Store account.
+        /// </param>
+        /// <param name='accountName'>
+        /// The name of the Data Lake Store account to attempt to enable the
+        /// Key Vault for.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> EnableKeyVaultWithHttpMessagesAsync(string resourceGroupName, string accountName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Lists the Data Lake Store accounts within a specific resource
         /// group. The response includes a link to the next page of results,
         /// if any.

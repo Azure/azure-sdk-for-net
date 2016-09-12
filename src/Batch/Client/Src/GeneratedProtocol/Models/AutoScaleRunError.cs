@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// An error that occurred when executing or evaluating a pool autoscale
@@ -40,10 +34,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the AutoScaleRunError class.
         /// </summary>
-        /// <param name="code">An identifier for the autoscale error. Codes are invariant and are intended to be consumed programmatically.</param>
-        /// <param name="message">A message describing the autoscale error, intended to be suitable for display in a user interface.</param>
-        /// <param name="values">A list of additional error details related to the autoscale error.</param>
-        public AutoScaleRunError(string code = default(string), string message = default(string), IList<NameValuePair> values = default(IList<NameValuePair>))
+        /// <param name="code">An identifier for the autoscale error. Codes
+        /// are invariant and are intended to be consumed
+        /// programmatically.</param>
+        /// <param name="message">A message describing the autoscale error,
+        /// intended to be suitable for display in a user interface.</param>
+        /// <param name="values">A list of additional error details related to
+        /// the autoscale error.</param>
+        public AutoScaleRunError(string code = default(string), string message = default(string), System.Collections.Generic.IList<NameValuePair> values = default(System.Collections.Generic.IList<NameValuePair>))
         {
             Code = code;
             Message = message;
@@ -54,22 +52,22 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets an identifier for the autoscale error. Codes are
         /// invariant and are intended to be consumed programmatically.
         /// </summary>
-        [JsonProperty(PropertyName = "code")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "code")]
         public string Code { get; set; }
 
         /// <summary>
         /// Gets or sets a message describing the autoscale error, intended to
         /// be suitable for display in a user interface.
         /// </summary>
-        [JsonProperty(PropertyName = "message")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "message")]
         public string Message { get; set; }
 
         /// <summary>
         /// Gets or sets a list of additional error details related to the
         /// autoscale error.
         /// </summary>
-        [JsonProperty(PropertyName = "values")]
-        public IList<NameValuePair> Values { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "values")]
+        public System.Collections.Generic.IList<NameValuePair> Values { get; set; }
 
     }
 }

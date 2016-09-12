@@ -18,14 +18,9 @@
 
 namespace Microsoft.Azure.Batch.Protocol
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
-    using Models;
+   using Microsoft.Rest.Azure;
+   using Models;
 
     /// <summary>
     /// Extension methods for FileOperations.
@@ -58,7 +53,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static FileDeleteFromTaskHeaders DeleteFromTask(this IFileOperations operations, string jobId, string taskId, string fileName, bool? recursive = default(bool?), FileDeleteFromTaskOptions fileDeleteFromTaskOptions = default(FileDeleteFromTaskOptions))
             {
-                return Task.Factory.StartNew(s => ((IFileOperations)s).DeleteFromTaskAsync(jobId, taskId, fileName, recursive, fileDeleteFromTaskOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IFileOperations)s).DeleteFromTaskAsync(jobId, taskId, fileName, recursive, fileDeleteFromTaskOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -88,7 +83,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FileDeleteFromTaskHeaders> DeleteFromTaskAsync(this IFileOperations operations, string jobId, string taskId, string fileName, bool? recursive = default(bool?), FileDeleteFromTaskOptions fileDeleteFromTaskOptions = default(FileDeleteFromTaskOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<FileDeleteFromTaskHeaders> DeleteFromTaskAsync(this IFileOperations operations, string jobId, string taskId, string fileName, bool? recursive = default(bool?), FileDeleteFromTaskOptions fileDeleteFromTaskOptions = default(FileDeleteFromTaskOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.DeleteFromTaskWithHttpMessagesAsync(jobId, taskId, fileName, recursive, fileDeleteFromTaskOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -116,7 +111,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static System.IO.Stream GetFromTask(this IFileOperations operations, string jobId, string taskId, string fileName, FileGetFromTaskOptions fileGetFromTaskOptions = default(FileGetFromTaskOptions))
             {
-                return Task.Factory.StartNew(s => ((IFileOperations)s).GetFromTaskAsync(jobId, taskId, fileName, fileGetFromTaskOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IFileOperations)s).GetFromTaskAsync(jobId, taskId, fileName, fileGetFromTaskOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -140,7 +135,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<System.IO.Stream> GetFromTaskAsync(this IFileOperations operations, string jobId, string taskId, string fileName, FileGetFromTaskOptions fileGetFromTaskOptions = default(FileGetFromTaskOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<System.IO.Stream> GetFromTaskAsync(this IFileOperations operations, string jobId, string taskId, string fileName, FileGetFromTaskOptions fileGetFromTaskOptions = default(FileGetFromTaskOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 var _result = await operations.GetFromTaskWithHttpMessagesAsync(jobId, taskId, fileName, fileGetFromTaskOptions, null, cancellationToken).ConfigureAwait(false);
                 _result.Request.Dispose();
@@ -167,7 +162,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static FileGetNodeFilePropertiesFromTaskHeaders GetNodeFilePropertiesFromTask(this IFileOperations operations, string jobId, string taskId, string fileName, FileGetNodeFilePropertiesFromTaskOptions fileGetNodeFilePropertiesFromTaskOptions = default(FileGetNodeFilePropertiesFromTaskOptions))
             {
-                return Task.Factory.StartNew(s => ((IFileOperations)s).GetNodeFilePropertiesFromTaskAsync(jobId, taskId, fileName, fileGetNodeFilePropertiesFromTaskOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IFileOperations)s).GetNodeFilePropertiesFromTaskAsync(jobId, taskId, fileName, fileGetNodeFilePropertiesFromTaskOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -191,7 +186,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FileGetNodeFilePropertiesFromTaskHeaders> GetNodeFilePropertiesFromTaskAsync(this IFileOperations operations, string jobId, string taskId, string fileName, FileGetNodeFilePropertiesFromTaskOptions fileGetNodeFilePropertiesFromTaskOptions = default(FileGetNodeFilePropertiesFromTaskOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<FileGetNodeFilePropertiesFromTaskHeaders> GetNodeFilePropertiesFromTaskAsync(this IFileOperations operations, string jobId, string taskId, string fileName, FileGetNodeFilePropertiesFromTaskOptions fileGetNodeFilePropertiesFromTaskOptions = default(FileGetNodeFilePropertiesFromTaskOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetNodeFilePropertiesFromTaskWithHttpMessagesAsync(jobId, taskId, fileName, fileGetNodeFilePropertiesFromTaskOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -225,7 +220,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static FileDeleteFromComputeNodeHeaders DeleteFromComputeNode(this IFileOperations operations, string poolId, string nodeId, string fileName, bool? recursive = default(bool?), FileDeleteFromComputeNodeOptions fileDeleteFromComputeNodeOptions = default(FileDeleteFromComputeNodeOptions))
             {
-                return Task.Factory.StartNew(s => ((IFileOperations)s).DeleteFromComputeNodeAsync(poolId, nodeId, fileName, recursive, fileDeleteFromComputeNodeOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IFileOperations)s).DeleteFromComputeNodeAsync(poolId, nodeId, fileName, recursive, fileDeleteFromComputeNodeOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -255,7 +250,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FileDeleteFromComputeNodeHeaders> DeleteFromComputeNodeAsync(this IFileOperations operations, string poolId, string nodeId, string fileName, bool? recursive = default(bool?), FileDeleteFromComputeNodeOptions fileDeleteFromComputeNodeOptions = default(FileDeleteFromComputeNodeOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<FileDeleteFromComputeNodeHeaders> DeleteFromComputeNodeAsync(this IFileOperations operations, string poolId, string nodeId, string fileName, bool? recursive = default(bool?), FileDeleteFromComputeNodeOptions fileDeleteFromComputeNodeOptions = default(FileDeleteFromComputeNodeOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.DeleteFromComputeNodeWithHttpMessagesAsync(poolId, nodeId, fileName, recursive, fileDeleteFromComputeNodeOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -283,7 +278,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static System.IO.Stream GetFromComputeNode(this IFileOperations operations, string poolId, string nodeId, string fileName, FileGetFromComputeNodeOptions fileGetFromComputeNodeOptions = default(FileGetFromComputeNodeOptions))
             {
-                return Task.Factory.StartNew(s => ((IFileOperations)s).GetFromComputeNodeAsync(poolId, nodeId, fileName, fileGetFromComputeNodeOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IFileOperations)s).GetFromComputeNodeAsync(poolId, nodeId, fileName, fileGetFromComputeNodeOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -307,7 +302,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<System.IO.Stream> GetFromComputeNodeAsync(this IFileOperations operations, string poolId, string nodeId, string fileName, FileGetFromComputeNodeOptions fileGetFromComputeNodeOptions = default(FileGetFromComputeNodeOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<System.IO.Stream> GetFromComputeNodeAsync(this IFileOperations operations, string poolId, string nodeId, string fileName, FileGetFromComputeNodeOptions fileGetFromComputeNodeOptions = default(FileGetFromComputeNodeOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 var _result = await operations.GetFromComputeNodeWithHttpMessagesAsync(poolId, nodeId, fileName, fileGetFromComputeNodeOptions, null, cancellationToken).ConfigureAwait(false);
                 _result.Request.Dispose();
@@ -334,7 +329,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// </param>
             public static FileGetNodeFilePropertiesFromComputeNodeHeaders GetNodeFilePropertiesFromComputeNode(this IFileOperations operations, string poolId, string nodeId, string fileName, FileGetNodeFilePropertiesFromComputeNodeOptions fileGetNodeFilePropertiesFromComputeNodeOptions = default(FileGetNodeFilePropertiesFromComputeNodeOptions))
             {
-                return Task.Factory.StartNew(s => ((IFileOperations)s).GetNodeFilePropertiesFromComputeNodeAsync(poolId, nodeId, fileName, fileGetNodeFilePropertiesFromComputeNodeOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IFileOperations)s).GetNodeFilePropertiesFromComputeNodeAsync(poolId, nodeId, fileName, fileGetNodeFilePropertiesFromComputeNodeOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -358,7 +353,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FileGetNodeFilePropertiesFromComputeNodeHeaders> GetNodeFilePropertiesFromComputeNodeAsync(this IFileOperations operations, string poolId, string nodeId, string fileName, FileGetNodeFilePropertiesFromComputeNodeOptions fileGetNodeFilePropertiesFromComputeNodeOptions = default(FileGetNodeFilePropertiesFromComputeNodeOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<FileGetNodeFilePropertiesFromComputeNodeHeaders> GetNodeFilePropertiesFromComputeNodeAsync(this IFileOperations operations, string poolId, string nodeId, string fileName, FileGetNodeFilePropertiesFromComputeNodeOptions fileGetNodeFilePropertiesFromComputeNodeOptions = default(FileGetNodeFilePropertiesFromComputeNodeOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetNodeFilePropertiesFromComputeNodeWithHttpMessagesAsync(poolId, nodeId, fileName, fileGetNodeFilePropertiesFromComputeNodeOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -384,9 +379,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='fileListFromTaskOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static IPage<NodeFile> ListFromTask(this IFileOperations operations, string jobId, string taskId, bool? recursive = default(bool?), FileListFromTaskOptions fileListFromTaskOptions = default(FileListFromTaskOptions))
+            public static Microsoft.Rest.Azure.IPage<NodeFile> ListFromTask(this IFileOperations operations, string jobId, string taskId, bool? recursive = default(bool?), FileListFromTaskOptions fileListFromTaskOptions = default(FileListFromTaskOptions))
             {
-                return Task.Factory.StartNew(s => ((IFileOperations)s).ListFromTaskAsync(jobId, taskId, recursive, fileListFromTaskOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IFileOperations)s).ListFromTaskAsync(jobId, taskId, recursive, fileListFromTaskOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -410,7 +405,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<NodeFile>> ListFromTaskAsync(this IFileOperations operations, string jobId, string taskId, bool? recursive = default(bool?), FileListFromTaskOptions fileListFromTaskOptions = default(FileListFromTaskOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<NodeFile>> ListFromTaskAsync(this IFileOperations operations, string jobId, string taskId, bool? recursive = default(bool?), FileListFromTaskOptions fileListFromTaskOptions = default(FileListFromTaskOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListFromTaskWithHttpMessagesAsync(jobId, taskId, recursive, fileListFromTaskOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -436,9 +431,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='fileListFromComputeNodeOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static IPage<NodeFile> ListFromComputeNode(this IFileOperations operations, string poolId, string nodeId, bool? recursive = default(bool?), FileListFromComputeNodeOptions fileListFromComputeNodeOptions = default(FileListFromComputeNodeOptions))
+            public static Microsoft.Rest.Azure.IPage<NodeFile> ListFromComputeNode(this IFileOperations operations, string poolId, string nodeId, bool? recursive = default(bool?), FileListFromComputeNodeOptions fileListFromComputeNodeOptions = default(FileListFromComputeNodeOptions))
             {
-                return Task.Factory.StartNew(s => ((IFileOperations)s).ListFromComputeNodeAsync(poolId, nodeId, recursive, fileListFromComputeNodeOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IFileOperations)s).ListFromComputeNodeAsync(poolId, nodeId, recursive, fileListFromComputeNodeOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -462,7 +457,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<NodeFile>> ListFromComputeNodeAsync(this IFileOperations operations, string poolId, string nodeId, bool? recursive = default(bool?), FileListFromComputeNodeOptions fileListFromComputeNodeOptions = default(FileListFromComputeNodeOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<NodeFile>> ListFromComputeNodeAsync(this IFileOperations operations, string poolId, string nodeId, bool? recursive = default(bool?), FileListFromComputeNodeOptions fileListFromComputeNodeOptions = default(FileListFromComputeNodeOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListFromComputeNodeWithHttpMessagesAsync(poolId, nodeId, recursive, fileListFromComputeNodeOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -482,9 +477,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='fileListFromTaskNextOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static IPage<NodeFile> ListFromTaskNext(this IFileOperations operations, string nextPageLink, FileListFromTaskNextOptions fileListFromTaskNextOptions = default(FileListFromTaskNextOptions))
+            public static Microsoft.Rest.Azure.IPage<NodeFile> ListFromTaskNext(this IFileOperations operations, string nextPageLink, FileListFromTaskNextOptions fileListFromTaskNextOptions = default(FileListFromTaskNextOptions))
             {
-                return Task.Factory.StartNew(s => ((IFileOperations)s).ListFromTaskNextAsync(nextPageLink, fileListFromTaskNextOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IFileOperations)s).ListFromTaskNextAsync(nextPageLink, fileListFromTaskNextOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -502,7 +497,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<NodeFile>> ListFromTaskNextAsync(this IFileOperations operations, string nextPageLink, FileListFromTaskNextOptions fileListFromTaskNextOptions = default(FileListFromTaskNextOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<NodeFile>> ListFromTaskNextAsync(this IFileOperations operations, string nextPageLink, FileListFromTaskNextOptions fileListFromTaskNextOptions = default(FileListFromTaskNextOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListFromTaskNextWithHttpMessagesAsync(nextPageLink, fileListFromTaskNextOptions, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -522,9 +517,9 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='fileListFromComputeNodeNextOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static IPage<NodeFile> ListFromComputeNodeNext(this IFileOperations operations, string nextPageLink, FileListFromComputeNodeNextOptions fileListFromComputeNodeNextOptions = default(FileListFromComputeNodeNextOptions))
+            public static Microsoft.Rest.Azure.IPage<NodeFile> ListFromComputeNodeNext(this IFileOperations operations, string nextPageLink, FileListFromComputeNodeNextOptions fileListFromComputeNodeNextOptions = default(FileListFromComputeNodeNextOptions))
             {
-                return Task.Factory.StartNew(s => ((IFileOperations)s).ListFromComputeNodeNextAsync(nextPageLink, fileListFromComputeNodeNextOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IFileOperations)s).ListFromComputeNodeNextAsync(nextPageLink, fileListFromComputeNodeNextOptions), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -542,7 +537,7 @@ namespace Microsoft.Azure.Batch.Protocol
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<NodeFile>> ListFromComputeNodeNextAsync(this IFileOperations operations, string nextPageLink, FileListFromComputeNodeNextOptions fileListFromComputeNodeNextOptions = default(FileListFromComputeNodeNextOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<NodeFile>> ListFromComputeNodeNextAsync(this IFileOperations operations, string nextPageLink, FileListFromComputeNodeNextOptions fileListFromComputeNodeNextOptions = default(FileListFromComputeNodeNextOptions), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListFromComputeNodeNextWithHttpMessagesAsync(nextPageLink, fileListFromComputeNodeNextOptions, null, cancellationToken).ConfigureAwait(false))
                 {

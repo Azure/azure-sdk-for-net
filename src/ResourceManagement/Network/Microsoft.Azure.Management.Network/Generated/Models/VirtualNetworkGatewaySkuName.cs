@@ -20,5 +20,6 @@ namespace Microsoft.Azure.Management.Network.Models
         public const string Basic = "Basic";
         public const string HighPerformance = "HighPerformance";
         public const string Standard = "Standard";
+        public const string UltraPerformance = "UltraPerformance";
     }
 }

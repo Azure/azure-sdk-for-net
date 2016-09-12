@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Parameters for a CloudJobScheduleOperations.Patch request.
@@ -39,10 +33,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the JobSchedulePatchParameter class.
         /// </summary>
-        /// <param name="schedule">The schedule according to which jobs will be created.</param>
-        /// <param name="jobSpecification">The details of the jobs to be created on this schedule.</param>
-        /// <param name="metadata">A list of name-value pairs associated with the job schedule as metadata.</param>
-        public JobSchedulePatchParameter(Schedule schedule = default(Schedule), JobSpecification jobSpecification = default(JobSpecification), IList<MetadataItem> metadata = default(IList<MetadataItem>))
+        /// <param name="schedule">The schedule according to which jobs will
+        /// be created.</param>
+        /// <param name="jobSpecification">The details of the jobs to be
+        /// created on this schedule.</param>
+        /// <param name="metadata">A list of name-value pairs associated with
+        /// the job schedule as metadata.</param>
+        public JobSchedulePatchParameter(Schedule schedule = default(Schedule), JobSpecification jobSpecification = default(JobSpecification), System.Collections.Generic.IList<MetadataItem> metadata = default(System.Collections.Generic.IList<MetadataItem>))
         {
             Schedule = schedule;
             JobSpecification = jobSpecification;
@@ -52,27 +49,27 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the schedule according to which jobs will be created.
         /// </summary>
-        [JsonProperty(PropertyName = "schedule")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "schedule")]
         public Schedule Schedule { get; set; }
 
         /// <summary>
         /// Gets or sets the details of the jobs to be created on this
         /// schedule.
         /// </summary>
-        [JsonProperty(PropertyName = "jobSpecification")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "jobSpecification")]
         public JobSpecification JobSpecification { get; set; }
 
         /// <summary>
         /// Gets or sets a list of name-value pairs associated with the job
         /// schedule as metadata.
         /// </summary>
-        [JsonProperty(PropertyName = "metadata")]
-        public IList<MetadataItem> Metadata { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "metadata")]
+        public System.Collections.Generic.IList<MetadataItem> Metadata { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

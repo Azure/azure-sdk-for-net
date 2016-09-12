@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Get ExpressRouteCircuit operation retreives information about the
+            /// The Get ExpressRouteCircuit operation retrieves information about the
             /// specified ExpressRouteCircuit.
             /// </summary>
             /// <param name='operations'>
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Get ExpressRouteCircuit operation retreives information about the
+            /// The Get ExpressRouteCircuit operation retrieves information about the
             /// specified ExpressRouteCircuit.
             /// </summary>
             /// <param name='operations'>
@@ -235,9 +235,9 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The ListArpTable from ExpressRouteCircuit opertion retrieves the currently
-            /// advertised arp table associated with the ExpressRouteCircuits in a
-            /// resource group.
+            /// The ListArpTable from ExpressRouteCircuit operation retrieves the
+            /// currently advertised arp table associated with the ExpressRouteCircuits
+            /// in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -260,9 +260,9 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The ListArpTable from ExpressRouteCircuit opertion retrieves the currently
-            /// advertised arp table associated with the ExpressRouteCircuits in a
-            /// resource group.
+            /// The ListArpTable from ExpressRouteCircuit operation retrieves the
+            /// currently advertised arp table associated with the ExpressRouteCircuits
+            /// in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -291,9 +291,9 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The ListArpTable from ExpressRouteCircuit opertion retrieves the currently
-            /// advertised arp table associated with the ExpressRouteCircuits in a
-            /// resource group.
+            /// The ListArpTable from ExpressRouteCircuit operation retrieves the
+            /// currently advertised arp table associated with the ExpressRouteCircuits
+            /// in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -316,9 +316,9 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The ListArpTable from ExpressRouteCircuit opertion retrieves the currently
-            /// advertised arp table associated with the ExpressRouteCircuits in a
-            /// resource group.
+            /// The ListArpTable from ExpressRouteCircuit operation retrieves the
+            /// currently advertised arp table associated with the ExpressRouteCircuits
+            /// in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -347,7 +347,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The ListRoutesTable from ExpressRouteCircuit opertion retrieves the
+            /// The ListRoutesTable from ExpressRouteCircuit operation retrieves the
             /// currently advertised routes table associated with the
             /// ExpressRouteCircuits in a resource group.
             /// </summary>
@@ -372,7 +372,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The ListRoutesTable from ExpressRouteCircuit opertion retrieves the
+            /// The ListRoutesTable from ExpressRouteCircuit operation retrieves the
             /// currently advertised routes table associated with the
             /// ExpressRouteCircuits in a resource group.
             /// </summary>
@@ -403,7 +403,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The ListRoutesTable from ExpressRouteCircuit opertion retrieves the
+            /// The ListRoutesTable from ExpressRouteCircuit operation retrieves the
             /// currently advertised routes table associated with the
             /// ExpressRouteCircuits in a resource group.
             /// </summary>
@@ -428,7 +428,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The ListRoutesTable from ExpressRouteCircuit opertion retrieves the
+            /// The ListRoutesTable from ExpressRouteCircuit operation retrieves the
             /// currently advertised routes table associated with the
             /// ExpressRouteCircuits in a resource group.
             /// </summary>
@@ -459,7 +459,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The ListRoutesTable from ExpressRouteCircuit opertion retrieves the
+            /// The ListRoutesTable from ExpressRouteCircuit operation retrieves the
             /// currently advertised routes table associated with the
             /// ExpressRouteCircuits in a resource group.
             /// </summary>
@@ -484,7 +484,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The ListRoutesTable from ExpressRouteCircuit opertion retrieves the
+            /// The ListRoutesTable from ExpressRouteCircuit operation retrieves the
             /// currently advertised routes table associated with the
             /// ExpressRouteCircuits in a resource group.
             /// </summary>
@@ -515,7 +515,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The ListRoutesTable from ExpressRouteCircuit opertion retrieves the
+            /// The ListRoutesTable from ExpressRouteCircuit operation retrieves the
             /// currently advertised routes table associated with the
             /// ExpressRouteCircuits in a resource group.
             /// </summary>
@@ -540,7 +540,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The ListRoutesTable from ExpressRouteCircuit opertion retrieves the
+            /// The ListRoutesTable from ExpressRouteCircuit operation retrieves the
             /// currently advertised routes table associated with the
             /// ExpressRouteCircuits in a resource group.
             /// </summary>
@@ -571,8 +571,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Liststats ExpressRouteCircuit opertion retrieves all the stats from a
-            /// ExpressRouteCircuits in a resource group.
+            /// The List stats ExpressRouteCircuit operation retrieves all the stats from
+            /// a ExpressRouteCircuits in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -589,8 +589,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Liststats ExpressRouteCircuit opertion retrieves all the stats from a
-            /// ExpressRouteCircuits in a resource group.
+            /// The List stats ExpressRouteCircuit operation retrieves all the stats from
+            /// a ExpressRouteCircuits in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -613,8 +613,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Liststats ExpressRouteCircuit opertion retrieves all the stats from a
-            /// ExpressRouteCircuits in a resource group.
+            /// The List stats ExpressRouteCircuit operation retrieves all the stats from
+            /// a ExpressRouteCircuits in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -634,8 +634,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Liststats ExpressRouteCircuit opertion retrieves all the stats from a
-            /// ExpressRouteCircuits in a resource group.
+            /// The List stats ExpressRouteCircuit operation retrieves all the stats from
+            /// a ExpressRouteCircuits in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -661,7 +661,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List ExpressRouteCircuit opertion retrieves all the
+            /// The List ExpressRouteCircuit operation retrieves all the
             /// ExpressRouteCircuits in a resource group.
             /// </summary>
             /// <param name='operations'>
@@ -676,7 +676,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List ExpressRouteCircuit opertion retrieves all the
+            /// The List ExpressRouteCircuit operation retrieves all the
             /// ExpressRouteCircuits in a resource group.
             /// </summary>
             /// <param name='operations'>
@@ -697,7 +697,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List ExpressRouteCircuit opertion retrieves all the
+            /// The List ExpressRouteCircuit operation retrieves all the
             /// ExpressRouteCircuits in a subscription.
             /// </summary>
             /// <param name='operations'>
@@ -709,7 +709,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List ExpressRouteCircuit opertion retrieves all the
+            /// The List ExpressRouteCircuit operation retrieves all the
             /// ExpressRouteCircuits in a subscription.
             /// </summary>
             /// <param name='operations'>
@@ -727,7 +727,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List ExpressRouteCircuit opertion retrieves all the
+            /// The List ExpressRouteCircuit operation retrieves all the
             /// ExpressRouteCircuits in a resource group.
             /// </summary>
             /// <param name='operations'>
@@ -742,7 +742,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List ExpressRouteCircuit opertion retrieves all the
+            /// The List ExpressRouteCircuit operation retrieves all the
             /// ExpressRouteCircuits in a resource group.
             /// </summary>
             /// <param name='operations'>
@@ -763,7 +763,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List ExpressRouteCircuit opertion retrieves all the
+            /// The List ExpressRouteCircuit operation retrieves all the
             /// ExpressRouteCircuits in a subscription.
             /// </summary>
             /// <param name='operations'>
@@ -778,7 +778,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List ExpressRouteCircuit opertion retrieves all the
+            /// The List ExpressRouteCircuit operation retrieves all the
             /// ExpressRouteCircuits in a subscription.
             /// </summary>
             /// <param name='operations'>

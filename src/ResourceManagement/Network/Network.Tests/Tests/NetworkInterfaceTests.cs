@@ -189,6 +189,116 @@ namespace Networks.Tests
             }
         }
 
+        [Fact (Skip="It will fail in NRP because no such field exists, will enable once NRP is redeployed")]
+        
+        public void NetworkInterfaceWithAcceleratedNetworkingTest()
+        {
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);
+                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
+
+                var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/networkInterfaces");
+
+                string resourceGroupName = TestUtilities.GenerateName("csmrg");
+                resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
+                    new ResourceGroup
+                    {
+                        Location = location
+                    });
+
+                // Create Vnet
+                // Populate parameter for Put Vnet
+                string vnetName = TestUtilities.GenerateName();
+                string subnetName = TestUtilities.GenerateName();
+
+                var vnet = new VirtualNetwork()
+                {
+                    Location = location,
+
+                    AddressSpace = new AddressSpace()
+                    {
+                        AddressPrefixes = new List<string>()
+                    {
+                        "10.0.0.0/16",
+                    }
+                    },
+                    DhcpOptions = new DhcpOptions()
+                    {
+                        DnsServers = new List<string>()
+                    {
+                        "10.1.1.1",
+                        "10.1.2.4"
+                    }
+                    },
+                    Subnets = new List<Subnet>()
+                    {
+                        new Subnet()
+                        {
+                            Name = subnetName,
+                            AddressPrefix = "10.0.0.0/24",
+                        }
+                    }
+                };
+
+                var putVnetResponse = networkManagementClient.VirtualNetworks.CreateOrUpdate(resourceGroupName, vnetName, vnet);
+
+                var getSubnetResponse = networkManagementClient.Subnets.Get(resourceGroupName, vnetName, subnetName);
+
+                // Create Nic
+                string nicName = TestUtilities.GenerateName();
+                string ipConfigName = TestUtilities.GenerateName();
+
+                // IDnsSuffix is a read-only property, hence not specified below
+                var nicParameters = new NetworkInterface()
+                {
+                    Location = location,
+                    Tags = new Dictionary<string, string>()
+                        {
+                           {"key","value"}
+                        },
+                    EnableAcceleratedNetworking = true,
+                    IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
+                    {
+                        new NetworkInterfaceIPConfiguration()
+                        {
+                             Primary = true,
+                             Name = ipConfigName,
+                             PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                             PrivateIPAddressVersion = IPVersion.IPv4,
+                             Subnet = new Subnet()
+                             {
+                                 Id = getSubnetResponse.Id
+                             }
+                        },
+                    }
+                };
+
+                // Test NIC apis
+                var putNicResponse = networkManagementClient.NetworkInterfaces.CreateOrUpdate(resourceGroupName, nicName, nicParameters);
+
+                var getNicResponse = networkManagementClient.NetworkInterfaces.Get(resourceGroupName, nicName);
+                Assert.Equal(getNicResponse.Name, nicName);
+                Assert.Equal(getNicResponse.ProvisioningState, "Succeeded");
+                Assert.Null(getNicResponse.VirtualMachine);
+                Assert.Null(getNicResponse.MacAddress);
+                Assert.Equal(1, getNicResponse.IpConfigurations.Count);
+
+                // Delete Nic
+                networkManagementClient.NetworkInterfaces.Delete(resourceGroupName, nicName);
+
+                var getListNicResponse = networkManagementClient.NetworkInterfaces.List(resourceGroupName);
+                Assert.Equal(0, getListNicResponse.Count());
+
+                // Delete VirtualNetwork
+                networkManagementClient.VirtualNetworks.Delete(resourceGroupName, vnetName);
+            }
+        }
+
         [Fact]
         public void NetworkInterfaceMultiIpConfigTest()
         {

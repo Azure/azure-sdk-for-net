@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// An Azure Batch task to add.
@@ -39,19 +33,35 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the TaskAddParameter class.
         /// </summary>
-        /// <param name="id">A string that uniquely identifies the task within the job.</param>
-        /// <param name="commandLine">The command line of the task. For multi-instance tasks, the command line is executed on the primary subtask after all the subtasks have finished executing the coordianation command line.</param>
+        /// <param name="id">A string that uniquely identifies the task within
+        /// the job.</param>
+        /// <param name="commandLine">The command line of the task. For
+        /// multi-instance tasks, the command line is executed on the primary
+        /// subtask after all the subtasks have finished executing the
+        /// coordianation command line.</param>
         /// <param name="displayName">A display name for the task.</param>
-        /// <param name="exitConditions">How the Batch service should respond when the task completes.</param>
-        /// <param name="resourceFiles">A list of files that the Batch service will download to the compute node before running the command line.</param>
-        /// <param name="environmentSettings">A list of environment variable settings for the task.</param>
-        /// <param name="affinityInfo">A locality hint that can be used by the Batch service to select a compute node on which to start the new task.</param>
-        /// <param name="constraints">The execution constraints that apply to this task.</param>
-        /// <param name="runElevated">Whether to run the task in elevated mode.</param>
-        /// <param name="multiInstanceSettings">Information about how to run the multi-instance task.</param>
-        /// <param name="dependsOn">Any other tasks that this task depends on.</param>
-        /// <param name="applicationPackageReferences">A list of application packages that the Batch service will deploy to the compute node before running the command line.</param>
-        public TaskAddParameter(string id, string commandLine, string displayName = default(string), ExitConditions exitConditions = default(ExitConditions), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), AffinityInformation affinityInfo = default(AffinityInformation), TaskConstraints constraints = default(TaskConstraints), bool? runElevated = default(bool?), MultiInstanceSettings multiInstanceSettings = default(MultiInstanceSettings), TaskDependencies dependsOn = default(TaskDependencies), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>))
+        /// <param name="exitConditions">How the Batch service should respond
+        /// when the task completes.</param>
+        /// <param name="resourceFiles">A list of files that the Batch service
+        /// will download to the compute node before running the command
+        /// line.</param>
+        /// <param name="environmentSettings">A list of environment variable
+        /// settings for the task.</param>
+        /// <param name="affinityInfo">A locality hint that can be used by the
+        /// Batch service to select a compute node on which to start the new
+        /// task.</param>
+        /// <param name="constraints">The execution constraints that apply to
+        /// this task.</param>
+        /// <param name="runElevated">Whether to run the task in elevated
+        /// mode.</param>
+        /// <param name="multiInstanceSettings">Information about how to run
+        /// the multi-instance task.</param>
+        /// <param name="dependsOn">Any other tasks that this task depends
+        /// on.</param>
+        /// <param name="applicationPackageReferences">A list of application
+        /// packages that the Batch service will deploy to the compute node
+        /// before running the command line.</param>
+        public TaskAddParameter(string id, string commandLine, string displayName = default(string), ExitConditions exitConditions = default(ExitConditions), System.Collections.Generic.IList<ResourceFile> resourceFiles = default(System.Collections.Generic.IList<ResourceFile>), System.Collections.Generic.IList<EnvironmentSetting> environmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), AffinityInformation affinityInfo = default(AffinityInformation), TaskConstraints constraints = default(TaskConstraints), bool? runElevated = default(bool?), MultiInstanceSettings multiInstanceSettings = default(MultiInstanceSettings), TaskDependencies dependsOn = default(TaskDependencies), System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences = default(System.Collections.Generic.IList<ApplicationPackageReference>))
         {
             Id = id;
             DisplayName = displayName;
@@ -76,13 +86,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// including hyphens and underscores, and cannot contain more than
         /// 64 characters. It is common to use a GUID for the id.
         /// </remarks>
-        [JsonProperty(PropertyName = "id")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets a display name for the task.
         /// </summary>
-        [JsonProperty(PropertyName = "displayName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
@@ -98,14 +108,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// should invoke the shell in the command line, for example using
         /// "cmd /c MyCommand" in Windows or "/bin/sh -c MyCommand" in Linux.
         /// </remarks>
-        [JsonProperty(PropertyName = "commandLine")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "commandLine")]
         public string CommandLine { get; set; }
 
         /// <summary>
         /// Gets or sets how the Batch service should respond when the task
         /// completes.
         /// </summary>
-        [JsonProperty(PropertyName = "exitConditions")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "exitConditions")]
         public ExitConditions ExitConditions { get; set; }
 
         /// <summary>
@@ -117,68 +127,68 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// downloaded to the compute node on which the primary subtask is
         /// executed.
         /// </remarks>
-        [JsonProperty(PropertyName = "resourceFiles")]
-        public IList<ResourceFile> ResourceFiles { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "resourceFiles")]
+        public System.Collections.Generic.IList<ResourceFile> ResourceFiles { get; set; }
 
         /// <summary>
         /// Gets or sets a list of environment variable settings for the task.
         /// </summary>
-        [JsonProperty(PropertyName = "environmentSettings")]
-        public IList<EnvironmentSetting> EnvironmentSettings { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "environmentSettings")]
+        public System.Collections.Generic.IList<EnvironmentSetting> EnvironmentSettings { get; set; }
 
         /// <summary>
         /// Gets or sets a locality hint that can be used by the Batch service
         /// to select a compute node on which to start the new task.
         /// </summary>
-        [JsonProperty(PropertyName = "affinityInfo")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "affinityInfo")]
         public AffinityInformation AffinityInfo { get; set; }
 
         /// <summary>
         /// Gets or sets the execution constraints that apply to this task.
         /// </summary>
-        [JsonProperty(PropertyName = "constraints")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "constraints")]
         public TaskConstraints Constraints { get; set; }
 
         /// <summary>
         /// Gets or sets whether to run the task in elevated mode.
         /// </summary>
-        [JsonProperty(PropertyName = "runElevated")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "runElevated")]
         public bool? RunElevated { get; set; }
 
         /// <summary>
         /// Gets or sets information about how to run the multi-instance task.
         /// </summary>
-        [JsonProperty(PropertyName = "multiInstanceSettings")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "multiInstanceSettings")]
         public MultiInstanceSettings MultiInstanceSettings { get; set; }
 
         /// <summary>
         /// Gets or sets any other tasks that this task depends on.
         /// </summary>
-        [JsonProperty(PropertyName = "dependsOn")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "dependsOn")]
         public TaskDependencies DependsOn { get; set; }
 
         /// <summary>
         /// Gets or sets a list of application packages that the Batch service
         /// will deploy to the compute node before running the command line.
         /// </summary>
-        [JsonProperty(PropertyName = "applicationPackageReferences")]
-        public IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "applicationPackageReferences")]
+        public System.Collections.Generic.IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (Id == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Id");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Id");
             }
             if (CommandLine == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "CommandLine");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "CommandLine");
             }
             if (this.ResourceFiles != null)
             {

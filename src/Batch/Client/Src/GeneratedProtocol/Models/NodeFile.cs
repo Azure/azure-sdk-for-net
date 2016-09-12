@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Information about a file or directory on a compute node.
@@ -41,7 +35,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// </summary>
         /// <param name="name">The file path.</param>
         /// <param name="url">The URL of the file.</param>
-        /// <param name="isDirectory">Whether the object represents a directory.</param>
+        /// <param name="isDirectory">Whether the object represents a
+        /// directory.</param>
         /// <param name="properties">The file properties.</param>
         public NodeFile(string name = default(string), string url = default(string), bool? isDirectory = default(bool?), FileProperties properties = default(FileProperties))
         {
@@ -54,31 +49,31 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the file path.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the URL of the file.
         /// </summary>
-        [JsonProperty(PropertyName = "url")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
 
         /// <summary>
         /// Gets or sets whether the object represents a directory.
         /// </summary>
-        [JsonProperty(PropertyName = "isDirectory")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "isDirectory")]
         public bool? IsDirectory { get; set; }
 
         /// <summary>
         /// Gets or sets the file properties.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties")]
         public FileProperties Properties { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

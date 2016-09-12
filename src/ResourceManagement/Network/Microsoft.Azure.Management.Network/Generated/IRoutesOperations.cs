@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string routeTableName, string routeName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The Get route operation retreives information about the specified
+        /// The Get route operation retrieves information about the specified
         /// route from the route table.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the route.
         /// </param>
         /// <param name='routeParameters'>
-        /// Parameters supplied to the create/update routeoperation
+        /// Parameters supplied to the create/update route operation
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the route.
         /// </param>
         /// <param name='routeParameters'>
-        /// Parameters supplied to the create/update routeoperation
+        /// Parameters supplied to the create/update route operation
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<Route>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string routeTableName, string routeName, Route routeParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The List network security rule opertion retrieves all the routes
+        /// The List network security rule operation retrieves all the routes
         /// in a route table.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<IPage<Route>>> ListWithHttpMessagesAsync(string resourceGroupName, string routeTableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The List network security rule opertion retrieves all the routes
+        /// The List network security rule operation retrieves all the routes
         /// in a route table.
         /// </summary>
         /// <param name='nextPageLink'>

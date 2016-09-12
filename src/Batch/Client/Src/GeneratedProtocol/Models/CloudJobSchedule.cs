@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A job schedule that allows recurring jobs by specifying when to run
@@ -40,22 +34,34 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the CloudJobSchedule class.
         /// </summary>
-        /// <param name="id">A string that uniquely identifies the schedule within the account.</param>
-        /// <param name="displayName">The display name for the schedule.</param>
+        /// <param name="id">A string that uniquely identifies the schedule
+        /// within the account.</param>
+        /// <param name="displayName">The display name for the
+        /// schedule.</param>
         /// <param name="url">The URL of the job schedule.</param>
         /// <param name="eTag">The ETag of the job schedule.</param>
-        /// <param name="lastModified">The last modified time of the job schedule.</param>
-        /// <param name="creationTime">The creation time of the job schedule.</param>
+        /// <param name="lastModified">The last modified time of the job
+        /// schedule.</param>
+        /// <param name="creationTime">The creation time of the job
+        /// schedule.</param>
         /// <param name="state">The current state of the job schedule.</param>
-        /// <param name="stateTransitionTime">The time at which the job schedule entered the current state.</param>
-        /// <param name="previousState">The previous state of the job schedule.</param>
-        /// <param name="previousStateTransitionTime">The time at which the job schedule entered its previous state.</param>
-        /// <param name="schedule">The schedule according to which jobs will be created.</param>
-        /// <param name="jobSpecification">The details of the jobs to be created on this schedule.</param>
-        /// <param name="executionInfo">Information about jobs that have been and will be run under this schedule.</param>
-        /// <param name="metadata">A list of name-value pairs associated with the schedule as metadata.</param>
-        /// <param name="stats">The lifetime resource usage statistics for the job schedule.</param>
-        public CloudJobSchedule(string id = default(string), string displayName = default(string), string url = default(string), string eTag = default(string), DateTime? lastModified = default(DateTime?), DateTime? creationTime = default(DateTime?), JobScheduleState? state = default(JobScheduleState?), DateTime? stateTransitionTime = default(DateTime?), JobScheduleState? previousState = default(JobScheduleState?), DateTime? previousStateTransitionTime = default(DateTime?), Schedule schedule = default(Schedule), JobSpecification jobSpecification = default(JobSpecification), JobScheduleExecutionInformation executionInfo = default(JobScheduleExecutionInformation), IList<MetadataItem> metadata = default(IList<MetadataItem>), JobScheduleStatistics stats = default(JobScheduleStatistics))
+        /// <param name="stateTransitionTime">The time at which the job
+        /// schedule entered the current state.</param>
+        /// <param name="previousState">The previous state of the job
+        /// schedule.</param>
+        /// <param name="previousStateTransitionTime">The time at which the
+        /// job schedule entered its previous state.</param>
+        /// <param name="schedule">The schedule according to which jobs will
+        /// be created.</param>
+        /// <param name="jobSpecification">The details of the jobs to be
+        /// created on this schedule.</param>
+        /// <param name="executionInfo">Information about jobs that have been
+        /// and will be run under this schedule.</param>
+        /// <param name="metadata">A list of name-value pairs associated with
+        /// the schedule as metadata.</param>
+        /// <param name="stats">The lifetime resource usage statistics for the
+        /// job schedule.</param>
+        public CloudJobSchedule(string id = default(string), string displayName = default(string), string url = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), JobScheduleState? state = default(JobScheduleState?), System.DateTime? stateTransitionTime = default(System.DateTime?), JobScheduleState? previousState = default(JobScheduleState?), System.DateTime? previousStateTransitionTime = default(System.DateTime?), Schedule schedule = default(Schedule), JobSpecification jobSpecification = default(JobSpecification), JobScheduleExecutionInformation executionInfo = default(JobScheduleExecutionInformation), System.Collections.Generic.IList<MetadataItem> metadata = default(System.Collections.Generic.IList<MetadataItem>), JobScheduleStatistics stats = default(JobScheduleStatistics))
         {
             Id = id;
             DisplayName = displayName;
@@ -81,38 +87,38 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// It is common to use a GUID for the id.
         /// </remarks>
-        [JsonProperty(PropertyName = "id")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets the display name for the schedule.
         /// </summary>
-        [JsonProperty(PropertyName = "displayName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
         /// Gets or sets the URL of the job schedule.
         /// </summary>
-        [JsonProperty(PropertyName = "url")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
 
         /// <summary>
         /// Gets or sets the ETag of the job schedule.
         /// </summary>
-        [JsonProperty(PropertyName = "eTag")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "eTag")]
         public string ETag { get; set; }
 
         /// <summary>
         /// Gets or sets the last modified time of the job schedule.
         /// </summary>
-        [JsonProperty(PropertyName = "lastModified")]
-        public DateTime? LastModified { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "lastModified")]
+        public System.DateTime? LastModified { get; set; }
 
         /// <summary>
         /// Gets or sets the creation time of the job schedule.
         /// </summary>
-        [JsonProperty(PropertyName = "creationTime")]
-        public DateTime? CreationTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "creationTime")]
+        public System.DateTime? CreationTime { get; set; }
 
         /// <summary>
         /// Gets or sets the current state of the job schedule.
@@ -121,15 +127,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Possible values include: 'active', 'completed', 'disabled',
         /// 'terminating', 'deleting'
         /// </remarks>
-        [JsonProperty(PropertyName = "state")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "state")]
         public JobScheduleState? State { get; set; }
 
         /// <summary>
         /// Gets or sets the time at which the job schedule entered the
         /// current state.
         /// </summary>
-        [JsonProperty(PropertyName = "stateTransitionTime")]
-        public DateTime? StateTransitionTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "stateTransitionTime")]
+        public System.DateTime? StateTransitionTime { get; set; }
 
         /// <summary>
         /// Gets or sets the previous state of the job schedule.
@@ -138,54 +144,54 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Possible values include: 'active', 'completed', 'disabled',
         /// 'terminating', 'deleting'
         /// </remarks>
-        [JsonProperty(PropertyName = "previousState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "previousState")]
         public JobScheduleState? PreviousState { get; set; }
 
         /// <summary>
         /// Gets or sets the time at which the job schedule entered its
         /// previous state.
         /// </summary>
-        [JsonProperty(PropertyName = "previousStateTransitionTime")]
-        public DateTime? PreviousStateTransitionTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "previousStateTransitionTime")]
+        public System.DateTime? PreviousStateTransitionTime { get; set; }
 
         /// <summary>
         /// Gets or sets the schedule according to which jobs will be created.
         /// </summary>
-        [JsonProperty(PropertyName = "schedule")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "schedule")]
         public Schedule Schedule { get; set; }
 
         /// <summary>
         /// Gets or sets the details of the jobs to be created on this
         /// schedule.
         /// </summary>
-        [JsonProperty(PropertyName = "jobSpecification")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "jobSpecification")]
         public JobSpecification JobSpecification { get; set; }
 
         /// <summary>
         /// Gets or sets information about jobs that have been and will be run
         /// under this schedule.
         /// </summary>
-        [JsonProperty(PropertyName = "executionInfo")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "executionInfo")]
         public JobScheduleExecutionInformation ExecutionInfo { get; set; }
 
         /// <summary>
         /// Gets or sets a list of name-value pairs associated with the
         /// schedule as metadata.
         /// </summary>
-        [JsonProperty(PropertyName = "metadata")]
-        public IList<MetadataItem> Metadata { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "metadata")]
+        public System.Collections.Generic.IList<MetadataItem> Metadata { get; set; }
 
         /// <summary>
         /// Gets or sets the lifetime resource usage statistics for the job
         /// schedule.
         /// </summary>
-        [JsonProperty(PropertyName = "stats")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "stats")]
         public JobScheduleStatistics Stats { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

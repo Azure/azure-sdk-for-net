@@ -18,39 +18,36 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ComputeNodeState.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum ComputeNodeState
     {
-        [EnumMember(Value = "idle")]
+        [System.Runtime.Serialization.EnumMember(Value = "idle")]
         Idle,
-        [EnumMember(Value = "rebooting")]
+        [System.Runtime.Serialization.EnumMember(Value = "rebooting")]
         Rebooting,
-        [EnumMember(Value = "reimaging")]
+        [System.Runtime.Serialization.EnumMember(Value = "reimaging")]
         Reimaging,
-        [EnumMember(Value = "running")]
+        [System.Runtime.Serialization.EnumMember(Value = "running")]
         Running,
-        [EnumMember(Value = "unusable")]
+        [System.Runtime.Serialization.EnumMember(Value = "unusable")]
         Unusable,
-        [EnumMember(Value = "creating")]
+        [System.Runtime.Serialization.EnumMember(Value = "creating")]
         Creating,
-        [EnumMember(Value = "starting")]
+        [System.Runtime.Serialization.EnumMember(Value = "starting")]
         Starting,
-        [EnumMember(Value = "waitingforstarttask")]
+        [System.Runtime.Serialization.EnumMember(Value = "waitingforstarttask")]
         Waitingforstarttask,
-        [EnumMember(Value = "starttaskfailed")]
+        [System.Runtime.Serialization.EnumMember(Value = "starttaskfailed")]
         Starttaskfailed,
-        [EnumMember(Value = "unknown")]
+        [System.Runtime.Serialization.EnumMember(Value = "unknown")]
         Unknown,
-        [EnumMember(Value = "leavingpool")]
+        [System.Runtime.Serialization.EnumMember(Value = "leavingpool")]
         Leavingpool,
-        [EnumMember(Value = "offline")]
+        [System.Runtime.Serialization.EnumMember(Value = "offline")]
         Offline
     }
 }

@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-﻿namespace ObjectModelCodeGenerator
+namespace ObjectModelCodeGenerator
 {
     using System.Collections.Generic;
     using System.IO;
@@ -34,8 +34,16 @@
             var inputFile = @"BatchProperties.json";
             var model = new FileReader(inputFile).ReadTypes();
 
+            var seen = new HashSet<string>();
+
             foreach (var type in model.Types)
             {
+                if (seen.Contains(type.Name))
+                {
+                    System.Console.WriteLine($"Duplicate type in {inputFile}: {type.Name}");
+                }
+                seen.Add(type.Name);
+
                 string outputDirectory = "../../../../../src/Generated";
                 string outputFilePath = Path.Combine(outputDirectory, type.Name + ".cs");
 
