@@ -189,7 +189,8 @@ namespace Networks.Tests
             }
         }
 
-        [Fact]
+        [Fact (Skip="It will fail in NRP because no such field exists, will enable once NRP is redeployed")]
+        
         public void NetworkInterfaceWithAcceleratedNetworkingTest()
         {
             var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -260,7 +261,7 @@ namespace Networks.Tests
                         {
                            {"key","value"}
                         },
-                    AcceleratedNetworkingEnabled = true,
+                    EnableAcceleratedNetworking = true,
                     IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
                     {
                         new NetworkInterfaceIPConfiguration()
