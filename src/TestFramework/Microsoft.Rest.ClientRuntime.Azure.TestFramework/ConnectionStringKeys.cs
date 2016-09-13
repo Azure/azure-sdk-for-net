@@ -104,7 +104,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// <summary>
         /// The key inside the connection string for the RDFE Portal URI
         /// </summary>
-        public const string RdfePortalUriKey = "RdfePortalUri";
+        //public const string RdfePortalUriKey = "RdfePortalUri";
 
         /// <summary>
         /// The key inside the connection string for the DataLake FileSystem URI suffix
@@ -120,6 +120,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// Endpoint to use for AAD authentication
         /// </summary>
         public const string AADAuthenticationEndpointKey = "AADAuthEndpoint";
+
+        public const string GraphTokenAudienceUriKey = "GraphTokenAudienceUri";
 
         #endregion
     }

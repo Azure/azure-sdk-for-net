@@ -158,13 +158,20 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// </summary>
         private void SetupHttpRecorderMode()
         {
-            string testMode = this.ConnectionString.GetValue(ConnectionStringKeys.HttpRecorderModeKey);
+            string testMode = Environment.GetEnvironmentVariable("AZURE_TEST_MODE");
+
+            if (string.IsNullOrEmpty(testMode))
+            {   
+                testMode = this.ConnectionString.GetValue(ConnectionStringKeys.HttpRecorderModeKey);
+            }
+
             HttpRecorderMode recorderMode;
             //Ideally we should be throwing when incompatible environment (e.g. Environment=Foo) is provided in connection string
             //But currently we do not throw
             if (Enum.TryParse<HttpRecorderMode>(testMode, out recorderMode))
             {
                 HttpMockServer.Mode = recorderMode;
+
             }
             else
             {

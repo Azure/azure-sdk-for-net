@@ -129,12 +129,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// <param name="connString">User provided connection string</param>
         internal TestEndpoints(TestEndpoints testEndpoint, ConnectionString connString): this(testEndpoint)
         {
-            //FIND OUT MAPPING FROM CONNECTION STRING
-            //if (!string.IsNullOrEmpty(connString.GetValue(ConnectionStringKeys.RdfePortalUriKey)))
-            //{
-            //    ServiceManagementUri = new Uri(connString.GetValue(ConnectionStringKeys.RdfePortalUriKey));
-            //}
-
             if (!string.IsNullOrEmpty(connString.GetValue(ConnectionStringKeys.BaseUriKey)))
             {
                 ResourceManagementUri = new Uri(connString.GetValue(ConnectionStringKeys.BaseUriKey));
@@ -153,11 +147,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             if (!string.IsNullOrEmpty(connString.GetValue(ConnectionStringKeys.AADAuthenticationEndpointKey)))
             {
                 AADAuthUri = new Uri(connString.GetValue(ConnectionStringKeys.AADAuthenticationEndpointKey));
-            }
-
-            if (!string.IsNullOrEmpty(connString.GetValue(ConnectionStringKeys.RdfePortalUriKey)))
-            {
-                RdfePortalUri = new Uri(connString.GetValue(ConnectionStringKeys.RdfePortalUriKey));
             }
 
             if (!string.IsNullOrEmpty(connString.GetValue(ConnectionStringKeys.IbizaPortalUriKey)))
@@ -180,10 +169,10 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 AADTokenAudienceUri = new Uri(connString.GetValue(ConnectionStringKeys.AADTokenAudienceUriKey));
             }
 
-            //if (!string.IsNullOrEmpty(connString.GetValue(ConnectionStringKeys.RawGraphTokenKey)))
-            //{
-            //    GraphTokenAudienceUri = new Uri(connString.GetValue(ConnectionStringKeys.RawGraphTokenKey));
-            //}
+            if (!string.IsNullOrEmpty(connString.GetValue(ConnectionStringKeys.GraphTokenAudienceUriKey)))
+            {
+                GraphTokenAudienceUri = new Uri(connString.GetValue(ConnectionStringKeys.GraphTokenAudienceUriKey));
+            }
 
         }
 

@@ -5,6 +5,7 @@ namespace TestFramework.Tests.TestEnvironment
 {
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Text;
     using Xunit;
 
@@ -81,6 +82,7 @@ namespace TestFramework.Tests.TestEnvironment
         [Fact]
         public void KeyValueWithEqualSignString()
         {
+            //[SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine")]
             string keyValWithEqualSign = @"ServicePrincipal=Hello;ServicePrincipalSecret=234ghyu=;Password=He====;UserId===========";
             ConnectionString cs = new ConnectionString(keyValWithEqualSign);
             Assert.Equal(string.Empty, connStr.ParseErrors);
@@ -95,6 +97,7 @@ namespace TestFramework.Tests.TestEnvironment
         [Fact]
         public void ClientIdButNotSPN()
         {
+            //[SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine")]
             string clientIdButNoSPN = @"AADClientId=alsdkfjalakdsjflasdj;AADTenant=asdlkfjalsdkjflaksdj;Password=laksdjlfsd00980980=";
             connStr.Parse(clientIdButNoSPN);
             Assert.Equal(string.Empty, connStr.ParseErrors);
@@ -106,6 +109,7 @@ namespace TestFramework.Tests.TestEnvironment
         [Fact]
         public void UserIdAndPasswordButNoSPNSecret()
         {
+            //[SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine")]
             string clientIdButNoSPN = @"AADClientId=alsdkfjalakdsjflasdj;UserId=Hello@world.com;Password=laksdjlfsd00980980=";
             connStr.Parse(clientIdButNoSPN);
             Assert.Equal(string.Empty, connStr.ParseErrors);
