@@ -16,8 +16,6 @@
 
 namespace NotificationHubs.Tests.ScenarioTests
 {
-    using Microsoft.Azure.Management.NotificationHubs;
-    using Microsoft.Azure.Management.NotificationHubs.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using TestHelper;
     using System;
@@ -26,6 +24,8 @@ namespace NotificationHubs.Tests.ScenarioTests
     using System.Net;
     using Microsoft.Rest.Azure;
     using System.Linq;
+    using Models;
+
     public partial class ScenarioTests 
     {
         [Fact]
@@ -48,26 +48,20 @@ namespace NotificationHubs.Tests.ScenarioTests
                 var createNamespaceResponse = NotificationHubsManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
                     new NamespaceCreateOrUpdateParameters()
                     {
-                        Location = location,
-                        Properties = new NamespaceProperties()
-                        {
-                            NamespaceType = NamespaceType.NotificationHub
-                        }
+                        Location = location
                     });
 
                 Assert.NotNull(createNamespaceResponse);
                 Assert.Equal(createNamespaceResponse.Name, namespaceName);
 
-                TestUtilities.Wait(TimeSpan.FromSeconds(30));
+                ActivateNamespace(resourceGroup, namespaceName);
 
                 //Get the created namespace
                 var getNamespaceResponse = NotificationHubsManagementClient.Namespaces.Get(resourceGroup, namespaceName);
                 Assert.NotNull(getNamespaceResponse);
-                if (string.Compare(getNamespaceResponse.Properties.ProvisioningState, "Succeeded", true) != 0)
-                    TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
-                Assert.Equal("Succeeded", getNamespaceResponse.Properties.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
-                Assert.Equal("Active", getNamespaceResponse.Properties.Status, StringComparer.CurrentCultureIgnoreCase);
+                Assert.Equal("Succeeded", getNamespaceResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
+                Assert.Equal("Active", getNamespaceResponse.Status, StringComparer.CurrentCultureIgnoreCase);
 
                 //Create a notificationHub
                 var notificationHubList = CreateNotificationHubs(location, resourceGroup, namespaceName, 1);
@@ -95,50 +89,42 @@ namespace NotificationHubs.Tests.ScenarioTests
                             {"tag2", "value2"},
                             {"tag3", "value3"},
                         },
-                    Properties = new NotificationHubProperties()
+
+                    WnsCredential = new WnsCredential()
                     {
-                        WnsCredential = new WnsCredential()
-                        {
-                            Properties = new WnsCredentialProperties()
-                            {
-                                PackageSid = "ms-app://s-1-15-2-1817505189-427745171-3213743798-2985869298-800724128-1004923984-4143860699",
-                                SecretKey = "w7TBprR-9tJxn9mUOdK4PPHLCAzSYFhp",
-                                WindowsLiveEndpoint = @"http://pushtestservice.cloudapp.net/LiveID/accesstoken.srf"
-                            }
-                        }
+                        PackageSid = "ms-app://s-1-15-2-1817505189-427745171-3213743798-2985869298-800724128-1004923984-4143860699",
+                        SecretKey = "w7TBprR-9tJxn9mUOdK4PPHLCAzSYFhp",
+                        WindowsLiveEndpoint = @"http://pushtestservice.cloudapp.net/LiveID/accesstoken.srf"
                     }
                 };
 
                 var jsonStr = NotificationHubsManagementHelper.ConvertObjectToJSon(updateNotificationHubParameter);
 
-                ////We are removing the dependency of the header "if-match:*" when trying to update
-                ////Will uncomment this test after the fix goes out 
-                //var updateNotificationHubResponse = NotificationHubsManagementClient.NotificationHubs.CreateOrUpdate(resourceGroup, namespaceName,
-                //                                                    notificationHubName, updateNotificationHubParameter);
+                var updateNotificationHubResponse = NotificationHubsManagementClient.NotificationHubs.CreateOrUpdate(resourceGroup, namespaceName,
+                                                                    notificationHubName, updateNotificationHubParameter);
 
-                //Assert.NotNull(updateNotificationHubResponse);
+                Assert.NotNull(updateNotificationHubResponse);
 
-                //TestUtilities.Wait(TimeSpan.FromSeconds(30));
+                TestUtilities.Wait(TimeSpan.FromSeconds(30));
 
                 //Get the updated notificationHub
-                //getNotificationHubResponse = NotificationHubsManagementClient.NotificationHubs.Get(resourceGroup, namespaceName, notificationHubName);
-                //Assert.NotNull(getNotificationHubResponse);
-                //Assert.Equal(getNotificationHubResponse.Tags.Count, 3);
-                //foreach (var tag in updateNotificationHubParameter.Tags)
-                //{
-                //    Assert.True(getNotificationHubResponse.Tags.Any(t => t.Key.Equals(tag.Key)));
-                //    Assert.True(getNotificationHubResponse.Tags.Any(t => t.Value.Equals(tag.Value)));
-                //}
+                getNotificationHubResponse = NotificationHubsManagementClient.NotificationHubs.Get(resourceGroup, namespaceName, notificationHubName);
+                Assert.NotNull(getNotificationHubResponse);
+                Assert.Equal(getNotificationHubResponse.Tags.Count, 3);
+                foreach (var tag in updateNotificationHubParameter.Tags)
+                {
+                    Assert.True(getNotificationHubResponse.Tags.Any(t => t.Key.Equals(tag.Key)));
+                    Assert.True(getNotificationHubResponse.Tags.Any(t => t.Value.Equals(tag.Value)));
+                }
 
                 //Get the updated notificationHub PNSCredentials
                 var getNotificationHubPnsCredentialsResponse = NotificationHubsManagementClient.NotificationHubs.GetPnsCredentials(resourceGroup, namespaceName, notificationHubName);
                 Assert.NotNull(getNotificationHubPnsCredentialsResponse);
                 Assert.Equal(notificationHubName, getNotificationHubPnsCredentialsResponse.Name);
-                Assert.NotNull(getNotificationHubPnsCredentialsResponse.Properties);
-                Assert.NotNull(getNotificationHubPnsCredentialsResponse.Properties.WnsCredential);
-                Assert.Equal(getNotificationHubPnsCredentialsResponse.Properties.WnsCredential.Properties.PackageSid, updateNotificationHubParameter.Properties.WnsCredential.Properties.PackageSid);
-                Assert.Equal(getNotificationHubPnsCredentialsResponse.Properties.WnsCredential.Properties.SecretKey, updateNotificationHubParameter.Properties.WnsCredential.Properties.SecretKey);
-                Assert.Equal(getNotificationHubPnsCredentialsResponse.Properties.WnsCredential.Properties.WindowsLiveEndpoint, updateNotificationHubParameter.Properties.WnsCredential.Properties.WindowsLiveEndpoint);
+                Assert.NotNull(getNotificationHubPnsCredentialsResponse.WnsCredential);
+                Assert.Equal(getNotificationHubPnsCredentialsResponse.WnsCredential.PackageSid, updateNotificationHubParameter.WnsCredential.PackageSid);
+                Assert.Equal(getNotificationHubPnsCredentialsResponse.WnsCredential.SecretKey, updateNotificationHubParameter.WnsCredential.SecretKey);
+                Assert.Equal(getNotificationHubPnsCredentialsResponse.WnsCredential.WindowsLiveEndpoint, updateNotificationHubParameter.WnsCredential.WindowsLiveEndpoint);
 
 
                 //Delete notificationHub
@@ -181,17 +167,11 @@ namespace NotificationHubs.Tests.ScenarioTests
                 var parameter = new NotificationHubCreateOrUpdateParameters()
                 {
                     Location = location,
-                    Properties = new NotificationHubProperties()
+                    WnsCredential = new WnsCredential()
                     {
-                        WnsCredential = new WnsCredential()
-                        {
-                            Properties = new WnsCredentialProperties()
-                            {
-                                PackageSid = "ms-app://s-1-15-2-1817505189-427745171-3213743798-2985869298-800724128-1004923984-4143860699",
-                                SecretKey = "w7TBprR-9tJxn9mUOdK4PPHLCAzSYFhp",
-                                WindowsLiveEndpoint = @"http://pushtestservice.cloudapp.net/LiveID/accesstoken.srf"
-                            }
-                        }
+                        PackageSid = "ms-app://s-1-15-2-1817505189-427745171-3213743798-2985869298-800724128-1004923984-4143860699",
+                        SecretKey = "w7TBprR-9tJxn9mUOdK4PPHLCAzSYFhp",
+                        WindowsLiveEndpoint = @"http://pushtestservice.cloudapp.net/LiveID/accesstoken.srf"
                     }
                 };
 

@@ -7,20 +7,17 @@ namespace NotificationHubs.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters supplied to the Check Name Availability for Namespace and
-    /// NotificationHubs.
+    /// Description of a CheckAvailibility resource.
     /// </summary>
-    public partial class CheckAvailabilityParameters : Resource
+    public partial class CheckAvailabilityResult : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the CheckAvailabilityParameters
-        /// class.
+        /// Initializes a new instance of the CheckAvailabilityResult class.
         /// </summary>
-        public CheckAvailabilityParameters() { }
+        public CheckAvailabilityResult() { }
 
         /// <summary>
-        /// Initializes a new instance of the CheckAvailabilityParameters
-        /// class.
+        /// Initializes a new instance of the CheckAvailabilityResult class.
         /// </summary>
         /// <param name="location">Resource location</param>
         /// <param name="id">Resource Id</param>
@@ -30,7 +27,7 @@ namespace NotificationHubs.Models
         /// <param name="isAvailiable">True if the name is available and can
         /// be used to create new Namespace/NotificationHub. Otherwise
         /// false.</param>
-        public CheckAvailabilityParameters(string location, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), bool? isAvailiable = default(bool?))
+        public CheckAvailabilityResult(string location, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), bool? isAvailiable = default(bool?))
             : base(location, id, name, type, tags)
         {
             IsAvailiable = isAvailiable;

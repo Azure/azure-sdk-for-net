@@ -16,13 +16,12 @@
 
 namespace NotificationHubs.Tests.ScenarioTests
 {
-    using Microsoft.Azure.Management.NotificationHubs;
-    using Microsoft.Azure.Management.NotificationHubs.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using System;
     using System.Net;
     using TestHelper;
     using Xunit;
+    using Models;
 
     public partial class ScenarioTests 
     {
@@ -34,12 +33,12 @@ namespace NotificationHubs.Tests.ScenarioTests
                 InitializeClients(context);
 
                 var validNamespaceName = TestUtilities.GenerateName(NotificationHubsManagementHelper.NamespacePrefix);
-                var response = NotificationHubsManagementClient.Namespaces.CheckAvailability(new CheckAvailabilityParameters(validNamespaceName));
+                var response = NotificationHubsManagementClient.Namespaces.CheckAvailability(new CheckAvailabilityParameters(NotificationHubsManagementHelper.DefaultLocation, name:validNamespaceName));
                 Assert.NotNull(response);
                 Assert.True(response.IsAvailiable);
 
                 const string invalidNamespaceName = "hydraNhNamespace-invalid@!!#%$#";
-                response = NotificationHubsManagementClient.Namespaces.CheckAvailability(new CheckAvailabilityParameters(invalidNamespaceName));
+                response = NotificationHubsManagementClient.Namespaces.CheckAvailability(new CheckAvailabilityParameters(NotificationHubsManagementHelper.DefaultLocation, name:invalidNamespaceName));
                 Assert.NotNull(response);
                 Assert.False(response.IsAvailiable);
 
@@ -54,16 +53,13 @@ namespace NotificationHubs.Tests.ScenarioTests
 
                 var createResponse = NotificationHubsManagementClient.Namespaces.CreateOrUpdate(resourceGroup, validNamespaceName,
                     new NamespaceCreateOrUpdateParameters(
-                    location,
-                    new NamespaceProperties
-                    {
-                        NamespaceType = NamespaceType.NotificationHub,
-                    }));
+                    location
+                   ));
 
                 Assert.NotNull(createResponse);
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(30));
-                response = NotificationHubsManagementClient.Namespaces.CheckAvailability(new CheckAvailabilityParameters(validNamespaceName));
+                response = NotificationHubsManagementClient.Namespaces.CheckAvailability(new CheckAvailabilityParameters(NotificationHubsManagementHelper.DefaultLocation, name:validNamespaceName));
                 Assert.NotNull(response);
                 Assert.False(response.IsAvailiable);
                                

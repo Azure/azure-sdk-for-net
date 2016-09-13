@@ -15,11 +15,11 @@
 
 namespace NotificationHubs.Tests.ScenarioTests
 {
-    using Microsoft.Azure.Management.NotificationHubs;
     using Microsoft.Azure.Management.Resources;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using TestHelper;
     using System.Net;
+    using System;    
 
     public partial class ScenarioTests 
     {
@@ -78,6 +78,17 @@ namespace NotificationHubs.Tests.ScenarioTests
 
             NamespaceName = TestUtilities.GenerateName(NotificationHubsManagementHelper.NamespacePrefix);
             this.NotificationHubsManagementClient.TryCreateNamespace(ResourceGroupName, NamespaceName, Location);
-        }        
+        }
+
+        public bool ActivateNamespace(string resourceGroup, string namespaceName)
+        {
+            while (true)
+            {
+                var getNamespaceResponse = NotificationHubsManagementClient.Namespaces.Get(resourceGroup, namespaceName);
+
+                if (getNamespaceResponse.ProvisioningState.Equals("Succeeded", StringComparison.CurrentCultureIgnoreCase))
+                    return true;
+            }
+        }
     }
 }

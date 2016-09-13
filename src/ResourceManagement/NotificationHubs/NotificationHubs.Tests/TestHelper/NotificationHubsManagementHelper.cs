@@ -17,8 +17,6 @@ namespace NotificationHubs.Tests.TestHelper
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.Azure.Management.NotificationHubs;
-    using Microsoft.Azure.Management.NotificationHubs.Models;
     using Microsoft.Azure.Management.Resources;
     using Microsoft.Azure.Management.Resources.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
@@ -27,11 +25,12 @@ namespace NotificationHubs.Tests.TestHelper
     using System.Threading.Tasks;
     using Newtonsoft.Json.Serialization;
     using Newtonsoft.Json.Converters;
+    using Models;
 
     public static class NotificationHubsManagementHelper
     {
         internal const string DefaultLocation = "South Central US";
-        internal const string ResourceGroupPrefix = "NotificationHub-RG";
+        internal const string ResourceGroupPrefix = "TestRg-NH";//"TestRG-Smithab-NewAD";
         internal const string NamespacePrefix = "HydraNH-Namespace";
         internal const string NotificationHubPrefix = "HydraNH-NotificationHub";
         internal const string AuthorizationRulesPrefix = "HydraNH-Authrules";
@@ -86,7 +85,12 @@ namespace NotificationHubs.Tests.TestHelper
         {
             resourceManagementClient.ResourceGroups.CreateOrUpdate(resourceGroupName, new ResourceGroup(location));
         }
-        
+
+        public static void TryDeleteResourceGroup(this ResourceManagementClient resourceManagementClient, string resourceGroupName)
+        {
+            resourceManagementClient.ResourceGroups.Delete(resourceGroupName);
+        }
+
         public static void TryCreateNamespace(
             this NotificationHubsManagementClient client,
             string resourceGroupName,
@@ -96,16 +100,12 @@ namespace NotificationHubs.Tests.TestHelper
         {
             var namespaceParameter = new NamespaceCreateOrUpdateParameters()
             {
-                Location = location,
-                Properties = new NamespaceProperties
-                {
-                    NamespaceType = NamespaceType.NotificationHub
-                }
+                Location = location
             };
 
             if (!string.IsNullOrEmpty(scaleUnit))
             {
-                namespaceParameter.Properties.ScaleUnit = scaleUnit;
+                namespaceParameter.ScaleUnit = scaleUnit;
             }
 
             client.Namespaces.CreateOrUpdate(
@@ -152,6 +152,5 @@ namespace NotificationHubs.Tests.TestHelper
             },
             ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
         };
-
     }
 }
