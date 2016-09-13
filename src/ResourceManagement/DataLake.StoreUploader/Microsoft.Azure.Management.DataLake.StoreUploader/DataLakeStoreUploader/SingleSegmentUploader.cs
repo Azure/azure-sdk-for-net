@@ -14,6 +14,7 @@
 // limitations under the License.
 // 
 
+using Microsoft.Azure.Management.DataLake.Store.Models;
 using System;
 using System.IO;
 using System.Text;
@@ -205,8 +206,6 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             {
                 UploadBuffer(buffer, residualBufferLength, bytesCopiedSoFar);
             }
-
-            buffer = null;
         }
 
         /// <summary>
@@ -272,6 +271,29 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     uploadCompleted = true;
                     targetStreamOffset += bytesToCopy;
                     ReportProgress(targetStreamOffset, false);
+                }
+                catch (AdlsErrorException e)
+                {
+                    if (e.Body.RemoteException is AdlsBadOffsetException)
+                    {
+                        // this means we tried to re-upload at the same location and the upload actually succeeded, which means we should move on.
+                        uploadCompleted = true;
+                        targetStreamOffset += bytesToCopy;
+                        ReportProgress(targetStreamOffset, false);
+                    }
+                    else
+                    {
+                        //if we tried more than the number of times we were allowed to, give up and throw the exception
+                        if (attemptCount >= MaxBufferUploadAttemptCount)
+                        {
+                            ReportProgress(targetStreamOffset, true);
+                            throw;
+                        }
+                        else
+                        {
+                            WaitForRetry(attemptCount, this.UseBackOffRetryStrategy, _token);
+                        }
+                    }
                 }
                 catch
                 {

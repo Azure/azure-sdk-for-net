@@ -154,21 +154,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
         {
             if (isDownload)
             {
-                using (var targetStream = new FileStream(targetStreamPath, FileMode.CreateNew))
+                if (isDownload)
                 {
-                    foreach (var inputPath in inputStreamPaths)
+                    if (inputStreamPaths.Length != 2)
                     {
-                        using (var inputStream = File.OpenRead(inputPath))
-                        {
-                            inputStream.CopyTo(targetStream);
-                        }
+                        throw new InvalidOperationException(string.Format("Invalid list of stream paths for download finalization. Expected Paths: 2. Actual paths: {0}", inputStreamPaths.Length));
                     }
-                }
 
-                // clean up all the files only in the event of success.
-                foreach (var inputPath in inputStreamPaths)
-                {
-                    File.Delete(inputPath);
+                    File.Move(inputStreamPaths[0], inputStreamPaths[1]);
                 }
             }
             else

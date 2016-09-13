@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             // download the data
             DownloadSegmentContents();
 
-            VerifyDownloadedStream();
+            // VerifyDownloadedStream();
             //any exceptions are (re)thrown to be handled by the caller; we do not handle retries or other recovery techniques here
         }
 
@@ -169,8 +169,13 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             // set the length remaining to ensure that only the exact number of bytes is ultimately downloaded
             // for this segment.
             var lengthRemaining = _segmentMetadata.Length;
-            using (var outputStream = new FileStream(_segmentMetadata.Path, FileMode.Create))
+
+            // for multi-segment files we append "inprogress" to indicate that the file is not yet ready for use. 
+            // This also protects the user from unintentionally using the file after a failed download.
+            var streamName = _metadata.SegmentCount > 1 ? string.Format("{0}.inprogress", _metadata.TargetStreamPath) : _metadata.TargetStreamPath;
+            using (var outputStream = new FileStream(streamName, FileMode.Open, FileAccess.Write, FileShare.ReadWrite))
             {
+                outputStream.Seek(curOffset, SeekOrigin.Begin);
                 for (int i = 0; i < numRequests; i++)
                 {
                     _token.ThrowIfCancellationRequested();
@@ -191,7 +196,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
                             using (var readStream = _frontEnd.ReadStream(_metadata.InputFilePath, curOffset, lengthToDownload, _metadata.IsDownload))
                             {
-                                readStream.CopyTo(outputStream, (int)BufferLength);
+                                readStream.CopyTo(outputStream, (int)lengthToDownload);
                             }
 
                             downloadCompleted = true;
@@ -211,9 +216,9 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                             else
                             {
                                 WaitForRetry(attemptCount, this.UseBackOffRetryStrategy, _token);
-                                
+
                                 // forcibly put the stream back to where it should be based on where we think we are in the download.
-                                outputStream.Seek(localOffset, SeekOrigin.Begin); 
+                                outputStream.Seek(curOffset, SeekOrigin.Begin);
                             }
                         }
                     }
