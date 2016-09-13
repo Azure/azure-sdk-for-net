@@ -1,4 +1,7 @@
-﻿namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 {
     using System;
     using System.Collections.Generic;
@@ -14,16 +17,14 @@
     public class ConnectionString
     {
         #region fields
-        Dictionary<string, string> _keyValuePairs;
-        string _connString;
-        StringBuilder _parseErrorSb;
+        private Dictionary<string, string> _keyValuePairs;
+        private string _connString;
+        private StringBuilder _parseErrorSb;
         #endregion
 
         #region Properties
 
         private bool CheckViolation { get; set; }
-
-        
 
         /// <summary>
         /// Represents key values pairs for the parsed connection string
@@ -73,14 +74,19 @@
         #endregion
 
         #region Constructor/Init
+        /// <summary>
+        /// Initialize data
+        /// </summary>
         void Init()
         {
-            List<string> connectionKeyNames = (from fi in typeof(ConnectionStringKeys).GetFields(BindingFlags.Public | BindingFlags.Static) select fi.GetRawConstantValue().ToString()).ToList<string>();
+            List<string> connectionKeyNames = (from fi in typeof(ConnectionStringKeys)
+                                               .GetFields(BindingFlags.Public | BindingFlags.Static)
+                                               select fi.GetRawConstantValue().ToString()).ToList<string>();
             connectionKeyNames.ForEach((li) => KeyValuePairs.Add(li.ToLower(), string.Empty));
         }
         
         /// <summary>
-        /// 
+        /// Constructor
         /// </summary>
         public ConnectionString()
         {
@@ -94,11 +100,16 @@
         public ConnectionString(string connString) : this(connString, true)
         { }
 
+        /// <summary>
+        /// Constructs ConnectionString based on provided connection string
+        /// </summary>
+        /// <param name="connString">Connection string</param>
+        /// <param name="checkViolation">Violation checks in connection string are performed</param>
         public ConnectionString(string connString, bool checkViolation):this()
         {
             _connString = connString;
             CheckViolation = checkViolation;
-            Parse(_connString);
+            Parse(_connString); //Keyvalue pairs are normalized and is called from Parse(string) function
             NormalizeKeyValuePairs();
 
             if (CheckViolation)
@@ -164,7 +175,9 @@
                 {
                     string envName = KeyValuePairs.GetValueUsingCaseInsensitiveKey(ConnectionStringKeys.EnvironmentKey);
                     string uriKeyValue = KeyValuePairs.GetValueUsingCaseInsensitiveKey(nonEmptyUriKey);
-                    string envAndUriConflictError = string.Format("Connection string contains Environment '{0}' and '{1}={2}'. Any Uri and environment cannot co-exist. Either set any environment or provide Uris", envName, nonEmptyUriKey, uriKeyValue);
+                    string envAndUriConflictError = string.Format("Connection string contains Environment "+
+                        "'{0}' and '{1}={2}'. Any Uri and environment cannot co-exist. "+
+                        "Either set any environment or provide Uris", envName, nonEmptyUriKey, uriKeyValue);
                     throw new ArgumentException(envAndUriConflictError);
                 }
             }
@@ -243,7 +256,7 @@
                 //For now clearing keyValue dictionary, we assume the caller wants to parse new connection string
                 //and wants to discard old values (even if they are valid)
 
-                KeyValuePairs.Clear(true);
+                KeyValuePairs.Clear(clearValuesOnly: true);
                 foreach (string pair in pairs)
                 {
                     Match m = Regex.Match(pair, parseRegEx);
@@ -266,7 +279,7 @@
                     }
                 }
 
-                //Normalize AADClientId/ServicePrincipal AND Password/ServicePrincipalSecret
+                //Adjust key-value pairs and normalize values across multiple keys
                 NormalizeKeyValuePairs();
             }
         }
@@ -292,46 +305,4 @@
 
         #endregion
     }
-
-    /*
-    /// <summary>
-    /// Extension method class
-    /// </summary>
-    public static partial class ExtMethods
-    {
-        /// <summary>
-        /// Allows you to clear only values or key/value both
-        /// </summary>
-        /// <param name="dictionary">Dictionary<string,string> that to be cleared</param>
-        /// <param name="clearValuesOnly">True: Clears only values, False: Clear keys and values</param>
-        public static void Clear(this Dictionary<string, string> dictionary, bool clearValuesOnly)
-        {
-            //TODO: can be implemented for generic dictionary, but currently there is no requirement, else the overload
-            //will be reflected for the entire solution for any kind of Dictionary, so currently only scoping to Dictionary<string,string>
-            if (clearValuesOnly)
-            {
-                foreach (string key in dictionary.Keys.ToList<string>())
-                {
-                    dictionary[key] = string.Empty;
-                }
-            }
-            else
-            {
-                dictionary.Clear();
-            }
-        }
-
-        public static string ListValues(this EnvironmentNames env)
-        {
-            List<string> enumValues = (from ev in typeof(EnvironmentNames).GetMembers(BindingFlags.Public | BindingFlags.Static) select ev.Name).ToList();
-            return string.Join(",", enumValues.Select((item) => item));
-        }
-
-        public static bool IsAny<T>(this IEnumerable<T> collection)
-        {
-            return (collection != null && collection.Any());
-        }
-    }
-
-    */
 }

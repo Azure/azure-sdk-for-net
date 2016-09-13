@@ -1,14 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 {
+    using System;
+
     public enum EnvironmentNames
     {
         Prod,
@@ -19,6 +14,9 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
     public class TestEndpoints
     {
+        /// <summary>
+        /// 
+        /// </summary>
         internal TestEndpoints() { }
         internal TestEndpoints(EnvironmentNames testEnvName)
         {
@@ -125,8 +123,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         }
 
         /// <summary>
-        /// Copy constructor
-        /// Updates endpoint URI provided as part of the connection string
+        /// Constructor updates endpoint URI that matches provided connection string
         /// </summary>
         /// <param name="testEndpoint">endPoint that needs to be updated according to connection string</param>
         /// <param name="connString">User provided connection string</param>

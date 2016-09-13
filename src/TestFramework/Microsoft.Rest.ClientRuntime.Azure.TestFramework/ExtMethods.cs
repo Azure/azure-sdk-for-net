@@ -1,12 +1,11 @@
-﻿using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 {
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+
     public static class ExtMethods
     {
         /// <summary>

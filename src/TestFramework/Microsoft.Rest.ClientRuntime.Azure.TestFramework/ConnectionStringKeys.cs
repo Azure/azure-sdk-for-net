@@ -12,7 +12,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
     /// </summary>
     public class ConnectionStringKeys
     {
-        // <summary>
+        /// <summary>
         /// The key inside the connection string for the management certificate
         /// </summary>
         public const string ManagementCertificateKey = "ManagementCertificate";

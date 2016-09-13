@@ -85,11 +85,11 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication
         [Fact]
         public void EnvironmentFactoryInCsmDoesNotGetSubscriptionIfSubscriptionIdIsNone()
         {
-            HttpMockServer.Mode = HttpRecorderMode.Playback;
             Environment.SetEnvironmentVariable("TEST_CONNECTION_STRING", "");
             Environment.SetEnvironmentVariable("TEST_ORGID_AUTHENTICATION", "");
             Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "Environment=Prod;SubscriptionId=None");
             HttpMockServer.Initialize("Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication.Subscription", "CsmClientSubscriptionNone.json");
+            HttpMockServer.Mode = HttpRecorderMode.Playback;
             var environment = TestEnvironmentFactory.GetTestEnvironment();
             Assert.Equal("None", environment.SubscriptionId);
         }
@@ -111,7 +111,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication
         [Fact]
         public void TestGetServiceClientWithoutHandlers()
         {
-            HttpMockServer.Mode = HttpRecorderMode.Playback;
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
             Environment.SetEnvironmentVariable("TEST_CONNECTION_STRING", "");
             Environment.SetEnvironmentVariable("TEST_ORGID_AUTHENTICATION", "");
             Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "Environment=Next;SubscriptionId=ee39cb6d-d45b-4694-825a-f4d6f87ed72a;RawToken=abc");
@@ -124,7 +124,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication
         [Fact]
         public void TestGetServiceClientWithHandlers()
         {
-            HttpMockServer.Mode = HttpRecorderMode.Playback;
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
             Environment.SetEnvironmentVariable("TEST_CONNECTION_STRING", "");
             Environment.SetEnvironmentVariable("TEST_ORGID_AUTHENTICATION", "");
             Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "Environment=Next;SubscriptionId=ee39cb6d-d45b-4694-825a-f4d6f87ed72a;RawToken=abc");
@@ -138,9 +138,9 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication
         [Fact]
         public void TestGetServiceClientWhenSubscriptionIdIsNone()
         {
-            HttpMockServer.Mode = HttpRecorderMode.Playback;
             Environment.SetEnvironmentVariable("TEST_CONNECTION_STRING", "");
             Environment.SetEnvironmentVariable("TEST_ORGID_AUTHENTICATION", "");
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
             Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "Environment=Next;SubscriptionId=None;RawToken=abc");
             HttpMockServer.Initialize("Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication.Subscription", "CsmClientSubscriptionNone.json");
             var client = MockContext.Start((this.GetType().FullName), "CsmClientSubscriptionNone").GetServiceClient<SimpleClient>(handlers: new MockHandler());
@@ -151,7 +151,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication
         [Fact]
         public void TestMockServerAddedOnce()
         {
-            HttpMockServer.Mode = HttpRecorderMode.Playback;
+            Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Playback");
             Environment.SetEnvironmentVariable("TEST_CONNECTION_STRING", "");
             Environment.SetEnvironmentVariable("TEST_ORGID_AUTHENTICATION", "");
             Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", "Environment=Next;SubscriptionId=ee39cb6d-d45b-4694-825a-f4d6f87ed72a;RawToken=abc");
