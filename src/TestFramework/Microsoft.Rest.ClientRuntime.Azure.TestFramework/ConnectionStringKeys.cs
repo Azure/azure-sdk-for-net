@@ -6,7 +6,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 
     /// <summary>
     /// This class represents KeyNames for all the keys currently supported in Connection string    
-    /// !!!!!!ALERT!!!!!
+    /// Note:
     /// If you add a public const field, it will be used/assumed as key as part of the connection string
     /// This class is being used to reflect on all the key names supported in connection string.
     /// </summary>
@@ -69,7 +69,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         public const string RawGraphTokenKey = "RawGraphToken";
 
         /// <summary>
-        /// 
+        /// HttpRecorderMode
         /// </summary>
         public const string HttpRecorderModeKey = "HttpRecorderMode";
         #endregion
