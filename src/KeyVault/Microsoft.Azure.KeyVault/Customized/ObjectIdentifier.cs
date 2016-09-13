@@ -46,18 +46,28 @@ namespace Microsoft.Azure.KeyVault
             return false;
         }
 
-        protected string _vault;
-        protected string _vaultWithoutScheme;
-        protected string _name;
-        protected string _version;
+        private string _vault;
+        private string _vaultWithoutScheme;
+        private string _name;
+        private string _version;
 
-        protected string _baseIdentifier;
-        protected string _identifier;
+        private string _baseIdentifier;
+        private string _identifier;
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         protected ObjectIdentifier()
         {
         }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="vaultBaseUrl"> The vault base URL</param>
+        /// <param name="collection">The object collection e.g. 'keys', 'secrets' and 'certificates'.</param>
+        /// <param name="identifier">The key vault object identifier.</param>
+        /// <param name="version"> the version of the object.</param>
         protected ObjectIdentifier(string vaultBaseUrl, string collection, string name, string version = "")
         {
             if (string.IsNullOrEmpty(vaultBaseUrl))
@@ -80,6 +90,11 @@ namespace Microsoft.Azure.KeyVault
             _identifier = string.Format(CultureInfo.InvariantCulture, "{0}/{1}/{2}", _vault, collection, _identifier);
         }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="collection">The object collection e.g. 'keys', 'secrets' and 'certificates'.</param>
+        /// <param name="identifier">The key vault object identifier.</param>
         protected ObjectIdentifier(string collection, string identifier)
         {
             if (string.IsNullOrEmpty(collection))
@@ -116,6 +131,7 @@ namespace Microsoft.Azure.KeyVault
         public string BaseIdentifier
         {
             get { return _baseIdentifier; }
+            protected set { _baseIdentifier = value; }
         }
 
         /// <summary>
@@ -124,6 +140,7 @@ namespace Microsoft.Azure.KeyVault
         public string Identifier
         {
             get { return _identifier; }
+            protected set { _identifier = value; }
         }
 
         /// <summary>
@@ -132,6 +149,7 @@ namespace Microsoft.Azure.KeyVault
         public string Name
         {
             get { return _name; }
+            protected set { _name = value; }
         }
 
         /// <summary>
@@ -140,6 +158,7 @@ namespace Microsoft.Azure.KeyVault
         public string Vault
         {
             get { return _vault; }
+            protected set { _vault = value; }
         }
 
         /// <summary>
@@ -148,6 +167,7 @@ namespace Microsoft.Azure.KeyVault
         public string VaultWithoutScheme
         {
             get { return _vaultWithoutScheme; }
+            protected set { _vaultWithoutScheme = value; }
         }
 
         /// <summary>
@@ -156,6 +176,7 @@ namespace Microsoft.Azure.KeyVault
         public string Version
         {
             get { return _version; }
+            protected set { _version = value; }
         }
 
         public override string ToString()
@@ -306,8 +327,8 @@ namespace Microsoft.Azure.KeyVault
         public CertificateOperationIdentifier(string vaultBaseUrl, string name)
             : base(vaultBaseUrl, "certificates", name, "pending")
         {
-            _baseIdentifier = _identifier;
-            _version = string.Empty;
+            BaseIdentifier = Identifier;
+            Version = string.Empty;
         }
         
         /// <summary>
@@ -317,8 +338,8 @@ namespace Microsoft.Azure.KeyVault
         public CertificateOperationIdentifier(string identifier)
             : base("certificates", identifier)
         {
-            _baseIdentifier = _identifier;
-            _version = string.Empty;
+            BaseIdentifier = Identifier;
+            Version = string.Empty;
         }
     }
 
@@ -360,13 +381,13 @@ namespace Microsoft.Azure.KeyVault
 
             var baseUri = new Uri(vaultBaseUrl, UriKind.Absolute);
 
-            _name = name;
-            _version = string.Empty;
-            _vault = string.Format(CultureInfo.InvariantCulture, "{0}://{1}", baseUri.Scheme, baseUri.FullAuthority());
-            _vaultWithoutScheme = baseUri.Authority;
-            _baseIdentifier = string.Format(CultureInfo.InvariantCulture, "{0}/{1}/{2}", _vault, "certificates/issuers", _name);
-            _identifier = string.IsNullOrEmpty(_version) ? _name : string.Format(CultureInfo.InvariantCulture, "{0}/{1}", _name, _version);
-            _identifier = string.Format(CultureInfo.InvariantCulture, "{0}/{1}/{2}", _vault, "certificates/issuers", _identifier);
+            Name = name;
+            Version = string.Empty;
+            Vault = string.Format(CultureInfo.InvariantCulture, "{0}://{1}", baseUri.Scheme, baseUri.FullAuthority());
+            VaultWithoutScheme = baseUri.Authority;
+            BaseIdentifier = string.Format(CultureInfo.InvariantCulture, "{0}/{1}/{2}", Vault, "certificates/issuers", Name);
+            Identifier = string.IsNullOrEmpty(Version) ? Name : string.Format(CultureInfo.InvariantCulture, "{0}/{1}", Name, Version);
+            Identifier = string.Format(CultureInfo.InvariantCulture, "{0}/{1}/{2}", Vault, "certificates/issuers", Identifier);
         }
 
         /// <summary>
@@ -390,13 +411,13 @@ namespace Microsoft.Azure.KeyVault
             if (!string.Equals(baseUri.Segments[2], "issuers/"))
                 throw new ArgumentException(String.Format(CultureInfo.InvariantCulture, "Invalid ObjectIdentifier: {0}. segment [1] should be '{1}', found '{2}'", identifier, "issuers/", baseUri.Segments[1]));
 
-            _name = baseUri.Segments[3].Substring(0, baseUri.Segments[3].Length).TrimEnd('/');
-            _version = string.Empty;
-            _vault = string.Format(CultureInfo.InvariantCulture, "{0}://{1}", baseUri.Scheme, baseUri.FullAuthority());
-            _vaultWithoutScheme = baseUri.Authority;
-            _baseIdentifier = string.Format(CultureInfo.InvariantCulture, "{0}/{1}/{2}", _vault, "certificates/issuers", _name);
-            _identifier = string.IsNullOrEmpty(_version) ? _name : string.Format(CultureInfo.InvariantCulture, "{0}/{1}", _name, _version);
-            _identifier = string.Format(CultureInfo.InvariantCulture, "{0}/{1}/{2}", _vault, "certificates/issuers", _identifier);
+            Name = baseUri.Segments[3].Substring(0, baseUri.Segments[3].Length).TrimEnd('/');
+            Version = string.Empty;
+            Vault = string.Format(CultureInfo.InvariantCulture, "{0}://{1}", baseUri.Scheme, baseUri.FullAuthority());
+            VaultWithoutScheme = baseUri.Authority;
+            BaseIdentifier = string.Format(CultureInfo.InvariantCulture, "{0}/{1}/{2}", Vault, "certificates/issuers", Name);
+            Identifier = string.IsNullOrEmpty(Version) ? Name : string.Format(CultureInfo.InvariantCulture, "{0}/{1}", Name, Version);
+            Identifier = string.Format(CultureInfo.InvariantCulture, "{0}/{1}/{2}", Vault, "certificates/issuers", Identifier);
         }
     }
 }

@@ -666,7 +666,7 @@ namespace Microsoft.Azure.KeyVault
         /// The name of the issuer.
         /// </param>
         /// <param name='provider'>
-        /// The name of the issuer.
+        /// The issuer provider.
         /// </param>
         /// <param name='credentials'>
         /// The credentials to be used for the issuer.
@@ -695,7 +695,7 @@ namespace Microsoft.Azure.KeyVault
         /// The name of the issuer.
         /// </param>
         /// <param name='provider'>
-        /// The name of the issuer.
+        /// The issuer provider.
         /// </param>
         /// <param name='credentials'>
         /// The credentials to be used for the issuer.
