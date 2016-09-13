@@ -30,7 +30,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Initializes a new instance of the CatalogItemList class.
         /// </summary>
         /// <param name="count">the count of items in the list.</param>
-        /// <param name="nextLink">the link to the next page of results.</param>
+        /// <param name="nextLink">the link to the next page of
+        /// results.</param>
         public CatalogItemList(int? count = default(int?), string nextLink = default(string))
         {
             Count = count;

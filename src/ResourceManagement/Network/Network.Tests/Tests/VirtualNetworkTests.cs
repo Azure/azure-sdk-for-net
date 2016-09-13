@@ -111,5 +111,108 @@ namespace Networks.Tests
                 Assert.Equal(0, getAllVnets.Count());
             }
         }
+
+        [Fact]
+        public void VirtualNetworkCheckIpAddressAvailabilityTest()
+        {
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);
+                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
+
+                var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/virtualNetworks");
+
+                string resourceGroupName = TestUtilities.GenerateName("csmrg");
+                resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
+                    new ResourceGroup
+                    {
+                        Location = location
+                    });
+
+                string vnetName = TestUtilities.GenerateName();
+                string subnetName = TestUtilities.GenerateName();
+
+                var vnet = new VirtualNetwork()
+                {
+                    Location = location,
+
+                    AddressSpace = new AddressSpace()
+                    {
+                        AddressPrefixes = new List<string>()
+                        {
+                            "10.0.0.0/16",
+                        }
+                    },
+                    DhcpOptions = new DhcpOptions()
+                    {
+                        DnsServers = new List<string>()
+                        {
+                            "10.1.1.1",
+                            "10.1.2.4"
+                        }
+                    },
+                    Subnets = new List<Subnet>()
+                    {
+                        new Subnet()
+                        {
+                            Name = subnetName,
+                            AddressPrefix = "10.0.1.0/24",
+                        },
+                    }
+                };
+
+                // Put Vnet
+                var putVnetResponse = networkManagementClient.VirtualNetworks.CreateOrUpdate(resourceGroupName, vnetName, vnet);
+                Assert.Equal("Succeeded", putVnetResponse.ProvisioningState);
+
+                var getSubnetResponse = networkManagementClient.Subnets.Get(resourceGroupName, vnetName, subnetName);
+
+                // Create Nic
+                string nicName = TestUtilities.GenerateName();
+                string ipConfigName = TestUtilities.GenerateName();
+
+                var nicParameters = new NetworkInterface()
+                {
+                    Location = location,
+                    Tags = new Dictionary<string, string>()
+                        {
+                           {"key","value"}
+                        },
+                    IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
+                    {
+                        new NetworkInterfaceIPConfiguration()
+                        {
+                             Name = ipConfigName,
+                             PrivateIPAllocationMethod = IPAllocationMethod.Static,
+                             PrivateIPAddress = "10.0.1.9",
+                             Subnet = new Subnet()
+                             {
+                                 Id = getSubnetResponse.Id
+                             }
+                        }
+                    }
+                };
+
+                var putNicResponse = networkManagementClient.NetworkInterfaces.CreateOrUpdate(resourceGroupName, nicName, nicParameters);
+
+                // Check Ip Address availability API
+                var responseAvailable = networkManagementClient.VirtualNetworks.CheckIPAddressAvailability(resourceGroupName, vnetName, "10.0.1.10");
+
+                Assert.True(responseAvailable.Available);
+                Assert.Null(responseAvailable.AvailableIPAddresses);
+
+                var responseTaken = networkManagementClient.VirtualNetworks.CheckIPAddressAvailability(resourceGroupName, vnetName, "10.0.1.9");
+
+                Assert.False(responseTaken.Available);
+                Assert.Equal(5, responseTaken.AvailableIPAddresses.Count);
+
+                networkManagementClient.NetworkInterfaces.Delete(resourceGroupName, nicName);
+                networkManagementClient.VirtualNetworks.Delete(resourceGroupName, vnetName);
+            }
+        }
     }
 }

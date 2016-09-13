@@ -193,7 +193,7 @@
         private static TList ConvertCollection<TIn, TOut, TList>(
             IEnumerable<TIn> items,
             Func<TIn, TOut> objectCreationFunc,
-            Func<TList> listCreationFunc) 
+            Func<IEnumerable<TOut>, TList> listCreationFunc) 
             where TList : class, IList<TOut> 
             where TIn : class 
             where TOut : class
@@ -203,22 +203,7 @@
                 return null;
             }
 
-            TList result = listCreationFunc();
-
-            foreach (TIn protocolItem in items)
-            {
-                TOut omObject;
-                if (protocolItem == null)
-                {
-                    omObject = null;
-                }
-                else
-                {
-                    omObject = objectCreationFunc(protocolItem);
-                }
-                
-                result.Add(omObject);
-            }
+            TList result = listCreationFunc(items.Select(item => item == null ? null : objectCreationFunc(item)));
 
             return result;
         }
@@ -240,7 +225,7 @@
             List<TOut> result = UtilitiesInternal.ConvertCollection(
                 items,
                 objectCreationFunc,
-                () => new List<TOut>());
+                (convertedItemsEnumerable) => new List<TOut>(convertedItemsEnumerable));
 
             return result;
         }
@@ -262,7 +247,7 @@
             ConcurrentChangeTrackedModifiableList<TOut> result = UtilitiesInternal.ConvertCollection(
                 items,
                 objectCreationFunc,
-                () => new ConcurrentChangeTrackedModifiableList<TOut>());
+                (convertedItemsEnumerable) => new ConcurrentChangeTrackedModifiableList<TOut>(convertedItemsEnumerable));
 
             return result;
         }

@@ -24,6 +24,7 @@ namespace Microsoft.Azure.KeyVault
     using Newtonsoft.Json;
     using Microsoft.Rest.Azure;
     using Models;
+    using Microsoft.Azure.KeyVault.WebKey;
 
     /// <summary>
     /// Performs cryptographic key operations and vault operations against the
@@ -203,7 +204,8 @@ namespace Microsoft.Azure.KeyVault
         /// The name of the key
         /// </param>
         /// <param name='kty'>
-        /// The type of key to create. Valid key types, see JsonWebKeyType. Possible
+        /// The type of key to create. Valid key types, see JsonWebKeyType. Supported
+        /// JsonWebKey key types (kty) for Elliptic Curve, RSA, HSM, Octet. Possible
         /// values include: 'EC', 'RSA', 'RSA-HSM', 'oct'
         /// </param>
         /// <param name='keySize'>
@@ -243,6 +245,13 @@ namespace Microsoft.Azure.KeyVault
             if (keyName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "keyName");
+            }
+            if (keyName != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(keyName, "^[0-9a-zA-Z-]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "keyName", "^[0-9a-zA-Z-]+$");
+                }
             }
             if (this.ApiVersion == null)
             {
@@ -463,6 +472,13 @@ namespace Microsoft.Azure.KeyVault
             if (keyName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "keyName");
+            }
+            if (keyName != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(keyName, "^[0-9a-zA-Z-]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "keyName", "^[0-9a-zA-Z-]+$");
+                }
             }
             if (this.ApiVersion == null)
             {
@@ -3354,6 +3370,13 @@ namespace Microsoft.Azure.KeyVault
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "secretName");
             }
+            if (secretName != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(secretName, "^[0-9a-zA-Z-]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "secretName", "^[0-9a-zA-Z-]+$");
+                }
+            }
             if (this.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
@@ -5550,8 +5573,17 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='issuerName'>
         /// The name of the issuer.
         /// </param>
-        /// <param name='issuer'>
-        /// The issuer bundle.
+        /// <param name='provider'>
+        /// The name of the issuer.
+        /// </param>
+        /// <param name='credentials'>
+        /// The credentials to be used for the issuer.
+        /// </param>
+        /// <param name='organizationDetails'>
+        /// Details of the organization as provided to the issuer.
+        /// </param>
+        /// <param name='attributes'>
+        /// Attributes of the issuer object.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -5571,7 +5603,7 @@ namespace Microsoft.Azure.KeyVault
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IssuerBundle>> SetCertificateIssuerWithHttpMessagesAsync(string vaultBaseUrl, string issuerName, IssuerBundle issuer, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IssuerBundle>> SetCertificateIssuerWithHttpMessagesAsync(string vaultBaseUrl, string issuerName, string provider, IssuerCredentials credentials = default(IssuerCredentials), OrganizationDetails organizationDetails = default(OrganizationDetails), IssuerAttributes attributes = default(IssuerAttributes), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (vaultBaseUrl == null)
             {
@@ -5581,13 +5613,21 @@ namespace Microsoft.Azure.KeyVault
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "issuerName");
             }
-            if (issuer == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "issuer");
-            }
             if (this.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            if (provider == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "provider");
+            }
+            CertificateIssuerSetParameters parameter = new CertificateIssuerSetParameters();
+            if (provider != null || credentials != null || organizationDetails != null || attributes != null)
+            {
+                parameter.Provider = provider;
+                parameter.Credentials = credentials;
+                parameter.OrganizationDetails = organizationDetails;
+                parameter.Attributes = attributes;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -5598,7 +5638,7 @@ namespace Microsoft.Azure.KeyVault
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("vaultBaseUrl", vaultBaseUrl);
                 tracingParameters.Add("issuerName", issuerName);
-                tracingParameters.Add("issuer", issuer);
+                tracingParameters.Add("parameter", parameter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "SetCertificateIssuer", tracingParameters);
             }
@@ -5648,9 +5688,9 @@ namespace Microsoft.Azure.KeyVault
 
             // Serialize Request
             string _requestContent = null;
-            if(issuer != null)
+            if(parameter != null)
             {
-                _requestContent = SafeJsonConvert.SerializeObject(issuer, this.SerializationSettings);
+                _requestContent = SafeJsonConvert.SerializeObject(parameter, this.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -5745,8 +5785,17 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='issuerName'>
         /// The name of the issuer.
         /// </param>
-        /// <param name='issuer'>
-        /// The issuer bundle.
+        /// <param name='provider'>
+        /// The name of the issuer.
+        /// </param>
+        /// <param name='credentials'>
+        /// The credentials to be used for the issuer.
+        /// </param>
+        /// <param name='organizationDetails'>
+        /// Details of the organization as provided to the issuer.
+        /// </param>
+        /// <param name='attributes'>
+        /// Attributes of the issuer object.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -5766,7 +5815,7 @@ namespace Microsoft.Azure.KeyVault
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IssuerBundle>> UpdateCertificateIssuerWithHttpMessagesAsync(string vaultBaseUrl, string issuerName, IssuerBundle issuer, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IssuerBundle>> UpdateCertificateIssuerWithHttpMessagesAsync(string vaultBaseUrl, string issuerName, string provider = default(string), IssuerCredentials credentials = default(IssuerCredentials), OrganizationDetails organizationDetails = default(OrganizationDetails), IssuerAttributes attributes = default(IssuerAttributes), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (vaultBaseUrl == null)
             {
@@ -5776,13 +5825,17 @@ namespace Microsoft.Azure.KeyVault
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "issuerName");
             }
-            if (issuer == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "issuer");
-            }
             if (this.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
+            }
+            CertificateIssuerUpdateParameters parameter = new CertificateIssuerUpdateParameters();
+            if (provider != null || credentials != null || organizationDetails != null || attributes != null)
+            {
+                parameter.Provider = provider;
+                parameter.Credentials = credentials;
+                parameter.OrganizationDetails = organizationDetails;
+                parameter.Attributes = attributes;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -5793,7 +5846,7 @@ namespace Microsoft.Azure.KeyVault
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("vaultBaseUrl", vaultBaseUrl);
                 tracingParameters.Add("issuerName", issuerName);
-                tracingParameters.Add("issuer", issuer);
+                tracingParameters.Add("parameter", parameter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateCertificateIssuer", tracingParameters);
             }
@@ -5843,9 +5896,9 @@ namespace Microsoft.Azure.KeyVault
 
             // Serialize Request
             string _requestContent = null;
-            if(issuer != null)
+            if(parameter != null)
             {
-                _requestContent = SafeJsonConvert.SerializeObject(issuer, this.SerializationSettings);
+                _requestContent = SafeJsonConvert.SerializeObject(parameter, this.SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -6340,6 +6393,13 @@ namespace Microsoft.Azure.KeyVault
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "certificateName");
             }
+            if (certificateName != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(certificateName, "^[0-9a-zA-Z-]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "certificateName", "^[0-9a-zA-Z-]+$");
+                }
+            }
             if (this.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
@@ -6555,6 +6615,13 @@ namespace Microsoft.Azure.KeyVault
             if (certificateName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "certificateName");
+            }
+            if (certificateName != null)
+            {
+                if (!System.Text.RegularExpressions.Regex.IsMatch(certificateName, "^[0-9a-zA-Z-]+$"))
+                {
+                    throw new ValidationException(ValidationRules.Pattern, "certificateName", "^[0-9a-zA-Z-]+$");
+                }
             }
             if (this.ApiVersion == null)
             {
@@ -7302,6 +7369,9 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='certificateVersion'>
         /// The version of the certificate
         /// </param>
+        /// <param name='certificatePolicy'>
+        /// The management policy for the certificate
+        /// </param>
         /// <param name='certificateAttributes'>
         /// The attributes of the certificate (optional)
         /// </param>
@@ -7326,7 +7396,7 @@ namespace Microsoft.Azure.KeyVault
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<CertificateBundle>> UpdateCertificateWithHttpMessagesAsync(string vaultBaseUrl, string certificateName, string certificateVersion, CertificateAttributes certificateAttributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CertificateBundle>> UpdateCertificateWithHttpMessagesAsync(string vaultBaseUrl, string certificateName, string certificateVersion, CertificatePolicy certificatePolicy = default(CertificatePolicy), CertificateAttributes certificateAttributes = default(CertificateAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (vaultBaseUrl == null)
             {
@@ -7344,9 +7414,14 @@ namespace Microsoft.Azure.KeyVault
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
             }
-            CertificateUpdateParameters parameters = new CertificateUpdateParameters();
-            if (certificateAttributes != null || tags != null)
+            if (certificatePolicy != null)
             {
+                certificatePolicy.Validate();
+            }
+            CertificateUpdateParameters parameters = new CertificateUpdateParameters();
+            if (certificatePolicy != null || certificateAttributes != null || tags != null)
+            {
+                parameters.CertificatePolicy = certificatePolicy;
                 parameters.CertificateAttributes = certificateAttributes;
                 parameters.Tags = tags;
             }
@@ -7698,8 +7773,8 @@ namespace Microsoft.Azure.KeyVault
         /// <param name='certificateName'>
         /// The name of the certificate
         /// </param>
-        /// <param name='certificateOperation'>
-        /// The certificate operation response.
+        /// <param name='cancellationRequested'>
+        /// Indicates if cancellation was requested on the certificate operation.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -7719,7 +7794,7 @@ namespace Microsoft.Azure.KeyVault
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<CertificateOperation>> UpdateCertificateOperationWithHttpMessagesAsync(string vaultBaseUrl, string certificateName, CertificateOperation certificateOperation, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CertificateOperation>> UpdateCertificateOperationWithHttpMessagesAsync(string vaultBaseUrl, string certificateName, bool cancellationRequested, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (vaultBaseUrl == null)
             {
@@ -7729,14 +7804,12 @@ namespace Microsoft.Azure.KeyVault
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "certificateName");
             }
-            if (certificateOperation == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "certificateOperation");
-            }
             if (this.ApiVersion == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.ApiVersion");
             }
+            CertificateOperationUpdateParameter certificateOperation = new CertificateOperationUpdateParameter();
+            certificateOperation.CancellationRequested = cancellationRequested;
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;

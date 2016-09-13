@@ -35,8 +35,13 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <param name="attributes">The secret management attributes</param>
         /// <param name="tags">Application-specific metadata in the form of
         /// key-value pairs</param>
-        /// <param name="kid">The key id for certificate.</param>
-        public SecretBundle(string value = default(string), string id = default(string), string contentType = default(string), SecretAttributes attributes = default(SecretAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), string kid = default(string))
+        /// <param name="kid">If this is a secret backing a KV certificate,
+        /// then this field specifies the corresponding key backing the KV
+        /// certificate.</param>
+        /// <param name="managed">True if the secret's lifetime is managed by
+        /// key vault i.e. if this is a secret backing a certificate, then
+        /// managed will be true.</param>
+        public SecretBundle(string value = default(string), string id = default(string), string contentType = default(string), SecretAttributes attributes = default(SecretAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), string kid = default(string), bool? managed = default(bool?))
         {
             Value = value;
             Id = id;
@@ -44,6 +49,7 @@ namespace Microsoft.Azure.KeyVault.Models
             Attributes = attributes;
             Tags = tags;
             Kid = kid;
+            Managed = managed;
         }
 
         /// <summary>
@@ -78,10 +84,18 @@ namespace Microsoft.Azure.KeyVault.Models
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
-        /// Gets or sets the key id for certificate.
+        /// Gets if this is a secret backing a KV certificate, then this field
+        /// specifies the corresponding key backing the KV certificate.
         /// </summary>
         [JsonProperty(PropertyName = "kid")]
-        public string Kid { get; set; }
+        public string Kid { get; private set; }
+
+        /// <summary>
+        /// Gets true if the secret's lifetime is managed by key vault i.e. if
+        /// this is a secret backing a certificate, then managed will be true.
+        /// </summary>
+        [JsonProperty(PropertyName = "managed")]
+        public bool? Managed { get; private set; }
 
     }
 }

@@ -4,7 +4,7 @@
 ::
 
 @echo off
-set autoRestVersion=0.15.0-Nightly20160212
+set autoRestVersion=0.17.0-Nightly20160726
 
 if  "%1" == "" (
 	set specFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-keyvault/2015-06-01/swagger/keyvault.json"
@@ -17,6 +17,6 @@ set generateFolder=%~dp0Generated
 
 if exist %generateFolder% rd /S /Q  %generateFolder%
 
-call "%repoRoot%\tools\autorest.gen.cmd" %specFile% Microsoft.Azure.Management.KeyVault %autoRestVersion% %generateFolder%
+call "%repoRoot%\tools\autorest.gen.cmd" %specFile%  Microsoft.Azure.KeyVault %autoRestVersion% %generateFolder% -SyncMethods None 
 
 endlocal

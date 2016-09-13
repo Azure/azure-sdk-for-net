@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         public string Kind { get; set; }
 
         /// <summary>
-        /// The managedBy property of the resource.
+        /// Id of the resource that manages this resource.
         /// </summary>
         [JsonProperty(PropertyName = "managedBy")]
         public string ManagedBy { get; set; }

@@ -15,6 +15,7 @@ namespace Microsoft.Azure.KeyVault.Models
     using Microsoft.Rest;
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
+    using Microsoft.Azure.KeyVault.WebKey;
 
     /// <summary>
     /// A KeyBundle consisting of a WebKey plus its Attributes
@@ -33,11 +34,15 @@ namespace Microsoft.Azure.KeyVault.Models
         /// <param name="attributes">The key management attributes</param>
         /// <param name="tags">Application-specific metadata in the form of
         /// key-value pairs</param>
-        public KeyBundle(JsonWebKey key = default(JsonWebKey), KeyAttributes attributes = default(KeyAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        /// <param name="managed">True if the key's lifetime is managed by key
+        /// vault i.e. if this is a key backing a certificate, then managed
+        /// will be true.</param>
+        public KeyBundle(JsonWebKey key = default(JsonWebKey), KeyAttributes attributes = default(KeyAttributes), IDictionary<string, string> tags = default(IDictionary<string, string>), bool? managed = default(bool?))
         {
             Key = key;
             Attributes = attributes;
             Tags = tags;
+            Managed = managed;
         }
 
         /// <summary>
@@ -58,6 +63,13 @@ namespace Microsoft.Azure.KeyVault.Models
         /// </summary>
         [JsonProperty(PropertyName = "tags")]
         public IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets true if the key's lifetime is managed by key vault i.e. if
+        /// this is a key backing a certificate, then managed will be true.
+        /// </summary>
+        [JsonProperty(PropertyName = "managed")]
+        public bool? Managed { get; private set; }
 
     }
 }

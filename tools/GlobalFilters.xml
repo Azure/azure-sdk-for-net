@@ -135,7 +135,7 @@
         <string>\\OneBox\\</string>
         <string>ART\\TSATest</string>
         <string>ART\\TSATest</string>
-        <string>KeyVault\\Microsoft.Azure.KeyVault.Tests\\SessionRecords\\KeyVault.Tests.KeyVaultOperationsTest</string>
+        <string>KeyVault\\Microsoft.Azure.KeyVault.Tests\\SessionRecords</string>
 	<string>ApiManagement\\ApiManagement.Tests\\Resources\\testcertificate.pfx</string>
 	<string>ResourceManagement\\Network\\Network.Tests\\SessionRecords\\Networks.Tests.ApplicationGatewayTests\\ApplicationGatewayApiTest.json</string>
 	<string>ResourceManagement\\Network\\Network.Tests\\Tests\\Data\\ApplicationGatewayAuthCert.cer</string>

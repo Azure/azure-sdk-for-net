@@ -30,13 +30,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the Subnet class.
         /// </summary>
-        public Subnet(string id = default(string), string addressPrefix = default(string), NetworkSecurityGroup networkSecurityGroup = default(NetworkSecurityGroup), RouteTable routeTable = default(RouteTable), IList<IPConfiguration> ipConfigurations = default(IList<IPConfiguration>), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public Subnet(string id = default(string), string addressPrefix = default(string), NetworkSecurityGroup networkSecurityGroup = default(NetworkSecurityGroup), RouteTable routeTable = default(RouteTable), IList<IPConfiguration> ipConfigurations = default(IList<IPConfiguration>), IList<ResourceNavigationLink> resourceNavigationLinks = default(IList<ResourceNavigationLink>), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             AddressPrefix = addressPrefix;
             NetworkSecurityGroup = networkSecurityGroup;
             RouteTable = routeTable;
             IpConfigurations = ipConfigurations;
+            ResourceNavigationLinks = resourceNavigationLinks;
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
@@ -66,6 +67,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.ipConfigurations")]
         public IList<IPConfiguration> IpConfigurations { get; private set; }
+
+        /// <summary>
+        /// Gets array of references to the external resources using subnet
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.resourceNavigationLinks")]
+        public IList<ResourceNavigationLink> ResourceNavigationLinks { get; set; }
 
         /// <summary>
         /// Gets provisioning state of the resource

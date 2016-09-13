@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <value>
         ///   <c>true</c> if this instance is failed; otherwise, <c>false</c>.
         /// </value>
-        public bool IsFailed { get; private set; }
+        public bool IsFailed { get; internal set; }
 
         /// <summary>
         /// Gets a value indicating the number of bytes uploaded so far for this segment.
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <value>
         /// The uploaded byte count.
         /// </value>
-        public long UploadedByteCount { get; private set; }
+        public long UploadedByteCount { get; internal set; }
 
     }
 }

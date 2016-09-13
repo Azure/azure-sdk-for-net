@@ -29,7 +29,8 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <summary>
         /// Initializes a new instance of the AclStatusResult class.
         /// </summary>
-        /// <param name="aclStatus">the AclStatus object for a given file or directory.</param>
+        /// <param name="aclStatus">the AclStatus object for a given file or
+        /// directory.</param>
         public AclStatusResult(AclStatus aclStatus = default(AclStatus))
         {
             AclStatus = aclStatus;
