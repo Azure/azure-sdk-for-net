@@ -272,6 +272,45 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     targetStreamOffset += bytesToCopy;
                     ReportProgress(targetStreamOffset, false);
                 }
+                catch (AggregateException e)
+                {
+                    if (e.InnerExceptions.Count == 1 && e.InnerException is AdlsErrorException)
+                    {
+                        if(((AdlsErrorException)e.InnerException).Body.RemoteException is AdlsBadOffsetException)
+                        {
+                            // this means we tried to re-upload at the same location and the upload actually succeeded, which means we should move on.
+                            uploadCompleted = true;
+                            targetStreamOffset += bytesToCopy;
+                            ReportProgress(targetStreamOffset, false);
+                        }
+                        else
+                        {
+                            //if we tried more than the number of times we were allowed to, give up and throw the exception
+                            if (attemptCount >= MaxBufferUploadAttemptCount)
+                            {
+                                ReportProgress(targetStreamOffset, true);
+                                throw e;
+                            }
+                            else
+                            {
+                                WaitForRetry(attemptCount, this.UseBackOffRetryStrategy, _token);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //if we tried more than the number of times we were allowed to, give up and throw the exception
+                        if (attemptCount >= MaxBufferUploadAttemptCount)
+                        {
+                            ReportProgress(targetStreamOffset, true);
+                            throw e;
+                        }
+                        else
+                        {
+                            WaitForRetry(attemptCount, this.UseBackOffRetryStrategy, _token);
+                        }
+                    }
+                }
                 catch (AdlsErrorException e)
                 {
                     if (e.Body.RemoteException is AdlsBadOffsetException)
@@ -287,7 +326,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                         if (attemptCount >= MaxBufferUploadAttemptCount)
                         {
                             ReportProgress(targetStreamOffset, true);
-                            throw;
+                            throw e;
                         }
                         else
                         {
@@ -295,13 +334,13 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                         }
                     }
                 }
-                catch
+                catch (Exception ex)
                 {
                     //if we tried more than the number of times we were allowed to, give up and throw the exception
                     if (attemptCount >= MaxBufferUploadAttemptCount)
                     {
                         ReportProgress(targetStreamOffset, true);
-                        throw;
+                        throw ex;
                     }
                     else
                     {
