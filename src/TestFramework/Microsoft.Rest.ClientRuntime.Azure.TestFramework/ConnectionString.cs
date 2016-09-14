@@ -35,7 +35,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             {
                 if(_keyValuePairs == null)
                 {
-                    _keyValuePairs = new Dictionary<string, string>();
+                    _keyValuePairs = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
                 }
                 return _keyValuePairs;
             }
@@ -52,22 +52,12 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         {
             get
             {
-                if(_parseErrorSb == null)
-                {
-                    _parseErrorSb = new StringBuilder();                    
-                }
                 return _parseErrorSb.ToString();
             }
 
             private set
             {
-                if (_parseErrorSb == null)
-                {
-                    _parseErrorSb = new StringBuilder();
-                    _parseErrorSb.AppendLine(value);
-                }
-                else
-                    _parseErrorSb.AppendLine(value);
+                _parseErrorSb.AppendLine(value);
             }
         }
 
@@ -82,7 +72,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             List<string> connectionKeyNames = (from fi in typeof(ConnectionStringKeys)
                                                .GetFields(BindingFlags.Public | BindingFlags.Static)
                                                select fi.GetRawConstantValue().ToString()).ToList<string>();
-            connectionKeyNames.ForEach((li) => KeyValuePairs.Add(li.ToLower(), string.Empty));
+            connectionKeyNames.ForEach((li) => KeyValuePairs.Add(li, string.Empty));
         }
         
         /// <summary>
@@ -91,31 +81,18 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         public ConnectionString()
         {
             Init();
+            _parseErrorSb = new StringBuilder();
         }
 
         /// <summary>
         /// Initialize Connection string object using provided connectionString
         /// </summary>
         /// <param name="connString">Semicolon separated KeyValue pair connection string</param>
-        public ConnectionString(string connString) : this(connString, true)
-        { }
-
-        /// <summary>
-        /// Constructs ConnectionString based on provided connection string
-        /// </summary>
-        /// <param name="connString">Connection string</param>
-        /// <param name="checkViolation">Violation checks in connection string are performed</param>
-        public ConnectionString(string connString, bool checkViolation):this()
+        public ConnectionString(string connString) : this()
         {
             _connString = connString;
-            CheckViolation = checkViolation;
             Parse(_connString); //Keyvalue pairs are normalized and is called from Parse(string) function
             NormalizeKeyValuePairs();
-
-            if (CheckViolation)
-            {
-                DetectViolations();
-            }
         }
         #endregion
 
@@ -127,36 +104,36 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         private void NormalizeKeyValuePairs()
         {
             string clientId, spn, password, spnSecret, userId;
-            KeyValuePairs.TryGetValue(ConnectionStringKeys.AADClientIdKey.ToLower(), out clientId);
-            KeyValuePairs.TryGetValue(ConnectionStringKeys.ServicePrincipalKey.ToLower(), out spn);
+            KeyValuePairs.TryGetValue(ConnectionStringKeys.AADClientIdKey, out clientId);
+            KeyValuePairs.TryGetValue(ConnectionStringKeys.ServicePrincipalKey, out spn);
 
-            KeyValuePairs.TryGetValue(ConnectionStringKeys.UserIdKey.ToLower(), out userId);
-            KeyValuePairs.TryGetValue(ConnectionStringKeys.PasswordKey.ToLower(), out password);
-            KeyValuePairs.TryGetValue(ConnectionStringKeys.ServicePrincipalSecretKey.ToLower(), out spnSecret);            
+            KeyValuePairs.TryGetValue(ConnectionStringKeys.UserIdKey, out userId);
+            KeyValuePairs.TryGetValue(ConnectionStringKeys.PasswordKey, out password);
+            KeyValuePairs.TryGetValue(ConnectionStringKeys.ServicePrincipalSecretKey, out spnSecret);
 
             //ClientId was provided and servicePrincipal was empty, we want ServicePrincipal to be initialized
             //At some point we will deprecate ClientId keyName
             if (!string.IsNullOrEmpty(clientId) && (string.IsNullOrEmpty(spn)))
             {
-                KeyValuePairs[ConnectionStringKeys.ServicePrincipalKey.ToLower()] = clientId;
+                KeyValuePairs[ConnectionStringKeys.ServicePrincipalKey] = clientId;
             }
 
             //Set the value of PasswordKey to ServicePrincipalSecret ONLY if userId is empty
             //If UserId is not empty, we are not sure if it's a password for inter active login or ServicePrincipal SecretKey
             if (!string.IsNullOrEmpty(password) && (string.IsNullOrEmpty(spnSecret)) && (string.IsNullOrEmpty(userId)))
             {
-                KeyValuePairs[ConnectionStringKeys.ServicePrincipalSecretKey.ToLower()] = password;
+                KeyValuePairs[ConnectionStringKeys.ServicePrincipalSecretKey] = password;
             }
 
             //Initialize default values if found empty
             if (string.IsNullOrEmpty(clientId) && (string.IsNullOrEmpty(spn)))
             {
-                KeyValuePairs.UpdateDictionary(ConnectionStringKeys.ServicePrincipalKey, "1950a258-227b-4e31-a9cf-717495945fc2");
+                KeyValuePairs[ConnectionStringKeys.ServicePrincipalKey] = "1950a258-227b-4e31-a9cf-717495945fc2";
             }
 
             //Initialize raw tokens to a non-null/non-empty strings
-            KeyValuePairs.UpdateDictionary(ConnectionStringKeys.RawTokenKey, ConnectionStringKeys.RawTokenKey);
-            KeyValuePairs.UpdateDictionary(ConnectionStringKeys.RawGraphTokenKey, ConnectionStringKeys.RawGraphTokenKey);
+            KeyValuePairs[ConnectionStringKeys.RawTokenKey] = ConnectionStringKeys.RawTokenKey;
+            KeyValuePairs[ConnectionStringKeys.RawGraphTokenKey] = ConnectionStringKeys.RawGraphTokenKey;
         }
 
         /// <summary>
@@ -173,8 +150,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             {
                 if(!string.IsNullOrEmpty(nonEmptyUriKey))
                 {
-                    string envName = KeyValuePairs.GetValueUsingCaseInsensitiveKey(ConnectionStringKeys.EnvironmentKey);
-                    string uriKeyValue = KeyValuePairs.GetValueUsingCaseInsensitiveKey(nonEmptyUriKey);
+                    string envName = KeyValuePairs[ConnectionStringKeys.EnvironmentKey];
+                    string uriKeyValue = KeyValuePairs[nonEmptyUriKey];
                     string envAndUriConflictError = string.Format("Connection string contains Environment "+
                         "'{0}' and '{1}={2}'. Any Uri and environment cannot co-exist. "+
                         "Either set any environment or provide Uris", envName, nonEmptyUriKey, uriKeyValue);
@@ -192,7 +169,8 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             string nonEmptyUriKeyName = string.Empty;
             var nonEmptyUriList = KeyValuePairs.Where(item =>
             {
-                return ((item.Key.Contains("uri") || (item.Key.Equals(ConnectionStringKeys.AADAuthenticationEndpointKey.ToLower()))) && (!string.IsNullOrEmpty(item.Value)));
+                return ((item.Key.Contains("uri") || 
+                        (item.Key.Equals(ConnectionStringKeys.AADAuthenticationEndpointKey))) && (!string.IsNullOrEmpty(item.Value)));
             });
             
             if(nonEmptyUriList.IsAny<KeyValuePair<string,string>>())
@@ -210,7 +188,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         private bool IsEnvironmentSet()
         {
             bool envSet = false;            
-            string envNameString = KeyValuePairs.GetValueUsingCaseInsensitiveKey(ConnectionStringKeys.EnvironmentKey);
+            string envNameString = KeyValuePairs[ConnectionStringKeys.EnvironmentKey];
             if (!string.IsNullOrEmpty(envNameString))
             {
                 EnvironmentNames envName;
@@ -280,6 +258,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 }
 
                 //Adjust key-value pairs and normalize values across multiple keys
+                //We need to do this here because Connection string can be parsed multiple time within same instance
                 NormalizeKeyValuePairs();
             }
         }
@@ -289,9 +268,9 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// </summary>
         /// <param name="keyName">KeyName set in connection string</param>
         /// <returns>Value for the key provided</returns>
-        public string GetValue(string keyName)
+        internal string GetValue(string keyName)
         {
-            return KeyValuePairs.GetValueUsingCaseInsensitiveKey(keyName);
+            return KeyValuePairs[keyName];
         }
 
         /// <summary>

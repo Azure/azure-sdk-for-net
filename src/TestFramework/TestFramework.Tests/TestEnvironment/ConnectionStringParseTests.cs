@@ -25,7 +25,7 @@ namespace TestFramework.Tests.TestEnvironment
         {
             //Legal Connection string
             string legalStr = CreateConnStrWithAllPossibleValues();
-            ConnectionString cs = new ConnectionString(legalStr, false);
+            ConnectionString cs = new ConnectionString(legalStr);
             cs.Parse(legalStr);
             foreach(KeyValuePair<string, string> kv in cs.KeyValuePairs)
             {
@@ -127,7 +127,7 @@ namespace TestFramework.Tests.TestEnvironment
             string sampleStrValue = "34rghytukbnju7HelloWorld!!lkjdfuhgghj";
             string sampleNumericValue = "3476834rghh9876";
 
-            ConnectionString cnnStr = new ConnectionString("", false);
+            ConnectionString cnnStr = new ConnectionString("");
             StringBuilder sb = new StringBuilder();
             foreach(KeyValuePair<string, string> kv in cnnStr.KeyValuePairs)
             {

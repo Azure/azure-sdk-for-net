@@ -55,20 +55,6 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Authentication
             }
         }
 
-        [Theory]
-        [InlineData("BaseUri=https://management-preview.core.windows-int.net;SubscriptionId=ee39cb6d-d45b-4694-825a-f4d6f87ed72a;Environment=Dogfood")]
-        [InlineData("GraphUri=https://management-preview.core.windows-int.net;SubscriptionId=ee39cb6d-d45b-4694-825a-f4d6f87ed72a;Environment=Dogfood")]
-        [InlineData("GalleryUri=https://management-preview.core.windows-int.net;SubscriptionId=ee39cb6d-d45b-4694-825a-f4d6f87ed72a;Environment=Dogfood")]
-        [InlineData("AADAuthEndpoint=https://management-preview.core.windows-int.net;SubscriptionId=ee39cb6d-d45b-4694-825a-f4d6f87ed72a;Environment=Dogfood")]
-        [InlineData("GalleryUri=http://foo;AADAuthEndpoint=https://management-preview.core.windows-int.net;SubscriptionId=ee39cb6d-d45b-4694-825a-f4d6f87ed72a;Environment=Dogfood")]
-        public void EnvironmentFactoryThrowsIfCsmConnectionStringHasEnvironmentAndEndpoints(string connection)
-        {
-            Environment.SetEnvironmentVariable("TEST_CONNECTION_STRING", "");
-            Environment.SetEnvironmentVariable("TEST_ORGID_AUTHENTICATION", "");
-            Environment.SetEnvironmentVariable("TEST_CSM_ORGID_AUTHENTICATION", connection);
-            Assert.Throws<ArgumentException>(() => TestEnvironmentFactory.GetTestEnvironment());
-        }
-
         [Fact]
         public void EnvironmentFactoryInCsmUsesBaseUriEndpointFromConnectionString()
         {
