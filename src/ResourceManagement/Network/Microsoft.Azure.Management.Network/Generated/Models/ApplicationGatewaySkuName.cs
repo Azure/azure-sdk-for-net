@@ -20,5 +20,7 @@ namespace Microsoft.Azure.Management.Network.Models
         public const string StandardSmall = "Standard_Small";
         public const string StandardMedium = "Standard_Medium";
         public const string StandardLarge = "Standard_Large";
+        public const string WAFMedium = "WAF_Medium";
+        public const string WAFLarge = "WAF_Large";
     }
 }

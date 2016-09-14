@@ -38,13 +38,15 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Name of application gateway SKU. Possible values include:
-        /// 'Standard_Small', 'Standard_Medium', 'Standard_Large'
+        /// 'Standard_Small', 'Standard_Medium', 'Standard_Large',
+        /// 'WAF_Medium', 'WAF_Large'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Tier of application gateway. Possible values include: 'Standard'
+        /// Tier of application gateway. Possible values include: 'Standard',
+        /// 'WAF'
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
         public string Tier { get; set; }
