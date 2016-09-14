@@ -164,5 +164,15 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "etag")]
         public string Etag { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            if (this.WebApplicationFirewallConfiguration != null)
+            {
+                this.WebApplicationFirewallConfiguration.Validate();
+            }
+        }
     }
 }

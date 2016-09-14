@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the
         /// ApplicationGatewayWebApplicationFirewallConfiguration class.
         /// </summary>
-        public ApplicationGatewayWebApplicationFirewallConfiguration(bool? enabled = default(bool?), string firewallMode = default(string))
+        public ApplicationGatewayWebApplicationFirewallConfiguration(bool enabled, string firewallMode = default(string))
         {
             Enabled = enabled;
             FirewallMode = firewallMode;
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Whether web application firewall is enabled
         /// </summary>
         [JsonProperty(PropertyName = "enabled")]
-        public bool? Enabled { get; set; }
+        public bool Enabled { get; set; }
 
         /// <summary>
         /// Web application firewall mode. Possible values include:
@@ -50,5 +50,12 @@ namespace Microsoft.Azure.Management.Network.Models
         [JsonProperty(PropertyName = "firewallMode")]
         public string FirewallMode { get; set; }
 
+        /// <summary>
+        /// Validate the object. Throws ValidationException if validation fails.
+        /// </summary>
+        public virtual void Validate()
+        {
+            //Nothing to validate
+        }
     }
 }
