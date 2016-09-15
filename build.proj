@@ -48,7 +48,6 @@
     <LibraryToolsFolder>$(LibraryRoot)tools</LibraryToolsFolder>
     <LibraryNugetPackageFolder>$(LibraryRoot)\packages</LibraryNugetPackageFolder>
     <LibraryFriendlyName>Microsoft Azure Management Libraries</LibraryFriendlyName>
-    <AuthenticationSolution>src\Authentication\Authentication.sln</AuthenticationSolution>
     <ManagementLibrariesSolution>AzureManagementLibraries.sln</ManagementLibrariesSolution>
     <BinariesFolder>$(LibraryRoot)binaries</BinariesFolder>
     <PackageOutputDir>$(BinariesFolder)\packages</PackageOutputDir>
@@ -58,7 +57,6 @@
     <DelaySign Condition =" '$(DelaySign)' == '' ">false</DelaySign>
     <Scope Condition=" '$(Scope)' == '' ">All</Scope>
     <FxTargetList>portable;net40;net45</FxTargetList>
-    <FxTargetList Condition=" '$(Scope)' == 'authentication' ">net45</FxTargetList>
     <ZipExeFolder>$(LibraryToolsFolder)\7-Zip</ZipExeFolder>
     <ZipExe>$(ZipExeFolder)\7z.exe</ZipExe>
   </PropertyGroup>
@@ -98,11 +96,6 @@
     <Message Text="Non NetCore based AutoRest Libraries: @(Non_NetCore_AutoRestLibraries)" />
     <Message Text="NetCore AutoRest Libraries: @(NetCore_AutoRestLibraries)" />
     
-    <!--Do not build old libraries except Authentication, which Azure PowerShell still uses-->
-    <ItemGroup>
-      <NonAutoRestLibraries Include="$(LibrarySourceFolder)\Authentication\Authentication.sln"
-                            Condition=" '$(Scope)' == 'all' or '$(Scope)' == 'Authentication' " />
-    </ItemGroup>
     <Message Text="Non-AutoRest Libraries: @(NonAutoRestLibraries)" />
      
     <Message Text="Ensure 7zip is available" />
@@ -175,10 +168,6 @@
   </Target>
   
   <PropertyGroup>
-    <!--This property is used by build script at CI server. Do not remove it unless you will update CI as well -->
-    <!--TODO: research to include all library folders but exlude test folders with huge recorded json files.
-      For now we run subset of folders to avoid long build delay and avoid errors reported on recorded json files-->
-    <CorporateScanPaths>$(LibrarySourceFolder)\Authentication</CorporateScanPaths>
     <!--public token associated with MSSharedLibKey.snk-->
     <StrongNameToken Condition=" '$(StrongNameToken)' == '' ">31bf3856ad364e35</StrongNameToken>
   </PropertyGroup>

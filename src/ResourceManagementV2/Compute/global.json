@@ -1,3 +1,0 @@
-{
-    "projects": [ "Microsoft.Azure.Management.V2.Compute", "../Network", "../Resource", "../Storage" ]
-}

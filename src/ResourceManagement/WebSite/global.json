@@ -1,3 +1,0 @@
-{
-  "projects": [ "../../TestFramework", "Microsoft.Azure.Management.Websites", "Websites.Tests" ]
-}
