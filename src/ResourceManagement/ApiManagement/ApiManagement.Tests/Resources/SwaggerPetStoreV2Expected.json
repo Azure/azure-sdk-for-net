@@ -1,0 +1,520 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Swagger Petstore Extensive",
+    "version": "1.0",
+    "description": "A sample API that uses a petstore as an example to demonstrate features in the swagger-2.0 specification"
+  },
+  "host": "proxy.apim.net",
+  "basePath": "/swaggerv2api",
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/mySamplePath": {
+      "post": {
+        "description": "Dummy desc",
+        "operationId": "dummyid1",
+        "parameters": [
+          {
+            "name": "dummyReqQueryParam",
+            "in": "query",
+            "description": "dummyReqQueryParam description",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "dummyNotReqQueryParam",
+            "in": "query",
+            "description": "dummyNotReqQueryParam description",
+            "type": "string"
+          },
+          {
+            "name": "dummyDateHeaderParam",
+            "in": "header",
+            "description": "Format - date (as full-date in RFC3339). dummyDateHeaderParam description",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "Ocp-Apim-Subscription-Key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          },
+          {
+            "name": "pet",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/pet"
+            }
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "pet response",
+            "headers": {
+              "header1": {
+                "type": "integer",
+                "description": "sampleheader"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/petArray"
+            },
+            "examples": {
+              "application/json": {
+                "id": 3,
+                "name": "myresppet"
+              }
+            }
+          },
+          "500": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorModel"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/resourceWithFormData": {
+      "post": {
+        "description": "resourceWithFormData desc",
+        "operationId": "resourceWithFormDataPOST",
+        "parameters": [
+          {
+            "name": "dummyReqQueryParam",
+            "in": "query",
+            "description": "dummyReqQueryParam description",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "Ocp-Apim-Subscription-Key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          },
+          {
+            "name": "dummyFormDataParam",
+            "in": "formData",
+            "description": "dummyFormDataParam description",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "responses": {
+          "200": {
+            "description": "sample response"
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/mySamplePath2": {
+      "post": {
+        "description": "Dummy desc",
+        "operationId": "dummyid2",
+        "parameters": [
+          {
+            "name": "definedQueryParam",
+            "in": "query",
+            "description": "Format - whateverformat. definedQueryParam description",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "Ocp-Apim-Subscription-Key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          },
+          {
+            "name": "definedBodyParam",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/DefinedBodyParam"
+            }
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "204": {
+            "description": "dummyResponseDef description",
+            "headers": {
+              "header1": {
+                "type": "integer"
+              },
+              "header2": {
+                "type": "integer"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/pet"
+            },
+            "examples": {
+              "contenttype1": "contenttype1 example"
+            }
+          }
+        },
+        "produces": [
+          "contenttype1",
+          "application/xml"
+        ]
+      }
+    },
+    "/pets2": {
+      "get": {
+        "description": "Dummy description",
+        "operationId": "dummyOperationId",
+        "parameters": [
+          {
+            "name": "dummyParam",
+            "in": "query",
+            "description": "dummyParam desc",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Format - int32. maximum number of results to return",
+            "type": "integer"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "Ocp-Apim-Subscription-Key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "pet response",
+            "schema": {
+              "$ref": "#/definitions/Pets2Get200ApplicationJsonResponse"
+            }
+          },
+          "500": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorModel"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/pets": {
+      "get": {
+        "description": "Returns all pets from the system that the user has access to",
+        "operationId": "findPets",
+        "parameters": [
+          {
+            "name": "tags",
+            "in": "query",
+            "description": "tags to filter by",
+            "type": "string"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Format - int32. maximum number of results to return",
+            "type": "integer"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "Ocp-Apim-Subscription-Key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "pet response",
+            "schema": {
+              "$ref": "#/definitions/petArray"
+            }
+          },
+          "500": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorModel"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "application/xml"
+        ]
+      },
+      "post": {
+        "description": "Creates a new pet in the store.  Duplicates are allowed",
+        "operationId": "addPet",
+        "parameters": [
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "Ocp-Apim-Subscription-Key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          },
+          {
+            "name": "newPet",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/newPet"
+            }
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "pet response",
+            "schema": {
+              "$ref": "#/definitions/pet"
+            }
+          },
+          "500": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorModel"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/pets/{id}": {
+      "get": {
+        "description": "Returns a user based on a single ID, if the user does not have access to the pet",
+        "operationId": "findPetById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Format - int64. ID of pet to fetch",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "Ocp-Apim-Subscription-Key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "pet response",
+            "schema": {
+              "$ref": "#/definitions/pet"
+            }
+          },
+          "500": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorModel"
+            }
+          }
+        },
+        "produces": [
+          "application/json",
+          "application/xml",
+          "text/xml",
+          "text/html"
+        ]
+      },
+      "delete": {
+        "description": "deletes a single pet based on the ID supplied",
+        "operationId": "deletePet",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Format - int64. ID of pet to delete",
+            "required": true,
+            "type": "integer"
+          },
+          {
+            "name": "subscription-key",
+            "in": "query",
+            "description": "subscription key in url",
+            "type": "string"
+          },
+          {
+            "name": "Ocp-Apim-Subscription-Key",
+            "in": "header",
+            "description": "subscription key in header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "pet deleted"
+          },
+          "500": {
+            "description": "unexpected error",
+            "schema": {
+              "$ref": "#/definitions/errorModel"
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "pet": {
+      "required": [
+        "id",
+        "name"
+      ],
+      "externalDocs": {
+        "description": "find more info here",
+        "url": "https://helloreverb.com/about"
+      },
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "tag": {
+          "type": "string"
+        }
+      }
+    },
+    "newPet": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/pet"
+        },
+        {
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        }
+      ]
+    },
+    "errorModel": {
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "petArray": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/pet"
+      }
+    },
+    "DefinedBodyParam": {
+      "title": "Example Schema",
+      "type": "object",
+      "properties": {
+        "firstName": {
+          "type": "string"
+        },
+        "lastName": {
+          "type": "string"
+        },
+        "age": {
+          "description": "Age in years",
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "firstName",
+        "lastName"
+      ]
+    },
+    "Pets2Get200ApplicationJsonResponse": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

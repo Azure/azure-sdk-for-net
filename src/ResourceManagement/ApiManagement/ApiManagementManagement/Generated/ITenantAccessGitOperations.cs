@@ -85,29 +85,5 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// request ID.
         /// </returns>
         Task<AzureOperationResponse> RegenerateSecondaryKeyAsync(string resourceGroupName, string serviceName, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Update tenant settings.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='serviceName'>
-        /// The name of the Api Management service.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters.
-        /// </param>
-        /// <param name='etag'>
-        /// ETag.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        Task<AzureOperationResponse> UpdateAsync(string resourceGroupName, string serviceName, AccessInformationUpdateParameters parameters, string etag, CancellationToken cancellationToken);
     }
 }

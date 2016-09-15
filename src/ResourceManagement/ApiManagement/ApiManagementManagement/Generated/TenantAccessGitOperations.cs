@@ -24,8 +24,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Hyak.Common;
@@ -117,7 +115,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + Uri.EscapeDataString(serviceName);
             url = url + "/tenant/access/git";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -312,7 +310,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + Uri.EscapeDataString(serviceName);
             url = url + "/tenant/access/git/regeneratePrimaryKey";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -458,7 +456,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + Uri.EscapeDataString(serviceName);
             url = url + "/tenant/access/git/regenerateSecondaryKey";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -509,182 +507,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                     {
                         cancellationToken.ThrowIfCancellationRequested();
                         CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
-                        if (shouldTrace)
-                        {
-                            TracingAdapter.Error(invocationId, ex);
-                        }
-                        throw ex;
-                    }
-                    
-                    // Create Result
-                    AzureOperationResponse result = null;
-                    // Deserialize Response
-                    result = new AzureOperationResponse();
-                    result.StatusCode = statusCode;
-                    if (httpResponse.Headers.Contains("x-ms-request-id"))
-                    {
-                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                    }
-                    
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.Exit(invocationId, result);
-                    }
-                    return result;
-                }
-                finally
-                {
-                    if (httpResponse != null)
-                    {
-                        httpResponse.Dispose();
-                    }
-                }
-            }
-            finally
-            {
-                if (httpRequest != null)
-                {
-                    httpRequest.Dispose();
-                }
-            }
-        }
-        
-        /// <summary>
-        /// Update tenant settings.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
-        /// </param>
-        /// <param name='serviceName'>
-        /// Required. The name of the Api Management service.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. Parameters.
-        /// </param>
-        /// <param name='etag'>
-        /// Required. ETag.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// A standard service response including an HTTP status code and
-        /// request ID.
-        /// </returns>
-        public async Task<AzureOperationResponse> UpdateAsync(string resourceGroupName, string serviceName, AccessInformationUpdateParameters parameters, string etag, CancellationToken cancellationToken)
-        {
-            // Validate
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException("resourceGroupName");
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException("serviceName");
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException("parameters");
-            }
-            if (etag == null)
-            {
-                throw new ArgumentNullException("etag");
-            }
-            
-            // Tracing
-            bool shouldTrace = TracingAdapter.IsEnabled;
-            string invocationId = null;
-            if (shouldTrace)
-            {
-                invocationId = TracingAdapter.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("serviceName", serviceName);
-                tracingParameters.Add("parameters", parameters);
-                tracingParameters.Add("etag", etag);
-                TracingAdapter.Enter(invocationId, this, "UpdateAsync", tracingParameters);
-            }
-            
-            // Construct URL
-            string url = "";
-            url = url + "/subscriptions/";
-            if (this.Client.Credentials.SubscriptionId != null)
-            {
-                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
-            }
-            url = url + "/resourceGroups/";
-            url = url + Uri.EscapeDataString(resourceGroupName);
-            url = url + "/providers/";
-            url = url + "Microsoft.ApiManagement";
-            url = url + "/service/";
-            url = url + Uri.EscapeDataString(serviceName);
-            url = url + "/tenant/access/git";
-            List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
-            if (queryParameters.Count > 0)
-            {
-                url = url + "?" + string.Join("&", queryParameters);
-            }
-            string baseUrl = this.Client.BaseUri.AbsoluteUri;
-            // Trim '/' character from the end of baseUrl and beginning of url.
-            if (baseUrl[baseUrl.Length - 1] == '/')
-            {
-                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
-            }
-            if (url[0] == '/')
-            {
-                url = url.Substring(1);
-            }
-            url = baseUrl + "/" + url;
-            url = url.Replace(" ", "%20");
-            
-            // Create HTTP transport objects
-            HttpRequestMessage httpRequest = null;
-            try
-            {
-                httpRequest = new HttpRequestMessage();
-                httpRequest.Method = new HttpMethod("PATCH");
-                httpRequest.RequestUri = new Uri(url);
-                
-                // Set Headers
-                httpRequest.Headers.TryAddWithoutValidation("If-Match", etag);
-                
-                // Set Credentials
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                
-                // Serialize Request
-                string requestContent = null;
-                JToken requestDoc = null;
-                
-                JObject accessInformationUpdateParametersValue = new JObject();
-                requestDoc = accessInformationUpdateParametersValue;
-                
-                accessInformationUpdateParametersValue["enabled"] = parameters.Enabled;
-                
-                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
-                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
-                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
-                
-                // Send Request
-                HttpResponseMessage httpResponse = null;
-                try
-                {
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.SendRequest(invocationId, httpRequest);
-                    }
-                    cancellationToken.ThrowIfCancellationRequested();
-                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
-                    if (shouldTrace)
-                    {
-                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
-                    }
-                    HttpStatusCode statusCode = httpResponse.StatusCode;
-                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.NoContent)
-                    {
-                        cancellationToken.ThrowIfCancellationRequested();
-                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
                         if (shouldTrace)
                         {
                             TracingAdapter.Error(invocationId, ex);
