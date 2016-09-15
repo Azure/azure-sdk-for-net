@@ -2,7 +2,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace NotificationHubs
+namespace Microsoft.Azure.Management.NotificationHubs
 {
     using System.Linq;
     using Microsoft.Rest;

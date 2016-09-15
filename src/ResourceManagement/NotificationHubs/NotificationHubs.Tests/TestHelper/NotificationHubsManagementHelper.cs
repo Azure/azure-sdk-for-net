@@ -17,6 +17,8 @@ namespace NotificationHubs.Tests.TestHelper
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Microsoft.Azure.Management.NotificationHubs;
+    using Microsoft.Azure.Management.NotificationHubs.Models;
     using Microsoft.Azure.Management.Resources;
     using Microsoft.Azure.Management.Resources.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
@@ -25,12 +27,11 @@ namespace NotificationHubs.Tests.TestHelper
     using System.Threading.Tasks;
     using Newtonsoft.Json.Serialization;
     using Newtonsoft.Json.Converters;
-    using Models;
 
     public static class NotificationHubsManagementHelper
     {
         internal const string DefaultLocation = "South Central US";
-        internal const string ResourceGroupPrefix = "TestRg-NH";//"TestRG-Smithab-NewAD";
+        internal const string ResourceGroupPrefix = "TestRg-NH";
         internal const string NamespacePrefix = "HydraNH-Namespace";
         internal const string NotificationHubPrefix = "HydraNH-NotificationHub";
         internal const string AuthorizationRulesPrefix = "HydraNH-Authrules";

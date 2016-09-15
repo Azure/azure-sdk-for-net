@@ -16,14 +16,14 @@
 
 namespace NotificationHubs.Tests.ScenarioTests
 {
+    using Microsoft.Azure.Management.NotificationHubs;
+    using Microsoft.Azure.Management.NotificationHubs.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using System;
     using System.Linq;
-    using System.Net;
     using TestHelper;
     using Xunit;
     using System.Collections.Generic;
-    using Models;
 
     public partial class ScenarioTests 
     {

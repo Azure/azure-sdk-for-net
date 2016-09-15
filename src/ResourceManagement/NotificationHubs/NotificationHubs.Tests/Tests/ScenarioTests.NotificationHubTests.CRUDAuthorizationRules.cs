@@ -16,6 +16,8 @@
 
 namespace NotificationHubs.Tests.ScenarioTests
 {
+    using Microsoft.Azure.Management.NotificationHubs;
+    using Microsoft.Azure.Management.NotificationHubs.Models;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Microsoft.Azure.Test.HttpRecorder;
     using TestHelper;
@@ -25,7 +27,6 @@ namespace NotificationHubs.Tests.ScenarioTests
     using Microsoft.Rest.Azure;
     using System.Net;
     using System.Linq;
-    using Models;
 
     public partial class ScenarioTests 
     {
