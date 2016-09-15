@@ -59,6 +59,48 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// </exception>
         Task<AzureOperationResponse> ConcurrentAppendWithHttpMessagesAsync(string accountName, string filePath, System.IO.Stream streamContents, AppendModeType? appendMode = default(AppendModeType?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Sets or removes the expiration time on the specified file. This
+        /// operation can only be executed against files. Folders are not
+        /// supported.
+        /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Store account to execute filesystem operations
+        /// on.
+        /// </param>
+        /// <param name='filePath'>
+        /// The Data Lake Store path (starting with '/') of the file on which
+        /// to set or remove the expiration time.
+        /// </param>
+        /// <param name='expiryOption'>
+        /// Indicates the type of expiration to use for the file: 1.
+        /// NeverExpire: ExpireTime is ignored. 2. RelativeToNow: ExpireTime
+        /// is an integer in milliseconds representing the expiration date
+        /// relative to when file expiration is updated. 3.
+        /// RelativeToCreationDate: ExpireTime is an integer in milliseconds
+        /// representing the expiration date relative to file creation. 4.
+        /// Absolute: ExpireTime is an integer in milliseconds, as a Unix
+        /// timestamp relative to 1/1/1970 00:00:00. Possible values include:
+        /// 'NeverExpire', 'RelativeToNow', 'RelativeToCreationDate',
+        /// 'Absolute'
+        /// </param>
+        /// <param name='expireTime'>
+        /// The time that the file will expire, corresponding to the
+        /// ExpiryOption that was set.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="AdlsErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> SetFileExpiryWithHttpMessagesAsync(string accountName, string filePath, ExpiryOptionType expiryOption, long? expireTime = default(long?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Checks if the specified access is available at the given path.
         /// </summary>
         /// <param name='accountName'>
@@ -301,6 +343,10 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='streamContents'>
         /// The file contents to include when appending to the file.
         /// </param>
+        /// <param name='offset'>
+        /// The optional offset in the stream to begin the append operation.
+        /// Default is to append at the end of the stream.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -313,7 +359,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> AppendWithHttpMessagesAsync(string accountName, string directFilePath, System.IO.Stream streamContents, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> AppendWithHttpMessagesAsync(string accountName, string directFilePath, System.IO.Stream streamContents, long? offset = default(long?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a file with optionally specified content.
         /// </summary>
@@ -461,6 +507,56 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse> RemoveAclEntriesWithHttpMessagesAsync(string accountName, string removeAclFilePath, string aclspec, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Removes the existing Default Access Control List (ACL) of the
+        /// specified directory.
+        /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Store account to execute filesystem operations
+        /// on.
+        /// </param>
+        /// <param name='defaultAclFilePath'>
+        /// The Data Lake Store path (starting with '/') of the directory with
+        /// the default ACL being removed.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="AdlsErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> RemoveDefaultAclWithHttpMessagesAsync(string accountName, string defaultAclFilePath, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Removes the existing Access Control List (ACL) of the specified
+        /// file or directory.
+        /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Store account to execute filesystem operations
+        /// on.
+        /// </param>
+        /// <param name='aclFilePath'>
+        /// The Data Lake Store path (starting with '/') of the file or
+        /// directory with the ACL being removed.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="AdlsErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        Task<AzureOperationResponse> RemoveAclWithHttpMessagesAsync(string accountName, string aclFilePath, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets Access Control List (ACL) entries for the specified file or
         /// directory.

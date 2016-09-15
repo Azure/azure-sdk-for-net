@@ -15,8 +15,10 @@
 // 
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace Microsoft.Azure.Management.DataLake.StoreUploader
 {
@@ -27,8 +29,9 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
     {
         
         #region Private
-
         private List<UploadProgress> _fileProgress;
+
+        private ConcurrentQueue<UploadProgress> _progressBacklog;
 
         #endregion
 
@@ -52,17 +55,39 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             this.TotalFileLength = metadata.TotalFileBytes;
             this.TotalFileCount = metadata.FileCount;
             _fileProgress = new List<UploadProgress>(this.TotalFileCount);
+            _progressBacklog = new ConcurrentQueue<UploadProgress>();
 
             foreach (var fileMetadata in metadata.Files)
             {
+                var toAdd = new UploadProgress(fileMetadata);
                 if (fileMetadata.Status == SegmentUploadStatus.Complete)
                 {
                     this.UploadedByteCount += fileMetadata.FileLength;
                     this.UploadedFileCount++;
+                    toAdd.UploadedByteCount = toAdd.TotalFileLength;
+                    foreach(var segment in toAdd._segmentProgress)
+                    {
+                        segment.UploadedByteCount = segment.Length;
+                    }
                 }
 
-                _fileProgress.Add(new UploadProgress(fileMetadata));
+                _fileProgress.Add(toAdd);
             }
+        }
+
+        internal Thread GetProgressTrackingThread(CancellationToken token)
+        {
+            return new Thread(() =>
+            {
+                try
+                {
+                    this.SetSegmentProgress(token);
+                }
+                catch (OperationCanceledException)
+                {
+                    // do nothing, since we have already cancelled.
+                }
+            });
         }
 
         #endregion
@@ -112,29 +137,61 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             return _fileProgress[segmentNumber];
         }
 
-        /// <summary>
-        /// Updates the progress for the given segment
-        /// </summary>
-        /// <param name="segmentProgress">The segment progress.</param>
         internal void SetSegmentProgress(UploadProgress segmentProgress)
         {
-            lock (_fileProgress)
-            {
-                var previousProgress = _fileProgress.Where(p => p.UploadId.Equals(segmentProgress.UploadId, StringComparison.InvariantCultureIgnoreCase)).First();
-                
-                long deltaLength = segmentProgress.UploadedByteCount - previousProgress.UploadedByteCount;
-                this.UploadedByteCount += deltaLength;
+            _progressBacklog.Enqueue(segmentProgress);
+        }
 
-                // check to see if this upload is complete and that we haven't already marked it as complete
-                if(segmentProgress.UploadedByteCount == segmentProgress.TotalFileLength && deltaLength > 0)
+        /// <summary>
+        /// Updates the progress to indicate that a file failed
+        /// </summary>
+        internal void OnFileUploadThreadAborted(UploadMetadata failedFile)
+        {
+            ++this.UploadedFileCount;
+            
+            var previousProgress = _fileProgress.Where(p => p.UploadId.Equals(failedFile.UploadId, StringComparison.InvariantCultureIgnoreCase)).First();
+            foreach (var segment in previousProgress._segmentProgress)
+            {
+                // only fail out segments that haven't been completed.
+                if (segment.Length != segment.UploadedByteCount)
                 {
-                    this.UploadedFileCount++;
+                    segment.IsFailed = true;
                 }
 
-                // Iterate through all the segments inside this upload we are setting to get them up-to-date
-                foreach (var segment in segmentProgress._segmentProgress)
+                previousProgress.SetSegmentProgress(segment);
+            }
+            
+        }
+
+        /// <summary>
+        /// Updates the progress while there is still progress to update.
+        /// </summary>
+        private void SetSegmentProgress(CancellationToken token)
+        {
+            UploadProgress segmentProgress;
+            while (this.UploadedFileCount < this.TotalFileCount)
+            {
+                token.ThrowIfCancellationRequested();
+                if(_progressBacklog.TryDequeue(out segmentProgress))
                 {
-                    previousProgress.SetSegmentProgress(segment);
+                    token.ThrowIfCancellationRequested();
+                    var previousProgress = _fileProgress.Where(p => p.UploadId.Equals(segmentProgress.UploadId, StringComparison.InvariantCultureIgnoreCase)).First();
+
+                    long deltaLength = segmentProgress.UploadedByteCount - previousProgress.UploadedByteCount;
+                    this.UploadedByteCount += deltaLength;
+
+                    // check to see if this upload is complete and that we haven't already marked it as complete
+                    if (segmentProgress.UploadedByteCount == segmentProgress.TotalFileLength && deltaLength > 0)
+                    {
+                        ++this.UploadedFileCount;
+                    }
+
+                    // Iterate through all the segments inside this upload we are setting to get them up-to-date
+                    foreach (var segment in segmentProgress._segmentProgress)
+                    {
+                        token.ThrowIfCancellationRequested();
+                        previousProgress.SetSegmentProgress(segment);
+                    }
                 }
             }
         }

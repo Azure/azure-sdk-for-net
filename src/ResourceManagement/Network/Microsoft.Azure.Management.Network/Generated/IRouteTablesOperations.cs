@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Network
     public partial interface IRouteTablesOperations
     {
         /// <summary>
-        /// The Delete RouteTable operation deletes the specifed Route Table
+        /// The Delete RouteTable operation deletes the specified Route Table
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string routeTableName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The Delete RouteTable operation deletes the specifed Route Table
+        /// The Delete RouteTable operation deletes the specified Route Table
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<RouteTable>> GetWithHttpMessagesAsync(string resourceGroupName, string routeTableName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The Put RouteTable operation creates/updates a route tablein the
+        /// The Put RouteTable operation creates/updates a route table in the
         /// specified resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<RouteTable>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string routeTableName, RouteTable parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The Put RouteTable operation creates/updates a route tablein the
+        /// The Put RouteTable operation creates/updates a route table in the
         /// specified resource group.
         /// </summary>
         /// <param name='resourceGroupName'>

@@ -44,34 +44,33 @@ namespace Microsoft.Azure.Management.Network.Models
         }
 
         /// <summary>
-        /// Gets or sets default backend address pool resource of URL path map
+        /// Default backend address pool resource of URL path map
         /// </summary>
         [JsonProperty(PropertyName = "properties.defaultBackendAddressPool")]
         public SubResource DefaultBackendAddressPool { get; set; }
 
         /// <summary>
-        /// Gets or sets default backend http settings resource of URL path
-        /// map
+        /// Default backend http settings resource of URL path map
         /// </summary>
         [JsonProperty(PropertyName = "properties.defaultBackendHttpSettings")]
         public SubResource DefaultBackendHttpSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets path rule of URL path map resource
+        /// Path rule of URL path map resource
         /// </summary>
         [JsonProperty(PropertyName = "properties.pathRules")]
         public IList<ApplicationGatewayPathRule> PathRules { get; set; }
 
         /// <summary>
-        /// Gets provisioning state of the backend http settings resource
+        /// Provisioning state of the backend http settings resource
         /// Updating/Deleting/Failed
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
-        /// Gets name of the resource that is unique within a resource group.
-        /// This name can be used to access the resource
+        /// Name of the resource that is unique within a resource group. This
+        /// name can be used to access the resource
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

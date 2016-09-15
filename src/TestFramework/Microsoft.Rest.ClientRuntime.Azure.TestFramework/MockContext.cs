@@ -39,8 +39,10 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
             string methodName= "testframework_failed")
         {
             var context = new MockContext();
-
-            HttpMockServer.FileSystemUtilsObject = new Microsoft.Azure.Test.HttpRecorder.FileSystemUtils();
+            if (HttpMockServer.FileSystemUtilsObject == null)
+            {
+                HttpMockServer.FileSystemUtilsObject = new Microsoft.Azure.Test.HttpRecorder.FileSystemUtils();
+            }
             HttpMockServer.Initialize(className, methodName);
             if (HttpMockServer.Mode != HttpRecorderMode.Playback)
             {
@@ -68,10 +70,47 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// <returns></returns>
         public T GetServiceClient<T>(TestEnvironment currentEnvironment, bool internalBaseUri = false, params DelegatingHandler[] handlers) where T : class
         {
-            Type tokeCredType = Type.GetType("Microsoft.Rest.TokenCredentials, Microsoft.Rest.ClientRuntime");
-            object tokenCred = Activator.CreateInstance(tokeCredType, new object[] { currentEnvironment.TokenInfo.AccessToken });
+            return GetServiceClientWithCredentials<T>(currentEnvironment,
+                currentEnvironment.TokenInfo[TokenAudience.Management], internalBaseUri, handlers);
+        }
 
-            return GetServiceClientWithCredentials<T>(currentEnvironment, tokenCred, internalBaseUri, handlers);
+        /// <summary>
+        /// Creates Graph client object 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="handlers">Delegating existingHandlers</param>
+        /// <returns></returns>
+        public T GetGraphServiceClient<T>(
+            bool internalBaseUri = false,
+            params DelegatingHandler[] handlers) where T : class
+        {
+            return GetGraphServiceClient<T>(TestEnvironmentFactory.GetTestEnvironment(), internalBaseUri, handlers);
+        }
+
+        /// <summary>
+        /// Creates Graph client object 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="handlers">Delegating existingHandlers</param>
+        /// <returns></returns>
+        public T GetGraphServiceClient<T>(
+            TestEnvironment currentEnvironment,
+            bool internalBaseUri = false,
+            params DelegatingHandler[] handlers) where T : class
+        {            
+            if(!currentEnvironment.TokenInfo.ContainsKey(TokenAudience.Graph))
+            {
+                throw new ArgumentNullException(
+                    "currentEnvironment.TokenInfo[TokenAudience.Graph]",
+                    "Unable to create Graph Management client because Graph authentication token was not acquired during Login.");
+            }
+
+            return GetServiceClientWithCredentials<T>(
+                currentEnvironment,
+                currentEnvironment.TokenInfo[TokenAudience.Graph],
+                currentEnvironment.Endpoints.GraphUri,
+                internalBaseUri,
+                handlers);
         }
 
         /// <summary>
@@ -85,7 +124,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         {
             return GetServiceClientWithCredentials<T>(TestEnvironmentFactory.GetTestEnvironment(), credentials, handlers: handlers);
         }
-
+        
         /// <summary>
         /// Get a test environment, allowing the test to customize the creation options
         /// </summary>
@@ -93,14 +132,38 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
         /// <param name="credentials">Credentials</param>
         /// <param name="handlers">Delegating existingHandlers</param>
         /// <returns></returns>
-        public T GetServiceClientWithCredentials<T>(TestEnvironment currentEnvironment, object credentials, bool internalBaseUri = false, params DelegatingHandler[] handlers) where T : class
+        public T GetServiceClientWithCredentials<T>(
+            TestEnvironment currentEnvironment,
+            object credentials,
+            bool internalBaseUri = false,
+            params DelegatingHandler[] handlers) where T : class
+        {
+            return GetServiceClientWithCredentials<T>(currentEnvironment, credentials, currentEnvironment.BaseUri, internalBaseUri, handlers);
+        }
+
+        /// <summary>
+        /// Get a test environment, allowing the test to customize the creation options
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="credentials">Credentials</param>
+        /// <param name="baseUri">Base Uri</param>
+        /// <param name="handlers">Delegating existingHandlers</param>
+        /// <returns></returns>
+        public T GetServiceClientWithCredentials<T>(
+            TestEnvironment currentEnvironment, 
+            object credentials,
+            Uri baseUri,
+            bool internalBaseUri = false, 
+            params DelegatingHandler[] handlers) where T : class
         {
             T client;
             handlers = AddHandlers(currentEnvironment, handlers);
             var constructors = typeof(T).GetConstructors(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance | BindingFlags.NonPublic);
 
             ConstructorInfo constructor = null;
-            if (currentEnvironment.UsesCustomUri() && !internalBaseUri)
+            //We no longer use UseCustomUri function, rather check if BaseUri is notNull
+            //UseCustomeUri use to return true when BaseUri was set to some value
+            if ((currentEnvironment.BaseUri != null) && !internalBaseUri)
             {
                 foreach (var c in constructors)
                 {
@@ -121,7 +184,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 }
                 client = constructor.Invoke(new object[]
                 {
-                    currentEnvironment.BaseUri,
+                    baseUri,
                     credentials,
                     handlers
                 }) as T;
@@ -200,7 +263,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
                 handlers.Add(server);
             }
 
-            ResourceGroupCleaner cleaner = new ResourceGroupCleaner(currentEnvironment.TokenInfo);
+            ResourceGroupCleaner cleaner = new ResourceGroupCleaner(currentEnvironment.TokenInfo[TokenAudience.Management]);
             handlers.Add(cleaner);
             undoHandlers.Add(cleaner);
 

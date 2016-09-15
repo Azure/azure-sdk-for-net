@@ -1,19 +1,6 @@
-﻿//
-// Copyright © Microsoft Corporation, All Rights Reserved
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// THIS CODE IS PROVIDED *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS
-// OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION
-// ANY IMPLIED WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A
-// PARTICULAR PURPOSE, MERCHANTABILITY OR NON-INFRINGEMENT.
-//
-// See the Apache License, Version 2.0 for the specific language
-// governing permissions and limitations under the License.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
 
 using System;
 using System.Threading;
@@ -61,7 +48,7 @@ namespace Microsoft.Azure.KeyVault
         /// with the provided authentication callback and only resolves keys for the 
         /// specified key vault
         /// </summary>
-        /// <param name="vaultName">The URL for the Key Vault, e.g. https://myvault.vault.net/ </param>
+        /// <param name="vaultName">The URL for the Key Vault, e.g. https://myvault.vault.azure.net/ </param>
         /// <param name="authenticationCallback">Key Vault authentication callback</param>
         public KeyVaultKeyResolver( string vaultName, KeyVaultClient.AuthenticationCallback authenticationCallback )
             : this( vaultName, new KeyVaultClient( authenticationCallback ) )
@@ -72,7 +59,7 @@ namespace Microsoft.Azure.KeyVault
         /// Creates a new Key Vault KeyResolver that uses the specified KeyVaultClient
         /// and only resolves keys for the specified key vault
         /// </summary>
-        /// <param name="vaultName">The URL for the Key Vault, e.g. https://myvault.vault.net/ </param>
+        /// <param name="vaultName">The URL for the Key Vault, e.g. https://myvault.vault.azure.net/ </param>
         /// <param name="client">Key Vault client</param>
         public KeyVaultKeyResolver( string vaultName, KeyVaultClient client )
         {
@@ -99,15 +86,21 @@ namespace Microsoft.Azure.KeyVault
             if ( string.IsNullOrWhiteSpace( kid ) )
                 throw new ArgumentNullException( "kid" );
 
-            // If the resolver has a name prefix, only handle kid that have that prefix
-            if ( !string.IsNullOrEmpty( _name ) && !kid.StartsWith( _name, StringComparison.OrdinalIgnoreCase ) )
-                return null;
+            // If the resolver has a name prefix, only handle kid that have that prefix.
+            if ( _name != null )
+            {
+                var vaultUrl = new Uri( _name );
+                var keyUrl   = new Uri( kid );
+
+                if ( string.Compare( vaultUrl.Scheme, keyUrl.Scheme, true ) != 0 || string.Compare( vaultUrl.Authority, keyUrl.Authority, true ) != 0 || vaultUrl.Port != keyUrl.Port )
+                    return null;
+            }
 
             if ( KeyIdentifier.IsKeyIdentifier( kid ) )
-                return await ResolveKeyFromKeyAsync( kid, token );
+                return await ResolveKeyFromKeyAsync( kid, token ).ConfigureAwait( false );
 
             if ( SecretIdentifier.IsSecretIdentifier( kid ) )
-                return await ResolveKeyFromSecretAsync( kid, token );
+                return await ResolveKeyFromSecretAsync( kid, token ).ConfigureAwait( false );
 
             // Return null rather than throw an exception here
             return null;
@@ -119,17 +112,15 @@ namespace Microsoft.Azure.KeyVault
         {
             Uri vaultUri = new Uri( vaultName, UriKind.Absolute );
 
-            if ( vaultUri.Scheme != Uri.UriSchemeHttps )
+            if ( string.Compare(vaultUri.Scheme, "https", true) != 0 )
                 throw new ArgumentException( "The vaultName must use the https scheme" );
 
-            if ( !vaultUri.Host.EndsWith( "vault.net") )
-                throw new ArgumentException( "The vaultName must end with vault.net" );
-
-            if ( !string.IsNullOrWhiteSpace( vaultUri.PathAndQuery) )
+            if ( string.CompareOrdinal( vaultUri.PathAndQuery, "/" ) != 0 )
                 throw new ArgumentException( "The vaultName cannot contain a path or query string" );
 
             return vaultUri.AbsoluteUri;
         }
+
 
         private Task<IKey> ResolveKeyFromKeyAsync( string kid, CancellationToken token )
         {
@@ -162,7 +153,7 @@ namespace Microsoft.Azure.KeyVault
 
                         if ( keyBytes != null )
                         {
-                            return new SymmetricKey( sid, keyBytes );
+                            return new SymmetricKey( secret.Id, keyBytes );
                         }
                     }
 
@@ -171,7 +162,7 @@ namespace Microsoft.Azure.KeyVault
         }
 
         /// <summary>
-        /// Converts a Base64Url encoded string to a byte array
+        /// Converts a Base64 or Base64Url encoded string to a byte array
         /// </summary>
         /// <param name="input">The Base64Url encoded string</param>
         /// <returns>The byte array represented by the enconded string</returns>
@@ -199,6 +190,5 @@ namespace Microsoft.Azure.KeyVault
 
             return input + new string( '=', count );
         }
-
     }
 }

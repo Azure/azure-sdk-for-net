@@ -1,0 +1,39 @@
+{
+  "version": "2.0.0-*",
+  "description": "Microsoft Azure Key Vault Extensions tests",
+  "authors": [ "Microsoft Corporation" ],
+
+  "buildOptions": {
+    "delaySign": true,
+    "publicSign": false,
+    "keyFile": "../../../tools/MSSharedLibKey.snk"
+  },
+  
+  "testRunner": "xunit",
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": [ "dnxcore50", "portable-net451+win8" ],
+      "dependencies": {
+        "Microsoft.NETCore.App": {
+          "type": "platform",
+          "version": "1.0.0"
+        },
+        "System.Security.Cryptography.Primitives": "4.0.0",
+        "System.Diagnostics.TraceSource": "4.0.0",
+        "System.Security.Cryptography.Algorithms": "4.2.0"
+      }
+    }
+  },
+  "dependencies": {
+    "Microsoft.Azure.KeyVault": "2.0.1-preview",
+    "Microsoft.Azure.KeyVault.Cryptography": "2.0.0-preview",
+    "Microsoft.Azure.KeyVault.Extensions": "2.0.0-preview",
+    "Microsoft.Azure.KeyVault.Core": "2.0.0-preview",
+    "Microsoft.Azure.Test.HttpRecorder": "[1.6.7-preview,2.0.0)",
+    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "[1.3.5-preview,2.0.0)",
+    "Microsoft.Azure.KeyVault.TestFramework": "2.0.0-preview",
+    "dotnet-test-xunit": "2.2.0-preview2-build1029",
+    "Moq": "4.6.25-alpha",
+    "xunit": "2.2.0-beta2-build3300"
+  }
+}

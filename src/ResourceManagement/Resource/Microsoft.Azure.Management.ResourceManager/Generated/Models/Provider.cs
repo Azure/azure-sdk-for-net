@@ -38,25 +38,25 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets the provider id.
+        /// The provider id.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the namespace of the provider.
+        /// The namespace of the provider.
         /// </summary>
         [JsonProperty(PropertyName = "namespace")]
         public string NamespaceProperty { get; set; }
 
         /// <summary>
-        /// Gets or sets the registration state of the provider.
+        /// The registration state of the provider.
         /// </summary>
         [JsonProperty(PropertyName = "registrationState")]
         public string RegistrationState { get; set; }
 
         /// <summary>
-        /// Gets or sets the collection of provider resource types.
+        /// The collection of provider resource types.
         /// </summary>
         [JsonProperty(PropertyName = "resourceTypes")]
         public IList<ProviderResourceType> ResourceTypes { get; set; }

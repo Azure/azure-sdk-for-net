@@ -1,7 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg7379?api-version=2016-02-01",
+      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourcegroups/csmrg369?api-version=2016-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODllYzRkMWQtZGNjNy00YTNmLWE3MDEtMGE1ZDA3NGM4NTA1L3Jlc291cmNlZ3JvdXBzL2NzbXJnMzY5P2FwaS12ZXJzaW9uPTIwMTYtMDctMDE=",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"West Europe\"\r\n}",
       "RequestHeaders": {
@@ -12,19 +13,19 @@
           "33"
         ],
         "x-ms-client-request-id": [
-          "82d48839-267c-4697-91f9-eadee2b62635"
+          "841b86c4-73d4-44bf-b8fe-8f087e2bcbea"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.0.0.0"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.1.4-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg7379\",\r\n  \"name\": \"csmrg7379\",\r\n  \"location\": \"westeurope\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourceGroups/csmrg369\",\r\n  \"name\": \"csmrg369\",\r\n  \"location\": \"westeurope\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "175"
+          "173"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -36,22 +37,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 26 Jan 2016 22:33:16 GMT"
+          "Wed, 27 Jul 2016 00:36:55 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1197"
         ],
         "x-ms-request-id": [
-          "e90e7f96-ac3d-4e67-9f8e-d8e282f7f20e"
+          "a23b8af1-8650-4b54-8db2-a8e2b0f6d126"
         ],
         "x-ms-correlation-request-id": [
-          "e90e7f96-ac3d-4e67-9f8e-d8e282f7f20e"
+          "a23b8af1-8650-4b54-8db2-a8e2b0f6d126"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160126T223317Z:e90e7f96-ac3d-4e67-9f8e-d8e282f7f20e"
+          "CENTRALUS:20160727T003656Z:a23b8af1-8650-4b54-8db2-a8e2b0f6d126"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -60,27 +61,28 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg7379/providers/Microsoft.Resources/deployments/csmd8264/validate?api-version=2016-02-01",
+      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourcegroups/csmrg369/providers/Microsoft.Resources/deployments/csmd5783/validate?api-version=2016-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODllYzRkMWQtZGNjNy00YTNmLWE3MDEtMGE1ZDA3NGM4NTA1L3Jlc291cmNlZ3JvdXBzL2NzbXJnMzY5L3Byb3ZpZGVycy9NaWNyb3NvZnQuUmVzb3VyY2VzL2RlcGxveW1lbnRzL2NzbWQ1NzgzL3ZhbGlkYXRlP2FwaS12ZXJzaW9uPTIwMTYtMDctMDE=",
       "RequestMethod": "POST",
-      "RequestBody": "{\r\n  \"properties\": {\r\n    \"templateLink\": {\r\n      \"uri\": \"https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/201-web-app-github-deploy/azuredeploy.json\"\r\n    },\r\n    \"parameters\": {\r\n      \"repoURL\": {\r\n        \"value\": \"https://github.com/devigned/az-roadshow-oss.git\"\r\n      },\r\n      \"siteName\": {\r\n        \"value\": \"csres3257\"\r\n      },\r\n      \"hostingPlanName\": {\r\n        \"value\": \"someplan\"\r\n      },\r\n      \"siteLocation\": {\r\n        \"value\": \"westus\"\r\n      },\r\n      \"sku\": {\r\n        \"value\": \"Standard\"\r\n      }\r\n    },\r\n    \"mode\": \"Incremental\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"properties\": {\r\n    \"templateLink\": {\r\n      \"uri\": \"https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/201-web-app-github-deploy/azuredeploy.json\"\r\n    },\r\n    \"parameters\": {\r\n      \"repoURL\": {\r\n        \"value\": \"https://github.com/devigned/az-roadshow-oss.git\"\r\n      },\r\n      \"siteName\": {\r\n        \"value\": \"csres2760\"\r\n      },\r\n      \"hostingPlanName\": {\r\n        \"value\": \"someplan\"\r\n      },\r\n      \"sku\": {\r\n        \"value\": \"F1\"\r\n      }\r\n    },\r\n    \"mode\": \"Incremental\"\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "590"
+          "522"
         ],
         "x-ms-client-request-id": [
-          "6b17a5bb-8880-4791-927f-3e4b37205cc8"
+          "7fbfc8ef-daaa-4b79-88cc-7b5a43373b54"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.0.0.0"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.1.4-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg7379/providers/Microsoft.Resources/deployments/csmd8264\",\r\n  \"name\": \"csmd8264\",\r\n  \"properties\": {\r\n    \"templateLink\": {\r\n      \"uri\": \"https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/201-web-app-github-deploy/azuredeploy.json\",\r\n      \"contentVersion\": \"1.0.0.0\"\r\n    },\r\n    \"parameters\": {\r\n      \"siteName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"csres3257\"\r\n      },\r\n      \"hostingPlanName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"someplan\"\r\n      },\r\n      \"siteLocation\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"westus\"\r\n      },\r\n      \"sku\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"Standard\"\r\n      },\r\n      \"workerSize\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"0\"\r\n      },\r\n      \"repoURL\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"https://github.com/devigned/az-roadshow-oss.git\"\r\n      },\r\n      \"branch\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"master\"\r\n      }\r\n    },\r\n    \"mode\": \"Incremental\",\r\n    \"provisioningState\": \"Accepted\",\r\n    \"timestamp\": \"2016-01-26T22:33:18.6769732Z\",\r\n    \"duration\": \"PT0S\",\r\n    \"correlationId\": \"9897d176-0e2b-4b84-98c7-7a6af139d5c3\",\r\n    \"providers\": [\r\n      {\r\n        \"namespace\": \"Microsoft.Web\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"serverfarms\",\r\n            \"locations\": [\r\n              \"westus\"\r\n            ]\r\n          },\r\n          {\r\n            \"resourceType\": \"sites\",\r\n            \"locations\": [\r\n              \"westus\"\r\n            ]\r\n          },\r\n          {\r\n            \"resourceType\": \"sites/sourcecontrols\",\r\n            \"locations\": [\r\n              null\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"dependencies\": [\r\n      {\r\n        \"dependsOn\": [\r\n          {\r\n            \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg7379/providers/Microsoft.Web/serverfarms/someplan\",\r\n            \"resourceType\": \"Microsoft.Web/serverfarms\",\r\n            \"resourceName\": \"someplan\"\r\n          }\r\n        ],\r\n        \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg7379/providers/Microsoft.Web/sites/csres3257\",\r\n        \"resourceType\": \"Microsoft.Web/sites\",\r\n        \"resourceName\": \"csres3257\"\r\n      },\r\n      {\r\n        \"dependsOn\": [\r\n          {\r\n            \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg7379/providers/Microsoft.Web/Sites/csres3257\",\r\n            \"resourceType\": \"Microsoft.Web/Sites\",\r\n            \"resourceName\": \"csres3257\"\r\n          }\r\n        ],\r\n        \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg7379/providers/Microsoft.Web/sites/csres3257/sourcecontrols/web\",\r\n        \"resourceType\": \"Microsoft.Web/sites/sourcecontrols\",\r\n        \"resourceName\": \"csres3257/web\"\r\n      }\r\n    ],\r\n    \"validatedResources\": [\r\n      {\r\n        \"apiVersion\": \"2015-04-01\",\r\n        \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg7379/providers/Microsoft.Web/serverfarms/someplan\",\r\n        \"name\": \"someplan\",\r\n        \"type\": \"Microsoft.Web/serverfarms\",\r\n        \"location\": \"westus\",\r\n        \"properties\": {\r\n          \"name\": \"someplan\",\r\n          \"sku\": \"Standard\",\r\n          \"workerSize\": \"0\",\r\n          \"numberOfWorkers\": 1\r\n        }\r\n      },\r\n      {\r\n        \"apiVersion\": \"2015-04-01\",\r\n        \"dependsOn\": [\r\n          \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg7379/providers/Microsoft.Web/serverfarms/someplan\"\r\n        ],\r\n        \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg7379/providers/Microsoft.Web/sites/csres3257\",\r\n        \"name\": \"csres3257\",\r\n        \"type\": \"Microsoft.Web/sites\",\r\n        \"location\": \"westus\",\r\n        \"properties\": {\r\n          \"serverFarmId\": \"someplan\"\r\n        }\r\n      },\r\n      {\r\n        \"apiVersion\": \"2015-04-01\",\r\n        \"dependsOn\": [\r\n          \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg7379/providers/Microsoft.Web/Sites/csres3257\"\r\n        ],\r\n        \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg7379/providers/Microsoft.Web/sites/csres3257/sourcecontrols/web\",\r\n        \"name\": \"csres3257/web\",\r\n        \"type\": \"Microsoft.Web/sites/sourcecontrols\",\r\n        \"properties\": {\r\n          \"RepoUrl\": \"https://github.com/devigned/az-roadshow-oss.git\",\r\n          \"branch\": \"master\",\r\n          \"IsManualIntegration\": true\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourceGroups/csmrg369/providers/Microsoft.Resources/deployments/csmd5783\",\r\n  \"name\": \"csmd5783\",\r\n  \"properties\": {\r\n    \"templateLink\": {\r\n      \"uri\": \"https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/201-web-app-github-deploy/azuredeploy.json\",\r\n      \"contentVersion\": \"1.0.0.0\"\r\n    },\r\n    \"parameters\": {\r\n      \"siteName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"csres2760\"\r\n      },\r\n      \"hostingPlanName\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"someplan\"\r\n      },\r\n      \"sku\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"F1\"\r\n      },\r\n      \"workerSize\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"0\"\r\n      },\r\n      \"repoURL\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"https://github.com/devigned/az-roadshow-oss.git\"\r\n      },\r\n      \"branch\": {\r\n        \"type\": \"String\",\r\n        \"value\": \"master\"\r\n      }\r\n    },\r\n    \"mode\": \"Incremental\",\r\n    \"provisioningState\": \"Accepted\",\r\n    \"timestamp\": \"2016-07-27T00:36:57.1013428Z\",\r\n    \"duration\": \"PT0S\",\r\n    \"correlationId\": \"e9818067-2046-47d5-afa2-05d365dd3de5\",\r\n    \"providers\": [\r\n      {\r\n        \"namespace\": \"Microsoft.Web\",\r\n        \"resourceTypes\": [\r\n          {\r\n            \"resourceType\": \"serverfarms\",\r\n            \"locations\": [\r\n              \"westeurope\"\r\n            ]\r\n          },\r\n          {\r\n            \"resourceType\": \"sites\",\r\n            \"locations\": [\r\n              \"westeurope\"\r\n            ]\r\n          },\r\n          {\r\n            \"resourceType\": \"sites/sourcecontrols\",\r\n            \"locations\": [\r\n              null\r\n            ]\r\n          }\r\n        ]\r\n      }\r\n    ],\r\n    \"dependencies\": [\r\n      {\r\n        \"dependsOn\": [\r\n          {\r\n            \"id\": \"/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourceGroups/csmrg369/providers/Microsoft.Web/serverfarms/someplan\",\r\n            \"resourceType\": \"Microsoft.Web/serverfarms\",\r\n            \"resourceName\": \"someplan\"\r\n          }\r\n        ],\r\n        \"id\": \"/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourceGroups/csmrg369/providers/Microsoft.Web/sites/csres2760\",\r\n        \"resourceType\": \"Microsoft.Web/sites\",\r\n        \"resourceName\": \"csres2760\"\r\n      },\r\n      {\r\n        \"dependsOn\": [\r\n          {\r\n            \"id\": \"/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourceGroups/csmrg369/providers/Microsoft.Web/Sites/csres2760\",\r\n            \"resourceType\": \"Microsoft.Web/Sites\",\r\n            \"resourceName\": \"csres2760\"\r\n          }\r\n        ],\r\n        \"id\": \"/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourceGroups/csmrg369/providers/Microsoft.Web/sites/csres2760/sourcecontrols/web\",\r\n        \"resourceType\": \"Microsoft.Web/sites/sourcecontrols\",\r\n        \"resourceName\": \"csres2760/web\"\r\n      }\r\n    ],\r\n    \"validatedResources\": [\r\n      {\r\n        \"apiVersion\": \"2015-08-01\",\r\n        \"id\": \"/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourceGroups/csmrg369/providers/Microsoft.Web/serverfarms/someplan\",\r\n        \"name\": \"someplan\",\r\n        \"type\": \"Microsoft.Web/serverfarms\",\r\n        \"sku\": {\r\n          \"name\": \"F1\",\r\n          \"capacity\": 0\r\n        },\r\n        \"location\": \"westeurope\",\r\n        \"properties\": {\r\n          \"name\": \"someplan\"\r\n        }\r\n      },\r\n      {\r\n        \"dependsOn\": [\r\n          \"/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourceGroups/csmrg369/providers/Microsoft.Web/serverfarms/someplan\"\r\n        ],\r\n        \"apiVersion\": \"2015-08-01\",\r\n        \"id\": \"/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourceGroups/csmrg369/providers/Microsoft.Web/sites/csres2760\",\r\n        \"name\": \"csres2760\",\r\n        \"type\": \"Microsoft.Web/sites\",\r\n        \"location\": \"westeurope\",\r\n        \"properties\": {\r\n          \"serverFarmId\": \"someplan\"\r\n        }\r\n      },\r\n      {\r\n        \"dependsOn\": [\r\n          \"/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourceGroups/csmrg369/providers/Microsoft.Web/Sites/csres2760\"\r\n        ],\r\n        \"apiVersion\": \"2015-08-01\",\r\n        \"id\": \"/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourceGroups/csmrg369/providers/Microsoft.Web/sites/csres2760/sourcecontrols/web\",\r\n        \"name\": \"csres2760/web\",\r\n        \"type\": \"Microsoft.Web/sites/sourcecontrols\",\r\n        \"properties\": {\r\n          \"RepoUrl\": \"https://github.com/devigned/az-roadshow-oss.git\",\r\n          \"branch\": \"master\",\r\n          \"IsManualIntegration\": true\r\n        }\r\n      }\r\n    ]\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -92,7 +94,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 26 Jan 2016 22:33:18 GMT"
+          "Wed, 27 Jul 2016 00:36:56 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -101,16 +103,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1196"
         ],
         "x-ms-request-id": [
-          "9897d176-0e2b-4b84-98c7-7a6af139d5c3"
+          "e9818067-2046-47d5-afa2-05d365dd3de5"
         ],
         "x-ms-correlation-request-id": [
-          "9897d176-0e2b-4b84-98c7-7a6af139d5c3"
+          "e9818067-2046-47d5-afa2-05d365dd3de5"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160126T223319Z:9897d176-0e2b-4b84-98c7-7a6af139d5c3"
+          "CENTRALUS:20160727T003657Z:e9818067-2046-47d5-afa2-05d365dd3de5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -121,12 +123,12 @@
   ],
   "Names": {
     "ValidateGoodDeployment": [
-      "csmrg7379",
-      "csmd8264",
-      "csres3257"
+      "csmrg369",
+      "csmd5783",
+      "csres2760"
     ]
   },
   "Variables": {
-    "SubscriptionId": "3ca49042-782a-4cc9-89b5-ee1b487fe115"
+    "SubscriptionId": "89ec4d1d-dcc7-4a3f-a701-0a5d074c8505"
   }
 }

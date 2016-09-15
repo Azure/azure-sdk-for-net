@@ -29,6 +29,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlSecret class.
         /// </summary>
+        /// <param name="computeAccountName">the name of the Data Lake
+        /// Analytics account.</param>
+        /// <param name="version">the version of the catalog item.</param>
+        /// <param name="databaseName">the name of the database.</param>
+        /// <param name="name">the name of the secret.</param>
+        /// <param name="creationTime">the creation time of the credential
+        /// object. This is the only information returned about a secret from
+        /// a GET.</param>
+        /// <param name="uri">the URI identifier for the secret in the format
+        /// <hostname>:<port></param>
+        /// <param name="password">the password for the secret to pass
+        /// in</param>
         public USqlSecret(string computeAccountName = default(string), Guid? version = default(Guid?), string databaseName = default(string), string name = default(string), DateTimeOffset? creationTime = default(DateTimeOffset?), string uri = default(string), string password = default(string))
             : base(computeAccountName, version)
         {

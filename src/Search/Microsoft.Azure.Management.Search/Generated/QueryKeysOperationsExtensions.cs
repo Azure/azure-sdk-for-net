@@ -24,6 +24,7 @@ namespace Microsoft.Azure.Management.Search
     {
             /// <summary>
             /// Returns the list of query API keys for the given Azure Search service.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn832701.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -41,6 +42,7 @@ namespace Microsoft.Azure.Management.Search
 
             /// <summary>
             /// Returns the list of query API keys for the given Azure Search service.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn832701.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

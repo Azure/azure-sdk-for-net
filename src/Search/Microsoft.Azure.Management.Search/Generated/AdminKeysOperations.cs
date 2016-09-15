@@ -35,6 +35,9 @@ namespace Microsoft.Azure.Management.Search
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         internal AdminKeysOperations(SearchManagementClient client)
         {
             if (client == null) 
@@ -52,6 +55,7 @@ namespace Microsoft.Azure.Management.Search
         /// <summary>
         /// Returns the primary and secondary API keys for the given Azure Search
         /// service.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn832685.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the current subscription.
@@ -65,6 +69,15 @@ namespace Microsoft.Azure.Management.Search
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
+        /// <exception cref="CloudException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>

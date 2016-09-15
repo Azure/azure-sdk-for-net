@@ -29,6 +29,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlAssemblyFileInfo class.
         /// </summary>
+        /// <param name="type">the assembly file type. Possible values
+        /// include: 'Assembly', 'Resource'</param>
+        /// <param name="originalPath">the the original path to the assembly
+        /// file.</param>
+        /// <param name="contentPath">the the content path to the assembly
+        /// file.</param>
         public USqlAssemblyFileInfo(FileType? type = default(FileType?), string originalPath = default(string), string contentPath = default(string))
         {
             Type = type;

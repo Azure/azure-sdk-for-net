@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Network
     /// <summary>
     /// The Microsoft Azure Network management API provides a RESTful set of
     /// web services that interact with Microsoft Azure Networks service to
-    /// manage your network resrources. The API has entities that capture the
+    /// manage your network resources. The API has entities that capture the
     /// relationship between an end user and the Microsoft Azure Networks
     /// service.
     /// </summary>
@@ -377,7 +377,7 @@ namespace Microsoft.Azure.Management.Network
             this.VirtualNetworkGateways = new VirtualNetworkGatewaysOperations(this);
             this.VirtualNetworks = new VirtualNetworksOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
-            this.ApiVersion = "2016-06-01";
+            this.ApiVersion = "2016-09-01";
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;
             this.GenerateClientRequestId = true;

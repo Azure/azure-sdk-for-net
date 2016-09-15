@@ -29,6 +29,45 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the JobStatisticsVertexStage class.
         /// </summary>
+        /// <param name="dataRead">the amount of data read, in bytes.</param>
+        /// <param name="dataReadCrossPod">the amount of data read across
+        /// multiple pods, in bytes.</param>
+        /// <param name="dataReadIntraPod">the amount of data read in one pod,
+        /// in bytes.</param>
+        /// <param name="dataToRead">the amount of data remaining to be read,
+        /// in bytes.</param>
+        /// <param name="dataWritten">the amount of data written, in
+        /// bytes.</param>
+        /// <param name="duplicateDiscardCount">the number of duplicates that
+        /// were discarded.</param>
+        /// <param name="failedCount">the number of failures that occured in
+        /// this stage.</param>
+        /// <param name="maxVertexDataRead">the maximum amount of data read in
+        /// a single vertex, in bytes.</param>
+        /// <param name="minVertexDataRead">the minimum amount of data read in
+        /// a single vertex, in bytes.</param>
+        /// <param name="readFailureCount">the number of read failures in this
+        /// stage.</param>
+        /// <param name="revocationCount">the number of vertices that were
+        /// revoked during this stage.</param>
+        /// <param name="runningCount">the number of currently running
+        /// vertices in this stage.</param>
+        /// <param name="scheduledCount">the number of currently scheduled
+        /// vertices in this stage</param>
+        /// <param name="stageName">the name of this stage in job
+        /// execution.</param>
+        /// <param name="succeededCount">the number of vertices that succeeded
+        /// in this stage.</param>
+        /// <param name="tempDataWritten">the amount of temporary data
+        /// written, in bytes.</param>
+        /// <param name="totalCount">the total vertex count for this
+        /// stage.</param>
+        /// <param name="totalFailedTime">the amount of time that failed
+        /// vertices took up in this stage.</param>
+        /// <param name="totalProgress">the current progress of this stage, as
+        /// a percentage.</param>
+        /// <param name="totalSucceededTime">the amount of time all successful
+        /// vertices took in this stage.</param>
         public JobStatisticsVertexStage(long? dataRead = default(long?), long? dataReadCrossPod = default(long?), long? dataReadIntraPod = default(long?), long? dataToRead = default(long?), long? dataWritten = default(long?), int? duplicateDiscardCount = default(int?), int? failedCount = default(int?), long? maxVertexDataRead = default(long?), long? minVertexDataRead = default(long?), int? readFailureCount = default(int?), int? revocationCount = default(int?), int? runningCount = default(int?), int? scheduledCount = default(int?), string stageName = default(string), int? succeededCount = default(int?), long? tempDataWritten = default(long?), int? totalCount = default(int?), TimeSpan? totalFailedTime = default(TimeSpan?), int? totalProgress = default(int?), TimeSpan? totalSucceededTime = default(TimeSpan?))
         {
             DataRead = dataRead;

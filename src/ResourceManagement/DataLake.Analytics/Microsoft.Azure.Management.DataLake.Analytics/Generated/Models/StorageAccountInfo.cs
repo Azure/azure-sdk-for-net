@@ -29,6 +29,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the StorageAccountInfo class.
         /// </summary>
+        /// <param name="name">the account name associated with the Azure
+        /// storage account.</param>
+        /// <param name="properties">the properties associated with this
+        /// storage account.</param>
         public StorageAccountInfo(string name, StorageAccountProperties properties)
         {
             Name = name;

@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Network
         public NetworkManagementClient Client { get; private set; }
 
         /// <summary>
-        /// The Delete RouteTable operation deletes the specifed Route Table
+        /// The Delete RouteTable operation deletes the specified Route Table
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The Delete RouteTable operation deletes the specifed Route Table
+        /// The Delete RouteTable operation deletes the specified Route Table
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -415,8 +415,8 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The Put RouteTable operation creates/updates a route tablein the specified
-        /// resource group.
+        /// The Put RouteTable operation creates/updates a route table in the
+        /// specified resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -444,8 +444,8 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The Put RouteTable operation creates/updates a route tablein the specified
-        /// resource group.
+        /// The Put RouteTable operation creates/updates a route table in the
+        /// specified resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

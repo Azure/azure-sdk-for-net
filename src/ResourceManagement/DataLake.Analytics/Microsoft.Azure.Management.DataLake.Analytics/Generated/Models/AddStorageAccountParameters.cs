@@ -31,6 +31,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Initializes a new instance of the AddStorageAccountParameters
         /// class.
         /// </summary>
+        /// <param name="properties">the properties for the Azure Storage
+        /// account being added.</param>
         public AddStorageAccountParameters(StorageAccountProperties properties)
         {
             Properties = properties;

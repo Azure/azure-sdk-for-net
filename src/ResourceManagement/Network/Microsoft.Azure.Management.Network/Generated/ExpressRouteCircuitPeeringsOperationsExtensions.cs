@@ -161,7 +161,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Put Pering operation creates/updates an peering in the specified
+            /// The Put Peering operation creates/updates an peering in the specified
             /// ExpressRouteCircuits
             /// </summary>
             /// <param name='operations'>
@@ -186,7 +186,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Put Pering operation creates/updates an peering in the specified
+            /// The Put Peering operation creates/updates an peering in the specified
             /// ExpressRouteCircuits
             /// </summary>
             /// <param name='operations'>
@@ -217,7 +217,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Put Pering operation creates/updates an peering in the specified
+            /// The Put Peering operation creates/updates an peering in the specified
             /// ExpressRouteCircuits
             /// </summary>
             /// <param name='operations'>
@@ -242,7 +242,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Put Pering operation creates/updates an peering in the specified
+            /// The Put Peering operation creates/updates an peering in the specified
             /// ExpressRouteCircuits
             /// </summary>
             /// <param name='operations'>
@@ -283,7 +283,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the resource group.
             /// </param>
             /// <param name='circuitName'>
-            /// The name of the curcuit.
+            /// The name of the circuit.
             /// </param>
             public static IPage<ExpressRouteCircuitPeering> List(this IExpressRouteCircuitPeeringsOperations operations, string resourceGroupName, string circuitName)
             {
@@ -301,7 +301,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the resource group.
             /// </param>
             /// <param name='circuitName'>
-            /// The name of the curcuit.
+            /// The name of the circuit.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

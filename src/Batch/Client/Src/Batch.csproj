@@ -1,0 +1,280 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <ProjectGuid>{3328FBBF-9C20-4775-B367-856C09DC13BF}</ProjectGuid>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Microsoft.Azure.Batch</RootNamespace>
+    <AssemblyName>Microsoft.Azure.Batch</AssemblyName>
+    <DocumentationFile>$(ProjectDir)$(OutputPath)$(AssemblyName).xml</DocumentationFile>
+    <AutoRestProjects>true</AutoRestProjects>
+  </PropertyGroup>
+  <Import Project="..\..\..\..\tools\Library.Settings.targets" />
+  <ItemGroup>
+    <Analyzer Include="..\Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer\$(OutputPath)\ConfigureAwaitAnalyzer.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Data.Edm">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Data.Edm.5.6.4\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Data.OData.5.6.4\lib\net40\Microsoft.Data.OData.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services.Client">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Data.Services.Client.5.6.4\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Azure.KeyVault.Core">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Azure.KeyVault.Core.1.0.0\lib\portable-net45+wp8+wpa81+win\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Rest.ClientRuntime">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.2.3.1\lib\net45\Microsoft.Rest.ClientRuntime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Rest.ClientRuntime.Azure">
+      <HintPath>$(LibraryNugetPackageFolder)\Microsoft.Rest.ClientRuntime.Azure.3.3.1\lib\net45\Microsoft.Rest.ClientRuntime.Azure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage">
+      <HintPath>$(LibraryNugetPackageFolder)\WindowsAzure.Storage.6.2.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>$(LibraryNugetPackageFolder)\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.WebRequest" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Spatial">
+      <HintPath>$(LibraryNugetPackageFolder)\System.Spatial.5.6.4\lib\net40\System.Spatial.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AsyncListNodeAgentSkus.cs" />
+    <Compile Include="AsyncListSubtasks.cs" />
+    <Compile Include="CertificateReference.cs" />
+    <Compile Include="Common\Enumerations\JobAction.cs" />
+    <Compile Include="Common\Enumerations\OnTaskFailure.cs" />
+    <Compile Include="Common\Enumerations\OnAllTasksComplete.cs" />
+    <Compile Include="Common\Enumerations\OSType.cs" />
+    <Compile Include="Common\Enumerations\AddTaskStatus.cs" />
+    <Compile Include="ImageReference.cs" />
+    <Compile Include="IPropertyMetadata.cs" />
+    <Compile Include="IReadOnly.cs" />
+    <Compile Include="AddTaskCollectionResultHandler.cs" />
+    <Compile Include="AddTaskResult.cs" />
+    <Compile Include="AddTasksWorkflowManager.cs" />
+    <Compile Include="ApplicationOperations.cs" />
+    <Compile Include="AssemblyAttributes.cs" />
+    <Compile Include="AsyncApplicationSummariesEnumerator.cs" />
+    <Compile Include="AsyncListCertificates.cs" />
+    <Compile Include="AsyncListJobPrepReleaseTaskStatus.cs" />
+    <Compile Include="AsyncListJobs.cs" />
+    <Compile Include="AsyncListPools.cs" />
+    <Compile Include="AsyncListPoolUsageMetrics.cs" />
+    <Compile Include="AsyncListTaskFiles.cs" />
+    <Compile Include="AsyncListTasks.cs" />
+    <Compile Include="AsyncListNodeFiles.cs" />
+    <Compile Include="AsyncListJobSchedules.cs" />
+    <Compile Include="AsyncListComputeNodes.cs" />
+    <Compile Include="Auth\BatchSharedKeyCredentials.cs" />
+    <Compile Include="BatchClientBehaviors.cs" />
+    <Compile Include="ITransportObjectProvider.cs" />
+    <Compile Include="BatchRequestTimeout.cs" />
+    <Compile Include="JobManagerTask.cs" />
+    <Compile Include="JobOperations.cs" />
+    <Compile Include="Common\ExponentialRetry.cs" />
+    <Compile Include="Common\LinearRetry.cs" />
+    <Compile Include="Common\RequestInformation.cs" />
+    <Compile Include="Common\RequestResult.cs" />
+    <Compile Include="Common\RetryDecision.cs" />
+    <Compile Include="Common\RetryPolicyCommon.cs" />
+    <Compile Include="JobPreparationTask.cs" />
+    <Compile Include="JobReleaseTask.cs" />
+    <Compile Include="JobSpecification.cs" />
+    <Compile Include="NodeFile.cs" />
+    <Compile Include="BatchClientParallelOptions.cs" />
+    <Compile Include="BehaviorManager.cs" />
+    <Compile Include="Certificate.cs" />
+    <Compile Include="CertificateOperations.cs" />
+    <Compile Include="CloudJob.cs" />
+    <Compile Include="Common\BatchErrorCodeStrings.cs" />
+    <Compile Include="DetailLevel.cs" />
+    <Compile Include="FileStaging\ErrorMessages.Designer.cs">
+      <DependentUpon>ErrorMessages.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="IInheritedBehaviors.cs" />
+    <Compile Include="IPagedEnumerable.cs" />
+    <Compile Include="IPagedEnumerator.cs" />
+    <Compile Include="CloudPool.cs" />
+    <Compile Include="CloudTask.cs" />
+    <Compile Include="ODATADetailLevel.cs" />
+    <Compile Include="ODATAMonitor.cs" />
+    <Compile Include="Protocol\BatchRequests\NamedBatchRequests.cs" />
+    <Compile Include="Protocol\IBatchRequest.cs" />
+    <Compile Include="Protocol\Models\IOptions.cs" />
+    <Compile Include="PropertyAccessController.cs" />
+    <Compile Include="PropertyAccessor.cs" />
+    <Compile Include="PropertyCollection.cs" />
+    <Compile Include="Protocol\Models\ParameterExtensions.cs" />
+    <Compile Include="Protocol\Models\ResponseHeaderExtensions.cs" />
+    <Compile Include="RetryPolicyProvider.cs" />
+    <Compile Include="ClientRequestIdProvider.cs" />
+    <Compile Include="OSVersion.cs" />
+    <Compile Include="PagedEnumerable.cs" />
+    <Compile Include="PagedEnumerableExtensions.cs" />
+    <Compile Include="PagedEnumeratorBase.cs" />
+    <Compile Include="Protocol\BatchConstants.cs" />
+    <Compile Include="Protocol\BatchCredentials.cs" />
+    <Compile Include="Protocol\BatchRequest.cs" />
+    <Compile Include="Protocol\BatchSharedKeyCredential.cs" />
+    <Compile Include="Protocol\BatchTokenCredential.cs" />
+    <Compile Include="Protocol\Core\Logger.Common.cs" />
+    <Compile Include="Protocol\Core\NullType.cs" />
+    <Compile Include="Protocol\Core\UriQueryBuilder.cs" />
+    <Compile Include="Protocol\Interceptors.cs" />
+    <Compile Include="Common\IRetryPolicy.cs" />
+    <Compile Include="Protocol\LogLevel.cs" />
+    <Compile Include="Common\OperationContext.cs" />
+    <Compile Include="Common\NoRetry.cs" />
+    <Compile Include="Common\Enumerations\AllocationState.cs" />
+    <Compile Include="Common\Enumerations\CertificateFormat.cs" />
+    <Compile Include="Common\Enumerations\CertificateState.cs" />
+    <Compile Include="Common\Enumerations\CertificateVisibility.cs" />
+    <Compile Include="Common\Enumerations\CertStoreLocation.cs" />
+    <Compile Include="Common\Enumerations\ComputeNodeDeallocationOption.cs" />
+    <Compile Include="Common\Enumerations\ComputeNodeFillType.cs" />
+    <Compile Include="Common\Enumerations\ComputeNodeRebootOption.cs" />
+    <Compile Include="Common\Enumerations\ComputeNodeReimageOption.cs" />
+    <Compile Include="Common\Enumerations\ComputeNodeState.cs" />
+    <Compile Include="Common\Enumerations\DisableComputeNodeSchedulingOption.cs" />
+    <Compile Include="Common\Enumerations\DisableJobOption.cs" />
+    <Compile Include="Common\Enumerations\JobPreparationTaskState.cs" />
+    <Compile Include="Common\Enumerations\JobReleaseTaskState.cs" />
+    <Compile Include="Common\Enumerations\JobScheduleState.cs" />
+    <Compile Include="Common\Enumerations\JobState.cs" />
+    <Compile Include="Common\Enumerations\PoolLifetimeOption.cs" />
+    <Compile Include="Common\Enumerations\PoolState.cs" />
+    <Compile Include="Common\Enumerations\SchedulingErrorCategory.cs" />
+    <Compile Include="Common\Enumerations\SchedulingState.cs" />
+    <Compile Include="Common\Enumerations\StartTaskState.cs" />
+    <Compile Include="Common\Enumerations\TaskState.cs" />
+    <Compile Include="Protocol\ResponseInterceptor.cs" />
+    <Compile Include="StartTask.cs" />
+    <Compile Include="SynchronousMethodExceptionBehavior.cs" />
+    <Compile Include="TaskDependencies.cs" />
+    <Compile Include="TaskIdRange.cs" />
+    <Compile Include="CloudJobSchedule.cs" />
+    <Compile Include="TaskStateMonitor.cs" />
+    <Compile Include="ConcurrentChangeTrackedList.cs" />
+    <Compile Include="Utilities.cs" />
+    <Compile Include="ComputeNodeUser.cs" />
+    <Compile Include="ComputeNode.cs" />
+    <Compile Include="ComputeNodeFile.cs" />
+    <Compile Include="IModifiable.cs" />
+    <Compile Include="IProtocolLayer.cs" />
+    <Compile Include="ProtocolLayer.cs" />
+    <Compile Include="TaskFile.cs" />
+    <Compile Include="Auth\BatchCredentials.cs" />
+    <Compile Include="Common\BatchException.cs" />
+    <Compile Include="GeneratedProtocol\**\*.cs">
+      <!--<Link>GeneratedProtocol\%(RecursiveDir)%(FileName)%(Extension)</Link>-->
+    </Compile>
+    <Compile Include="Generated\**\*.cs" />
+    <Compile Include="Protocol\BatchClientErrorMessages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BatchClientErrorMessages.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\Async.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Protocol\BatchClientErrorMessages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>BatchClientErrorMessages.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ReadMe_ReleaseNotes\2015.07.jul.GA.delta.from.doc.build.txt" />
+    <Content Include="ReadMe_ReleaseNotes\2015.07.jul.GA.ReleaseNotes.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Authorization.cs" />
+    <Compile Include="BatchClient.cs" />
+    <Compile Include="BatchClientExceptions.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="BindingState.cs" />
+    <Compile Include="IFileStagingArtifact.cs" />
+    <Compile Include="IRefreshable.cs" />
+    <Compile Include="LockUtil.cs" />
+    <Compile Include="PoolOperations.cs" />
+    <Compile Include="BatchErrorMessages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BatchErrorMessages.resx</DependentUpon>
+    </Compile>
+    <Compile Include="JobScheduleOperations.cs" />
+    <Compile Include="UtilitiesInternal.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="BatchErrorMessages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>BatchErrorMessages.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FileStaging\StagingStorageAccount.cs" />
+    <Compile Include="FileStaging\Constants.cs" />
+    <Compile Include="FileStaging\SequentialFileStaging.cs" />
+    <Compile Include="FileStaging\FileStagingManager.cs" />
+    <Compile Include="FileStaging\FileStagingLinkedSources.cs" />
+    <Compile Include="FileStaging\IFileStagingManager.cs" />
+    <Compile Include="FileStaging\IFileStagingProvider.cs" />
+    <Compile Include="FileStaging\SequentialFileStagingArtifact.cs" />
+    <EmbeddedResource Include="FileStaging\ErrorMessages.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ErrorMessages.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tools\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer\ConfigureAwaitAnalyzer.csproj">
+      <Project>{48215d6d-db21-48b8-ab03-1297a94df696}</Project>
+      <Name>ConfigureAwaitAnalyzer</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>False</Private>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition=" '$(LibraryFxTarget)' == 'portable' " />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the ExpressRouteCircuit class.
         /// </summary>
-        public ExpressRouteCircuit(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ExpressRouteCircuitSku sku = default(ExpressRouteCircuitSku), bool? allowClassicOperations = default(bool?), string circuitProvisioningState = default(string), string serviceProviderProvisioningState = default(string), IList<ExpressRouteCircuitAuthorization> authorizations = default(IList<ExpressRouteCircuitAuthorization>), IList<ExpressRouteCircuitPeering> peerings = default(IList<ExpressRouteCircuitPeering>), string serviceKey = default(string), string serviceProviderNotes = default(string), ExpressRouteCircuitServiceProviderProperties serviceProviderProperties = default(ExpressRouteCircuitServiceProviderProperties), string provisioningState = default(string), string etag = default(string))
+        public ExpressRouteCircuit(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ExpressRouteCircuitSku sku = default(ExpressRouteCircuitSku), bool? allowClassicOperations = default(bool?), string circuitProvisioningState = default(string), string serviceProviderProvisioningState = default(string), IList<ExpressRouteCircuitAuthorization> authorizations = default(IList<ExpressRouteCircuitAuthorization>), IList<ExpressRouteCircuitPeering> peerings = default(IList<ExpressRouteCircuitPeering>), string serviceKey = default(string), string serviceProviderNotes = default(string), ExpressRouteCircuitServiceProviderProperties serviceProviderProperties = default(ExpressRouteCircuitServiceProviderProperties), string provisioningState = default(string), string gatewayManagerEtag = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             Sku = sku;
@@ -43,6 +43,7 @@ namespace Microsoft.Azure.Management.Network.Models
             ServiceProviderNotes = serviceProviderNotes;
             ServiceProviderProperties = serviceProviderProperties;
             ProvisioningState = provisioningState;
+            GatewayManagerEtag = gatewayManagerEtag;
             Etag = etag;
         }
 
@@ -108,6 +109,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
+
+        /// <summary>
+        /// Gets or sets the GatewayManager Etag
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.gatewayManagerEtag")]
+        public string GatewayManagerEtag { get; set; }
 
         /// <summary>
         /// Gets a unique read-only string that changes whenever the resource

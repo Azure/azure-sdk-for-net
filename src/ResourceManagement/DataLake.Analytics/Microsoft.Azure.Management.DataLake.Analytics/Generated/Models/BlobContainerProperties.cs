@@ -29,6 +29,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the BlobContainerProperties class.
         /// </summary>
+        /// <param name="lastModifiedTime">the last modified time of the blob
+        /// container.</param>
         public BlobContainerProperties(DateTime? lastModifiedTime = default(DateTime?))
         {
             LastModifiedTime = lastModifiedTime;

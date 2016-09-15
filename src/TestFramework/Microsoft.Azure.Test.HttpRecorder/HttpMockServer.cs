@@ -76,31 +76,29 @@ namespace Microsoft.Azure.Test.HttpRecorder
             if (Mode == HttpRecorderMode.Playback)
             {
                 string recordDir = Path.Combine(RecordsDirectory, CallerIdentity);
-                if (HttpMockServer.FileSystemUtilsObject.DirectoryExists(recordDir))
+                var fileName = Path.GetFullPath(Path.Combine(recordDir, testIdentity.Replace(".json","") + ".json"));
+                if (!HttpMockServer.FileSystemUtilsObject.DirectoryExists(recordDir) ||
+                    !HttpMockServer.FileSystemUtilsObject.FileExists(fileName))
                 {
-                    foreach (string recordsFile in HttpMockServer.FileSystemUtilsObject.GetFiles(recordDir, testIdentity + ".json", false)) //TODO: check whether we need to go 'recursive'
-                    {
-                        RecordEntryPack pack = RecordEntryPack.Deserialize(recordsFile);
-                        foreach (var entry in pack.Entries)
-                        {
-                            records.Enqueue(entry);
-                        }
-                        foreach (var func in pack.Names.Keys)
-                        {
-                            pack.Names[func].ForEach(n => names.Enqueue(func, n));
-                        }
-                        Variables = pack.Variables;
-                        if (Variables == null)
-                        {
-                            Variables = new Dictionary<string, string>();
-                        }
-                    }
+                    throw new ArgumentException(
+                        string.Format("Unable to find recorded mock file '{0}'.", fileName), "callerIdentity");
                 }
                 else
-                {
-                    // if mock folder does not exist, switch execution back to HttpRecorderMode.None
-                    throw new ArgumentException(
-                        string.Format("Unable to find recorded mock directory '{0}'.", recordDir), "callerIdentity");
+                { 
+                    RecordEntryPack pack = RecordEntryPack.Deserialize(fileName);
+                    foreach (var entry in pack.Entries)
+                    {
+                        records.Enqueue(entry);
+                    }
+                    foreach (var func in pack.Names.Keys)
+                    {
+                        pack.Names[func].ForEach(n => names.Enqueue(func, n));
+                    }
+                    Variables = pack.Variables;
+                    if (Variables == null)
+                    {
+                        Variables = new Dictionary<string, string>();
+                    }
                 }
             }
 

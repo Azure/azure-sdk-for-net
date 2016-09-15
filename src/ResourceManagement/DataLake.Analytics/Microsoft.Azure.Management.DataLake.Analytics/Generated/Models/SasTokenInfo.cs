@@ -29,6 +29,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the SasTokenInfo class.
         /// </summary>
+        /// <param name="accessToken">the access token for the associated
+        /// Azure Storage Container.</param>
         public SasTokenInfo(string accessToken = default(string))
         {
             AccessToken = accessToken;

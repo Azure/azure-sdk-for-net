@@ -44,26 +44,49 @@ namespace ResourceGroups.Tests
                    'namespace': 'Microsoft.Websites',
                    'registrationState': 'Registered',
                    'resourceTypes': [
-                    {
+                   {
                        'resourceType': 'sites',
                        'locations': [
                          'Central US'
-                       ]
-                     },
-                     {
+                       ], 
+                       'aliases': [{
+                           'name': 'Microsoft.Compute/virtualMachines/sku.name',
+			               'paths': [{
+                               'path': 'properties.hardwareProfile.vmSize',
+                               'apiVersions': [
+                                   '2015-05-01-preview',
+                                   '2015-06-15',
+                                   '2016-03-30',
+                                   '2016-04-30-preview'
+                               ]
+                           }]
+                       },
+                       {
+                           'name': 'Microsoft.Compute/virtualMachines/imagePublisher',
+                           'paths': [{
+                               'path': 'properties.storageProfile.imageReference.publisher',
+                               'apiVersions': [
+                                   '2015-05-01-preview',
+                                   '2015-06-15',
+                                   '2016-03-30',
+                                   '2016-04-30-preview'
+                               ]
+                           }]
+                       }]
+                   },
+                   {
                        'resourceType': 'sites/pages',
                        'locations': [
                          'West US'
                        ]
-                     }
-                   ]   
+                   }]
                 }")
             };
             response.Headers.Add("x-ms-request-id", "1");
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = GetResourceManagementClient(handler);
 
-            var result = client.Providers.Get("Microsoft.Websites");
+            var result = client.Providers.Get("Microsoft.Websites", expand: "resourceTypes/aliases");
 
             // Validate headers
             Assert.Equal(HttpMethod.Get, handler.Method);
@@ -76,6 +99,10 @@ namespace ResourceGroups.Tests
             Assert.Equal("sites", result.ResourceTypes[0].ResourceType);
             Assert.Equal(1, result.ResourceTypes[0].Locations.Count);
             Assert.Equal("Central US", result.ResourceTypes[0].Locations[0]);
+            Assert.Equal(2, result.ResourceTypes[0].Aliases.Count);
+            Assert.Equal("Microsoft.Compute/virtualMachines/sku.name", result.ResourceTypes[0].Aliases[0].Name);
+            Assert.Equal(1, result.ResourceTypes[0].Aliases[0].Paths.Count);
+            Assert.Equal("properties.hardwareProfile.vmSize", result.ResourceTypes[0].Aliases[0].Paths[0].Path);
         }
 
         [Fact]

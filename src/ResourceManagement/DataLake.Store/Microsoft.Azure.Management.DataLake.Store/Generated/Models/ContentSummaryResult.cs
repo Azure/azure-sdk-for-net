@@ -29,6 +29,8 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <summary>
         /// Initializes a new instance of the ContentSummaryResult class.
         /// </summary>
+        /// <param name="contentSummary">the content summary for the specified
+        /// path</param>
         public ContentSummaryResult(ContentSummary contentSummary = default(ContentSummary))
         {
             ContentSummary = contentSummary;

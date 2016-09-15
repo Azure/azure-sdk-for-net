@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// Initializes a new instance of the
         /// ApplicationGatewayBackendHttpSettings class.
         /// </summary>
-        public ApplicationGatewayBackendHttpSettings(string id = default(string), int? port = default(int?), string protocol = default(string), string cookieBasedAffinity = default(string), int? requestTimeout = default(int?), SubResource probe = default(SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public ApplicationGatewayBackendHttpSettings(string id = default(string), int? port = default(int?), string protocol = default(string), string cookieBasedAffinity = default(string), int? requestTimeout = default(int?), SubResource probe = default(SubResource), IList<SubResource> authenticationCertificates = default(IList<SubResource>), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             Port = port;
@@ -40,52 +40,59 @@ namespace Microsoft.Azure.Management.Network.Models
             CookieBasedAffinity = cookieBasedAffinity;
             RequestTimeout = requestTimeout;
             Probe = probe;
+            AuthenticationCertificates = authenticationCertificates;
             ProvisioningState = provisioningState;
             Name = name;
             Etag = etag;
         }
 
         /// <summary>
-        /// Gets or sets the port
+        /// Port
         /// </summary>
         [JsonProperty(PropertyName = "properties.port")]
         public int? Port { get; set; }
 
         /// <summary>
-        /// Gets or sets the protocol. Possible values include: 'Http', 'Https'
+        /// Protocol. Possible values include: 'Http', 'Https'
         /// </summary>
         [JsonProperty(PropertyName = "properties.protocol")]
         public string Protocol { get; set; }
 
         /// <summary>
-        /// Gets or sets the cookie affinity. Possible values include:
-        /// 'Enabled', 'Disabled'
+        /// Cookie affinity. Possible values include: 'Enabled', 'Disabled'
         /// </summary>
         [JsonProperty(PropertyName = "properties.cookieBasedAffinity")]
         public string CookieBasedAffinity { get; set; }
 
         /// <summary>
-        /// Gets or sets request timeout
+        /// Request timeout
         /// </summary>
         [JsonProperty(PropertyName = "properties.requestTimeout")]
         public int? RequestTimeout { get; set; }
 
         /// <summary>
-        /// Gets or sets probe resource of application gateway
+        /// Probe resource of application gateway
         /// </summary>
         [JsonProperty(PropertyName = "properties.probe")]
         public SubResource Probe { get; set; }
 
         /// <summary>
-        /// Gets or sets Provisioning state of the backend http settings
-        /// resource Updating/Deleting/Failed
+        /// Array of references to Application Gateway Authentication
+        /// Certificates
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.authenticationCertificates")]
+        public IList<SubResource> AuthenticationCertificates { get; set; }
+
+        /// <summary>
+        /// Provisioning state of the backend http settings resource
+        /// Updating/Deleting/Failed
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
-        /// Gets name of the resource that is unique within a resource group.
-        /// This name can be used to access the resource
+        /// Name of the resource that is unique within a resource group. This
+        /// name can be used to access the resource
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

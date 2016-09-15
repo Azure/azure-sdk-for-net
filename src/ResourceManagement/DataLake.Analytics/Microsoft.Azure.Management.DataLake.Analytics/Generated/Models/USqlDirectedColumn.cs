@@ -29,6 +29,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlDirectedColumn class.
         /// </summary>
+        /// <param name="name">the name of the index in the table.</param>
+        /// <param name="descending">the switch indicating if the index is
+        /// descending or not.</param>
         public USqlDirectedColumn(string name = default(string), bool? descending = default(bool?))
         {
             Name = name;

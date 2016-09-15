@@ -29,6 +29,8 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <summary>
         /// Initializes a new instance of the FileOperationResult class.
         /// </summary>
+        /// <param name="operationResult">the result of the operation or
+        /// request.</param>
         public FileOperationResult(bool? operationResult = default(bool?))
         {
             OperationResult = operationResult;

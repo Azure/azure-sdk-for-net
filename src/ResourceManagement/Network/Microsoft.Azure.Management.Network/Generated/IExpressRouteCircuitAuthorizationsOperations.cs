@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.Network
         Task<AzureOperationResponse<ExpressRouteCircuitAuthorization>> GetWithHttpMessagesAsync(string resourceGroupName, string circuitName, string authorizationName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The Put Authorization operation creates/updates an authorization
-        /// in thespecified ExpressRouteCircuits
+        /// in the specified ExpressRouteCircuits
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -108,7 +108,7 @@ namespace Microsoft.Azure.Management.Network
         Task<AzureOperationResponse<ExpressRouteCircuitAuthorization>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string circuitName, string authorizationName, ExpressRouteCircuitAuthorization authorizationParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The Put Authorization operation creates/updates an authorization
-        /// in thespecified ExpressRouteCircuits
+        /// in the specified ExpressRouteCircuits
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the resource group.
         /// </param>
         /// <param name='circuitName'>
-        /// The name of the curcuit.
+        /// The name of the circuit.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

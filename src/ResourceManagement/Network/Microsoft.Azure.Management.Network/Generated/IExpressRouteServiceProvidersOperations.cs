@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Network
     public partial interface IExpressRouteServiceProvidersOperations
     {
         /// <summary>
-        /// The List ExpressRouteServiceProvider opertion retrieves all the
+        /// The List ExpressRouteServiceProvider operation retrieves all the
         /// available ExpressRouteServiceProviders.
         /// </summary>
         /// <param name='customHeaders'>
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<IPage<ExpressRouteServiceProvider>>> ListWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The List ExpressRouteServiceProvider opertion retrieves all the
+        /// The List ExpressRouteServiceProvider operation retrieves all the
         /// available ExpressRouteServiceProviders.
         /// </summary>
         /// <param name='nextPageLink'>

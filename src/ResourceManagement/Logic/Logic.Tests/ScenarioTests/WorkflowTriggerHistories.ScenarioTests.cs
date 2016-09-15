@@ -29,10 +29,7 @@ namespace Test.Azure.Management.Logic
                     workflow: new Workflow
                     {
                         Location = this.location,
-                        Sku = new Sku()
-                        {
-                            Name = SkuName.Basic
-                        },
+                        Sku = this.Sku,
                         Definition = JToken.Parse(this.simpleTriggerDefinition)
                     });
 
@@ -66,10 +63,7 @@ namespace Test.Azure.Management.Logic
                     workflow: new Workflow
                     {
                         Location = this.location,
-                        Sku = new Sku()
-                        {
-                            Name = SkuName.Basic
-                        },
+                        Sku = this.Sku,
                         Definition = JToken.Parse(this.simpleTriggerDefinition)
                     });
 

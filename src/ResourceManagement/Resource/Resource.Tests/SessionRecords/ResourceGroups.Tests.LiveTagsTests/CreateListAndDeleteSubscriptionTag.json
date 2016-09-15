@@ -1,21 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames/csmtg9591?api-version=2016-02-01",
+      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/tagNames/csmtg4645?api-version=2016-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODllYzRkMWQtZGNjNy00YTNmLWE3MDEtMGE1ZDA3NGM4NTA1L3RhZ05hbWVzL2NzbXRnNDY0NT9hcGktdmVyc2lvbj0yMDE2LTA3LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a269a629-b18d-4190-abb1-af1291cc7efd"
+          "48630b18-e0cd-4bc0-9804-ea48a9532eb0"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.0.0.0"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.1.4-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames/csmtg9591\",\r\n  \"tagName\": \"csmtg9591\",\r\n  \"count\": {\r\n    \"type\": \"Total\",\r\n    \"value\": 0\r\n  },\r\n  \"values\": []\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/tagNames/csmtg4645\",\r\n  \"tagName\": \"csmtg4645\",\r\n  \"count\": {\r\n    \"type\": \"Total\",\r\n    \"value\": 0\r\n  },\r\n  \"values\": []\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "148"
@@ -30,22 +31,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 26 Jan 2016 22:37:57 GMT"
+          "Wed, 27 Jul 2016 01:13:55 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1195"
         ],
         "x-ms-request-id": [
-          "c9fafd41-21ac-459e-bd27-bc4c11b8e705"
+          "712748ed-3486-40a7-9872-d2744472f32e"
         ],
         "x-ms-correlation-request-id": [
-          "c9fafd41-21ac-459e-bd27-bc4c11b8e705"
+          "712748ed-3486-40a7-9872-d2744472f32e"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160126T223757Z:c9fafd41-21ac-459e-bd27-bc4c11b8e705"
+          "CENTRALUS:20160727T011356Z:712748ed-3486-40a7-9872-d2744472f32e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -54,21 +55,22 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames?api-version=2016-02-01",
+      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/tagNames?api-version=2016-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODllYzRkMWQtZGNjNy00YTNmLWE3MDEtMGE1ZDA3NGM4NTA1L3RhZ05hbWVzP2FwaS12ZXJzaW9uPTIwMTYtMDctMDE=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "18990fc3-d8e5-47ef-a6c9-27e110fe7348"
+          "5b8adf44-e285-4cc7-a984-51a8b9e05053"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.0.0.0"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.1.4-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames/xplatResourceGroupTag1649\",\r\n      \"tagName\": \"xplatResourceGroupTag1649\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames/xplatResourceGroupTag1649/tagValues/fooValue\",\r\n          \"tagValue\": \"fooValue\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 0\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames/xplatResourceGroupTag3365\",\r\n      \"tagName\": \"xplatResourceGroupTag3365\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames/xplatResourceGroupTag3365/tagValues/fooValue\",\r\n          \"tagValue\": \"fooValue\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 0\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames/xplatResourceGroupTag7753\",\r\n      \"tagName\": \"xplatResourceGroupTag7753\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames/xplatResourceGroupTag7753/tagValues/fooValue\",\r\n          \"tagValue\": \"fooValue\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 0\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames/xplatResourceGroupTag8574\",\r\n      \"tagName\": \"xplatResourceGroupTag8574\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames/xplatResourceGroupTag8574/tagValues/fooValue\",\r\n          \"tagValue\": \"fooValue\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 0\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames/xplatResourceGroupTag8580\",\r\n      \"tagName\": \"xplatResourceGroupTag8580\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames/xplatResourceGroupTag8580/tagValues/fooValue\",\r\n          \"tagValue\": \"fooValue\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 0\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames/xplatResourceTag3081\",\r\n      \"tagName\": \"xplatResourceTag3081\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames/xplatResourceTag3081/tagValues/fooValue\",\r\n          \"tagValue\": \"fooValue\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 0\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames/xplatResourceTag3195\",\r\n      \"tagName\": \"xplatResourceTag3195\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames/xplatResourceTag3195/tagValues/fooValue\",\r\n          \"tagValue\": \"fooValue\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 0\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames/xplatResourceTag3930\",\r\n      \"tagName\": \"xplatResourceTag3930\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames/xplatResourceTag3930/tagValues/fooValue\",\r\n          \"tagValue\": \"fooValue\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 0\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames/xplatResourceTag4974\",\r\n      \"tagName\": \"xplatResourceTag4974\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames/xplatResourceTag4974/tagValues/fooValue\",\r\n          \"tagValue\": \"fooValue\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 0\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames/xplatResourceTag6569\",\r\n      \"tagName\": \"xplatResourceTag6569\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames/xplatResourceTag6569/tagValues/fooValue\",\r\n          \"tagValue\": \"fooValue\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 0\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames/csmtg9591\",\r\n      \"tagName\": \"csmtg9591\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": []\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames/xplatResourceGroupTag1134\",\r\n      \"tagName\": \"xplatResourceGroupTag1134\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": []\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames/xplatResourceGroupTag2084\",\r\n      \"tagName\": \"xplatResourceGroupTag2084\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": []\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames/xplatResourceGroupTag2294\",\r\n      \"tagName\": \"xplatResourceGroupTag2294\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": []\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames/xplatResourceGroupTag2588\",\r\n      \"tagName\": \"xplatResourceGroupTag2588\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": []\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames/xplatResourceGroupTag7653\",\r\n      \"tagName\": \"xplatResourceGroupTag7653\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": []\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames/xplatResourceTag2487\",\r\n      \"tagName\": \"xplatResourceTag2487\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": []\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames/xplatResourceTag2936\",\r\n      \"tagName\": \"xplatResourceTag2936\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": []\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames/xplatResourceTag433\",\r\n      \"tagName\": \"xplatResourceTag433\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": []\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames/xplatResourceTag5353\",\r\n      \"tagName\": \"xplatResourceTag5353\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": []\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames/xplatResourceTag7395\",\r\n      \"tagName\": \"xplatResourceTag7395\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": []\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/tagNames/provision_source\",\r\n      \"tagName\": \"provision_source\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 1\r\n      },\r\n      \"values\": [\r\n        {\r\n          \"id\": \"/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/tagNames/provision_source/tagValues/RMS\",\r\n          \"tagValue\": \"RMS\",\r\n          \"count\": {\r\n            \"type\": \"Total\",\r\n            \"value\": 1\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/tagNames/csmtg4645\",\r\n      \"tagName\": \"csmtg4645\",\r\n      \"count\": {\r\n        \"type\": \"Total\",\r\n        \"value\": 0\r\n      },\r\n      \"values\": []\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -80,7 +82,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 26 Jan 2016 22:37:57 GMT"
+          "Wed, 27 Jul 2016 01:13:55 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -89,16 +91,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14999"
+          "14978"
         ],
         "x-ms-request-id": [
-          "d3f77f81-e330-4659-a51f-6357ddba61cd"
+          "2a6959cc-455d-4b82-81ab-532d761b1e9d"
         ],
         "x-ms-correlation-request-id": [
-          "d3f77f81-e330-4659-a51f-6357ddba61cd"
+          "2a6959cc-455d-4b82-81ab-532d761b1e9d"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160126T223757Z:d3f77f81-e330-4659-a51f-6357ddba61cd"
+          "CENTRALUS:20160727T011356Z:2a6959cc-455d-4b82-81ab-532d761b1e9d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -107,18 +109,19 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/tagNames/csmtg9591?api-version=2016-02-01",
+      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/tagNames/csmtg4645?api-version=2016-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODllYzRkMWQtZGNjNy00YTNmLWE3MDEtMGE1ZDA3NGM4NTA1L3RhZ05hbWVzL2NzbXRnNDY0NT9hcGktdmVyc2lvbj0yMDE2LTA3LTAx",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "0500f13a-8061-42f5-a098-000bb18e59e0"
+          "560c9463-bb7f-4083-8263-bb9c9047dad9"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.0.0.0"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.1.4-preview"
         ]
       },
       "ResponseBody": "",
@@ -133,22 +136,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 26 Jan 2016 22:37:57 GMT"
+          "Wed, 27 Jul 2016 01:13:55 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1194"
         ],
         "x-ms-request-id": [
-          "8e0a4e80-d400-4101-bc5f-602262fef00c"
+          "358b04b6-93d2-4579-9a5d-28c126bda1da"
         ],
         "x-ms-correlation-request-id": [
-          "8e0a4e80-d400-4101-bc5f-602262fef00c"
+          "358b04b6-93d2-4579-9a5d-28c126bda1da"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160126T223758Z:8e0a4e80-d400-4101-bc5f-602262fef00c"
+          "CENTRALUS:20160727T011356Z:358b04b6-93d2-4579-9a5d-28c126bda1da"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -159,10 +162,10 @@
   ],
   "Names": {
     "CreateListAndDeleteSubscriptionTag": [
-      "csmtg9591"
+      "csmtg4645"
     ]
   },
   "Variables": {
-    "SubscriptionId": "3ca49042-782a-4cc9-89b5-ee1b487fe115"
+    "SubscriptionId": "89ec4d1d-dcc7-4a3f-a701-0a5d074c8505"
   }
 }

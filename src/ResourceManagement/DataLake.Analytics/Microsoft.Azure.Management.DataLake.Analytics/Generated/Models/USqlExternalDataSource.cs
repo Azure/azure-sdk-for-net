@@ -29,6 +29,17 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlExternalDataSource class.
         /// </summary>
+        /// <param name="computeAccountName">the name of the Data Lake
+        /// Analytics account.</param>
+        /// <param name="version">the version of the catalog item.</param>
+        /// <param name="databaseName">the name of the database.</param>
+        /// <param name="name">the name of the external data source.</param>
+        /// <param name="provider">the name of the provider for the external
+        /// data source.</param>
+        /// <param name="providerString">the name of the provider string for
+        /// the external data source.</param>
+        /// <param name="pushdownTypes">the list of types to push down from
+        /// the external data source.</param>
         public USqlExternalDataSource(string computeAccountName = default(string), Guid? version = default(Guid?), string databaseName = default(string), string name = default(string), string provider = default(string), string providerString = default(string), IList<string> pushdownTypes = default(IList<string>))
             : base(computeAccountName, version)
         {

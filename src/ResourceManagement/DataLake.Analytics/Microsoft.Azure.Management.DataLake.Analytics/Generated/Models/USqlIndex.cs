@@ -29,6 +29,24 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlIndex class.
         /// </summary>
+        /// <param name="name">the name of the index in the table.</param>
+        /// <param name="indexKeys">the list of directed columns in the
+        /// index</param>
+        /// <param name="columns">the list of columns in the index</param>
+        /// <param name="distributionInfo">the distributions info of the
+        /// index</param>
+        /// <param name="partitionFunction">partition function ID for the
+        /// index.</param>
+        /// <param name="partitionKeyList">the list of partion keys in the
+        /// index</param>
+        /// <param name="streamNames">the list of full paths to the streams
+        /// that contain this index in the DataLake account.</param>
+        /// <param name="isColumnstore">the switch indicating if this index is
+        /// a columnstore index.</param>
+        /// <param name="indexId">the ID of this index within the
+        /// table.</param>
+        /// <param name="isUnique">the switch indicating if this index is a
+        /// unique index.</param>
         public USqlIndex(string name = default(string), IList<USqlDirectedColumn> indexKeys = default(IList<USqlDirectedColumn>), IList<string> columns = default(IList<string>), USqlDistributionInfo distributionInfo = default(USqlDistributionInfo), Guid? partitionFunction = default(Guid?), IList<string> partitionKeyList = default(IList<string>), IList<string> streamNames = default(IList<string>), bool? isColumnstore = default(bool?), int? indexId = default(int?), bool? isUnique = default(bool?))
         {
             Name = name;

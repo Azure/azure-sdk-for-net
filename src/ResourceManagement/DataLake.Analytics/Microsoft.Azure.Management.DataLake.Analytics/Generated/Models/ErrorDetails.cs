@@ -29,6 +29,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the ErrorDetails class.
         /// </summary>
+        /// <param name="code">the HTTP status code or error code associated
+        /// with this error</param>
+        /// <param name="message">the error message localized based on
+        /// Accept-Language</param>
+        /// <param name="target">the target of the particular error (for
+        /// example, the name of the property in error).</param>
         public ErrorDetails(string code = default(string), string message = default(string), string target = default(string))
         {
             Code = code;

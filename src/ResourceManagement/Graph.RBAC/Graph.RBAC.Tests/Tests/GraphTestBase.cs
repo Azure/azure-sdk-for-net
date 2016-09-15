@@ -23,6 +23,7 @@ using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System.Net;
 using Microsoft.Azure.Graph.RBAC.Models;
 using System.Threading;
+using Microsoft.Rest.Azure.OData;
 
 namespace Microsoft.Azure.Graph.RBAC.Tests
 {
@@ -77,26 +78,27 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
                 handler.IsPassThrough = true;
             }
             var client = handler == null ?
-                context.GetServiceClient<GraphRbacManagementClient>() :
-                context.GetServiceClient<GraphRbacManagementClient>(handlers: handler);
+                context.GetGraphServiceClient<GraphRbacManagementClient>() :
+                context.GetGraphServiceClient<GraphRbacManagementClient>(handlers: handler);
+
             client.TenantID = GetTenantAndDomain().TenantId;
             return client;
         }
 
-        public KeyCredential CreateKeyCredential()
+        public KeyCredential CreateKeyCredential(string keyId = null)
         {
             X509Certificate applicationCertificate = new X509Certificate("SampleApplicationCredential.cer");
             KeyCredential cred = new KeyCredential();
             cred.StartDate = DateTime.Now;
             cred.EndDate = DateTime.Now.AddMonths(12);
-            cred.KeyId = Guid.NewGuid().ToString();
+            cred.KeyId = keyId ?? Guid.NewGuid().ToString();
             cred.Value = Convert.ToBase64String(applicationCertificate.Export(X509ContentType.Cert));
             cred.Type = "AsymmetricX509Cert";
             cred.Usage = "Verify";
             return cred;
         }
 
-        public PasswordCredential CreatePasswordCredential()
+        public PasswordCredential CreatePasswordCredential(string keyId = null)
         {
             var bytes = new byte[32] { 1, 2 ,3 , 4, 5, 6, 7, 8, 9, 10,
                                         1, 2 ,3 , 4, 5, 6, 7, 8, 9, 10,
@@ -105,9 +107,65 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
             PasswordCredential cred = new PasswordCredential();
             cred.StartDate = DateTime.Now;
             cred.EndDate = DateTime.Now.AddMonths(12);
-            cred.KeyId = Guid.NewGuid().ToString();
+            cred.KeyId = keyId ?? Guid.NewGuid().ToString();
             cred.Value = Convert.ToBase64String(bytes);
             return cred;
+        }
+
+        public void UpdateAppKeyCredential(MockContext context, string appObjectId, KeyCredential credential)
+        {
+            GetGraphClient(context).Applications.UpdateKeyCredentials(appObjectId, new KeyCredentialsUpdateParameters(new List<KeyCredential>() { credential }));
+        }
+        public void UpdateAppKeyCredential(MockContext context, string appObjectId, List<KeyCredential> credentials)
+        {
+            GetGraphClient(context).Applications.UpdateKeyCredentials(appObjectId, new KeyCredentialsUpdateParameters(credentials));
+        }
+
+        public void UpdateAppPasswordCredential(MockContext context, string appObjectId, PasswordCredential credential)
+        {
+            GetGraphClient(context).Applications.UpdatePasswordCredentials(appObjectId, new PasswordCredentialsUpdateParameters(new List<PasswordCredential>() { credential }));
+        }
+        public void UpdateAppPasswordCredential(MockContext context, string appObjectId, List<PasswordCredential> credentials)
+        {
+            GetGraphClient(context).Applications.UpdatePasswordCredentials(appObjectId, new PasswordCredentialsUpdateParameters(credentials));
+        }
+
+        public void UpdateSpKeyCredential(MockContext context, string spObjectId, KeyCredential credential)
+        {
+            GetGraphClient(context).ServicePrincipals.UpdateKeyCredentials(spObjectId, new KeyCredentialsUpdateParameters(new List<KeyCredential>() { credential }));
+        }
+        public void UpdateSpKeyCredential(MockContext context, string spObjectId, List<KeyCredential> credentials)
+        {
+            GetGraphClient(context).ServicePrincipals.UpdateKeyCredentials(spObjectId, new KeyCredentialsUpdateParameters(credentials));
+        }
+
+        public void UpdateSpPasswordCredential(MockContext context, string spObjectId, PasswordCredential credential)
+        {
+            GetGraphClient(context).ServicePrincipals.UpdatePasswordCredentials(spObjectId, new PasswordCredentialsUpdateParameters(new List<PasswordCredential>() { credential }));
+        }
+        public void UpdateSpPasswordCredential(MockContext context, string spObjectId, List<PasswordCredential> credentials)
+        {
+            GetGraphClient(context).ServicePrincipals.UpdatePasswordCredentials(spObjectId, new PasswordCredentialsUpdateParameters(credentials));
+        }
+
+        public List<KeyCredential> GetAppKeyCredential(MockContext context, string appObjectId)
+        {
+            return GetGraphClient(context).Applications.ListKeyCredentials(appObjectId).ToList();
+        }
+
+        public List<PasswordCredential> GetAppPasswordCredential(MockContext context, string appObjectId)
+        {
+            return GetGraphClient(context).Applications.ListPasswordCredentials(appObjectId).ToList();
+        }
+
+        public List<KeyCredential> GetSpKeyCredential(MockContext context, string spObjectId)
+        {
+            return GetGraphClient(context).ServicePrincipals.ListKeyCredentials(spObjectId).ToList();
+        }
+
+        public List<PasswordCredential> GetSpPasswordCredential(MockContext context, string spObjectId)
+        {
+            return GetGraphClient(context).ServicePrincipals.ListPasswordCredentials(spObjectId).ToList();
         }
 
         public Application CreateApplication(MockContext context, PasswordCredential passwordCredential = null, KeyCredential keyCredential = null)
@@ -132,20 +190,18 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
                 parameters.KeyCredentials = new KeyCredential[] { keyCredential };
             }
 
-            return GetGraphClient(context).Application.Create(parameters);
+            return GetGraphClient(context).Applications.Create(parameters);
         }
 
-        public void UpdateApplication(MockContext context, string applicaitonObjectId, PasswordCredential passwordCredential = null, KeyCredential keyCredential = null)
+        public void UpdateApplication(MockContext context, string applicaitonObjectId, string newDisplayName = null, string newIdentifierUri = null, PasswordCredential passwordCredential = null, KeyCredential keyCredential = null)
         {
-            var appName = TestUtilities.GenerateName("adApplication");
-            var url = string.Format("http://{0}/home", appName);
-            var parameters = new ApplicationCreateParameters();
+            var parameters = new ApplicationUpdateParameters();
+            parameters.DisplayName = newDisplayName;
 
-            parameters.AvailableToOtherTenants = false;
-            parameters.DisplayName = appName;
-            parameters.Homepage = url;
-            parameters.IdentifierUris = new[] { url };
-            parameters.ReplyUrls = new[] { url };
+            if (!string.IsNullOrEmpty(newIdentifierUri))
+            {
+                parameters.IdentifierUris = new[] { newIdentifierUri };
+            }
 
             if (passwordCredential != null)
             {
@@ -157,18 +213,25 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
                 parameters.KeyCredentials = new KeyCredential[] { keyCredential };
             }
 
-            GetGraphClient(context).Application.Update(applicaitonObjectId, parameters);
+            GetGraphClient(context).Applications.Patch(applicaitonObjectId, parameters);
         }
 
         public void DeleteApplication(MockContext context, string appObjectId)
         {
-            GetGraphClient(context).Application.Delete(appObjectId);
+            GetGraphClient(context).Applications.Delete(appObjectId);
         }
 
-        public void SearchApplication(MockContext context, string appObjectId)
+        public Application GetApplicationByObjectId(MockContext context, string appObjectId)
         {
-            GetGraphClient(context).Application.Get(appObjectId);
+            return GetGraphClient(context).Applications.Get(appObjectId);
         }
+
+
+        public IEnumerable<Application> SearchApplication(MockContext context, ODataQuery<Application> odataQuery)
+        {
+            return GetGraphClient(context).Applications.List(odataQuery);
+        }
+
 
         public ServicePrincipal CreateServicePrincipal(MockContext context, string appId)
         {
@@ -178,17 +241,17 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
                 AppId = appId
             };
 
-            return GetGraphClient(context).ServicePrincipal.Create(parameters);
+            return GetGraphClient(context).ServicePrincipals.Create(parameters);
         }
 
         public void DeleteServicePrincipal(MockContext context, string spObjectId)
         {
-            GetGraphClient(context).ServicePrincipal.Delete(spObjectId);
+            GetGraphClient(context).ServicePrincipals.Delete(spObjectId);
         }
 
         public void SearchServicePrincipal(MockContext context, string spObjectId)
         {
-            GetGraphClient(context).ServicePrincipal.Get(spObjectId);
+            GetGraphClient(context).ServicePrincipals.Get(spObjectId);
         }
 
         public User CreateUser(MockContext context)
@@ -201,21 +264,21 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
             parameter.DisplayName = username;
             parameter.AccountEnabled = true;
             parameter.MailNickname = username + "test";
-            parameter.PasswordProfile = new UserCreateParametersPasswordProfile();
+            parameter.PasswordProfile = new PasswordProfile();
             parameter.PasswordProfile.ForceChangePasswordNextLogin = false;
             parameter.PasswordProfile.Password = "Test12345";
 
-            return GetGraphClient(context).User.Create(parameter);
+            return GetGraphClient(context).Users.Create(parameter);
         }
 
         public void DeleteUser(MockContext context, string upnOrObjectId)
         {
-            GetGraphClient(context).User.Delete(upnOrObjectId);
+            GetGraphClient(context).Users.Delete(upnOrObjectId);
         }
 
         public void SearchUser(MockContext context, string upnOrObjectId)
         {
-            GetGraphClient(context).User.Get(upnOrObjectId);
+            GetGraphClient(context).Users.Get(upnOrObjectId);
         }
 
         public ADGroup CreateGroup(MockContext context)
@@ -224,39 +287,37 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
             string mailNickName = groupname + "tester";
             GroupCreateParameters parameters = new GroupCreateParameters();
             parameters.DisplayName = groupname;
-            parameters.MailEnabled = false;
-            parameters.SecurityEnabled = true;
             parameters.MailNickname = mailNickName;
 
-            return GetGraphClient(context).Group.Create(parameters);
+            return GetGraphClient(context).Groups.Create(parameters);
         }
 
         public void DeleteGroup(MockContext context, string objectId)
         {
-            GetGraphClient(context).Group.Delete(objectId);
+            GetGraphClient(context).Groups.Delete(objectId);
         }
 
         public void SearchGroup(MockContext context, string objectId)
         {
-            GetGraphClient(context).Group.Get(objectId);
+            GetGraphClient(context).Groups.Get(objectId);
         }
 
         public void AddMember(MockContext context, ADGroup group, User user)
         {
             string memberUrl = string.Format("{0}{1}/directoryObjects/{2}",
                 GetGraphClient(context).BaseUri.AbsoluteUri, GetGraphClient(context).TenantID, user.ObjectId);
-            GetGraphClient(context).Group.AddMember(group.ObjectId, new GroupAddMemberParameters(memberUrl));
+            GetGraphClient(context).Groups.AddMember(group.ObjectId, new GroupAddMemberParameters(memberUrl));
         }
 
         //return all groups the user is a member of (transitive)
         public IEnumerable<string> GetMemberGroups(MockContext context, User user)
         {
-            return GetGraphClient(context).User.GetMemberGroups(user.ObjectId, new UserGetMemberGroupsParameters(false));
+            return GetGraphClient(context).Users.GetMemberGroups(user.ObjectId, new UserGetMemberGroupsParameters(false));
         }
 
         public void RemoveMember(MockContext context, ADGroup group, User user)
         {
-            GetGraphClient(context).Group.RemoveMember(group.ObjectId, user.ObjectId);
+            GetGraphClient(context).Groups.RemoveMember(group.ObjectId, user.ObjectId);
         }
     }
 }

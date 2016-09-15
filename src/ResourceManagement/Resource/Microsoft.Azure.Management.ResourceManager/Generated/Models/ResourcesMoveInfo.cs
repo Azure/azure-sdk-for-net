@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets the ids of the resources.
+        /// The ids of the resources.
         /// </summary>
         [JsonProperty(PropertyName = "resources")]
         public IList<string> Resources { get; set; }

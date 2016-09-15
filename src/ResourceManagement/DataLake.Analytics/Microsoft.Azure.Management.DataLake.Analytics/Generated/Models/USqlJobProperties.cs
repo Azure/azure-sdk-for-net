@@ -27,6 +27,41 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlJobProperties class.
         /// </summary>
+        /// <param name="script">the script to run</param>
+        /// <param name="runtimeVersion">the runtime version of the Data Lake
+        /// Analytics engine to use for the specific type of job being
+        /// run.</param>
+        /// <param name="resources">the list of resources that are required by
+        /// the job</param>
+        /// <param name="statistics">the job specific statistics.</param>
+        /// <param name="debugData">the job specific debug data
+        /// locations.</param>
+        /// <param name="diagnostics">the diagnostics for the job.</param>
+        /// <param name="algebraFilePath">the algebra file path after the job
+        /// has completed</param>
+        /// <param name="totalCompilationTime">the total time this job spent
+        /// compiling. This value should not be set by the user and will be
+        /// ignored if it is.</param>
+        /// <param name="totalPauseTime">the total time this job spent paused.
+        /// This value should not be set by the user and will be ignored if
+        /// it is.</param>
+        /// <param name="totalQueuedTime">the total time this job spent
+        /// queued. This value should not be set by the user and will be
+        /// ignored if it is.</param>
+        /// <param name="totalRunningTime">the total time this job spent
+        /// executing. This value should not be set by the user and will be
+        /// ignored if it is.</param>
+        /// <param name="rootProcessNodeId">the ID used to identify the job
+        /// manager coordinating job execution. This value should not be set
+        /// by the user and will be ignored if it is.</param>
+        /// <param name="yarnApplicationId">the ID used to identify the yarn
+        /// application executing the job. This value should not be set by
+        /// the user and will be ignored if it is.</param>
+        /// <param name="yarnApplicationTimeStamp">the timestamp (in ticks)
+        /// for the yarn application executing the job. This value should not
+        /// be set by the user and will be ignored if it is.</param>
+        /// <param name="compileMode">the compile mode for the job. Possible
+        /// values include: 'Semantic', 'Full', 'SingleBox'</param>
         public USqlJobProperties(string script, string runtimeVersion = default(string), IList<JobResource> resources = default(IList<JobResource>), JobStatistics statistics = default(JobStatistics), JobDataPath debugData = default(JobDataPath), IList<Diagnostics> diagnostics = default(IList<Diagnostics>), string algebraFilePath = default(string), TimeSpan? totalCompilationTime = default(TimeSpan?), TimeSpan? totalPauseTime = default(TimeSpan?), TimeSpan? totalQueuedTime = default(TimeSpan?), TimeSpan? totalRunningTime = default(TimeSpan?), string rootProcessNodeId = default(string), string yarnApplicationId = default(string), long? yarnApplicationTimeStamp = default(long?), CompileMode? compileMode = default(CompileMode?))
             : base(script, runtimeVersion)
         {

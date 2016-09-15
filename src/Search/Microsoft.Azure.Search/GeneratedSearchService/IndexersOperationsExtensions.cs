@@ -24,6 +24,7 @@ namespace Microsoft.Azure.Search
     {
             /// <summary>
             /// Resets the change tracking state associated with an Azure Search indexer.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946897.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -41,6 +42,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Resets the change tracking state associated with an Azure Search indexer.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946897.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -61,6 +63,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Runs an Azure Search indexer on-demand.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946885.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -78,6 +81,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Runs an Azure Search indexer on-demand.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946885.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -99,6 +103,7 @@ namespace Microsoft.Azure.Search
             /// <summary>
             /// Creates a new Azure Search indexer or updates an indexer if it already
             /// exists.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946899.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -112,14 +117,18 @@ namespace Microsoft.Azure.Search
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static Indexer CreateOrUpdate(this IIndexersOperations operations, string indexerName, Indexer indexer, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
+            /// <param name='accessCondition'>
+            /// Additional parameters for the operation
+            /// </param>
+            public static Indexer CreateOrUpdate(this IIndexersOperations operations, string indexerName, Indexer indexer, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition))
             {
-                return Task.Factory.StartNew(s => ((IIndexersOperations)s).CreateOrUpdateAsync(indexerName, indexer, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IIndexersOperations)s).CreateOrUpdateAsync(indexerName, indexer, searchRequestOptions, accessCondition), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Creates a new Azure Search indexer or updates an indexer if it already
             /// exists.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946899.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -133,12 +142,15 @@ namespace Microsoft.Azure.Search
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
+            /// <param name='accessCondition'>
+            /// Additional parameters for the operation
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Indexer> CreateOrUpdateAsync(this IIndexersOperations operations, string indexerName, Indexer indexer, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Indexer> CreateOrUpdateAsync(this IIndexersOperations operations, string indexerName, Indexer indexer, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(indexerName, indexer, searchRequestOptions, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(indexerName, indexer, searchRequestOptions, accessCondition, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -146,6 +158,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Deletes an Azure Search indexer.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946898.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -156,13 +169,17 @@ namespace Microsoft.Azure.Search
             /// <param name='searchRequestOptions'>
             /// Additional parameters for the operation
             /// </param>
-            public static void Delete(this IIndexersOperations operations, string indexerName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions))
+            /// <param name='accessCondition'>
+            /// Additional parameters for the operation
+            /// </param>
+            public static void Delete(this IIndexersOperations operations, string indexerName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition))
             {
-                Task.Factory.StartNew(s => ((IIndexersOperations)s).DeleteAsync(indexerName, searchRequestOptions), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IIndexersOperations)s).DeleteAsync(indexerName, searchRequestOptions, accessCondition), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Deletes an Azure Search indexer.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946898.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -171,18 +188,22 @@ namespace Microsoft.Azure.Search
             /// The name of the indexer to delete.
             /// </param>
             /// <param name='searchRequestOptions'>
+            /// Additional parameters for the operation
+            /// </param>
+            /// <param name='accessCondition'>
             /// Additional parameters for the operation
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IIndexersOperations operations, string indexerName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IIndexersOperations operations, string indexerName, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteWithHttpMessagesAsync(indexerName, searchRequestOptions, null, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteWithHttpMessagesAsync(indexerName, searchRequestOptions, accessCondition, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
             /// Retrieves an indexer definition from Azure Search.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946874.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -200,6 +221,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Retrieves an indexer definition from Azure Search.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946874.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -223,6 +245,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Lists all indexers available for an Azure Search service.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946883.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -237,6 +260,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Lists all indexers available for an Azure Search service.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946883.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -257,6 +281,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Creates a new Azure Search indexer.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946899.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -274,6 +299,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Creates a new Azure Search indexer.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946899.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -297,6 +323,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Returns the current status and execution history of an indexer.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946884.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -314,6 +341,7 @@ namespace Microsoft.Azure.Search
 
             /// <summary>
             /// Returns the current status and execution history of an indexer.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn946884.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -29,6 +29,20 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlAssembly class.
         /// </summary>
+        /// <param name="computeAccountName">the name of the Data Lake
+        /// Analytics account.</param>
+        /// <param name="version">the version of the catalog item.</param>
+        /// <param name="databaseName">the name of the database.</param>
+        /// <param name="name">the name of the assembly.</param>
+        /// <param name="clrName">the name of the CLR.</param>
+        /// <param name="isVisible">the switch indicating if this assembly is
+        /// visible or not.</param>
+        /// <param name="isUserDefined">the switch indicating if this assembly
+        /// is user defined or not.</param>
+        /// <param name="files">the list of files associated with the
+        /// assembly</param>
+        /// <param name="dependencies">the list of dependencies associated
+        /// with the assembly</param>
         public USqlAssembly(string computeAccountName = default(string), Guid? version = default(Guid?), string databaseName = default(string), string name = default(string), string clrName = default(string), bool? isVisible = default(bool?), bool? isUserDefined = default(bool?), IList<USqlAssemblyFileInfo> files = default(IList<USqlAssemblyFileInfo>), IList<USqlAssemblyDependencyInfo> dependencies = default(IList<USqlAssemblyDependencyInfo>))
             : base(computeAccountName, version)
         {

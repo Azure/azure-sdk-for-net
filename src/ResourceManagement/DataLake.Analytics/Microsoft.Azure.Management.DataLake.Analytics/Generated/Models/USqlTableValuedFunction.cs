@@ -29,6 +29,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlTableValuedFunction class.
         /// </summary>
+        /// <param name="computeAccountName">the name of the Data Lake
+        /// Analytics account.</param>
+        /// <param name="version">the version of the catalog item.</param>
+        /// <param name="databaseName">the name of the database.</param>
+        /// <param name="schemaName">the name of the schema associated with
+        /// this database.</param>
+        /// <param name="name">the name of the table valued function.</param>
+        /// <param name="definition">the definition of the table valued
+        /// function.</param>
         public USqlTableValuedFunction(string computeAccountName = default(string), Guid? version = default(Guid?), string databaseName = default(string), string schemaName = default(string), string name = default(string), string definition = default(string))
             : base(computeAccountName, version)
         {

@@ -30,6 +30,18 @@ namespace Test.Azure.Management.Logic
             }
         }
 
+        /// <summary>
+        /// Default SKU reference.
+        /// </summary>
+        protected Sku Sku => new Sku
+        {
+            Name = SkuName.Standard,
+            Plan = new ResourceReference
+            {
+                Id = ServicePlanResourceId
+            }
+        };
+
         protected LogicManagementClient GetIntegrationAccountClient(MockContext context)
         {
             var client = context.GetServiceClient<LogicManagementClient>();

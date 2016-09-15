@@ -125,7 +125,7 @@ namespace ResourceGroups.Tests
                 Assert.True(ResourcesManagementTestUtilities.LocationsAreEqual(mySqlLocation, createOrUpdateResult.Location),
                     string.Format("Resource location for resource '{0}' does not match expected location '{1}'", createOrUpdateResult.Location, mySqlLocation));
                 Assert.NotNull(createOrUpdateResult.Plan);
-                Assert.Equal("Mercury", createOrUpdateResult.Plan.Name);
+                Assert.Equal("Free", createOrUpdateResult.Plan.Name);
 
                 var getResult = client.Resources.Get(groupName, groupIdentity.ResourceProviderNamespace,
                     "", groupIdentity.ResourceType, groupIdentity.ResourceName, groupIdentity.ResourceProviderApiVersion);
@@ -134,7 +134,7 @@ namespace ResourceGroups.Tests
                 Assert.True(ResourcesManagementTestUtilities.LocationsAreEqual(mySqlLocation, getResult.Location),
                     string.Format("Resource location for resource '{0}' does not match expected location '{1}'", getResult.Location, mySqlLocation));
                 Assert.NotNull(getResult.Plan);
-                Assert.Equal("Mercury", getResult.Plan.Name);
+                Assert.Equal("Free", getResult.Plan.Name);
             }
         }
 

@@ -5,21 +5,9 @@ using Microsoft.IdentityModel.Clients.ActiveDirectory;
 
 namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework
 {
-    public class TokenInfo
+    public enum TokenAudience
     {
-        public TokenInfo(string accessToken)
-        {
-            AccessToken = accessToken;
-            AccessTokenType = "Bearer";
-        }
-
-        public TokenInfo(AuthenticationResult result)
-        {
-            AccessToken = result.AccessToken;
-            AccessTokenType = result.AccessTokenType;
-        }
-
-        public string AccessToken { get; private set; }
-        public string AccessTokenType { get; private set; }
+        Management,
+        Graph
     }
 }

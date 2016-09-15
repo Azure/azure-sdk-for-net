@@ -32,13 +32,8 @@ namespace Microsoft.Azure.Search.Tests
             IEnumerable<Hotel> expectedDocs =
                 Data.TestDocuments.Where(h => h.HotelId == "4" || h.HotelId == "5").OrderBy(h => h.HotelId);
                 
-            SearchAssert.SequenceEqual(
-                expectedDocs,
-                response.Results.Select(r => r.Document));
-
-            SearchAssert.SequenceEqual(
-                expectedDocs.Select(h => h.Description),
-                response.Results.Select(r => r.Text));
+            Assert.Equal(expectedDocs, response.Results.Select(r => r.Document));
+            Assert.Equal(expectedDocs.Select(h => h.Description), response.Results.Select(r => r.Text));
         }
 
         protected void TestCanSuggestDynamicDocuments()
@@ -61,7 +56,7 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Equal(expectedDocs.Length, response.Results.Count);
             for (int i = 0; i < expectedDocs.Length; i++)
             {
-                SearchAssert.DocumentsEqual(expectedDocs[i], response.Results[i].Document);
+                Assert.Equal(expectedDocs[i], response.Results[i].Document);
                 Assert.Equal(expectedDocs[i]["description"], response.Results[i].Text);
             }
         }
@@ -71,27 +66,20 @@ namespace Microsoft.Azure.Search.Tests
             SearchIndexClient client = GetClient();
 
             var invalidParameters = new SuggestParameters() { OrderBy = new[] { "This is not a valid orderby." } };
-            CloudException e =
-                Assert.Throws<CloudException>(() => client.Documents.Suggest("hotel", "sg", invalidParameters));
-
-            Assert.Equal(HttpStatusCode.BadRequest, e.Response.StatusCode);
-            Assert.Contains(
-                "Invalid expression: Syntax error at position 7 in 'This is not a valid orderby.'",
-                e.Message);
+            SearchAssert.ThrowsCloudException(
+                () => client.Documents.Suggest("hotel", "sg", invalidParameters),
+                HttpStatusCode.BadRequest,
+                "Invalid expression: Syntax error at position 7 in 'This is not a valid orderby.'");
         }
 
         protected void TestSuggestThrowsWhenGivenBadSuggesterName()
         {
             SearchIndexClient client = GetClient();
 
-            CloudException e =
-                Assert.Throws<CloudException>(
-                    () => client.Documents.Suggest("hotel", "Suggester does not exist", new SuggestParameters()));
-
-            Assert.Equal(HttpStatusCode.BadRequest, e.Response.StatusCode);
-            Assert.Contains(
-                "The specified suggester name 'Suggester does not exist' does not exist in this index definition.",
-                e.Message);
+            SearchAssert.ThrowsCloudException(
+                () => client.Documents.Suggest("hotel", "Suggester does not exist", new SuggestParameters()),
+                HttpStatusCode.BadRequest,
+                "The specified suggester name 'Suggester does not exist' does not exist in this index definition.");
         }
 
         protected void TestFuzzyIsOffByDefault()
@@ -327,7 +315,7 @@ namespace Microsoft.Azure.Search.Tests
             Assert.NotNull(response.Results);
 
             IEnumerable<string> actualKeys = response.Results.Select(r => r.Document.HotelId);
-            SearchAssert.SequenceEqual(expectedKeys, actualKeys);
+            Assert.Equal(expectedKeys, actualKeys);
         }
     }
 }

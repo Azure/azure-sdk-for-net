@@ -87,6 +87,34 @@ namespace ResourceGroups.Tests
             }
         }
 
+        [Fact()]
+        public void CreateDeploymentWithStringTemplateAndParameters()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.Created };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                var client = GetResourceManagementClient(context, handler);
+                var parameters = new Deployment
+                {
+                    Properties = new DeploymentProperties()
+                    {
+                        Template = File.ReadAllText(Path.Combine("ScenarioTests", "simple-storage-account.json")),
+                        Parameters = File.ReadAllText(Path.Combine("ScenarioTests", "simple-storage-account-parameters.json")),
+                        Mode = DeploymentMode.Incremental,
+                    }
+                };
+
+                string groupName = TestUtilities.GenerateName("csmrg");
+                string deploymentName = TestUtilities.GenerateName("csmd");
+                client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = "West Europe" });
+                client.Deployments.CreateOrUpdate(groupName, deploymentName, parameters);
+
+                var deployment = client.Deployments.Get(groupName, deploymentName);
+                Assert.Equal("Succeeded", deployment.Properties.ProvisioningState);
+            }
+        }
+
         [Fact]
         public void CreateDeploymentAndValidateProperties()
         {
@@ -107,7 +135,7 @@ namespace ResourceGroups.Tests
                         },
                         Parameters =
                         JObject.Parse(
-                            @"{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName  + "'}, 'hostingPlanName': {'value': 'someplan'}, 'siteLocation': {'value': 'westus'}, 'sku': {'value': 'Standard'}}"),
+                            @"{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName  + "'}, 'hostingPlanName': {'value': 'someplan'}, 'sku': {'value': 'F1'}}"),
                         Mode = DeploymentMode.Incremental,
                     }
                 };
@@ -157,7 +185,7 @@ namespace ResourceGroups.Tests
                             Uri = GoodWebsiteTemplateUri,
                         },
                         Parameters =
-                        JObject.Parse(@"{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName + "'}, 'hostingPlanName': {'value': 'someplan'}, 'siteLocation': {'value': 'westus'}, 'sku': {'value': 'Standard'}}"),
+                        JObject.Parse(@"{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName + "'}, 'hostingPlanName': {'value': 'someplan'}, 'sku': {'value': 'F1'}}"),
                         Mode = DeploymentMode.Incremental,
                     }
                 };
@@ -193,7 +221,7 @@ namespace ResourceGroups.Tests
                 {
                     Properties = new DeploymentProperties()
                     {
-                        Template = File.ReadAllText(Path.Combine("ScenarioTests", "good-website.js")),
+                        Template = File.ReadAllText(Path.Combine("ScenarioTests", "good-website.json")),
                         Parameters =
                         JObject.Parse(@"{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName + "'}, 'hostingPlanName': {'value': 'someplan'}, 'siteLocation': {'value': 'westus'}, 'sku': {'value': 'Standard'}}"),
                         Mode = DeploymentMode.Incremental,
@@ -370,7 +398,7 @@ namespace ResourceGroups.Tests
                             Uri = GoodWebsiteTemplateUri,
                         },
                         Parameters =
-                        JObject.Parse("{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName + "'}, 'hostingPlanName': {'value': 'someplan'}, 'siteLocation': {'value': 'westus'}, 'sku': {'value': 'Standard'}}"),
+                        JObject.Parse("{'repoURL': {'value': 'https://github.com/devigned/az-roadshow-oss.git'}, 'siteName': {'value': '" + resourceName + "'}, 'hostingPlanName': {'value': 'someplan'}, 'sku': {'value': 'F1'}}"),
                         Mode = DeploymentMode.Incremental,
                     }
                 };

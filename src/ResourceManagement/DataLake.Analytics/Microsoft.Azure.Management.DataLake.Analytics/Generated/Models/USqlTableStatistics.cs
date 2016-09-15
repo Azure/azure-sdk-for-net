@@ -29,6 +29,30 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlTableStatistics class.
         /// </summary>
+        /// <param name="computeAccountName">the name of the Data Lake
+        /// Analytics account.</param>
+        /// <param name="version">the version of the catalog item.</param>
+        /// <param name="databaseName">the name of the database.</param>
+        /// <param name="schemaName">the name of the schema associated with
+        /// this table and database.</param>
+        /// <param name="tableName">the name of the table.</param>
+        /// <param name="name">the name of the table statistics.</param>
+        /// <param name="userStatName">the name of the user statistics.</param>
+        /// <param name="statDataPath">the path to the statistics data.</param>
+        /// <param name="createTime">the creation time of the
+        /// statistics.</param>
+        /// <param name="updateTime">the last time the statistics were
+        /// updated.</param>
+        /// <param name="isUserCreated">the switch indicating if these
+        /// statistics are user created.</param>
+        /// <param name="isAutoCreated">the switch indicating if these
+        /// statistics are automatically created.</param>
+        /// <param name="hasFilter">the switch indicating if these statistics
+        /// have a filter.</param>
+        /// <param name="filterDefinition">the filter definition for the
+        /// statistics.</param>
+        /// <param name="colNames">the list of column names associated with
+        /// these statistics.</param>
         public USqlTableStatistics(string computeAccountName = default(string), Guid? version = default(Guid?), string databaseName = default(string), string schemaName = default(string), string tableName = default(string), string name = default(string), string userStatName = default(string), string statDataPath = default(string), DateTimeOffset? createTime = default(DateTimeOffset?), DateTimeOffset? updateTime = default(DateTimeOffset?), bool? isUserCreated = default(bool?), bool? isAutoCreated = default(bool?), bool? hasFilter = default(bool?), string filterDefinition = default(string), IList<string> colNames = default(IList<string>))
             : base(computeAccountName, version)
         {

@@ -29,6 +29,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the ExternalTable class.
         /// </summary>
+        /// <param name="tableName">the name of the table associated with this
+        /// database and schema.</param>
+        /// <param name="dataSource">the data source associated with this
+        /// external table.</param>
         public ExternalTable(string tableName = default(string), EntityId dataSource = default(EntityId))
         {
             TableName = tableName;

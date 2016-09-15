@@ -1,8 +1,0 @@
-{
-    name: "LinkedService-WikiAggregatedData",
-    properties:
-    {
-        type: "AzureSqlLinkedService",
-        connectionString: "$EncryptedString$SqlEncryptedConnectionString"
-    }
-}

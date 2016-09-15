@@ -29,6 +29,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the DataLakeStoreAccountInfo class.
         /// </summary>
+        /// <param name="name">the account name of the Data Lake Store
+        /// account.</param>
+        /// <param name="properties">the properties associated with this Data
+        /// Lake Store account.</param>
         public DataLakeStoreAccountInfo(string name, DataLakeStoreAccountInfoProperties properties = default(DataLakeStoreAccountInfoProperties))
         {
             Name = name;

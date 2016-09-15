@@ -1,0 +1,63 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.KeyVault", "Microsoft.Azure.Management.KeyVault\Microsoft.Azure.Management.KeyVault.xproj", "{92ADE435-B835-447D-8B5B-1F4A52F8DF39}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "KeyVaultManagement.Tests", "KeyVaultManagement.Tests\KeyVaultManagement.Tests.xproj", "{030623AB-8A12-44B3-8CB3-2356152F9C9F}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "TestFramework", "..\..\TestFramework\Microsoft.Rest.ClientRuntime.Azure.TestFramework\TestFramework.xproj", "{C4C4E1C8-B99D-4D90-8C27-6D0C0A268BA5}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "HttpRecorder", "..\..\TestFramework\Microsoft.Azure.Test.HttpRecorder\HttpRecorder.xproj", "{5D12D45A-E55F-410E-B8AF-9DC90E81B237}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Graph.RBAC", "..\Graph.RBAC\Microsoft.Azure.Graph.RBAC\Microsoft.Azure.Graph.RBAC.xproj", "{44D4E2E7-4B9F-4B49-978F-7984AA72D63D}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.ResourceManager", "..\Resource\Microsoft.Azure.ResourceManager\Microsoft.Azure.ResourceManager.xproj", "{BE53CF33-9A3D-4101-9DFD-62AC09CADADA}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "HttpRecorder", "..\..\TestFramework\Microsoft.Azure.Test.HttpRecorder\HttpRecorder.xproj", "{5D12D45A-E55F-410E-B8AF-9DC90E81B237}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{92ADE435-B835-447D-8B5B-1F4A52F8DF39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{92ADE435-B835-447D-8B5B-1F4A52F8DF39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{92ADE435-B835-447D-8B5B-1F4A52F8DF39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{92ADE435-B835-447D-8B5B-1F4A52F8DF39}.Release|Any CPU.Build.0 = Release|Any CPU
+		{030623AB-8A12-44B3-8CB3-2356152F9C9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{030623AB-8A12-44B3-8CB3-2356152F9C9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{030623AB-8A12-44B3-8CB3-2356152F9C9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{030623AB-8A12-44B3-8CB3-2356152F9C9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4C4E1C8-B99D-4D90-8C27-6D0C0A268BA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4C4E1C8-B99D-4D90-8C27-6D0C0A268BA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4C4E1C8-B99D-4D90-8C27-6D0C0A268BA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4C4E1C8-B99D-4D90-8C27-6D0C0A268BA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44D4E2E7-4B9F-4B49-978F-7984AA72D63D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44D4E2E7-4B9F-4B49-978F-7984AA72D63D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44D4E2E7-4B9F-4B49-978F-7984AA72D63D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44D4E2E7-4B9F-4B49-978F-7984AA72D63D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE53CF33-9A3D-4101-9DFD-62AC09CADADA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE53CF33-9A3D-4101-9DFD-62AC09CADADA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE53CF33-9A3D-4101-9DFD-62AC09CADADA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE53CF33-9A3D-4101-9DFD-62AC09CADADA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D12D45A-E55F-410E-B8AF-9DC90E81B237}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D12D45A-E55F-410E-B8AF-9DC90E81B237}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D12D45A-E55F-410E-B8AF-9DC90E81B237}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D12D45A-E55F-410E-B8AF-9DC90E81B237}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4C4E1C8-B99D-4D90-8C27-6D0C0A268BA5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4C4E1C8-B99D-4D90-8C27-6D0C0A268BA5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4C4E1C8-B99D-4D90-8C27-6D0C0A268BA5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4C4E1C8-B99D-4D90-8C27-6D0C0A268BA5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D12D45A-E55F-410E-B8AF-9DC90E81B237}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D12D45A-E55F-410E-B8AF-9DC90E81B237}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D12D45A-E55F-410E-B8AF-9DC90E81B237}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D12D45A-E55F-410E-B8AF-9DC90E81B237}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

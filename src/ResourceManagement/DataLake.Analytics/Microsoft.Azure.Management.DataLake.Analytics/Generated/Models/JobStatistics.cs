@@ -29,9 +29,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the JobStatistics class.
         /// </summary>
-        public JobStatistics(DateTimeOffset? lastUpdateTimeUtc = default(DateTimeOffset?), IList<JobStatisticsVertexStage> stages = default(IList<JobStatisticsVertexStage>))
+        /// <param name="lastUpdateTimeUtc">the last update time for the
+        /// statistics.</param>
+        /// <param name="finalizingTimeUtc">the job finalizing start
+        /// time.</param>
+        /// <param name="stages">the list of stages for the job.</param>
+        public JobStatistics(DateTimeOffset? lastUpdateTimeUtc = default(DateTimeOffset?), DateTimeOffset? finalizingTimeUtc = default(DateTimeOffset?), IList<JobStatisticsVertexStage> stages = default(IList<JobStatisticsVertexStage>))
         {
             LastUpdateTimeUtc = lastUpdateTimeUtc;
+            FinalizingTimeUtc = finalizingTimeUtc;
             Stages = stages;
         }
 
@@ -40,6 +46,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// </summary>
         [JsonProperty(PropertyName = "lastUpdateTimeUtc")]
         public DateTimeOffset? LastUpdateTimeUtc { get; private set; }
+
+        /// <summary>
+        /// Gets the job finalizing start time.
+        /// </summary>
+        [JsonProperty(PropertyName = "finalizingTimeUtc")]
+        public DateTimeOffset? FinalizingTimeUtc { get; private set; }
 
         /// <summary>
         /// Gets the list of stages for the job.

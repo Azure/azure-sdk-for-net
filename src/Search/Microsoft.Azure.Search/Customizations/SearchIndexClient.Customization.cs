@@ -4,6 +4,8 @@
 
 namespace Microsoft.Azure.Search
 {
+    using System;
+    using System.Linq;
     using System.Net.Http;
 
     public partial class SearchIndexClient
@@ -21,14 +23,7 @@ namespace Microsoft.Azure.Search
         public SearchIndexClient(string searchServiceName, string indexName, SearchCredentials credentials)
             : this()
         {
-            var validatedSearchServiceName = new SearchServiceName(searchServiceName);
-            var validatedIndexName = new IndexName(indexName);
-            Throw.IfArgumentNull(credentials, "credentials");
-
-            this.Credentials = credentials;
-            this.BaseUri = validatedSearchServiceName.BuildBaseUriWithIndex(validatedIndexName);
-
-            this.Credentials.InitializeServiceClient(this);
+            Initialize(searchServiceName, indexName, credentials);
         }
 
         /// <summary>
@@ -54,15 +49,7 @@ namespace Microsoft.Azure.Search
             params DelegatingHandler[] handlers)
             : this(rootHandler, handlers)
         {
-            var validatedSearchServiceName = new SearchServiceName(searchServiceName);
-            var validatedIndexName = new IndexName(indexName);
-
-            Throw.IfArgumentNull(credentials, "credentials");
-
-            this.Credentials = credentials;
-            this.BaseUri = validatedSearchServiceName.BuildBaseUriWithIndex(validatedIndexName);
-
-            this.Credentials.InitializeServiceClient(this);
+            Initialize(searchServiceName, indexName, credentials);
         }
 
         /// <inheritdoc />
@@ -73,5 +60,53 @@ namespace Microsoft.Azure.Search
 
         /// <inheritdoc />
         public bool UseHttpGetForQueries { get; set; }
+
+        /// <inheritdoc />
+        public void TargetDifferentIndex(string newIndexName)
+        {
+            // ASSUMPTION: BaseUri is set by every constructor.
+            Tuple<string, string> hostAndFqdn = SplitHost(this.BaseUri.Host);
+            string searchServiceName = hostAndFqdn.Item1;
+            string fullyQualifiedDomainName = hostAndFqdn.Item2;
+            SetBaseUri(searchServiceName, newIndexName, fullyQualifiedDomainName);
+        }
+
+        internal IDocumentsProxyOperations DocumentsProxy { get; private set; }
+
+        partial void CustomInitialize()
+        {
+            DocumentsProxy = new DocumentsProxyOperations(this);
+        }
+
+        private static Tuple<string, string> SplitHost(string host)
+        {
+            int indexOfFirstDot = host.IndexOf('.');
+            if (indexOfFirstDot == -1 || indexOfFirstDot == host.Length - 1)
+            {
+                return Tuple.Create(host, String.Empty);
+            }
+            else
+            {
+                return Tuple.Create(host.Substring(0, indexOfFirstDot), host.Substring(indexOfFirstDot + 1));
+            }
+        }
+
+        private void Initialize(string searchServiceName, string indexName, SearchCredentials credentials)
+        {
+            Throw.IfArgumentNull(credentials, "credentials");
+
+            this.SetBaseUri(searchServiceName, indexName);
+
+            this.Credentials = credentials;
+            this.Credentials.InitializeServiceClient(this);
+        }
+
+        private void SetBaseUri(string searchServiceName, string indexName, string fullyQualifiedDomainName = null)
+        {
+            var validatedSearchServiceName = new SearchServiceName(searchServiceName);
+            var validatedIndexName = new IndexName(indexName);
+
+            this.BaseUri = validatedSearchServiceName.BuildBaseUriWithIndex(validatedIndexName, fullyQualifiedDomainName);
+        }
     }
 }

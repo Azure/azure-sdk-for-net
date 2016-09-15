@@ -1,0 +1,50 @@
+{
+  "version": "2.0.0-preview",
+  "title": "Microsoft Azure Key Vault WebKey",
+  "description": "Microsoft Azure Key Vault WebKey Class Library",
+  "authors": [ "Microsoft" ],
+
+  "packOptions": {
+    "summary": "Class library for Azure Key Vault WebKey",
+    "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+    "tags": [ "Microsoft Azure key vault WebKey" ],
+    "requireLicenseAcceptance": true,
+    "releaseNotes": ""
+  },
+  "buildOptions": {
+    "delaySign": true,
+    "publicSign": false,
+    "keyFile": "../../../tools/MSSharedLibKey.snk"
+  },
+  "dependencies": {
+    "Newtonsoft.Json": "6.0.8"
+  },
+  "frameworks": {
+    "netstandard1.5": {
+      "buildOptions": { "define": [ "PORTABLE" ] },
+      "imports": [ "dnxcore50" ],
+      "dependencies": {
+        "Microsoft.NETCore.Platforms": "1.0.1",
+        "System.Collections": "4.0.11",
+        "System.Runtime": "4.1.0",
+        "Microsoft.CSharp": "4.0.1",
+        "System.Collections.Concurrent": "4.0.12",
+        "System.Runtime.Serialization.Primitives": "4.1.1",
+        "System.Security.Cryptography.Csp": "4.0.0",
+        "System.Linq": "4.1.0",
+        "System.Runtime.Extensions": "4.1.0"
+      }
+    },
+    "net45": {
+      "frameworkAssemblies": {
+        "System": { "type": "build" },
+        "System.Security": { "type": "default" }
+      },
+      "dependencies": {
+      }
+    }
+  },
+  "configurations": {
+  }
+}

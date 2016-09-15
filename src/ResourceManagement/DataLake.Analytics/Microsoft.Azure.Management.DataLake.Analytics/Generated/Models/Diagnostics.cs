@@ -26,6 +26,15 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the Diagnostics class.
         /// </summary>
+        /// <param name="columnNumber">the column where the error
+        /// occured.</param>
+        /// <param name="end">the ending index of the error.</param>
+        /// <param name="lineNumber">the line number the error occured
+        /// on.</param>
+        /// <param name="message">the error message.</param>
+        /// <param name="severity">the severity of the error. Possible values
+        /// include: 'Warning', 'Error', 'Info'</param>
+        /// <param name="start">the starting index of the error.</param>
         public Diagnostics(int? columnNumber = default(int?), int? end = default(int?), int? lineNumber = default(int?), string message = default(string), SeverityTypes? severity = default(SeverityTypes?), int? start = default(int?))
         {
             ColumnNumber = columnNumber;

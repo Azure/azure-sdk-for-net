@@ -36,6 +36,9 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <summary>
         /// Initializes a new instance of the AzureAsyncOperationResult class.
         /// </summary>
+        /// <param name="status">the status of the AzureAsuncOperation.
+        /// Possible values include: 'InProgress', 'Succeeded',
+        /// 'Failed'</param>
         public AzureAsyncOperationResult(OperationStatus? status = default(OperationStatus?), Error error = default(Error))
         {
             Status = status;
