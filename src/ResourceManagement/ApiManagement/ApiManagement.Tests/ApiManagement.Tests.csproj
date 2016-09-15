@@ -179,8 +179,9 @@
     <None Include="SessionRecords\ResourceProviderFunctionalTests\BackupRestore.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\ResourceProviderFunctionalTests\CheckNameAvailability.json" />
-    <None Include="SessionRecords\ResourceProviderFunctionalTests\CheckServiceNameAvailability.json" />
+    <None Include="SessionRecords\ResourceProviderFunctionalTests\CheckNameAvailability.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\ResourceProviderFunctionalTests\CreateListUpdateDelete.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -199,8 +200,12 @@
     <None Include="SessionRecords\ResourceProviderFunctionalTests\UpdateHostname.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\SmapiFunctionalTests\ApiImportExport_Swagger.json" />
-    <None Include="SessionRecords\SmapiFunctionalTests\ApiImportExport_Wadl.json" />
+    <None Include="SessionRecords\SmapiFunctionalTests\ApiImportExport_Swagger.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\ApiImportExport_Wadl.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\SmapiFunctionalTests\ApiOperationsCreateListUpdateDelete.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
