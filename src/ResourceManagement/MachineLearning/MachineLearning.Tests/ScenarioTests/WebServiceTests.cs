@@ -71,7 +71,7 @@ namespace MachineLearning.Tests.ScenarioTests
         }
 
         [Fact]
-        public void CreateGetRemoveWebService()
+        public void CreateGetRemoveGraphWebService()
         {
             this.RunAMLWebServiceTestScenario((webServiceName, resourceGroupName, resourcesClient, amlServicesClient, cpResourceId, storageAccount) =>
             {
