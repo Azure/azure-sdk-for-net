@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.V2.Compute", "..\Compute\Microsoft.Azure.Management.V2.Compute\Microsoft.Azure.Management.V2.Compute.xproj", "{CBE97730-45F5-448E-88E9-55DF94D65B87}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.V2.Storage", "..\Storage\Microsoft.Azure.Management.V2.Storage\Microsoft.Azure.Management.V2.Storage.xproj", "{A9B44E1B-C26F-44AB-B13F-F22742371135}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.V2.Network", "..\Network\Microsoft.Azure.Management.V2.Network\Microsoft.Azure.Management.V2.Network.xproj", "{4F22B186-DEB4-4B95-BA58-0187F0E33003}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.V2.Resource", "..\Resource\Microsoft.Azure.Management.V2.Resource\Microsoft.Azure.Management.V2.Resource.xproj", "{A5986BDB-0D0D-48AA-9E49-ECE96BAC8AEE}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AzureTests", "Azure.Tests\AzureTests.xproj", "{BF7B919F-53F0-4216-84BC-722786A3AEA0}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management", "Microsoft.Azure.Management\Microsoft.Azure.Management.xproj", "{B1032273-B366-4751-B216-36332A06CBC6}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Samples", "Samples\Samples.xproj", "{F47E6D07-2D06-4DDD-8DAA-C235FB192BE8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CBE97730-45F5-448E-88E9-55DF94D65B87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBE97730-45F5-448E-88E9-55DF94D65B87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBE97730-45F5-448E-88E9-55DF94D65B87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBE97730-45F5-448E-88E9-55DF94D65B87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9B44E1B-C26F-44AB-B13F-F22742371135}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9B44E1B-C26F-44AB-B13F-F22742371135}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9B44E1B-C26F-44AB-B13F-F22742371135}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9B44E1B-C26F-44AB-B13F-F22742371135}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4F22B186-DEB4-4B95-BA58-0187F0E33003}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4F22B186-DEB4-4B95-BA58-0187F0E33003}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4F22B186-DEB4-4B95-BA58-0187F0E33003}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4F22B186-DEB4-4B95-BA58-0187F0E33003}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5986BDB-0D0D-48AA-9E49-ECE96BAC8AEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5986BDB-0D0D-48AA-9E49-ECE96BAC8AEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5986BDB-0D0D-48AA-9E49-ECE96BAC8AEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5986BDB-0D0D-48AA-9E49-ECE96BAC8AEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF7B919F-53F0-4216-84BC-722786A3AEA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF7B919F-53F0-4216-84BC-722786A3AEA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF7B919F-53F0-4216-84BC-722786A3AEA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF7B919F-53F0-4216-84BC-722786A3AEA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1032273-B366-4751-B216-36332A06CBC6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1032273-B366-4751-B216-36332A06CBC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1032273-B366-4751-B216-36332A06CBC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1032273-B366-4751-B216-36332A06CBC6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F47E6D07-2D06-4DDD-8DAA-C235FB192BE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F47E6D07-2D06-4DDD-8DAA-C235FB192BE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F47E6D07-2D06-4DDD-8DAA-C235FB192BE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F47E6D07-2D06-4DDD-8DAA-C235FB192BE8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

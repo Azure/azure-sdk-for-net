@@ -1,0 +1,51 @@
+{
+  "version": "0.0.1-prerelease",
+  "description": "TODOResourceV2Description.",
+  "authors": [ "Microsoft" ],
+  "packOptions": {
+    "summary": "TODOResourceV2Description.",
+    "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
+    "tags": [ "Microsoft Azure Resource management", "resource", "REST HTTP client", "azureofficial", "windowsazureofficial" ],
+    "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+    "requireLicenseAcceptance":  true
+  },
+  "buildOptions": {
+    "delaySign": true,
+    "publicSign": false,
+    "keyFile": "../../../../tools/MSSharedLibKey.snk"
+  },
+    "frameworks": {
+        "net45": {
+            "dependencies": {
+                "Microsoft.Rest.ClientRuntime.Azure": "[3.1.0,4.0.0)"
+            }
+        },
+        "netstandard1.5": {
+            "imports": [ "dnxcore50" ],
+            "dependencies": {
+                "Microsoft.NETCore.Platforms": "1.0.1",
+                "System.Diagnostics.Tools": "4.0.1",
+                "System.Net.Http": "4.1.0",
+                "System.Runtime.Serialization.Primitives": "4.1.1",
+                "System.Threading.Tasks": "4.0.11",
+                "Microsoft.Rest.ClientRuntime.Azure": "[3.3.1,4.0.0)",
+                "System.Console": "4.0.0",
+                "System.IO.FileSystem": "4.0.1"
+            }
+        },
+        "netstandard1.1": {
+            "imports": [ "dnxcore50" ],
+            "dependencies": {
+                "System.Runtime.Serialization.Primitives": "4.1.1",
+                "Microsoft.Rest.ClientRuntime.Azure": "[3.3.1,4.0.0)",
+                "System.Console": "4.0.0",
+                "System.IO.FileSystem": "4.0.1"
+            }
+        }
+    },
+    "dependencies": {
+        "Microsoft.IdentityModel.Clients.ActiveDirectory": "3.11.305310302-alpha",
+        "Microsoft.Rest.ClientRuntime.Azure.Authentication": "2.2.4-preview"
+    }
+}
