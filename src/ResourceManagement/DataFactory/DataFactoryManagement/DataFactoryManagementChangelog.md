@@ -1,16 +1,22 @@
 For additional details on features, see the full [Azure Data Factory Release Notes](https://azure.microsoft.com/en-us/documentation/articles/data-factory-release-notes). 
 
 ## Version 4.10.0
-_Release date: 2016.08.09_ 
+_Release date: 2016.09.09_ 
 
 ### Feature Additions
 
+* The following optional properties have been added to TextFormat:
+    * SkipLineCount
+    * FirstRowAsHeader 
+    * TreatEmptyAsNull
 * The following linked service types have been added: 
     * OnPremisesCassandraLinkedService, SalesforceLinkedService
 * The following dataset types have been added: 
     * OnPremisesCassandraTableDataset
 * The following copy source types have been added: 	
     * CassandraSource
+* Add WebServiceInputs property to AzureMLBatchExecutionActivity
+    * Enable passing multiple web service inputs to an Azure Machine Learning experiment
 
 ## Version 4.9.1
 _Release date: 2016.07.05_ 

@@ -32,34 +32,12 @@ namespace Microsoft.Azure.Management.Resources.Models
     /// </summary>
     public partial class DeploymentPreFlightResource : GenericResourceExtended
     {
-        private string _apiVersion;
-        
-        /// <summary>
-        /// Optional. Gets or sets the api version of the resource.
-        /// </summary>
-        public string ApiVersion
-        {
-            get { return this._apiVersion; }
-            set { this._apiVersion = value; }
-        }
-        
-        private IList<string> _dependsOn;
-        
-        /// <summary>
-        /// Optional. Gets the list of depends on.
-        /// </summary>
-        public IList<string> DependsOn
-        {
-            get { return this._dependsOn; }
-            set { this._dependsOn = value; }
-        }
-        
         /// <summary>
         /// Initializes a new instance of the DeploymentPreFlightResource class.
         /// </summary>
-        public DeploymentPreFlightResource()
+        public DeploymentPreFlightResource(string location): this()
         {
-            this.DependsOn = new LazyList<string>();
+            this.Location = location;
         }
     }
 }

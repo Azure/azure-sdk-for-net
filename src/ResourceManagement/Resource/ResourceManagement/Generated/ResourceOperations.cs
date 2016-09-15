@@ -230,11 +230,11 @@ namespace Microsoft.Azure.Management.Resources
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.Conflict)
+                    if (statusCode == HttpStatusCode.BadRequest)
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.BadRequest)
+                    if (statusCode == HttpStatusCode.Conflict)
                     {
                         result.Status = OperationStatus.Failed;
                     }
@@ -512,10 +512,6 @@ namespace Microsoft.Azure.Management.Resources
             {
                 throw new ArgumentNullException("parameters");
             }
-            if (parameters.Location == null)
-            {
-                throw new ArgumentNullException("parameters.Location");
-            }
             
             // Tracing
             bool shouldTrace = TracingAdapter.IsEnabled;
@@ -626,7 +622,10 @@ namespace Microsoft.Azure.Management.Resources
                     }
                 }
                 
-                genericResourceValue["location"] = parameters.Location;
+                if (parameters.Location != null)
+                {
+                    genericResourceValue["location"] = parameters.Location;
+                }
                 
                 if (parameters.Tags != null)
                 {
