@@ -5,15 +5,6 @@ base=`dirname {BASH_SOURCE[0]}`
 rootdir="$( cd "$base" && pwd )"
   
 dotnet restore
-cd $rootdir/src/TestFramework/HttpRecorder.Tests
-dotnet restore
-dotnet build --framework netcoreapp1.0
-dotnet test
-cd  ../TestFramework.Tests
-dotnet restore
-dotnet build --framework netcoreapp1.0
-dotnet test
-
 armdir=$rootdir/src/ResourceManagement
 for folder in $armdir/*
 do
