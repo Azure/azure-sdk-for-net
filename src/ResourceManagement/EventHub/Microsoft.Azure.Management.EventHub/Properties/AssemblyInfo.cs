@@ -1,4 +1,4 @@
-//
+﻿//
 // Copyright (c) Microsoft.  All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,17 +15,16 @@
 
 using System.Reflection;
 using System.Resources;
-using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Microsoft Azure Batch Management Library")]
-[assembly: AssemblyDescription("Provides management functions for Microsoft Azure Batch services.")]
+[assembly: AssemblyTitle("Microsoft Azure EventHubs Management Library")]
+[assembly: AssemblyDescription("Provides Microsoft Azure EventHubs management functions for managing the Microsoft Azure EventHubs service.")]
 
-[assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("2.0.0.0")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.2.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Microsoft Azure .NET SDK")]
+[assembly: AssemblyProduct("Microsoft Azure EventHubs .NET SDK")]
 [assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Get publicIpAddress operation retreives information about the
+            /// The Get publicIpAddress operation retrieves information about the
             /// specified pubicIpAddress
             /// </summary>
             /// <param name='operations'>
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Get publicIpAddress operation retreives information about the
+            /// The Get publicIpAddress operation retrieves information about the
             /// specified pubicIpAddress
             /// </summary>
             /// <param name='operations'>
@@ -241,8 +241,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List publicIpAddress opertion retrieves all the publicIpAddresses in a
-            /// subscription.
+            /// The List publicIpAddress operation retrieves all the publicIpAddresses in
+            /// a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -253,8 +253,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List publicIpAddress opertion retrieves all the publicIpAddresses in a
-            /// subscription.
+            /// The List publicIpAddress operation retrieves all the publicIpAddresses in
+            /// a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -271,8 +271,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List publicIpAddress opertion retrieves all the publicIpAddresses in a
-            /// resource group.
+            /// The List publicIpAddress operation retrieves all the publicIpAddresses in
+            /// a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -286,8 +286,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List publicIpAddress opertion retrieves all the publicIpAddresses in a
-            /// resource group.
+            /// The List publicIpAddress operation retrieves all the publicIpAddresses in
+            /// a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -307,8 +307,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List publicIpAddress opertion retrieves all the publicIpAddresses in a
-            /// subscription.
+            /// The List publicIpAddress operation retrieves all the publicIpAddresses in
+            /// a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -322,8 +322,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List publicIpAddress opertion retrieves all the publicIpAddresses in a
-            /// subscription.
+            /// The List publicIpAddress operation retrieves all the publicIpAddresses in
+            /// a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -343,8 +343,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List publicIpAddress opertion retrieves all the publicIpAddresses in a
-            /// resource group.
+            /// The List publicIpAddress operation retrieves all the publicIpAddresses in
+            /// a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -358,8 +358,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List publicIpAddress opertion retrieves all the publicIpAddresses in a
-            /// resource group.
+            /// The List publicIpAddress operation retrieves all the publicIpAddresses in
+            /// a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

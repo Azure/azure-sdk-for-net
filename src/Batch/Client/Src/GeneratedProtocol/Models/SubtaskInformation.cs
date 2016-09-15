@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Information about an Azure Batch subtask.
@@ -40,16 +34,25 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the SubtaskInformation class.
         /// </summary>
         /// <param name="id">The id of the subtask.</param>
-        /// <param name="nodeInfo">Information about the compute node on which the subtask ran.</param>
-        /// <param name="startTime">The time at which the subtask started running. If the subtask has been restarted or retried, this is the most recent time at which the subtask started running.</param>
-        /// <param name="endTime">The time at which the subtask completed.</param>
-        /// <param name="exitCode">The exit code of the program specified on the subtask command line.</param>
-        /// <param name="schedulingError">Details of any error encountered scheduling the subtask.</param>
+        /// <param name="nodeInfo">Information about the compute node on which
+        /// the subtask ran.</param>
+        /// <param name="startTime">The time at which the subtask started
+        /// running. If the subtask has been restarted or retried, this is
+        /// the most recent time at which the subtask started running.</param>
+        /// <param name="endTime">The time at which the subtask
+        /// completed.</param>
+        /// <param name="exitCode">The exit code of the program specified on
+        /// the subtask command line.</param>
+        /// <param name="schedulingError">Details of any error encountered
+        /// scheduling the subtask.</param>
         /// <param name="state">The current state of the subtask.</param>
-        /// <param name="stateTransitionTime">The time at which the subtask entered its current state.</param>
-        /// <param name="previousState">The previous state of the subtask.</param>
-        /// <param name="previousStateTransitionTime">The time at which the subtask entered its previous state.</param>
-        public SubtaskInformation(int? id = default(int?), ComputeNodeInformation nodeInfo = default(ComputeNodeInformation), DateTime? startTime = default(DateTime?), DateTime? endTime = default(DateTime?), int? exitCode = default(int?), TaskSchedulingError schedulingError = default(TaskSchedulingError), TaskState? state = default(TaskState?), DateTime? stateTransitionTime = default(DateTime?), TaskState? previousState = default(TaskState?), DateTime? previousStateTransitionTime = default(DateTime?))
+        /// <param name="stateTransitionTime">The time at which the subtask
+        /// entered its current state.</param>
+        /// <param name="previousState">The previous state of the
+        /// subtask.</param>
+        /// <param name="previousStateTransitionTime">The time at which the
+        /// subtask entered its previous state.</param>
+        public SubtaskInformation(int? id = default(int?), ComputeNodeInformation nodeInfo = default(ComputeNodeInformation), System.DateTime? startTime = default(System.DateTime?), System.DateTime? endTime = default(System.DateTime?), int? exitCode = default(int?), TaskSchedulingError schedulingError = default(TaskSchedulingError), TaskState? state = default(TaskState?), System.DateTime? stateTransitionTime = default(System.DateTime?), TaskState? previousState = default(TaskState?), System.DateTime? previousStateTransitionTime = default(System.DateTime?))
         {
             Id = id;
             NodeInfo = nodeInfo;
@@ -66,14 +69,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the id of the subtask.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public int? Id { get; set; }
 
         /// <summary>
         /// Gets or sets information about the compute node on which the
         /// subtask ran.
         /// </summary>
-        [JsonProperty(PropertyName = "nodeInfo")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "nodeInfo")]
         public ComputeNodeInformation NodeInfo { get; set; }
 
         /// <summary>
@@ -81,8 +84,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// subtask has been restarted or retried, this is the most recent
         /// time at which the subtask started running.
         /// </summary>
-        [JsonProperty(PropertyName = "startTime")]
-        public DateTime? StartTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "startTime")]
+        public System.DateTime? StartTime { get; set; }
 
         /// <summary>
         /// Gets or sets the time at which the subtask completed.
@@ -90,8 +93,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// This property is set only if the subtask is in the Completed state.
         /// </remarks>
-        [JsonProperty(PropertyName = "endTime")]
-        public DateTime? EndTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "endTime")]
+        public System.DateTime? EndTime { get; set; }
 
         /// <summary>
         /// Gets or sets the exit code of the program specified on the subtask
@@ -107,14 +110,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// generated by the compute node operating system, such as when a
         /// process is forcibly terminated.
         /// </remarks>
-        [JsonProperty(PropertyName = "exitCode")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "exitCode")]
         public int? ExitCode { get; set; }
 
         /// <summary>
         /// Gets or sets details of any error encountered scheduling the
         /// subtask.
         /// </summary>
-        [JsonProperty(PropertyName = "schedulingError")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "schedulingError")]
         public TaskSchedulingError SchedulingError { get; set; }
 
         /// <summary>
@@ -124,15 +127,15 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Possible values include: 'active', 'preparing', 'running',
         /// 'completed'
         /// </remarks>
-        [JsonProperty(PropertyName = "state")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "state")]
         public TaskState? State { get; set; }
 
         /// <summary>
         /// Gets or sets the time at which the subtask entered its current
         /// state.
         /// </summary>
-        [JsonProperty(PropertyName = "stateTransitionTime")]
-        public DateTime? StateTransitionTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "stateTransitionTime")]
+        public System.DateTime? StateTransitionTime { get; set; }
 
         /// <summary>
         /// Gets or sets the previous state of the subtask.
@@ -142,7 +145,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// state. Possible values include: 'active', 'preparing', 'running',
         /// 'completed'
         /// </remarks>
-        [JsonProperty(PropertyName = "previousState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "previousState")]
         public TaskState? PreviousState { get; set; }
 
         /// <summary>
@@ -153,13 +156,13 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// This property is not set if the subtask is in its initial Active
         /// state.
         /// </remarks>
-        [JsonProperty(PropertyName = "previousStateTransitionTime")]
-        public DateTime? PreviousStateTransitionTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "previousStateTransitionTime")]
+        public System.DateTime? PreviousStateTransitionTime { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()

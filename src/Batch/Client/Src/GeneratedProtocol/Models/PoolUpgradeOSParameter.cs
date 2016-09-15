@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Parameters for a CloudPoolOperations.UpgradeOS request.
@@ -39,7 +33,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the PoolUpgradeOSParameter class.
         /// </summary>
-        /// <param name="targetOSVersion">The Azure Guest OS version to be installed on the virtual machines in the pool.</param>
+        /// <param name="targetOSVersion">The Azure Guest OS version to be
+        /// installed on the virtual machines in the pool.</param>
         public PoolUpgradeOSParameter(string targetOSVersion)
         {
             TargetOSVersion = targetOSVersion;
@@ -49,20 +44,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Gets or sets the Azure Guest OS version to be installed on the
         /// virtual machines in the pool.
         /// </summary>
-        [JsonProperty(PropertyName = "targetOSVersion")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "targetOSVersion")]
         public string TargetOSVersion { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (TargetOSVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "TargetOSVersion");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "TargetOSVersion");
             }
         }
     }

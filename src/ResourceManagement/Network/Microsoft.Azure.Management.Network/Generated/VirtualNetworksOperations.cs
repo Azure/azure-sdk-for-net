@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Network
         public NetworkManagementClient Client { get; private set; }
 
         /// <summary>
-        /// The Delete VirtualNetwork operation deletes the specifed virtual network
+        /// The Delete VirtualNetwork operation deletes the specified virtual network
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The Delete VirtualNetwork operation deletes the specifed virtual network
+        /// The Delete VirtualNetwork operation deletes the specified virtual network
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.

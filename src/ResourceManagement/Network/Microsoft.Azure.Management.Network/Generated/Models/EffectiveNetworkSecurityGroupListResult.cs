@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Response for list effective network security groups api servive call
+    /// Response for list effective network security groups api service call
     /// </summary>
     public partial class EffectiveNetworkSecurityGroupListResult
     {

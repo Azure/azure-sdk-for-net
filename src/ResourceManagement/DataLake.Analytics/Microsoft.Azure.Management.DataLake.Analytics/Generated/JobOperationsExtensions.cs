@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The Azure Data Lake Analytics account to execute job operations on.
             /// </param>
             /// <param name='jobIdentity'>
-            /// JobInfo ID.
+            /// Job Information ID.
             /// </param>
             public static JobStatistics GetStatistics(this IJobOperations operations, string accountName, Guid jobIdentity)
             {
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// The Azure Data Lake Analytics account to execute job operations on.
             /// </param>
             /// <param name='jobIdentity'>
-            /// JobInfo ID.
+            /// Job Information ID.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

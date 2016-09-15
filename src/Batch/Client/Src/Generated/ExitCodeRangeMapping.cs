@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Batch
         /// <param name='start'>The first exit code in the range.</param>
         /// <param name='end'>The last exit code in the range.</param>
         /// <param name='exitOptions'>An <see cref="ExitOptions" /> specifying how the Batch service should respond if the task exits with an exit 
-        /// code in the range <see cref="Start"/> to <see cref="End"/>.</param>
+        /// code in the range <see cref="Start"/> to <see cref="End"/> inclusive.</param>
         public ExitCodeRangeMapping(
             int start,
             int end,
@@ -69,6 +69,10 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the last exit code in the range.
         /// </summary>
+        /// <remarks>
+        /// Ranges are inclusive. For example, if an <see cref="ExitCodeRangeMapping" /> specifies Start 8 and End 10, then 
+        /// it matches exit codes 8, 9 and 10.
+        /// </remarks>
         public int End
         {
             get { return this.end; }
@@ -76,7 +80,7 @@ namespace Microsoft.Azure.Batch
 
         /// <summary>
         /// Gets an <see cref="ExitOptions" /> specifying how the Batch service should respond if the task exits with an 
-        /// exit code in the range <see cref="Start"/> to <see cref="End"/>.
+        /// exit code in the range <see cref="Start"/> to <see cref="End"/> inclusive.
         /// </summary>
         public ExitOptions ExitOptions
         {
@@ -86,6 +90,10 @@ namespace Microsoft.Azure.Batch
         /// <summary>
         /// Gets the first exit code in the range.
         /// </summary>
+        /// <remarks>
+        /// Ranges are inclusive. For example, if an <see cref="ExitCodeRangeMapping" /> specifies Start 8 and End 10, then 
+        /// it matches exit codes 8, 9 and 10.
+        /// </remarks>
         public int Start
         {
             get { return this.start; }

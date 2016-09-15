@@ -30,7 +30,7 @@ namespace Microsoft.Azure.KeyVault.Models
         /// Initializes a new instance of the CertificateIssuerItem class.
         /// </summary>
         /// <param name="id">Certificate Identifier</param>
-        /// <param name="provider">The name of the issuer.</param>
+        /// <param name="provider">The issuer provider.</param>
         public CertificateIssuerItem(string id = default(string), string provider = default(string))
         {
             Id = id;
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.KeyVault.Models
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the issuer.
+        /// Gets or sets the issuer provider.
         /// </summary>
         [JsonProperty(PropertyName = "provider")]
         public string Provider { get; set; }

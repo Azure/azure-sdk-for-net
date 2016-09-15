@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The schedule according to which jobs will be created
@@ -39,11 +33,20 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the Schedule class.
         /// </summary>
-        /// <param name="doNotRunUntil">The earliest time at which any job may be created under this job schedule.</param>
-        /// <param name="doNotRunAfter">A time after which no job will be created under this job schedule. The schedule will move to the completed state as soon as this deadline is past and there is no active job under this job schedule.</param>
-        /// <param name="startWindow">The time interval, starting from the time at which the schedule indicates a job should be created, within which a job must be created.</param>
-        /// <param name="recurrenceInterval">The time interval between the start times of two successive jobs under the job schedule. A job schedule can have at most one active job under it at any given time.</param>
-        public Schedule(DateTime? doNotRunUntil = default(DateTime?), DateTime? doNotRunAfter = default(DateTime?), TimeSpan? startWindow = default(TimeSpan?), TimeSpan? recurrenceInterval = default(TimeSpan?))
+        /// <param name="doNotRunUntil">The earliest time at which any job may
+        /// be created under this job schedule.</param>
+        /// <param name="doNotRunAfter">A time after which no job will be
+        /// created under this job schedule. The schedule will move to the
+        /// completed state as soon as this deadline is past and there is no
+        /// active job under this job schedule.</param>
+        /// <param name="startWindow">The time interval, starting from the
+        /// time at which the schedule indicates a job should be created,
+        /// within which a job must be created.</param>
+        /// <param name="recurrenceInterval">The time interval between the
+        /// start times of two successive jobs under the job schedule. A job
+        /// schedule can have at most one active job under it at any given
+        /// time.</param>
+        public Schedule(System.DateTime? doNotRunUntil = default(System.DateTime?), System.DateTime? doNotRunAfter = default(System.DateTime?), System.TimeSpan? startWindow = default(System.TimeSpan?), System.TimeSpan? recurrenceInterval = default(System.TimeSpan?))
         {
             DoNotRunUntil = doNotRunUntil;
             DoNotRunAfter = doNotRunAfter;
@@ -59,8 +62,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// If you do not specify a doNotRunUntil time, the schedule becomes
         /// ready to create jobs immediately.
         /// </remarks>
-        [JsonProperty(PropertyName = "doNotRunUntil")]
-        public DateTime? DoNotRunUntil { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "doNotRunUntil")]
+        public System.DateTime? DoNotRunUntil { get; set; }
 
         /// <summary>
         /// Gets or sets a time after which no job will be created under this
@@ -68,8 +71,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// soon as this deadline is past and there is no active job under
         /// this job schedule.
         /// </summary>
-        [JsonProperty(PropertyName = "doNotRunAfter")]
-        public DateTime? DoNotRunAfter { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "doNotRunAfter")]
+        public System.DateTime? DoNotRunAfter { get; set; }
 
         /// <summary>
         /// Gets or sets the time interval, starting from the time at which
@@ -81,16 +84,16 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// 'opportunity' is lost; no job will be created until the next
         /// recurrence of the schedule.
         /// </remarks>
-        [JsonProperty(PropertyName = "startWindow")]
-        public TimeSpan? StartWindow { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "startWindow")]
+        public System.TimeSpan? StartWindow { get; set; }
 
         /// <summary>
         /// Gets or sets the time interval between the start times of two
         /// successive jobs under the job schedule. A job schedule can have
         /// at most one active job under it at any given time.
         /// </summary>
-        [JsonProperty(PropertyName = "recurrenceInterval")]
-        public TimeSpan? RecurrenceInterval { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "recurrenceInterval")]
+        public System.TimeSpan? RecurrenceInterval { get; set; }
 
     }
 }

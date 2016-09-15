@@ -202,6 +202,11 @@ namespace Microsoft.Azure.KeyVault.WebKey
             return this.Equals( other );
         }
 
+        /// <summary>
+        /// Compares <see cref="JsonWebKey"/> objects
+        /// </summary>
+        /// <param name="other"> the <see cref="JsonWebKey"/> object to compare with </param>
+        /// <returns> whether the <see cref="JsonWebKey"/> objects are equals </returns>
         public bool Equals( JsonWebKey other )
         {
             if ( other == null )
@@ -276,9 +281,7 @@ namespace Microsoft.Azure.KeyVault.WebKey
 
                 case JsonWebKeyType.Rsa:
                 case JsonWebKeyType.RsaHsm:
-                    // MAY have private key parameters, but only ALL or NONE
                     var privateParameters = new bool[] { D != null, DP != null, DQ != null, QI != null, P != null, Q != null };
-
                     return privateParameters.All( ( value ) => value );
 
                 default:
@@ -349,13 +352,6 @@ namespace Microsoft.Azure.KeyVault.WebKey
             if ( string.IsNullOrEmpty( Kty ) )
                 return false;
 
-            // Validate Key Operations
-            if ( KeyOps != null && KeyOps.Count() != 0 )
-            {
-                if ( !KeyOps.All( ( op ) => { return JsonWebKeyOperation.AllOperations.Contains( op ); } ) )
-                    return false;
-            }
-
             // Per-kty validation
             switch ( Kty )
             {
@@ -404,7 +400,7 @@ namespace Microsoft.Azure.KeyVault.WebKey
             if ( ( N == null && E != null ) || ( N != null && E == null ) )
                 return false;
 
-            // MUST NOT have private key parameters, but only ALL or NONE
+            // MUST NOT have private key parameters
             var privateParameters = new bool[] { D != null, DP != null, DQ != null, QI != null, P != null, Q != null };
 
             if ( privateParameters.Any( ( value ) => value ) )
@@ -566,13 +562,6 @@ namespace Microsoft.Azure.KeyVault.WebKey
             var trimmed = new byte[requiredLength];
             Array.Copy(value, value.Length - requiredLength, trimmed, 0, requiredLength);
             return trimmed;
-        }
-
-        [OnDeserialized]
-        internal void OnDeserialized( StreamingContext context )
-        {
-            if ( !IsValid() )
-                throw new JsonSerializationException( "JsonWebKey is not valid" );
         }
        
         public override string ToString()

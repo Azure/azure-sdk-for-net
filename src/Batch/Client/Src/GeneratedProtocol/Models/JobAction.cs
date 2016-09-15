@@ -18,21 +18,18 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for JobAction.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum JobAction
     {
-        [EnumMember(Value = "none")]
+        [System.Runtime.Serialization.EnumMember(Value = "none")]
         None,
-        [EnumMember(Value = "disable")]
+        [System.Runtime.Serialization.EnumMember(Value = "disable")]
         Disable,
-        [EnumMember(Value = "terminate")]
+        [System.Runtime.Serialization.EnumMember(Value = "terminate")]
         Terminate
     }
 }

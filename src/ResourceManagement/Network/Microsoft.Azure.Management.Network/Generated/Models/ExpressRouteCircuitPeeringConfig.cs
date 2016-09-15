@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Network.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Specfies the peering config
+    /// Specifies the peering config
     /// </summary>
     public partial class ExpressRouteCircuitPeeringConfig
     {

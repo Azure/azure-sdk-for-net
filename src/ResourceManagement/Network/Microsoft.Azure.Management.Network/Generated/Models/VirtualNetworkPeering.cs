@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// Gets or sets if gatewayLinks can be used in remote virtual
-        /// networkâ€™s link to this virtual network
+        /// network’s link to this virtual network
         /// </summary>
         [JsonProperty(PropertyName = "properties.allowGatewayTransit")]
         public bool? AllowGatewayTransit { get; set; }
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Gets or sets if remote gateways can be used on this virtual
         /// network. If the flag is set to true, and allowGatewayTransit on
-        /// remotepeering is also true, virtual network will use gateways of
+        /// remote peering is also true, virtual network will use gateways of
         /// remote virtual network for transit. Only 1 peering can have this
         /// flag set to true. This flag cannot be set if virtual network
         /// already has a gateway.

@@ -30,13 +30,14 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the VirtualNetworkGateway class.
         /// </summary>
-        public VirtualNetworkGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations = default(IList<VirtualNetworkGatewayIPConfiguration>), string gatewayType = default(string), string vpnType = default(string), bool? enableBgp = default(bool?), SubResource gatewayDefaultSite = default(SubResource), VirtualNetworkGatewaySku sku = default(VirtualNetworkGatewaySku), VpnClientConfiguration vpnClientConfiguration = default(VpnClientConfiguration), BgpSettings bgpSettings = default(BgpSettings), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        public VirtualNetworkGateway(string id = default(string), string name = default(string), string type = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IList<VirtualNetworkGatewayIPConfiguration> ipConfigurations = default(IList<VirtualNetworkGatewayIPConfiguration>), string gatewayType = default(string), string vpnType = default(string), bool? enableBgp = default(bool?), bool? activeActive = default(bool?), SubResource gatewayDefaultSite = default(SubResource), VirtualNetworkGatewaySku sku = default(VirtualNetworkGatewaySku), VpnClientConfiguration vpnClientConfiguration = default(VpnClientConfiguration), BgpSettings bgpSettings = default(BgpSettings), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
             : base(id, name, type, location, tags)
         {
             IpConfigurations = ipConfigurations;
             GatewayType = gatewayType;
             VpnType = vpnType;
             EnableBgp = enableBgp;
+            ActiveActive = activeActive;
             GatewayDefaultSite = gatewayDefaultSite;
             Sku = sku;
             VpnClientConfiguration = vpnClientConfiguration;
@@ -71,6 +72,12 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableBgp")]
         public bool? EnableBgp { get; set; }
+
+        /// <summary>
+        /// ActiveActive flag
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.activeActive")]
+        public bool? ActiveActive { get; set; }
 
         /// <summary>
         /// Gets or sets the reference of the LocalNetworkGateway resource

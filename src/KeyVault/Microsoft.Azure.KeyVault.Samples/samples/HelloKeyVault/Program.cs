@@ -925,7 +925,7 @@ namespace Sample.Microsoft.HelloKeyVault
                 : UnixTimeJsonConverter.EpochDate.ToString();
 
             Console.Out.WriteLine("Certificate attributes: \n\tIs enabled: {0}\n\tExpiry date: {1}\n\tEnable date: {2}\n\tThumbprint: {3}",
-                certificateBundle.Attributes.Enabled, expiryDateStr, notBeforeStr, ToHexString(certificateBundle.X5t));
+                certificateBundle.Attributes.Enabled, expiryDateStr, notBeforeStr, ToHexString(certificateBundle.X509Thumbprint));
 
             PrintoutTags(certificateBundle.Tags);
 

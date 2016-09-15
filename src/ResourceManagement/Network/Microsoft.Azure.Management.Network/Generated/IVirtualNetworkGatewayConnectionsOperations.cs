@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the resource group.
         /// </param>
         /// <param name='virtualNetworkGatewayConnectionName'>
-        /// The name of the virtual network gateway conenction.
+        /// The name of the virtual network gateway connection.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Begin Create or update Virtual Network
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the resource group.
         /// </param>
         /// <param name='virtualNetworkGatewayConnectionName'>
-        /// The name of the virtual network gateway conenction.
+        /// The name of the virtual network gateway connection.
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Begin Create or update Virtual Network
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Network
         Task<AzureOperationResponse<VirtualNetworkGatewayConnection>> GetWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The Delete VirtualNetworkGatewayConnection operation deletes the
-        /// specifed virtual network Gateway connection through Network
+        /// specified virtual network Gateway connection through Network
         /// resource provider.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.Network
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkGatewayConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The Delete VirtualNetworkGatewayConnection operation deletes the
-        /// specifed virtual network Gateway connection through Network
+        /// specified virtual network Gateway connection through Network
         /// resource provider.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -212,7 +212,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Begin Set Virtual Network Gateway
-        /// conection Shared key operation throughNetwork resource provider.
+        /// connection Shared key operation throughNetwork resource provider.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -235,7 +235,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         /// <param name='parameters'>
         /// Parameters supplied to the Begin Set Virtual Network Gateway
-        /// conection Shared key operation throughNetwork resource provider.
+        /// connection Shared key operation throughNetwork resource provider.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

@@ -30,7 +30,7 @@ namespace Microsoft.Azure.KeyVault.Models
         /// Initializes a new instance of the IssuerBundle class.
         /// </summary>
         /// <param name="id">Identifier for the issuer object.</param>
-        /// <param name="provider">The name of the issuer.</param>
+        /// <param name="provider">The issuer provider.</param>
         /// <param name="credentials">The credentials to be used for the
         /// issuer.</param>
         /// <param name="organizationDetails">Details of the organization as
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.KeyVault.Models
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets or sets the name of the issuer.
+        /// Gets or sets the issuer provider.
         /// </summary>
         [JsonProperty(PropertyName = "provider")]
         public string Provider { get; set; }

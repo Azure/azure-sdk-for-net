@@ -187,20 +187,6 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
 
         private void KeyMustThrowArgumentException(string paramName, JsonWebKey key)
         {
-            // We sill must be able to serialize...
-            var serialized = key.ToString();
-            try
-            {
-                // ...and deserialize
-                var deserialized = JsonConvert.DeserializeObject<JsonWebKey>(serialized);
-                Assert.Equal(key, deserialized);
-            }
-            catch (TargetInvocationException)
-            {
-                // TODO: This key is failing the serialization roundtrip, but this behavior is kept for compatibility.
-                Console.WriteLine("WARNING: Key with bad value on \"" + paramName + "\" can be serialized, but not deserialized.");
-            }
-
             KeyMustThrowArgumentException(key, true);
 
             if (paramName == "E" || paramName == "N")
@@ -240,13 +226,13 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
         {
             var rsa = key.ToRSA(includePrivateParameters);
 
-            Console.WriteLine("Checking encrypt with OAEP");
+            // Checking encrypt with OAEP
             var plainText = new byte[] { 1, 3, 2, 7 };
             var cipherText = rsa.Encrypt(plainText, true);
 
             if (includePrivateParameters)
             {
-                Console.WriteLine("Checking decrypt with OAEP");
+                // Checking decrypt with OAEP
                 var plainText2 = rsa.Decrypt(cipherText, true);
 
                 if (!plainText2.SequenceEqual(plainText))
@@ -274,11 +260,11 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
 
         private static void KeysMustBeCompatible(RSACryptoServiceProvider publicKey, RSACryptoServiceProvider privateKey)
         {
-            Console.WriteLine("Checking encrypt with OAEP");
+            // Checking encrypt with OAEP
             var plainText = new byte[] { 1, 3, 2, 7 };
             var cipherText = publicKey.Encrypt(plainText, true);
 
-            Console.WriteLine("Checking decrypt with OAEP");
+            // Checking decrypt with OAEP
             var plainText2 = privateKey.Decrypt(cipherText, true);
 
             if (!plainText2.SequenceEqual(plainText))
@@ -316,11 +302,11 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
                 return;
             }
 
-            Console.WriteLine("Checking encrypt with OAEP");
+            // Checking encrypt with OAEP
             var plainText = new byte[] { 1, 3, 2, 7 };
             var cipherText = rsa.Encrypt(plainText, true);
 
-            Console.WriteLine("Checking decrypt with OAEP");
+            // Checking decrypt with OAEP
             var plainText2 = rsa.Decrypt(cipherText, true);
 
             if (!plainText2.SequenceEqual(plainText))

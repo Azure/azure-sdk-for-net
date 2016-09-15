@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Network
     public static partial class VirtualNetworksOperationsExtensions
     {
             /// <summary>
-            /// The Delete VirtualNetwork operation deletes the specifed virtual network
+            /// The Delete VirtualNetwork operation deletes the specified virtual network
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Delete VirtualNetwork operation deletes the specifed virtual network
+            /// The Delete VirtualNetwork operation deletes the specified virtual network
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Delete VirtualNetwork operation deletes the specifed virtual network
+            /// The Delete VirtualNetwork operation deletes the specified virtual network
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Delete VirtualNetwork operation deletes the specifed virtual network
+            /// The Delete VirtualNetwork operation deletes the specified virtual network
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -479,7 +479,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The Delete VirtualNetworkGateway operation deletes the specifed virtual
+        /// The Delete VirtualNetworkGateway operation deletes the specified virtual
         /// network Gateway through Network resource provider.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -503,7 +503,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The Delete VirtualNetworkGateway operation deletes the specifed virtual
+        /// The Delete VirtualNetworkGateway operation deletes the specified virtual
         /// network Gateway through Network resource provider.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -655,8 +655,8 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The List VirtualNetworkGateways opertion retrieves all the virtual network
-        /// gateways stored.
+        /// The List VirtualNetworkGateways operation retrieves all the virtual
+        /// network gateways stored.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -1256,8 +1256,8 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The List VirtualNetworkGateways opertion retrieves all the virtual network
-        /// gateways stored.
+        /// The List VirtualNetworkGateways operation retrieves all the virtual
+        /// network gateways stored.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

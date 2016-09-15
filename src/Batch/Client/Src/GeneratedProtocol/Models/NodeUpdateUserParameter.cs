@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Parameters for a ComputeNodeOperations.UpdateUser request.
@@ -40,9 +34,11 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Initializes a new instance of the NodeUpdateUserParameter class.
         /// </summary>
         /// <param name="password">The password of the account.</param>
-        /// <param name="expiryTime">The time at which the account should expire.</param>
-        /// <param name="sshPublicKey">The SSH public key that can be used for remote login to the compute node.</param>
-        public NodeUpdateUserParameter(string password = default(string), DateTime? expiryTime = default(DateTime?), string sshPublicKey = default(string))
+        /// <param name="expiryTime">The time at which the account should
+        /// expire.</param>
+        /// <param name="sshPublicKey">The SSH public key that can be used for
+        /// remote login to the compute node.</param>
+        public NodeUpdateUserParameter(string password = default(string), System.DateTime? expiryTime = default(System.DateTime?), string sshPublicKey = default(string))
         {
             Password = password;
             ExpiryTime = expiryTime;
@@ -52,7 +48,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Gets or sets the password of the account.
         /// </summary>
-        [JsonProperty(PropertyName = "password")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "password")]
         public string Password { get; set; }
 
         /// <summary>
@@ -61,14 +57,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <remarks>
         /// If omitted, the default is 1 day from the current time.
         /// </remarks>
-        [JsonProperty(PropertyName = "expiryTime")]
-        public DateTime? ExpiryTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "expiryTime")]
+        public System.DateTime? ExpiryTime { get; set; }
 
         /// <summary>
         /// Gets or sets the SSH public key that can be used for remote login
         /// to the compute node.
         /// </summary>
-        [JsonProperty(PropertyName = "sshPublicKey")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "sshPublicKey")]
         public string SshPublicKey { get; set; }
 
     }

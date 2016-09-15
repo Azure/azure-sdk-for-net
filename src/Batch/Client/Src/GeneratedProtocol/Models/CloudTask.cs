@@ -18,13 +18,7 @@
 
 namespace Microsoft.Azure.Batch.Protocol.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// An Azure Batch task.
@@ -39,30 +33,47 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// <summary>
         /// Initializes a new instance of the CloudTask class.
         /// </summary>
-        /// <param name="id">A string that uniquely identifies the task within the job.</param>
+        /// <param name="id">A string that uniquely identifies the task within
+        /// the job.</param>
         /// <param name="displayName">A display name for the task.</param>
         /// <param name="url">The URL of the task.</param>
         /// <param name="eTag">The ETag of the task.</param>
-        /// <param name="lastModified">The last modified time of the task.</param>
+        /// <param name="lastModified">The last modified time of the
+        /// task.</param>
         /// <param name="creationTime">The creation time of the task.</param>
-        /// <param name="exitConditions">How the Batch service should respond when the task completes.</param>
+        /// <param name="exitConditions">How the Batch service should respond
+        /// when the task completes.</param>
         /// <param name="state">The current state of the task.</param>
-        /// <param name="stateTransitionTime">The time at which the task entered its current state.</param>
+        /// <param name="stateTransitionTime">The time at which the task
+        /// entered its current state.</param>
         /// <param name="previousState">The previous state of the task.</param>
-        /// <param name="previousStateTransitionTime">The time at which the task entered its previous state.</param>
+        /// <param name="previousStateTransitionTime">The time at which the
+        /// task entered its previous state.</param>
         /// <param name="commandLine">The command line of the task.</param>
-        /// <param name="resourceFiles">A list of files that the Batch service will download to the compute node before running the command line.</param>
-        /// <param name="environmentSettings">A list of environment variable settings for the task.</param>
-        /// <param name="affinityInfo">A locality hint that can be used by the Batch service to select a compute node on which to start the new task.</param>
-        /// <param name="constraints">The execution constraints that apply to this task.</param>
-        /// <param name="runElevated">Whether to run the task in elevated mode.</param>
-        /// <param name="executionInfo">Information about the execution of the task.</param>
-        /// <param name="nodeInfo">Information about the compute node on which the task ran.</param>
-        /// <param name="multiInstanceSettings">Information about how to run the multi-instance task.</param>
+        /// <param name="resourceFiles">A list of files that the Batch service
+        /// will download to the compute node before running the command
+        /// line.</param>
+        /// <param name="environmentSettings">A list of environment variable
+        /// settings for the task.</param>
+        /// <param name="affinityInfo">A locality hint that can be used by the
+        /// Batch service to select a compute node on which to start the new
+        /// task.</param>
+        /// <param name="constraints">The execution constraints that apply to
+        /// this task.</param>
+        /// <param name="runElevated">Whether to run the task in elevated
+        /// mode.</param>
+        /// <param name="executionInfo">Information about the execution of the
+        /// task.</param>
+        /// <param name="nodeInfo">Information about the compute node on which
+        /// the task ran.</param>
+        /// <param name="multiInstanceSettings">Information about how to run
+        /// the multi-instance task.</param>
         /// <param name="stats">Resource usage statistics for the task.</param>
         /// <param name="dependsOn">Any dependencies this task has.</param>
-        /// <param name="applicationPackageReferences">A list of application packages that the Batch service will deploy to the compute node before running the command line.</param>
-        public CloudTask(string id = default(string), string displayName = default(string), string url = default(string), string eTag = default(string), DateTime? lastModified = default(DateTime?), DateTime? creationTime = default(DateTime?), ExitConditions exitConditions = default(ExitConditions), TaskState? state = default(TaskState?), DateTime? stateTransitionTime = default(DateTime?), TaskState? previousState = default(TaskState?), DateTime? previousStateTransitionTime = default(DateTime?), string commandLine = default(string), IList<ResourceFile> resourceFiles = default(IList<ResourceFile>), IList<EnvironmentSetting> environmentSettings = default(IList<EnvironmentSetting>), AffinityInformation affinityInfo = default(AffinityInformation), TaskConstraints constraints = default(TaskConstraints), bool? runElevated = default(bool?), TaskExecutionInformation executionInfo = default(TaskExecutionInformation), ComputeNodeInformation nodeInfo = default(ComputeNodeInformation), MultiInstanceSettings multiInstanceSettings = default(MultiInstanceSettings), TaskStatistics stats = default(TaskStatistics), TaskDependencies dependsOn = default(TaskDependencies), IList<ApplicationPackageReference> applicationPackageReferences = default(IList<ApplicationPackageReference>))
+        /// <param name="applicationPackageReferences">A list of application
+        /// packages that the Batch service will deploy to the compute node
+        /// before running the command line.</param>
+        public CloudTask(string id = default(string), string displayName = default(string), string url = default(string), string eTag = default(string), System.DateTime? lastModified = default(System.DateTime?), System.DateTime? creationTime = default(System.DateTime?), ExitConditions exitConditions = default(ExitConditions), TaskState? state = default(TaskState?), System.DateTime? stateTransitionTime = default(System.DateTime?), TaskState? previousState = default(TaskState?), System.DateTime? previousStateTransitionTime = default(System.DateTime?), string commandLine = default(string), System.Collections.Generic.IList<ResourceFile> resourceFiles = default(System.Collections.Generic.IList<ResourceFile>), System.Collections.Generic.IList<EnvironmentSetting> environmentSettings = default(System.Collections.Generic.IList<EnvironmentSetting>), AffinityInformation affinityInfo = default(AffinityInformation), TaskConstraints constraints = default(TaskConstraints), bool? runElevated = default(bool?), TaskExecutionInformation executionInfo = default(TaskExecutionInformation), ComputeNodeInformation nodeInfo = default(ComputeNodeInformation), MultiInstanceSettings multiInstanceSettings = default(MultiInstanceSettings), TaskStatistics stats = default(TaskStatistics), TaskDependencies dependsOn = default(TaskDependencies), System.Collections.Generic.IList<ApplicationPackageReference> applicationPackageReferences = default(System.Collections.Generic.IList<ApplicationPackageReference>))
         {
             Id = id;
             DisplayName = displayName;
@@ -98,44 +109,44 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// including hyphens and underscores, and cannot contain more than
         /// 64 characters. It is common to use a GUID for the id.
         /// </remarks>
-        [JsonProperty(PropertyName = "id")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets a display name for the task.
         /// </summary>
-        [JsonProperty(PropertyName = "displayName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "displayName")]
         public string DisplayName { get; set; }
 
         /// <summary>
         /// Gets or sets the URL of the task.
         /// </summary>
-        [JsonProperty(PropertyName = "url")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "url")]
         public string Url { get; set; }
 
         /// <summary>
         /// Gets or sets the ETag of the task.
         /// </summary>
-        [JsonProperty(PropertyName = "eTag")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "eTag")]
         public string ETag { get; set; }
 
         /// <summary>
         /// Gets or sets the last modified time of the task.
         /// </summary>
-        [JsonProperty(PropertyName = "lastModified")]
-        public DateTime? LastModified { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "lastModified")]
+        public System.DateTime? LastModified { get; set; }
 
         /// <summary>
         /// Gets or sets the creation time of the task.
         /// </summary>
-        [JsonProperty(PropertyName = "creationTime")]
-        public DateTime? CreationTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "creationTime")]
+        public System.DateTime? CreationTime { get; set; }
 
         /// <summary>
         /// Gets or sets how the Batch service should respond when the task
         /// completes.
         /// </summary>
-        [JsonProperty(PropertyName = "exitConditions")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "exitConditions")]
         public ExitConditions ExitConditions { get; set; }
 
         /// <summary>
@@ -145,14 +156,14 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// Possible values include: 'active', 'preparing', 'running',
         /// 'completed'
         /// </remarks>
-        [JsonProperty(PropertyName = "state")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "state")]
         public TaskState? State { get; set; }
 
         /// <summary>
         /// Gets or sets the time at which the task entered its current state.
         /// </summary>
-        [JsonProperty(PropertyName = "stateTransitionTime")]
-        public DateTime? StateTransitionTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "stateTransitionTime")]
+        public System.DateTime? StateTransitionTime { get; set; }
 
         /// <summary>
         /// Gets or sets the previous state of the task.
@@ -162,7 +173,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// state. Possible values include: 'active', 'preparing', 'running',
         /// 'completed'
         /// </remarks>
-        [JsonProperty(PropertyName = "previousState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "previousState")]
         public TaskState? PreviousState { get; set; }
 
         /// <summary>
@@ -172,8 +183,8 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// This property is not set if the task is in its initial Active
         /// state.
         /// </remarks>
-        [JsonProperty(PropertyName = "previousStateTransitionTime")]
-        public DateTime? PreviousStateTransitionTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "previousStateTransitionTime")]
+        public System.DateTime? PreviousStateTransitionTime { get; set; }
 
         /// <summary>
         /// Gets or sets the command line of the task.
@@ -188,7 +199,7 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// the command line, for example using "cmd /c MyCommand" in Windows
         /// or "/bin/sh -c MyCommand" in Linux.
         /// </remarks>
-        [JsonProperty(PropertyName = "commandLine")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "commandLine")]
         public string CommandLine { get; set; }
 
         /// <summary>
@@ -200,76 +211,76 @@ namespace Microsoft.Azure.Batch.Protocol.Models
         /// downloaded to the compute node on which the primary subtask is
         /// executed.
         /// </remarks>
-        [JsonProperty(PropertyName = "resourceFiles")]
-        public IList<ResourceFile> ResourceFiles { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "resourceFiles")]
+        public System.Collections.Generic.IList<ResourceFile> ResourceFiles { get; set; }
 
         /// <summary>
         /// Gets or sets a list of environment variable settings for the task.
         /// </summary>
-        [JsonProperty(PropertyName = "environmentSettings")]
-        public IList<EnvironmentSetting> EnvironmentSettings { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "environmentSettings")]
+        public System.Collections.Generic.IList<EnvironmentSetting> EnvironmentSettings { get; set; }
 
         /// <summary>
         /// Gets or sets a locality hint that can be used by the Batch service
         /// to select a compute node on which to start the new task.
         /// </summary>
-        [JsonProperty(PropertyName = "affinityInfo")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "affinityInfo")]
         public AffinityInformation AffinityInfo { get; set; }
 
         /// <summary>
         /// Gets or sets the execution constraints that apply to this task.
         /// </summary>
-        [JsonProperty(PropertyName = "constraints")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "constraints")]
         public TaskConstraints Constraints { get; set; }
 
         /// <summary>
         /// Gets or sets whether to run the task in elevated mode.
         /// </summary>
-        [JsonProperty(PropertyName = "runElevated")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "runElevated")]
         public bool? RunElevated { get; set; }
 
         /// <summary>
         /// Gets or sets information about the execution of the task.
         /// </summary>
-        [JsonProperty(PropertyName = "executionInfo")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "executionInfo")]
         public TaskExecutionInformation ExecutionInfo { get; set; }
 
         /// <summary>
         /// Gets or sets information about the compute node on which the task
         /// ran.
         /// </summary>
-        [JsonProperty(PropertyName = "nodeInfo")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "nodeInfo")]
         public ComputeNodeInformation NodeInfo { get; set; }
 
         /// <summary>
         /// Gets or sets information about how to run the multi-instance task.
         /// </summary>
-        [JsonProperty(PropertyName = "multiInstanceSettings")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "multiInstanceSettings")]
         public MultiInstanceSettings MultiInstanceSettings { get; set; }
 
         /// <summary>
         /// Gets or sets resource usage statistics for the task.
         /// </summary>
-        [JsonProperty(PropertyName = "stats")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "stats")]
         public TaskStatistics Stats { get; set; }
 
         /// <summary>
         /// Gets or sets any dependencies this task has.
         /// </summary>
-        [JsonProperty(PropertyName = "dependsOn")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "dependsOn")]
         public TaskDependencies DependsOn { get; set; }
 
         /// <summary>
         /// Gets or sets a list of application packages that the Batch service
         /// will deploy to the compute node before running the command line.
         /// </summary>
-        [JsonProperty(PropertyName = "applicationPackageReferences")]
-        public IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "applicationPackageReferences")]
+        public System.Collections.Generic.IList<ApplicationPackageReference> ApplicationPackageReferences { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
