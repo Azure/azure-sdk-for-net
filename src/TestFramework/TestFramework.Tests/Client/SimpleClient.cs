@@ -37,7 +37,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.TestFramework.Test.Client
             {
                 throw new ArgumentNullException("credentials");
             }
-            this.BaseUri = TestEnvironment.EnvEndpoints[EnvironmentNames.Prod].ResourceManagementUri;
+            this.BaseUri = new TestEnvironment().EnvEndpoints[EnvironmentNames.Prod].ResourceManagementUri;
             this.Credentials = credentials;
             this.Credentials.InitializeServiceClient(this);
         }
