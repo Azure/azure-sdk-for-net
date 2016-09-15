@@ -17,7 +17,7 @@ namespace Azure.Tests
         private string rgName = "csmrg720";
         private string newRgName = "csmrg189";
 
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CanCreateUpdateMoveResource()
         {
             IResourceManager resourceManager = CreateResourceManager();

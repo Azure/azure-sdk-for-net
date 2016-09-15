@@ -13,7 +13,7 @@ namespace Azure.Tests
     public class TenantsTests
     {
 
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CanListTenants()
         {
             var resourceManager = CreateResourceManager();

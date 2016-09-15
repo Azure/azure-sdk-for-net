@@ -11,7 +11,7 @@ namespace Azure.Tests
         private const string LOCATION = "southcentralus";
         private const string VMNAME = "javavm3";
 
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CanCreateVirtualMachine()
         {
             IComputeManager computeManager = TestHelper.CreateComputeManager();

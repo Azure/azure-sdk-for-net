@@ -17,7 +17,7 @@ namespace Azure.Tests
         private string rgName = "rgstg123";
         private string stgName = "stgbnc732";
 
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CanCRUDStorageAccount()
         {
             try

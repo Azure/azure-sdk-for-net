@@ -11,7 +11,7 @@ namespace Azure.Tests
 {
     public class StorageUsagesTests
     {
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CanListUsages()
         {
             var storageManger = CreateStorageManager();

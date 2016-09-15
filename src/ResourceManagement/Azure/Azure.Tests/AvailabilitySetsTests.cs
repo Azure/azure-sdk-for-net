@@ -12,7 +12,7 @@ namespace Azure.Tests
         private string rgName = "rgstg1546";
         private string availName = "availset732";
 
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CanCRUDAvailabilitySet()
         {
             try

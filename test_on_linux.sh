@@ -16,7 +16,8 @@ do
       cd $armdir/$item/$item.Tests
       dotnet restore
       dotnet build --framework netcoreapp1.0
-      dotnet test
+# Skipping tests on CI since they run in live mode only      
+#     dotnet test
       cd $armdir 
     fi
   fi

@@ -14,7 +14,7 @@ namespace Azure.Tests
     {
         string testId = "" + System.DateTime.Now.Ticks % 100000L;
 
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CreateUpdateTest()
         {
             string newName = "net" + this.testId;

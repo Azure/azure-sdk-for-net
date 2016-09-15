@@ -13,7 +13,7 @@ namespace Azure.Tests
 {
     public class ProvidersTests
     {
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CanRegisterAndUnRegisterProvider()
         {
             var resourceManager = CreateResourceManager();

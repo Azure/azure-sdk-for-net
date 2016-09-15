@@ -22,7 +22,7 @@ namespace Azure.Tests
         private string updateParameters = "{\"vnetAddressPrefix\":{\"value\":\"10.0.0.0/16\"},\"subnet1Name\":{\"value\":\"Subnet1\"},\"subnet1Prefix\":{\"value\":\"10.0.0.0/24\"}}";
         private string contentVersion = "1.0.0.0";
 
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CanCreateVirtualNetwork()
         {
             IResourceManager resourceManager = CreateResourceManager();
@@ -66,7 +66,7 @@ namespace Azure.Tests
             resourceManager.GenericResources.Delete(rgName, "Microsoft.Network", "", "virtualnetworks", "VNet1", "2015-06-15");
         }
 
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CanCancelVirtualNetworkDeployment()
         {
             IResourceManager resourceManager = CreateResourceManager();
@@ -85,7 +85,7 @@ namespace Azure.Tests
             resourceManager.GenericResources.Delete(rgName, "Microsoft.Network", "", "virtualnetworks", "VNet1", "2015-06-15");
         }
 
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CanUpdateVirtualNetworkDeployment()
         {
             IResourceManager resourceManager = CreateResourceManager();

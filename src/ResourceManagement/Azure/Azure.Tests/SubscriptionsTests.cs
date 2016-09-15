@@ -12,7 +12,7 @@ namespace Azure.Tests
 {
     public class SubscriptionsTests
     {
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CanListSubscriptions()
         {
             var resourceManager = CreateResourceManager();
@@ -20,7 +20,7 @@ namespace Azure.Tests
             Assert.True(subscriptions.Count > 0);
         }
 
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CanListLocations()
         {
             var resourceManager = CreateResourceManager();
