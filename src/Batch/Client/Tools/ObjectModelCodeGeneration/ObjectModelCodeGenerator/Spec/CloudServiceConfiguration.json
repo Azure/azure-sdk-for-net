@@ -1,0 +1,44 @@
+    {
+      "Name": "CloudServiceConfiguration",
+      "ProtocolName": "Models.CloudServiceConfiguration",
+      "Comment": "The configuration for compute nodes in a pool based on the Azure Cloud Services platform.",
+      "Properties": [
+        {
+          "Key": {
+            "Type": "string",
+            "Name": "OSFamily",
+            "SummaryComment": "The Azure Guest OS family to be installed on the virtual machines in the pool.",
+            "RemarksComment": "For more information about Guest OS families, see https://azure.microsoft.com/documentation/articles/cloud-services-guestos-update-matrix/.",
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Required"
+          },
+          "Value": {
+            "Name": "OsFamily"
+          }
+        },
+        {
+          "Key": {
+            "Type": "string",
+            "Name": "TargetOSVersion",
+            "SummaryComment": "The Azure Guest OS version to be installed on the virtual machines in the pool. If no value is provided, the Batch service will default to \"'*\", which specifies the latest operating system version for the <see cref=\"OSFamily\"/>.",
+            "RemarksComment": null,
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Optional"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "string",
+            "Name": "CurrentOSVersion",
+            "SummaryComment": "The Azure Guest OS version currently installed on the virtual machines in the pool. This may differ from <see cref=\"TargetOSVersion\"/> if the pool state is <see cref=\"Common.PoolState.Upgrading\"/>.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "none"
+          },
+          "Value": null
+        }
+      ]
+    }

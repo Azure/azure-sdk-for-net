@@ -1,0 +1,55 @@
+    {
+      "Name": "TaskSchedulingError",
+      "ProtocolName": "Models.TaskSchedulingError",
+      "Comment": "Information about an error when scheduling a task.",
+      "IsConstructorPublic": false,
+      "Properties": [
+        {
+          "Key": {
+            "Type": "Common.SchedulingErrorCategory",
+            "Name": "Category",
+            "SummaryComment": "The category of the task scheduling error.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "none"
+          },
+          "Value": {
+            "Type": "Models.SchedulingErrorCategory",
+            "Name": "Category"
+          }
+        },
+        {
+          "Key": {
+            "Type": "string",
+            "Name": "Code",
+            "SummaryComment": "A code for the task scheduling error. See <see cref=\"Common.TaskSchedulingErrorCodes\"/> for possible values.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "none"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "string",
+            "Name": "Message",
+            "SummaryComment": "A message describing the task scheduling error, intended to be suitable for display in a user interface.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "none"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "IReadOnlyList<NameValuePair>",
+            "Name": "Details",
+            "SummaryComment": "A list of additional error details related to the scheduling error.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "none"
+          },
+          "Value": null
+        }
+      ]
+    }

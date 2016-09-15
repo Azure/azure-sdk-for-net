@@ -1,0 +1,60 @@
+    {
+      "Name": "ImageReference",
+      "ProtocolName": "Models.ImageReference",
+      "Comment": "A reference to an Azure Virtual Machines Marketplace image. To retrieve a list of images supported by the Batch service, see <see cref=\"PoolOperations.ListNodeAgentSkus\"/> and <see cref=\"NodeAgentSku.VerifiedImageReferences\"/>.",
+      "IsUsedInCollections": true,
+      "Properties": [
+        {
+          "Key": {
+            "Type": "string",
+            "Name": "Offer",
+            "SummaryComment": "The offer type of the Azure Virtual Machines Marketplace image.",
+            "RemarksComment": "For example, UbuntuServer or WindowsServer.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Required",
+            "HideSetter": true
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "string",
+            "Name": "Publisher",
+            "SummaryComment": "The publisher of the Azure Virtual Machines Marketplace image.",
+            "RemarksComment": "For example, Canonical or MicrosoftWindowsServer.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Required",
+            "HideSetter": true
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "string",
+            "Name": "Sku",
+            "SummaryComment": "The SKU of the Azure Virtual Machines Marketplace image.",
+            "RemarksComment": "For example, 14.04.0-LTS or 2012-R2-Datacenter.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Required",
+            "HideSetter": true
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "string",
+            "Name": "Version",
+            "SummaryComment": "The version of the Azure Virtual Machines Marketplace image.",
+            "RemarksComment": "If this property is not specified, it defaults to 'latest', which is the latest version of the image.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Optional",
+            "HideSetter": true
+          },
+          "Value": null
+        }
+      ]
+    }
