@@ -33,18 +33,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
 
                 Assert.NotNull(getResponse);
                 Assert.NotNull(getResponse.Value);
-                Assert.False(getResponse.Value.Enabled);
-
-                // add more settings
-                var parameters = new AccessInformationUpdateParameters
-                {
-                    Enabled = true
-                };
-                var response = ApiManagementClient.TenantAccessGit.Update(ResourceGroupName, ApiManagementServiceName, parameters, getResponse.ETag);
-
-                Assert.NotNull(response);
-                Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
-
+                Assert.True(getResponse.Value.Enabled);
+                
                 getResponse = ApiManagementClient.TenantAccessGit.Get(ResourceGroupName, ApiManagementServiceName);
 
                 Assert.NotNull(getResponse);

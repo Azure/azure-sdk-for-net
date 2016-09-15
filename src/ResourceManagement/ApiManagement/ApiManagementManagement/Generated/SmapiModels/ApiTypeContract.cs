@@ -22,31 +22,21 @@
 using System;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.ApiManagement.Models
+namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
 {
     /// <summary>
-    /// Types of API Management hostnames.
+    /// Type of Api.
     /// </summary>
-    public enum HostnameType
+    public enum ApiTypeContract
     {
         /// <summary>
-        /// Proxy hostname type. Is used to update proxy hostname.
+        /// HTTP Api.
         /// </summary>
-        Proxy = 1,
+        Http = 0,
         
         /// <summary>
-        /// Portal hostname type. Is used to update portal hostname.
+        /// SOAP Api
         /// </summary>
-        Portal = 2,
-        
-        /// <summary>
-        /// Management hostname type. Is used to update management hostname.
-        /// </summary>
-        Management = 3,
-        
-        /// <summary>
-        /// Kudu hostname type. Is used to update kudu hostname.
-        /// </summary>
-        Kudu = 4,
+        Soap = 1,
     }
 }

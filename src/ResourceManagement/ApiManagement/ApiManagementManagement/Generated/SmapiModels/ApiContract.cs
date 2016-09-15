@@ -123,6 +123,17 @@ namespace Microsoft.Azure.Management.ApiManagement.SmapiModels
             set { this._subscriptionKeyParameterNames = value; }
         }
         
+        private ApiTypeContract _type;
+        
+        /// <summary>
+        /// Optional. Type of API.
+        /// </summary>
+        public ApiTypeContract Type
+        {
+            get { return this._type; }
+            set { this._type = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the ApiContract class.
         /// </summary>

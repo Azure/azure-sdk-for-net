@@ -64,7 +64,7 @@ namespace ApiManagement.Tests
             //var newToken = context.AcquireTokenByRefreshToken(result.RefreshToken, testEnvironment.ClientId, "https://management.core.windows.net/");
 
             ////context.TokenCache.ReadItems().Where(item => item.)
-            //((TokenCloudCredentials) apiManagementClient.Credentials).Token = newToken.AccessToken;
+            //((TokenCloudCredentials)apiManagementClient.Credentials).Token = newToken.AccessToken;
         }
 
         private static void ThrowIfTrue(bool condition, string message)
@@ -158,14 +158,14 @@ namespace ApiManagement.Tests
                     Location = location,
                     Properties = new ApiServiceProperties
                     {
-                        SkuProperties = new ApiServiceSkuProperties
-                        {
-                            Capacity = 1,
-                            SkuType = skuType
-                        },
                         AddresserEmail = "foo@live.com",
                         PublisherEmail = "foo@live.com",
                         PublisherName = "apimgmt"
+                    },
+                    SkuProperties = new ApiServiceSkuProperties
+                    {
+                        Capacity = 1,
+                        SkuType = skuType
                     }
                 });
 

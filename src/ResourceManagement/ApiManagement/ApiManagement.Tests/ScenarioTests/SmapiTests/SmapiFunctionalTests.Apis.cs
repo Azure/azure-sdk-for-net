@@ -12,6 +12,8 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
+using Newtonsoft.Json.Linq;
+
 namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTests
 {
     using System;
@@ -281,9 +283,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
         }
 
         [Fact]
-        public void ApiImportExport()
+        public void ApiImportExport_Wadl()
         {
-            TestUtilities.StartTest("SmapiFunctionalTests", "ApiImportExport");
+            TestUtilities.StartTest("SmapiFunctionalTests", "ApiImportExport_Wadl");
 
             try
             {
@@ -305,7 +307,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                             wadlApiId,
                             wadlMediaType,
                             stream,
-                            path);
+                            path,
+                            string.Empty,
+                            string.Empty);
                     }
 
                     Assert.NotNull(importResponse);
@@ -343,7 +347,9 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                             wadlApiId,
                             wadlMediaType,
                             stream,
-                            path);
+                            path,
+                            string.Empty,
+                            string.Empty);
                     }
 
                     Assert.NotNull(importResponse);
@@ -358,6 +364,88 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                 {
                     // remove the API
                     ApiManagementClient.Apis.Delete(ResourceGroupName, ApiManagementServiceName, wadlApiId, "*");
+                }
+            }
+            finally
+            {
+                TestUtilities.EndTest();
+            }
+        }
+
+        [Fact]
+        public void ApiImportExport_Swagger()
+        {
+            TestUtilities.StartTest("SmapiFunctionalTests", "ApiImportExport_Swagger");
+
+            try
+            {
+                const string swaggerPath = "./Resources/SwaggerPetStoreV2.json";
+                const string expectedSwaggerPath = "./Resources/SwaggerPetStoreV2Expected.json";
+                const string swaggerMediaType = "application/vnd.swagger.doc+json";
+                const string path = "swaggerApi";
+                string swaggerApi = TestUtilities.GenerateName("aid");
+
+                try
+                {
+                    // import API
+                    AzureOperationResponse importResponse = null;
+                    using (var stream = File.OpenRead(swaggerPath))
+                    {
+                        importResponse = ApiManagementClient.Apis.Import(
+                            ResourceGroupName,
+                            ApiManagementServiceName,
+                            swaggerApi,
+                            swaggerMediaType,
+                            stream,
+                            path,
+                            null,
+                            null);
+                    }
+
+                    Assert.NotNull(importResponse);
+                    Assert.Equal(HttpStatusCode.Created, importResponse.StatusCode);
+
+                    // get the api to check it was created
+                    var getResponse = ApiManagementClient.Apis.Get(ResourceGroupName, ApiManagementServiceName, swaggerApi);
+
+                    Assert.NotNull(getResponse);
+                    Assert.NotNull(getResponse.Value);
+                    Assert.Equal(swaggerApi, getResponse.Value.Id);
+                    Assert.Equal(path, getResponse.Value.Path);
+
+                    // export API
+                    var exportResponse = ApiManagementClient.Apis.Export(
+                        ResourceGroupName,
+                        ApiManagementServiceName,
+                        swaggerApi,
+                        swaggerMediaType);
+
+                    Assert.NotNull(exportResponse);
+                    Assert.NotNull(exportResponse.Content);
+
+                    JObject expectedExportedSwagger = new JObject();
+                    byte[] swaggerExpectedBytes = File.ReadAllBytes(expectedSwaggerPath);
+                    using (Stream stream = new MemoryStream(swaggerExpectedBytes))
+                    using (StreamReader sr = new StreamReader(stream))
+                    {
+                        JsonReader jread = new JsonTextReader(sr);
+                        expectedExportedSwagger = JObject.Load(jread);
+                    }
+
+                    JObject actualExportedSwagger;
+                    using (Stream stream = new MemoryStream(exportResponse.Content))
+                    using (StreamReader sr = new StreamReader(stream))
+                    {
+                        JsonReader jread = new JsonTextReader(sr);
+                        actualExportedSwagger = JObject.Load(jread);
+                    }
+
+                    Assert.Equal(expectedExportedSwagger.GetValue("info"), actualExportedSwagger.GetValue("info"));
+                }
+                finally
+                {
+                    // remove the API
+                    ApiManagementClient.Apis.Delete(ResourceGroupName, ApiManagementServiceName, swaggerApi, "*");
                 }
             }
             finally

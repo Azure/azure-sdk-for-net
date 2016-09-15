@@ -25,28 +25,23 @@ using System.Linq;
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
     /// <summary>
-    /// Types of API Management hostnames.
+    /// Types of Virtual Private Network.
     /// </summary>
-    public enum HostnameType
+    public enum VirtualNetworkType
     {
         /// <summary>
-        /// Proxy hostname type. Is used to update proxy hostname.
+        /// No Vpn is Configured for Tenant.
         /// </summary>
-        Proxy = 1,
+        None = 0,
         
         /// <summary>
-        /// Portal hostname type. Is used to update portal hostname.
+        /// ApiManagement Service has an External Facing VIP for Tenant.
         /// </summary>
-        Portal = 2,
+        External = 1,
         
         /// <summary>
-        /// Management hostname type. Is used to update management hostname.
+        /// ApiManagement service has an Internal Facing VIP for Tenant.
         /// </summary>
-        Management = 3,
-        
-        /// <summary>
-        /// Kudu hostname type. Is used to update kudu hostname.
-        /// </summary>
-        Kudu = 4,
+        Internal = 2,
     }
 }

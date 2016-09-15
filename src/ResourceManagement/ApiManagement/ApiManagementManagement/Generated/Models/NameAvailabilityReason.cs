@@ -25,28 +25,23 @@ using System.Linq;
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
     /// <summary>
-    /// Types of API Management hostnames.
+    /// Types of API Managrement SKU (Tier).
     /// </summary>
-    public enum HostnameType
+    public enum NameAvailabilityReason
     {
         /// <summary>
-        /// Proxy hostname type. Is used to update proxy hostname.
+        /// Name is valid.
         /// </summary>
-        Proxy = 1,
+        Valid = 0,
         
         /// <summary>
-        /// Portal hostname type. Is used to update portal hostname.
+        /// Name is invalid.
         /// </summary>
-        Portal = 2,
+        Invalid = 1,
         
         /// <summary>
-        /// Management hostname type. Is used to update management hostname.
+        /// Name already exists.
         /// </summary>
-        Management = 3,
-        
-        /// <summary>
-        /// Kudu hostname type. Is used to update kudu hostname.
-        /// </summary>
-        Kudu = 4,
+        AlreadyExists = 2,
     }
 }

@@ -28,25 +28,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
 
             try
             {
-                var getResponse = ApiManagementClient.TenantAccessGit.Get(ResourceGroupName, ApiManagementServiceName);
-
-                Assert.NotNull(getResponse);
-                Assert.NotNull(getResponse.Value);
-                Assert.Equal(HttpStatusCode.OK, getResponse.StatusCode);
-
-                // enable git access
-                var parameters = new AccessInformationUpdateParameters
-                {
-                    Enabled = true
-                };
-                var response = ApiManagementClient.TenantAccessGit.Update(ResourceGroupName,
-                    ApiManagementServiceName, parameters, getResponse.ETag);
-
-                Assert.NotNull(response);
-                Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
-
                 // test git is enabled
-                getResponse = ApiManagementClient.TenantAccessGit.Get(ResourceGroupName, ApiManagementServiceName);
+                var getResponse = ApiManagementClient.TenantAccessGit.Get(ResourceGroupName, ApiManagementServiceName);
 
                 Assert.NotNull(getResponse);
                 Assert.NotNull(getResponse.Value);
@@ -112,22 +95,6 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                 Assert.NotNull(getSyncState.Value);
                 Assert.True(getSyncState.Value.IsGitEnabled);
                 Assert.Equal("master", getSyncState.Value.Branch);
-
-                // disable git access
-                parameters.Enabled = false;
-
-                response = ApiManagementClient.TenantAccessGit.Update(ResourceGroupName,
-                    ApiManagementServiceName, parameters, getResponse.ETag);
-
-                Assert.NotNull(response);
-                Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
-
-                // test git is disabled
-                getResponse = ApiManagementClient.TenantAccessGit.Get(ResourceGroupName, ApiManagementServiceName);
-
-                Assert.NotNull(getResponse);
-                Assert.NotNull(getResponse.Value);
-                Assert.False(getResponse.Value.Enabled);
             }
             finally
             {
