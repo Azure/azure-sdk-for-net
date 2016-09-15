@@ -76,6 +76,17 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute.Models
             set { this._secondaryAzurePort = value; }
         }
         
+        private string _serviceKey;
+        
+        /// <summary>
+        /// Optional. Specifies the service key of circuit.
+        /// </summary>
+        public string ServiceKey
+        {
+            get { return this._serviceKey; }
+            set { this._serviceKey = value; }
+        }
+        
         private int _sTag;
         
         /// <summary>
