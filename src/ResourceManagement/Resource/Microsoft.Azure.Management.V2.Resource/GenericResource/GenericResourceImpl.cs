@@ -117,7 +117,6 @@ namespace Microsoft.Azure.Management.V2.Resource
             return null;
         }
 
-
         public GenericResource.Update.IWithApiVersion Update()
         {
             return this;

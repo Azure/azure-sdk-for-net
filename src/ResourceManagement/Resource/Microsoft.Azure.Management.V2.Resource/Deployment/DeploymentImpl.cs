@@ -415,17 +415,7 @@ namespace Microsoft.Azure.Management.V2.Resource
 
         #endregion
 
-        #region Implementation of ICreatable interface 
-
-        public new IDeployment Create()
-        {
-            if (creatableResourceGroup != null)
-            {
-                creatableResourceGroup.Create();
-            }
-            CreateResource();
-            return this;
-        }
+        #region Implementation of ICreatable & IApplicable interface 
 
         public async new Task<IDeployment> CreateAsync(CancellationToken cancellationToken = default(CancellationToken), bool multiThreaded = true)
         {
@@ -436,9 +426,14 @@ namespace Microsoft.Azure.Management.V2.Resource
             return await CreateResourceAsync(cancellationToken);
         }
 
+        public async new Task<IDeployment> ApplyAsync(CancellationToken cancellationToken = default(CancellationToken), bool multiThreaded = true)
+        {
+            return await UpdateResourceAsync(cancellationToken);
+        }
+
         #endregion
 
-        #region Implementation of IResourceCreator interface
+        #region Implementation of IResourceCreatorUpdator interface
 
         public override async Task<IDeployment> CreateResourceAsync(CancellationToken cancellationToken)
         {
@@ -457,21 +452,26 @@ namespace Microsoft.Azure.Management.V2.Resource
             return this;
         }
 
-        public override IDeployment CreateResource()
+        public override async Task<IDeployment> UpdateResourceAsync(CancellationToken cancellationToken)
         {
-            DeploymentInner inner = new DeploymentInner
+            if (TemplateLink != null && Template != null)
             {
-                Properties = new DeploymentProperties
-                {
-                    Mode = Mode,
-                    Template = Template,
-                    TemplateLink = TemplateLink,
-                    Parameters = Parameters,
-                    ParametersLink = ParametersLink
-                }
-            };
-            client.CreateOrUpdate(ResourceGroupName, Name, inner);
-            return this;
+                WithTemplate(null);
+            }
+
+            if (ParametersLink != null && Parameters != null)
+            {
+                WithParameters(null);
+            }
+            return await CreateResourceAsync(cancellationToken);
+        }
+
+        public override bool IsInCreateMode
+        {
+            get
+            {
+                return Inner.Id == null;
+            }
         }
 
         #endregion

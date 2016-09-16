@@ -6,12 +6,12 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 {
     internal class CreatorTaskItem<IResourceT> : ITaskItem<IResourceT>
     {
-        private IResourceCreator<IResourceT> resourceCreator;
+        private IResourceCreatorUpdator<IResourceT> resourceCreatorUpdator;
         private IResourceT createdResource;
 
-        public CreatorTaskItem(IResourceCreator<IResourceT> resourceCreator)
+        public CreatorTaskItem(IResourceCreatorUpdator<IResourceT> resourceCreator)
         {
-            this.resourceCreator = resourceCreator;
+            this.resourceCreatorUpdator = resourceCreator;
         }
 
         public IResourceT Result
@@ -30,7 +30,13 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
                 return;
             }
 
-            createdResource = await resourceCreator.CreateResourceAsync(cancellationToken);
+            if (resourceCreatorUpdator.IsInCreateMode)
+            {
+                createdResource = await resourceCreatorUpdator.CreateResourceAsync(cancellationToken);
+            } else
+            {
+                createdResource = await resourceCreatorUpdator.UpdateResourceAsync(cancellationToken);
+            }
         }
     }
 }

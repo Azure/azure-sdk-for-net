@@ -2,9 +2,9 @@
 
 namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 {
-    public class CreatorTaskGroup<IResourceT> : TaskGroupBase<IResourceT>
+    public class CreateUpdateTaskGroup<IResourceT> : TaskGroupBase<IResourceT>
     {
-        public CreatorTaskGroup(string rootCreatableId, IResourceCreator<IResourceT> resourceCreator) 
+        public CreateUpdateTaskGroup(string rootCreatableId, IResourceCreatorUpdator<IResourceT> resourceCreator) 
             : base(rootCreatableId, new CreatorTaskItem<IResourceT>(resourceCreator))
         {}
 

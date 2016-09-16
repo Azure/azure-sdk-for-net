@@ -214,7 +214,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         {
             var nicCreatable = this.nicDefinitionWithCreate
                 .WithNewPrimaryPublicIpAddress(creatable);
-            this.AddCreatableDependency(nicCreatable as IResourceCreator<IResource>);
+            this.AddCreatableDependency(nicCreatable as IResourceCreatorUpdator<IResource>);
             return this;
         }
 
@@ -223,7 +223,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             var nicCreatable = this.nicDefinitionWithCreate
                 .WithNewPrimaryPublicIpAddress(leafDnsLabel);
             this.creatablePrimaryNetworkInterfaceKey = nicCreatable.Key;
-            this.AddCreatableDependency(nicCreatable as IResourceCreator<IResource>);
+            this.AddCreatableDependency(nicCreatable as IResourceCreatorUpdator<IResource>);
             return this;
         }
 
@@ -232,7 +232,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             var nicCreatable = this.nicDefinitionWithCreate
                 .WithExistingPrimaryPublicIpAddress(publicIpAddress);
             this.creatablePrimaryNetworkInterfaceKey = nicCreatable.Key;
-            this.AddCreatableDependency(nicCreatable as IResourceCreator<IResource>);
+            this.AddCreatableDependency(nicCreatable as IResourceCreatorUpdator<IResource>);
             return this;
         }
 
@@ -240,14 +240,14 @@ namespace Microsoft.Azure.Management.V2.Compute
         {
             var nicCreatable = this.nicDefinitionWithCreate;
             this.creatablePrimaryNetworkInterfaceKey = nicCreatable.Key;
-            this.AddCreatableDependency(nicCreatable as IResourceCreator<IResource>);
+            this.AddCreatableDependency(nicCreatable as IResourceCreatorUpdator<IResource>);
             return this;
         }
 
         public VirtualMachineImpl WithNewPrimaryNetworkInterface(ICreatable<INetworkInterface> creatable)
         {
             this.creatablePrimaryNetworkInterfaceKey = creatable.Key;
-            this.AddCreatableDependency(creatable as IResourceCreator<IResource>);
+            this.AddCreatableDependency(creatable as IResourceCreatorUpdator<IResource>);
             return this;
         }
 
@@ -485,7 +485,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             if (this.creatableStorageAccountKey == null)
             {
                 this.creatableStorageAccountKey = creatable.Key;
-                this.AddCreatableDependency(creatable as IResourceCreator<IResource>);
+                this.AddCreatableDependency(creatable as IResourceCreatorUpdator<IResource>);
             }
             return this;
         }
@@ -520,7 +520,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             if (this.creatableAvailabilitySetKey == null)
             {
                 this.creatableAvailabilitySetKey = creatable.Key;
-                this.AddCreatableDependency(creatable as IResourceCreator<IResource>);
+                this.AddCreatableDependency(creatable as IResourceCreatorUpdator<IResource>);
             }
             return this;
         }
@@ -541,7 +541,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         public VirtualMachineImpl WithNewSecondaryNetworkInterface(ICreatable<INetworkInterface> creatable)
         {
             this.creatableSecondaryNetworkInterfaceKeys.Add(creatable.Key);
-            this.AddCreatableDependency(creatable as IResourceCreator<IResource>);
+            this.AddCreatableDependency(creatable as IResourceCreatorUpdator<IResource>);
             return this;
         }
 
@@ -851,10 +851,6 @@ namespace Microsoft.Azure.Management.V2.Compute
 
                 return null;
             }
-        }
-        public override IVirtualMachine CreateResource()
-        {
-            return this.CreateResourceAsync().Result;
         }
 
         public override async Task<IVirtualMachine> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))

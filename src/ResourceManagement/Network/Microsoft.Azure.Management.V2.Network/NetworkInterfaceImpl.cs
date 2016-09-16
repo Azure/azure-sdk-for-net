@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Management.V2.Network
             if (this.creatableNetworkSecurityGroupKey == null)
             {
                 this.creatableNetworkSecurityGroupKey = creatable.Key;
-                this.AddCreatableDependency(creatable as IResourceCreator<IResource>);
+                this.AddCreatableDependency(creatable as IResourceCreatorUpdator<IResource>);
             }
 
             return this;
@@ -445,7 +445,7 @@ namespace Microsoft.Azure.Management.V2.Network
         internal void AddToCreatableDependencies<T>(ICreatable<T> creatableResource) where T : IResource
         {
 
-            base.AddCreatableDependency(creatableResource as IResourceCreator<IResource>);
+            base.AddCreatableDependency(creatableResource as IResourceCreatorUpdator<IResource>);
 
         }
 
