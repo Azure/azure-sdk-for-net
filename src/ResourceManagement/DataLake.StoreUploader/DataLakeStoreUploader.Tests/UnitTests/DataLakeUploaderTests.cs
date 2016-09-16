@@ -162,7 +162,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
         /// <summary>
         /// Tests the case of a fresh upload with multiple segments.
         /// </summary>
-        [Fact]
+        [Fact(Skip = "begoldsm has acknowledged the falkiness of these tests. Hence skipping and issue 2344 is opened to track the progress")]
         public void DataLakeUploader_FreshUploadDownload()
         {
             var frontEnd = new InMemoryFrontEnd();
