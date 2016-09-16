@@ -25,6 +25,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
     using Microsoft.Azure.Test;
     using Newtonsoft.Json;
     using Xunit;
+    using System.Xml.Schema;
 
     public partial class SmapiFunctionalTests
     {
@@ -322,6 +323,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                     Assert.NotNull(getResponse.Value);
                     Assert.Equal(wadlApiId, getResponse.Value.Id);
                     Assert.Equal(path, getResponse.Value.Path);
+                    Assert.Equal(ApiTypeContract.Http, getResponse.Value.Type);
 
                     // export API
                     var exportResponse = ApiManagementClient.Apis.Export(
@@ -412,6 +414,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                     Assert.NotNull(getResponse.Value);
                     Assert.Equal(swaggerApi, getResponse.Value.Id);
                     Assert.Equal(path, getResponse.Value.Path);
+                    Assert.Equal(ApiTypeContract.Http, getResponse.Value.Type);
 
                     // export API
                     var exportResponse = ApiManagementClient.Apis.Export(
@@ -446,6 +449,90 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                 {
                     // remove the API
                     ApiManagementClient.Apis.Delete(ResourceGroupName, ApiManagementServiceName, swaggerApi, "*");
+                }
+            }
+            finally
+            {
+                TestUtilities.EndTest();
+            }
+        }
+
+        [Fact]
+        public void ApiImportExport_Wsdl()
+        {
+            TestUtilities.StartTest("SmapiFunctionalTests", "ApiImportExport_Wsdl");
+
+            try
+            {
+                const string wsdlPath = "./Resources/Weather.wsdl";
+                const string wsdlXsdSchema = "./Resources/wsdl11.xsd";
+                const string wsdlMediaType = "application/wsdl+xml";
+                const string path = "soapApi";
+                const string wsdlServiceName = "Weather";
+                const string wsdlEndpointName = "WeatherSoap";
+                string soapApiId = TestUtilities.GenerateName("aid");
+
+                try
+                {
+                    // import API
+                    AzureOperationResponse importResponse = null;
+                    using (var stream = File.OpenRead(wsdlPath))
+                    {
+                        importResponse = ApiManagementClient.Apis.Import(
+                            ResourceGroupName,
+                            ApiManagementServiceName,
+                            soapApiId,
+                            wsdlMediaType,
+                            stream,
+                            path,
+                            wsdlServiceName,
+                            wsdlEndpointName);
+                    }
+
+                    Assert.NotNull(importResponse);
+                    Assert.Equal(HttpStatusCode.Created, importResponse.StatusCode);
+
+                    // get the api to check it was created
+                    var getResponse = ApiManagementClient.Apis.Get(ResourceGroupName, ApiManagementServiceName, soapApiId);
+
+                    Assert.NotNull(getResponse);
+                    Assert.NotNull(getResponse.Value);
+                    Assert.Equal(soapApiId, getResponse.Value.Id);
+                    Assert.Equal(path, getResponse.Value.Path);
+                    Assert.Equal(ApiTypeContract.Soap, getResponse.Value.Type);
+
+                    // export API
+                    var exportResponse = ApiManagementClient.Apis.Export(
+                        ResourceGroupName,
+                        ApiManagementServiceName,
+                        soapApiId,
+                        wsdlMediaType);
+
+                    Assert.NotNull(exportResponse);
+                    Assert.NotNull(exportResponse.Content);
+
+                    string wsdlOutput;
+                    using (Stream stream = new MemoryStream(exportResponse.Content))
+                    using (StreamReader sr = new StreamReader(stream))
+                    {
+                        wsdlOutput = sr.ReadToEnd();
+                    }
+
+                    XmlSchemaSet xsds = new XmlSchemaSet();
+                    byte[] expectedSchema = File.ReadAllBytes(wsdlXsdSchema);
+                    using (Stream xsdstream = new MemoryStream(expectedSchema))
+                    {
+                        xsds.Add(XmlSchema.Read(xsdstream, (s, e) => { Assert.True(false, e.Message); }));
+                        xsds.Compile();
+                    }
+                    
+                    var doc = XDocument.Parse(wsdlOutput);
+                    doc.Validate(xsds, (s, e) => { Assert.True( false, e.Message); });
+                }
+                finally
+                {
+                    // remove the API
+                    ApiManagementClient.Apis.Delete(ResourceGroupName, ApiManagementServiceName, soapApiId, "*");
                 }
             }
             finally
