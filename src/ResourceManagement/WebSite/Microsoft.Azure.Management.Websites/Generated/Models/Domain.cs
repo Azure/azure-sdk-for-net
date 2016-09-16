@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the Domain class.
         /// </summary>
-        public Domain(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Contact contactAdmin = default(Contact), Contact contactBilling = default(Contact), Contact contactRegistrant = default(Contact), Contact contactTech = default(Contact), DomainStatus? registrationStatus = default(DomainStatus?), ProvisioningState? provisioningState = default(ProvisioningState?), IList<string> nameServers = default(IList<string>), bool? privacy = default(bool?), DateTime? createdTime = default(DateTime?), DateTime? expirationTime = default(DateTime?), DateTime? lastRenewedTime = default(DateTime?), bool? autoRenew = default(bool?), bool? readyForDnsRecordManagement = default(bool?), IList<HostName> managedHostNames = default(IList<HostName>), DomainPurchaseConsent consent = default(DomainPurchaseConsent))
-            : base(location, id, name, type, tags)
+        public Domain(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Contact contactAdmin = default(Contact), Contact contactBilling = default(Contact), Contact contactRegistrant = default(Contact), Contact contactTech = default(Contact), DomainStatus? registrationStatus = default(DomainStatus?), ProvisioningState? provisioningState = default(ProvisioningState?), IList<string> nameServers = default(IList<string>), bool? privacy = default(bool?), DateTime? createdTime = default(DateTime?), DateTime? expirationTime = default(DateTime?), DateTime? lastRenewedTime = default(DateTime?), bool? autoRenew = default(bool?), bool? readyForDnsRecordManagement = default(bool?), IList<HostName> managedHostNames = default(IList<HostName>), DomainPurchaseConsent consent = default(DomainPurchaseConsent), IList<string> domainNotRenewableReasons = default(IList<string>))
+            : base(location, id, name, kind, type, tags)
         {
             ContactAdmin = contactAdmin;
             ContactBilling = contactBilling;
@@ -47,6 +47,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             ReadyForDnsRecordManagement = readyForDnsRecordManagement;
             ManagedHostNames = managedHostNames;
             Consent = consent;
+            DomainNotRenewableReasons = domainNotRenewableReasons;
         }
 
         /// <summary>
@@ -148,6 +149,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.consent")]
         public DomainPurchaseConsent Consent { get; set; }
+
+        /// <summary>
+        /// Reasons why domain is not renewable
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.domainNotRenewableReasons")]
+        public IList<string> DomainNotRenewableReasons { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.

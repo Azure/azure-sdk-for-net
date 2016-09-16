@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the Site class.
         /// </summary>
-        public Site(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string siteName = default(string), string state = default(string), IList<string> hostNames = default(IList<string>), string repositorySiteName = default(string), UsageState? usageState = default(UsageState?), bool? enabled = default(bool?), IList<string> enabledHostNames = default(IList<string>), SiteAvailabilityState? availabilityState = default(SiteAvailabilityState?), IList<HostNameSslState> hostNameSslStates = default(IList<HostNameSslState>), string serverFarmId = default(string), DateTime? lastModifiedTimeUtc = default(DateTime?), SiteConfig siteConfig = default(SiteConfig), IList<string> trafficManagerHostNames = default(IList<string>), bool? premiumAppDeployed = default(bool?), bool? scmSiteAlsoStopped = default(bool?), string targetSwapSlot = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), string microService = default(string), string gatewaySiteName = default(string), bool? clientAffinityEnabled = default(bool?), bool? clientCertEnabled = default(bool?), bool? hostNamesDisabled = default(bool?), string outboundIpAddresses = default(string), int? containerSize = default(int?), int? maxNumberOfWorkers = default(int?), CloningInfo cloningInfo = default(CloningInfo), string resourceGroup = default(string), bool? isDefaultContainer = default(bool?), string defaultHostName = default(string))
-            : base(location, id, name, type, tags)
+        public Site(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string siteName = default(string), string state = default(string), IList<string> hostNames = default(IList<string>), string repositorySiteName = default(string), UsageState? usageState = default(UsageState?), bool? enabled = default(bool?), IList<string> enabledHostNames = default(IList<string>), SiteAvailabilityState? availabilityState = default(SiteAvailabilityState?), IList<HostNameSslState> hostNameSslStates = default(IList<HostNameSslState>), string serverFarmId = default(string), bool? reserved = default(bool?), DateTime? lastModifiedTimeUtc = default(DateTime?), SiteConfig siteConfig = default(SiteConfig), IList<string> trafficManagerHostNames = default(IList<string>), bool? premiumAppDeployed = default(bool?), bool? scmSiteAlsoStopped = default(bool?), string targetSwapSlot = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), string microService = default(string), string gatewaySiteName = default(string), bool? clientAffinityEnabled = default(bool?), bool? clientCertEnabled = default(bool?), bool? hostNamesDisabled = default(bool?), string outboundIpAddresses = default(string), int? containerSize = default(int?), int? dailyMemoryTimeQuota = default(int?), DateTime? suspendedTill = default(DateTime?), int? maxNumberOfWorkers = default(int?), CloningInfo cloningInfo = default(CloningInfo), string resourceGroup = default(string), bool? isDefaultContainer = default(bool?), string defaultHostName = default(string))
+            : base(location, id, name, kind, type, tags)
         {
             SiteName = siteName;
             State = state;
@@ -42,6 +42,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             AvailabilityState = availabilityState;
             HostNameSslStates = hostNameSslStates;
             ServerFarmId = serverFarmId;
+            Reserved = reserved;
             LastModifiedTimeUtc = lastModifiedTimeUtc;
             SiteConfig = siteConfig;
             TrafficManagerHostNames = trafficManagerHostNames;
@@ -56,6 +57,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
             HostNamesDisabled = hostNamesDisabled;
             OutboundIpAddresses = outboundIpAddresses;
             ContainerSize = containerSize;
+            DailyMemoryTimeQuota = dailyMemoryTimeQuota;
+            SuspendedTill = suspendedTill;
             MaxNumberOfWorkers = maxNumberOfWorkers;
             CloningInfo = cloningInfo;
             ResourceGroup = resourceGroup;
@@ -134,6 +137,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.serverFarmId")]
         public string ServerFarmId { get; set; }
+
+        /// <summary>
+        /// Reserved
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.reserved")]
+        public bool? Reserved { get; set; }
 
         /// <summary>
         /// Last time web app was modified in UTC
@@ -226,6 +235,19 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.containerSize")]
         public int? ContainerSize { get; set; }
+
+        /// <summary>
+        /// Maximum allowed daily memory-time quota (applicable on dynamic
+        /// sites only)
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.dailyMemoryTimeQuota")]
+        public int? DailyMemoryTimeQuota { get; set; }
+
+        /// <summary>
+        /// Site suspended till in case memory-time quota is exceeded
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.suspendedTill")]
+        public DateTime? SuspendedTill { get; set; }
 
         /// <summary>
         /// Maximum number of workers

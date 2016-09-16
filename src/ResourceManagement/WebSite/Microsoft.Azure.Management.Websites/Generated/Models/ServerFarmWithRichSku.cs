@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the ServerFarmWithRichSku class.
         /// </summary>
-        public ServerFarmWithRichSku(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SkuDescription sku = default(SkuDescription), string serverFarmWithRichSkuName = default(string), string workerTierName = default(string), StatusOptions? status = default(StatusOptions?), string subscription = default(string), string adminSiteName = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), int? maximumNumberOfWorkers = default(int?), string geoRegion = default(string), bool? perSiteScaling = default(bool?), int? numberOfSites = default(int?), string resourceGroup = default(string))
-            : base(location, id, name, type, tags)
+        public ServerFarmWithRichSku(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SkuDescription sku = default(SkuDescription), string serverFarmWithRichSkuName = default(string), string workerTierName = default(string), StatusOptions? status = default(StatusOptions?), string subscription = default(string), string adminSiteName = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile), int? maximumNumberOfWorkers = default(int?), string geoRegion = default(string), bool? perSiteScaling = default(bool?), int? numberOfSites = default(int?), string resourceGroup = default(string), bool? reserved = default(bool?))
+            : base(location, id, name, kind, type, tags)
         {
             Sku = sku;
             ServerFarmWithRichSkuName = serverFarmWithRichSkuName;
@@ -44,6 +44,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             PerSiteScaling = perSiteScaling;
             NumberOfSites = numberOfSites;
             ResourceGroup = resourceGroup;
+            Reserved = reserved;
         }
 
         /// <summary>
@@ -122,6 +123,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.resourceGroup")]
         public string ResourceGroup { get; private set; }
+
+        /// <summary>
+        /// Reserved
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.reserved")]
+        public bool? Reserved { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.

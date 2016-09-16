@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the ResourceMetric class.
         /// </summary>
-        public ResourceMetric(ResourceMetricName name = default(ResourceMetricName), string unit = default(string), string timeGrain = default(string), DateTime? startTime = default(DateTime?), DateTime? endTime = default(DateTime?), string resourceId = default(string), IList<ResourceMetricValue> metricValues = default(IList<ResourceMetricValue>), IList<KeyValuePairStringString> properties = default(IList<KeyValuePairStringString>))
+        public ResourceMetric(ResourceMetricName name = default(ResourceMetricName), string unit = default(string), string timeGrain = default(string), DateTime? startTime = default(DateTime?), DateTime? endTime = default(DateTime?), string resourceId = default(string), string id = default(string), IList<ResourceMetricValue> metricValues = default(IList<ResourceMetricValue>), IList<KeyValuePairStringString> properties = default(IList<KeyValuePairStringString>))
         {
             Name = name;
             Unit = unit;
@@ -37,6 +37,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             StartTime = startTime;
             EndTime = endTime;
             ResourceId = resourceId;
+            Id = id;
             MetricValues = metricValues;
             Properties = properties;
         }
@@ -76,6 +77,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "resourceId")]
         public string ResourceId { get; set; }
+
+        /// <summary>
+        /// Resource Id
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
         /// <summary>
         /// Metric values

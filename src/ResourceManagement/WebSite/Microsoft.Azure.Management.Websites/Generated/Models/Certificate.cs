@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the Certificate class.
         /// </summary>
-        public Certificate(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string friendlyName = default(string), string subjectName = default(string), IList<string> hostNames = default(IList<string>), string pfxBlob = default(string), string siteName = default(string), string selfLink = default(string), string issuer = default(string), DateTime? issueDate = default(DateTime?), DateTime? expirationDate = default(DateTime?), string password = default(string), string thumbprint = default(string), bool? valid = default(bool?), string cerBlob = default(string), string publicKeyHash = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile))
-            : base(location, id, name, type, tags)
+        public Certificate(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string friendlyName = default(string), string subjectName = default(string), IList<string> hostNames = default(IList<string>), string pfxBlob = default(string), string siteName = default(string), string selfLink = default(string), string issuer = default(string), DateTime? issueDate = default(DateTime?), DateTime? expirationDate = default(DateTime?), string password = default(string), string thumbprint = default(string), bool? valid = default(bool?), string cerBlob = default(string), string publicKeyHash = default(string), HostingEnvironmentProfile hostingEnvironmentProfile = default(HostingEnvironmentProfile))
+            : base(location, id, name, kind, type, tags)
         {
             FriendlyName = friendlyName;
             SubjectName = subjectName;

@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the TopLevelDomain class.
         /// </summary>
-        public TopLevelDomain(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string topLevelDomainName = default(string), bool? privacy = default(bool?))
-            : base(location, id, name, type, tags)
+        public TopLevelDomain(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string topLevelDomainName = default(string), bool? privacy = default(bool?))
+            : base(location, id, name, kind, type, tags)
         {
             TopLevelDomainName = topLevelDomainName;
             Privacy = privacy;

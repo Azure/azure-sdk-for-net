@@ -1008,6 +1008,366 @@ namespace Microsoft.Azure.Management.WebSites
             }
 
             /// <summary>
+            /// Retrieves all Service Bus Hybrid Connections in use on this App Service
+            /// Plan
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name
+            /// </param>
+            /// <param name='name'>
+            /// The name of the App Service Plan
+            /// </param>
+            public static HybridConnection GetHybridConnections(this IServerFarmsOperations operations, string resourceGroupName, string name)
+            {
+                return Task.Factory.StartNew(s => ((IServerFarmsOperations)s).GetHybridConnectionsAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves all Service Bus Hybrid Connections in use on this App Service
+            /// Plan
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name
+            /// </param>
+            /// <param name='name'>
+            /// The name of the App Service Plan
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<HybridConnection> GetHybridConnectionsAsync( this IServerFarmsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetHybridConnectionsWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieves a specific Service Bus Hybrid Connection in use on this App
+            /// Service Plan.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name
+            /// </param>
+            /// <param name='name'>
+            /// The name of the App Service Plan
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The name of the Service Bus Namespace
+            /// </param>
+            /// <param name='relayName'>
+            /// The name of the Service Bus Relay
+            /// </param>
+            public static HybridConnection GetHybridConnection(this IServerFarmsOperations operations, string resourceGroupName, string name, string namespaceName, string relayName)
+            {
+                return Task.Factory.StartNew(s => ((IServerFarmsOperations)s).GetHybridConnectionAsync(resourceGroupName, name, namespaceName, relayName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieves a specific Service Bus Hybrid Connection in use on this App
+            /// Service Plan.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name
+            /// </param>
+            /// <param name='name'>
+            /// The name of the App Service Plan
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The name of the Service Bus Namespace
+            /// </param>
+            /// <param name='relayName'>
+            /// The name of the Service Bus Relay
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<HybridConnection> GetHybridConnectionAsync( this IServerFarmsOperations operations, string resourceGroupName, string name, string namespaceName, string relayName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetHybridConnectionWithHttpMessagesAsync(resourceGroupName, name, namespaceName, relayName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Updates an existing Service Bus Hybrid Connection in use on this App
+            /// Service Plan. This will fail if the Hybrid Connection does not already
+            /// exist.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name
+            /// </param>
+            /// <param name='name'>
+            /// The name of the App Service Plan
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The name of the Service Bus Namespace
+            /// </param>
+            /// <param name='relayName'>
+            /// The name of the Service Bus Relay
+            /// </param>
+            /// <param name='connection'>
+            /// The hybrid connection entity
+            /// </param>
+            public static HybridConnection PutHybridConnection(this IServerFarmsOperations operations, string resourceGroupName, string name, string namespaceName, string relayName, HybridConnection connection)
+            {
+                return Task.Factory.StartNew(s => ((IServerFarmsOperations)s).PutHybridConnectionAsync(resourceGroupName, name, namespaceName, relayName, connection), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Updates an existing Service Bus Hybrid Connection in use on this App
+            /// Service Plan. This will fail if the Hybrid Connection does not already
+            /// exist.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name
+            /// </param>
+            /// <param name='name'>
+            /// The name of the App Service Plan
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The name of the Service Bus Namespace
+            /// </param>
+            /// <param name='relayName'>
+            /// The name of the Service Bus Relay
+            /// </param>
+            /// <param name='connection'>
+            /// The hybrid connection entity
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<HybridConnection> PutHybridConnectionAsync( this IServerFarmsOperations operations, string resourceGroupName, string name, string namespaceName, string relayName, HybridConnection connection, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.PutHybridConnectionWithHttpMessagesAsync(resourceGroupName, name, namespaceName, relayName, connection, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes an existing Service Bus Hybrid Connection in use on this App
+            /// Service Plan.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name
+            /// </param>
+            /// <param name='name'>
+            /// The name of the App Service Plan
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The name of the Service Bus Namespace
+            /// </param>
+            /// <param name='relayName'>
+            /// The name of the Service Bus Relay
+            /// </param>
+            public static object DeleteHybridConnection(this IServerFarmsOperations operations, string resourceGroupName, string name, string namespaceName, string relayName)
+            {
+                return Task.Factory.StartNew(s => ((IServerFarmsOperations)s).DeleteHybridConnectionAsync(resourceGroupName, name, namespaceName, relayName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes an existing Service Bus Hybrid Connection in use on this App
+            /// Service Plan.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name
+            /// </param>
+            /// <param name='name'>
+            /// The name of the App Service Plan
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The name of the Service Bus Namespace
+            /// </param>
+            /// <param name='relayName'>
+            /// The name of the Service Bus Relay
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> DeleteHybridConnectionAsync( this IServerFarmsOperations operations, string resourceGroupName, string name, string namespaceName, string relayName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.DeleteHybridConnectionWithHttpMessagesAsync(resourceGroupName, name, namespaceName, relayName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets a list of sites that are using a particular Hybrid Connection on an
+            /// App Service Plan
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group
+            /// </param>
+            /// <param name='name'>
+            /// The name of the App Service Plan
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The Hybrid Connection namespace
+            /// </param>
+            /// <param name='relayName'>
+            /// The Hybrid Connection relay name
+            /// </param>
+            public static object GetHybridConnectionSites(this IServerFarmsOperations operations, string resourceGroupName, string name, string namespaceName, string relayName)
+            {
+                return Task.Factory.StartNew(s => ((IServerFarmsOperations)s).GetHybridConnectionSitesAsync(resourceGroupName, name, namespaceName, relayName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a list of sites that are using a particular Hybrid Connection on an
+            /// App Service Plan
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group
+            /// </param>
+            /// <param name='name'>
+            /// The name of the App Service Plan
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The Hybrid Connection namespace
+            /// </param>
+            /// <param name='relayName'>
+            /// The Hybrid Connection relay name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetHybridConnectionSitesAsync( this IServerFarmsOperations operations, string resourceGroupName, string name, string namespaceName, string relayName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetHybridConnectionSitesWithHttpMessagesAsync(resourceGroupName, name, namespaceName, relayName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the maximum number of Hybrid Connections allowed on a specified App
+            /// Service Plan
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group
+            /// </param>
+            /// <param name='name'>
+            /// The name of the App Service Plan
+            /// </param>
+            public static object GetHybridConnectionPlanLimit(this IServerFarmsOperations operations, string resourceGroupName, string name)
+            {
+                return Task.Factory.StartNew(s => ((IServerFarmsOperations)s).GetHybridConnectionPlanLimitAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the maximum number of Hybrid Connections allowed on a specified App
+            /// Service Plan
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group
+            /// </param>
+            /// <param name='name'>
+            /// The name of the App Service Plan
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetHybridConnectionPlanLimitAsync( this IServerFarmsOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetHybridConnectionPlanLimitWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Gets the send key name and value for this Hybrid Connection
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name
+            /// </param>
+            /// <param name='name'>
+            /// The name of the App Service Plan
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The name of the Service Bus Namespace
+            /// </param>
+            /// <param name='relayName'>
+            /// The name of the Service Bus Relay
+            /// </param>
+            public static HybridConnectionKey ListHybridConnectionKeys(this IServerFarmsOperations operations, string resourceGroupName, string name, string namespaceName, string relayName)
+            {
+                return Task.Factory.StartNew(s => ((IServerFarmsOperations)s).ListHybridConnectionKeysAsync(resourceGroupName, name, namespaceName, relayName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets the send key name and value for this Hybrid Connection
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name
+            /// </param>
+            /// <param name='name'>
+            /// The name of the App Service Plan
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The name of the Service Bus Namespace
+            /// </param>
+            /// <param name='relayName'>
+            /// The name of the Service Bus Relay
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<HybridConnectionKey> ListHybridConnectionKeysAsync( this IServerFarmsOperations operations, string resourceGroupName, string name, string namespaceName, string relayName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListHybridConnectionKeysWithHttpMessagesAsync(resourceGroupName, name, namespaceName, relayName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Gets list of Apps associated with an App Service Plan
             /// </summary>
             /// <param name='operations'>

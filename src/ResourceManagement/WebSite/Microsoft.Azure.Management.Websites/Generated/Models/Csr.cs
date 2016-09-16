@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the Csr class.
         /// </summary>
-        public Csr(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string csrName = default(string), string distinguishedName = default(string), string csrString = default(string), string pfxBlob = default(string), string password = default(string), string publicKeyHash = default(string), string hostingEnvironment = default(string))
-            : base(location, id, name, type, tags)
+        public Csr(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string csrName = default(string), string distinguishedName = default(string), string csrString = default(string), string pfxBlob = default(string), string password = default(string), string publicKeyHash = default(string), string hostingEnvironment = default(string))
+            : base(location, id, name, kind, type, tags)
         {
             CsrName = csrName;
             DistinguishedName = distinguishedName;

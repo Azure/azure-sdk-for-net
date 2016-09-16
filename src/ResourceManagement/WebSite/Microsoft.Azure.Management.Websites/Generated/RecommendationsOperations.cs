@@ -242,13 +242,17 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Recommendation rule name
         /// </param>
+        /// <param name='updateSeen'>
+        /// If true, the backend updates the last seen timestamp of the recommendation
+        /// object.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<RecommendationRule>> GetRuleDetailsBySiteNameWithHttpMessagesAsync(string resourceGroupName, string siteName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RecommendationRule>> GetRuleDetailsBySiteNameWithHttpMessagesAsync(string resourceGroupName, string siteName, string name, bool? updateSeen = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -280,6 +284,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("siteName", siteName);
                 tracingParameters.Add("name", name);
+                tracingParameters.Add("updateSeen", updateSeen);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetRuleDetailsBySiteName", tracingParameters);
             }
@@ -291,6 +296,10 @@ namespace Microsoft.Azure.Management.WebSites
             _url = _url.Replace("{name}", Uri.EscapeDataString(name));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
+            if (updateSeen != null)
+            {
+                _queryParameters.Add(string.Format("updateSeen={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(updateSeen, this.Client.SerializationSettings).Trim('"'))));
+            }
             if (this.Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
@@ -437,13 +446,17 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='numSlots'>
         /// The number of site slots associated to the site
         /// </param>
+        /// <param name='liveHours'>
+        /// If greater than zero, this API scans the last active live site symptoms,
+        /// dynamically generate on-the-fly recommendations
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<IList<Recommendation>>> GetRecommendedRulesForSiteWithHttpMessagesAsync(string resourceGroupName, string siteName, bool? featured = default(bool?), string siteSku = default(string), int? numSlots = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IList<Recommendation>>> GetRecommendedRulesForSiteWithHttpMessagesAsync(string resourceGroupName, string siteName, bool? featured = default(bool?), string siteSku = default(string), int? numSlots = default(int?), int? liveHours = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -473,6 +486,7 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("featured", featured);
                 tracingParameters.Add("siteSku", siteSku);
                 tracingParameters.Add("numSlots", numSlots);
+                tracingParameters.Add("liveHours", liveHours);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetRecommendedRulesForSite", tracingParameters);
             }
@@ -494,6 +508,10 @@ namespace Microsoft.Azure.Management.WebSites
             if (numSlots != null)
             {
                 _queryParameters.Add(string.Format("numSlots={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(numSlots, this.Client.SerializationSettings).Trim('"'))));
+            }
+            if (liveHours != null)
+            {
+                _queryParameters.Add(string.Format("liveHours={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(liveHours, this.Client.SerializationSettings).Trim('"'))));
             }
             if (this.Client.ApiVersion != null)
             {

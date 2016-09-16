@@ -31,10 +31,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Initializes a new instance of the
         /// ManagedHostingEnvironmentCollection class.
         /// </summary>
-        public ManagedHostingEnvironmentCollection(IList<ManagedHostingEnvironment> value = default(IList<ManagedHostingEnvironment>), string nextLink = default(string))
+        public ManagedHostingEnvironmentCollection(IList<ManagedHostingEnvironment> value = default(IList<ManagedHostingEnvironment>), string nextLink = default(string), string id = default(string))
         {
             Value = value;
             NextLink = nextLink;
+            Id = id;
         }
 
         /// <summary>
@@ -48,6 +49,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "nextLink")]
         public string NextLink { get; set; }
+
+        /// <summary>
+        /// Id of parent resource
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
     }
 }

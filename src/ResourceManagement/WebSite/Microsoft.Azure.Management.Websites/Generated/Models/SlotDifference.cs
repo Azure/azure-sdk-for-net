@@ -30,8 +30,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the SlotDifference class.
         /// </summary>
-        public SlotDifference(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string slotDifferenceType = default(string), string settingType = default(string), string diffRule = default(string), string settingName = default(string), string valueInCurrentSlot = default(string), string valueInTargetSlot = default(string), string description = default(string))
-            : base(location, id, name, type, tags)
+        public SlotDifference(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string slotDifferenceType = default(string), string settingType = default(string), string diffRule = default(string), string settingName = default(string), string valueInCurrentSlot = default(string), string valueInTargetSlot = default(string), string description = default(string))
+            : base(location, id, name, kind, type, tags)
         {
             SlotDifferenceType = slotDifferenceType;
             SettingType = settingType;

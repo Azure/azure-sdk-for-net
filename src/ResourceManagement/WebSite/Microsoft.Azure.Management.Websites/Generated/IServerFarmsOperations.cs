@@ -443,6 +443,158 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         Task<AzureOperationResponse<ServerFarmWithRichSku>> GetServerFarmOperationWithHttpMessagesAsync(string resourceGroupName, string name, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
+        /// Retrieves all Service Bus Hybrid Connections in use on this App
+        /// Service Plan
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the App Service Plan
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<HybridConnection>> GetHybridConnectionsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Retrieves a specific Service Bus Hybrid Connection in use on this
+        /// App Service Plan.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the App Service Plan
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The name of the Service Bus Namespace
+        /// </param>
+        /// <param name='relayName'>
+        /// The name of the Service Bus Relay
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<HybridConnection>> GetHybridConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string namespaceName, string relayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Updates an existing Service Bus Hybrid Connection in use on this
+        /// App Service Plan. This will fail if the Hybrid Connection does
+        /// not already exist.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the App Service Plan
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The name of the Service Bus Namespace
+        /// </param>
+        /// <param name='relayName'>
+        /// The name of the Service Bus Relay
+        /// </param>
+        /// <param name='connection'>
+        /// The hybrid connection entity
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<HybridConnection>> PutHybridConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string namespaceName, string relayName, HybridConnection connection, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Deletes an existing Service Bus Hybrid Connection in use on this
+        /// App Service Plan.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the App Service Plan
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The name of the Service Bus Namespace
+        /// </param>
+        /// <param name='relayName'>
+        /// The name of the Service Bus Relay
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<object>> DeleteHybridConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string namespaceName, string relayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets a list of sites that are using a particular Hybrid Connection
+        /// on an App Service Plan
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group
+        /// </param>
+        /// <param name='name'>
+        /// The name of the App Service Plan
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The Hybrid Connection namespace
+        /// </param>
+        /// <param name='relayName'>
+        /// The Hybrid Connection relay name
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<object>> GetHybridConnectionSitesWithHttpMessagesAsync(string resourceGroupName, string name, string namespaceName, string relayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets the maximum number of Hybrid Connections allowed on a
+        /// specified App Service Plan
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group
+        /// </param>
+        /// <param name='name'>
+        /// The name of the App Service Plan
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<object>> GetHybridConnectionPlanLimitWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Gets the send key name and value for this Hybrid Connection
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the App Service Plan
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The name of the Service Bus Namespace
+        /// </param>
+        /// <param name='relayName'>
+        /// The name of the Service Bus Relay
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<HybridConnectionKey>> ListHybridConnectionKeysWithHttpMessagesAsync(string resourceGroupName, string name, string namespaceName, string relayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
         /// Gets list of Apps associated with an App Service Plan
         /// </summary>
         /// <param name='nextPageLink'>

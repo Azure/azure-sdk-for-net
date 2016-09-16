@@ -218,7 +218,7 @@ namespace WebSites.Tests.ScenarioTests
                     var connStringValueTypePair = new ConnStringValueTypePair
                     {
                         Value = connectionStringValue,
-                        Type = DatabaseServerType.MySql
+                        Type = ConnectionStringType.MySql
                     };
 
                     var connectionStringResponse = webSitesClient.Sites.UpdateSiteConnectionStrings(

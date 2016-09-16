@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the HostingEnvironment class.
         /// </summary>
-        public HostingEnvironment(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string hostingEnvironmentName = default(string), string hostingEnvironmentLocation = default(string), ProvisioningState? provisioningState = default(ProvisioningState?), HostingEnvironmentStatus? status = default(HostingEnvironmentStatus?), string vnetName = default(string), string vnetResourceGroupName = default(string), string vnetSubnetName = default(string), VirtualNetworkProfile virtualNetwork = default(VirtualNetworkProfile), InternalLoadBalancingMode? internalLoadBalancingMode = default(InternalLoadBalancingMode?), string multiSize = default(string), int? multiRoleCount = default(int?), IList<WorkerPool> workerPools = default(IList<WorkerPool>), int? ipsslAddressCount = default(int?), string databaseEdition = default(string), string databaseServiceObjective = default(string), int? upgradeDomains = default(int?), string subscriptionId = default(string), string dnsSuffix = default(string), string lastAction = default(string), string lastActionResult = default(string), string allowedMultiSizes = default(string), string allowedWorkerSizes = default(string), int? maximumNumberOfMachines = default(int?), IList<VirtualIPMapping> vipMappings = default(IList<VirtualIPMapping>), IList<StampCapacity> environmentCapacities = default(IList<StampCapacity>), IList<NetworkAccessControlEntry> networkAccessControlList = default(IList<NetworkAccessControlEntry>), bool? environmentIsHealthy = default(bool?), string environmentStatus = default(string), string resourceGroup = default(string), string apiManagementAccountId = default(string), bool? suspended = default(bool?), IList<NameValuePair> clusterSettings = default(IList<NameValuePair>))
-            : base(location, id, name, type, tags)
+        public HostingEnvironment(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string hostingEnvironmentName = default(string), string hostingEnvironmentLocation = default(string), ProvisioningState? provisioningState = default(ProvisioningState?), HostingEnvironmentStatus? status = default(HostingEnvironmentStatus?), string vnetName = default(string), string vnetResourceGroupName = default(string), string vnetSubnetName = default(string), VirtualNetworkProfile virtualNetwork = default(VirtualNetworkProfile), InternalLoadBalancingMode? internalLoadBalancingMode = default(InternalLoadBalancingMode?), string multiSize = default(string), int? multiRoleCount = default(int?), IList<WorkerPool> workerPools = default(IList<WorkerPool>), int? ipsslAddressCount = default(int?), string databaseEdition = default(string), string databaseServiceObjective = default(string), int? upgradeDomains = default(int?), string subscriptionId = default(string), string dnsSuffix = default(string), string lastAction = default(string), string lastActionResult = default(string), string allowedMultiSizes = default(string), string allowedWorkerSizes = default(string), int? maximumNumberOfMachines = default(int?), IList<VirtualIPMapping> vipMappings = default(IList<VirtualIPMapping>), IList<StampCapacity> environmentCapacities = default(IList<StampCapacity>), IList<NetworkAccessControlEntry> networkAccessControlList = default(IList<NetworkAccessControlEntry>), bool? environmentIsHealthy = default(bool?), string environmentStatus = default(string), string resourceGroup = default(string), int? frontEndScaleFactor = default(int?), string apiManagementAccountId = default(string), bool? suspended = default(bool?), IList<NameValuePair> clusterSettings = default(IList<NameValuePair>))
+            : base(location, id, name, kind, type, tags)
         {
             HostingEnvironmentName = hostingEnvironmentName;
             HostingEnvironmentLocation = hostingEnvironmentLocation;
@@ -61,6 +61,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             EnvironmentIsHealthy = environmentIsHealthy;
             EnvironmentStatus = environmentStatus;
             ResourceGroup = resourceGroup;
+            FrontEndScaleFactor = frontEndScaleFactor;
             ApiManagementAccountId = apiManagementAccountId;
             Suspended = suspended;
             ClusterSettings = clusterSettings;
@@ -266,7 +267,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public string ResourceGroup { get; set; }
 
         /// <summary>
-        /// Api Management Account associated with this Hosting Environment
+        /// Scale Factor for FrontEnds
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.frontEndScaleFactor")]
+        public int? FrontEndScaleFactor { get; set; }
+
+        /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "properties.apiManagementAccountId")]
         public string ApiManagementAccountId { get; set; }
