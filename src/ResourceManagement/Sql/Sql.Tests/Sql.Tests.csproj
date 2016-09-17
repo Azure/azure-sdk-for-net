@@ -13,9 +13,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScenarioTests\Sql2.RecommendedActionScenarioTest.cs" />
     <Compile Include="ScenarioTests\Sql2.AdvisorScenarioTest.cs" />
-    <Compile Include="ScenarioTests\Sql2.BlobAuditScenarioTest.cs" />
-    <Compile Include="ScenarioTests\Sql2.RecommendedActionScenarioTest.cs" />
-    <Compile Include="ScenarioTests\Sql2.AdvisorScenarioTest.cs" />
+    <Compile Include="ScenarioTests\Sql2.BlobAuditScenarioTest.cs" />    
     <Compile Include="ScenarioTests\Sql2.BackupScenarioTests.cs" />
     <Compile Include="ScenarioTests\Sql2.ImportExportScenarioTest.cs" />
     <Compile Include="ScenarioTests\Sql2.JobAccountScenarioTests.cs" />
