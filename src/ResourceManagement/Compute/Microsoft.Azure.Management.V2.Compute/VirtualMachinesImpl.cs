@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         public Task DeleteAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return ((ISupportsDeletingByGroup)this).DeleteAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
+            return ((ISupportsDeletingByGroup)this).DeleteAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id), cancellationToken);
         }
 
         public async Task DeleteAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         public async Task<PagedList<IVirtualMachine>> ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken)
         {
-            var data = await this.InnerCollection.ListAsync(resourceGroupName);
+            var data = await this.InnerCollection.ListAsync(resourceGroupName, cancellationToken);
             return WrapList(new PagedList<VirtualMachineInner>(data));
         }
 
