@@ -49,6 +49,16 @@ var mappings = {
         'source': 'arm-redis/2016-04-01/swagger/redis.json',
         'package': 'Microsoft.Azure.Management.Fluent.Redis',
         'args': '-FT 1'
+    },
+    'graphrbac': {
+        'dir': 'Graph.RBAC/Microsoft.Azure.Management.V2.Graph.RBAC',
+        'source': 'arm-graphrbac/1.6/swagger/graphrbac.json',
+        'package': 'Microsoft.Azure.Management.Graph.RBAC',
+    },
+    'keyvault': {
+        'dir': 'KeyVault/Microsoft.Azure.Management.V2.KeyVault',
+        'source': 'arm-keyvault/2015-06-01/swagger/keyvault.json',
+        'package': 'Microsoft.Azure.Management.KeyVault',
     }
 };
 
