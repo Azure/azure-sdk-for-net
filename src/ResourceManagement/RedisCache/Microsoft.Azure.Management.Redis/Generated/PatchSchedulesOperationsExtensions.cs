@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='parameters'>
             /// Parameters to set patch schedules for redis cache.
             /// </param>
-            public static RedisPatchSchedulesResponse CreateOrUpdate(this IPatchSchedulesOperations operations, string resourceGroupName, string name, RedisPatchSchedulesRequest parameters)
+            public static RedisPatchSchedule CreateOrUpdate(this IPatchSchedulesOperations operations, string resourceGroupName, string name, RedisPatchSchedule parameters)
             {
                 return System.Threading.Tasks.Task.Factory.StartNew(s => ((IPatchSchedulesOperations)s).CreateOrUpdateAsync(resourceGroupName, name, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<RedisPatchSchedulesResponse> CreateOrUpdateAsync(this IPatchSchedulesOperations operations, string resourceGroupName, string name, RedisPatchSchedulesRequest parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<RedisPatchSchedule> CreateOrUpdateAsync(this IPatchSchedulesOperations operations, string resourceGroupName, string name, RedisPatchSchedule parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='name'>
             /// The name of the redis cache.
             /// </param>
-            public static RedisPatchSchedulesResponse Get(this IPatchSchedulesOperations operations, string resourceGroupName, string name)
+            public static RedisPatchSchedule Get(this IPatchSchedulesOperations operations, string resourceGroupName, string name)
             {
                 return System.Threading.Tasks.Task.Factory.StartNew(s => ((IPatchSchedulesOperations)s).GetAsync(resourceGroupName, name), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<RedisPatchSchedulesResponse> GetAsync(this IPatchSchedulesOperations operations, string resourceGroupName, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<RedisPatchSchedule> GetAsync(this IPatchSchedulesOperations operations, string resourceGroupName, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
                 {

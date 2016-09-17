@@ -10,6 +10,9 @@ namespace Microsoft.Azure.Management.Redis.Models
 {
     using System.Linq;
 
+    /// <summary>
+    /// Patch schedule entry for Premium Redis Cache.
+    /// </summary>
     public partial class ScheduleEntry
     {
         /// <summary>
@@ -27,7 +30,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// can start.</param>
         /// <param name="maintenanceWindow">ISO8601 timespan specifying how
         /// much time cache patching can take. </param>
-        public ScheduleEntry(string dayOfWeek, int startHourUtc, System.TimeSpan? maintenanceWindow = default(System.TimeSpan?))
+        public ScheduleEntry(DayOfWeek dayOfWeek, int startHourUtc, System.TimeSpan? maintenanceWindow = default(System.TimeSpan?))
         {
             DayOfWeek = dayOfWeek;
             StartHourUtc = startHourUtc;
@@ -40,7 +43,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// 'Friday', 'Saturday', 'Sunday'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "dayOfWeek")]
-        public string DayOfWeek { get; set; }
+        public DayOfWeek DayOfWeek { get; set; }
 
         /// <summary>
         /// Gets or sets start hour after which cache patching can start.
@@ -63,10 +66,6 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// </exception>
         public virtual void Validate()
         {
-            if (DayOfWeek == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "DayOfWeek");
-            }
         }
     }
 }

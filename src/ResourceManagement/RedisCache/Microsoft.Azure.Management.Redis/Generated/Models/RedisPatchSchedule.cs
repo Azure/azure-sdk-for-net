@@ -14,17 +14,15 @@ namespace Microsoft.Azure.Management.Redis.Models
     /// Response to put/get patch schedules for redis cache.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class RedisPatchSchedulesResponse
+    public partial class RedisPatchSchedule
     {
         /// <summary>
-        /// Initializes a new instance of the RedisPatchSchedulesResponse
-        /// class.
+        /// Initializes a new instance of the RedisPatchSchedule class.
         /// </summary>
-        public RedisPatchSchedulesResponse() { }
+        public RedisPatchSchedule() { }
 
         /// <summary>
-        /// Initializes a new instance of the RedisPatchSchedulesResponse
-        /// class.
+        /// Initializes a new instance of the RedisPatchSchedule class.
         /// </summary>
         /// <param name="scheduleEntries">List of patch schedules for redis
         /// cache.</param>
@@ -32,7 +30,7 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="location">Resource location</param>
-        public RedisPatchSchedulesResponse(System.Collections.Generic.IList<ScheduleEntry> scheduleEntries, string id = default(string), string name = default(string), string type = default(string), string location = default(string))
+        public RedisPatchSchedule(System.Collections.Generic.IList<ScheduleEntry> scheduleEntries, string id = default(string), string name = default(string), string type = default(string), string location = default(string))
         {
             Id = id;
             Name = name;
@@ -60,10 +58,10 @@ namespace Microsoft.Azure.Management.Redis.Models
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets resource location
+        /// Gets resource location
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
+        public string Location { get; private set; }
 
         /// <summary>
         /// Gets or sets list of patch schedules for redis cache.
