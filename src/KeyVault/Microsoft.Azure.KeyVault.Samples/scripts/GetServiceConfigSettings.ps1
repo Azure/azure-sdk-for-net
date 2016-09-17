@@ -9,7 +9,7 @@ $vaultName           = 'MyVaultName'
 $resourceGroupName   = 'MyResourceGroupName'
 $applicationName     = 'MyAppName'
 $storageName         = 'MyStorageName'
-$pathToCertFile      = 'C:\path\Certificate.cer'
+
 
 # **********************************************************************************************
 # You MAY set the following values before running this script
@@ -23,8 +23,7 @@ $secretName          = 'MyStorageAccessSecret'
 if (($vaultName -eq 'MyVaultName') -or `
     ($resourceGroupName -eq 'MyResourceGroupName') -or `
 	($applicationName -eq 'MyAppName') -or `
-	($storageName -eq 'MyStorageName') -or `
-	($pathToCertFile -eq 'C:\path\Certificate.cer'))
+	($storageName -eq 'MyStorageName'))
 {
 	Write-Host 'You must edit the values at the top of this script before executing' -foregroundcolor Yellow
 	exit
@@ -46,9 +45,14 @@ $VerbosePreference = "SilentlyContinue"
 # **********************************************************************************************
 # Prep the cert credential data
 # **********************************************************************************************
-$x509 = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2
-$x509.Import($pathToCertFile)
-$myCertThumbprint = $x509.Thumbprint
+
+$certificateName = "$applicationName" + "cert"
+$myCertThumbprint = (New-SelfSignedCertificate -Type Custom -Subject "$certificateName"-KeyUsage DigitalSignature -KeyAlgorithm RSA -KeyLength 2048 -CertStoreLocation "Cert:\CurrentUser\My" -Provider "Microsoft Enhanced Cryptographic Provider v1.0" ).Thumbprint
+$x509 = (Get-ChildItem -Path cert:\CurrentUser\My\$myCertthumbprint)
+$password = Read-Host -Prompt "Please enter the certificate password." -AsSecureString
+Export-Certificate -cert $cert -FilePath ".\$certificateName.cer"
+Export-PfxCertificate -Cert $cert -FilePath ".\$certificateName.pfx" -Password $password
+
 
 $credValue = [System.Convert]::ToBase64String($x509.GetRawCertData())
 $now = [System.DateTime]::Now
@@ -64,7 +68,7 @@ if(-not $SvcPrincipals)
     $identifierUri = [string]::Format("http://localhost:8080/{0}",[Guid]::NewGuid().ToString("N"))
     $homePage = "http://contoso.com"
     Write-Host "Creating a new AAD Application"
-    $ADApp = New-AzureRmADApplication -DisplayName $applicationName -HomePage $homePage -IdentifierUris $identifierUri  -KeyValue $credValue -KeyType "AsymmetricX509Cert" -KeyUsage "Verify" -StartDate $now -EndDate $oneYearFromNow
+    $ADApp = New-AzureRmADApplication -DisplayName $applicationName -HomePage $homePage -IdentifierUris $identifierUri  -CertValue $credValue -StartDate $now -EndDate $oneYearFromNow
     Write-Host "Creating a new AAD service principal"
     $servicePrincipal = New-AzureRmADServicePrincipal -ApplicationId $ADApp.ApplicationId
 }
