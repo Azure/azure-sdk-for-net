@@ -11,16 +11,19 @@ namespace Microsoft.Azure.Management.V2.Compute
     using Microsoft.Azure.Management.V2.Network;
     using Microsoft.Azure.Management.V2.Resource.Core;
     using Microsoft.Azure.Management.V2.Storage;
+    using Management.Compute;
+    using Microsoft.Azure.Management.Compute.Models;
+
     /// <summary>
     /// The implementation for {@link VirtualMachineScaleSets}.
     /// </summary>
     public partial class VirtualMachineScaleSetsImpl  :
-        GroupableResourcesImpl<IVirtualMachineScaleSet,VirtualMachineScaleSetImpl,VirtualMachineScaleSetInner,VirtualMachineScaleSetsInner,ComputeManager>,
+        GroupableResources<IVirtualMachineScaleSet,VirtualMachineScaleSetImpl,VirtualMachineScaleSetInner, IVirtualMachineScaleSetsOperations, ComputeManager>,
         IVirtualMachineScaleSets
     {
         private StorageManager storageManager;
         private NetworkManager networkManager;
-        private  VirtualMachineScaleSetsImpl (VirtualMachineScaleSetsInner client, ComputeManager computeManager, StorageManager storageManager, NetworkManager networkManager)
+        private  VirtualMachineScaleSetsImpl (IVirtualMachineScaleSetsOperations client, ComputeManager computeManager, StorageManager storageManager, NetworkManager networkManager)
         {
 
             //$ ComputeManager computeManager,

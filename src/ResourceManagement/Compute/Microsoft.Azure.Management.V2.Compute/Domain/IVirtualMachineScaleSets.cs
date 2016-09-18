@@ -20,8 +20,11 @@ namespace Microsoft.Azure.Management.V2.Compute
         ISupportsGettingById<IVirtualMachineScaleSet>,
         ISupportsCreating<IBlank>,
         ISupportsDeleting,
-        ISupportsDeletingByGroup,
-        ISupportsBatchCreation<IVirtualMachineScaleSet>
+        ISupportsDeletingByGroup
+    /*,
+    //TODO Uncomment this after supporting ISupportsBatchCreation in C#
+    ISupportsBatchCreation<IVirtualMachineScaleSet>
+    */
     {
         /// <summary>
         /// Shuts down the Virtual Machine in the scale set and releases the compute resources.

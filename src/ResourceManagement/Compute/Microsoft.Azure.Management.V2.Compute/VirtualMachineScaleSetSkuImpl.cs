@@ -6,16 +6,17 @@
 
 namespace Microsoft.Azure.Management.V2.Compute
 {
-
+    using Management.Compute.Models;
     using Microsoft.Azure.Management.V2.Resource.Core;
     /// <summary>
     /// implementation of {@link VirtualMachineScaleSetSku}.
     /// </summary>
     public partial class VirtualMachineScaleSetSkuImpl  :
-        WrapperImpl<VirtualMachineScaleSetSkuInner>,
+        Wrapper<VirtualMachineScaleSetSku>,
         IVirtualMachineScaleSetSku
     {
-        private  VirtualMachineScaleSetSkuImpl (VirtualMachineScaleSetSkuInner inner)
+        // TODO: Report bug -> autorest generator is not appendeing 'Inner' to type Microsoft.Azure.Management.Compute.Models.VirtualMachineScaleSetSku
+        private VirtualMachineScaleSetSkuImpl (VirtualMachineScaleSetSku inner) : base(inner)
         {
 
             //$ super(inner);

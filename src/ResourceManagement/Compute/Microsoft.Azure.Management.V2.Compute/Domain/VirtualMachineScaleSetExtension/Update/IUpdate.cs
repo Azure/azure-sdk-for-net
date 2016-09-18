@@ -6,10 +6,10 @@
 
 namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Update
 {
-
-    using Java.Util;
     using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update;
     using Microsoft.Azure.Management.V2.Resource.Core.ChildResourceActions;
+    using System.Collections.Generic;
+
     /// <summary>
     /// The stage of the virtual machine scale set extension update allowing to add or update public and private settings.
     /// </summary>
@@ -36,14 +36,14 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.
         /// </summary>
         /// <param name="settings">settings the public settings</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Update.IUpdate WithPublicSettings (HashMap<string,object> settings);
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Update.IUpdate WithPublicSettings (IDictionary<string,object> settings);
 
         /// <summary>
         /// Specifies private settings.
         /// </summary>
         /// <param name="settings">settings the private settings</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Update.IUpdate WithProtectedSettings (HashMap<string,object> settings);
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Update.IUpdate WithProtectedSettings (IDictionary<string,object> settings);
 
     }
     /// <summary>

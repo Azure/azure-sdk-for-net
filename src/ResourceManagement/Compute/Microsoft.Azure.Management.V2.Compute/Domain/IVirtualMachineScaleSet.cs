@@ -12,6 +12,8 @@ namespace Microsoft.Azure.Management.V2.Compute
     using Microsoft.Azure.Management.V2.Resource.Core;
     using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update;
+    using Management.Compute.Models;
+
     /// <summary>
     /// An immutable client-side representation of an Azure virtual machine scale set.
     /// </summary>

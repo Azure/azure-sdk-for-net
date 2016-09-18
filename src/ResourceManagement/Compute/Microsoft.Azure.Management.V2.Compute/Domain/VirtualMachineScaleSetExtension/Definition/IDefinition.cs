@@ -9,7 +9,8 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.
 
     using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.V2.Compute;
-    using Java.Util;
+    using System.Collections.Generic;
+
     /// <summary>
     /// The first stage of a virtual machine scale set extension definition.
     /// 
@@ -55,13 +56,16 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.
     public interface IWithImageOrPublisher<ParentT>  :
         IWithPublisher<ParentT>
     {
+        /*
+        //TODO Uncomment this after moving IVirtualMachineExtensionImage from Java
+        //
         /// <summary>
         /// Specifies the virtual machine scale set extension image to use.
         /// </summary>
         /// <param name="image">image the image</param>
         /// <returns>the next stage of the definition</returns>
         IWithAttach<ParentT> WithImage (IVirtualMachineExtensionImage image);
-
+        */
     }
     /// <summary>
     /// The stage of the virtual machine scale set extension definition allowing to specify the type of the virtual machine
@@ -160,14 +164,14 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.
         /// </summary>
         /// <param name="settings">settings the public settings</param>
         /// <returns>the next stage of the definition</returns>
-        IWithAttach<ParentT> WithPublicSettings (HashMap<string,object> settings);
+        IWithAttach<ParentT> WithPublicSettings (IDictionary<string,object> settings);
 
         /// <summary>
         /// Specifies private settings.
         /// </summary>
         /// <param name="settings">settings the private settings</param>
         /// <returns>the next stage of the definition</returns>
-        IWithAttach<ParentT> WithProtectedSettings (HashMap<string,object> settings);
+        IWithAttach<ParentT> WithProtectedSettings (IDictionary<string,object> settings);
 
     }
 }

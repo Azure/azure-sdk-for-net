@@ -14,6 +14,8 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definitio
     using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.V2.Resource.Core.Resource.Definition;
     using Microsoft.Azure.Management.V2.Storage;
+    using Management.Compute.Models;
+
     /// <summary>
     /// The stage of the Windows virtual machine scale set definition which contains all the minimum required
     /// inputs for the resource to be created (via {@link WithCreate#create()}, but also allows for any other

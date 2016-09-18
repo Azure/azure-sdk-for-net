@@ -6,7 +6,7 @@
 
 namespace Microsoft.Azure.Management.V2.Compute
 {
-
+    using Management.Compute.Models;
 
     /// <summary>
     /// A type representing sku available for virtual machines in a scale set.

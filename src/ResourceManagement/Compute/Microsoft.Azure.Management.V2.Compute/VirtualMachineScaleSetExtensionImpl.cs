@@ -14,21 +14,23 @@ namespace Microsoft.Azure.Management.V2.Compute
     using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition;
     using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update;
     using Microsoft.Azure.Management.V2.Resource.Core;
-    using Java.Util;
     using System.Collections.Generic;
+    using Management.Compute.Models;
+    using Resource.Core.ChildResourceActions;
+
     /// <summary>
     /// Implementation of {@link VirtualMachineScaleSetExtension}.
     /// </summary>
     public partial class VirtualMachineScaleSetExtensionImpl  :
-        ChildResourceImpl<VirtualMachineScaleSetExtensionInner,VirtualMachineScaleSetImpl,IVirtualMachineScaleSet>,
+        ChildResource<VirtualMachineScaleSetExtensionInner, VirtualMachineScaleSetImpl>,
         IVirtualMachineScaleSetExtension,
         IDefinition<IWithCreate>,
         IUpdateDefinition<IWithApplicable>,
-        IUpdate
+        VirtualMachineScaleSetExtension.Update.IUpdate
     {
-        private HashMap<string,object> publicSettings;
-        private HashMap<string,object> protectedSettings;
-        protected  VirtualMachineScaleSetExtensionImpl (VirtualMachineScaleSetExtensionInner inner, VirtualMachineScaleSetImpl parent)
+        private IDictionary<string,object> publicSettings;
+        private IDictionary<string,object> protectedSettings;
+        protected  VirtualMachineScaleSetExtensionImpl (VirtualMachineScaleSetExtensionInner inner, VirtualMachineScaleSetImpl parent) : base(inner.Id, inner, parent)
         {
 
             //$ VirtualMachineScaleSetImpl parent) {
@@ -136,6 +138,9 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this;
         }
 
+        /*
+        //TODO Uncomment this after moving IVirtualMachineExtensionImage from Java
+        //
         public VirtualMachineScaleSetExtensionImpl WithImage (IVirtualMachineExtensionImage image)
         {
 
@@ -146,6 +151,7 @@ namespace Microsoft.Azure.Management.V2.Compute
 
             return this;
         }
+        */
 
         public VirtualMachineScaleSetExtensionImpl WithPublisher (string extensionImagePublisherName)
         {
@@ -174,7 +180,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this;
         }
 
-        public VirtualMachineScaleSetExtensionImpl WithPublicSettings (HashMap<string,object> settings)
+        public VirtualMachineScaleSetExtensionImpl WithPublicSettings (IDictionary<string,object> settings)
         {
 
             //$ this.publicSettings.clear();
@@ -184,7 +190,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this;
         }
 
-        public VirtualMachineScaleSetExtensionImpl WithProtectedSettings (HashMap<string,object> settings)
+        public VirtualMachineScaleSetExtensionImpl WithProtectedSettings (IDictionary<string,object> settings)
         {
 
             //$ this.protectedSettings.clear();
@@ -245,16 +251,13 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         }
 
-        public VirtualMachineScaleSetImpl Attach
+        public VirtualMachineScaleSetImpl Attach()
         {
-            get
-            {
-            //$ nullifySettingsIfEmpty();
-            //$ return this.parent().withExtension(this);
-
-
-                return null;
-            }
+            return null;
+        }
+        VirtualMachineScaleSet.Update.IUpdate ISettable<VirtualMachineScaleSet.Update.IUpdate>.Parent()
+        {
+            return base.Parent;
         }
     }
 }

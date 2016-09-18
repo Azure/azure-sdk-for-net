@@ -6,6 +6,7 @@
 
 namespace Microsoft.Azure.Management.V2.Compute
 {
+    using Management.Compute.Models;
 
     using Microsoft.Azure.Management.V2.Resource.Core;
     public partial class VirtualMachineScaleSetSkuImpl 
@@ -16,11 +17,11 @@ namespace Microsoft.Azure.Management.V2.Compute
         }
 
         /// <returns>available scaling information.</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetSkuCapacity Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSetSku.Capacity
+        VirtualMachineScaleSetSkuCapacity Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSetSku.Capacity
         {
             get
             {
-                return this.Capacity as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetSkuCapacity;
+                return this.Capacity as VirtualMachineScaleSetSkuCapacity;
             }
         }
         /// <returns>the type of resource the sku applies to.</returns>
