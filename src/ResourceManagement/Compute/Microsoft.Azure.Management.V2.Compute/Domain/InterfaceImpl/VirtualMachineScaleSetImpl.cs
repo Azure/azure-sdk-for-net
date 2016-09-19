@@ -39,8 +39,8 @@ namespace Microsoft.Azure.Management.V2.Compute
     {
         // Clients
         private IVirtualMachineScaleSetsOperations client;
-        private StorageManager storageManager;
-        private NetworkManager networkManager;
+        private IStorageManager storageManager;
+        private INetworkManager networkManager;
         // used to generate unique name for any dependency resources
         private ResourceNamer namer;
         private bool isMarketplaceLinuxImage = false;
@@ -81,8 +81,8 @@ namespace Microsoft.Azure.Management.V2.Compute
                     VirtualMachineScaleSetInner innerModel,
                     IVirtualMachineScaleSetsOperations client,
                     ComputeManager computeManager,
-                    StorageManager storageManager,
-                    NetworkManager networkManager) : base(name, innerModel, computeManager)
+                    IStorageManager storageManager,
+                    INetworkManager networkManager) : base(name, innerModel, computeManager)
         {
             this.client = client;
             this.storageManager = storageManager;
