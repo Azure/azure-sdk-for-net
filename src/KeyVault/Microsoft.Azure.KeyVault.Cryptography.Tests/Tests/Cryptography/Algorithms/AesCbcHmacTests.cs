@@ -45,12 +45,13 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Tests
                 Assert.True( encryptor.Tag.SequenceEqual( TAG ) );
             }
 
-            using ( var decryptor = kw.CreateDecryptor( CEK, IV, AUTH ) )
+            using ( var decryptor = kw.CreateDecryptor( CEK, IV, AUTH ) as IAuthenticatedCryptoTransform )
             {
                 var decrypted = decryptor.TransformFinalBlock( ED, 0, ED.Length );
 
                 // Assert
                 Assert.True( decrypted.SequenceEqual( PLAIN ) );
+                Assert.True( decryptor.Tag.SequenceEqual( TAG ) );
             }
         }
     }
