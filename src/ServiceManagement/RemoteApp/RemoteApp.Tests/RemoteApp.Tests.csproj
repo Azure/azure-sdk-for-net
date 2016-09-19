@@ -110,6 +110,12 @@
     <None Include="SessionRecords\RemoteApp.Tests.TemplateImageTests\CanEnsureStorageInRegion.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\RemoteApp.Tests.TemplateImageTests\CanExportGoldImage.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\RemoteApp.Tests.TemplateImageTests\CanExportUserDisk.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\RemoteApp.Tests.TemplateImageTests\CanGetTemplateImageByName.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

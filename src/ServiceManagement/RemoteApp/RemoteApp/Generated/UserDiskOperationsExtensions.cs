@@ -25,6 +25,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure;
 using Microsoft.WindowsAzure.Management.RemoteApp;
+using Microsoft.WindowsAzure.Management.RemoteApp.Models;
 
 namespace Microsoft.WindowsAzure.Management.RemoteApp
 {
@@ -143,6 +144,74 @@ namespace Microsoft.WindowsAzure.Management.RemoteApp
         public static Task<AzureOperationResponse> DeleteAsync(this IUserDiskOperations operations, string collectionName, string userUpn)
         {
             return operations.DeleteAsync(collectionName, userUpn, CancellationToken.None);
+        }
+        
+        /// <summary>
+        /// Migrate user disks of all the users from a collection to the
+        /// specified azure storage account
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IUserDiskOperations.
+        /// </param>
+        /// <param name='collectionName'>
+        /// Required. The collection name.
+        /// </param>
+        /// <param name='targetAccountName'>
+        /// Required. The destination storage account name
+        /// </param>
+        /// <param name='targetAccountKey'>
+        /// Required. The destination storage account key
+        /// </param>
+        /// <param name='targetContainerName'>
+        /// Required. The destination container name
+        /// </param>
+        /// <param name='overwriteExistingUserDisk'>
+        /// Required. A flag denoting if the request is to overwrite the
+        /// existing user disk in the destination storage account
+        /// </param>
+        /// <returns>
+        /// The response containing the operation tracking id.
+        /// </returns>
+        public static OperationResultWithTrackingId Migrate(this IUserDiskOperations operations, string collectionName, string targetAccountName, string targetAccountKey, string targetContainerName, bool overwriteExistingUserDisk)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IUserDiskOperations)s).MigrateAsync(collectionName, targetAccountName, targetAccountKey, targetContainerName, overwriteExistingUserDisk);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// Migrate user disks of all the users from a collection to the
+        /// specified azure storage account
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.RemoteApp.IUserDiskOperations.
+        /// </param>
+        /// <param name='collectionName'>
+        /// Required. The collection name.
+        /// </param>
+        /// <param name='targetAccountName'>
+        /// Required. The destination storage account name
+        /// </param>
+        /// <param name='targetAccountKey'>
+        /// Required. The destination storage account key
+        /// </param>
+        /// <param name='targetContainerName'>
+        /// Required. The destination container name
+        /// </param>
+        /// <param name='overwriteExistingUserDisk'>
+        /// Required. A flag denoting if the request is to overwrite the
+        /// existing user disk in the destination storage account
+        /// </param>
+        /// <returns>
+        /// The response containing the operation tracking id.
+        /// </returns>
+        public static Task<OperationResultWithTrackingId> MigrateAsync(this IUserDiskOperations operations, string collectionName, string targetAccountName, string targetAccountKey, string targetContainerName, bool overwriteExistingUserDisk)
+        {
+            return operations.MigrateAsync(collectionName, targetAccountName, targetAccountKey, targetContainerName, overwriteExistingUserDisk, CancellationToken.None);
         }
     }
 }
