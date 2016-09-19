@@ -116,26 +116,18 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// <param name="image">image the image</param>
         /// <returns>the next stage of the definition</returns>
         ///
-        /*
-        //TODO Uncomment this after moving IVirtualMachineExtensionImage from Java
-        //
         Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Definition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate> Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Definition.IWithImageOrPublisher<Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate>.WithImage (IVirtualMachineExtensionImage image) {
             return this.WithImage( image) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Definition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate>;
         }
-        */
 
         /// <summary>
         /// Specifies the virtual machine scale set extension image to use.
         /// </summary>
         /// <param name="image">image the image</param>
         /// <returns>the next stage of the definition</returns>
-        /*
-        //TODO Uncomment this after moving IVirtualMachineExtensionImage from Java
-        //
         Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Update.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable> Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Update.IWithImageOrPublisher<Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable>.WithImage (IVirtualMachineExtensionImage image) {
             return this.WithImage( image) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Update.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable>;
         }
-        */
 
         /// <summary>
         /// Specifies the version of the virtual machine scale set image extension.

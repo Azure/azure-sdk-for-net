@@ -32,81 +32,55 @@ namespace Microsoft.Azure.Management.V2.Compute
         private IDictionary<string,object> protectedSettings;
         internal  VirtualMachineScaleSetExtensionImpl (VirtualMachineScaleSetExtensionInner inner, VirtualMachineScaleSetImpl parent) : base(inner.Id, inner, parent)
         {
-
-            //$ VirtualMachineScaleSetImpl parent) {
-            //$ super(inner, parent);
-            //$ initializeSettings();
-            //$ }
-
+            InitializeSettings();
         }
 
         public string Name
         {
             get
             {
-            //$ return this.inner().name();
-
-
-                return null;
+                return this.Inner.Name;
             }
         }
         public string PublisherName
         {
             get
             {
-            //$ return this.inner().publisher();
-
-
-                return null;
+                return this.Inner.Publisher;
             }
         }
         public string TypeName
         {
             get
             {
-            //$ return this.inner().type();
-
-
-                return null;
+                return this.Inner.Type;
             }
         }
         public string VersionName
         {
             get
             {
-            //$ return this.inner().typeHandlerVersion();
-
-
-                return null;
+                return this.Inner.TypeHandlerVersion;
             }
         }
         public bool? AutoUpgradeMinorVersionEnabled
         {
             get
             {
-            //$ return this.inner().autoUpgradeMinorVersion();
-
-
-                return null;
+                return this.Inner.AutoUpgradeMinorVersion;
             }
         }
         public IDictionary<string,object> PublicSettings
         {
             get
             {
-            //$ return Collections.unmodifiableMap(this.publicSettings);
-
-
-                return null;
+                return this.publicSettings;
             }
         }
         public string PublicSettingsAsJsonString
         {
             get
             {
-            //$ return null;
-
-
                 return null;
             }
         }
@@ -114,147 +88,120 @@ namespace Microsoft.Azure.Management.V2.Compute
         {
             get
             {
-            //$ return this.inner().provisioningState();
-
-
-                return null;
+                return this.Inner.ProvisioningState;
             }
         }
         public VirtualMachineScaleSetExtensionImpl WithAutoUpgradeMinorVersionEnabled ()
         {
-
-            //$ this.inner().withAutoUpgradeMinorVersion(true);
-            //$ return this;
-
+            this.Inner.AutoUpgradeMinorVersion = true;
             return this;
         }
 
         public VirtualMachineScaleSetExtensionImpl WithAutoUpgradeMinorVersionDisabled ()
         {
-
-            //$ this.inner().withAutoUpgradeMinorVersion(false);
-            //$ return this;
-
+            this.Inner.AutoUpgradeMinorVersion = false;
             return this;
         }
 
-        /*
-        //TODO Uncomment this after moving IVirtualMachineExtensionImage from Java
-        //
         public VirtualMachineScaleSetExtensionImpl WithImage (IVirtualMachineExtensionImage image)
         {
-
-            //$ this.inner().withPublisher(image.publisherName())
-            //$ .withType(image.typeName())
-            //$ .withTypeHandlerVersion(image.versionName());
-            //$ return this;
-
+            Inner.Publisher = image.PublisherName;
+            Inner.Type = image.TypeName;
+            Inner.TypeHandlerVersion = image.VersionName;
             return this;
         }
-        */
 
         public VirtualMachineScaleSetExtensionImpl WithPublisher (string extensionImagePublisherName)
         {
-
-            //$ this.inner().withPublisher(extensionImagePublisherName);
-            //$ return this;
-
+            this.Inner.Publisher = extensionImagePublisherName;
             return this;
         }
 
         public VirtualMachineScaleSetExtensionImpl WithPublicSetting (string key, object value)
         {
-
-            //$ this.publicSettings.put(key, value);
-            //$ return this;
-
+            this.publicSettings.Add(key, value);
             return this;
         }
 
         public VirtualMachineScaleSetExtensionImpl WithProtectedSetting (string key, object value)
         {
 
-            //$ this.protectedSettings.put(key, value);
-            //$ return this;
-
+            this.protectedSettings.Add(key, value);
             return this;
         }
 
         public VirtualMachineScaleSetExtensionImpl WithPublicSettings (IDictionary<string,object> settings)
         {
-
-            //$ this.publicSettings.clear();
-            //$ this.publicSettings.putAll(settings);
-            //$ return this;
-
+            this.publicSettings.Clear();
+            foreach(var entry in settings) {
+                this.publicSettings.Add(entry.Key, entry.Value);
+            }
             return this;
         }
 
         public VirtualMachineScaleSetExtensionImpl WithProtectedSettings (IDictionary<string,object> settings)
         {
-
-            //$ this.protectedSettings.clear();
-            //$ this.protectedSettings.putAll(settings);
-            //$ return this;
-
+            this.protectedSettings.Clear();
+            foreach (var entry in settings)
+            {
+                this.protectedSettings.Add(entry.Key, entry.Value);
+            }
             return this;
         }
 
         public VirtualMachineScaleSetExtensionImpl WithType (string extensionImageTypeName)
         {
-
-            //$ this.inner().withType(extensionImageTypeName);
-            //$ return this;
-
+            Inner.Type = extensionImageTypeName;
             return this;
         }
 
         public VirtualMachineScaleSetExtensionImpl WithVersion (string extensionImageVersionName)
         {
-
-            //$ this.inner().withTypeHandlerVersion(extensionImageVersionName);
-            //$ return this;
-
+            Inner.TypeHandlerVersion = extensionImageVersionName;
             return this;
         }
 
         private void NullifySettingsIfEmpty ()
         {
+            if (this.publicSettings.Count == 0) {
+                this.Inner.Settings = null;
+            }
 
-            //$ if (this.publicSettings.size() == 0) {
-            //$ this.inner().withSettings(null);
-            //$ }
-            //$ if (this.protectedSettings.size() == 0) {
-            //$ this.inner().withProtectedSettings(null);
-            //$ }
-            //$ }
-
+            if (this.protectedSettings.Count == 0)
+            {
+                this.Inner.ProtectedSettings = null;
+            }
         }
 
         private void InitializeSettings ()
         {
+            if (this.Inner.Settings == null)
+            {
+                this.publicSettings = new Dictionary<string, object>();
+                this.Inner.Settings = this.publicSettings;
+            }
+            else
+            {
+                this.publicSettings = this.Inner.Settings as IDictionary<string, object>;
+            }
 
-            //$ if (this.inner().settings() == null) {
-            //$ this.publicSettings = new LinkedHashMap<>();
-            //$ this.inner().withSettings(this.publicSettings);
-            //$ } else {
-            //$ this.publicSettings = (LinkedHashMap<String, Object>) this.inner().settings();
-            //$ }
-            //$ 
-            //$ if (this.inner().protectedSettings() == null) {
-            //$ this.protectedSettings = new LinkedHashMap<>();
-            //$ this.inner().withProtectedSettings(this.protectedSettings);
-            //$ } else {
-            //$ this.protectedSettings = (LinkedHashMap<String, Object>) this.inner().protectedSettings();
-            //$ }
-            //$ }
-
+            if (this.Inner.ProtectedSettings == null)
+            {
+                this.protectedSettings = new Dictionary<string, object>();
+                this.Inner.ProtectedSettings = this.protectedSettings;
+            }
+            else
+            {
+                this.protectedSettings = this.Inner.ProtectedSettings as IDictionary<string, object>;
+            }
         }
 
         public VirtualMachineScaleSetImpl Attach()
         {
-            return null;
+            NullifySettingsIfEmpty();
+            return this.Parent.WithExtension(this);
         }
+
         VirtualMachineScaleSet.Update.IUpdate ISettable<VirtualMachineScaleSet.Update.IUpdate>.Parent()
         {
             return base.Parent;

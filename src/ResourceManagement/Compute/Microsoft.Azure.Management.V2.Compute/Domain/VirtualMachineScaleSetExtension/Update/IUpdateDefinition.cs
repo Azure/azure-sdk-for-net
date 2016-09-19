@@ -20,8 +20,6 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.
     public interface IWithImageOrPublisher<ParentT>  :
         IWithPublisher<ParentT>
     {
-        /*
-        /TODO Uncomment this after moving IVirtualMachineExtensionImage from Java
         //
         /// <summary>
         /// Specifies the virtual machine scale set extension image to use.
@@ -29,9 +27,8 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.
         /// <param name="image">image the image</param>
         /// <returns>the next stage of the definition</returns>
         IWithAttach<ParentT> WithImage (IVirtualMachineExtensionImage image);
-        */
-
     }
+
     /// <summary>
     /// The final stage of the virtual machine scale set extension definition.
     /// <p>
