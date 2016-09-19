@@ -200,7 +200,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update
         /// </summary>
         /// <param name="name">name the reference name for the extension</param>
         /// <returns>the stage representing configuration for the extension</returns>
-        IBlank<IWithApplicable> DefineNewExtension (string name);
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Update.IBlank<IWithApplicable> DefineNewExtension (string name);
 
         /// <summary>
         /// Begins the description of an update of an existing extension assigned to the virtual machines in the scale set.

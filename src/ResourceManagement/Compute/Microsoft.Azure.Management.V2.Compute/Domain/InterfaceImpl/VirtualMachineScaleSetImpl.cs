@@ -19,6 +19,7 @@ using Microsoft.Azure.Management.V2.Storage;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Rest.Azure;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Microsoft.Azure.Management.V2.Compute
 {
@@ -795,10 +796,10 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this;
         }
 
-        public VirtualMachineScaleSetExtensionImpl DefineNewExtension(string name)
-        {
-            return new VirtualMachineScaleSetExtensionImpl(new VirtualMachineScaleSetExtensionInner { Name = name }, this);
-        }
+        //public VirtualMachineScaleSetExtensionImpl DefineNewExtension(string name)
+        //{
+        //    return new VirtualMachineScaleSetExtensionImpl(new VirtualMachineScaleSetExtensionInner { Name = name }, this);
+        //}
 
         protected VirtualMachineScaleSetImpl WithExtension(VirtualMachineScaleSetExtensionImpl extension)
         {
@@ -929,7 +930,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             if (self.ComputerNamePrefix == null)
             {
                 // VM name cannot contain only numeric values and cannot exceed 15 chars
-                if (self.Name.All(char.IsDigit))
+                if ((new Regex(@"^\d+$")).IsMatch(self.Name))
                 {
                     this.WithComputerNamePrefix(ResourceNamer.RandomResourceName("vmss-vm", 12));
                 }
@@ -1534,125 +1535,12 @@ namespace Microsoft.Azure.Management.V2.Compute
         #endregion
     }
 
-    public partial class VirtualMachineScaleSetImpl :
-        VirtualMachineScaleSet.Update.IUpdate
-    {
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Update.IBlank<Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable>
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithExtension.DefineNewExtension(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IUpdate
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithExtension.UpdateExtension(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithCapacity.WithCapacity(int capacity)
-        {
-            throw new NotImplementedException();
-        }
-
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithExtension.WithoutExtension(string name)
-        {
-            throw new NotImplementedException();
-        }
-
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancer.WithoutPrimaryInternalLoadBalancer()
-        {
-            throw new NotImplementedException();
-        }
-
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerBackend.WithoutPrimaryInternalLoadBalancerBackends(string backendNames)
-        {
-            throw new NotImplementedException();
-        }
-
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerNatPool.WithoutPrimaryInternalLoadBalancerNatPools(string natPoolNames)
-        {
-            throw new NotImplementedException();
-        }
-
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancer.WithoutPrimaryInternetFacingLoadBalancer()
-        {
-            throw new NotImplementedException();
-        }
-
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerBackend.WithoutPrimaryInternetFacingLoadBalancerBackends(string backendNames)
-        {
-            throw new NotImplementedException();
-        }
-
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerNatPool.WithoutPrimaryInternetFacingLoadBalancerNatPools(string natPoolNames)
-        {
-            throw new NotImplementedException();
-        }
-
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerBackendOrNatPool
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancer.WithPrimaryInternalLoadBalancer(ILoadBalancer loadBalancer)
-        {
-            throw new NotImplementedException();
-        }
-
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerNatPool
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerBackendOrNatPool.WithPrimaryInternalLoadBalancerBackends(string backendNames)
-        {
-            throw new NotImplementedException();
-        }
-
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerNatPool.WithPrimaryInternalLoadBalancerInboundNatPools(string natPoolNames)
-        {
-            throw new NotImplementedException();
-        }
-
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryLoadBalancer.WithPrimaryInternetFacingLoadBalancer(ILoadBalancer loadBalancer)
-        {
-            throw new NotImplementedException();
-        }
-
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerNatPool
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool.WithPrimaryInternetFacingLoadBalancerBackends(string backendNames)
-        {
-            throw new NotImplementedException();
-        }
-
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancer
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerNatPool.WithPrimaryInternetFacingLoadBalancerInboundNatPools(string natPoolNames)
-        {
-            throw new NotImplementedException();
-        }
-
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithSku.WithSku(IVirtualMachineScaleSetSku sku)
-        {
-            throw new NotImplementedException();
-        }
-
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithSku.WithSku(VirtualMachineScaleSetSkuTypes skuType)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public partial class VirtualMachineScaleSetImpl :
-        VirtualMachineScaleSet.Definition.IDefinition
+    public partial class VirtualMachineScaleSetImpl
     {
         Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate
             Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate.DisableAutoUpdate()
         {
-            return null;
+            return this.DisableAutoUpdate() as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate;
         }
 
         Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate
@@ -1661,10 +1549,11 @@ namespace Microsoft.Azure.Management.V2.Compute
             return null;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Definition.IBlank<IWithCreate> 
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Definition.IBlank<Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate> 
             Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithExtension.DefineNewExtension(string name)
         {
-            throw new NotImplementedException();
+            // return this.DefineNewExtension(name) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Definition.IBlank<Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate>;
+            return new VirtualMachineScaleSetExtensionImpl(new VirtualMachineScaleSetExtensionInner { Name = name }, this) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Definition.IBlank<Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate>;
         }
 
         Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate
@@ -1915,6 +1804,116 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate
             Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate.WithWinRm(WinRMListener listener)
+        {
+            throw new NotImplementedException();
+        }
+
+        // Update Withers
+
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Update.IBlank<Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable>
+    Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithExtension.DefineNewExtension(string name)
+        {
+            return new VirtualMachineScaleSetExtensionImpl(new VirtualMachineScaleSetExtensionInner { Name = name }, this) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Update.IBlank<Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable>;
+        }
+
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IUpdate
+            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithExtension.UpdateExtension(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
+            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithCapacity.WithCapacity(int capacity)
+        {
+            throw new NotImplementedException();
+        }
+
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
+            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithExtension.WithoutExtension(string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
+            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancer.WithoutPrimaryInternalLoadBalancer()
+        {
+            throw new NotImplementedException();
+        }
+
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
+            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerBackend.WithoutPrimaryInternalLoadBalancerBackends(string backendNames)
+        {
+            throw new NotImplementedException();
+        }
+
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
+            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerNatPool.WithoutPrimaryInternalLoadBalancerNatPools(string natPoolNames)
+        {
+            throw new NotImplementedException();
+        }
+
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
+            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancer.WithoutPrimaryInternetFacingLoadBalancer()
+        {
+            throw new NotImplementedException();
+        }
+
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
+            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerBackend.WithoutPrimaryInternetFacingLoadBalancerBackends(string backendNames)
+        {
+            throw new NotImplementedException();
+        }
+
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
+            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerNatPool.WithoutPrimaryInternetFacingLoadBalancerNatPools(string natPoolNames)
+        {
+            throw new NotImplementedException();
+        }
+
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerBackendOrNatPool
+            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancer.WithPrimaryInternalLoadBalancer(ILoadBalancer loadBalancer)
+        {
+            throw new NotImplementedException();
+        }
+
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerNatPool
+            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerBackendOrNatPool.WithPrimaryInternalLoadBalancerBackends(string backendNames)
+        {
+            throw new NotImplementedException();
+        }
+
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
+            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerNatPool.WithPrimaryInternalLoadBalancerInboundNatPools(string natPoolNames)
+        {
+            throw new NotImplementedException();
+        }
+
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool
+            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryLoadBalancer.WithPrimaryInternetFacingLoadBalancer(ILoadBalancer loadBalancer)
+        {
+            throw new NotImplementedException();
+        }
+
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerNatPool
+            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool.WithPrimaryInternetFacingLoadBalancerBackends(string backendNames)
+        {
+            throw new NotImplementedException();
+        }
+
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancer
+            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerNatPool.WithPrimaryInternetFacingLoadBalancerInboundNatPools(string natPoolNames)
+        {
+            throw new NotImplementedException();
+        }
+
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
+            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithSku.WithSku(IVirtualMachineScaleSetSku sku)
+        {
+            throw new NotImplementedException();
+        }
+
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
+            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithSku.WithSku(VirtualMachineScaleSetSkuTypes skuType)
         {
             throw new NotImplementedException();
         }
