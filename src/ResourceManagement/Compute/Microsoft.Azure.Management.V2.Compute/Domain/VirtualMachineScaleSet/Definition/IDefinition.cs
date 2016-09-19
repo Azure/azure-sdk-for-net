@@ -28,13 +28,13 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definitio
         /// Specifies that VM Agent should not be provisioned.
         /// </summary>
         /// <returns>the stage representing creatable Windows VM scale set definition</returns>
-        IWithWindowsCreate DisableVmAgent { get; }
+        IWithWindowsCreate DisableVmAgent();
 
         /// <summary>
         /// Specifies that automatic updates should be disabled.
         /// </summary>
         /// <returns>the stage representing creatable Windows VM scale set definition</returns>
-        IWithWindowsCreate DisableAutoUpdate { get; }
+        IWithWindowsCreate DisableAutoUpdate();
 
         /// <summary>
         /// Specifies the time-zone.

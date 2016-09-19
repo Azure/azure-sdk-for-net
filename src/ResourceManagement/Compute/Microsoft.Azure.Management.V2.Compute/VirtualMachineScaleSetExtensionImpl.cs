@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     {
         private IDictionary<string,object> publicSettings;
         private IDictionary<string,object> protectedSettings;
-        protected  VirtualMachineScaleSetExtensionImpl (VirtualMachineScaleSetExtensionInner inner, VirtualMachineScaleSetImpl parent) : base(inner.Id, inner, parent)
+        internal  VirtualMachineScaleSetExtensionImpl (VirtualMachineScaleSetExtensionInner inner, VirtualMachineScaleSetImpl parent) : base(inner.Id, inner, parent)
         {
 
             //$ VirtualMachineScaleSetImpl parent) {

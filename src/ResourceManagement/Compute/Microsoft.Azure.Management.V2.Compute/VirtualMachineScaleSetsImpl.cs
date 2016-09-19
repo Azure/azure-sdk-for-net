@@ -13,6 +13,10 @@ namespace Microsoft.Azure.Management.V2.Compute
     using Microsoft.Azure.Management.V2.Storage;
     using Management.Compute;
     using Microsoft.Azure.Management.Compute.Models;
+    using System.Collections.Generic;
+    using System;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// The implementation for {@link VirtualMachineScaleSets}.
@@ -23,156 +27,145 @@ namespace Microsoft.Azure.Management.V2.Compute
     {
         private StorageManager storageManager;
         private NetworkManager networkManager;
-        private  VirtualMachineScaleSetsImpl (IVirtualMachineScaleSetsOperations client, ComputeManager computeManager, StorageManager storageManager, NetworkManager networkManager)
+        private  VirtualMachineScaleSetsImpl (IVirtualMachineScaleSetsOperations client, ComputeManager computeManager, StorageManager storageManager, NetworkManager networkManager) : base(client, computeManager)
         {
-
-            //$ ComputeManager computeManager,
-            //$ StorageManager storageManager,
-            //$ NetworkManager networkManager) {
-            //$ super(client, computeManager);
-            //$ this.storageManager = storageManager;
-            //$ this.networkManager = networkManager;
-            //$ }
-
+            this.storageManager = storageManager;
+            this.networkManager = networkManager;
         }
 
-        public IVirtualMachineScaleSet GetByGroup (string groupName, string name)
-        {
-
-            //$ return wrapModel(this.innerCollection.get(groupName, name));
-
-            return null;
-        }
+        //public async override Task<IVirtualMachineScaleSet> GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public PagedList<IVirtualMachineScaleSet> ListByGroup (string groupName)
         {
-
             //$ return wrapList(this.innerCollection.list(groupName));
-
             return null;
         }
 
         public PagedList<IVirtualMachineScaleSet> List ()
         {
-
             //$ return wrapList(this.innerCollection.listAll());
-
             return null;
         }
 
         public void Delete (string id)
         {
-
-            //$ this.delete(ResourceUtils.groupFromResourceId(id), ResourceUtils.nameFromResourceId(id));
-
+            this.Delete(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
         }
 
         public void Delete (string groupName, string name)
         {
-
-            //$ this.innerCollection.delete(groupName, name);
-
+            this.InnerCollection.Delete(groupName, name);
         }
 
         public void Deallocate (string groupName, string name)
         {
-
-            //$ this.innerCollection.deallocate(groupName, name);
-
+            this.InnerCollection.Deallocate(groupName, name);
         }
 
         public void PowerOff (string groupName, string name)
         {
-
-            //$ this.innerCollection.powerOff(groupName, name);
-
+            this.InnerCollection.PowerOff(groupName, name);
         }
 
         public void Restart (string groupName, string name)
         {
-
-            //$ this.innerCollection.restart(groupName, name);
-
+            this.InnerCollection.Restart(groupName, name);
         }
 
         public void Start (string groupName, string name)
         {
-
-            //$ this.innerCollection.start(groupName, name);
+            this.InnerCollection.Start(groupName, name);
 
         }
 
         public void Reimage (string groupName, string name)
         {
-
-            //$ this.innerCollection.reimage(groupName, name);
+            this.InnerCollection.Reimage(groupName, name);
 
         }
 
         public VirtualMachineScaleSetImpl Define (string name)
         {
-
-            //$ return wrapModel(name);
-
-            return null;
+            return WrapModel(name);
         }
 
-        protected VirtualMachineScaleSetImpl WrapModel (string name)
+        protected override VirtualMachineScaleSetImpl WrapModel (string name)
         {
 
-            //$ VirtualMachineScaleSetInner inner = new VirtualMachineScaleSetInner();
-            //$ 
-            //$ inner.withVirtualMachineProfile(new VirtualMachineScaleSetVMProfile());
-            //$ inner.virtualMachineProfile()
-            //$ .withStorageProfile(new VirtualMachineScaleSetStorageProfile()
-            //$ .withOsDisk(new VirtualMachineScaleSetOSDisk().withVhdContainers(new ArrayList<String>())));
-            //$ inner.virtualMachineProfile()
-            //$ .withOsProfile(new VirtualMachineScaleSetOSProfile());
-            //$ 
-            //$ inner.virtualMachineProfile()
-            //$ .withNetworkProfile(new VirtualMachineScaleSetNetworkProfile());
-            //$ 
-            //$ inner.virtualMachineProfile()
-            //$ .networkProfile()
-            //$ .withNetworkInterfaceConfigurations(new ArrayList<VirtualMachineScaleSetNetworkConfigurationInner>());
-            //$ 
-            //$ VirtualMachineScaleSetNetworkConfigurationInner primaryNetworkInterfaceConfiguration =
-            //$ new VirtualMachineScaleSetNetworkConfigurationInner()
-            //$ .withPrimary(true)
-            //$ .withName("primary-nic-cfg")
-            //$ .withIpConfigurations(new ArrayList<VirtualMachineScaleSetIPConfigurationInner>());
-            //$ primaryNetworkInterfaceConfiguration
-            //$ .ipConfigurations()
-            //$ .add(new VirtualMachineScaleSetIPConfigurationInner()
-            //$ .withName("primary-nic-ip-cfg"));
-            //$ 
-            //$ inner.virtualMachineProfile()
-            //$ .networkProfile()
-            //$ .networkInterfaceConfigurations()
-            //$ .add(primaryNetworkInterfaceConfiguration);
-            //$ 
-            //$ return new VirtualMachineScaleSetImpl(name,
-            //$ inner,
-            //$ this.innerCollection,
-            //$ super.myManager,
-            //$ this.storageManager,
-            //$ this.networkManager);
+            VirtualMachineScaleSetInner inner = new VirtualMachineScaleSetInner
+            {
+                VirtualMachineProfile = new VirtualMachineScaleSetVMProfile
+                {
+                    StorageProfile = new VirtualMachineScaleSetStorageProfile
+                    {
+                        OsDisk = new VirtualMachineScaleSetOSDisk
+                        {
+                            VhdContainers = new List<string>()
+                        }
+                    },
+                    OsProfile = new VirtualMachineScaleSetOSProfile
+                    {
 
-            return null;
+                    },
+                    NetworkProfile = new VirtualMachineScaleSetNetworkProfile
+                    {
+                        NetworkInterfaceConfigurations = new List<VirtualMachineScaleSetNetworkConfigurationInner>()
+                        {
+                            new VirtualMachineScaleSetNetworkConfigurationInner
+                            {
+                                Primary = true,
+                                Name = "primary-nic-cfg",
+                                IpConfigurations = new List<VirtualMachineScaleSetIPConfigurationInner>()
+                                {
+                                    new VirtualMachineScaleSetIPConfigurationInner
+                                    {
+                                        Name = "primary-nic-ip-cfg"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+            return new VirtualMachineScaleSetImpl(name,
+                inner,
+                this.InnerCollection,
+                this.MyManager,
+                this.storageManager,
+                this.networkManager);
         }
 
-        protected VirtualMachineScaleSetImpl WrapModel (VirtualMachineScaleSetInner inner)
+        protected override IVirtualMachineScaleSet WrapModel (VirtualMachineScaleSetInner inner)
         {
-
-            //$ return new VirtualMachineScaleSetImpl(inner.name(),
-            //$ inner,
-            //$ this.innerCollection,
-            //$ super.myManager,
-            //$ this.storageManager,
-            //$ this.networkManager);
-
-            return null;
+            return new VirtualMachineScaleSetImpl(inner.Name,
+                inner,
+                this.InnerCollection,
+                this.MyManager,
+                this.storageManager,
+                this.networkManager);
         }
 
+        Task<PagedList<IVirtualMachineScaleSet>> ISupportsListingByGroup<IVirtualMachineScaleSet>.ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task ISupportsDeleting.DeleteAsync(string id, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task ISupportsDeletingByGroup.DeleteAsync(string groupName, string name, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async override Task<IVirtualMachineScaleSet> GetByGroupAsync(string groupName, string name)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

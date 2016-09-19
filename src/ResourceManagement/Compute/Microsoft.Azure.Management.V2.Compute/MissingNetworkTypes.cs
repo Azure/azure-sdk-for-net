@@ -7,10 +7,11 @@ namespace Microsoft.Azure.Management.V2.Network
 {
     public interface IBackend
     {
-
+        string Name { get; set; }
     }
 
     public interface IInboundNatPool
     {
+        string Name { get; set; }
     }
 }
