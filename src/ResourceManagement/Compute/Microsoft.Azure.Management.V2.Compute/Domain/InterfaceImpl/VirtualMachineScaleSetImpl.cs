@@ -866,7 +866,27 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         public override async Task<IVirtualMachineScaleSet> CreateResourceAsync(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            if (this.extensions.Count > 0)
+            {
+                this.Inner.VirtualMachineProfile
+                    .ExtensionProfile = new VirtualMachineScaleSetExtensionProfile
+                    {
+                        Extensions = new List<VirtualMachineScaleSetExtensionInner>()
+                    };
+                foreach (IVirtualMachineScaleSetExtension extension in this.extensions.Values)
+                {
+                    this.Inner.VirtualMachineProfile
+                        .ExtensionProfile
+                        .Extensions.Add(extension.Inner);
+                }
+            }
+
+            this.setOSDiskAndOSProfileDefaults();
+            this.setPrimaryIpConfigurationBackendsAndInboundNatPools();
+            await handleOSDiskContainersAsync();
+            await client.CreateOrUpdateAsync(this.ResourceGroupName, this.Name, this.Inner);
+            this.clearCachedProperties();
+            return this;
         }
 
         #region Helpers
