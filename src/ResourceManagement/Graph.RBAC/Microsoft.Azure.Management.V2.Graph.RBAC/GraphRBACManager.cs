@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
 
         #endregion
 
-        #region ComputeManager builder
+        #region Graph RBAC Manager builder
 
         public static IGraphRbacManager Authenticate(ServiceClientCredentials serviceClientCredentials, string subscriptionId, string tenantId)
         {
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
 
         #endregion
 
-        #region IComputeManager implementation 
+        #region IGraphRbacManager implementation 
 
         public IUsers Users
         {
