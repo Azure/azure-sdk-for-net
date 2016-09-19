@@ -12,20 +12,19 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 
-using Newtonsoft.Json.Linq;
-
 namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTests
 {
     using System;
     using System.IO;
     using System.Net;
     using System.Xml.Linq;
-    using Hyak.Common;
-    using Microsoft.Azure.Management.ApiManagement.SmapiModels;
-    using Microsoft.Azure.Test;
-    using Newtonsoft.Json;
-    using Xunit;
     using System.Xml.Schema;
+    using Hyak.Common;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Linq;
+    using SmapiModels;
+    using Test;
+    using Xunit;
 
     public partial class SmapiFunctionalTests
     {
@@ -41,29 +40,6 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                     ResourceGroupName,
                     ApiManagementServiceName,
                     null);
-
-                // there should be 'Echo API' which is created by default for every new instance of :
-                /*
-                {  
-                   "value":[  
-                      {  
-                         "id":"/apis/5515969a0a6a4406e8040001",
-                         "name":"Echo API",
-                         "description":null,
-                         "serviceUrl":"http://echoapi.cloudapp.net/api",
-                         "path":"echo",
-                         "protocols":[  
-                            "https"
-                         ],
-                         "authenticationSettings":null,
-                         "subscriptionKeyParameterNames":null
-                      }
-                   ],
-                   "count":1,
-                   "nextLink":null
-                }
-                */
-
                 Assert.NotNull(listResponse);
                 Assert.NotNull(listResponse.Result.Values);
                 Assert.Equal(1, listResponse.Result.TotalCount);

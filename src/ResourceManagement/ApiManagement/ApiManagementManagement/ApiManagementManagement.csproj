@@ -13,9 +13,7 @@
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
-    <None Include="Microsoft.Azure.Management.ApiManagement.nuget.proj">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="Microsoft.Azure.Management.ApiManagement.nuget.proj" />
     <None Include="Microsoft.Azure.Management.ApiManagement.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>

@@ -24,6 +24,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
 
     public partial class ResourceProviderFunctionalTests
     {
+        /// <summary>
+        /// Common Test Subnet Resource
+        /// </summary>
+        const string SubnetResourceId =
+                    "/subscriptions/20010222-2b48-4245-a95c-090db6312d5f/resourceGroups/Default-Networking/providers/Microsoft.Network/virtualNetworks/apim-hydra-vnet2/subnets/default";
+
         [Fact]
         public void ManageDeployments()
         {
@@ -92,11 +98,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                 TryCreateApiService();
 
                 var apiManagementClient = GetServiceClient<ApiManagementClient>(new CSMTestEnvironmentFactory());
-
-                // default subnet for tests
-                const string subnetResourceId =
-                    "/subscriptions/20010222-2b48-4245-a95c-090db6312d5f/resourceGroups/Default-Networking/providers/Microsoft.Network/virtualNetworks/apim-hydra-vnet2/subnets/default";
-
+                
                 // Join the Developer Service to a Vnet having External VIP
                 var response = apiManagementClient.ResourceProvider.ManageDeployments(
                     ResourceGroupName,
@@ -109,7 +111,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                         VirtualNetworkConfiguration = new VirtualNetworkConfiguration()
                         {
                             Location = Location,
-                            SubnetResourceId = subnetResourceId
+                            SubnetResourceId = SubnetResourceId
                         },
                         VpnType = VirtualNetworkType.External
                     });
@@ -124,7 +126,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                 Assert.Equal(SkuType.Developer, getResponse.Value.SkuProperties.SkuType);
                 Assert.Equal(1, getResponse.Value.SkuProperties.Capacity);
                 Assert.NotNull(getResponse.Value.Properties.VirtualNetworkConfiguration.SubnetResourceId);
-                Assert.Equal(subnetResourceId, getResponse.Value.Properties.VirtualNetworkConfiguration.SubnetResourceId);
+                Assert.Equal(SubnetResourceId, getResponse.Value.Properties.VirtualNetworkConfiguration.SubnetResourceId);
                 Assert.Equal(VirtualNetworkType.External, getResponse.Value.Properties.VpnType);
             }
         }
@@ -139,11 +141,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                 TryCreateApiService();
 
                 var apiManagementClient = GetServiceClient<ApiManagementClient>(new CSMTestEnvironmentFactory());
-
-                // default subnet for tests
-                const string subnetResourceId =
-                    "/subscriptions/20010222-2b48-4245-a95c-090db6312d5f/resourceGroups/Default-Networking/providers/Microsoft.Network/virtualNetworks/apim-hydra-vnet2/subnets/default";
-
+                
                 // switch from External to Internal Vpn
                 var response = apiManagementClient.ResourceProvider.ManageDeployments(
                     ResourceGroupName,
@@ -156,7 +154,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                         VirtualNetworkConfiguration = new VirtualNetworkConfiguration()
                         {
                             Location = Location,
-                            SubnetResourceId = subnetResourceId
+                            SubnetResourceId = SubnetResourceId
                         },
                         VpnType = VirtualNetworkType.Internal
                     });
@@ -171,7 +169,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                 Assert.Equal(SkuType.Developer, getResponse.Value.SkuProperties.SkuType);
                 Assert.Equal(1, getResponse.Value.SkuProperties.Capacity);
                 Assert.NotNull(getResponse.Value.Properties.VirtualNetworkConfiguration.SubnetResourceId);
-                Assert.Equal(subnetResourceId, getResponse.Value.Properties.VirtualNetworkConfiguration.SubnetResourceId);
+                Assert.Equal(SubnetResourceId, getResponse.Value.Properties.VirtualNetworkConfiguration.SubnetResourceId);
                 Assert.Equal(VirtualNetworkType.Internal, getResponse.Value.Properties.VpnType);
             }
         }

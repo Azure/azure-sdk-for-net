@@ -15,6 +15,7 @@
 namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceProviderTests
 {
     using System;
+    using System.Net;
     using global::ApiManagement.Tests;
     using Microsoft.Azure.Management.ApiManagement.Models;
     using Microsoft.Azure.Test;
@@ -36,6 +37,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                     apiManagementClient.ResourceProvider.CheckNameAvailability(new ApiServiceCheckNameAvailabilityParameters(validServiceName));
                 Assert.NotNull(response);
                 Assert.True(response.NameAvailable);
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                 Assert.NotNull(response.Reason);
                 Assert.NotNull(response.Message);
 
@@ -45,6 +47,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                         new ApiServiceCheckNameAvailabilityParameters(invalidName));
                 Assert.NotNull(response);
                 Assert.False(response.NameAvailable);
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                 Assert.NotNull(response.Reason);
 
                 // create api management service 
@@ -78,6 +81,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                     apiManagementClient.ResourceProvider.CheckNameAvailability(
                         new ApiServiceCheckNameAvailabilityParameters(validServiceName));
                 Assert.NotNull(response);
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                 Assert.False(response.NameAvailable);
                 Assert.NotNull(response.Reason);
             }

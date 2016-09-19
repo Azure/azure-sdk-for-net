@@ -75,7 +75,7 @@
     </None>
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2BlobAuditScenarioTest\ServerBlobAuditingPolicyLifecycleTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>    
+    </None>
     <None Include="SessionRecords\Sql2.Tests.ScenarioTests.Sql2BackupScenarioTest\GeoBackupPolicyTest.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
