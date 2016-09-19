@@ -24,6 +24,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure;
+using Microsoft.WindowsAzure.Management.RemoteApp.Models;
 
 namespace Microsoft.WindowsAzure.Management.RemoteApp
 {
@@ -75,5 +76,33 @@ namespace Microsoft.WindowsAzure.Management.RemoteApp
         /// request ID.
         /// </returns>
         Task<AzureOperationResponse> DeleteAsync(string collectionName, string userUpn, CancellationToken cancellationToken);
+        
+        /// <summary>
+        /// Migrate user disks of all the users from a collection to the
+        /// specified azure storage account
+        /// </summary>
+        /// <param name='collectionName'>
+        /// The collection name.
+        /// </param>
+        /// <param name='targetAccountName'>
+        /// The destination storage account name
+        /// </param>
+        /// <param name='targetAccountKey'>
+        /// The destination storage account key
+        /// </param>
+        /// <param name='targetContainerName'>
+        /// The destination container name
+        /// </param>
+        /// <param name='overwriteExistingUserDisk'>
+        /// A flag denoting if the request is to overwrite the existing user
+        /// disk in the destination storage account
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// The response containing the operation tracking id.
+        /// </returns>
+        Task<OperationResultWithTrackingId> MigrateAsync(string collectionName, string targetAccountName, string targetAccountKey, string targetContainerName, bool overwriteExistingUserDisk, CancellationToken cancellationToken);
     }
 }
