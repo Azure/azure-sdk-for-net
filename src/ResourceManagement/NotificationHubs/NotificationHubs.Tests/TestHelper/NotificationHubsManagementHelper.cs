@@ -97,15 +97,12 @@ namespace NotificationHubs.Tests.TestHelper
             var namespaceParameter = new NamespaceCreateOrUpdateParameters()
             {
                 Location = location,
-                Properties = new NamespaceProperties
-                {
-                    NamespaceType = NamespaceType.NotificationHub
-                }
+                NamespaceType = NamespaceType.NotificationHub
             };
 
             if (!string.IsNullOrEmpty(scaleUnit))
             {
-                namespaceParameter.Properties.ScaleUnit = scaleUnit;
+                namespaceParameter.ScaleUnit = scaleUnit;
             }
 
             client.Namespaces.CreateOrUpdate(

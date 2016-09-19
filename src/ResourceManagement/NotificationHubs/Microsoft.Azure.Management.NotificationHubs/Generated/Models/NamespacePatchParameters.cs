@@ -7,20 +7,18 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
     using System.Linq;
 
     /// <summary>
-    /// Parameters supplied to the CreateOrUpdate Namespace operation.
+    /// Parameters supplied to the Patch Namespace operation.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class NamespaceCreateOrUpdateParameters : Resource
+    public partial class NamespacePatchParameters : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the
-        /// NamespaceCreateOrUpdateParameters class.
+        /// Initializes a new instance of the NamespacePatchParameters class.
         /// </summary>
-        public NamespaceCreateOrUpdateParameters() { }
+        public NamespacePatchParameters() { }
 
         /// <summary>
-        /// Initializes a new instance of the
-        /// NamespaceCreateOrUpdateParameters class.
+        /// Initializes a new instance of the NamespacePatchParameters class.
         /// </summary>
         /// <param name="location">Resource location</param>
         /// <param name="id">Resource Id</param>
@@ -28,8 +26,8 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="sku">The sku of the created namespace</param>
-        /// <param name="namespaceCreateOrUpdateParametersName">The name of
-        /// the namespace.</param>
+        /// <param name="namespacePatchParametersName">The name of the
+        /// namespace.</param>
         /// <param name="provisioningState">Provisioning state of the
         /// Namespace.</param>
         /// <param name="region">Specifies the targeted region in which the
@@ -54,10 +52,10 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// Critical.</param>
         /// <param name="namespaceType">The namespace type. Possible values
         /// include: 'Messaging', 'NotificationHub'</param>
-        public NamespaceCreateOrUpdateParameters(string location, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), Sku sku = default(Sku), string namespaceCreateOrUpdateParametersName = default(string), string provisioningState = default(string), string region = default(string), string status = default(string), System.DateTime? createdAt = default(System.DateTime?), string serviceBusEndpoint = default(string), string subscriptionId = default(string), string scaleUnit = default(string), bool? enabled = default(bool?), bool? critical = default(bool?), NamespaceType? namespaceType = default(NamespaceType?))
+        public NamespacePatchParameters(string location, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), Sku sku = default(Sku), string namespacePatchParametersName = default(string), string provisioningState = default(string), string region = default(string), string status = default(string), System.DateTime? createdAt = default(System.DateTime?), string serviceBusEndpoint = default(string), string subscriptionId = default(string), string scaleUnit = default(string), bool? enabled = default(bool?), bool? critical = default(bool?), NamespaceType? namespaceType = default(NamespaceType?))
             : base(location, id, name, type, tags, sku)
         {
-            NamespaceCreateOrUpdateParametersName = namespaceCreateOrUpdateParametersName;
+            NamespacePatchParametersName = namespacePatchParametersName;
             ProvisioningState = provisioningState;
             Region = region;
             Status = status;
@@ -74,7 +72,7 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// Gets or sets the name of the namespace.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.name")]
-        public string NamespaceCreateOrUpdateParametersName { get; set; }
+        public string NamespacePatchParametersName { get; set; }
 
         /// <summary>
         /// Gets or sets provisioning state of the Namespace.
