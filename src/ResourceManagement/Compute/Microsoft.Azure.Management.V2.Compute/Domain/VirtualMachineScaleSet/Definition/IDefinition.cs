@@ -146,7 +146,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definitio
         /// </summary>
         /// <param name="natPoolNames">natPoolNames inbound NAT pool names</param>
         /// <returns>the next stage of the virtual machine scale set definition</returns>
-        IWithOS WithPrimaryInternalLoadBalancerInboundNatPools (string natPoolNames);
+        IWithOS WithPrimaryInternalLoadBalancerInboundNatPools (params string[] natPoolNames);
 
     }
     /// <summary>
@@ -162,7 +162,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definitio
         /// </summary>
         /// <param name="backendNames">backendNames the backend names</param>
         /// <returns>the next stage of the virtual machine scale set definition</returns>
-        IWithPrimaryInternetFacingLoadBalancerNatPool WithPrimaryInternetFacingLoadBalancerBackends (string backendNames);
+        IWithPrimaryInternetFacingLoadBalancerNatPool WithPrimaryInternetFacingLoadBalancerBackends (params string[] backendNames);
 
     }
     /// <summary>
@@ -520,7 +520,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definitio
         /// </summary>
         /// <param name="backendNames">backendNames the backend names</param>
         /// <returns>the next stage of the virtual machine scale set definition</returns>
-        IWithInternalInternalLoadBalancerNatPool WithPrimaryInternalLoadBalancerBackends (string backendNames);
+        IWithInternalInternalLoadBalancerNatPool WithPrimaryInternalLoadBalancerBackends (params string[] backendNames);
 
     }
     /// <summary>
@@ -537,7 +537,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definitio
         /// </summary>
         /// <param name="natPoolNames">natPoolNames the inbound NAT pool names</param>
         /// <returns>the next stage of the virtual machine scale set definition</returns>
-        IWithPrimaryInternalLoadBalancer WithPrimaryInternetFacingLoadBalancerInboundNatPools (string natPoolNames);
+        IWithPrimaryInternalLoadBalancer WithPrimaryInternetFacingLoadBalancerInboundNatPools (params string[] natPoolNames);
 
     }
 }

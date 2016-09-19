@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update
         /// </summary>
         /// <param name="natPoolNames">natPoolNames the inbound NAT pool names</param>
         /// <returns>the next stage of the virtual machine scale set update</returns>
-        IWithPrimaryInternalLoadBalancer WithPrimaryInternetFacingLoadBalancerInboundNatPools (string natPoolNames);
+        IWithPrimaryInternalLoadBalancer WithPrimaryInternetFacingLoadBalancerInboundNatPools (params string[] natPoolNames);
 
     }
     /// <summary>
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update
         /// <param name="backendNames">backendNames the backend names</param>
         /// <returns>the next stage of the virtual machine scale set update allowing to choose inbound nat pool from</returns>
         /// <returns>the load balancer.</returns>
-        IWithPrimaryInternetFacingLoadBalancerNatPool WithPrimaryInternetFacingLoadBalancerBackends (string backendNames);
+        IWithPrimaryInternetFacingLoadBalancerNatPool WithPrimaryInternetFacingLoadBalancerBackends (params string[] backendNames);
 
     }
     /// <summary>
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update
         /// <param name="backendNames">backendNames the backend names</param>
         /// <returns>the next stage of the virtual machine scale set update allowing to choose inbound nat pool from</returns>
         /// <returns>the load balancer.</returns>
-        IWithPrimaryInternalLoadBalancerNatPool WithPrimaryInternalLoadBalancerBackends (string backendNames);
+        IWithPrimaryInternalLoadBalancerNatPool WithPrimaryInternalLoadBalancerBackends (params string[] backendNames);
 
     }
     /// <summary>
@@ -160,7 +160,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update
         /// </summary>
         /// <param name="natPoolNames">natPoolNames the inbound NAT pool names</param>
         /// <returns>the next stage of the virtual machine scale set update</returns>
-        IWithApplicable WithPrimaryInternalLoadBalancerInboundNatPools (string natPoolNames);
+        IWithApplicable WithPrimaryInternalLoadBalancerInboundNatPools (params string[] natPoolNames);
 
     }
     /// <summary>
@@ -229,14 +229,14 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update
         /// </summary>
         /// <param name="backendNames">backendNames the existing backend names to remove</param>
         /// <returns>the next stage of the virtual machine scale set update</returns>
-        IWithApplicable WithoutPrimaryInternetFacingLoadBalancerBackends (string backendNames);
+        IWithApplicable WithoutPrimaryInternetFacingLoadBalancerBackends (params string[] backendNames);
 
         /// <summary>
         /// Removes association between the primary network interface configuration and backend of the internal load balancer.
         /// </summary>
         /// <param name="backendNames">backendNames the existing backend names to remove</param>
         /// <returns>the next stage of the virtual machine scale set update</returns>
-        IWithApplicable WithoutPrimaryInternalLoadBalancerBackends (string backendNames);
+        IWithApplicable WithoutPrimaryInternalLoadBalancerBackends (params string[] backendNames);
 
     }
     /// <summary>
@@ -260,7 +260,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update
         /// </summary>
         /// <param name="natPoolNames">natPoolNames the name of an existing inbound NAT pools to remove</param>
         /// <returns>the next stage of the virtual machine scale set update</returns>
-        IWithApplicable WithoutPrimaryInternetFacingLoadBalancerNatPools (string natPoolNames);
+        IWithApplicable WithoutPrimaryInternetFacingLoadBalancerNatPools (params string[] natPoolNames);
 
         /// <summary>
         /// Removes association between the primary network interface configuration and inbound NAT pool of the
@@ -268,7 +268,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update
         /// </summary>
         /// <param name="natPoolNames">natPoolNames the name of an existing inbound NAT pools to remove</param>
         /// <returns>the next stage of the virtual machine scale set update</returns>
-        IWithApplicable WithoutPrimaryInternalLoadBalancerNatPools (string natPoolNames);
+        IWithApplicable WithoutPrimaryInternalLoadBalancerNatPools (params string[] natPoolNames);
 
     }
     /// <summary>

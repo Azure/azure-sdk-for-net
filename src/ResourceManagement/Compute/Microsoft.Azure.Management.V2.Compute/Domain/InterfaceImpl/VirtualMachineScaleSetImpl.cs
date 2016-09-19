@@ -29,10 +29,10 @@ namespace Microsoft.Azure.Management.V2.Compute
             Rest.Azure.Resource,
             VirtualMachineScaleSetImpl,
             IComputeManager,
-            VirtualMachine.Definition.IWithGroup,
-            VirtualMachine.Definition.IWithNetwork,
-            VirtualMachine.Definition.IWithCreate,
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IUpdate>,
+            VirtualMachineScaleSet.Definition.IWithGroup,
+            VirtualMachineScaleSet.Definition.IWithSku,
+            VirtualMachineScaleSet.Definition.IWithCreate,
+            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable>,
         IVirtualMachineScaleSet,
         Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IDefinition,
         Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IUpdate
@@ -825,7 +825,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
             return this;
         }
-        
+
         #endregion
 
         #region Actions
@@ -1532,6 +1532,11 @@ namespace Microsoft.Azure.Management.V2.Compute
             return merged;
         }
 
+        IWithPrimaryLoadBalancer IUpdatable<IWithPrimaryLoadBalancer>.Update()
+        {
+            return this;
+        }
+
         #endregion
     }
 
@@ -1707,13 +1712,13 @@ namespace Microsoft.Azure.Management.V2.Compute
         }
 
         Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithInternalInternalLoadBalancerNatPool
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithInternalLoadBalancerBackendOrNatPool.WithPrimaryInternalLoadBalancerBackends(string backendNames)
+            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithInternalLoadBalancerBackendOrNatPool.WithPrimaryInternalLoadBalancerBackends(params string[] backendNames)
         {
             return this.WithPrimaryInternalLoadBalancerBackends(backendNames) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithInternalInternalLoadBalancerNatPool;
         }
 
         Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithOS
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithInternalInternalLoadBalancerNatPool.WithPrimaryInternalLoadBalancerInboundNatPools(string natPoolNames)
+            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithInternalInternalLoadBalancerNatPool.WithPrimaryInternalLoadBalancerInboundNatPools(params string[] natPoolNames)
         {
             return this.WithPrimaryInternalLoadBalancerInboundNatPools(natPoolNames) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithOS;
         }
@@ -1725,13 +1730,13 @@ namespace Microsoft.Azure.Management.V2.Compute
         }
 
         Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancerNatPool
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool.WithPrimaryInternetFacingLoadBalancerBackends(string backendNames)
+            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool.WithPrimaryInternetFacingLoadBalancerBackends(params string[] backendNames)
         {
             return this.WithPrimaryInternetFacingLoadBalancerBackends(backendNames) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancerNatPool;
         }
 
         Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternalLoadBalancer
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancerNatPool.WithPrimaryInternetFacingLoadBalancerInboundNatPools(string natPoolNames)
+            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancerNatPool.WithPrimaryInternetFacingLoadBalancerInboundNatPools(params string[] natPoolNames)
         {
             return this.WithPrimaryInternetFacingLoadBalancerInboundNatPools(natPoolNames) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternalLoadBalancer;
         }
@@ -1841,13 +1846,13 @@ namespace Microsoft.Azure.Management.V2.Compute
         }
 
         Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerBackend.WithoutPrimaryInternalLoadBalancerBackends(string backendNames)
+            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerBackend.WithoutPrimaryInternalLoadBalancerBackends(params string[] backendNames)
         {
             return this.WithoutPrimaryInternalLoadBalancerBackends(backendNames) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable;
         }
 
         Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerNatPool.WithoutPrimaryInternalLoadBalancerNatPools(string natPoolNames)
+            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerNatPool.WithoutPrimaryInternalLoadBalancerNatPools(params string[] natPoolNames)
         {
             return this.WithoutPrimaryInternalLoadBalancerNatPools(natPoolNames) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable;
         }
@@ -1859,13 +1864,13 @@ namespace Microsoft.Azure.Management.V2.Compute
         }
 
         Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerBackend.WithoutPrimaryInternetFacingLoadBalancerBackends(string backendNames)
+            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerBackend.WithoutPrimaryInternetFacingLoadBalancerBackends(params string[] backendNames)
         {
             return this.WithoutPrimaryInternetFacingLoadBalancerBackends(backendNames) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable;
         }
 
         Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerNatPool.WithoutPrimaryInternetFacingLoadBalancerNatPools(string natPoolNames)
+            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerNatPool.WithoutPrimaryInternetFacingLoadBalancerNatPools(params string[] natPoolNames)
         {
             return this.WithoutPrimaryInternetFacingLoadBalancerNatPools(natPoolNames) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable;
         }
@@ -1877,13 +1882,13 @@ namespace Microsoft.Azure.Management.V2.Compute
         }
 
         Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerNatPool
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerBackendOrNatPool.WithPrimaryInternalLoadBalancerBackends(string backendNames)
+            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerBackendOrNatPool.WithPrimaryInternalLoadBalancerBackends(params string[] backendNames)
         {
             return this.WithPrimaryInternalLoadBalancerBackends(backendNames) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerNatPool;
         }
 
         Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerNatPool.WithPrimaryInternalLoadBalancerInboundNatPools(string natPoolNames)
+            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerNatPool.WithPrimaryInternalLoadBalancerInboundNatPools(params string[] natPoolNames)
         {
             return this.WithPrimaryInternalLoadBalancerInboundNatPools(natPoolNames) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable;
         }
@@ -1895,13 +1900,13 @@ namespace Microsoft.Azure.Management.V2.Compute
         }
 
         Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerNatPool
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool.WithPrimaryInternetFacingLoadBalancerBackends(string backendNames)
+            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool.WithPrimaryInternetFacingLoadBalancerBackends(params string[] backendNames)
         {
             return this.WithPrimaryInternetFacingLoadBalancerBackends(backendNames) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerNatPool;
         }
 
         Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancer
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerNatPool.WithPrimaryInternetFacingLoadBalancerInboundNatPools(string natPoolNames)
+            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerNatPool.WithPrimaryInternetFacingLoadBalancerInboundNatPools(params string[] natPoolNames)
         {
             return this.WithPrimaryInternetFacingLoadBalancerInboundNatPools(natPoolNames) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancer;
         }

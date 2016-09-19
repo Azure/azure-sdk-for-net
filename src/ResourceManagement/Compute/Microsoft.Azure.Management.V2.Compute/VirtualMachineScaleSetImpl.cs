@@ -11,6 +11,7 @@ namespace Microsoft.Azure.Management.V2.Compute
 {
     public partial class VirtualMachineScaleSetImpl
     {
+        /**
         VirtualMachineScaleSetExtensionImpl DefineNewExtension(string name)
         {
             throw new NotImplementedException();
@@ -155,5 +156,6 @@ namespace Microsoft.Azure.Management.V2.Compute
         {
             throw new NotImplementedException();
         }
+    **/
     }
 }
