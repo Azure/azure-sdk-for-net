@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     using System;
     using System.Threading;
     using System.Threading.Tasks;
+    using Rest.Azure;
 
     /// <summary>
     /// The implementation for {@link VirtualMachineScaleSets}.
@@ -25,29 +26,37 @@ namespace Microsoft.Azure.Management.V2.Compute
         GroupableResources<IVirtualMachineScaleSet,VirtualMachineScaleSetImpl,VirtualMachineScaleSetInner, IVirtualMachineScaleSetsOperations, ComputeManager>,
         IVirtualMachineScaleSets
     {
-        private StorageManager storageManager;
-        private NetworkManager networkManager;
-        private  VirtualMachineScaleSetsImpl (IVirtualMachineScaleSetsOperations client, ComputeManager computeManager, StorageManager storageManager, NetworkManager networkManager) : base(client, computeManager)
+        private IStorageManager storageManager;
+        private INetworkManager networkManager;
+        public  VirtualMachineScaleSetsImpl (IVirtualMachineScaleSetsOperations client, ComputeManager computeManager, IStorageManager storageManager, INetworkManager networkManager) : base(client, computeManager)
         {
             this.storageManager = storageManager;
             this.networkManager = networkManager;
         }
 
-        //public async override Task<IVirtualMachineScaleSet> GetByGroupAsync(string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
-        //{
-        //    throw new NotImplementedException();
-        //}
-
         public PagedList<IVirtualMachineScaleSet> ListByGroup (string groupName)
         {
-            //$ return wrapList(this.innerCollection.list(groupName));
-            return null;
+            IPage<VirtualMachineScaleSetInner> firstPage = InnerCollection.List(groupName);
+            var pagedList = new PagedList<VirtualMachineScaleSetInner>(firstPage, (string nextPageLink) =>
+            {
+                return InnerCollection.ListNext(nextPageLink);
+            });
+            return WrapList(pagedList);
+
         }
 
         public PagedList<IVirtualMachineScaleSet> List ()
         {
-            //$ return wrapList(this.innerCollection.listAll());
-            return null;
+            IPage<VirtualMachineScaleSetInner> firstPage = InnerCollection.ListAll();
+            var pagedList = new PagedList<VirtualMachineScaleSetInner>(firstPage, (string nextPageLink) =>
+            {
+                return InnerCollection.ListAllNext(nextPageLink);
+            });
+            return WrapList(pagedList);
+        }
+        Task<PagedList<IVirtualMachineScaleSet>> ISupportsListingByGroup<IVirtualMachineScaleSet>.ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken)
+        {
+            throw new NotSupportedException();
         }
 
         public void Delete (string id)
@@ -58,6 +67,26 @@ namespace Microsoft.Azure.Management.V2.Compute
         public void Delete (string groupName, string name)
         {
             this.InnerCollection.Delete(groupName, name);
+        }
+
+        Task ISupportsDeleting.DeleteAsync(string id, CancellationToken cancellationToken)
+        {
+            return this.InnerCollection.DeleteAsync(ResourceUtils.GroupFromResourceId(id), 
+                ResourceUtils.NameFromResourceId(id),
+                cancellationToken);
+        }
+
+        Task ISupportsDeletingByGroup.DeleteAsync(string groupName, string name, CancellationToken cancellationToken)
+        {
+            return this.InnerCollection.DeleteAsync(groupName,
+                name,
+                cancellationToken);
+        }
+
+        public async override Task<IVirtualMachineScaleSet> GetByGroupAsync(string groupName, string name)
+        {
+            var scaleSet = await this.InnerCollection.GetAsync(groupName, name);
+            return WrapModel(scaleSet);
         }
 
         public void Deallocate (string groupName, string name)
@@ -146,26 +175,6 @@ namespace Microsoft.Azure.Management.V2.Compute
                 this.MyManager,
                 this.storageManager,
                 this.networkManager);
-        }
-
-        Task<PagedList<IVirtualMachineScaleSet>> ISupportsListingByGroup<IVirtualMachineScaleSet>.ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task ISupportsDeleting.DeleteAsync(string id, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task ISupportsDeletingByGroup.DeleteAsync(string groupName, string name, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async override Task<IVirtualMachineScaleSet> GetByGroupAsync(string groupName, string name)
-        {
-            throw new NotImplementedException();
         }
     }
 }

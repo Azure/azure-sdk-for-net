@@ -26,6 +26,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         private IVirtualMachines virtualMachines;
         private IVirtualMachineImages virtualMachineImages;
         private IAvailabilitySets availabilitySets;
+        private IVirtualMachineScaleSets virtualMachineScaleSets;
         #endregion
 
         #region ctrs
@@ -129,6 +130,19 @@ namespace Microsoft.Azure.Management.V2.Compute
                 return availabilitySets;
             }
         }
+
+        public IVirtualMachineScaleSets VirtualMachineScaleSets {
+            get
+            {
+                if (virtualMachineScaleSets == null)
+                {
+                    virtualMachineScaleSets = new VirtualMachineScaleSetsImpl(client.VirtualMachineScaleSets, this, 
+                        this.storageManager,
+                        this.networkManager);
+                }
+                return virtualMachineScaleSets;
+            }
+        }
         #endregion
     }
 
@@ -137,5 +151,6 @@ namespace Microsoft.Azure.Management.V2.Compute
         IVirtualMachines VirtualMachines { get; }
         IVirtualMachineImages VirtualMachineImages { get; }
         IAvailabilitySets AvailabilitySets { get; }
+        IVirtualMachineScaleSets VirtualMachineScaleSets { get; }
     }
 }
