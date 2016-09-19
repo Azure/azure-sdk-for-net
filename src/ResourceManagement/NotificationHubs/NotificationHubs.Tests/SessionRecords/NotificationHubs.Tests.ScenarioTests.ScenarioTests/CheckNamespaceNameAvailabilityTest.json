@@ -19,7 +19,7 @@
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/1.0.2-preview"
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/2.0.0-preview"
         ]
       },
       "ResponseBody": "{\r\n  \"isAvailiable\": true,\r\n  \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/checkNamespaceAvailability\",\r\n  \"name\": \"HydraNH-Namespace5798\",\r\n  \"type\": \"Microsoft.NotificationHubs/namespaces/checkNamespaceAvailability\",\r\n  \"location\": null,\r\n  \"tags\": null,\r\n  \"properties\": true\r\n}",
@@ -89,7 +89,7 @@
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/1.0.2-preview"
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/2.0.0-preview"
         ]
       },
       "ResponseBody": "{\r\n  \"isAvailiable\": false,\r\n  \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/checkNamespaceAvailability\",\r\n  \"name\": \"hydraNhNamespace-invalid@!!#%$#\",\r\n  \"type\": \"Microsoft.NotificationHubs/namespaces/checkNamespaceAvailability\",\r\n  \"location\": null,\r\n  \"tags\": null,\r\n  \"properties\": false\r\n}",
@@ -159,7 +159,7 @@
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/1.0.2-preview"
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/2.0.0-preview"
         ]
       },
       "ResponseBody": "{\r\n  \"isAvailiable\": false,\r\n  \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/providers/Microsoft.NotificationHubs/checkNamespaceAvailability\",\r\n  \"name\": \"HydraNH-Namespace5798\",\r\n  \"type\": \"Microsoft.NotificationHubs/namespaces/checkNamespaceAvailability\",\r\n  \"location\": null,\r\n  \"tags\": null,\r\n  \"properties\": false\r\n}",
@@ -289,7 +289,7 @@
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4503\",\r\n  \"name\": \"NotificationHub-RG4503\",\r\n  \"location\": \"southcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "205"
+          "187"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -343,7 +343,7 @@
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/1.0.2-preview"
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/2.0.0-preview"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"/subscriptions/111c36dc-4047-4c69-acd5-301072ff1fc2/resourceGroups/NotificationHub-RG4503/providers/Microsoft.NotificationHubs/namespaces/HydraNH-Namespace5798\",\r\n  \"name\": \"HydraNH-Namespace5798\",\r\n  \"type\": \"Microsoft.NotificationHubs/namespaces\",\r\n  \"location\": \"South Central US\",\r\n  \"kind\": \"NotificationHub\",\r\n  \"tags\": {},\r\n  \"properties\": {\r\n    \"provisioningState\": \"Unknown\",\r\n    \"metricId\": null,\r\n    \"enabled\": false,\r\n    \"namespaceType\": \"NotificationHub\"\r\n  }\r\n}",
@@ -407,7 +407,7 @@
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/1.0.2-preview"
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/2.0.0-preview"
         ]
       },
       "ResponseBody": "",
@@ -462,7 +462,7 @@
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
-          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/1.0.2-preview"
+          "Microsoft.Azure.Management.NotificationHubs.NotificationHubsManagementClient/2.0.0-preview"
         ]
       },
       "ResponseBody": "{\r\n  \"id\": \"subscriptions/111c36dc40474c69acd5301072ff1fc2/operationsStatus/HydraNH-Namespace5798\",\r\n  \"name\": \"HydraNH-Namespace5798\",\r\n  \"status\": \"Completed\"\r\n}",
