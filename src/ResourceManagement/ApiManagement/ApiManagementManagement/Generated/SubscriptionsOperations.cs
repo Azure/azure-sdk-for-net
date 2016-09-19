@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "/subscriptions/";
             url = url + Uri.EscapeDataString(sid);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -351,7 +351,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "/subscriptions/";
             url = url + Uri.EscapeDataString(sid);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -506,7 +506,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "/subscriptions/";
             url = url + Uri.EscapeDataString(sid);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -767,7 +767,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + Uri.EscapeDataString(serviceName);
             url = url + "/subscriptions";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             List<string> odataFilter = new List<string>();
             if (query != null && query.Filter != null)
             {
@@ -1315,7 +1315,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + Uri.EscapeDataString(sid);
             url = url + "/regeneratePrimaryKey";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1472,7 +1472,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + Uri.EscapeDataString(sid);
             url = url + "/regenerateSecondaryKey";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -1651,7 +1651,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "/subscriptions/";
             url = url + Uri.EscapeDataString(sid);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

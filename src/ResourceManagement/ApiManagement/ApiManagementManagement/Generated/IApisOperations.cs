@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         Task<AzureOperationResponse> DeleteAsync(string resourceGroupName, string serviceName, string aid, string etag, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Exporst API to one of the supported formats.
+        /// Exports API to one of the supported formats.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -150,6 +150,12 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='path'>
         /// Path in case importing document does not support path.
         /// </param>
+        /// <param name='wsdlServiceName'>
+        /// Local name of WSDL Service to be imported.
+        /// </param>
+        /// <param name='wsdlEndpointName'>
+        /// Local name of WSDL Endpoint (port) to be imported.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -157,7 +163,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        Task<AzureOperationResponse> ImportAsync(string resourceGroupName, string serviceName, string aid, string contentType, Stream content, string path, CancellationToken cancellationToken);
+        Task<AzureOperationResponse> ImportAsync(string resourceGroupName, string serviceName, string aid, string contentType, Stream content, string path, string wsdlServiceName, string wsdlEndpointName, CancellationToken cancellationToken);
         
         /// <summary>
         /// List all APIs of the Api Management service instance.

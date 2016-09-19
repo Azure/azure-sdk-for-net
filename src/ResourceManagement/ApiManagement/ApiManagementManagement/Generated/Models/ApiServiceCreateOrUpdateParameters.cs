@@ -55,6 +55,17 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             set { this._properties = value; }
         }
         
+        private ApiServiceSkuProperties _skuProperties;
+        
+        /// <summary>
+        /// Required. Gets or sets sku properties of the Api Management service.
+        /// </summary>
+        public ApiServiceSkuProperties SkuProperties
+        {
+            get { return this._skuProperties; }
+            set { this._skuProperties = value; }
+        }
+        
         private IDictionary<string, string> _tags;
         
         /// <summary>
@@ -82,7 +93,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         /// Initializes a new instance of the
         /// ApiServiceCreateOrUpdateParameters class with required arguments.
         /// </summary>
-        public ApiServiceCreateOrUpdateParameters(string location, ApiServiceProperties properties)
+        public ApiServiceCreateOrUpdateParameters(string location, ApiServiceProperties properties, ApiServiceSkuProperties skuProperties)
             : this()
         {
             if (location == null)
@@ -93,8 +104,13 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             {
                 throw new ArgumentNullException("properties");
             }
+            if (skuProperties == null)
+            {
+                throw new ArgumentNullException("skuProperties");
+            }
             this.Location = location;
             this.Properties = properties;
+            this.SkuProperties = skuProperties;
         }
     }
 }

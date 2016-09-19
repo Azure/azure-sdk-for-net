@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
         
         /// <summary>
-        /// Exporst API to one of the supported formats.
+        /// Exports API to one of the supported formats.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -196,7 +196,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
         
         /// <summary>
-        /// Exporst API to one of the supported formats.
+        /// Exports API to one of the supported formats.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -300,15 +300,21 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='path'>
         /// Optional. Path in case importing document does not support path.
         /// </param>
+        /// <param name='wsdlServiceName'>
+        /// Optional. Local name of WSDL Service to be imported.
+        /// </param>
+        /// <param name='wsdlEndpointName'>
+        /// Optional. Local name of WSDL Endpoint (port) to be imported.
+        /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static AzureOperationResponse Import(this IApisOperations operations, string resourceGroupName, string serviceName, string aid, string contentType, Stream content, string path)
+        public static AzureOperationResponse Import(this IApisOperations operations, string resourceGroupName, string serviceName, string aid, string contentType, Stream content, string path, string wsdlServiceName, string wsdlEndpointName)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IApisOperations)s).ImportAsync(resourceGroupName, serviceName, aid, contentType, content, path);
+                return ((IApisOperations)s).ImportAsync(resourceGroupName, serviceName, aid, contentType, content, path, wsdlServiceName, wsdlEndpointName);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -338,13 +344,19 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='path'>
         /// Optional. Path in case importing document does not support path.
         /// </param>
+        /// <param name='wsdlServiceName'>
+        /// Optional. Local name of WSDL Service to be imported.
+        /// </param>
+        /// <param name='wsdlEndpointName'>
+        /// Optional. Local name of WSDL Endpoint (port) to be imported.
+        /// </param>
         /// <returns>
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public static Task<AzureOperationResponse> ImportAsync(this IApisOperations operations, string resourceGroupName, string serviceName, string aid, string contentType, Stream content, string path)
+        public static Task<AzureOperationResponse> ImportAsync(this IApisOperations operations, string resourceGroupName, string serviceName, string aid, string contentType, Stream content, string path, string wsdlServiceName, string wsdlEndpointName)
         {
-            return operations.ImportAsync(resourceGroupName, serviceName, aid, contentType, content, path, CancellationToken.None);
+            return operations.ImportAsync(resourceGroupName, serviceName, aid, contentType, content, path, wsdlServiceName, wsdlEndpointName, CancellationToken.None);
         }
         
         /// <summary>

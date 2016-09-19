@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + Uri.EscapeDataString(serviceName);
             url = url + "/tenant/configuration/deploy";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -338,7 +338,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + Uri.EscapeDataString(serviceName);
             url = url + "/tenant/configuration/save";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -540,7 +540,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + Uri.EscapeDataString(serviceName);
             url = url + "/tenant/configuration/validate";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

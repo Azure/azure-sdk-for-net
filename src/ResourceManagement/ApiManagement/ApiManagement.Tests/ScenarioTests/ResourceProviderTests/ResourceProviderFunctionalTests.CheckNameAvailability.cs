@@ -15,6 +15,7 @@
 namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceProviderTests
 {
     using System;
+    using System.Net;
     using global::ApiManagement.Tests;
     using Microsoft.Azure.Management.ApiManagement.Models;
     using Microsoft.Azure.Test;
@@ -23,28 +24,30 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
     public partial class ResourceProviderFunctionalTests
     {
         [Fact]
-        public void CheckServiceNameAvailability()
+        public void CheckNameAvailability()
         {
             using (var context = UndoContext.Current)
             {
-                context.Start("ResourceProviderFunctionalTests", "CheckServiceNameAvailability");
+                context.Start("ResourceProviderFunctionalTests", "CheckNameAvailability");
 
                 var apiManagementClient = ApiManagementHelper.GetApiManagementClient();
 
                 var validServiceName = TestUtilities.GenerateName("hydraapimservicevalid");
-                var response =
-                    apiManagementClient.ResourceProvider.CheckServiceNameAvailability(
-                        new ApiServiceCheckNameAvailabilityParameters(validServiceName));
+                var response = 
+                    apiManagementClient.ResourceProvider.CheckNameAvailability(new ApiServiceCheckNameAvailabilityParameters(validServiceName));
                 Assert.NotNull(response);
-                Assert.True(response.IsAvailable);
-                Assert.Null(response.Reason);
+                Assert.True(response.NameAvailable);
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                Assert.NotNull(response.Reason);
+                Assert.NotNull(response.Message);
 
                 const string invalidName = "!!!invalidname";
                 response =
-                    apiManagementClient.ResourceProvider.CheckServiceNameAvailability(
+                    apiManagementClient.ResourceProvider.CheckNameAvailability(
                         new ApiServiceCheckNameAvailabilityParameters(invalidName));
                 Assert.NotNull(response);
-                Assert.False(response.IsAvailable);
+                Assert.False(response.NameAvailable);
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
                 Assert.NotNull(response.Reason);
 
                 // create api management service 
@@ -60,14 +63,14 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                     new ApiServiceProperties
                     {
                         CreatedAtUtc = DateTime.UtcNow,
-                        SkuProperties = new ApiServiceSkuProperties
-                        {
-                            Capacity = 1,
-                            SkuType = SkuType.Developer
-                        },
                         AddresserEmail = "addresser@live.com",
                         PublisherEmail = "publisher@live.com",
                         PublisherName = "publisher"
+                    },
+                    new ApiServiceSkuProperties
+                    {
+                        Capacity = 1,
+                        SkuType = SkuType.Developer
                     });
 
                 var createResponse = apiManagementClient.ResourceProvider.CreateOrUpdate(resourceGroup, validServiceName,
@@ -75,10 +78,11 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                 Assert.NotNull(createResponse);
 
                 response =
-                    apiManagementClient.ResourceProvider.CheckServiceNameAvailability(
+                    apiManagementClient.ResourceProvider.CheckNameAvailability(
                         new ApiServiceCheckNameAvailabilityParameters(validServiceName));
                 Assert.NotNull(response);
-                Assert.False(response.IsAvailable);
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+                Assert.False(response.NameAvailable);
                 Assert.NotNull(response.Reason);
             }
         }

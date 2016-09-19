@@ -73,7 +73,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </param>
         /// <param name='format'>
         /// Format of the policy. Supported formats:
-        /// application/vnd.ms-azure-apim.policy+xml
+        /// application/vnd.ms-azure-apim.policy+xml,
+        /// application/vnd.ms-azure-apim.policy.raw+xml
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
@@ -97,7 +98,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </param>
         /// <param name='format'>
         /// Format of the policy. Supported formats:
-        /// application/vnd.ms-azure-apim.policy+xml
+        /// application/vnd.ms-azure-apim.policy+xml,
+        /// application/vnd.ms-azure-apim.policy.raw+xml
         /// </param>
         /// <param name='policyStream'>
         /// Policy stream.
