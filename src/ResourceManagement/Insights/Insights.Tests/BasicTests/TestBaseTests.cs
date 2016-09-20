@@ -15,18 +15,14 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Insights.Tests.Helpers;
-using Microsoft.Azure;
 using Microsoft.Azure.Insights;
 using Microsoft.Azure.Insights.Models;
 using Microsoft.Azure.Management.Insights;
 using Microsoft.Rest;
 using Xunit;
 
-namespace Insights.Tests.InMemoryTests
+namespace Insights.Tests.BasicTests
 {
     public class TestBase
     {

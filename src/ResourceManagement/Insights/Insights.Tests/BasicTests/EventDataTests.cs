@@ -21,13 +21,10 @@ using System.Net.Http;
 using Insights.Tests.Helpers;
 using Microsoft.Azure.Insights;
 using Microsoft.Azure.Insights.Models;
-using Microsoft.Rest.Azure;
 using Microsoft.Rest.Azure.OData;
-using Newtonsoft.Json;
 using Xunit;
-using Xunit.Sdk;
 
-namespace Insights.Tests.InMemoryTests
+namespace Insights.Tests.BasicTests
 {
     /// <summary>
     /// <para>Class to unit test the Insights API methods.</para>
@@ -66,13 +63,9 @@ namespace Insights.Tests.InMemoryTests
         public void ListEventsTest()
         {
             List<EventData> expectedEventDataCollection = GetEventDataCollection();
-
-            var internalList = JsonConvert.SerializeObject(expectedEventDataCollection);
-            var content = string.Concat("{ \"value\":", internalList, ", \"nextLink\":\"\"}");
-
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(content)
+                Content = new StringContent(string.Concat("{ \"value\":", expectedEventDataCollection.ToJson(), ", \"nextLink\":\"\"}"))
             };
             
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
@@ -97,13 +90,9 @@ namespace Insights.Tests.InMemoryTests
         public void ListEventsNextTest()
         {
             List<EventData> expectedEventDataCollection = GetEventDataCollection();
-
-            var internalList = JsonConvert.SerializeObject(expectedEventDataCollection);
-            var content = string.Concat("{ \"value\":", internalList, ", \"nextLink\":\"\"}");
-
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(content)
+                Content = new StringContent(string.Concat("{ \"value\":", expectedEventDataCollection.ToJson(), ", \"nextLink\":\"\"}"))
             };
 
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };

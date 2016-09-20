@@ -15,18 +15,17 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using Insights.Tests.Helpers;
 using Microsoft.Azure.Insights;
 using Microsoft.Azure.Insights.Models;
-using Newtonsoft.Json;
 using Xunit;
+using Newtonsoft.Json;
 
-namespace Insights.Tests.InMemoryTests
+namespace Insights.Tests.BasicTests
 {
-    public class UsagesInMemoryTests : TestBase
+    public class UsagesTests : TestBase
     {
         [Fact]
         public void ListUsageTest()
@@ -35,9 +34,7 @@ namespace Insights.Tests.InMemoryTests
             string filterString = "name.value eq 'CPUTime' or name.value eq 'Requests'";
 
             List<UsageMetric> expectedUsageMetricCollection = GetUsageMetricCollection(resourceUri);
-
-            var internalList = expectedUsageMetricCollection.ToJson();
-            var content = string.Concat("{ \"value\":", internalList, ", \"nextLink\":\"\"}");
+            var content = string.Concat("{ \"value\":", expectedUsageMetricCollection.ToJson(), ", \"nextLink\":\"\"}");
 
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {

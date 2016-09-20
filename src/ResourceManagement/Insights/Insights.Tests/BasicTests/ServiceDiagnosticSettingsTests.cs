@@ -15,72 +15,59 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using Insights.Tests.Helpers;
 using Microsoft.Azure.Management.Insights;
 using Microsoft.Azure.Management.Insights.Models;
-using Microsoft.Azure.Test.HttpRecorder;
 using Xunit;
 
-namespace Insights.Tests.InMemoryTests
+namespace Insights.Tests.BasicTests
 {
-    public class DiagnosticSettingsInMemoryTests : TestBase
+    public class ServiceDiagnosticSettingsTests : TestBase
     {
         private const string ResourceUri = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.web/serverFarms/DefaultServerFarm";
 
         [Fact]
         public void LogProfiles_PutTest()
         {
-            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            var expResponse = CreateDiagnosticSettings();
+            var expHttpResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(string.Empty),
+                Content = new StringContent(expResponse.ToJson())
             };
 
-            var handler = new RecordedDelegatingHandler(response);
+            var handler = new RecordedDelegatingHandler(expHttpResponse);
             InsightsManagementClient customClient = this.GetInsightsManagementClient(handler);
 
-            var parameters = new ServiceDiagnosticSettingsPutParameters
-            {
-                Properties = CreateDiagnosticSettings()
-            };
+            var parameters = CreateDiagnosticSettingsParams();
 
-            customClient.ServiceDiagnosticSettingsOperations.Put(ResourceUri, parameters);
-            var actualResponse = JsonExtensions.FromJson<ServiceDiagnosticSettingsPutParameters>(handler.Request);
-            AreEqual(parameters.Properties, actualResponse.Properties);
+            ServiceDiagnosticSettingsResource response = customClient.ServiceDiagnosticSettings.CreateOrUpdate(resourceUri: ResourceUri, parameters: parameters);
+            AreEqual(expResponse, response);
         }
 
         [Fact]
         public void LogProfiles_GetTest()
         {
-            var diagnosticSettings = CreateDiagnosticSettings();
-            var expectedResponse = new ServiceDiagnosticSettingsGetResponse()
+            var expResponse = CreateDiagnosticSettings();
+            var expHttpResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Name = "service",
-                Properties = diagnosticSettings,
-                RequestId = "request id",
-                StatusCode = HttpStatusCode.OK
+                Content = new StringContent(expResponse.ToJson())
             };
 
-            var response = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(expectedResponse.ToJson()),
-            };
-
-            var handler = new RecordedDelegatingHandler(response);
+            var handler = new RecordedDelegatingHandler(expHttpResponse);
             InsightsManagementClient customClient = this.GetInsightsManagementClient(handler);
-            ServiceDiagnosticSettingsGetResponse actualResponse = customClient.ServiceDiagnosticSettingsOperations.Get(ResourceUri);
-            AreEqual(expectedResponse.Properties, actualResponse.Properties);
+            ServiceDiagnosticSettingsResource actualResponse = customClient.ServiceDiagnosticSettings.Get(resourceUri: ResourceUri);
+            AreEqual(expResponse, actualResponse);
         }
 
-        private static ServiceDiagnosticSettings CreateDiagnosticSettings()
+        private static ServiceDiagnosticSettingsCreateOrUpdateParameters CreateDiagnosticSettingsParams()
         {
-            return new ServiceDiagnosticSettings
+            return new ServiceDiagnosticSettingsCreateOrUpdateParameters
             {
                 StorageAccountId = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.storage/storageaccounts/sa1",
                 ServiceBusRuleId = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.servicebus/namespaces/ns1/authorizationRules/authrule",
-                StorageAccountName = "sa1",
+                WorkspaceId = "wsId",
                 Logs = new List<LogSettings>
                 {
                     new LogSettings
@@ -108,7 +95,41 @@ namespace Insights.Tests.InMemoryTests
             };
         }
 
-        private static void AreEqual(ServiceDiagnosticSettings exp, ServiceDiagnosticSettings act)
+        private static ServiceDiagnosticSettingsResource CreateDiagnosticSettings()
+        {
+            return new ServiceDiagnosticSettingsResource
+            {
+                StorageAccountId = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.storage/storageaccounts/sa1",
+                ServiceBusRuleId = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.servicebus/namespaces/ns1/authorizationRules/authrule",
+                WorkspaceId = "wsId",
+                Logs = new List<LogSettings>
+                {
+                    new LogSettings
+                    {
+                        RetentionPolicy = new RetentionPolicy
+                        {
+                            Days = 90,
+                            Enabled = true
+                        }
+                    }
+                },
+                Metrics = new List<MetricSettings>
+                {
+                    new MetricSettings
+                    {
+                        Enabled = true,
+                        RetentionPolicy = new RetentionPolicy
+                        {
+                            Enabled = true,
+                            Days = 90
+                        },
+                        TimeGrain = TimeSpan.FromMinutes(1)
+                    }
+                }
+            };
+        }
+
+        private static void AreEqual(ServiceDiagnosticSettingsResource exp, ServiceDiagnosticSettingsResource act)
         {
             if (exp == act)
             {
@@ -126,7 +147,7 @@ namespace Insights.Tests.InMemoryTests
             CompareLists(exp.Metrics, act.Metrics);
 
             Assert.Equal(exp.StorageAccountId, act.StorageAccountId);
-            Assert.Equal(exp.StorageAccountName, act.StorageAccountName);
+            Assert.Equal(exp.WorkspaceId, act.WorkspaceId);
             Assert.Equal(exp.ServiceBusRuleId, act.ServiceBusRuleId);
         }
 

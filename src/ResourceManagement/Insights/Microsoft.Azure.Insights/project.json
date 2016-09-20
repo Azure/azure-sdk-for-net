@@ -9,7 +9,7 @@
     "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
     "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
     "tags": [ "Microsoft", "Microsoft Azure", "Azure", "Insights", "monitoring", "monitoring services", "metrics", "alerts", "autoscale", "events", "operations", "logs", "REST", "HTTP", "client", "azureofficial", "windowsazureofficial", "management services", "diagnostics", "telemetry", "analytics" ],
-    "requireLicenseAcceptance":  false,
+    "requireLicenseAcceptance":  false
   },
 
   "buildOptions": {

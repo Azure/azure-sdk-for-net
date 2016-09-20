@@ -15,70 +15,55 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using Insights.Tests.Helpers;
 using Microsoft.Azure.Management.Insights;
 using Microsoft.Azure.Management.Insights.Models;
-using Microsoft.Azure.Test.HttpRecorder;
 using Xunit;
 
-namespace Insights.Tests.InMemoryTests
+namespace Insights.Tests.BasicTests
 {
-    public class AutoscaleInMemoryTests : TestBase
+    public class AutoscaleTests : TestBase
     {
         private const string ResourceUri = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.web/serverFarms/DefaultServerFarm";
 
         [Fact]
         public void CreateOrUpdateSettingTest()
         {
-            var handler = new RecordedDelegatingHandler();
-            InsightsManagementClient customClient = this.GetInsightsManagementClient(handler);
-
-            AutoscaleSettingCreateOrUpdateParameters parameters = new AutoscaleSettingCreateOrUpdateParameters
+            AutoscaleSettingResource expResponse = CreateAutoscaleSetting(location: "East US", resourceUri: ResourceUri, metricName: "CpuPercentage");
+            var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Properties = CreateAutoscaleSetting(ResourceUri, "CpuPercentage", string.Empty),
-                Location = "East US",
-                Tags = new Dictionary<string, string> { { "tag1", "value1" } }
+                Content = new StringContent(expResponse.ToJson()),
             };
 
-            customClient.AutoscaleOperations.CreateOrUpdateSetting("resourceGroup1", "setting1", parameters);
-            var actualResponse = JsonExtensions.FromJson<AutoscaleSettingCreateOrUpdateParameters>(handler.Request);
-            AreEqual(parameters.Properties, actualResponse.Properties);
+            var handler = new RecordedDelegatingHandler(response);
+            InsightsManagementClient customClient = this.GetInsightsManagementClient(handler);
+
+            var actualResponse = customClient.AutoscaleSettings.CreateOrUpdate(resourceGroupName: "resourceGroup1", autoscaleSettingName: "setting1", parameters: expResponse);
+            AreEqual(expResponse, actualResponse);
         }
 
         [Fact]
         public void Autoscale_GetSetting()
         {
             var expectedAutoscaleSetting = CreateAutoscaleSetting(ResourceUri, "CpuPercentage", string.Empty);
-            var expectedAutoscaleSettingGetResponse = new AutoscaleSettingGetResponse()
-            {
-                Id = ResourceUri,
-                Location = "East US",
-                Tags = new Dictionary<string, string> {{"tag1", "value1"}},
-                Name = expectedAutoscaleSetting.Name,
-                Properties = expectedAutoscaleSetting,
-                RequestId = "request id",
-                StatusCode = HttpStatusCode.OK
-            };
-
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(expectedAutoscaleSettingGetResponse.ToJson()),
+                Content = new StringContent(expectedAutoscaleSetting.ToJson()),
             };
 
             var handler = new RecordedDelegatingHandler(response);
             InsightsManagementClient customClient = this.GetInsightsManagementClient(handler);
-            AutoscaleSettingGetResponse actualResponse = customClient.AutoscaleOperations.GetSetting("resourceGroup1", "setting1");
-            AreEqual(expectedAutoscaleSettingGetResponse.Properties, actualResponse.Properties);
+            AutoscaleSettingResource actualResponse = customClient.AutoscaleSettings.Get(resourceGroupName: "resourceGroup1", autoscaleSettingName: "setting1");
+            AreEqual(expectedAutoscaleSetting, actualResponse);
         }
 
-        private static AutoscaleSetting CreateAutoscaleSetting(string resourceUri, string metricName, string metricNamespace)
+        private static AutoscaleSettingResource CreateAutoscaleSetting(string location, string resourceUri, string metricName)
         {
-            var capacity = new ScaleCapacity
+            var capacity = new ScaleCapacity()
             {
-                Default = "1",
+                DefaultProperty = "1",
                 Maximum = "100",
                 Minimum = "1"
             };
@@ -96,8 +81,8 @@ namespace Insights.Tests.InMemoryTests
                 Schedule = new RecurrentSchedule()
                 {
                     Days = new List<string> { "Monday" },
-                    Hours = new List<int> { 0 },
-                    Minutes = new int[] { 10 },
+                    Hours = new List<int?> { 0 },
+                    Minutes = new List<int?> { 10 },
                     TimeZone = "UTC-11"
                 }
             };
@@ -109,9 +94,7 @@ namespace Insights.Tests.InMemoryTests
                     MetricTrigger = new MetricTrigger
                     {
                         MetricName = metricName,
-                        MetricNamespace = metricNamespace,
                         MetricResourceUri = resourceUri,
-                        Operator = ComparisonOperationType.GreaterThan,
                         Statistic = MetricStatisticType.Average,
                         Threshold = 80.0,
                         TimeAggregation = TimeAggregationType.Maximum,
@@ -122,15 +105,15 @@ namespace Insights.Tests.InMemoryTests
                     {
                         Cooldown = TimeSpan.FromMinutes(20),
                         Direction = ScaleDirection.Increase,
-                        Type = ScaleType.ExactCount,
                         Value = "10"
                     }
                 }
             };
 
-            AutoscaleSetting setting = new AutoscaleSetting
+            AutoscaleSettingResource setting = new AutoscaleSettingResource
             {
                 Name = "setting1",
+                AutoscaleSettingResourceName = "setting1",
                 TargetResourceUri = resourceUri,
                 Enabled = true,
                 Profiles = new AutoscaleProfile[]
@@ -151,13 +134,16 @@ namespace Insights.Tests.InMemoryTests
                         Recurrence = recurrence,
                         Rules = rules
                     }
-                }
+                },
+                Location = "",
+                Tags = null,
+                Notifications = null
             };
 
             return setting;
         }
 
-        private static void AreEqual(AutoscaleSetting exp, AutoscaleSetting act)
+        private static void AreEqual(AutoscaleSettingResource exp, AutoscaleSettingResource act)
         {
             if (exp != null)
             {
@@ -203,7 +189,7 @@ namespace Insights.Tests.InMemoryTests
         {
             if (exp != null)
             {
-                Assert.Equal(exp.Default, act.Default);
+                Assert.Equal(exp.DefaultProperty, act.DefaultProperty);
                 Assert.Equal(exp.Maximum, act.Maximum);
                 Assert.Equal(exp.Minimum, act.Minimum);
             }
@@ -229,6 +215,29 @@ namespace Insights.Tests.InMemoryTests
             }
         }
 
+        private static bool AreEqual(IList<int?> exp, IList<int?> act)
+        {
+            if (exp != null)
+            {
+                if (act == null || exp.Count != act.Count)
+                {
+                    return false;
+                }
+
+                for (int i = 0; i < exp.Count; i++)
+                {
+                    if (exp[i] != act[i])
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
+            return act == null;
+        }
+
         private static void AreEqual(ScaleRule exp, ScaleRule act)
         {
             if (exp != null)
@@ -243,9 +252,7 @@ namespace Insights.Tests.InMemoryTests
             if (exp != null)
             {
                 Assert.Equal(exp.MetricName, act.MetricName);
-                Assert.Equal(exp.MetricNamespace, act.MetricNamespace);
                 Assert.Equal(exp.MetricResourceUri, act.MetricResourceUri);
-                Assert.Equal(exp.Operator, act.Operator);
                 Assert.Equal(exp.Statistic, act.Statistic);
                 Assert.Equal(exp.Threshold, act.Threshold);
                 Assert.Equal(exp.TimeAggregation, act.TimeAggregation);
@@ -260,7 +267,6 @@ namespace Insights.Tests.InMemoryTests
             {
                 Assert.Equal(exp.Cooldown, act.Cooldown);
                 Assert.Equal(exp.Direction, act.Direction);
-                Assert.Equal(exp.Type, act.Type);
                 Assert.Equal(exp.Value, act.Value);
             }
         }

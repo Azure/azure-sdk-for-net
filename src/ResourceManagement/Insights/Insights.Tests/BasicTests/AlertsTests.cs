@@ -18,58 +18,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 using Insights.Tests.Helpers;
 using Microsoft.Azure.Management.Insights;
 using Microsoft.Azure.Management.Insights.Models;
-using Newtonsoft.Json;
 using Xunit;
 
-namespace Insights.Tests.InMemoryTests
+namespace Insights.Tests.BasicTests
 {
-    public class Alerts : TestBase
+    public class AlertsTests : TestBase
     {
-        #region ListRules
-
-        private static AlertRuleResource ruleResource = new AlertRuleResource(
-                id: "id1",
-		        location: "location1",
-		        name: "name1",
-                actions: new List<RuleAction> {
-                    new RuleEmailAction(
-                        sendToServiceOwners: true,
-                        customEmails: new List<string>
-                        {
-                            "eamil1",
-                        }
-                    )
-                },
-			    condition: new LocationThresholdRuleCondition(
-				    dataSource: new RuleMetricDataSource(
-					    metricName: "CpuPercentage",
-                        resourceUri: "resUri1"
-				    ),
-				    failedLocationCount: 1,
-				    windowSize: new TimeSpan(0,0,30,0)
-			    ),
-			    description: "description1",
-			    isEnabled: true,
-			    lastUpdatedTime: new DateTime(2016, 9, 15),
-		        tags: new Dictionary<string, string> {
-			        { "key1", "val1" }
-		        }
-            );
-
-        private static List<AlertRuleResource> listRules = new List<AlertRuleResource>
-        {
-            ruleResource
-        };
-
-        #endregion
-
         [Fact]
         public void GetIncidentTest()
         {
@@ -77,7 +34,7 @@ namespace Insights.Tests.InMemoryTests
 
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(JsonConvert.SerializeObject(expectedIncident))
+                Content = new StringContent(expectedIncident.ToJson())
             };
 
             var handler = new RecordedDelegatingHandler(response);
@@ -136,21 +93,19 @@ namespace Insights.Tests.InMemoryTests
                     )
             };
 
-            var baseContent = JsonConvert.SerializeObject(expectedIncidentsResponse);
-
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(string.Concat("{\"value\": ", baseContent, "}"))
+                Content = new StringContent(expectedIncidentsResponse.ToJson())
             };
 
             var handler = new RecordedDelegatingHandler(response);
             var insightsClient = GetInsightsManagementClient(handler);
 
-            var actualIncidents = insightsClient.AlertRuleIncidents.ListByAlertRule(
+            var actualIncidents = insightsClient.Incidents.ListByAlertRule(
                 resourceGroupName: "rg1",
                 ruleName: "r1");
 
-            AreEqual(expectedIncidentsResponse.ToList(), actualIncidents.ToList());
+            AreEqual(expectedIncidentsResponse, actualIncidents.ToList());
         }
 
         private void AreEqual(IList<Incident> exp, IList<Incident> act)
@@ -175,16 +130,13 @@ namespace Insights.Tests.InMemoryTests
             }
         }
 
-        //[Fact]
+        [Fact]
         public void CreateOrUpdateRuleTest()
         {
-            RuleCreateOrUpdateParameters expectedParameters = GetCreateOrUpdateRuleParameter();
-
-            var expectedResponseContent = JsonConvert.SerializeObject(ruleResource);
-
+            AlertRuleResource expectedParameters = GetCreateOrUpdateRuleParameter();
             var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(expectedResponseContent)
+                Content = new StringContent(expectedParameters.ToJson())
             };
 
             var handler = new RecordedDelegatingHandler(expectedResponse);
@@ -192,20 +144,16 @@ namespace Insights.Tests.InMemoryTests
 
             var result = insightsClient.AlertRules.CreateOrUpdate(resourceGroupName: "rg1", ruleName: expectedParameters.Name, parameters: expectedParameters);
 
-            var actualParameters = handler.Request.FromJson<RuleCreateOrUpdateParameters>();
-
-            AreEqual(expectedParameters, actualParameters);
+            AreEqual(expectedParameters, result);
         }
 
-        //[Fact]
+        [Fact]
         public void ListRulesTest()
         {
-            var expectedRuleResourceCollection = listRules;
-            var baseContent = JsonConvert.SerializeObject(listRules);
-
+            var expResponse = GetRuleResourceCollection();
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(string.Concat("{\"value\":", baseContent, "}"))
+                Content = new StringContent(expResponse.ToJson())
             };
 
             var handler = new RecordedDelegatingHandler(response);
@@ -213,16 +161,10 @@ namespace Insights.Tests.InMemoryTests
 
             var actualResponse = insightsClient.AlertRules.ListByResourceGroup(resourceGroupName: " rg1", odataQuery: "resourceUri eq 'resUri'");
 
-            AreEqual(expectedRuleResourceCollection, actualResponse.GetEnumerator());
+            AreEqual(expResponse, actualResponse.ToList<AlertRuleResource>());
         }
 
-        [Fact]
-        public void UpdateRuleTest()
-        {
-            // Not implemented because the method signature is the same as CreateOrUpdateRule
-        }
-
-        private void AreEqual(RuleCreateOrUpdateParameters exp, RuleCreateOrUpdateParameters act)
+        private void AreEqual(AlertRuleResource exp, AlertRuleResource act)
         {
             if (exp != null)
             {
@@ -234,20 +176,6 @@ namespace Insights.Tests.InMemoryTests
                 AreEqual(exp.Condition, act.Condition);
                 AreEqual(exp.Actions, act.Actions);
                 Assert.Equal(exp.LastUpdatedTime, act.LastUpdatedTime);
-            }
-        }
-
-        private void AreEqual(RuleResource exp, RuleResource act)
-        {
-            if (exp != null)
-            {
-                AreEqual(exp.Condition, act.Condition);
-                Assert.Equal(exp.Description, act.Description);
-                Assert.Equal(exp.IsEnabled, act.IsEnabled);
-                Assert.True(exp.LastUpdatedTime.HasValue);
-                Assert.True(act.LastUpdatedTime.HasValue);
-                Assert.Equal(exp.LastUpdatedTime.Value.ToUniversalTime(), act.LastUpdatedTime.Value.ToUniversalTime());
-                Assert.Equal(exp.Name, act.Name);
             }
         }
 
@@ -301,7 +229,7 @@ namespace Insights.Tests.InMemoryTests
             }
         }
 
-        private RuleCreateOrUpdateParameters GetCreateOrUpdateRuleParameter()
+        private AlertRuleResource GetCreateOrUpdateRuleParameter()
         {
             List<RuleAction> actions = new List<RuleAction>();
             actions.Add(new RuleEmailAction()
@@ -313,8 +241,9 @@ namespace Insights.Tests.InMemoryTests
                         SendToServiceOwners = true
                     });
 
-            return new RuleCreateOrUpdateParameters(
+            return new AlertRuleResource(
                 location: "location",
+                alertRuleResourceName: "name1",
                 actions: actions,
                 condition: new LocationThresholdRuleCondition()
                 {
@@ -337,7 +266,7 @@ namespace Insights.Tests.InMemoryTests
             );
         }
 
-        private List<RuleResource> GetRuleResourceCollection()
+        private List<AlertRuleResource> GetRuleResourceCollection()
         {
             List<RuleAction> actions = new List<RuleAction>();
             actions.Add(new RuleEmailAction()
@@ -349,12 +278,13 @@ namespace Insights.Tests.InMemoryTests
                 SendToServiceOwners = true
             });
 
-            return new List<RuleResource>
+            return new List<AlertRuleResource>
             {
-                new RuleResource(
+                new AlertRuleResource(
                     id: "id1",
                     location: "location1",
                     name: "name1",
+                    alertRuleResourceName: "name1",
                     actions: actions,
                     condition: new LocationThresholdRuleCondition()
                     {
@@ -377,21 +307,15 @@ namespace Insights.Tests.InMemoryTests
             };
         }
 
-        private void AreEqual(IList<RuleResource> exp, IEnumerator<RuleResource> act)
+        private void AreEqual(IList<AlertRuleResource> exp, IList<AlertRuleResource> act)
         {
             if (exp != null)
             {
-                var actList = new List<RuleResource>();
-                while (act.MoveNext())
-                {
-                    actList.Add(act.Current);
-                }
-
-                Assert.True(exp.Count == actList.Count);
+                Assert.True(exp.Count == act.Count);
 
                 for (int i = 0; i < exp.Count; i++)
                 {
-                    AreEqual(exp[i], actList[i]);
+                    AreEqual(exp[i], act[i]);
                 }
             }
         }

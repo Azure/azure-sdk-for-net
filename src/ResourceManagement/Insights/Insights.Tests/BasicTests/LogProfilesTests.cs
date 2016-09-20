@@ -13,22 +13,18 @@
 // limitations under the License.
 //
 
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text.RegularExpressions;
 using Insights.Tests.Helpers;
 using Microsoft.Azure.Management.Insights;
 using Microsoft.Azure.Management.Insights.Models;
-using Microsoft.Azure.Test.HttpRecorder;
 using Xunit;
 
-namespace Insights.Tests.InMemoryTests
+namespace Insights.Tests.BasicTests
 {
-    public class LogProfilesInMemoryTests : TestBase
+    public class LogProfilesTests : TestBase
     {
         private const string ResourceId = "/subscriptions/0e44ac0a-5911-482b-9edd-3e67625d45b5/providers/microsoft.insights/logprofiles/default";
 
@@ -37,23 +33,20 @@ namespace Insights.Tests.InMemoryTests
         [Fact]
         public void LogProfiles_CreateOrUpdateTest()
         {
-            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK)
+            LogProfileResource expResponse = CreateLogProfile();
+            HttpResponseMessage expHttpResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(string.Empty)
+                Content = new StringContent(expResponse.ToJson())
             };
 
-            var handler = new RecordedDelegatingHandler(response);
+            var handler = new RecordedDelegatingHandler(expHttpResponse);
             InsightsManagementClient customClient = this.GetInsightsManagementClient(handler);
 
-            var parameters = new LogProfileCreatOrUpdateParameters
-            {
-                Properties = CreateLogProfile()
-            };
+            var parameters = CreateLogProfileParams();
 
-            customClient.LogProfilesOperations.CreateOrUpdate(DefaultName, parameters);
+            LogProfileResource actualResponse = customClient.LogProfiles.CreateOrUpdate(logProfileName: DefaultName, parameters: parameters);
 
-            var actualRequest = JsonExtensions.FromJson<LogProfileCreatOrUpdateParameters>(handler.Request);
-            AreEqual(parameters.Properties, actualRequest.Properties);
+            AreEqual(expResponse, actualResponse);
         }
 
         [Fact]
@@ -67,74 +60,51 @@ namespace Insights.Tests.InMemoryTests
             var handler = new RecordedDelegatingHandler(response);
             InsightsManagementClient customClient = this.GetInsightsManagementClient(handler);
 
-            customClient.LogProfilesOperations.Delete(DefaultName);
+            customClient.LogProfiles.Delete(logProfileName: DefaultName);
         }
 
         [Fact]
         public void LogProfiles_GetTest()
         {
-            var logProfile = CreateLogProfile();
-            var expectedResponse = new LogProfileGetResponse()
-            {
-                Id = ResourceId,
-                Name = DefaultName,
-                Properties = logProfile,
-                RequestId = "request id",
-                StatusCode = HttpStatusCode.OK
-            };
-
+            var expResponse = CreateLogProfile();
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(expectedResponse.ToJson()),
+                Content = new StringContent(expResponse.ToJson())
             };
 
             var handler = new RecordedDelegatingHandler(response);
             InsightsManagementClient customClient = this.GetInsightsManagementClient(handler);
 
-            LogProfileGetResponse actualResponse = customClient.LogProfilesOperations.Get(DefaultName);
-            AreEqual(expectedResponse.Properties, actualResponse.Properties);
+            LogProfileResource actualResponse = customClient.LogProfiles.Get(logProfileName: DefaultName);
+            AreEqual(expResponse, actualResponse);
         }
 
         [Fact]
         public void LogProfiles_ListTest()
         {
             var logProfile = CreateLogProfile();
-
-            var expectedResponse = new LogProfileListResponse
+            var expResponse = new List<LogProfileResource>
             {
-                LogProfileCollection = new LogProfileCollection
-                {
-                    Value = new List<LogProfileResource>
-                    {
-                        new LogProfileResource()
-                        {
-                            Id = ResourceId,
-                            Name = DefaultName,
-                            Properties = logProfile
-                        }
-                    }
-                }
+                logProfile
             };
 
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(expectedResponse.LogProfileCollection.ToJson()),
+                Content = new StringContent(expResponse.ToJson())
             };
 
             var handler = new RecordedDelegatingHandler(response);
             InsightsManagementClient customClient = this.GetInsightsManagementClient(handler);
 
-            LogProfileListResponse actualResponse = customClient.LogProfilesOperations.List();
+            IList<LogProfileResource> actualResponse = customClient.LogProfiles.List().ToList<LogProfileResource>();
 
-            Assert.Equal(expectedResponse.LogProfileCollection.Value.Count, actualResponse.LogProfileCollection.Value.Count);
-            AreEqual(
-                expectedResponse.LogProfileCollection.Value[0].Properties,
-                actualResponse.LogProfileCollection.Value[0].Properties);
+            Assert.Equal(expResponse.Count, actualResponse.Count);
+            AreEqual(expResponse[0], actualResponse[0]);
         }
 
-        private static LogProfile CreateLogProfile()
+        private static LogProfileResource CreateLogProfile()
         {
-            return new LogProfile
+            return new LogProfileResource
             {
                 StorageAccountId = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.storage/storageaccounts/sa1",
                 ServiceBusRuleId = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.servicebus/namespaces/sb1/authorizationrules/ar1",
@@ -148,7 +118,23 @@ namespace Insights.Tests.InMemoryTests
             };
         }
 
-        private static void AreEqual(LogProfile exp, LogProfile act)
+        private static LogProfileCreateOrUpdateParameters CreateLogProfileParams()
+        {
+            return new LogProfileCreateOrUpdateParameters
+            {
+                StorageAccountId = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.storage/storageaccounts/sa1",
+                ServiceBusRuleId = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.servicebus/namespaces/sb1/authorizationrules/ar1",
+                Categories = new List<string> { "Delete", "Write" },
+                Locations = new List<string> { "global", "eastus" },
+                RetentionPolicy = new RetentionPolicy
+                {
+                    Days = 4,
+                    Enabled = true,
+                }
+            };
+        }
+
+        private static void AreEqual(LogProfileResource exp, LogProfileResource act)
         {
             if (exp != null)
             {
