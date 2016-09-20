@@ -1,4 +1,10 @@
-﻿using System;
+﻿/**
+* Copyright (c) Microsoft Corporation. All rights reserved.
+* Licensed under the MIT License. See License.txt in the project root for
+* license information.
+*/
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,6 +32,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         private IVirtualMachines virtualMachines;
         private IVirtualMachineImages virtualMachineImages;
         private IAvailabilitySets availabilitySets;
+        private IVirtualMachineScaleSets virtualMachineScaleSets;
         #endregion
 
         #region ctrs
@@ -129,6 +136,19 @@ namespace Microsoft.Azure.Management.V2.Compute
                 return availabilitySets;
             }
         }
+
+        public IVirtualMachineScaleSets VirtualMachineScaleSets {
+            get
+            {
+                if (virtualMachineScaleSets == null)
+                {
+                    virtualMachineScaleSets = new VirtualMachineScaleSetsImpl(client.VirtualMachineScaleSets, this, 
+                        this.storageManager,
+                        this.networkManager);
+                }
+                return virtualMachineScaleSets;
+            }
+        }
         #endregion
     }
 
@@ -137,5 +157,6 @@ namespace Microsoft.Azure.Management.V2.Compute
         IVirtualMachines VirtualMachines { get; }
         IVirtualMachineImages VirtualMachineImages { get; }
         IAvailabilitySets AvailabilitySets { get; }
+        IVirtualMachineScaleSets VirtualMachineScaleSets { get; }
     }
 }
