@@ -303,7 +303,7 @@ namespace Microsoft.Azure.Management.V2.Storage
         #endregion
 
 
-        #region Implementation of IResourceCreator interface
+        #region Implementation of IResourceCreatorUpdator interface
 
         public override async Task<IStorageAccount> CreateResourceAsync(CancellationToken cancellationToken)
         {
@@ -319,7 +319,7 @@ namespace Microsoft.Azure.Management.V2.Storage
             return this;
         }
 
-        public override async Task<IStorageAccount> ApplyAsync(CancellationToken cancellationToken = default(CancellationToken), bool multiThreaded = true)
+        public override async Task<IStorageAccount> UpdateResourceAsync(CancellationToken cancellationToken)
         {
             // overriding the base.ApplyAsync here since the parameter for update is different from the  one for create.
             var response = await client.UpdateAsync(ResourceGroupName, this.name, updateParameters, cancellationToken);

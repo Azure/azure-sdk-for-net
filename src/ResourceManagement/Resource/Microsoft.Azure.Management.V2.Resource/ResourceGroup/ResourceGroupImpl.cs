@@ -186,9 +186,17 @@ namespace Microsoft.Azure.Management.V2.Resource
             return this;
         }
 
-        public override IResourceGroup CreateResource()
+        public override async Task<IResourceGroup> UpdateResourceAsync(CancellationToken cancellationToken)
         {
-            return CreateResourceAsync(CancellationToken.None).Result;
+            return await CreateResourceAsync(cancellationToken);
+        }
+
+        public override bool IsInCreateMode
+        {
+            get
+            {
+                return Inner.Id == null;
+            }
         }
     }
 }

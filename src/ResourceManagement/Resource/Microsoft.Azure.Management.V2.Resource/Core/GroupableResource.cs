@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.V2.Resource
         {
             groupName = creatable.Key;
             newGroup = creatable;
-            AddCreatableDependency(creatable as IResourceCreator<IResource>);
+            AddCreatableDependency(creatable as IResourceCreatorUpdator<IResource>);
             return this as IDefintionAfterResourceGroup;
         }
 

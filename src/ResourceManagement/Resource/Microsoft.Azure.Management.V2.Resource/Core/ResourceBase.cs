@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
 
         #endregion
 
-        protected bool IsInCreateMode
+        public override bool IsInCreateMode
         {
             get
             {
@@ -188,6 +188,11 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
         }
 
         #endregion
+
+        public override Task<IFluentResourceT> UpdateResourceAsync(CancellationToken cancellationToken)
+        {
+            return this.CreateResourceAsync(cancellationToken);
+        }
 
         private void EnsureResource(InnerResourceT innerObject)
         {
