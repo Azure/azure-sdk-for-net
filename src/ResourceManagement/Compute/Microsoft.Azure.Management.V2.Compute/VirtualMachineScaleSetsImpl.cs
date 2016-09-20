@@ -42,7 +42,6 @@ namespace Microsoft.Azure.Management.V2.Compute
                 return InnerCollection.ListNext(nextPageLink);
             });
             return WrapList(pagedList);
-
         }
 
         public PagedList<IVirtualMachineScaleSet> List ()
@@ -54,6 +53,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             });
             return WrapList(pagedList);
         }
+
         Task<PagedList<IVirtualMachineScaleSet>> ISupportsListingByGroup<IVirtualMachineScaleSet>.ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken)
         {
             throw new NotSupportedException();

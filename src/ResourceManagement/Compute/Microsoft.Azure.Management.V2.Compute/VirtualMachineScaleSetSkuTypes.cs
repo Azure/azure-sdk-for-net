@@ -1,9 +1,10 @@
-using Microsoft.Azure.Management.Compute.Models;
 /**
 * Copyright (c) Microsoft Corporation. All rights reserved.
 * Licensed under the MIT License. See License.txt in the project root for
 * license information.
 */
+using Microsoft.Azure.Management.Compute.Models;
+
 namespace Microsoft.Azure.Management.V2.Compute
 {
     /// <summary>
@@ -217,6 +218,7 @@ namespace Microsoft.Azure.Management.V2.Compute
                 return this.sku;
             }
         }
+
         public override string ToString()
         {
             return this.value;

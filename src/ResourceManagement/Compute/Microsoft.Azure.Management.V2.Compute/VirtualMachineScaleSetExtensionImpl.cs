@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.V2.Compute
                 return this.Inner.AutoUpgradeMinorVersion;
             }
         }
-        public IDictionary<string,object> PublicSettings
+        public IDictionary<string, object> PublicSettings
         {
             get
             {

@@ -18,38 +18,26 @@ namespace Microsoft.Azure.Management.V2.Compute
         // TODO: Report bug -> autorest generator is not appendeing 'Inner' to type Microsoft.Azure.Management.Compute.Models.VirtualMachineScaleSetSku
         private VirtualMachineScaleSetSkuImpl (VirtualMachineScaleSetSku inner) : base(inner)
         {
-
-            //$ super(inner);
-            //$ }
-
         }
 
         public string ResourceType
         {
             get
             {
-            //$ return this.inner().resourceType();
-
-
-                return null;
+                return Inner.ResourceType;
             }
         }
+
         public VirtualMachineScaleSetSkuTypes SkuType ()
         {
-
-            //$ return new VirtualMachineScaleSetSkuTypes(this.inner().sku());
-
-            return null;
+            return new VirtualMachineScaleSetSkuTypes(this.Inner.Sku);
         }
 
         public VirtualMachineScaleSetSkuCapacity Capacity
         {
             get
             {
-            //$ return this.inner().capacity();
-
-
-                return null;
+                return this.Inner.Capacity;
             }
         }
     }

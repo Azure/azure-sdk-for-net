@@ -24,6 +24,7 @@ namespace Microsoft.Azure.Management.V2.Compute
                 return this.Capacity as VirtualMachineScaleSetSkuCapacity;
             }
         }
+
         /// <returns>the type of resource the sku applies to.</returns>
         string Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSetSku.ResourceType
         {

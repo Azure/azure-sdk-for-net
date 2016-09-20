@@ -1,4 +1,10 @@
-﻿using Microsoft.Azure.Management.Compute.Models;
+﻿/**
+* Copyright (c) Microsoft Corporation. All rights reserved.
+* Licensed under the MIT License. See License.txt in the project root for
+* license information.
+*/
+
+using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.V2.Resource.Core;
 using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
 using System;
@@ -33,7 +39,7 @@ namespace Microsoft.Azure.Management.V2.Compute
          * @return the operating system this virtual machine extension image supports
          */
         /// <returns>the region in which virtual machine extension image is available</returns>
-        OperatingSystemTypes osType();
+        OperatingSystemTypes OsType();
 
         /// <returns>the type of role this virtual machine extension image supports</returns>
         ComputeRoles ComputeRole { get; }
