@@ -13,11 +13,11 @@ namespace Microsoft.Azure.Management.Network.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for ApplicationGatewayTier.
+    /// Defines values for ApplicationGatewayFirewallMode.
     /// </summary>
-    public static class ApplicationGatewayTier
+    public static class ApplicationGatewayFirewallMode
     {
-        public const string Standard = "Standard";
-        public const string WAF = "WAF";
+        public const string Detection = "Detection";
+        public const string Prevention = "Prevention";
     }
 }
