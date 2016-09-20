@@ -44,6 +44,6 @@
     },
     "dependencies": {
         "Microsoft.Azure.Management.V2.Resource": "0.0.1-prerelease",
-        "Microsoft.Azure.Management.V2.Graph.RBAC": "0.0.1-prerelease"
+        "Microsoft.Azure.Management.Fluent.Graph.RBAC": "0.0.1-prerelease"
     }
 }

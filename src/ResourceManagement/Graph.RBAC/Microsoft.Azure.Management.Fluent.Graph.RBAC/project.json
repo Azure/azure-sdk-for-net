@@ -1,9 +1,9 @@
 {
   "version": "0.0.1-prerelease",
-  "description": "TODOGraphRBACV2Description.",
+  "description": "Fluent Graph RBAC management library.",
   "authors": [ "Microsoft" ],
   "packOptions": {
-    "summary": "TODOGraphRBACV2Description.",
+    "summary": "Fluent Graph RBAC management library.",
     "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
     "tags": [ "Microsoft Azure GraphRBAC management", "virtual machine", "graphrbac", "REST HTTP client", "azureofficial", "windowsazureofficial" ],
     "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
