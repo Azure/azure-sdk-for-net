@@ -2,16 +2,13 @@
 * Copyright (c) Microsoft Corporation. All rights reserved.
 * Licensed under the MIT License. See License.txt in the project root for
 * license information.
-*/ 
+*/
 
 namespace Microsoft.Azure.Management.V2.Network
 {
-
+    using Management.Network;
     using Microsoft.Azure.Management.Network.Models;
     using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Resource;
-    using Management.Network;
-    using System.Collections.Generic;
     using PublicIpAddress.Definition;
     using Resource.Core.CollectionActions;
     using System;
@@ -21,33 +18,32 @@ namespace Microsoft.Azure.Management.V2.Network
     /// <summary>
     /// Implementation for {@link PublicIpAddresses}.
     /// </summary>
-    public partial class PublicIpAddressesImpl  :
+    public partial class PublicIpAddressesImpl :
         GroupableResources<
             IPublicIpAddress,
             PublicIpAddressImpl,
             PublicIPAddressInner,
-            IPublicIPAddressesOperations, 
+            IPublicIPAddressesOperations,
             INetworkManager>,
         IPublicIpAddresses
     {
-        internal  PublicIpAddressesImpl (IPublicIPAddressesOperations client, INetworkManager networkManager) :
-            base (client, networkManager)
+        internal PublicIpAddressesImpl(IPublicIPAddressesOperations client, INetworkManager networkManager) :
+            base(client, networkManager)
         {
         }
 
-        public void Delete (string id)
+        public void Delete(string id)
         {
             this.Delete(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
         }
 
-        public void Delete (string groupName, string name)
+        public void Delete(string groupName, string name)
         {
             this.InnerCollection.Delete(groupName, name);
         }
 
-        protected override PublicIpAddressImpl WrapModel (string name)
+        protected override PublicIpAddressImpl WrapModel(string name)
         {
-
             PublicIPAddressInner inner = new PublicIPAddressInner();
 
             if (inner.DnsSettings == null)
@@ -62,7 +58,7 @@ namespace Microsoft.Azure.Management.V2.Network
                 this.MyManager);
         }
 
-        protected override IPublicIpAddress WrapModel (PublicIPAddressInner inner)
+        protected override IPublicIpAddress WrapModel(PublicIPAddressInner inner)
         {
             return new PublicIpAddressImpl(
                 inner.Id,
@@ -71,14 +67,17 @@ namespace Microsoft.Azure.Management.V2.Network
                 this.MyManager);
         }
 
-        PagedList<IPublicIpAddress> List()
+        private PagedList<IPublicIpAddress> List()
         {
-            IEnumerable<PublicIPAddressInner> storageAccounts = InnerCollection.ListAll();
-            var pagedList = new PagedList<PublicIPAddressInner>(storageAccounts);
+            var firstPage = InnerCollection.ListAll();
+            var pagedList = new PagedList<PublicIPAddressInner>(firstPage, (string nextPageLink) =>
+            {
+                return InnerCollection.ListAllNext(nextPageLink);
+            });
             return WrapList(pagedList);
         }
 
-        IBlank Define(string name)
+        private IBlank Define(string name)
         {
             return WrapModel(name);
         }
@@ -90,13 +89,16 @@ namespace Microsoft.Azure.Management.V2.Network
 
         public PagedList<IPublicIpAddress> ListByGroup(string resourceGroupName)
         {
-            return ((ISupportsListingByGroup<IPublicIpAddress>)this).ListByGroupAsync(resourceGroupName).Result;
+            var data = this.InnerCollection.List(resourceGroupName);
+            return WrapList(new PagedList<PublicIPAddressInner>(data, (string nextPageLink) =>
+            {
+                return InnerCollection.ListNext(nextPageLink);
+            }));
         }
 
-        public async Task<PagedList<IPublicIpAddress>> ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken)
+        public Task<PagedList<IPublicIpAddress>> ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken)
         {
-            var data = await this.InnerCollection.ListAsync(resourceGroupName);
-            return WrapList(new PagedList<PublicIPAddressInner>(data));
+            throw new NotSupportedException();
         }
 
         public async Task DeleteAsync(string groupName, string name, CancellationToken cancellationToken)

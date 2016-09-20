@@ -6,16 +6,14 @@
 
 namespace Microsoft.Azure.Management.V2.Network
 {
-
+    using Management.Network;
+    using Microsoft.Azure.Management.Network.Models;
     using Microsoft.Azure.Management.V2.Resource.Core;
     using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
-    using Microsoft.Azure.Management.V2.Resource;
-    using Microsoft.Azure.Management.Network.Models;
-    using Management.Network;
     using System;
-    using System.Threading.Tasks;
-    using System.Threading;
     using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Implementation for {@link NetworkSecurityGroups}.
@@ -31,26 +29,34 @@ namespace Microsoft.Azure.Management.V2.Network
 
         public PagedList<INetworkSecurityGroup> List()
         {
-            IEnumerable<NetworkSecurityGroupInner> list = InnerCollection.ListAll();
-            var pagedList = new PagedList<NetworkSecurityGroupInner>(list);
+            var firstPage = InnerCollection.ListAll();
+            var pagedList = new PagedList<NetworkSecurityGroupInner>(firstPage, (string nextPageLink) =>
+            {
+                return InnerCollection.ListAllNext(nextPageLink);
+            });
+
             return WrapList(pagedList);
         }
 
         public PagedList<INetworkSecurityGroup> ListByGroup(string groupName)
         {
-            IEnumerable<NetworkSecurityGroupInner> list = InnerCollection.List(groupName);
-            var pagedList = new PagedList<NetworkSecurityGroupInner>(list);
+            var list = InnerCollection.List(groupName);
+            var pagedList = new PagedList<NetworkSecurityGroupInner>(list, (string nextPageLink) =>
+            {
+                return InnerCollection.ListNext(nextPageLink);
+            });
+
             return WrapList(pagedList);
         }
 
         public void Delete(string id)
         {
-           this.Delete(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
+            Delete(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
         }
 
         public void Delete(string groupName, string name)
         {
-            this.InnerCollection.Delete(groupName, name);
+            InnerCollection.Delete(groupName, name);
         }
 
         public NetworkSecurityGroupImpl Define(string name)
@@ -60,7 +66,6 @@ namespace Microsoft.Azure.Management.V2.Network
 
         protected override NetworkSecurityGroupImpl WrapModel(string name)
         {
-
             NetworkSecurityGroupInner inner = new NetworkSecurityGroupInner(name: name);
 
             // Initialize rules
@@ -98,7 +103,7 @@ namespace Microsoft.Azure.Management.V2.Network
 
         Task<PagedList<INetworkSecurityGroup>> ISupportsListingByGroup<INetworkSecurityGroup>.ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public async override Task<INetworkSecurityGroup> GetByGroupAsync(string groupName, string name)

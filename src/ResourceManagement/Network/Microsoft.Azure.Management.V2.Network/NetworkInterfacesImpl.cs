@@ -6,15 +6,12 @@
 
 namespace Microsoft.Azure.Management.V2.Network
 {
-
+    using Management.Network;
+    using Microsoft.Azure.Management.Network.Models;
     using Microsoft.Azure.Management.V2.Resource.Core;
     using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
-    using Microsoft.Azure.Management.Network.Models;
-    using Microsoft.Azure.Management.V2.Resource;
-    using Management.Network;
-    using System.Collections.Generic;
     using System;
-    using NetworkInterface.Definition;
+    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -32,21 +29,27 @@ namespace Microsoft.Azure.Management.V2.Network
 
         public PagedList<INetworkInterface> List()
         {
-            IEnumerable<NetworkInterfaceInner> storageAccounts = InnerCollection.ListAll();
-            var pagedList = new PagedList<NetworkInterfaceInner>(storageAccounts);
+            var firstPage = InnerCollection.ListAll();
+            var pagedList = new PagedList<NetworkInterfaceInner>(firstPage, (string nextPageLink) =>
+            {
+                return InnerCollection.ListAllNext(nextPageLink);
+            });
             return WrapList(pagedList);
         }
 
         public PagedList<INetworkInterface> ListByGroup(string groupName)
         {
-            IEnumerable<NetworkInterfaceInner> list = InnerCollection.List(groupName);
-            var pagedList = new PagedList<NetworkInterfaceInner>(list);
+            var list = InnerCollection.List(groupName);
+            var pagedList = new PagedList<NetworkInterfaceInner>(list, (string nextPageLink) =>
+            {
+                return InnerCollection.ListNext(nextPageLink);
+            });
             return WrapList(pagedList);
         }
 
         public void Delete(string id)
         {
-           this.Delete(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
+            this.Delete(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
         }
 
         public void Delete(string groupName, string name)
@@ -56,7 +59,6 @@ namespace Microsoft.Azure.Management.V2.Network
 
         public NetworkInterface.Definition.IBlank Define(string name)
         {
-
             return WrapModel(name);
         }
 
@@ -64,7 +66,7 @@ namespace Microsoft.Azure.Management.V2.Network
         {
             NetworkInterfaceInner inner = new NetworkInterfaceInner();
             inner.IpConfigurations = new List<NetworkInterfaceIPConfigurationInner>();
-            inner.DnsSettings =  new NetworkInterfaceDnsSettings();
+            inner.DnsSettings = new NetworkInterfaceDnsSettings();
             return new NetworkInterfaceImpl(name,
                 inner,
                 this.InnerCollection,
@@ -81,10 +83,8 @@ namespace Microsoft.Azure.Management.V2.Network
 
         async Task<PagedList<INetworkInterface>> ISupportsListingByGroup<INetworkInterface>.ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken)
         {
-            var data = await this.InnerCollection.ListAsync(resourceGroupName);
-            return WrapList(new PagedList<NetworkInterfaceInner>(data));
+            throw new NotSupportedException();
         }
-
 
         async Task ISupportsDeletingByGroup.DeleteAsync(string groupName, string name, CancellationToken cancellationToken)
         {
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.V2.Network
 
         async Task ISupportsDeleting.DeleteAsync(string id, CancellationToken cancellationToken)
         {
-           await this.InnerCollection.DeleteAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id), cancellationToken);
+            await this.InnerCollection.DeleteAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id), cancellationToken);
         }
     }
 }

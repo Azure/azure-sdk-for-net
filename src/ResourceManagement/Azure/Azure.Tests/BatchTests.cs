@@ -4,8 +4,6 @@ using Microsoft.Azure.Management.V2.Resource;
 using Microsoft.Azure.Management.V2.Resource.Authentication;
 using Microsoft.Azure.Management.V2.Resource.Core;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -55,7 +53,7 @@ namespace Azure.Tests
                 {
                 }
 
-                var batchAccounts = await batchManager.BatchAccounts.ListByGroupAsync(rgName);
+                var batchAccounts = batchManager.BatchAccounts.ListByGroup(rgName);
 
                 Assert.Equal(batchAccounts.Count, 0);
             }

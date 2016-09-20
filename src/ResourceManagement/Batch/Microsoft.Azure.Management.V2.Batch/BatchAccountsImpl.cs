@@ -6,14 +6,11 @@
 
 namespace Microsoft.Azure.Management.V2.Batch
 {
-
-    using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
+    using Management.Batch;
+    using Management.Batch.Models;
+    using Microsoft.Azure.Management.V2.Batch.BatchAccount.Definition;
     using Microsoft.Azure.Management.V2.Resource.Core;
     using Microsoft.Azure.Management.V2.Storage;
-    using Microsoft.Azure.Management.V2.Batch.BatchAccount.Definition;
-    using Management.Batch.Models;
-    using Management.Batch;
-    using Resource;
     using System;
     using System.Threading;
     using System.Threading.Tasks;
@@ -61,15 +58,23 @@ namespace Microsoft.Azure.Management.V2.Batch
 
         public PagedList<IBatchAccount> List()
         {
-            return new ChildListFlattener<IResourceGroup, IBatchAccount>(MyManager.ResourceManager.ResourceGroups.List(), (IResourceGroup resourceGroup) =>
+            var firstPage = InnerCollection.List();
+            var pagedList = new PagedList<AccountResourceInner>(firstPage, (string nextPageLink) =>
             {
-                return ListByGroup(resourceGroup.Name);
-            }).Flatten();
+                return InnerCollection.ListNext(nextPageLink);
+            });
+
+            return WrapList(pagedList);
         }
 
         public PagedList<IBatchAccount> ListByGroup(string resourceGroupName)
         {
-            var pagedList = new PagedList<AccountResourceInner>(InnerCollection.ListByResourceGroup(resourceGroupName));
+            var firstPage = InnerCollection.ListByResourceGroup(resourceGroupName);
+            var pagedList = new PagedList<AccountResourceInner>(firstPage, (string nextPageLink) =>
+            {
+                return InnerCollection.ListByResourceGroupNext(nextPageLink);
+            });
+
             return WrapList(pagedList);
         }
 
@@ -88,10 +93,9 @@ namespace Microsoft.Azure.Management.V2.Batch
             return WrapModel(name);
         }
 
-        public async Task<PagedList<IBatchAccount>> ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<PagedList<IBatchAccount>> ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
         {
-            var data = await InnerCollection.ListByResourceGroupAsync(resourceGroupName, cancellationToken);
-            return this.WrapList(new PagedList<AccountResourceInner>(data));
+            throw new NotSupportedException();
         }
 
         public async Task DeleteAsync(string id, CancellationToken cancellationToken = default(CancellationToken))

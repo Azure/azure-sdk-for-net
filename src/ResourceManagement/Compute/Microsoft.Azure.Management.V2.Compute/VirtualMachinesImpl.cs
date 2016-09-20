@@ -6,21 +6,17 @@
 
 namespace Microsoft.Azure.Management.V2.Compute
 {
-
-    using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.Network.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
-    using Microsoft.Azure.Management.V2.Resource;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.Storage.Models;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition;
     using Management.Compute;
-    using Storage;
+    using Microsoft.Azure.Management.Compute.Models;
+    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition;
+    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
     using Network;
-    using System.Threading.Tasks;
-    using System.Threading;
+    using Storage;
     using System;
     using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// The implementation for {@link VirtualMachines}.
@@ -47,17 +43,20 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         public PagedList<IVirtualMachine> List()
         {
-            // There is no API supporting listing of availabiltiy set across subscription so enumerate all RGs and then
-            // flatten the "list of list of availibility sets" as "list of availibility sets" .
-            return new ChildListFlattener<IResourceGroup, IVirtualMachine>(MyManager.ResourceManager.ResourceGroups.List(), (IResourceGroup resourceGroup) =>
+            var pagedList = new PagedList<VirtualMachineInner>(this.InnerCollection.ListAll(), (string nextPageLink) =>
             {
-                return ListByGroup(resourceGroup.Name);
-            }).Flatten();
+                return InnerCollection.ListAllNext(nextPageLink);
+            });
+
+            return WrapList(pagedList);
         }
 
         public PagedList<IVirtualMachine> ListByGroup(string resourceGroupName)
         {
-            var pagedList = new PagedList<VirtualMachineInner>(this.InnerCollection.List(resourceGroupName));
+            var pagedList = new PagedList<VirtualMachineInner>(this.InnerCollection.List(resourceGroupName), (string nextPageLink) =>
+            {
+                return InnerCollection.ListNext(nextPageLink);
+            });
             return WrapList(pagedList);
         }
 
@@ -165,8 +164,7 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         public async Task<PagedList<IVirtualMachine>> ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken)
         {
-            var data = await this.InnerCollection.ListAsync(resourceGroupName, cancellationToken);
-            return WrapList(new PagedList<VirtualMachineInner>(data));
+            throw new NotSupportedException();
         }
 
         public async override Task<IVirtualMachine> GetByGroupAsync(string groupName, string name)

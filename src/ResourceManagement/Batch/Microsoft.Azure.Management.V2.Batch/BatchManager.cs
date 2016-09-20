@@ -1,4 +1,10 @@
-﻿using Microsoft.Azure.Management.Batch;
+﻿/**
+* Copyright (c) Microsoft Corporation. All rights reserved.
+* Licensed under the MIT License. See License.txt in the project root for
+* license information.
+*/
+
+using Microsoft.Azure.Management.Batch;
 using Microsoft.Azure.Management.V2.Resource.Core;
 using Microsoft.Azure.Management.V2.Storage;
 using Microsoft.Rest;
@@ -13,8 +19,10 @@ namespace Microsoft.Azure.Management.V2.Batch
         private IBatchAccounts batchAccounts;
 
         #region SDK clients
+
         private BatchManagementClient client;
-        #endregion
+
+        #endregion SDK clients
 
         public BatchManager(RestClient restClient, string subscriptionId) : base(restClient, subscriptionId)
         {
@@ -35,6 +43,7 @@ namespace Microsoft.Azure.Management.V2.Batch
          * @param subscriptionId the subscription
          * @return the BatchManager
          */
+
         public static BatchManager Authenticate(RestClient restClient, String subscriptionId)
         {
             return new BatchManager(restClient, subscriptionId);
@@ -44,7 +53,8 @@ namespace Microsoft.Azure.Management.V2.Batch
         {
             return new Configurable();
         }
-        #endregion
+
+        #endregion BatchManager builder
 
         #region IConfigurable and it's implementation
 
@@ -63,9 +73,9 @@ namespace Microsoft.Azure.Management.V2.Batch
             }
         }
 
-        #endregion
+        #endregion IConfigurable and it's implementation
 
-        #region IBatchManager implementation 
+        #region IBatchManager implementation
 
         public IBatchAccounts BatchAccounts
         {
@@ -80,7 +90,7 @@ namespace Microsoft.Azure.Management.V2.Batch
             }
         }
 
-        #endregion
+        #endregion IBatchManager implementation
     }
 
     public interface IBatchManager : IManagerBase
