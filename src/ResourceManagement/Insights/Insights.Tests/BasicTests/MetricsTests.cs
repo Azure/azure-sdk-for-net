@@ -36,7 +36,7 @@ namespace Insights.Tests.BasicTests
             IList<MetricDefinition> expectedMetricDefinitionCollection = GetMetricDefinitionCollection(ResourceUri);
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(expectedMetricDefinitionCollection.ToJson())
+                Content = new StringContent(string.Concat("{ \"value\":", expectedMetricDefinitionCollection.ToJson(), "}"))
             };
 
             RecordedDelegatingHandler handler = new RecordedDelegatingHandler(response);
@@ -54,7 +54,7 @@ namespace Insights.Tests.BasicTests
             IList<Metric> expectedMetricCollection = GetMetricCollection(ResourceUri);
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(expectedMetricCollection.ToJson())
+                Content = new StringContent(string.Concat("{ \"value\":", expectedMetricCollection.ToJson(), "}"))
             };
 
             RecordedDelegatingHandler handler = new RecordedDelegatingHandler(response);
