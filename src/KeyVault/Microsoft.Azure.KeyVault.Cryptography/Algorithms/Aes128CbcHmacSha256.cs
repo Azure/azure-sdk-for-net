@@ -4,6 +4,9 @@
 
 namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
 {
+    /// <summary>
+    /// JWE A128CBC-HS256: https://tools.ietf.org/html/rfc7518#section-5.2.3
+    /// </summary>
     public class Aes128CbcHmacSha256 : AesCbcHmacSha2
     {
         public const string AlgorithmName = "A128CBC-HS256";

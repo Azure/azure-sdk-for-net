@@ -1,6 +1,8 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿//
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
+//
 
 #if !PORTABLE
 
@@ -19,65 +21,82 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
         {
         }
 
-        public override byte[] SignHash( AsymmetricAlgorithm key, byte[] digest )
+        public override ISignatureTransform CreateSignatureTransform( AsymmetricAlgorithm key )
         {
-            var csp = key as RSACryptoServiceProvider;
-
-            SafeNCryptProviderHandle hProvider;
-            var errorCode = NativeMethods.NCryptOpenStorageProvider( out hProvider, "Microsoft Software Key Storage Provider", 0 );
-            if ( errorCode != NativeMethods.Success )
-                throw new CryptographicException( errorCode );
-
-            var blob = NativeMethods.NewNCryptPrivateBlob( csp.ExportParameters( true ) );
-            SafeNCryptKeyHandle hKey;
-            errorCode = NativeMethods.NCryptImportKey( hProvider, IntPtr.Zero, "RSAPRIVATEBLOB", null, out hKey, blob, blob.Length, 0 );
-            if ( errorCode != NativeMethods.Success )
-                throw new CryptographicException( errorCode );
-
-            var pkcs1Info = new NativeMethods.NCRYPT_PKCS1_PADDING_INFO { pszAlgId = null };
-
-            int cbResult;
-            errorCode = NativeMethods.NCryptSignHash( hKey, ref pkcs1Info, digest, digest.Length, null, 0, out cbResult, NativeMethods.AsymmetricPaddingMode.Pkcs1 );
-            if ( errorCode != NativeMethods.Success )
-                throw new CryptographicException( errorCode );
-
-            var signature = new byte[cbResult];
-            errorCode = NativeMethods.NCryptSignHash( hKey, ref pkcs1Info, digest, digest.Length, signature, signature.Length, out cbResult, NativeMethods.AsymmetricPaddingMode.Pkcs1 );
-            if ( errorCode != NativeMethods.Success )
-                throw new CryptographicException( errorCode );
-
-            if ( cbResult != signature.Length )
-            {
-                var temp = new byte[cbResult];
-                Array.Copy( signature, temp, cbResult );
-                signature = temp;
-            }
-
-            return signature;
+            return new RsNullSignatureTransform( key );
         }
 
-        public override bool VerifyHash( AsymmetricAlgorithm key, byte[] digest, byte[] signature )
+        internal class RsNullSignatureTransform : ISignatureTransform
         {
-            var csp = key as RSACryptoServiceProvider;
+            private RSACryptoServiceProvider _key;
 
-            SafeNCryptProviderHandle hProvider;
-            var errorCode = NativeMethods.NCryptOpenStorageProvider( out hProvider, "Microsoft Software Key Storage Provider", 0 );
-            if ( errorCode != NativeMethods.Success )
-                throw new CryptographicException( errorCode );
+            public RsNullSignatureTransform( AsymmetricAlgorithm key )
+            {
+                if ( key == null )
+                    throw new ArgumentNullException( "key" );
 
-            var blob = NativeMethods.NewNCryptPublicBlob( csp.ExportParameters( false ) );
-            SafeNCryptKeyHandle hKey;
-            errorCode = NativeMethods.NCryptImportKey( hProvider, IntPtr.Zero, "RSAPUBLICBLOB", null, out hKey, blob, blob.Length, 0 );
-            if ( errorCode != NativeMethods.Success )
-                throw new CryptographicException( errorCode );
+                if ( !( key is RSACryptoServiceProvider ) )
+                    throw new ArgumentException( string.Format( "key must be of type {0}", typeof( RSACryptoServiceProvider ).AssemblyQualifiedName ), "key" );
 
-            var pkcs1Info = new NativeMethods.NCRYPT_PKCS1_PADDING_INFO { pszAlgId = null };
+                _key = key as RSACryptoServiceProvider;
+            }
 
-            errorCode = NativeMethods.NCryptVerifySignature( hKey, ref pkcs1Info, digest, digest.Length, signature, signature.Length, NativeMethods.AsymmetricPaddingMode.Pkcs1 );
-            if ( errorCode != NativeMethods.Success && errorCode != NativeMethods.BadSignature && errorCode != NativeMethods.InvalidParameter )
-                throw new CryptographicException( errorCode );
+            public byte[] Sign( byte[] digest )
+            {
+                SafeNCryptProviderHandle hProvider;
+                var errorCode = NativeMethods.NCryptOpenStorageProvider( out hProvider, "Microsoft Software Key Storage Provider", 0 );
+                if ( errorCode != NativeMethods.Success )
+                    throw new CryptographicException( errorCode );
 
-            return ( errorCode == NativeMethods.Success );
+                var blob = NativeMethods.NewNCryptPrivateBlob( _key.ExportParameters( true ) );
+                SafeNCryptKeyHandle hKey;
+                errorCode = NativeMethods.NCryptImportKey( hProvider, IntPtr.Zero, "RSAPRIVATEBLOB", null, out hKey, blob, blob.Length, 0 );
+                if ( errorCode != NativeMethods.Success )
+                    throw new CryptographicException( errorCode );
+
+                var pkcs1Info = new NativeMethods.NCRYPT_PKCS1_PADDING_INFO { pszAlgId = null };
+
+                int cbResult;
+                errorCode = NativeMethods.NCryptSignHash( hKey, ref pkcs1Info, digest, digest.Length, null, 0, out cbResult, NativeMethods.AsymmetricPaddingMode.Pkcs1 );
+                if ( errorCode != NativeMethods.Success )
+                    throw new CryptographicException( errorCode );
+
+                var signature = new byte[cbResult];
+                errorCode = NativeMethods.NCryptSignHash( hKey, ref pkcs1Info, digest, digest.Length, signature, signature.Length, out cbResult, NativeMethods.AsymmetricPaddingMode.Pkcs1 );
+                if ( errorCode != NativeMethods.Success )
+                    throw new CryptographicException( errorCode );
+
+                if ( cbResult != signature.Length )
+                {
+                    var temp = new byte[cbResult];
+                    Array.Copy( signature, temp, cbResult );
+                    signature = temp;
+                }
+
+                return signature;
+            }
+
+            public bool Verify( byte[] digest, byte[] signature )
+            {
+                SafeNCryptProviderHandle hProvider;
+                var errorCode = NativeMethods.NCryptOpenStorageProvider( out hProvider, "Microsoft Software Key Storage Provider", 0 );
+                if ( errorCode != NativeMethods.Success )
+                    throw new CryptographicException( errorCode );
+
+                var blob = NativeMethods.NewNCryptPublicBlob( _key.ExportParameters( false ) );
+                SafeNCryptKeyHandle hKey;
+                errorCode = NativeMethods.NCryptImportKey( hProvider, IntPtr.Zero, "RSAPUBLICBLOB", null, out hKey, blob, blob.Length, 0 );
+                if ( errorCode != NativeMethods.Success )
+                    throw new CryptographicException( errorCode );
+
+                var pkcs1Info = new NativeMethods.NCRYPT_PKCS1_PADDING_INFO { pszAlgId = null };
+
+                errorCode = NativeMethods.NCryptVerifySignature( hKey, ref pkcs1Info, digest, digest.Length, signature, signature.Length, NativeMethods.AsymmetricPaddingMode.Pkcs1 );
+                if ( errorCode != NativeMethods.Success && errorCode != NativeMethods.BadSignature && errorCode != NativeMethods.InvalidParameter )
+                    throw new CryptographicException( errorCode );
+
+                return ( errorCode == NativeMethods.Success );
+            }
         }
     }
 }
