@@ -709,7 +709,7 @@ namespace Sample.Microsoft.HelloKeyVault
             if (certificateThumbprint == null)
                 throw new System.ArgumentNullException("certificateThumbprint");
 
-            X509Store store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
+            X509Store store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
             try
             {
                 store.Open(OpenFlags.ReadOnly);
