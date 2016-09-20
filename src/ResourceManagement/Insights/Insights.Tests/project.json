@@ -1,0 +1,36 @@
+﻿{
+  "version": "1.0.0",
+  "description": "Microsoft Azure LogicApps Management Library",
+  "authors": [ "Microsoft" ],
+
+  "packOptions": {
+    "summary": "Provides LogicApps management capabilities for Microsoft Azure",
+    "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
+    "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+    "tags": [ "Microsoft Azure LogicApps management", "LogicApps", "LogicApps management", "REST HTTP client", "windowsazureofficial" ],
+    "requireLicenseAcceptance": true
+  },
+
+  "buildOptions": {
+    "delaySign": true,
+    "publicSign": false,
+    "keyFile": "../../../../tools/MSSharedLibKey.snk",
+    "compile": "../../../../tools/DisableTestRunParallel.cs"
+  },
+
+  "testRunner": "xunit",
+
+  "frameworks": {
+    "net45": {
+      "dependencies": {
+      }
+    }
+  },
+
+  "dependencies": {
+    "Microsoft.Azure.Insights": "0.14.0-preview",
+    "xunit": "2.2.0-beta2-build3300"
+  }
+
+}

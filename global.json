@@ -25,6 +25,7 @@
     "src/ResourceManagement/TrafficManager/Microsoft.Azure.Management.TrafficManager",
     "src/ResourceManagement/Websites/Microsoft.Azure.Management.Websites",
     "src/ResourceManagement/DataLake.StoreUploader/Microsoft.Azure.Management.DataLake.StoreUploader",
-    "src/ResourceManagement/IotHub/Microsoft.Azure.Management.IotHub"
+    "src/ResourceManagement/IotHub/Microsoft.Azure.Management.IotHub",
+    "src/ResourceManagement/Insights/Microsoft.Azure.Insights"
   ]
 }
