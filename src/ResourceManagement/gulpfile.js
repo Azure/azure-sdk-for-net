@@ -37,6 +37,12 @@ var mappings = {
         'source': 'arm-network/2016-06-01/swagger/network.json',
         'package': 'Microsoft.Azure.Management.Network',
         'args': '-FT 1'
+    },
+    'batch': {
+        'dir': 'Batch/Microsoft.Azure.Management.V2.Batch',
+        'source': 'arm-batch/2015-12-01/swagger/BatchManagement.json',
+        'package': 'Microsoft.Azure.Management.Batch',
+        'args': '-FT 1'
     }
 };
 
