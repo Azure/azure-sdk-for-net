@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.UpdateDefiniti
     /// using {@link WithAttach#attach()}.
     /// @param <ParentT> the return type of {@link WithAttach#attach()}
     /// </summary>
-    public interface IWithAttach<ParentT>  :
+    public interface IWithAttach<ParentT> :
         IInDefinition<ParentT>,
         IWithPermissions<ParentT>
     {

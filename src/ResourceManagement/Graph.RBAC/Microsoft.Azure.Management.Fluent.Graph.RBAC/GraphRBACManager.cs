@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
 
         public GraphRbacManager(RestClient restClient, string subscriptionId, string tenantId) : base(restClient, subscriptionId)
         {
-            client = new GraphRbacManagementClient(new Uri(restClient.BaseUri),
+            client = new GraphRbacManagementClient(
                 restClient.Credentials,
                 restClient.RootHttpHandler,
                 restClient.Handlers.ToArray());
@@ -36,11 +36,11 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
 
         #region Graph RBAC Manager builder
 
-        public static IGraphRbacManager Authenticate(ServiceClientCredentials serviceClientCredentials, string subscriptionId, string tenantId)
+        public static IGraphRbacManager Authenticate(ServiceClientCredentials graphCredentials, string subscriptionId, string tenantId)
         {
             return new GraphRbacManager(RestClient.Configure()
                     .withEnvironment(AzureEnvironment.AzureGlobalCloud)
-                    .withCredentials(serviceClientCredentials)
+                    .withCredentials(graphCredentials)
                     .build(), subscriptionId, tenantId);
         }
 
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
 
         public interface IConfigurable : IAzureConfigurable<IConfigurable>
         {
-            IGraphRbacManager Authenticate(ServiceClientCredentials serviceClientCredentials, string subscriptionId, string tenantId);
+            IGraphRbacManager Authenticate(ServiceClientCredentials graphCredentials, string subscriptionId, string tenantId);
         }
 
         protected class Configurable :

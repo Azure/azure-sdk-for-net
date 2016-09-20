@@ -220,12 +220,12 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
             return this;
         }
 
-        private async Task PopulateAccessPolicies (CancellationToken cancellationToken = default(CancellationToken))
+        private Task PopulateAccessPolicies (CancellationToken cancellationToken = default(CancellationToken))
         {
             var tasks = new List<Task>();
             foreach (var accessPolicy in accessPolicies)
             {
-                if (accessPolicy.ObjectId == null) 
+                if (accessPolicy.ObjectId == null || accessPolicy.ObjectId == Guid.Empty.ToString()) 
                 {
                     if (accessPolicy.UserPrincipalName != null)
                     {
@@ -244,7 +244,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
                 }
             }
 
-            await Task.WhenAll(tasks);
+            return Task.WhenAll(tasks);
         }
 
         public override async Task<IVault> CreateResourceAsync (CancellationToken cancellationToken = default(CancellationToken))

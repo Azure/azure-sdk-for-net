@@ -27,14 +27,14 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
 
         #region ctrs
 
-        public KeyVaultManager(RestClient restClient, string subscriptionId, string tenantId) : base(restClient, subscriptionId)
+        public KeyVaultManager(RestClient restClient, ServiceClientCredentials graphCredentials, string subscriptionId, string tenantId) : base(restClient, subscriptionId)
         {
             client = new KeyVaultManagementClient(new Uri(restClient.BaseUri),
                 restClient.Credentials,
                 restClient.RootHttpHandler,
                 restClient.Handlers.ToArray());
             client.SubscriptionId = subscriptionId;
-            graphRbacManager = GraphRbacManager.Authenticate(restClient, subscriptionId, tenantId);
+            graphRbacManager = GraphRbacManager.Authenticate(graphCredentials, subscriptionId, tenantId);
             this.tenantId = tenantId;
         }
 
@@ -42,17 +42,17 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
 
         #region Key Vault Manager builder
 
-        public static IKeyVaultManager Authenticate(ServiceClientCredentials serviceClientCredentials, string subscriptionId, string tenantId)
+        public static IKeyVaultManager Authenticate(ServiceClientCredentials serviceClientCredentials, ServiceClientCredentials graphCredentials, string subscriptionId, string tenantId)
         {
             return new KeyVaultManager(RestClient.Configure()
                     .withEnvironment(AzureEnvironment.AzureGlobalCloud)
                     .withCredentials(serviceClientCredentials)
-                    .build(), subscriptionId, tenantId);
+                    .build(), graphCredentials, subscriptionId, tenantId);
         }
 
-        public static IKeyVaultManager Authenticate(RestClient restClient, string subscriptionId, string tenantId)
+        public static IKeyVaultManager Authenticate(RestClient restClient, ServiceClientCredentials graphCredentials, string subscriptionId, string tenantId)
         {
-            return new KeyVaultManager(restClient, subscriptionId, tenantId);
+            return new KeyVaultManager(restClient, graphCredentials, subscriptionId, tenantId);
         }
 
         public static IConfigurable Configure()
@@ -67,16 +67,16 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
 
         public interface IConfigurable : IAzureConfigurable<IConfigurable>
         {
-            IKeyVaultManager Authenticate(ServiceClientCredentials serviceClientCredentials, string subscriptionId, string tenantId);
+            IKeyVaultManager Authenticate(ServiceClientCredentials serviceClientCredentials, ServiceClientCredentials graphCredentials, string subscriptionId, string tenantId);
         }
 
         protected class Configurable :
             AzureConfigurable<IConfigurable>,
             IConfigurable
         {
-            public IKeyVaultManager Authenticate(ServiceClientCredentials credentials, string subscriptionId, string tenantId)
+            public IKeyVaultManager Authenticate(ServiceClientCredentials credentials, ServiceClientCredentials graphCredentials, string subscriptionId, string tenantId)
             {
-                return new KeyVaultManager(BuildRestClient(credentials), subscriptionId, tenantId);
+                return new KeyVaultManager(BuildRestClient(credentials), graphCredentials, subscriptionId, tenantId);
             }
         }
 

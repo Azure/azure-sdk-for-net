@@ -71,6 +71,12 @@ namespace Microsoft.Azure.Management.V2.Resource.Authentication
             TokenCache = new TokenCache(); // Default to in-memory cache
         }
 
+        public string TenantId { get { return tenantId; } }
+
+        public string ClientId { get { return clientId; } }
+
+        public string ClientSecret { get { return clientSecret; } }
+
         public ApplicationTokenCredentials withTokenCache(TokenCache tokenCache)
         {
             TokenCache = tokenCache;
@@ -91,6 +97,22 @@ namespace Microsoft.Azure.Management.V2.Resource.Authentication
                 activeDirectoryServiceSettings,
                 TokenCache).ConfigureAwait(false).GetAwaiter().GetResult();
             return credentials.ProcessHttpRequestAsync(request, cancellationToken);
+        }
+
+        public ApplicationTokenCredentials GraphCredentials
+        {
+            get
+            {
+                ApplicationTokenCredentials graphCredentials = (ApplicationTokenCredentials) this.MemberwiseClone();
+                graphCredentials.TokenCache = new TokenCache();
+                graphCredentials.activeDirectoryServiceSettings = new ActiveDirectoryServiceSettings()
+                {
+                    AuthenticationEndpoint = activeDirectoryServiceSettings.AuthenticationEndpoint,
+                    TokenAudience = new Uri("https://graph.windows.net"),
+                    ValidateAuthority = activeDirectoryServiceSettings.ValidateAuthority
+                };
+                return graphCredentials;
+            }
         }
     }
 }
