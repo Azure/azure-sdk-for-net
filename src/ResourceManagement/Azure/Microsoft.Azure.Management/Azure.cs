@@ -1,4 +1,5 @@
-﻿using Microsoft.Azure.Management.V2.Compute;
+﻿using Microsoft.Azure.Management.V2.Batch;
+using Microsoft.Azure.Management.V2.Compute;
 using Microsoft.Azure.Management.V2.Network;
 using Microsoft.Azure.Management.V2.Resource;
 using Microsoft.Azure.Management.V2.Resource.Authentication;
@@ -6,6 +7,7 @@ using Microsoft.Azure.Management.V2.Resource.Core;
 using Microsoft.Azure.Management.V2.Storage;
 using Microsoft.Rest;
 using System.Linq;
+using System;
 
 namespace Microsoft.Azure.Management
 {
@@ -17,6 +19,7 @@ namespace Microsoft.Azure.Management
         private IStorageManager storageManager;
         private IComputeManager computeManager;
         private INetworkManager networkManager;
+        private IBatchManager batchManager;
 
         #endregion Service Managers
 
@@ -107,6 +110,14 @@ namespace Microsoft.Azure.Management
             }
         }
 
+        public IBatchAccounts BatchAccounts
+        {
+            get
+            {
+                return batchManager.BatchAccounts;
+            }
+        }
+
         #endregion Getters
 
         #region ctrs
@@ -117,6 +128,7 @@ namespace Microsoft.Azure.Management
             storageManager = StorageManager.Authenticate(restClient, subscriptionId);
             computeManager = ComputeManager.Authenticate(restClient, subscriptionId);
             networkManager = NetworkManager.Authenticate(restClient, subscriptionId);
+            batchManager = BatchManager.Authenticate(restClient, subscriptionId);
             SubscriptionId = subscriptionId;
         }
 
@@ -273,5 +285,7 @@ namespace Microsoft.Azure.Management
         IVirtualMachineImages VirtualMachineImages { get; }
 
         IAvailabilitySets AvailabilitySets { get; }
+
+        IBatchAccounts BatchAccounts { get; }
     }
 }

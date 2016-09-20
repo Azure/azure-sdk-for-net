@@ -18,7 +18,7 @@ namespace Azure.Tests
             try
             {
                 // Create
-                IComputeManager computeManager = CreatComputeManager();
+                IComputeManager computeManager = CreateComputeManager();
                 var availabilitySet = computeManager.AvailabilitySets
                     .Define(availName)
                     .WithRegion(Region.US_EAST)
@@ -64,7 +64,7 @@ namespace Azure.Tests
             }
         }
 
-        private IComputeManager CreatComputeManager()
+        private IComputeManager CreateComputeManager()
         {
             ApplicationTokenCredentials credentials = new ApplicationTokenCredentials(@"C:\my.azureauth");
             return ComputeManager

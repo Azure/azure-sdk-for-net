@@ -1,10 +1,10 @@
-﻿using System;
+﻿using Microsoft.Azure.Management.Storage;
+using Microsoft.Azure.Management.Storage.Models;
+using Microsoft.Azure.Management.V2.Resource.Core;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.Storage;
-using Microsoft.Azure.Management.Storage.Models;
-using Microsoft.Azure.Management.V2.Resource.Core;
 
 namespace Microsoft.Azure.Management.V2.Storage
 {
@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.V2.Storage
         IStorageAccounts
     {
         internal StorageAccountsImpl(IStorageAccountsOperations innerCollection, IStorageManager manager) : base(innerCollection, manager)
-        {}
+        { }
 
         #region Actions
 
@@ -27,8 +27,7 @@ namespace Microsoft.Azure.Management.V2.Storage
             return new CheckNameAvailabilityResult(InnerCollection.CheckNameAvailability(name));
         }
 
-        #endregion
-
+        #endregion Actions
 
         #region Implementation of ISupportsCreating interface
 
@@ -40,7 +39,7 @@ namespace Microsoft.Azure.Management.V2.Storage
             return wrapped;
         }
 
-        #endregion
+        #endregion Implementation of ISupportsCreating interface
 
         #region Implementation of ISupportsListing interface
 
@@ -51,7 +50,7 @@ namespace Microsoft.Azure.Management.V2.Storage
             return WrapList(pagedList);
         }
 
-        #endregion
+        #endregion Implementation of ISupportsListing interface
 
         #region Implementation of ISupportsListingByGroup interface
 
@@ -67,17 +66,17 @@ namespace Microsoft.Azure.Management.V2.Storage
             throw new NotSupportedException();
         }
 
-        #endregion
+        #endregion Implementation of ISupportsListingByGroup interface
 
         #region Implementation of ISupportsGettingByGroup::GetByGroupAsync and override GroupableResources::GetByGroupAsync
 
         public override async Task<IStorageAccount> GetByGroupAsync(string groupName, string name)
         {
-           var storageAccount = await InnerCollection.GetPropertiesAsync(groupName, name);
+            var storageAccount = await InnerCollection.GetPropertiesAsync(groupName, name);
             return WrapModel(storageAccount);
         }
 
-        #endregion
+        #endregion Implementation of ISupportsGettingByGroup::GetByGroupAsync and override GroupableResources::GetByGroupAsync
 
         #region Implementation of ISupportsDeleting interface
 
@@ -91,7 +90,7 @@ namespace Microsoft.Azure.Management.V2.Storage
             return DeleteAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id), cancellationToken);
         }
 
-        #endregion
+        #endregion Implementation of ISupportsDeleting interface
 
         #region Implementation of ISupportsDeletingByGroup interface
 
@@ -105,7 +104,7 @@ namespace Microsoft.Azure.Management.V2.Storage
             return InnerCollection.DeleteAsync(resourceGroupName, name, cancellationToken);
         }
 
-        #endregion
+        #endregion Implementation of ISupportsDeletingByGroup interface
 
         #region Implementation of CreatableWrappers::WrapModel abstract method
 
@@ -117,7 +116,7 @@ namespace Microsoft.Azure.Management.V2.Storage
                 MyManager);
         }
 
-        #endregion
+        #endregion Implementation of CreatableWrappers::WrapModel abstract method
 
         #region Implementation of ReadableWrappers::WrapModel abstract method
 
@@ -131,6 +130,6 @@ namespace Microsoft.Azure.Management.V2.Storage
             );
         }
 
-        #endregion
+        #endregion Implementation of ReadableWrappers::WrapModel abstract method
     }
 }

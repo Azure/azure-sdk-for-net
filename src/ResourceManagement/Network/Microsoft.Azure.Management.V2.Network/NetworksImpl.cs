@@ -6,16 +6,13 @@
 
 namespace Microsoft.Azure.Management.V2.Network
 {
-
-    using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
+    using Management.Network;
     using Microsoft.Azure.Management.Network.Models;
     using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Resource;
-    using Management.Network;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
     using System;
+    using System.Collections.Generic;
     using System.Threading;
+    using System.Threading.Tasks;
 
     /// <summary>
     /// Implementation for {@link Networks}.
@@ -24,22 +21,29 @@ namespace Microsoft.Azure.Management.V2.Network
         GroupableResources<INetwork, NetworkImpl, VirtualNetworkInner, IVirtualNetworksOperations, NetworkManager>,
         INetworks
     {
-        internal NetworksImpl(NetworkManagementClient networkClient, NetworkManager networkManager) : 
+        internal NetworksImpl(NetworkManagementClient networkClient, NetworkManager networkManager) :
             base(networkClient.VirtualNetworks, networkManager)
         {
         }
 
         public PagedList<INetwork> List()
         {
-            IEnumerable<VirtualNetworkInner> list = InnerCollection.ListAll();
-            var pagedList = new PagedList<VirtualNetworkInner>(list);
+            var firstPage = InnerCollection.ListAll();
+            var pagedList = new PagedList<VirtualNetworkInner>(firstPage, (string nextPageLink) =>
+            {
+                return InnerCollection.ListAllNext(nextPageLink);
+            });
+
             return this.WrapList(pagedList);
         }
 
         public PagedList<INetwork> ListByGroup(string groupName)
         {
-            IEnumerable<VirtualNetworkInner> list = InnerCollection.List(groupName);
-            var pagedList = new PagedList<VirtualNetworkInner>(list);
+            var firstPage = InnerCollection.List(groupName);
+            var pagedList = new PagedList<VirtualNetworkInner>(firstPage, (string nextPageLink) =>
+            {
+                return InnerCollection.ListNext(nextPageLink);
+            });
             return this.WrapList(pagedList);
         }
 
@@ -72,7 +76,7 @@ namespace Microsoft.Azure.Management.V2.Network
 
             if (addressSpace.AddressPrefixes == null)
             {
-                addressSpace.AddressPrefixes  =new List<string>();
+                addressSpace.AddressPrefixes = new List<string>();
             }
 
             // Initialize subnets
@@ -108,7 +112,7 @@ namespace Microsoft.Azure.Management.V2.Network
 
         public Task<PagedList<INetwork>> ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         public async Task DeleteAsync(string id, CancellationToken cancellationToken)
