@@ -1,6 +1,8 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿//
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
+//
 
 #if !PORTABLE
 
@@ -21,7 +23,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography
         SHA512,
     }
 
-    public sealed class IncrementalHash : IDisposable
+    internal sealed class IncrementalHash : IDisposable
     {
         private static readonly byte[] NullBuffer = new byte[0];
 
