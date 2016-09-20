@@ -354,6 +354,43 @@ namespace ResourceGroups.Tests
         }
 
         [Fact]
+        public void CreatedAndDeleteResourceById()
+        {
+            var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+                string subscriptionId = "89ec4d1d-dcc7-4a3f-a701-0a5d074c8505";
+                string groupName = TestUtilities.GenerateName("csmrg");
+                string resourceName = TestUtilities.GenerateName("csmr");
+                var client = GetResourceManagementClient(context, handler);
+
+                client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
+                string location = this.GetWebsiteLocation(client);
+
+                string resourceId = string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Web/sites/{2}", subscriptionId, groupName, resourceName);
+                client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = location });
+                var createOrUpdateResult = client.Resources.CreateOrUpdateById(
+                    resourceId,
+                    WebResourceProviderVersion,
+                    new GenericResource
+                    {
+                        Location = location,
+                        Properties = JObject.Parse("{'name':'" + resourceName + "','siteMode':'Limited','computeMode':'Shared', 'sku':'Free', 'workerSize': 0}")
+                    }
+                );
+
+                var listResult = client.ResourceGroups.ListResources(groupName);
+
+                Assert.Equal(resourceName, listResult.First().Name);
+
+                client.Resources.DeleteById(
+                    resourceId,
+                    WebResourceProviderVersion);
+            }
+        }
+
+        [Fact]
         public void CreatedAndListResource()
         {
             var handler = new RecordedDelegatingHandler() { StatusCodeToReturn = HttpStatusCode.OK };
