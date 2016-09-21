@@ -40,13 +40,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Reference of application gateway backend address pool resource.
         /// </summary>
-        [JsonProperty(PropertyName = "BackendAddressPool")]
+        [JsonProperty(PropertyName = "backendAddressPool")]
         public ApplicationGatewayBackendAddressPool BackendAddressPool { get; set; }
 
         /// <summary>
         /// List of application gateway backendhealth http settings.
         /// </summary>
-        [JsonProperty(PropertyName = "BackendHttpSettingsCollection")]
+        [JsonProperty(PropertyName = "backendHttpSettingsCollection")]
         public IList<ApplicationGatewayBackendHealthHttpSettings> BackendHttpSettingsCollection { get; set; }
 
     }

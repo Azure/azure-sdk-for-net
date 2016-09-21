@@ -41,20 +41,20 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// IP address or FQDN of backend server
         /// </summary>
-        [JsonProperty(PropertyName = "Address")]
+        [JsonProperty(PropertyName = "address")]
         public string Address { get; set; }
 
         /// <summary>
         /// Reference of IP configuration of backend server.
         /// </summary>
-        [JsonProperty(PropertyName = "IpConfiguration")]
+        [JsonProperty(PropertyName = "ipConfiguration")]
         public SubResource IpConfiguration { get; set; }
 
         /// <summary>
         /// Health of backend server. Possible values include: 'Unknown',
         /// 'Up', 'Down', 'Partial'
         /// </summary>
-        [JsonProperty(PropertyName = "Health")]
+        [JsonProperty(PropertyName = "health")]
         public string Health { get; set; }
 
     }

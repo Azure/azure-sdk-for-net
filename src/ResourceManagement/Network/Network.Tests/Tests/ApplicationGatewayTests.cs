@@ -417,7 +417,7 @@ namespace Networks.Tests
                 var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);
                 var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
 
-                var location = "West Central US";
+                var location = "West US";
 
                 string resourceGroupName = TestUtilities.GenerateName("csmrg");
                 resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,

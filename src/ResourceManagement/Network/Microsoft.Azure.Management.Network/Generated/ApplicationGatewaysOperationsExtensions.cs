@@ -470,7 +470,8 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the application gateway.
             /// </param>
             /// <param name='expand'>
-            /// expand references resources.
+            /// Expands BackendAddressPool and BackendHttpSettings referenced in backend
+            /// health.
             /// </param>
             public static ApplicationGatewayBackendHealth BackendHealth(this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, string expand = default(string))
             {
@@ -491,7 +492,8 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the application gateway.
             /// </param>
             /// <param name='expand'>
-            /// expand references resources.
+            /// Expands BackendAddressPool and BackendHttpSettings referenced in backend
+            /// health.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -518,7 +520,8 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the application gateway.
             /// </param>
             /// <param name='expand'>
-            /// expand references resources.
+            /// Expands BackendAddressPool and BackendHttpSettings referenced in backend
+            /// health.
             /// </param>
             public static ApplicationGatewayBackendHealth BeginBackendHealth(this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, string expand = default(string))
             {
@@ -539,7 +542,8 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the application gateway.
             /// </param>
             /// <param name='expand'>
-            /// expand references resources.
+            /// Expands BackendAddressPool and BackendHttpSettings referenced in backend
+            /// health.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

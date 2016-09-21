@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Network.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "BackendAddressPools")]
+        [JsonProperty(PropertyName = "backendAddressPools")]
         public IList<ApplicationGatewayBackendHealthPool> BackendAddressPools { get; set; }
 
     }

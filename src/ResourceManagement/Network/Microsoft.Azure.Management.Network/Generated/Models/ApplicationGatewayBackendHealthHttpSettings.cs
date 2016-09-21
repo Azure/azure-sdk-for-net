@@ -40,13 +40,13 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Reference of application gateway backend http settings resource.
         /// </summary>
-        [JsonProperty(PropertyName = "BackendHttpSettings")]
+        [JsonProperty(PropertyName = "backendHttpSettings")]
         public ApplicationGatewayBackendHttpSettings BackendHttpSettings { get; set; }
 
         /// <summary>
         /// List of application gateway backendhealth servers.
         /// </summary>
-        [JsonProperty(PropertyName = "Servers")]
+        [JsonProperty(PropertyName = "servers")]
         public IList<ApplicationGatewayBackendHealthServer> Servers { get; set; }
 
     }

@@ -220,7 +220,8 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the application gateway.
         /// </param>
         /// <param name='expand'>
-        /// expand references resources.
+        /// Expands BackendAddressPool and BackendHttpSettings referenced in
+        /// backend health.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -241,7 +242,8 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the application gateway.
         /// </param>
         /// <param name='expand'>
-        /// expand references resources.
+        /// Expands BackendAddressPool and BackendHttpSettings referenced in
+        /// backend health.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
