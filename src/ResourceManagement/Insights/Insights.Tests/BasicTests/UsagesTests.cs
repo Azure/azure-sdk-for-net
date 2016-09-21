@@ -31,20 +31,21 @@ namespace Insights.Tests.BasicTests
         public void ListUsageTest()
         {
             string resourceUri = "/subscriptions/123456789/resourceGroups/rg/providers/rp/rUri";
-            string filterString = "name.value eq 'CPUTime' or name.value eq 'Requests'";
-
             List<UsageMetric> expectedUsageMetricCollection = GetUsageMetricCollection(resourceUri);
-            var content = string.Concat("{ \"value\":", expectedUsageMetricCollection.ToJson(), ", \"nextLink\":\"\"}");
+
+            var handler = new RecordedDelegatingHandler();
+            var insightsClient = GetInsightsClient(handler);
+            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expectedUsageMetricCollection, insightsClient.SerializationSettings);
 
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(content)
+                Content = new StringContent(string.Concat("{ \"value\":", serializedObject, "}"))
             };
 
-            var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
-            var insightsClient = GetInsightsClient(handler);
+            handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
+            insightsClient = GetInsightsClient(handler);
 
-
+            string filterString = "name.value eq 'CPUTime' or name.value eq 'Requests'";
             IEnumerable<UsageMetric> actualRespose = insightsClient.UsageMetrics.List(resourceUri: resourceUri, apiVersion: "2014-04-01", odataQuery: filterString);
 
             AreEqual(expectedUsageMetricCollection, actualRespose.GetEnumerator());
@@ -61,7 +62,7 @@ namespace Insights.Tests.BasicTests
                     name: new LocalizableString(
                         localizedValue: "Cpu Percentage",
                         value: "CpuPercentage"),
-                    nextResetTime: DateTime.Now.AddDays(1),
+                    nextResetTime: DateTime.UtcNow.AddDays(1),
                     quotaPeriod: TimeSpan.FromDays(1),
                     unit: Unit.Percent.ToString()
                 )

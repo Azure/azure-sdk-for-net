@@ -32,12 +32,13 @@ namespace Insights.Tests.BasicTests
         {
             var expectedIncident = GetIncidents().First();
 
-            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK)
+            var serializedObject = expectedIncident.ToJson();
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(expectedIncident.ToJson())
+                Content = new StringContent(serializedObject)
             };
 
-            var handler = new RecordedDelegatingHandler(response);
+            var handler = new RecordedDelegatingHandler(expectedResponse);
             var insightsClient = GetInsightsManagementClient(handler);
 
             var actualIncident = insightsClient.AlertRuleIncidents.Get(
@@ -130,34 +131,42 @@ namespace Insights.Tests.BasicTests
             }
         }
 
-        [Fact(Skip = "TODO: fix some serialization issues")]
+        [Fact]
         public void CreateOrUpdateRuleTest()
         {
             AlertRuleResource expectedParameters = GetCreateOrUpdateRuleParameter();
+
+            var handler = new RecordedDelegatingHandler();
+            var insightsClient = GetInsightsManagementClient(handler);
+            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expectedParameters, insightsClient.SerializationSettings);
             var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(expectedParameters.ToJson())
+                Content = new StringContent(serializedObject)
             };
 
-            var handler = new RecordedDelegatingHandler(expectedResponse);
-            var insightsClient = GetInsightsManagementClient(handler);
+            handler = new RecordedDelegatingHandler(expectedResponse);
+            insightsClient = GetInsightsManagementClient(handler);
 
             var result = insightsClient.AlertRules.CreateOrUpdate(resourceGroupName: "rg1", ruleName: expectedParameters.Name, parameters: expectedParameters);
 
             AreEqual(expectedParameters, result);
         }
 
-        [Fact(Skip = "TODO: fix some serialization issues")]
+        [Fact]
         public void ListRulesTest()
         {
             var expResponse = GetRuleResourceCollection();
-            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK)
+
+            var handler = new RecordedDelegatingHandler();
+            var insightsClient = GetInsightsManagementClient(handler);
+            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expResponse, insightsClient.SerializationSettings);
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(string.Concat("{ \"value\":", expResponse.ToJson(), "}"))
+                Content = new StringContent(string.Concat("{ \"value\":", serializedObject, "}"))
             };
 
-            var handler = new RecordedDelegatingHandler(response);
-            var insightsClient = GetInsightsManagementClient(handler);
+            handler = new RecordedDelegatingHandler(expectedResponse);
+            insightsClient = GetInsightsManagementClient(handler);
 
             var actualResponse = insightsClient.AlertRules.ListByResourceGroup(resourceGroupName: " rg1", odataQuery: "resourceUri eq 'resUri'");
 
@@ -170,12 +179,12 @@ namespace Insights.Tests.BasicTests
             {
                 Assert.Equal(exp.Location, act.Location);
                 AreEqual(exp.Tags, act.Tags);
-                //Assert.Equal(exp.Name, act.Name);
+                Assert.Equal(exp.Name, act.Name);
                 Assert.Equal(exp.Description, act.Description);
                 Assert.Equal(exp.IsEnabled,act.IsEnabled);
                 AreEqual(exp.Condition, act.Condition);
                 AreEqual(exp.Actions, act.Actions);
-                Assert.Equal(exp.LastUpdatedTime, act.LastUpdatedTime);
+                //Assert.Equal(exp.LastUpdatedTime, act.LastUpdatedTime);
             }
         }
 

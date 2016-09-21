@@ -30,21 +30,24 @@ namespace Insights.Tests.BasicTests
 
         private static string DefaultName = "default";
 
-        [Fact(Skip = "TODO: fix some serialization issues")]
+        [Fact]
         public void LogProfiles_CreateOrUpdateTest()
         {
             LogProfileResource expResponse = CreateLogProfile();
-            HttpResponseMessage expHttpResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            var handler = new RecordedDelegatingHandler();
+            var insightsClient = GetInsightsManagementClient(handler);
+            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expResponse, insightsClient.SerializationSettings);
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(expResponse.ToJson())
+                Content = new StringContent(serializedObject)
             };
 
-            var handler = new RecordedDelegatingHandler(expHttpResponse);
-            InsightsManagementClient customClient = this.GetInsightsManagementClient(handler);
+            handler = new RecordedDelegatingHandler(expectedResponse);
+            insightsClient = GetInsightsManagementClient(handler);
 
             var parameters = CreateLogProfileParams();
 
-            LogProfileResource actualResponse = customClient.LogProfiles.CreateOrUpdate(logProfileName: DefaultName, parameters: parameters);
+            LogProfileResource actualResponse = insightsClient.LogProfiles.CreateOrUpdate(logProfileName: DefaultName, parameters: parameters);
 
             AreEqual(expResponse, actualResponse);
         }
@@ -63,23 +66,26 @@ namespace Insights.Tests.BasicTests
             customClient.LogProfiles.Delete(logProfileName: DefaultName);
         }
 
-        [Fact(Skip = "TODO: fix some serialization issues")]
+        [Fact]
         public void LogProfiles_GetTest()
         {
             var expResponse = CreateLogProfile();
-            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            var handler = new RecordedDelegatingHandler();
+            var insightsClient = GetInsightsManagementClient(handler);
+            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expResponse, insightsClient.SerializationSettings);
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(expResponse.ToJson())
+                Content = new StringContent(serializedObject)
             };
 
-            var handler = new RecordedDelegatingHandler(response);
-            InsightsManagementClient customClient = this.GetInsightsManagementClient(handler);
+            handler = new RecordedDelegatingHandler(expectedResponse);
+            insightsClient = GetInsightsManagementClient(handler);
 
-            LogProfileResource actualResponse = customClient.LogProfiles.Get(logProfileName: DefaultName);
+            LogProfileResource actualResponse = insightsClient.LogProfiles.Get(logProfileName: DefaultName);
             AreEqual(expResponse, actualResponse);
         }
 
-        [Fact(Skip = "TODO: fix some serialization issues")]
+        [Fact]
         public void LogProfiles_ListTest()
         {
             var logProfile = CreateLogProfile();
@@ -88,15 +94,18 @@ namespace Insights.Tests.BasicTests
                 logProfile
             };
 
-            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            var handler = new RecordedDelegatingHandler();
+            var insightsClient = GetInsightsManagementClient(handler);
+            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expResponse, insightsClient.SerializationSettings);
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(expResponse.ToJson())
+                Content = new StringContent(string.Concat("{ \"value\":", serializedObject, "}"))
             };
 
-            var handler = new RecordedDelegatingHandler(response);
-            InsightsManagementClient customClient = this.GetInsightsManagementClient(handler);
+            handler = new RecordedDelegatingHandler(expectedResponse);
+            insightsClient = GetInsightsManagementClient(handler);
 
-            IList<LogProfileResource> actualResponse = customClient.LogProfiles.List().ToList<LogProfileResource>();
+            IList<LogProfileResource> actualResponse = insightsClient.LogProfiles.List().ToList<LogProfileResource>();
 
             Assert.Equal(expResponse.Count, actualResponse.Count);
             AreEqual(expResponse[0], actualResponse[0]);

@@ -28,36 +28,43 @@ namespace Insights.Tests.BasicTests
     {
         private const string ResourceUri = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.web/serverFarms/DefaultServerFarm";
 
-        [Fact(Skip = "TODO: fix some serialization issues")]
+        [Fact]
         public void LogProfiles_PutTest()
         {
             var expResponse = CreateDiagnosticSettings();
-            var expHttpResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            var handler = new RecordedDelegatingHandler();
+            var insightsClient = GetInsightsManagementClient(handler);
+            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expResponse, insightsClient.SerializationSettings);
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(expResponse.ToJson())
+                Content = new StringContent(serializedObject)
             };
 
-            var handler = new RecordedDelegatingHandler(expHttpResponse);
-            InsightsManagementClient customClient = this.GetInsightsManagementClient(handler);
+            handler = new RecordedDelegatingHandler(expectedResponse);
+            insightsClient = GetInsightsManagementClient(handler);
 
             var parameters = CreateDiagnosticSettingsParams();
 
-            ServiceDiagnosticSettingsResource response = customClient.ServiceDiagnosticSettings.CreateOrUpdate(resourceUri: ResourceUri, parameters: parameters);
+            ServiceDiagnosticSettingsResource response = insightsClient.ServiceDiagnosticSettings.CreateOrUpdate(resourceUri: ResourceUri, parameters: parameters);
             AreEqual(expResponse, response);
         }
 
-        [Fact(Skip = "TODO: fix some deserialization issues")]
+        [Fact]
         public void LogProfiles_GetTest()
         {
             var expResponse = CreateDiagnosticSettings();
-            var expHttpResponse = new HttpResponseMessage(HttpStatusCode.OK)
+            var handler = new RecordedDelegatingHandler();
+            var insightsClient = GetInsightsManagementClient(handler);
+            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expResponse, insightsClient.SerializationSettings);
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(expResponse.ToJson())
+                Content = new StringContent(serializedObject)
             };
 
-            var handler = new RecordedDelegatingHandler(expHttpResponse);
-            InsightsManagementClient customClient = this.GetInsightsManagementClient(handler);
-            ServiceDiagnosticSettingsResource actualResponse = customClient.ServiceDiagnosticSettings.Get(resourceUri: ResourceUri);
+            handler = new RecordedDelegatingHandler(expectedResponse);
+            insightsClient = GetInsightsManagementClient(handler);
+
+            ServiceDiagnosticSettingsResource actualResponse = insightsClient.ServiceDiagnosticSettings.Get(resourceUri: ResourceUri);
             AreEqual(expResponse, actualResponse);
         }
 

@@ -28,35 +28,42 @@ namespace Insights.Tests.BasicTests
     {
         private const string ResourceUri = "/subscriptions/4d7e91d4-e930-4bb5-a93d-163aa358e0dc/resourceGroups/Default-Web-westus/providers/microsoft.web/serverFarms/DefaultServerFarm";
 
-        [Fact(Skip = "TODO: fix some serialization issues")]
+        [Fact]
         public void CreateOrUpdateSettingTest()
         {
             AutoscaleSettingResource expResponse = CreateAutoscaleSetting(location: "East US", resourceUri: ResourceUri, metricName: "CpuPercentage");
-            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            var handler = new RecordedDelegatingHandler();
+            var insightsClient = GetInsightsManagementClient(handler);
+            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expResponse, insightsClient.SerializationSettings);
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(expResponse.ToJson()),
+                Content = new StringContent(serializedObject)
             };
 
-            var handler = new RecordedDelegatingHandler(response);
-            InsightsManagementClient customClient = this.GetInsightsManagementClient(handler);
+            handler = new RecordedDelegatingHandler(expectedResponse);
+            insightsClient = GetInsightsManagementClient(handler);
 
-            var actualResponse = customClient.AutoscaleSettings.CreateOrUpdate(resourceGroupName: "resourceGroup1", autoscaleSettingName: "setting1", parameters: expResponse);
+            var actualResponse = insightsClient.AutoscaleSettings.CreateOrUpdate(resourceGroupName: "resourceGroup1", autoscaleSettingName: "setting1", parameters: expResponse);
             AreEqual(expResponse, actualResponse);
         }
 
-        [Fact(Skip = "TODO: fix some serialization issues")]
+        [Fact]
         public void Autoscale_GetSetting()
         {
-            var expectedAutoscaleSetting = CreateAutoscaleSetting(ResourceUri, "CpuPercentage", string.Empty);
-            var response = new HttpResponseMessage(HttpStatusCode.OK)
+            var expResponse = CreateAutoscaleSetting(ResourceUri, "CpuPercentage", string.Empty);
+            var handler = new RecordedDelegatingHandler();
+            var insightsClient = GetInsightsManagementClient(handler);
+            var serializedObject = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expResponse, insightsClient.SerializationSettings);
+            var expectedResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new StringContent(expectedAutoscaleSetting.ToJson()),
+                Content = new StringContent(serializedObject)
             };
 
-            var handler = new RecordedDelegatingHandler(response);
-            InsightsManagementClient customClient = this.GetInsightsManagementClient(handler);
-            AutoscaleSettingResource actualResponse = customClient.AutoscaleSettings.Get(resourceGroupName: "resourceGroup1", autoscaleSettingName: "setting1");
-            AreEqual(expectedAutoscaleSetting, actualResponse);
+            handler = new RecordedDelegatingHandler(expectedResponse);
+            insightsClient = GetInsightsManagementClient(handler);
+
+            AutoscaleSettingResource actualResponse = insightsClient.AutoscaleSettings.Get(resourceGroupName: "resourceGroup1", autoscaleSettingName: "setting1");
+            AreEqual(expResponse, actualResponse);
         }
 
         private static AutoscaleSettingResource CreateAutoscaleSetting(string location, string resourceUri, string metricName)
