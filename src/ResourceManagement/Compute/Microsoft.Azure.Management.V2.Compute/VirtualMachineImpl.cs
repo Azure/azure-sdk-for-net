@@ -102,6 +102,9 @@ namespace Microsoft.Azure.Management.V2.Compute
             var response = await client.GetWithHttpMessagesAsync(this.ResourceGroupName,
                 this.Name);
             SetInner(response.Body);
+            ClearCachedRelatedResources();
+            InitializeDataDisks();
+            this.virtualMachineExtensions.Refresh();
             return this;
         }
 
@@ -800,20 +803,13 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
 
-        // TODO: Remove this
-        public IList<VirtualMachineExtensionInner> Resources
+        public IDictionary<string, IVirtualMachineExtension> Extensions
         {
             get
             {
-                return Inner.Resources;
+                return this.virtualMachineExtensions.AsMap();
             }
         }
-
-        public IDictionary<string, IVirtualMachineExtension> extensions()
-        {
-            return this.virtualMachineExtensions.AsMap();
-        }
-
 
         public Plan Plan
         {
@@ -899,6 +895,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             this.SetInner(response);
             ClearCachedRelatedResources();
             InitializeDataDisks();
+            await this.virtualMachineExtensions.CommitAndGetAllAsync(cancellationToken);
             return this;
         }
 

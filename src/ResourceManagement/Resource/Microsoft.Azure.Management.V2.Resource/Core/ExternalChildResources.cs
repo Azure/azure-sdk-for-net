@@ -57,12 +57,20 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
             InitializeCollection();
         }
 
+        /**
+        public Task<Observable<FluentModelTImpl>> CommitAsync(CancellationToken cacellationToken)
+        {
+            // This method cannot be implemented as there is no easy way to stream reources due to the 
+            // absense of Rx.Net
+        }
+        **/
+
         /// <summary>
         /// Commits the changes in the external child resource collection.
         /// </summary>
         /// <param name="cacellationToken"></param>
         /// <returns>On success a task with changed child resources else a faulted task</returns>
-        public Task<List<FluentModelTImpl>> CommitAsync(CancellationToken cacellationToken)
+        public Task<List<FluentModelTImpl>> CommitAndGetAllAsync(CancellationToken cacellationToken)
         {
             ConcurrentBag<Exception> exceptions = new ConcurrentBag<Exception>();
             ConcurrentBag<FluentModelTImpl> comitted = new ConcurrentBag<FluentModelTImpl>();

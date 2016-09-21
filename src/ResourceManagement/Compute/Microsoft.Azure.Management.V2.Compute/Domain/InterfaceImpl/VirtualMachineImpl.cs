@@ -143,14 +143,16 @@ namespace Microsoft.Azure.Management.V2.Compute
                 return this.AvailabilitySetId as string;
             }
         }
-        /// <returns>the resources value</returns>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Compute.Models.VirtualMachineExtensionInner> Microsoft.Azure.Management.V2.Compute.IVirtualMachine.Resources
+
+        /// <returns>the extensions attached to the Azure Virtual Machine</returns>
+        System.Collections.Generic.IDictionary<string, IVirtualMachineExtension> Microsoft.Azure.Management.V2.Compute.IVirtualMachine.Extensions
         {
             get
             {
-                return this.Resources as System.Collections.Generic.IList<Microsoft.Azure.Management.Compute.Models.VirtualMachineExtensionInner>;
+                return this.Extensions as System.Collections.Generic.IDictionary<string, IVirtualMachineExtension>;
             }
         }
+
         /// <returns>the operating system disk caching type, valid values are 'None', 'ReadOnly', 'ReadWrite'</returns>
         Microsoft.Azure.Management.Compute.Models.CachingTypes? Microsoft.Azure.Management.V2.Compute.IVirtualMachine.OsDiskCachingType
         {
