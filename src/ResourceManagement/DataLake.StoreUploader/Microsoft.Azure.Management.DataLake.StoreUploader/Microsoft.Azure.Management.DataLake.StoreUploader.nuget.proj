@@ -5,7 +5,7 @@
     Microsoft.Azure.Management.DataLake.StoreUploader
     -->
     <SdkNuGetPackage Include="Microsoft.Azure.Management.DataLake.StoreUploader">
-      <PackageVersion>0.10.6-preview</PackageVersion>
+      <PackageVersion>0.10.7-preview</PackageVersion>
       <Folder>$(MSBuildThisFileDirectory)</Folder>
     </SdkNuGetPackage>
   </ItemGroup>

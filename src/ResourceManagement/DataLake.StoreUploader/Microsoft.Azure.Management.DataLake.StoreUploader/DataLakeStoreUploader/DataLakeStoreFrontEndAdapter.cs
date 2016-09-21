@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
         private readonly CancellationToken _token;
 
-        private const int PerRequestTimeoutMs = 30000; // 30 seconds and we timeout the request
+        private const int PerRequestTimeoutMs = 60000; // 60 seconds and we timeout the request
 
         #endregion
 
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         public DataLakeStoreFrontEndAdapter(string accountName, IDataLakeStoreFileSystemManagementClient client) :
             this(accountName, client, CancellationToken.None)
         {
-            
+
         }
 
         /// <summary>
@@ -111,11 +111,11 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         {
             if (isDownload)
             {
-                if(Directory.Exists(streamPath))
+                if (Directory.Exists(streamPath))
                 {
                     Directory.Delete(streamPath, recurse);
                 }
-                else if(File.Exists(streamPath))
+                else if (File.Exists(streamPath))
                 {
                     File.Delete(streamPath);
                 }
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         {
             using (var stream = new MemoryStream(data, 0, byteCount))
             {
-                var task = _client.FileSystem.AppendAsync(_accountName, streamPath, stream, cancellationToken: _token);
+                var task = _client.FileSystem.AppendAsync(_accountName, streamPath, stream, offset, cancellationToken: _token);
 
                 if (!task.Wait(PerRequestTimeoutMs))
                 {
@@ -161,9 +161,9 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             {
                 var task = _client.FileSystem.OpenWithHttpMessagesAsync(_accountName, streamPath, length, offset, cancellationToken: _token);
 
-                if (!task.Wait(PerRequestTimeoutMs * 3)) // reads take longer in general, so we give the read thrice as much time to complete.
+                if (!task.Wait(PerRequestTimeoutMs))
                 {
-                    throw new TaskCanceledException(string.Format("Reading stream operation did not complete after {0} milliseconds. TraceId: {1}", PerRequestTimeoutMs * 3, task.Result.RequestId));
+                    throw new TaskCanceledException(string.Format("Reading stream operation did not complete after {0} milliseconds. TraceId: {1}", PerRequestTimeoutMs, task.Result.RequestId));
                 }
 
                 return task.GetAwaiter().GetResult().Body;
@@ -305,13 +305,13 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         {
             Dictionary<string, long> toReturn = new Dictionary<string, long>();
             var files = _client.FileSystem.ListFileStatus(_accountName, directoryPath).FileStatuses.FileStatus;
-            foreach(var file in files)
+            foreach (var file in files)
             {
                 if (file.Type == FileType.FILE)
                 {
                     toReturn.Add(string.Format("{0}/{1}", directoryPath, file.PathSuffix), file.Length.GetValueOrDefault());
                 }
-                else if(recursive)
+                else if (recursive)
                 {
                     foreach (var entry in ListDirectory(string.Format("{0}/{1}", directoryPath, file.PathSuffix), true))
                     {
@@ -335,20 +335,12 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         {
             if (isDownload)
             {
-                using (var targetStream = new FileStream(targetStreamPath, FileMode.CreateNew))
+                if (inputStreamPaths.Length != 2)
                 {
-                    foreach(var inputPath in inputStreamPaths)
-                    {
-                        using (var inputStream = File.OpenRead(inputPath))
-                        {
-                            inputStream.CopyTo(targetStream);
-                        }
-                    }
+                    throw new InvalidOperationException(string.Format("Invalid list of stream paths for download finalization. Expected Paths: 2. Actual paths: {0}", inputStreamPaths.Length));
                 }
 
-                // clean up all the files only in the event of success.
-                var toDelete = Path.GetDirectoryName(inputStreamPaths[0]);
-                Directory.Delete(toDelete, true);
+                File.Move(inputStreamPaths[0], inputStreamPaths[1]);
             }
             else
             {
