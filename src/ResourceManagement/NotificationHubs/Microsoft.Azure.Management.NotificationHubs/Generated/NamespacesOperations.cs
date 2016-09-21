@@ -470,7 +470,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
         /// The namespace name.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to create a Namespace Resource.
+        /// Parameters supplied to patch a Namespace Resource.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.

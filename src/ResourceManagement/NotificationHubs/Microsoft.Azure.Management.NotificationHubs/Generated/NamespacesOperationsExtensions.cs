@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// The namespace name.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to create a Namespace Resource.
+            /// Parameters supplied to patch a Namespace Resource.
             /// </param>
             public static NamespaceResource Patch(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespacePatchParameters parameters)
             {
@@ -136,7 +136,7 @@ namespace Microsoft.Azure.Management.NotificationHubs
             /// The namespace name.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to create a Namespace Resource.
+            /// Parameters supplied to patch a Namespace Resource.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
