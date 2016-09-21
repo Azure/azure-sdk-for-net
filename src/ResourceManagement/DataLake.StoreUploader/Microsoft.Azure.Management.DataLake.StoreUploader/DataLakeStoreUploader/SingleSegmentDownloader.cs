@@ -102,23 +102,18 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 _token.ThrowIfCancellationRequested();
             }
 
-            //open a file stream (truncate it if it already exists) for the target segment
-            // we always truncate here because overwrite validation should have already been done.
-            // always create the directory as well
-            Directory.CreateDirectory(Path.GetDirectoryName(_segmentMetadata.Path));
-            
             // download the data
-            DownloadSegmentContents();
-
-            // VerifyDownloadedStream();
             //any exceptions are (re)thrown to be handled by the caller; we do not handle retries or other recovery techniques here
+            // NOTE: We don't validate the download contents for each individual segment because all segments are being downloaded,
+            // in parallel, into the same stream. We cannot confirm the size of the data downloaded here. Instead we do it once at the end.
+            DownloadSegmentContents();
         }
 
         /// <summary>
         /// Verifies the downloaded stream.
         /// </summary>
         /// <exception cref="UploadFailedException"></exception>
-        private void VerifyDownloadedStream()
+        internal void VerifyDownloadedStream()
         {
             //verify that the remote stream has the length we expected.
             var retryCount = 0;

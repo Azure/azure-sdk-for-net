@@ -991,6 +991,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     var ssu = new SingleSegmentDownloader(0, metadata, _frontEnd, _token, segmentProgressTracker);
                     ssu.UseBackOffRetryStrategy = this.Parameters.UseSegmentBlockBackOffRetryStrategy;
                     ssu.Download();
+                    ssu.VerifyDownloadedStream();
                 }
                 metadata.Status = SegmentUploadStatus.Complete;
 
