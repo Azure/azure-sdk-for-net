@@ -17,22 +17,22 @@ namespace Microsoft.Azure.Insights
     /// </summary>
     public static partial class UsageMetricsOperationsExtensions
     {
-            /// <summary>
-            /// The List operation lists the usage metrics for the resource.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceUri'>
-            /// The identifier of the resource.
-            /// </param>
-            /// <param name='apiVersion'>
-            /// The client Api Version.
-            /// </param>
-            /// <param name='odataQuery'>
-            /// OData parameters to apply to the operation.
-            /// </param>
-            public static System.Collections.Generic.IEnumerable<UsageMetric> List(this IUsageMetricsOperations operations, string resourceUri, string apiVersion, Microsoft.Rest.Azure.OData.ODataQuery<UsageMetric> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<UsageMetric>))
+        /// <summary>
+        /// The List operation lists the usage metrics for the resource.
+        /// </summary>
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='resourceUri'>
+        /// The identifier of the resource.
+        /// </param>
+        /// <param name='apiVersion'>
+        /// The client Api Version.
+        /// </param>
+        /// <param name='odataQuery'>
+        /// OData parameters to apply to the operation.
+        /// </param>
+        public static System.Collections.Generic.IEnumerable<UsageMetric> List(this IUsageMetricsOperations operations, string resourceUri, string apiVersion, Microsoft.Rest.Azure.OData.ODataQuery<UsageMetric> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<UsageMetric>))
             {
                 return System.Threading.Tasks.Task.Factory.StartNew(s => ((IUsageMetricsOperations)s).ListAsync(resourceUri, apiVersion, odataQuery), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -45,6 +45,9 @@ namespace Microsoft.Azure.Insights
             /// </param>
             /// <param name='resourceUri'>
             /// The identifier of the resource.
+            /// </param>
+            /// <param name='apiVersion'>
+            /// The client Api Version.
             /// </param>
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
