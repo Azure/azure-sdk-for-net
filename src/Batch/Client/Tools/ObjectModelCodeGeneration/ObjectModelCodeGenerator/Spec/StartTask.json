@@ -1,0 +1,80 @@
+    {
+      "Name": "StartTask",
+      "ProtocolName": "Models.StartTask",
+      "Comment": "A task which is run when a compute node joins a pool in the Azure Batch service, or when the compute node is rebooted or reimaged.",
+      "Properties": [
+        {
+          "Key": {
+            "Type": "string",
+            "Name": "CommandLine",
+            "SummaryComment": "The command line of the task.",
+            "RemarksComment": "The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using \"cmd /c MyCommand\" in Windows or \"/bin/sh -c MyCommand\" in Linux.",
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Required"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "IList<EnvironmentSetting>",
+            "Name": "EnvironmentSettings",
+            "SummaryComment": "A set of environment settings for the start task.",
+            "RemarksComment": null,
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "IList<Models.EnvironmentSetting>",
+            "Name": "EnvironmentSettings"
+          }
+        },
+        {
+          "Key": {
+            "Type": "int?",
+            "Name": "MaxTaskRetryCount",
+            "SummaryComment": "The maximum number of retries for the task.",
+            "RemarksComment": null,
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "IList<ResourceFile>",
+            "Name": "ResourceFiles",
+            "SummaryComment": "A list of files that the Batch service will download to the compute node before running the command line.",
+            "RemarksComment": null,
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "IList<Models.ResourceFile>",
+            "Name": "ResourceFiles"
+          }
+        },
+        {
+          "Key": {
+            "Type": "bool?",
+            "Name": "RunElevated",
+            "SummaryComment": "Whether to run the task in elevated mode.",
+            "RemarksComment": null,
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "bool?",
+            "Name": "WaitForSuccess",
+            "SummaryComment": "A value indicating whether the Batch service should wait for the start task to complete before scheduling any tasks on the compute node.",
+            "RemarksComment": "If this is not specified, the default is false.",
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        }
+      ]
+    }
