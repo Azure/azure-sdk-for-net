@@ -417,7 +417,7 @@ namespace Networks.Tests
                 var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);
                 var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
 
-                var location = "West Central US";
+                var location = "West US";
 
                 string resourceGroupName = TestUtilities.GenerateName("csmrg");
                 resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
@@ -481,6 +481,11 @@ namespace Networks.Tests
                 var getGateway = networkManagementClient.ApplicationGateways.Get(resourceGroupName, appGwName);
                 Assert.Equal(appGwName, getGateway.Name);
                 CompareApplicationGateway(appGw, getGateway);
+
+                //Get AppGw backend health
+                var backendHealth = networkManagementClient.ApplicationGateways.BackendHealth(resourceGroupName, appGwName);
+                Assert.Equal(1, backendHealth.BackendAddressPools.Count);
+                Assert.Equal(2, backendHealth.BackendAddressPools[0].BackendHttpSettingsCollection.Count);
 
                 // Create Nics
                 string nic1name = TestUtilities.GenerateName();
