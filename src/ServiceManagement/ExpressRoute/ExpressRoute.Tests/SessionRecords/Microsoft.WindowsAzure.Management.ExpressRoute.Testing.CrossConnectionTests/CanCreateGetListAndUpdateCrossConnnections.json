@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/dedicatedcircuits/serviceproviders?api-version=1.0",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzL3NlcnZpY2Vwcm92aWRlcnM/YXBpLXZlcnNpb249MS4w",
+      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/dedicatedcircuits/serviceproviders?api-version=1.0",
+      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzL3NlcnZpY2Vwcm92aWRlcnM/YXBpLXZlcnNpb249MS4w",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -10,54 +10,54 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<DedicatedCircuitServiceProviders xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1</Bandwidth>\r\n        <Label>1Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Boydton 1 DC,Des Moines 2 DC,USWest</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>BVTAzureIXP01</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1</Bandwidth>\r\n        <Label>1Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Boydton 1 DC,Des Moines 2 DC,USWest</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>BVTAzureTelco01</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1</Bandwidth>\r\n        <Label>1Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10000</Bandwidth>\r\n        <Label>10Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Boydton 1 DC,Des Moines 2 DC,USWest</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>BVTCustomerIXP01</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1</Bandwidth>\r\n        <Label>1Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Boydton 1 DC,Des Moines 2 DC,USWest</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>BVTCustomerTelco01</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1</Bandwidth>\r\n        <Label>BVTTestServiceProvider1-label-1</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10</Bandwidth>\r\n        <Label>BVTTestServiceProvider1-label-10</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Location1,Location2</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>BVTTestServiceProvider1</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1</Bandwidth>\r\n        <Label>BVTTestServiceProvider2-label-1</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10</Bandwidth>\r\n        <Label>BVTTestServiceProvider2-label-10</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Location1,Location2</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>BVTTestServiceProvider2</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>128</Bandwidth>\r\n        <Label>256</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Azure,USWest,Boydton 1 DC</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>GNS</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1</Bandwidth>\r\n        <Label>1Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10</Bandwidth>\r\n        <Label>10Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1024</Bandwidth>\r\n        <Label>1024Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Boydton 1 DC,USWest,Azure</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>IXP-01</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n</DedicatedCircuitServiceProviders>",
+      "ResponseBody": "<DedicatedCircuitServiceProviders xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1</Bandwidth>\r\n        <Label>1Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10</Bandwidth>\r\n        <Label>10Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Boydton 1 DC</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>BVTAzureIXP01</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10</Bandwidth>\r\n        <Label>10Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Boydton 1 DC,Des Moines 2 DC,USWest</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>BVTAzureTelco01</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1</Bandwidth>\r\n        <Label>1Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10</Bandwidth>\r\n        <Label>10Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>200Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Boydton 1 DC</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>BVTCustomerIXP01</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10</Bandwidth>\r\n        <Label>10Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>50</Bandwidth>\r\n        <Label>50Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>100</Bandwidth>\r\n        <Label>100Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>500</Bandwidth>\r\n        <Label>500Mbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>1000</Bandwidth>\r\n        <Label>1Gbps</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Boydton 1 DC,Des Moines 2 DC,USWest</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>BVTCustomerTelco01</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>BVTTestServiceProvider1-label-1</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10</Bandwidth>\r\n        <Label>BVTTestServiceProvider1-label-10</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Location1,Location2</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>bvttestserviceprovider1</Name>\r\n    <Type>Telco</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n  <DedicatedCircuitServiceProvider>\r\n    <DedicatedCircuitBandwidths>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>200</Bandwidth>\r\n        <Label>BVTTestServiceProvider2-label-1</Label>\r\n      </DedicatedCircuitBandwidth>\r\n      <DedicatedCircuitBandwidth>\r\n        <Bandwidth>10</Bandwidth>\r\n        <Label>BVTTestServiceProvider2-label-10</Label>\r\n      </DedicatedCircuitBandwidth>\r\n    </DedicatedCircuitBandwidths>\r\n    <DedicatedCircuitLocations>Location1,Location2</DedicatedCircuitLocations>\r\n    <Encapsulation>None</Encapsulation>\r\n    <Name>bvttestserviceprovider2</Name>\r\n    <Type>IXP</Type>\r\n  </DedicatedCircuitServiceProvider>\r\n</DedicatedCircuitServiceProviders>",
       "ResponseHeaders": {
         "Content-Length": [
-          "5820"
+          "4421"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
         "x-ms-request-id": [
-          "886bcd987c730d3998d11192f669f6a0"
+          "b0b959810fd2a414968c1572c5866a5c"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 21:02:42 GMT"
+          "Wed, 21 Sep 2016 01:14:06 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6190.7618",
+          "(rd_rdfe_n.160909-0404)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/dedicatedcircuits?api-version=1.0",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzP2FwaS12ZXJzaW9uPTEuMA==",
+      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/dedicatedcircuits?api-version=1.0",
+      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzP2FwaS12ZXJzaW9uPTEuMA==",
       "RequestMethod": "POST",
-      "RequestBody": "<CreateDedicatedCircuit xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <Bandwidth>1</Bandwidth>\r\n  <CircuitName>circuit5725</CircuitName>\r\n  <Location>Location1</Location>\r\n  <ServiceProviderName>BVTTestServiceProvider2</ServiceProviderName>\r\n</CreateDedicatedCircuit>",
+      "RequestBody": "<CreateDedicatedCircuit xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <Bandwidth>500</Bandwidth>\r\n  <BillingType>MeteredData</BillingType>\r\n  <CircuitName>circuit5276</CircuitName>\r\n  <Location>Boydton 1 DC</Location>\r\n  <ServiceProviderName>BVTAzureIXP01</ServiceProviderName>\r\n  <Sku>Standard</Sku>\r\n</CreateDedicatedCircuit>",
       "RequestHeaders": {
         "Content-Type": [
           "application/xml"
         ],
         "Content-Length": [
-          "275"
+          "335"
         ],
         "x-ms-version": [
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperationAsyncResponse xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>616c9ee8-0ca2-0525-a7aa-fcee07f28d26</ID>\r\n</GatewayOperationAsyncResponse>",
+      "ResponseBody": "<GatewayOperationAsyncResponse xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>39d14c51-e1ef-a5f6-a1c6-d5085b89fb9e</ID>\r\n</GatewayOperationAsyncResponse>",
       "ResponseHeaders": {
         "Content-Length": [
           "210"
@@ -66,25 +66,25 @@
           "application/xml; charset=utf-8"
         ],
         "x-ms-request-id": [
-          "616c9ee80ca20525a7aafcee07f28d26"
+          "39d14c51e1efa5f6a1c6d5085b89fb9e"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 21:02:48 GMT"
+          "Wed, 21 Sep 2016 01:14:09 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6190.7618",
+          "(rd_rdfe_n.160909-0404)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/operation/616c9ee8-0ca2-0525-a7aa-fcee07f28d26",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi82MTZjOWVlOC0wY2EyLTA1MjUtYTdhYS1mY2VlMDdmMjhkMjY=",
+      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/operation/39d14c51-e1ef-a5f6-a1c6-d5085b89fb9e",
+      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi8zOWQxNGM1MS1lMWVmLWE1ZjYtYTFjNi1kNTA4NWI4OWZiOWU=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -92,37 +92,37 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>616c9ee8-0ca2-0525-a7aa-fcee07f28d26</ID>\r\n  <OperationName>CreateDedicatedCircuit</OperationName>\r\n  <OperationStartedTime>2015-02-24T21:02:48.0059245</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data />\r\n  <HealthStatus />\r\n  <ID>39d14c51-e1ef-a5f6-a1c6-d5085b89fb9e</ID>\r\n  <OperationName>CreateDedicatedCircuit</OperationName>\r\n  <OperationStartedTime>2016-09-21T01:14:09.348892</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
       "ResponseHeaders": {
         "Content-Length": [
-          "336"
+          "357"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
         "x-ms-request-id": [
-          "e089a7bd9dbb02ea917660c7230005a7"
+          "109cff6faa6cad53a30868d11be359c2"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 21:02:48 GMT"
+          "Wed, 21 Sep 2016 01:14:09 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6190.7618",
+          "(rd_rdfe_n.160909-0404)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4/services/networking/operation/616c9ee8-0ca2-0525-a7aa-fcee07f28d26",
-      "EncodedRequestUri": "LzBjZDQwYmEzLTc1ZDQtNGQ4Mi05NWZlLWI0YzNmZjRmZDdlNC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi82MTZjOWVlOC0wY2EyLTA1MjUtYTdhYS1mY2VlMDdmMjhkMjY=",
+      "RequestUri": "/6418ec2a-e390-424d-a490-1fee167c5a7a/services/networking/operation/39d14c51-e1ef-a5f6-a1c6-d5085b89fb9e",
+      "EncodedRequestUri": "LzY0MThlYzJhLWUzOTAtNDI0ZC1hNDkwLTFmZWUxNjdjNWE3YS9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi8zOWQxNGM1MS1lMWVmLWE1ZjYtYTFjNi1kNTA4NWI4OWZiOWU=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -130,37 +130,37 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data>c1e4c5eb-664f-41bb-a24f-59b1810d7411</Data>\r\n  <HttpStatusCode>OK</HttpStatusCode>\r\n  <ID>616c9ee8-0ca2-0525-a7aa-fcee07f28d26</ID>\r\n  <OperationCompletedTime>2015-02-24T21:02:53.5779844</OperationCompletedTime>\r\n  <OperationName>CreateDedicatedCircuit</OperationName>\r\n  <OperationStartedTime>2015-02-24T21:02:48.0059245</OperationStartedTime>\r\n  <Status>Successful</Status>\r\n</GatewayOperation>",
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data>c8f1c988-9129-4568-9cee-6ef0fcb6fc54</Data>\r\n  <HealthStatus />\r\n  <HttpStatusCode>OK</HttpStatusCode>\r\n  <ID>39d14c51-e1ef-a5f6-a1c6-d5085b89fb9e</ID>\r\n  <OperationCompletedTime>2016-09-21T01:14:12.2285529</OperationCompletedTime>\r\n  <OperationName>CreateDedicatedCircuit</OperationName>\r\n  <OperationStartedTime>2016-09-21T01:14:09.348892</OperationStartedTime>\r\n  <Status>Successful</Status>\r\n</GatewayOperation>",
       "ResponseHeaders": {
         "Content-Length": [
-          "496"
+          "510"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
         "x-ms-request-id": [
-          "036b29b96e090ae4975e52217d5fc7e3"
+          "b1d23364711daf95b7e97f85a272b71f"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 21:03:20 GMT"
+          "Wed, 21 Sep 2016 01:14:41 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6190.7618",
+          "(rd_rdfe_n.160909-0404)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/81e5b62a-6488-4a10-a9f7-a0cb8b7883a7/services/networking/dedicatedcircuits/c1e4c5eb-664f-41bb-a24f-59b1810d7411/crossconnection?api-version=1.0",
-      "EncodedRequestUri": "LzgxZTViNjJhLTY0ODgtNGExMC1hOWY3LWEwY2I4Yjc4ODNhNy9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzL2MxZTRjNWViLTY2NGYtNDFiYi1hMjRmLTU5YjE4MTBkNzQxMS9jcm9zc2Nvbm5lY3Rpb24/YXBpLXZlcnNpb249MS4w",
+      "RequestUri": "/8d593cda-2cfb-430d-b898-5b2606e297d4/services/networking/dedicatedcircuits/c8f1c988-9129-4568-9cee-6ef0fcb6fc54/crossconnection?api-version=1.0",
+      "EncodedRequestUri": "LzhkNTkzY2RhLTJjZmItNDMwZC1iODk4LTViMjYwNmUyOTdkNC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzL2M4ZjFjOTg4LTkxMjktNDU2OC05Y2VlLTZlZjBmY2I2ZmM1NC9jcm9zc2Nvbm5lY3Rpb24/YXBpLXZlcnNpb249MS4w",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
@@ -168,10 +168,10 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperationAsyncResponse xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>8dbf6c62-9297-0985-94e1-53a148aeaed3</ID>\r\n</GatewayOperationAsyncResponse>",
+      "ResponseBody": "<GatewayOperationAsyncResponse xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>94972961-6cd4-ad33-afb3-da4522baa809</ID>\r\n</GatewayOperationAsyncResponse>",
       "ResponseHeaders": {
         "Content-Length": [
           "210"
@@ -180,25 +180,25 @@
           "application/xml; charset=utf-8"
         ],
         "x-ms-request-id": [
-          "8dbf6c629297098594e153a148aeaed3"
+          "949729616cd4ad33afb3da4522baa809"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 21:03:22 GMT"
+          "Wed, 21 Sep 2016 01:14:43 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6190.7618",
+          "(rd_rdfe_n.160909-0404)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/81e5b62a-6488-4a10-a9f7-a0cb8b7883a7/services/networking/operation/8dbf6c62-9297-0985-94e1-53a148aeaed3",
-      "EncodedRequestUri": "LzgxZTViNjJhLTY0ODgtNGExMC1hOWY3LWEwY2I4Yjc4ODNhNy9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi84ZGJmNmM2Mi05Mjk3LTA5ODUtOTRlMS01M2ExNDhhZWFlZDM=",
+      "RequestUri": "/8d593cda-2cfb-430d-b898-5b2606e297d4/services/networking/operation/94972961-6cd4-ad33-afb3-da4522baa809",
+      "EncodedRequestUri": "LzhkNTkzY2RhLTJjZmItNDMwZC1iODk4LTViMjYwNmUyOTdkNC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi85NDk3Mjk2MS02Y2Q0LWFkMzMtYWZiMy1kYTQ1MjJiYWE4MDk=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -206,37 +206,37 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>8dbf6c62-9297-0985-94e1-53a148aeaed3</ID>\r\n  <OperationName>ProvisionCrossConnection</OperationName>\r\n  <OperationStartedTime>2015-02-24T21:03:22.5985767</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data />\r\n  <HealthStatus />\r\n  <ID>94972961-6cd4-ad33-afb3-da4522baa809</ID>\r\n  <OperationName>ProvisionCrossConnection</OperationName>\r\n  <OperationStartedTime>2016-09-21T01:14:42.8934246</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
       "ResponseHeaders": {
         "Content-Length": [
-          "338"
+          "360"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
         "x-ms-request-id": [
-          "196af87740a007b2add1eaa845f8a979"
+          "58ee0bb8b80da443814fba8a5feeeff0"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 21:03:22 GMT"
+          "Wed, 21 Sep 2016 01:14:43 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6190.7618",
+          "(rd_rdfe_n.160909-0404)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/81e5b62a-6488-4a10-a9f7-a0cb8b7883a7/services/networking/operation/8dbf6c62-9297-0985-94e1-53a148aeaed3",
-      "EncodedRequestUri": "LzgxZTViNjJhLTY0ODgtNGExMC1hOWY3LWEwY2I4Yjc4ODNhNy9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi84ZGJmNmM2Mi05Mjk3LTA5ODUtOTRlMS01M2ExNDhhZWFlZDM=",
+      "RequestUri": "/8d593cda-2cfb-430d-b898-5b2606e297d4/services/networking/operation/94972961-6cd4-ad33-afb3-da4522baa809",
+      "EncodedRequestUri": "LzhkNTkzY2RhLTJjZmItNDMwZC1iODk4LTViMjYwNmUyOTdkNC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi85NDk3Mjk2MS02Y2Q0LWFkMzMtYWZiMy1kYTQ1MjJiYWE4MDk=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -244,37 +244,37 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <HttpStatusCode>OK</HttpStatusCode>\r\n  <ID>8dbf6c62-9297-0985-94e1-53a148aeaed3</ID>\r\n  <OperationCompletedTime>2015-02-24T21:03:24.7122947</OperationCompletedTime>\r\n  <OperationName>ProvisionCrossConnection</OperationName>\r\n  <OperationStartedTime>2015-02-24T21:03:22.5985767</OperationStartedTime>\r\n  <Status>Successful</Status>\r\n</GatewayOperation>",
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data />\r\n  <HealthStatus />\r\n  <HttpStatusCode>OK</HttpStatusCode>\r\n  <ID>94972961-6cd4-ad33-afb3-da4522baa809</ID>\r\n  <OperationCompletedTime>2016-09-21T01:14:44.1872327</OperationCompletedTime>\r\n  <OperationName>ProvisionCrossConnection</OperationName>\r\n  <OperationStartedTime>2016-09-21T01:14:42.8934246</OperationStartedTime>\r\n  <Status>Successful</Status>\r\n</GatewayOperation>",
       "ResponseHeaders": {
         "Content-Length": [
-          "449"
+          "471"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
         "x-ms-request-id": [
-          "aa9b224d3e2d0495bfa5c5d133ed6046"
+          "c085abdc5be6a96fa248d07820bc7e33"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 21:03:54 GMT"
+          "Wed, 21 Sep 2016 01:15:14 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6190.7618",
+          "(rd_rdfe_n.160909-0404)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/81e5b62a-6488-4a10-a9f7-a0cb8b7883a7/services/networking/dedicatedcircuits/c1e4c5eb-664f-41bb-a24f-59b1810d7411/crossconnection?api-version=1.0",
-      "EncodedRequestUri": "LzgxZTViNjJhLTY0ODgtNGExMC1hOWY3LWEwY2I4Yjc4ODNhNy9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzL2MxZTRjNWViLTY2NGYtNDFiYi1hMjRmLTU5YjE4MTBkNzQxMS9jcm9zc2Nvbm5lY3Rpb24/YXBpLXZlcnNpb249MS4w",
+      "RequestUri": "/8d593cda-2cfb-430d-b898-5b2606e297d4/services/networking/dedicatedcircuits/c8f1c988-9129-4568-9cee-6ef0fcb6fc54/crossconnection?api-version=1.0",
+      "EncodedRequestUri": "LzhkNTkzY2RhLTJjZmItNDMwZC1iODk4LTViMjYwNmUyOTdkNC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzL2M4ZjFjOTg4LTkxMjktNDU2OC05Y2VlLTZlZjBmY2I2ZmM1NC9jcm9zc2Nvbm5lY3Rpb24/YXBpLXZlcnNpb249MS4w",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -282,37 +282,75 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<CrossConnection xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Bandwidth>1</Bandwidth>\r\n  <PrimaryAzurePort>BVTTestServiceProvider2Device1Port11</PrimaryAzurePort>\r\n  <ProvisioningState>Provisioning</ProvisioningState>\r\n  <STag>5</STag>\r\n  <SecondaryAzurePort>BVTTestServiceProvider2Device2Port11</SecondaryAzurePort>\r\n  <Status>Enabled</Status>\r\n</CrossConnection>",
+      "ResponseBody": "<CrossConnection xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Bandwidth>500</Bandwidth>\r\n  <PrimaryAzurePort>bvtazureixp01</PrimaryAzurePort>\r\n  <ProvisioningState>Provisioning</ProvisioningState>\r\n  <STag>14</STag>\r\n  <SecondaryAzurePort>bvtazureixp01</SecondaryAzurePort>\r\n  <Status>Enabled</Status>\r\n</CrossConnection>",
       "ResponseHeaders": {
         "Content-Length": [
-          "400"
+          "357"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
         "x-ms-request-id": [
-          "90151fdf305f07a98a76fadcd3926987"
+          "e50b042c4519a399a52291ee2936d9e0"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 21:03:55 GMT"
+          "Wed, 21 Sep 2016 01:15:15 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6190.7618",
+          "(rd_rdfe_n.160909-0404)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/81e5b62a-6488-4a10-a9f7-a0cb8b7883a7/services/networking/dedicatedcircuits/c1e4c5eb-664f-41bb-a24f-59b1810d7411/crossconnection?api-version=1.0",
-      "EncodedRequestUri": "LzgxZTViNjJhLTY0ODgtNGExMC1hOWY3LWEwY2I4Yjc4ODNhNy9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzL2MxZTRjNWViLTY2NGYtNDFiYi1hMjRmLTU5YjE4MTBkNzQxMS9jcm9zc2Nvbm5lY3Rpb24/YXBpLXZlcnNpb249MS4w",
+      "RequestUri": "/8d593cda-2cfb-430d-b898-5b2606e297d4/services/networking/crossconnections?api-version=1.0",
+      "EncodedRequestUri": "LzhkNTkzY2RhLTJjZmItNDMwZC1iODk4LTViMjYwNmUyOTdkNC9zZXJ2aWNlcy9uZXR3b3JraW5nL2Nyb3NzY29ubmVjdGlvbnM/YXBpLXZlcnNpb249MS4w",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-version": [
+          "2011-10-01"
+        ],
+        "User-Agent": [
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
+        ]
+      },
+      "ResponseBody": "<CrossConnections xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <CrossConnection>\r\n    <Bandwidth>200</Bandwidth>\r\n    <PrimaryAzurePort>bvtazureixp01</PrimaryAzurePort>\r\n    <ProvisioningState>Provisioned</ProvisioningState>\r\n    <STag>186</STag>\r\n    <SecondaryAzurePort>bvtazureixp01</SecondaryAzurePort>\r\n    <ServiceKey>4f6b536d-1469-4693-88cc-1c26b0cc1412</ServiceKey>\r\n    <Status>Enabled</Status>\r\n  </CrossConnection>\r\n  <CrossConnection>\r\n    <Bandwidth>200</Bandwidth>\r\n    <PrimaryAzurePort>bvtazureixp01</PrimaryAzurePort>\r\n    <ProvisioningState>Provisioned</ProvisioningState>\r\n    <STag>929</STag>\r\n    <SecondaryAzurePort>bvtazureixp01</SecondaryAzurePort>\r\n    <ServiceKey>c0129b52-70e1-4f39-9fbb-c9a7ec6c55a6</ServiceKey>\r\n    <Status>Enabled</Status>\r\n  </CrossConnection>\r\n  <CrossConnection>\r\n    <Bandwidth>200</Bandwidth>\r\n    <PrimaryAzurePort>bvtazureixp01</PrimaryAzurePort>\r\n    <ProvisioningState>NotProvisioned</ProvisioningState>\r\n    <STag>571</STag>\r\n    <SecondaryAzurePort>bvtazureixp01</SecondaryAzurePort>\r\n    <ServiceKey>bfc567f4-414a-472d-b8c5-c1ec7c3409a0</ServiceKey>\r\n    <Status>Disabling</Status>\r\n  </CrossConnection>\r\n  <CrossConnection>\r\n    <Bandwidth>200</Bandwidth>\r\n    <PrimaryAzurePort>bvtazureixp01</PrimaryAzurePort>\r\n    <ProvisioningState>Provisioned</ProvisioningState>\r\n    <STag>734</STag>\r\n    <SecondaryAzurePort>bvtazureixp01</SecondaryAzurePort>\r\n    <ServiceKey>310b7ef6-a8cc-4eba-bffc-c4215060cd01</ServiceKey>\r\n    <Status>Enabled</Status>\r\n  </CrossConnection>\r\n  <CrossConnection>\r\n    <Bandwidth>200</Bandwidth>\r\n    <PrimaryAzurePort>bvtazureixp01</PrimaryAzurePort>\r\n    <ProvisioningState>Provisioned</ProvisioningState>\r\n    <STag>713</STag>\r\n    <SecondaryAzurePort>bvtazureixp01</SecondaryAzurePort>\r\n    <ServiceKey>3140f1bf-d7f2-4ed4-88a4-126c6a215526</ServiceKey>\r\n    <Status>Enabled</Status>\r\n  </CrossConnection>\r\n  <CrossConnection>\r\n    <Bandwidth>200</Bandwidth>\r\n    <PrimaryAzurePort>bvtazureixp01</PrimaryAzurePort>\r\n    <ProvisioningState>Provisioned</ProvisioningState>\r\n    <STag>413</STag>\r\n    <SecondaryAzurePort>bvtazureixp01</SecondaryAzurePort>\r\n    <ServiceKey>b9de8742-7cbd-485e-8907-32dfeda81b17</ServiceKey>\r\n    <Status>Enabled</Status>\r\n  </CrossConnection>\r\n  <CrossConnection>\r\n    <Bandwidth>200</Bandwidth>\r\n    <PrimaryAzurePort>bvtazureixp01</PrimaryAzurePort>\r\n    <ProvisioningState>Provisioning</ProvisioningState>\r\n    <STag>2</STag>\r\n    <SecondaryAzurePort>bvtazureixp01</SecondaryAzurePort>\r\n    <ServiceKey>00789ebb-3f7f-45be-94ea-c8ff04b88036</ServiceKey>\r\n    <Status>Enabled</Status>\r\n  </CrossConnection>\r\n  <CrossConnection>\r\n    <Bandwidth>500</Bandwidth>\r\n    <PrimaryAzurePort>bvtazureixp01</PrimaryAzurePort>\r\n    <ProvisioningState>NotProvisioned</ProvisioningState>\r\n    <STag>6</STag>\r\n    <SecondaryAzurePort>bvtazureixp01</SecondaryAzurePort>\r\n    <ServiceKey>056a9acc-c1fb-4558-8022-d64446ad73c3</ServiceKey>\r\n    <Status>Enabled</Status>\r\n  </CrossConnection>\r\n  <CrossConnection>\r\n    <Bandwidth>500</Bandwidth>\r\n    <PrimaryAzurePort>bvtazureixp01</PrimaryAzurePort>\r\n    <ProvisioningState>NotProvisioned</ProvisioningState>\r\n    <STag>11</STag>\r\n    <SecondaryAzurePort>bvtazureixp01</SecondaryAzurePort>\r\n    <ServiceKey>0f0593b6-8526-42a4-9ede-aef641f23112</ServiceKey>\r\n    <Status>Enabled</Status>\r\n  </CrossConnection>\r\n  <CrossConnection>\r\n    <Bandwidth>500</Bandwidth>\r\n    <PrimaryAzurePort>bvtazureixp01</PrimaryAzurePort>\r\n    <ProvisioningState>NotProvisioned</ProvisioningState>\r\n    <STag>8</STag>\r\n    <SecondaryAzurePort>bvtazureixp01</SecondaryAzurePort>\r\n    <ServiceKey>27684e94-1909-42b8-958a-30dd46668fa4</ServiceKey>\r\n    <Status>Enabled</Status>\r\n  </CrossConnection>\r\n  <CrossConnection>\r\n    <Bandwidth>500</Bandwidth>\r\n    <PrimaryAzurePort>bvtazureixp01</PrimaryAzurePort>\r\n    <ProvisioningState>NotProvisioned</ProvisioningState>\r\n    <STag>9</STag>\r\n    <SecondaryAzurePort>bvtazureixp01</SecondaryAzurePort>\r\n    <ServiceKey>2c6a7d98-a0c3-4288-81eb-3485a8591b59</ServiceKey>\r\n    <Status>Enabled</Status>\r\n  </CrossConnection>\r\n  <CrossConnection>\r\n    <Bandwidth>500</Bandwidth>\r\n    <PrimaryAzurePort>bvtazureixp01</PrimaryAzurePort>\r\n    <ProvisioningState>NotProvisioned</ProvisioningState>\r\n    <STag>10</STag>\r\n    <SecondaryAzurePort>bvtazureixp01</SecondaryAzurePort>\r\n    <ServiceKey>3963d681-e2b0-48a7-8c2a-af696c234ac4</ServiceKey>\r\n    <Status>Enabled</Status>\r\n  </CrossConnection>\r\n  <CrossConnection>\r\n    <Bandwidth>500</Bandwidth>\r\n    <PrimaryAzurePort>bvtazureixp01</PrimaryAzurePort>\r\n    <ProvisioningState>NotProvisioned</ProvisioningState>\r\n    <STag>12</STag>\r\n    <SecondaryAzurePort>bvtazureixp01</SecondaryAzurePort>\r\n    <ServiceKey>46c20470-14d3-4da1-8141-bc431024d6a7</ServiceKey>\r\n    <Status>Enabled</Status>\r\n  </CrossConnection>\r\n  <CrossConnection>\r\n    <Bandwidth>500</Bandwidth>\r\n    <PrimaryAzurePort>bvtazureixp01</PrimaryAzurePort>\r\n    <ProvisioningState>NotProvisioned</ProvisioningState>\r\n    <STag>5</STag>\r\n    <SecondaryAzurePort>bvtazureixp01</SecondaryAzurePort>\r\n    <ServiceKey>50990fd9-d322-4f61-8717-15f92ed6ade5</ServiceKey>\r\n    <Status>Enabled</Status>\r\n  </CrossConnection>\r\n  <CrossConnection>\r\n    <Bandwidth>500</Bandwidth>\r\n    <PrimaryAzurePort>bvtazureixp01</PrimaryAzurePort>\r\n    <ProvisioningState>NotProvisioned</ProvisioningState>\r\n    <STag>4</STag>\r\n    <SecondaryAzurePort>bvtazureixp01</SecondaryAzurePort>\r\n    <ServiceKey>8ded2b6f-645f-43c1-9ec0-13d923dd4d5b</ServiceKey>\r\n    <Status>Enabled</Status>\r\n  </CrossConnection>\r\n  <CrossConnection>\r\n    <Bandwidth>200</Bandwidth>\r\n    <PrimaryAzurePort>bvtazureixp01</PrimaryAzurePort>\r\n    <ProvisioningState>NotProvisioned</ProvisioningState>\r\n    <STag>3</STag>\r\n    <SecondaryAzurePort>bvtazureixp01</SecondaryAzurePort>\r\n    <ServiceKey>979c8add-a9a8-40c5-8370-b91e184b89bb</ServiceKey>\r\n    <Status>Enabled</Status>\r\n  </CrossConnection>\r\n  <CrossConnection>\r\n    <Bandwidth>500</Bandwidth>\r\n    <PrimaryAzurePort>bvtazureixp01</PrimaryAzurePort>\r\n    <ProvisioningState>Provisioning</ProvisioningState>\r\n    <STag>14</STag>\r\n    <SecondaryAzurePort>bvtazureixp01</SecondaryAzurePort>\r\n    <ServiceKey>c8f1c988-9129-4568-9cee-6ef0fcb6fc54</ServiceKey>\r\n    <Status>Enabled</Status>\r\n  </CrossConnection>\r\n  <CrossConnection>\r\n    <Bandwidth>500</Bandwidth>\r\n    <PrimaryAzurePort>bvtazureixp01</PrimaryAzurePort>\r\n    <ProvisioningState>NotProvisioned</ProvisioningState>\r\n    <STag>7</STag>\r\n    <SecondaryAzurePort>bvtazureixp01</SecondaryAzurePort>\r\n    <ServiceKey>e3c0a2a6-10a8-4ea0-be8e-fe56641db25b</ServiceKey>\r\n    <Status>Enabled</Status>\r\n  </CrossConnection>\r\n  <CrossConnection>\r\n    <Bandwidth>500</Bandwidth>\r\n    <PrimaryAzurePort>bvtazureixp01</PrimaryAzurePort>\r\n    <ProvisioningState>Provisioned</ProvisioningState>\r\n    <STag>13</STag>\r\n    <SecondaryAzurePort>bvtazureixp01</SecondaryAzurePort>\r\n    <ServiceKey>f1619e56-5d9f-4678-b6d7-d13f3f3e2bcf</ServiceKey>\r\n    <Status>Enabled</Status>\r\n  </CrossConnection>\r\n  <CrossConnection>\r\n    <Bandwidth>200</Bandwidth>\r\n    <PrimaryAzurePort>bvtazureixp01</PrimaryAzurePort>\r\n    <ProvisioningState>Provisioned</ProvisioningState>\r\n    <STag>75</STag>\r\n    <SecondaryAzurePort>bvtazureixp01</SecondaryAzurePort>\r\n    <ServiceKey>5e4a422d-d930-4935-ab73-2ef847609d6d</ServiceKey>\r\n    <Status>Enabled</Status>\r\n  </CrossConnection>\r\n  <CrossConnection>\r\n    <Bandwidth>200</Bandwidth>\r\n    <PrimaryAzurePort>bvtazureixp01</PrimaryAzurePort>\r\n    <ProvisioningState>Provisioned</ProvisioningState>\r\n    <STag>121</STag>\r\n    <SecondaryAzurePort>bvtazureixp01</SecondaryAzurePort>\r\n    <ServiceKey>799d2ef0-7bdc-42c0-a6ab-38fe7b6189e9</ServiceKey>\r\n    <Status>Enabled</Status>\r\n  </CrossConnection>\r\n  <CrossConnection>\r\n    <Bandwidth>200</Bandwidth>\r\n    <PrimaryAzurePort>bvtazureixp01</PrimaryAzurePort>\r\n    <ProvisioningState>Provisioned</ProvisioningState>\r\n    <STag>709</STag>\r\n    <SecondaryAzurePort>bvtazureixp01</SecondaryAzurePort>\r\n    <ServiceKey>f5fb02ec-bd62-4cdf-a6f1-17a75dc0a3ae</ServiceKey>\r\n    <Status>Enabled</Status>\r\n  </CrossConnection>\r\n  <CrossConnection>\r\n    <Bandwidth>200</Bandwidth>\r\n    <PrimaryAzurePort>bvtazureixp01</PrimaryAzurePort>\r\n    <ProvisioningState>Provisioned</ProvisioningState>\r\n    <STag>829</STag>\r\n    <SecondaryAzurePort>bvtazureixp01</SecondaryAzurePort>\r\n    <ServiceKey>839d98c0-5cbc-413e-bcf4-cc458facf875</ServiceKey>\r\n    <Status>Enabled</Status>\r\n  </CrossConnection>\r\n  <CrossConnection>\r\n    <Bandwidth>200</Bandwidth>\r\n    <PrimaryAzurePort>bvtazureixp01</PrimaryAzurePort>\r\n    <ProvisioningState>Provisioned</ProvisioningState>\r\n    <STag>566</STag>\r\n    <SecondaryAzurePort>bvtazureixp01</SecondaryAzurePort>\r\n    <ServiceKey>108b407f-c55c-4541-a6c2-dd0005214d70</ServiceKey>\r\n    <Status>Enabled</Status>\r\n  </CrossConnection>\r\n  <CrossConnection>\r\n    <Bandwidth>200</Bandwidth>\r\n    <PrimaryAzurePort>bvtazureixp01</PrimaryAzurePort>\r\n    <ProvisioningState>Provisioned</ProvisioningState>\r\n    <STag>591</STag>\r\n    <SecondaryAzurePort>bvtazureixp01</SecondaryAzurePort>\r\n    <ServiceKey>c3c3bfe9-268e-40da-bf78-a287b23d6c88</ServiceKey>\r\n    <Status>Enabled</Status>\r\n  </CrossConnection>\r\n</CrossConnections>",
+      "ResponseHeaders": {
+        "Content-Length": [
+          "8054"
+        ],
+        "Content-Type": [
+          "application/xml; charset=utf-8"
+        ],
+        "x-ms-request-id": [
+          "66d1b139e3cfa8a9936e247a5706433e"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Wed, 21 Sep 2016 01:15:16 GMT"
+        ],
+        "Server": [
+          "1.0.6190.7618",
+          "(rd_rdfe_n.160909-0404)",
+          "Microsoft-HTTPAPI/2.0"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/8d593cda-2cfb-430d-b898-5b2606e297d4/services/networking/dedicatedcircuits/c8f1c988-9129-4568-9cee-6ef0fcb6fc54/crossconnection?api-version=1.0",
+      "EncodedRequestUri": "LzhkNTkzY2RhLTJjZmItNDMwZC1iODk4LTViMjYwNmUyOTdkNC9zZXJ2aWNlcy9uZXR3b3JraW5nL2RlZGljYXRlZGNpcmN1aXRzL2M4ZjFjOTg4LTkxMjktNDU2OC05Y2VlLTZlZjBmY2I2ZmM1NC9jcm9zc2Nvbm5lY3Rpb24/YXBpLXZlcnNpb249MS4w",
       "RequestMethod": "PUT",
       "RequestBody": "<UpdateCrossConnection xmlns=\"http://schemas.microsoft.com/windowsazure\">\r\n  <Operation>NotifyCrossConnectionProvisioned</Operation>\r\n  <ProvisioningError></ProvisioningError>\r\n</UpdateCrossConnection>",
       "RequestHeaders": {
@@ -326,10 +364,10 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperationAsyncResponse xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>c7515d6c-71d2-0769-bf3b-7ed9331c6d59</ID>\r\n</GatewayOperationAsyncResponse>",
+      "ResponseBody": "<GatewayOperationAsyncResponse xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>cefb5b91-7258-a039-a801-d501513159f0</ID>\r\n</GatewayOperationAsyncResponse>",
       "ResponseHeaders": {
         "Content-Length": [
           "210"
@@ -338,25 +376,25 @@
           "application/xml; charset=utf-8"
         ],
         "x-ms-request-id": [
-          "c7515d6c71d20769bf3b7ed9331c6d59"
+          "cefb5b917258a039a801d501513159f0"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 21:03:58 GMT"
+          "Wed, 21 Sep 2016 01:15:18 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6190.7618",
+          "(rd_rdfe_n.160909-0404)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 202
     },
     {
-      "RequestUri": "/81e5b62a-6488-4a10-a9f7-a0cb8b7883a7/services/networking/operation/c7515d6c-71d2-0769-bf3b-7ed9331c6d59",
-      "EncodedRequestUri": "LzgxZTViNjJhLTY0ODgtNGExMC1hOWY3LWEwY2I4Yjc4ODNhNy9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi9jNzUxNWQ2Yy03MWQyLTA3NjktYmYzYi03ZWQ5MzMxYzZkNTk=",
+      "RequestUri": "/8d593cda-2cfb-430d-b898-5b2606e297d4/services/networking/operation/cefb5b91-7258-a039-a801-d501513159f0",
+      "EncodedRequestUri": "LzhkNTkzY2RhLTJjZmItNDMwZC1iODk4LTViMjYwNmUyOTdkNC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi9jZWZiNWI5MS03MjU4LWEwMzktYTgwMS1kNTAxNTEzMTU5ZjA=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -364,37 +402,37 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <ID>c7515d6c-71d2-0769-bf3b-7ed9331c6d59</ID>\r\n  <OperationName>UpdateCrossConnection</OperationName>\r\n  <OperationStartedTime>2015-02-24T21:03:58.4018304</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data />\r\n  <HealthStatus />\r\n  <ID>cefb5b91-7258-a039-a801-d501513159f0</ID>\r\n  <OperationName>UpdateCrossConnection</OperationName>\r\n  <OperationStartedTime>2016-09-21T01:15:18.1500957</OperationStartedTime>\r\n  <Status>InProgress</Status>\r\n</GatewayOperation>",
       "ResponseHeaders": {
         "Content-Length": [
-          "335"
+          "357"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
         "x-ms-request-id": [
-          "eb73473d1d3d0446845d96c344f221ba"
+          "a7fdbbcf954aa43faa217d60e575ea4d"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 21:03:58 GMT"
+          "Wed, 21 Sep 2016 01:15:18 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6190.7618",
+          "(rd_rdfe_n.160909-0404)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/81e5b62a-6488-4a10-a9f7-a0cb8b7883a7/services/networking/operation/c7515d6c-71d2-0769-bf3b-7ed9331c6d59",
-      "EncodedRequestUri": "LzgxZTViNjJhLTY0ODgtNGExMC1hOWY3LWEwY2I4Yjc4ODNhNy9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi9jNzUxNWQ2Yy03MWQyLTA3NjktYmYzYi03ZWQ5MzMxYzZkNTk=",
+      "RequestUri": "/8d593cda-2cfb-430d-b898-5b2606e297d4/services/networking/operation/cefb5b91-7258-a039-a801-d501513159f0",
+      "EncodedRequestUri": "LzhkNTkzY2RhLTJjZmItNDMwZC1iODk4LTViMjYwNmUyOTdkNC9zZXJ2aWNlcy9uZXR3b3JraW5nL29wZXJhdGlvbi9jZWZiNWI5MS03MjU4LWEwMzktYTgwMS1kNTAxNTEzMTU5ZjA=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -402,29 +440,29 @@
           "2011-10-01"
         ],
         "User-Agent": [
-          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/1.0.0.0"
+          "Microsoft.WindowsAzure.Management.ExpressRoute.ExpressRouteManagementClient/0.9.0.0"
         ]
       },
-      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <HttpStatusCode>OK</HttpStatusCode>\r\n  <ID>c7515d6c-71d2-0769-bf3b-7ed9331c6d59</ID>\r\n  <OperationCompletedTime>2015-02-24T21:04:00.0368355</OperationCompletedTime>\r\n  <OperationName>UpdateCrossConnection</OperationName>\r\n  <OperationStartedTime>2015-02-24T21:03:58.4018304</OperationStartedTime>\r\n  <Status>Successful</Status>\r\n</GatewayOperation>",
+      "ResponseBody": "<GatewayOperation xmlns=\"http://schemas.microsoft.com/windowsazure\" xmlns:i=\"http://www.w3.org/2001/XMLSchema-instance\">\r\n  <Data />\r\n  <HealthStatus />\r\n  <HttpStatusCode>OK</HttpStatusCode>\r\n  <ID>cefb5b91-7258-a039-a801-d501513159f0</ID>\r\n  <OperationCompletedTime>2016-09-21T01:15:21.0433218</OperationCompletedTime>\r\n  <OperationName>UpdateCrossConnection</OperationName>\r\n  <OperationStartedTime>2016-09-21T01:15:18.1500957</OperationStartedTime>\r\n  <Status>Successful</Status>\r\n</GatewayOperation>",
       "ResponseHeaders": {
         "Content-Length": [
-          "446"
+          "468"
         ],
         "Content-Type": [
           "application/xml; charset=utf-8"
         ],
         "x-ms-request-id": [
-          "ea044d7638c200f5bc193f3eee007cf3"
+          "b1c5337aa573ac12a734f2ec394b4fcf"
         ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Tue, 24 Feb 2015 21:04:30 GMT"
+          "Wed, 21 Sep 2016 01:15:49 GMT"
         ],
         "Server": [
-          "1.0.6190.5159",
-          "(rd_rdfe_n.150123-1103)",
+          "1.0.6190.7618",
+          "(rd_rdfe_n.160909-0404)",
           "Microsoft-HTTPAPI/2.0"
         ]
       },
@@ -433,14 +471,14 @@
   ],
   "Names": {
     "CanCreateGetListAndUpdateCrossConnnections": [
-      "circuit5725"
+      "circuit5276"
     ]
   },
   "Variables": {
-    "SubscriptionId": "0cd40ba3-75d4-4d82-95fe-b4c3ff4fd7e4",
-    "TEST_PROVIDER_NAME": "bvttestserviceprovider2",
-    "TEST_PROVIDER_MANAGEMENT_CERTIFICATE": "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",
-    "TEST_PROVIDER_SUBSCRIPTION_ID": "81e5b62a-6488-4a10-a9f7-a0cb8b7883a7",
-    "TEST_PROVIDER_BASE_URI": "https://managementvnetnext.rdfetest.dnsdemo4.com"
+    "SubscriptionId": "6418ec2a-e390-424d-a490-1fee167c5a7a",
+    "TEST_PROVIDER_MANAGEMENT_CERTIFICATE": "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",
+    "TEST_PROVIDER_SUBSCRIPTION_ID": "8d593cda-2cfb-430d-b898-5b2606e297d4",
+    "TEST_PROVIDER_BASE_URI": "https://managementvnetnext.rdfetest.dnsdemo4.com/",
+    "TEST_PROVIDER_NAME": "BVTAzureIXP01"
   }
 }

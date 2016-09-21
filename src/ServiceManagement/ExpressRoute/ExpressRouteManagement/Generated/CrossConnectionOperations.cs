@@ -558,6 +558,13 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                                 crossConnectionInstance.STag = sTagInstance;
                             }
                             
+                            XElement serviceKeyElement = crossConnectionElement.Element(XName.Get("ServiceKey", "http://schemas.microsoft.com/windowsazure"));
+                            if (serviceKeyElement != null)
+                            {
+                                string serviceKeyInstance = serviceKeyElement.Value;
+                                crossConnectionInstance.ServiceKey = serviceKeyInstance;
+                            }
+                            
                             XElement statusElement = crossConnectionElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));
                             if (statusElement != null)
                             {
@@ -937,6 +944,13 @@ namespace Microsoft.WindowsAzure.Management.ExpressRoute
                                 {
                                     int sTagInstance = int.Parse(sTagElement.Value, CultureInfo.InvariantCulture);
                                     crossConnectionInstance.STag = sTagInstance;
+                                }
+                                
+                                XElement serviceKeyElement = crossConnectionsElement.Element(XName.Get("ServiceKey", "http://schemas.microsoft.com/windowsazure"));
+                                if (serviceKeyElement != null)
+                                {
+                                    string serviceKeyInstance = serviceKeyElement.Value;
+                                    crossConnectionInstance.ServiceKey = serviceKeyInstance;
                                 }
                                 
                                 XElement statusElement = crossConnectionsElement.Element(XName.Get("Status", "http://schemas.microsoft.com/windowsazure"));

@@ -70,6 +70,7 @@ namespace Microsoft.Azure.Management.ExpressRoute.Testing
             return GetServiceClient<ExpressRouteManagementClient>();
         }
 
+
         public static ExpressRouteManagementClient GetSecondCustomerExpressRouteManagementClient()
         {
             string managementCertificate = "";
@@ -113,6 +114,7 @@ namespace Microsoft.Azure.Management.ExpressRoute.Testing
 
         public static ExpressRouteManagementClient GetProviderExpressRouteManagementClient()
         {
+            
             string managementCertificate = "";
             string baseUri;
             string subscriptionId;
@@ -124,7 +126,12 @@ namespace Microsoft.Azure.Management.ExpressRoute.Testing
             }
             else
             {
-                string publishSettingsFile = Environment.GetEnvironmentVariable("TEST_PROVIDER_PUBLISHSETTINGS_FILE");
+                string publishSettingsFile = Environment.GetEnvironmentVariable("TEST_PUBLISHSETTINGS_FILE_P");
+                if (string.IsNullOrEmpty(publishSettingsFile))
+                {
+                    // Take default path
+                    publishSettingsFile = @"C:\Powershell\PublishSettings\defaultProvider.publishsettings";
+                }
                 PublishData publishData = XmlSerializationHelpers.DeserializeXmlFile<PublishData>(publishSettingsFile);
                 managementCertificate = Enumerable.First<PublishDataPublishProfile>((IEnumerable<PublishDataPublishProfile>)publishData.Items).ManagementCertificate;
                 if (string.IsNullOrEmpty(managementCertificate))
