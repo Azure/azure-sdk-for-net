@@ -482,6 +482,11 @@ namespace Networks.Tests
                 Assert.Equal(appGwName, getGateway.Name);
                 CompareApplicationGateway(appGw, getGateway);
 
+                //Get AppGw backend health
+                var backendHealth = networkManagementClient.ApplicationGateways.BackendHealth(resourceGroupName, appGwName);
+                Assert.Equal(1, backendHealth.BackendAddressPools.Count);
+                Assert.Equal(2, backendHealth.BackendAddressPools[0].BackendHttpSettingsCollection.Count);
+
                 // Create Nics
                 string nic1name = TestUtilities.GenerateName();
                 string nic2name = TestUtilities.GenerateName();
