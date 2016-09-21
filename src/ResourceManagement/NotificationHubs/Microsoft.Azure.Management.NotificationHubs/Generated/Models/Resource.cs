@@ -80,6 +80,10 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Location");
             }
+            if (this.Sku != null)
+            {
+                this.Sku.Validate();
+            }
         }
     }
 }

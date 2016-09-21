@@ -9,8 +9,7 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
     /// <summary>
     /// Parameters supplied to the Patch Namespace operation.
     /// </summary>
-    [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class NamespacePatchParameters : Resource
+    public partial class NamespacePatchParameters
     {
         /// <summary>
         /// Initializes a new instance of the NamespacePatchParameters class.
@@ -20,127 +19,25 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// <summary>
         /// Initializes a new instance of the NamespacePatchParameters class.
         /// </summary>
-        /// <param name="location">Resource location</param>
-        /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
-        /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="sku">The sku of the created namespace</param>
-        /// <param name="namespacePatchParametersName">The name of the
-        /// namespace.</param>
-        /// <param name="provisioningState">Provisioning state of the
-        /// Namespace.</param>
-        /// <param name="region">Specifies the targeted region in which the
-        /// namespace should be created. It can be any of the following
-        /// values: Australia EastAustralia SoutheastCentral USEast USEast US
-        /// 2West USNorth Central USSouth Central USEast AsiaSoutheast
-        /// AsiaBrazil SouthJapan EastJapan WestNorth EuropeWest
-        /// Europe</param>
-        /// <param name="status">Status of the namespace. It can be any of
-        /// these values:1 = Created/Active2 = Creating3 = Suspended4 =
-        /// Deleting</param>
-        /// <param name="createdAt">The time the namespace was created.</param>
-        /// <param name="serviceBusEndpoint">Endpoint you can use to perform
-        /// NotificationHub operations.</param>
-        /// <param name="subscriptionId">The Id of the Azure subscription
-        /// associated with the namespace.</param>
-        /// <param name="scaleUnit">ScaleUnit where the namespace gets
-        /// created</param>
-        /// <param name="enabled">Whether or not the namespace is currently
-        /// enabled.</param>
-        /// <param name="critical">Whether or not the namespace is set as
-        /// Critical.</param>
-        /// <param name="namespaceType">The namespace type. Possible values
-        /// include: 'Messaging', 'NotificationHub'</param>
-        public NamespacePatchParameters(string location, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), Sku sku = default(Sku), string namespacePatchParametersName = default(string), string provisioningState = default(string), string region = default(string), string status = default(string), System.DateTime? createdAt = default(System.DateTime?), string serviceBusEndpoint = default(string), string subscriptionId = default(string), string scaleUnit = default(string), bool? enabled = default(bool?), bool? critical = default(bool?), NamespaceType? namespaceType = default(NamespaceType?))
-            : base(location, id, name, type, tags, sku)
+        public NamespacePatchParameters(System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), Sku sku = default(Sku))
         {
-            NamespacePatchParametersName = namespacePatchParametersName;
-            ProvisioningState = provisioningState;
-            Region = region;
-            Status = status;
-            CreatedAt = createdAt;
-            ServiceBusEndpoint = serviceBusEndpoint;
-            SubscriptionId = subscriptionId;
-            ScaleUnit = scaleUnit;
-            Enabled = enabled;
-            Critical = critical;
-            NamespaceType = namespaceType;
+            Tags = tags;
+            Sku = sku;
         }
 
         /// <summary>
-        /// Gets or sets the name of the namespace.
+        /// Gets or sets resource tags
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.name")]
-        public string NamespacePatchParametersName { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "tags")]
+        public System.Collections.Generic.IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
-        /// Gets or sets provisioning state of the Namespace.
+        /// Gets or sets the sku of the created namespace
         /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
-
-        /// <summary>
-        /// Gets or sets specifies the targeted region in which the namespace
-        /// should be created. It can be any of the following values:
-        /// Australia EastAustralia SoutheastCentral USEast USEast US 2West
-        /// USNorth Central USSouth Central USEast AsiaSoutheast AsiaBrazil
-        /// SouthJapan EastJapan WestNorth EuropeWest Europe
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.region")]
-        public string Region { get; set; }
-
-        /// <summary>
-        /// Gets or sets status of the namespace. It can be any of these
-        /// values:1 = Created/Active2 = Creating3 = Suspended4 = Deleting
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.status")]
-        public string Status { get; set; }
-
-        /// <summary>
-        /// Gets or sets the time the namespace was created.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.createdAt")]
-        public System.DateTime? CreatedAt { get; set; }
-
-        /// <summary>
-        /// Gets or sets endpoint you can use to perform NotificationHub
-        /// operations.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.serviceBusEndpoint")]
-        public string ServiceBusEndpoint { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Id of the Azure subscription associated with the
-        /// namespace.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.subscriptionId")]
-        public string SubscriptionId { get; set; }
-
-        /// <summary>
-        /// Gets or sets scaleUnit where the namespace gets created
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.scaleUnit")]
-        public string ScaleUnit { get; set; }
-
-        /// <summary>
-        /// Gets or sets whether or not the namespace is currently enabled.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.enabled")]
-        public bool? Enabled { get; set; }
-
-        /// <summary>
-        /// Gets or sets whether or not the namespace is set as Critical.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.critical")]
-        public bool? Critical { get; set; }
-
-        /// <summary>
-        /// Gets or sets the namespace type. Possible values include:
-        /// 'Messaging', 'NotificationHub'
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.namespaceType")]
-        public NamespaceType? NamespaceType { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "sku")]
+        public Sku Sku { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -148,9 +45,12 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
+            if (this.Sku != null)
+            {
+                this.Sku.Validate();
+            }
         }
     }
 }
