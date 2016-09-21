@@ -183,6 +183,11 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         public SecurityProfile SecurityProfile { get; set; }
 
         /// <summary>
+        /// Gets or sets the component versions for each service in this HDInsight cluster.
+        /// </summary>
+        public Dictionary<string, string> ComponentVersion { get; set; }
+        
+        /// <summary>
         /// Initializes a new instance of the ClusterCreateParameters class.
         /// </summary>
         public ClusterCreateParameters()
