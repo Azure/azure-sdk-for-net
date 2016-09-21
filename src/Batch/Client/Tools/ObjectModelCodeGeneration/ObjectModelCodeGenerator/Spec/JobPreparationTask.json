@@ -1,0 +1,105 @@
+    {
+      "Name": "JobPreparationTask",
+      "ProtocolName": "Models.JobPreparationTask",
+      "Comment": "A Job Preparation task to run before any tasks of the job on any given compute node.",
+      "Properties": [
+        {
+          "Key": {
+            "Type": "string",
+            "Name": "Id",
+            "SummaryComment": "The id of the task.",
+            "RemarksComment": null,
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "string",
+            "Name": "CommandLine",
+            "SummaryComment": "The command line of the task.",
+            "RemarksComment": "The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using \"cmd /c MyCommand\" in Windows or \"/bin/sh -c MyCommand\" in Linux.",
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Required"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "IList<ResourceFile>",
+            "Name": "ResourceFiles",
+            "SummaryComment": "A list of files that the Batch service will download to the compute node before running the command line.",
+            "RemarksComment": null,
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "IList<Models.ResourceFile>",
+            "Name": "ResourceFiles"
+          }
+        },
+        {
+          "Key": {
+            "Type": "IList<EnvironmentSetting>",
+            "Name": "EnvironmentSettings",
+            "SummaryComment": "The collection of EnvironmentSetting instances.",
+            "RemarksComment": null,
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "IList<Models.EnvironmentSetting>",
+            "Name": "EnvironmentSettings"
+          }
+        },
+        {
+          "Key": {
+            "Type": "bool?",
+            "Name": "RunElevated",
+            "SummaryComment": "Whether to run the task in elevated mode.",
+            "RemarksComment": null,
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "TaskConstraints",
+            "Name": "Constraints",
+            "SummaryComment": "The execution constraints provided by the user for this Job Preparation task.",
+            "RemarksComment": null,
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "bool?",
+            "Name": "WaitForSuccess",
+            "SummaryComment": "Whether the Batch service should wait for the successful completion of the Job Preparation task before scheduling any tasks on the compute node.",
+            "RemarksComment": "A Job Preparation task execution is considered successful if its ExitCode is 0. If this property is not specified, a default value of true is assigned by the Batch service.",
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "bool?",
+            "Name": "RerunOnComputeNodeRebootAfterSuccess",
+            "SummaryComment": "Whether the Batch service should rerun the Job Preparation task after a compute node reboots.",
+            "RemarksComment": "The Job Preparation task is always rerun if a compute node is reimaged, or if the Job Preparation task did not complete (e.g. because the reboot occurred while the task was running). Therefore, you should always write a Job Preparation task to be idempotent and to behave correctly if run multiple times. If this property is not specified, a default value of true is assigned by the Batch service.",
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "bool?",
+            "Name": "RerunOnNodeRebootAfterSuccess"
+          }
+        }
+      ]
+    }

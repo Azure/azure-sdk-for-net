@@ -121,10 +121,78 @@
   <ItemGroup />
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="BatchProperties.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="packages.config" />
+    <None Include="Spec\AddTaskResult.json" />
+    <None Include="Spec\AffinityInformation.json" />
+    <None Include="Spec\ApplicationPackageReference.json" />
+    <None Include="Spec\ApplicationSummary.json" />
+    <None Include="Spec\AutoPoolSpecification.json" />
+    <None Include="Spec\AutoScaleRun.json" />
+    <None Include="Spec\AutoScaleRunError.json" />
+    <None Include="Spec\BatchError.json" />
+    <None Include="Spec\BatchErrorDetail.json" />
+    <None Include="Spec\Certificate.json" />
+    <None Include="Spec\CertificateReference.json" />
+    <None Include="Spec\CloudJob.json" />
+    <None Include="Spec\CloudJobSchedule.json" />
+    <None Include="Spec\CloudPool.json" />
+    <None Include="Spec\CloudServiceConfiguration.json" />
+    <None Include="Spec\CloudTask.json" />
+    <None Include="Spec\ComputeNode.json" />
+    <None Include="Spec\ComputeNodeError.json" />
+    <None Include="Spec\ComputeNodeInformation.json" />
+    <None Include="Spec\ComputeNodeUser.json" />
+    <None Include="Spec\DeleteCertificateError.json" />
+    <None Include="Spec\EnvironmentSetting.json" />
+    <None Include="Spec\ErrorMessage.json" />
+    <None Include="Spec\ExitCodeMapping.json" />
+    <None Include="Spec\ExitCodeRangeMapping.json" />
+    <None Include="Spec\ExitConditions.json" />
+    <None Include="Spec\ExitOptions.json" />
+    <None Include="Spec\FileProperties.json" />
+    <None Include="Spec\ImageReference.json" />
+    <None Include="Spec\JobConstraints.json" />
+    <None Include="Spec\JobExecutionInformation.json" />
+    <None Include="Spec\JobManagerTask.json" />
+    <None Include="Spec\JobPreparationAndReleaseTaskExecutionInformation.json" />
+    <None Include="Spec\JobPreparationTask.json" />
+    <None Include="Spec\JobPreparationTaskExecutionInformation.json" />
+    <None Include="Spec\JobReleaseTask.json" />
+    <None Include="Spec\JobReleaseTaskExecutionInformation.json" />
+    <None Include="Spec\JobScheduleExecutionInformation.json" />
+    <None Include="Spec\JobScheduleStatistics.json" />
+    <None Include="Spec\JobSchedulingError.json" />
+    <None Include="Spec\JobSpecification.json" />
+    <None Include="Spec\JobStatistics.json" />
+    <None Include="Spec\MetadataItem.json" />
+    <None Include="Spec\MultiInstanceSettings.json" />
+    <None Include="Spec\NameValuePair.json" />
+    <None Include="Spec\NetworkConfiguration.json" />
+    <None Include="Spec\NodeAgentSku.json" />
+    <None Include="Spec\PoolInformation.json" />
+    <None Include="Spec\PoolSpecification.json" />
+    <None Include="Spec\PoolStatistics.json" />
+    <None Include="Spec\PoolUsageMetrics.json" />
+    <None Include="Spec\RecentJob.json" />
+    <None Include="Spec\RemoteLoginSettings.json" />
+    <None Include="Spec\ResizeError.json" />
+    <None Include="Spec\ResourceFile.json" />
+    <None Include="Spec\ResourceStatistics.json" />
+    <None Include="Spec\Schedule.json" />
+    <None Include="Spec\StartTask.json" />
+    <None Include="Spec\StartTaskInformation.json" />
+    <None Include="Spec\SubtaskInformation.json" />
+    <None Include="Spec\TaskConstraints.json" />
+    <None Include="Spec\TaskDependencies.json" />
+    <None Include="Spec\TaskExecutionInformation.json" />
+    <None Include="Spec\TaskIdRange.json" />
+    <None Include="Spec\TaskInformation.json" />
+    <None Include="Spec\TaskSchedulingError.json" />
+    <None Include="Spec\TaskSchedulingPolicy.json" />
+    <None Include="Spec\TaskStatistics.json" />
+    <None Include="Spec\UsageStatistics.json" />
+    <None Include="Spec\VirtualMachineConfiguration.json" />
+    <None Include="Spec\WindowsConfiguration.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition=" '$(LibraryFxTarget)' != 'portable' " />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

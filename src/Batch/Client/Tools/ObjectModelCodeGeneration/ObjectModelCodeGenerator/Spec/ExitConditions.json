@@ -1,0 +1,58 @@
+    {
+      "Name": "ExitConditions",
+      "ProtocolName": "Models.ExitConditions",
+      "Comment": "How the Batch service should respond when a task completes.",
+      "IsUsedInCollections": true,
+      "Properties": [
+        {
+          "Key": {
+            "Type": "IList<ExitCodeMapping>",
+            "Name": "ExitCodes",
+            "SummaryComment": "A list of task exit codes and how the Batch service should respond to them.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "IList<Models.ExitCodeMapping>",
+            "Name": "ExitCodes",
+          }
+        },
+        {
+          "Key": {
+            "Type": "IList<ExitCodeRangeMapping>",
+            "Name": "ExitCodeRanges",
+            "SummaryComment": "A list of task exit code ranges and how the Batch service should respond to them.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "IList<Models.ExitCodeRangeMapping>",
+            "Name": "ExitCodeRanges",
+          }
+        },
+        { 
+          "Key": {
+            "Type": "ExitOptions",
+            "Name": "SchedulingError",
+            "SummaryComment": "How the Batch service should respond if the task fails with a scheduling error.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null,
+        },
+        {
+          "Key": {
+            "Type": "ExitOptions",
+            "Name": "Default",
+            "SummaryComment": "How the Batch service should respond if the task fails with an exit condition not covered by any of the other properties.",
+            "RemarksComment": "This value is used if the task exits with any nonzero exit code not listed in the <see cref=\"ExitCodes\"/> or <see cref=\"ExitCodeRanges\"/> collection, or with a scheduling error if the <see cref=\"SchedulingError\"/> property is not present.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "Models.ExitOptions",
+            "Name": "DefaultProperty",
+          }
+        },
+      ]
+    }
