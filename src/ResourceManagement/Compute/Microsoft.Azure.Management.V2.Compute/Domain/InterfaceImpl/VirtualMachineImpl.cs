@@ -594,6 +594,46 @@ namespace Microsoft.Azure.Management.V2.Compute
         }
 
         /// <summary>
+        /// Specifies definition of an extension to be attached to the virtual machine.
+        /// </summary>
+        /// <param name="name">name the reference name for the extension</param>
+        /// <returns>the stage representing configuration for the extension</returns>
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.Definition.IBlank<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate> Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithExtension.DefineNewExtension(string name)
+        {
+            return this.DefineNewExtension(name) as Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.Definition.IBlank<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate>;
+        }
+
+        /// <summary>
+        /// Detaches an extension with the given name from the virtual machine.
+        /// </summary>
+        /// <param name="name">name the reference name for the extension to be removed/uninstalled</param>
+        /// <returns>the stage representing updatable VM definition</returns>
+        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IWithExtension.WithoutExtension(string name)
+        {
+            return this.WithoutExtension(name) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Begins the description of an update of an existing extension of this virtual machine.
+        /// </summary>
+        /// <param name="name">name the reference name for the extension</param>
+        /// <returns>the stage representing updatable VM definition</returns>
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.Update.IUpdate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IWithExtension.UpdateExtension(string name)
+        {
+            return this.UpdateExtension(name) as Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Specifies definition of an extension to be attached to the virtual machine.
+        /// </summary>
+        /// <param name="name">name the reference name for the extension</param>
+        /// <returns>the stage representing configuration for the extension</returns>
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.UpdateDefinition.IBlank<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate> Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IWithExtension.DefineNewExtension(string name)
+        {
+            return this.DefineNewExtension(name) as Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.UpdateDefinition.IBlank<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>;
+        }
+
+        /// <summary>
         /// Assigns the specified static private IP address within the specified existing virtual network subnet to the
         /// virtual machine's primary network interface.
         /// </summary>

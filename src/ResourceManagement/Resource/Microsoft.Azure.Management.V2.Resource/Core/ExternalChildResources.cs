@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -39,12 +40,21 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
             get; private set;
         }
 
+        /// <returns>the child resource collection as a read-only dictionary.</returns>
+        protected IDictionary<string, FluentModelTImpl> Collection
+        {
+            get
+            {
+                return new ReadOnlyDictionary<string, FluentModelTImpl>(this.collection);
+            }
+        }
+
         /// <summary>
         /// Refresh the collection.
         /// </summary>
         public void Refresh()
         {
-            initializeCollection();
+            InitializeCollection();
         }
 
         /// <summary>
@@ -142,13 +152,13 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
         /// </summary>
         /// <param name="name">the name for the new external child resource</param>
         /// <returns>the child resource</returns>
-        protected FluentModelTImpl prepareDefine(String name)
+        protected FluentModelTImpl PrepareDefine(string name)
         {
-            if (find(name) != null)
+            if (Find(name) != null)
             {
                 throw new ArgumentException("A child resource ('" + childResourceName + "') with name  '" + name + "' already exists");
             }
-            FluentModelTImpl childResource = newChildResource(name);
+            FluentModelTImpl childResource = NewChildResource(name);
             childResource.State = State.ToBeCreated;
             return childResource;
         }
@@ -158,9 +168,9 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
         /// </summary>
         /// <param name="name">the name of the external child resource</param>
         /// <returns>the external child resource to be updated</returns>
-        protected FluentModelTImpl prepareUpdate(String name)
+        protected FluentModelTImpl PrepareUpdate(String name)
         {
-            FluentModelTImpl childResource = find(name);
+            FluentModelTImpl childResource = Find(name);
             if (childResource == null
                     || childResource.State == State.ToBeCreated)
             {
@@ -178,9 +188,9 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
         /// Mark an external child resource with given name as to be removed.
         /// </summary>
         /// <param name="name">the name of the external child resource</param>
-        protected void prepareRemove(String name)
+        protected void PrepareRemove(String name)
         {
-            FluentModelTImpl childResource = find(name);
+            FluentModelTImpl childResource = Find(name);
             if (childResource == null
                     || childResource.State == State.ToBeCreated)
             {
@@ -193,7 +203,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
         /// Adds an external child resource to the collection.
         /// </summary>
         /// <param name="childResource">childResource the external child resource</param>
-        protected void addChildResource(FluentModelTImpl childResource)
+        protected void AddChildResource(FluentModelTImpl childResource)
         {
             this.collection.AddOrUpdate(childResource.Name,
                 key => childResource,
@@ -204,7 +214,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
         /// <summary>
         /// Initializes the external child resource collection.
         /// </summary>
-        protected void initializeCollection()
+        protected void InitializeCollection()
         {
             this.collection.Clear();
             foreach (FluentModelTImpl childResource in this.ListChildResources())
@@ -219,14 +229,14 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
         /// Gets the list of external child resources.
         /// </summary>
         /// <returns>the list of external child resources</returns>
-        protected abstract List<FluentModelTImpl> ListChildResources();
+        protected abstract IList<FluentModelTImpl> ListChildResources();
 
         /// <summary>
         /// Gets a new external child resource model instance.
         /// </summary>
         /// <param name="name">the name for the new child resource</param>
         /// <returns>the new child resource</returns>
-        protected abstract FluentModelTImpl newChildResource(string name);
+        protected abstract FluentModelTImpl NewChildResource(string name);
 
         /**
          * Finds a child resource with the given name.
@@ -234,7 +244,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
          * @param name the child resource name
          * @return null if no child resource exists with the given name else the child resource
          */
-        private FluentModelTImpl find(string name)
+        private FluentModelTImpl Find(string name)
         {
             var result =  this.collection.Where(ele => ele.Key.Equals(name, StringComparison.OrdinalIgnoreCase));
             if (result.Any())

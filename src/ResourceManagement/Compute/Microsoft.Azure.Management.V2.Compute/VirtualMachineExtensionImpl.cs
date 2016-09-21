@@ -37,13 +37,13 @@ namespace Microsoft.Azure.Management.V2.Compute
         private IVirtualMachineExtensionsOperations client;
         private IDictionary<string, object> publicSettings;
         private IDictionary<string, object> protectedSettings;
-        private  VirtualMachineExtensionImpl (string name, VirtualMachineImpl parent, VirtualMachineExtensionInner inner, IVirtualMachineExtensionsOperations client) : base(name, parent, inner)
+        internal  VirtualMachineExtensionImpl (string name, VirtualMachineImpl parent, VirtualMachineExtensionInner inner, IVirtualMachineExtensionsOperations client) : base(name, parent, inner)
         {
             this.client = client;
             this.InitializeSettings();
         }
 
-        protected static VirtualMachineExtensionImpl NewVirtualMachineExtension (string name, VirtualMachineImpl parent, IVirtualMachineExtensionsOperations client)
+        internal static VirtualMachineExtensionImpl NewVirtualMachineExtension (string name, VirtualMachineImpl parent, IVirtualMachineExtensionsOperations client)
         {
             return new VirtualMachineExtensionImpl(name,
                 parent,
@@ -231,9 +231,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         public VirtualMachineImpl Attach ()
         {
             this.NullifySettingsIfEmpty();
-            // TODO: implement withExtension in VM
-            // return base.parent.WithExtension(this);
-            return null;
+            return base.parent.WithExtension(this);
         }
 
         public override async Task<IVirtualMachineExtension> Refresh ()

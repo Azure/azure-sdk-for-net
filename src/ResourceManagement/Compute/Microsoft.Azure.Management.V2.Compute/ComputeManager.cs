@@ -102,6 +102,7 @@ namespace Microsoft.Azure.Management.V2.Compute
                 {
                     virtualMachines = new VirtualMachinesImpl(
                         client.VirtualMachines, 
+                        client.VirtualMachineExtensions,
                         client.VirtualMachineSizes, 
                         this,
                         storageManager,
