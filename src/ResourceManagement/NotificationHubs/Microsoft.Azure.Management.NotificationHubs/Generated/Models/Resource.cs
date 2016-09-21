@@ -39,10 +39,10 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets or sets resource name
+        /// Gets resource name
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         /// <summary>
         /// Gets resource type
