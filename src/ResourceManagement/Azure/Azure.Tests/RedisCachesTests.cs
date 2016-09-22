@@ -7,6 +7,7 @@ using Microsoft.Azure.Management.V2.Resource;
 using Microsoft.Azure.Management.V2.Resource.Authentication;
 using Microsoft.Azure.Management.V2.Resource.Core;
 using Microsoft.Rest.Azure;
+using System.Linq;
 using System;
 using Xunit;
 using DayOfWeek = Microsoft.Azure.Management.Fluent.Redis.Models.DayOfWeek;
@@ -30,7 +31,7 @@ namespace Azure.Tests
                 var redisManager = CreateRedisManager();
 
                 // Create
-                var resourceGroups = redisManager.ResourceManager.ResourceGroups
+                var resourceGroup = redisManager.ResourceManager.ResourceGroups
                                         .Define(RG_NAME_SECOND)
                                         .WithRegion(Region.US_CENTRAL)
                                         .Create();
@@ -45,7 +46,7 @@ namespace Azure.Tests
                 var redisCacheDefinition2 = redisManager.RedisCaches
                         .Define(RR_NAME_SECOND)
                         .WithRegion(Region.US_CENTRAL)
-                        .WithExistingResourceGroup(resourceGroups)
+                        .WithExistingResourceGroup(resourceGroup)
                         .WithPremiumSku()
                         .WithShardCount(10)
                         .WithPatchSchedule(DayOfWeek.Sunday, 10, TimeSpan.FromMinutes(302))
@@ -54,7 +55,7 @@ namespace Azure.Tests
                 var redisCacheDefinition3 = redisManager.RedisCaches
                         .Define(RR_NAME_THIRD)
                         .WithRegion(Region.US_CENTRAL)
-                        .WithExistingResourceGroup(resourceGroups)
+                        .WithExistingResourceGroup(resourceGroup)
                         .WithPremiumSku(2)
                         .WithRedisConfiguration("maxclients", "2")
                         .WithNonSslPort()
@@ -67,28 +68,20 @@ namespace Azure.Tests
 
                 // List by Resource Group
                 var redisCaches = redisManager.RedisCaches.ListByGroup(RG_NAME);
-                bool found = false;
-                foreach (IRedisCache existingRedisCache in redisCaches)
+
+                if(!redisCaches.Any( r => r.Name.Equals(RR_NAME, StringComparison.OrdinalIgnoreCase)))
                 {
-                    if (existingRedisCache.Name.Equals(RR_NAME, StringComparison.OrdinalIgnoreCase))
-                    {
-                        found = true;
-                    }
+                    Assert.True(false);
                 }
-                Assert.True(found);
                 Assert.Equal(1, redisCaches.Count);
 
                 // List all Redis resources
                 redisCaches = redisManager.RedisCaches.List();
-                found = false;
-                foreach (IRedisCache existingRedisCache in redisCaches)
+
+                if (!redisCaches.Any(r => r.Name.Equals(RR_NAME, StringComparison.OrdinalIgnoreCase)))
                 {
-                    if (existingRedisCache.Name.Equals(RR_NAME, StringComparison.OrdinalIgnoreCase))
-                    {
-                        found = true;
-                    }
+                    Assert.True(false);
                 }
-                Assert.True(found);
                 Assert.Equal(3, redisCaches.Count);
 
                 // Get
