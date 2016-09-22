@@ -14,5 +14,10 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
         {
             get; private set;
         }
+
+        public void SetInner(InnerT inner)
+        {
+            this.Inner = inner;
+        }
     }
 }

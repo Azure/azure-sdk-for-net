@@ -160,7 +160,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         }
 
         /// <returns>the name of the child resource</returns>
-        string Microsoft.Azure.Management.V2.Resource.Core.IChildResource.Name
+        string Microsoft.Azure.Management.V2.Resource.Core.IChildResource<IVirtualMachine>.Name
         {
             get
             {

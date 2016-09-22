@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     /// </summary>
     public interface IVirtualMachineDataDisk  :
         IWrapper<DataDisk>,
-        IChildResource
+        IChildResource<IVirtualMachine>
     {
         /// <returns>the size of this data disk in GB</returns>
         int? Size { get; }

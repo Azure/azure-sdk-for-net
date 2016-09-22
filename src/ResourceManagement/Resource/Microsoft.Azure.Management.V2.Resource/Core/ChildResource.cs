@@ -1,34 +1,44 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
+
 namespace Microsoft.Azure.Management.V2.Resource.Core
 {
-    /**
-     * Child resource abstract implementation.
-     * (Internal use only)
-     * @param <InnerT> Azure inner child class type
-     * @param <ParentImplT> parent implementation
-     */
-    public abstract class ChildResource<InnerT, ParentImplT>
-        : IndexableWrapper<InnerT>, IChildResource
+    /// <summary>
+    /// Child resource abstract implementation.
+    /// (Internal use only)
+    /// </summary>
+    /// <typeparam name="InnerT">Azure inner child class type</typeparam>
+    /// <typeparam name="ParentImplT">Parent fluent interface implementation</typeparam>
+    /// <typeparam name="IParentT">Parent fluent interface</typeparam>
+    public abstract class ChildResource<InnerT, ParentImplT, IParentT>
+        : IndexableWrapper<InnerT>,
+          IChildResource<IParentT>
+        where ParentImplT : IParentT
     {
-
         protected ChildResource(string name, InnerT innerObject, ParentImplT parent)
                 : base(name, innerObject)
         {
             this.Parent = parent;
         }
 
-        /**
-         * @return parent resource for this child resource
-         */
-        public ParentImplT Parent { get; private set; }
+        /// <summary>
+        /// Gets the reference to the parent implementation, this is used by
+        /// the child resource impls to invoke methods in the parent such as
+        /// method to add the child resource impl to collection of child resources
+        /// maintined by the parent.
+        /// </summary>
+        protected ParentImplT Parent { get; private set; }
 
-        string IChildResource.Name
+        public abstract string Name { get; }
+
+        /// <returns>the parent fluent interface</returns>
+        IParentT IChildResource<IParentT>.Parent
         {
             get
             {
-                return base.Key;
+                return this.Parent;
             }
         }
     }

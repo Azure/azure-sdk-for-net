@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.V2.Network
     /// </summary>
     public interface ISubnet  :
         IWrapper<Microsoft.Azure.Management.Network.Models.SubnetInner>,
-        IChildResource
+        IChildResource<INetwork>
     {
         /// <returns>the address space prefix, in CIDR notation, assigned to this subnet</returns>
         string AddressPrefix { get; }

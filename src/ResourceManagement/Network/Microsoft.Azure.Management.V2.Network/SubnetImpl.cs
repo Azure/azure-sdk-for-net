@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.V2.Network
     /// Implementation for {@link Subnet} and its create and update interfaces.
     /// </summary>
     public partial class SubnetImpl :
-        ChildResource<SubnetInner, NetworkImpl>,
+        ChildResource<SubnetInner, NetworkImpl, INetwork>,
         ISubnet,
         IDefinition<IWithCreateAndSubnet>,
         IUpdateDefinition<Network.Update.IUpdate>,
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.V2.Network
             }
         }
 
-        public string Name
+        public override string Name
         {
             get
             {

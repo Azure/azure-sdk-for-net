@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.V2.Network
     /// </summary>
     public interface INicIpConfiguration  :
         IWrapper<Microsoft.Azure.Management.Network.Models.NetworkInterfaceIPConfigurationInner>,
-        IChildResource
+        IChildResource<INetworkInterface>
     {
         /// <summary>
         /// Gets the resource id of the public IP address associated with this IP configuration.

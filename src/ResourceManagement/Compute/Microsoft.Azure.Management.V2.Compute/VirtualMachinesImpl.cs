@@ -26,13 +26,15 @@ namespace Microsoft.Azure.Management.V2.Compute
             ComputeManager>,
         IVirtualMachines
     {
-        private IStorageManager storageManager;
-        private INetworkManager networkManager;
-        private VirtualMachineSizesImpl vmSizes;
+        private readonly IStorageManager storageManager;
+        private readonly INetworkManager networkManager;
+        private readonly VirtualMachineSizesImpl vmSizes;
+        private readonly IVirtualMachineExtensionsOperations virtualMachineExtensionsClient;
 
-        internal VirtualMachinesImpl(IVirtualMachinesOperations client, IVirtualMachineSizesOperations virtualMachineSizesClient, ComputeManager computeManager, IStorageManager storageManager, INetworkManager networkManager) :
+        internal VirtualMachinesImpl(IVirtualMachinesOperations client, IVirtualMachineExtensionsOperations virtualMachineExtensionsClient, IVirtualMachineSizesOperations virtualMachineSizesClient, ComputeManager computeManager, IStorageManager storageManager, INetworkManager networkManager) :
             base(client, computeManager)
         {
+            this.virtualMachineExtensionsClient = virtualMachineExtensionsClient;
             this.storageManager = storageManager;
             this.networkManager = networkManager;
             this.vmSizes = new VirtualMachineSizesImpl(virtualMachineSizesClient);
@@ -134,6 +136,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return new VirtualMachineImpl(name,
                 inner,
                 this.InnerCollection,
+                this.virtualMachineExtensionsClient,
                 base.MyManager,
                 this.storageManager,
                 this.networkManager);
@@ -144,6 +147,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return new VirtualMachineImpl(virtualMachineInner.Name,
                 virtualMachineInner,
                 this.InnerCollection,
+                this.virtualMachineExtensionsClient,
                 base.MyManager,
                 this.storageManager,
                 this.networkManager);

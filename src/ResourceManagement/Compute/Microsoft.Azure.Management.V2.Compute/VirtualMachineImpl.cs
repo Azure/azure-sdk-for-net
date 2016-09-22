@@ -40,11 +40,11 @@ namespace Microsoft.Azure.Management.V2.Compute
         VirtualMachine.Definition.IDefinition,
         IUpdate
     {
-        private IVirtualMachinesOperations client;
-        private IStorageManager storageManager;
-        private INetworkManager networkManager;
-        private string vmName;
-        private ResourceNamer namer;
+        private readonly IVirtualMachinesOperations client;
+        private readonly IStorageManager storageManager;
+        private readonly INetworkManager networkManager;
+        private readonly string vmName;
+        private readonly ResourceNamer namer;
         private string creatableStorageAccountKey;
         private string creatableAvailabilitySetKey;
         private string creatablePrimaryNetworkInterfaceKey;
@@ -61,12 +61,14 @@ namespace Microsoft.Azure.Management.V2.Compute
         private IWithPrimaryPrivateIp nicDefinitionWithPrivateIp;
         private IWithPrimaryNetworkSubnet nicDefinitionWithSubnet;
         private Network.NetworkInterface.Definition.IWithCreate nicDefinitionWithCreate;
-
         //private PagedListConverter<VirtualMachineSizeOperations,IVirtualMachineSize> virtualMachineSizeConverter;
+        // The entry point to manage extensions associated with the virtual machine
+        private VirtualMachineExtensionsImpl virtualMachineExtensions;
 
         internal VirtualMachineImpl(string name,
             VirtualMachineInner innerModel,
             IVirtualMachinesOperations client,
+            IVirtualMachineExtensionsOperations extensionsClient,
             IComputeManager computeManager,
             IStorageManager storageManager,
             INetworkManager networkManager) :
@@ -87,6 +89,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             // return new VirtualMachineSizeImpl(inner);
             // }
             // };
+            this.virtualMachineExtensions = new VirtualMachineExtensionsImpl(extensionsClient, this);
             InitializeDataDisks();
             // }
         }
@@ -96,6 +99,9 @@ namespace Microsoft.Azure.Management.V2.Compute
             var response = await client.GetWithHttpMessagesAsync(this.ResourceGroupName,
                 this.Name);
             SetInner(response.Body);
+            ClearCachedRelatedResources();
+            InitializeDataDisks();
+            this.virtualMachineExtensions.Refresh();
             return this;
         }
 
@@ -548,6 +554,11 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this;
         }
 
+        public VirtualMachineExtensionImpl DefineNewExtension(string name)
+        {
+            return this.virtualMachineExtensions.Define(name);
+        }
+
         public VirtualMachineImpl WithoutDataDisk(string name)
         {
             int idx = -1;
@@ -611,6 +622,17 @@ namespace Microsoft.Azure.Management.V2.Compute
                     }
                 }
             }
+            return this;
+        }
+
+        public VirtualMachineExtensionImpl UpdateExtension(string name)
+        {
+            return this.virtualMachineExtensions.Update(name);
+        }
+
+        public VirtualMachineImpl WithoutExtension(string name)
+        {
+            this.virtualMachineExtensions.Remove(name);
             return this;
         }
 
@@ -777,11 +799,12 @@ namespace Microsoft.Azure.Management.V2.Compute
                 return Inner.LicenseType;
             }
         }
-        public IList<VirtualMachineExtensionInner> Resources
+
+        public IDictionary<string, IVirtualMachineExtension> Extensions
         {
             get
             {
-                return Inner.Resources;
+                return this.virtualMachineExtensions.AsMap();
             }
         }
 
@@ -869,6 +892,13 @@ namespace Microsoft.Azure.Management.V2.Compute
             this.SetInner(response);
             ClearCachedRelatedResources();
             InitializeDataDisks();
+            await this.virtualMachineExtensions.CommitAndGetAllAsync(cancellationToken);
+            return this;
+        }
+
+        internal VirtualMachineImpl WithExtension(VirtualMachineExtensionImpl extension)
+        {
+            this.virtualMachineExtensions.AddExtension(extension);
             return this;
         }
 
