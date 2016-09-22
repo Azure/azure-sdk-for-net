@@ -1,5 +1,17 @@
 For additional details on features, see the full [Azure Data Factory Release Notes](https://azure.microsoft.com/en-us/documentation/articles/data-factory-release-notes). 
 
+## Version 4.11.0
+_Release date: 2016.09.13_ 
+
+### Feature Additions
+
+* The following linked service types have been added: 
+    * OnPremisesMongoDbLinkedService, AmazonRedshiftLinkedService, AwsAccessKeyLinkedService
+* The following dataset types have been added: 
+    * MongoDbCollectionDataset, AmazonS3Dataset
+* The following copy source types have been added: 	
+    * MongoDbSource
+
 ## Version 4.10.0
 _Release date: 2016.09.09_ 
 

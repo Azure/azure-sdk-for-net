@@ -476,5 +476,63 @@ namespace DataFactory.Tests.Framework.JsonSamples
         }
     }
 }";
+
+        [JsonSample]
+        public const string MongoDbLinkedService = @"
+{
+    name: ""OnPremisesMongoDbLinkedService"",
+    properties:
+    {
+        type: ""OnPremisesMongoDb"",
+        description: ""test description"",
+        typeProperties:
+        {
+            authenticationType: ""Basic"",
+            server : ""fakeserver.com"", 
+            port : 666,
+            username: ""fakeuser"",
+            password : ""fakepwd"",
+            authSource : ""fackadmindb"",
+            databaseName : ""fakedb"",
+            gatewayName : ""fakegw"",
+            encryptedCredential : ""fakecred""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string AmazonRedshiftLinkedService = @"
+{
+    name: ""AmazonRedshiftLinkedService"",
+    properties:
+    {
+        type: ""AmazonRedshift"",
+        description: ""test description"",
+        typeProperties:
+        {
+            server : ""http://localhost/fakeredshiftserver.com"", 
+            port : 5439,
+            username: ""rsadmin"",
+            password : ""fakepassword"",
+            database : ""fakedatabase""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string AwsAccessKeyLinkedService = @"
+{
+    name: ""AwsAccessKeyLinkedService"",
+    properties:
+    {
+        type: ""AwsAccessKey"",
+        description: ""test description"",
+        typeProperties:
+        {
+            accessKeyId : ""fakeaccess"",
+            secretAccessKey : ""fakesecret""
+        }
+    }
+}";
     }
 }

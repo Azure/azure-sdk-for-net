@@ -640,5 +640,53 @@ namespace DataFactory.Tests.Framework.JsonSamples
     } 
 } 
 ";
+
+        [JsonSample]
+        public const string MongoDbDataset = @"
+{ 
+    name: ""MongoDbTable"", 
+    properties: { 
+        type: ""MongoDbCollection"", 
+        linkedServiceName: ""fake ls"",
+        typeProperties: { 
+            collectionName: ""fake table""
+        }, 
+        availability: { 
+            frequency: ""Hour"", 
+            interval: 1
+        } 
+    }
+}
+";
+
+        [JsonSample]
+        public const string AmazonS3Dataset = @"
+{
+    name: ""AmazonS3Dataset"",
+    properties:
+    {
+        type: ""AmazonS3"",
+        linkedServiceName: ""MyLinkedServiceName"",
+        typeProperties: { 
+            bucketName: ""sample bucket"",
+            key: ""sample key"",
+            prefix: ""sample prefix"",
+            version: ""sample version"",
+            format:{
+                type:""OrcFormat""
+            },
+            compression:
+            {
+                type: ""Deflate"",
+                level: ""Fastest""
+            }
+        }, 
+        availability:
+        {
+            interval: 1,
+            frequency: ""Hour""
+        }
+    }
+}";
     }
 }

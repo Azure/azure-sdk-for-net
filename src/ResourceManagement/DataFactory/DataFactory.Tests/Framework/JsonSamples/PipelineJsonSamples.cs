@@ -1533,5 +1533,44 @@ namespace DataFactory.Tests.Framework.JsonSamples
     }
 }
 ";
+
+        [JsonSample]
+        public const string MongoDbActivityPipeline = @"{
+    ""name"": ""Pipeline"",
+    ""properties"": {
+        ""hubName"": ""hdis-jsontest-hub"",
+        ""activities"": [
+            {
+                ""name"": ""blob-table"",
+                ""type"": ""Copy"",
+                ""inputs"": [
+                    {
+                        ""name"": ""Table-MongoDb""
+                    }
+                ],
+                ""outputs"": [
+                    {
+                        ""name"": ""Table-AzureTable""
+                    }
+                ],
+                ""policy"": {
+                    ""concurrency"": 1
+                },
+                ""typeProperties"": {
+                    ""source"": {
+                        ""type"": ""MongoDbSource"",
+                        ""query"":""fake query""
+                    },
+                    ""sink"": {
+                        ""type"": ""AzureTableSink"",
+                        ""writeBatchSize"": 1000000,
+                        ""azureTableDefaultPartitionKeyValue"": ""defaultParitionKey""
+                    },
+                }
+            }
+        ]
+    }
+}
+";
     }
 }
