@@ -40,6 +40,17 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             set { this._location = value; }
         }
         
+        private string _subnetName;
+        
+        /// <summary>
+        /// Optional. Gets or sets subnetwork name.
+        /// </summary>
+        public string SubnetName
+        {
+            get { return this._subnetName; }
+            set { this._subnetName = value; }
+        }
+        
         private string _subnetResourceId;
         
         /// <summary>
@@ -49,6 +60,17 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         {
             get { return this._subnetResourceId; }
             set { this._subnetResourceId = value; }
+        }
+        
+        private Guid _vnetId;
+        
+        /// <summary>
+        /// Optional. Gets or sets virtual network id.
+        /// </summary>
+        public Guid VnetId
+        {
+            get { return this._vnetId; }
+            set { this._vnetId = value; }
         }
         
         /// <summary>

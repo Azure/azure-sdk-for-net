@@ -589,6 +589,13 @@ namespace Microsoft.Azure.Management.ApiManagement
                     JObject vpnconfigurationValue = new JObject();
                     propertiesValue["vpnconfiguration"] = vpnconfigurationValue;
                     
+                    vpnconfigurationValue["vnetid"] = parameters.Properties.VirtualNetworkConfiguration.VnetId.ToString();
+                    
+                    if (parameters.Properties.VirtualNetworkConfiguration.SubnetName != null)
+                    {
+                        vpnconfigurationValue["subnetname"] = parameters.Properties.VirtualNetworkConfiguration.SubnetName;
+                    }
+                    
                     if (parameters.Properties.VirtualNetworkConfiguration.SubnetResourceId != null)
                     {
                         vpnconfigurationValue["subnetResourceId"] = parameters.Properties.VirtualNetworkConfiguration.SubnetResourceId;
@@ -639,6 +646,13 @@ namespace Microsoft.Azure.Management.ApiManagement
                             {
                                 JObject vpnconfigurationValue2 = new JObject();
                                 additionalRegionValue["vpnconfiguration"] = vpnconfigurationValue2;
+                                
+                                vpnconfigurationValue2["vnetid"] = additionalLocationsItem.VirtualNetworkConfiguration.VnetId.ToString();
+                                
+                                if (additionalLocationsItem.VirtualNetworkConfiguration.SubnetName != null)
+                                {
+                                    vpnconfigurationValue2["subnetname"] = additionalLocationsItem.VirtualNetworkConfiguration.SubnetName;
+                                }
                                 
                                 if (additionalLocationsItem.VirtualNetworkConfiguration.SubnetResourceId != null)
                                 {
@@ -906,6 +920,20 @@ namespace Microsoft.Azure.Management.ApiManagement
                                     VirtualNetworkConfiguration vpnconfigurationInstance = new VirtualNetworkConfiguration();
                                     propertiesInstance.VirtualNetworkConfiguration = vpnconfigurationInstance;
                                     
+                                    JToken vnetidValue = vpnconfigurationValue3["vnetid"];
+                                    if (vnetidValue != null && vnetidValue.Type != JTokenType.Null)
+                                    {
+                                        Guid vnetidInstance = Guid.Parse(((string)vnetidValue));
+                                        vpnconfigurationInstance.VnetId = vnetidInstance;
+                                    }
+                                    
+                                    JToken subnetnameValue = vpnconfigurationValue3["subnetname"];
+                                    if (subnetnameValue != null && subnetnameValue.Type != JTokenType.Null)
+                                    {
+                                        string subnetnameInstance = ((string)subnetnameValue);
+                                        vpnconfigurationInstance.SubnetName = subnetnameInstance;
+                                    }
+                                    
                                     JToken subnetResourceIdValue = vpnconfigurationValue3["subnetResourceId"];
                                     if (subnetResourceIdValue != null && subnetResourceIdValue.Type != JTokenType.Null)
                                     {
@@ -964,6 +992,20 @@ namespace Microsoft.Azure.Management.ApiManagement
                                         {
                                             VirtualNetworkConfiguration vpnconfigurationInstance2 = new VirtualNetworkConfiguration();
                                             additionalRegionInstance.VirtualNetworkConfiguration = vpnconfigurationInstance2;
+                                            
+                                            JToken vnetidValue2 = vpnconfigurationValue4["vnetid"];
+                                            if (vnetidValue2 != null && vnetidValue2.Type != JTokenType.Null)
+                                            {
+                                                Guid vnetidInstance2 = Guid.Parse(((string)vnetidValue2));
+                                                vpnconfigurationInstance2.VnetId = vnetidInstance2;
+                                            }
+                                            
+                                            JToken subnetnameValue2 = vpnconfigurationValue4["subnetname"];
+                                            if (subnetnameValue2 != null && subnetnameValue2.Type != JTokenType.Null)
+                                            {
+                                                string subnetnameInstance2 = ((string)subnetnameValue2);
+                                                vpnconfigurationInstance2.SubnetName = subnetnameInstance2;
+                                            }
                                             
                                             JToken subnetResourceIdValue2 = vpnconfigurationValue4["subnetResourceId"];
                                             if (subnetResourceIdValue2 != null && subnetResourceIdValue2.Type != JTokenType.Null)
@@ -1254,6 +1296,13 @@ namespace Microsoft.Azure.Management.ApiManagement
                                 JObject vpnconfigurationValue = new JObject();
                                 additionalRegionValue["vpnconfiguration"] = vpnconfigurationValue;
                                 
+                                vpnconfigurationValue["vnetid"] = additionalLocationsItem.VirtualNetworkConfiguration.VnetId.ToString();
+                                
+                                if (additionalLocationsItem.VirtualNetworkConfiguration.SubnetName != null)
+                                {
+                                    vpnconfigurationValue["subnetname"] = additionalLocationsItem.VirtualNetworkConfiguration.SubnetName;
+                                }
+                                
                                 if (additionalLocationsItem.VirtualNetworkConfiguration.SubnetResourceId != null)
                                 {
                                     vpnconfigurationValue["subnetResourceId"] = additionalLocationsItem.VirtualNetworkConfiguration.SubnetResourceId;
@@ -1273,6 +1322,13 @@ namespace Microsoft.Azure.Management.ApiManagement
                 {
                     JObject vpnConfigurationValue = new JObject();
                     apiServiceManageDeploymentsParametersValue["vpnConfiguration"] = vpnConfigurationValue;
+                    
+                    vpnConfigurationValue["vnetid"] = parameters.VirtualNetworkConfiguration.VnetId.ToString();
+                    
+                    if (parameters.VirtualNetworkConfiguration.SubnetName != null)
+                    {
+                        vpnConfigurationValue["subnetname"] = parameters.VirtualNetworkConfiguration.SubnetName;
+                    }
                     
                     if (parameters.VirtualNetworkConfiguration.SubnetResourceId != null)
                     {
@@ -2783,6 +2839,20 @@ namespace Microsoft.Azure.Management.ApiManagement
                                     VirtualNetworkConfiguration vpnconfigurationInstance = new VirtualNetworkConfiguration();
                                     propertiesInstance.VirtualNetworkConfiguration = vpnconfigurationInstance;
                                     
+                                    JToken vnetidValue = vpnconfigurationValue["vnetid"];
+                                    if (vnetidValue != null && vnetidValue.Type != JTokenType.Null)
+                                    {
+                                        Guid vnetidInstance = Guid.Parse(((string)vnetidValue));
+                                        vpnconfigurationInstance.VnetId = vnetidInstance;
+                                    }
+                                    
+                                    JToken subnetnameValue = vpnconfigurationValue["subnetname"];
+                                    if (subnetnameValue != null && subnetnameValue.Type != JTokenType.Null)
+                                    {
+                                        string subnetnameInstance = ((string)subnetnameValue);
+                                        vpnconfigurationInstance.SubnetName = subnetnameInstance;
+                                    }
+                                    
                                     JToken subnetResourceIdValue = vpnconfigurationValue["subnetResourceId"];
                                     if (subnetResourceIdValue != null && subnetResourceIdValue.Type != JTokenType.Null)
                                     {
@@ -2841,6 +2911,20 @@ namespace Microsoft.Azure.Management.ApiManagement
                                         {
                                             VirtualNetworkConfiguration vpnconfigurationInstance2 = new VirtualNetworkConfiguration();
                                             additionalRegionInstance.VirtualNetworkConfiguration = vpnconfigurationInstance2;
+                                            
+                                            JToken vnetidValue2 = vpnconfigurationValue2["vnetid"];
+                                            if (vnetidValue2 != null && vnetidValue2.Type != JTokenType.Null)
+                                            {
+                                                Guid vnetidInstance2 = Guid.Parse(((string)vnetidValue2));
+                                                vpnconfigurationInstance2.VnetId = vnetidInstance2;
+                                            }
+                                            
+                                            JToken subnetnameValue2 = vpnconfigurationValue2["subnetname"];
+                                            if (subnetnameValue2 != null && subnetnameValue2.Type != JTokenType.Null)
+                                            {
+                                                string subnetnameInstance2 = ((string)subnetnameValue2);
+                                                vpnconfigurationInstance2.SubnetName = subnetnameInstance2;
+                                            }
                                             
                                             JToken subnetResourceIdValue2 = vpnconfigurationValue2["subnetResourceId"];
                                             if (subnetResourceIdValue2 != null && subnetResourceIdValue2.Type != JTokenType.Null)
@@ -3207,6 +3291,20 @@ namespace Microsoft.Azure.Management.ApiManagement
                                     VirtualNetworkConfiguration vpnconfigurationInstance = new VirtualNetworkConfiguration();
                                     propertiesInstance.VirtualNetworkConfiguration = vpnconfigurationInstance;
                                     
+                                    JToken vnetidValue = vpnconfigurationValue["vnetid"];
+                                    if (vnetidValue != null && vnetidValue.Type != JTokenType.Null)
+                                    {
+                                        Guid vnetidInstance = Guid.Parse(((string)vnetidValue));
+                                        vpnconfigurationInstance.VnetId = vnetidInstance;
+                                    }
+                                    
+                                    JToken subnetnameValue = vpnconfigurationValue["subnetname"];
+                                    if (subnetnameValue != null && subnetnameValue.Type != JTokenType.Null)
+                                    {
+                                        string subnetnameInstance = ((string)subnetnameValue);
+                                        vpnconfigurationInstance.SubnetName = subnetnameInstance;
+                                    }
+                                    
                                     JToken subnetResourceIdValue = vpnconfigurationValue["subnetResourceId"];
                                     if (subnetResourceIdValue != null && subnetResourceIdValue.Type != JTokenType.Null)
                                     {
@@ -3265,6 +3363,20 @@ namespace Microsoft.Azure.Management.ApiManagement
                                         {
                                             VirtualNetworkConfiguration vpnconfigurationInstance2 = new VirtualNetworkConfiguration();
                                             additionalRegionInstance.VirtualNetworkConfiguration = vpnconfigurationInstance2;
+                                            
+                                            JToken vnetidValue2 = vpnconfigurationValue2["vnetid"];
+                                            if (vnetidValue2 != null && vnetidValue2.Type != JTokenType.Null)
+                                            {
+                                                Guid vnetidInstance2 = Guid.Parse(((string)vnetidValue2));
+                                                vpnconfigurationInstance2.VnetId = vnetidInstance2;
+                                            }
+                                            
+                                            JToken subnetnameValue2 = vpnconfigurationValue2["subnetname"];
+                                            if (subnetnameValue2 != null && subnetnameValue2.Type != JTokenType.Null)
+                                            {
+                                                string subnetnameInstance2 = ((string)subnetnameValue2);
+                                                vpnconfigurationInstance2.SubnetName = subnetnameInstance2;
+                                            }
                                             
                                             JToken subnetResourceIdValue2 = vpnconfigurationValue2["subnetResourceId"];
                                             if (subnetResourceIdValue2 != null && subnetResourceIdValue2.Type != JTokenType.Null)
@@ -3994,6 +4106,20 @@ namespace Microsoft.Azure.Management.ApiManagement
                                             VirtualNetworkConfiguration vpnconfigurationInstance = new VirtualNetworkConfiguration();
                                             propertiesInstance.VirtualNetworkConfiguration = vpnconfigurationInstance;
                                             
+                                            JToken vnetidValue = vpnconfigurationValue["vnetid"];
+                                            if (vnetidValue != null && vnetidValue.Type != JTokenType.Null)
+                                            {
+                                                Guid vnetidInstance = Guid.Parse(((string)vnetidValue));
+                                                vpnconfigurationInstance.VnetId = vnetidInstance;
+                                            }
+                                            
+                                            JToken subnetnameValue = vpnconfigurationValue["subnetname"];
+                                            if (subnetnameValue != null && subnetnameValue.Type != JTokenType.Null)
+                                            {
+                                                string subnetnameInstance = ((string)subnetnameValue);
+                                                vpnconfigurationInstance.SubnetName = subnetnameInstance;
+                                            }
+                                            
                                             JToken subnetResourceIdValue = vpnconfigurationValue["subnetResourceId"];
                                             if (subnetResourceIdValue != null && subnetResourceIdValue.Type != JTokenType.Null)
                                             {
@@ -4052,6 +4178,20 @@ namespace Microsoft.Azure.Management.ApiManagement
                                                 {
                                                     VirtualNetworkConfiguration vpnconfigurationInstance2 = new VirtualNetworkConfiguration();
                                                     additionalRegionInstance.VirtualNetworkConfiguration = vpnconfigurationInstance2;
+                                                    
+                                                    JToken vnetidValue2 = vpnconfigurationValue2["vnetid"];
+                                                    if (vnetidValue2 != null && vnetidValue2.Type != JTokenType.Null)
+                                                    {
+                                                        Guid vnetidInstance2 = Guid.Parse(((string)vnetidValue2));
+                                                        vpnconfigurationInstance2.VnetId = vnetidInstance2;
+                                                    }
+                                                    
+                                                    JToken subnetnameValue2 = vpnconfigurationValue2["subnetname"];
+                                                    if (subnetnameValue2 != null && subnetnameValue2.Type != JTokenType.Null)
+                                                    {
+                                                        string subnetnameInstance2 = ((string)subnetnameValue2);
+                                                        vpnconfigurationInstance2.SubnetName = subnetnameInstance2;
+                                                    }
                                                     
                                                     JToken subnetResourceIdValue2 = vpnconfigurationValue2["subnetResourceId"];
                                                     if (subnetResourceIdValue2 != null && subnetResourceIdValue2.Type != JTokenType.Null)
