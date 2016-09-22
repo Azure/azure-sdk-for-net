@@ -77,7 +77,7 @@ namespace Azure.Tests
 
         private IBatchManager CreateBatchManager()
         {
-            ApplicationTokenCredentials credentials = new ApplicationTokenCredentials(@"C:\my.azureauth");
+            AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
             return BatchManager
                 .Configure()
                 .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
@@ -86,7 +86,7 @@ namespace Azure.Tests
 
         private IResourceManager CreateResourceManager()
         {
-            ApplicationTokenCredentials credentials = new ApplicationTokenCredentials(@"C:\my.azureauth");
+            AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
             IResourceManager resourceManager = ResourceManager2.Configure()
                 .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                 .Authenticate(credentials)

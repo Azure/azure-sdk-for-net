@@ -7,6 +7,7 @@ using Microsoft.Azure.Management.V2.Resource;
 using Microsoft.Azure.Management.V2.Resource.Authentication;
 using Microsoft.Azure.Management.V2.Resource.Core;
 using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Microsoft.Rest;
 using Microsoft.Rest.Azure.Authentication;
 using System.Linq;
 using Xunit;
@@ -25,7 +26,7 @@ namespace Azure.Tests
          * Main entry point.
          * @param args the parameters
          */
-        [Fact]
+        [Fact(Skip = "TODO: Convert to recorded tests")]
         public void Test()
         {
             string vaultName1 = ResourceNamer.RandomResourceName("vault1", 20);
@@ -49,7 +50,7 @@ namespace Azure.Tests
 
                 vault1 = vault1.Update()
                         .DefineAccessPolicy()
-                            .ForServicePrincipal(new ApplicationTokenCredentials(@"C:\my.azureauth").ClientId)
+                            .ForServicePrincipal(AzureCredentials.FromFile(@"C:\my.azureauth").ClientId)
                             .AllowKeyAllPermissions()
                             .AllowSecretPermission(SecretPermissions.Get)
                             .AllowSecretPermission(SecretPermissions.List)
@@ -77,7 +78,7 @@ namespace Azure.Tests
                         .WithRegion(Region.US_EAST)
                         .WithExistingResourceGroup(rgName)
                         .DefineAccessPolicy()
-                            .ForServicePrincipal(new ApplicationTokenCredentials(@"C:\my.azureauth").ClientId)
+                            .ForServicePrincipal(AzureCredentials.FromFile(@"C:\my.azureauth").ClientId)
                             .AllowKeyPermission(KeyPermissions.Get)
                             .AllowKeyPermission(KeyPermissions.List)
                             .AllowKeyPermission(KeyPermissions.Decrypt)
@@ -105,11 +106,11 @@ namespace Azure.Tests
 
         public IKeyVaultManager CreateKeyVaultManager()
         {
-            ApplicationTokenCredentials credentials = new ApplicationTokenCredentials(@"C:\my.azureauth");
+            AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
             return KeyVaultManager
                 .Configure()
                 .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                .Authenticate(credentials, credentials.GraphCredentials, credentials.DefaultSubscriptionId, credentials.TenantId);
+                .Authenticate(credentials, credentials.DefaultSubscriptionId, credentials.TenantId);
         }
     }
 }

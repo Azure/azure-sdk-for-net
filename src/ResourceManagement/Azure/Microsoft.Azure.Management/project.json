@@ -9,6 +9,8 @@
     "Microsoft.Azure.Management.V2.Batch": "0.0.1-prerelease",
     "NETStandard.Library": "1.6.0",
     "Microsoft.Azure.Management.Fluent.Redis": "0.0.1-prerelease"
+    "Microsoft.Azure.Management.Fluent.KeyVault": "0.0.1-prerelease",
+    "NETStandard.Library": "1.6.0"
   },
 
   "frameworks": {
