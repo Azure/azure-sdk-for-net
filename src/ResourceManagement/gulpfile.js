@@ -43,6 +43,12 @@ var mappings = {
         'source': 'arm-batch/2015-12-01/swagger/BatchManagement.json',
         'package': 'Microsoft.Azure.Management.Batch',
         'args': '-FT 1'
+    },
+    'redis': {
+        'dir': 'RedisCache/Microsoft.Azure.Management.Fluent.Redis',
+        'source': 'arm-redis/2016-04-01/swagger/redis.json',
+        'package': 'Microsoft.Azure.Management.Fluent.Redis',
+        'args': '-FT 1'
     }
 };
 
