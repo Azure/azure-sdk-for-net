@@ -1237,7 +1237,8 @@ namespace Microsoft.Azure.KeyVault
         /// The name of the key
         /// </param>
         /// <param name='maxresults'>
-        /// Maximum number of results to return.
+        /// Maximum number of results to return in a page. If not specified the
+        /// service will return up to 25 results.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1266,6 +1267,14 @@ namespace Microsoft.Azure.KeyVault
             if (keyName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "keyName");
+            }
+            if (maxresults > 25)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "maxresults", 25);
+            }
+            if (maxresults < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "maxresults", 1);
             }
             if (this.ApiVersion == null)
             {
@@ -1423,7 +1432,8 @@ namespace Microsoft.Azure.KeyVault
         /// The vault name, e.g. https://myvault.vault.azure.net
         /// </param>
         /// <param name='maxresults'>
-        /// Maximum number of results to return.
+        /// Maximum number of results to return in a page. If not specified the
+        /// service will return up to 25 results.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1448,6 +1458,14 @@ namespace Microsoft.Azure.KeyVault
             if (vaultBaseUrl == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "vaultBaseUrl");
+            }
+            if (maxresults > 25)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "maxresults", 25);
+            }
+            if (maxresults < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "maxresults", 1);
             }
             if (this.ApiVersion == null)
             {
@@ -4131,7 +4149,8 @@ namespace Microsoft.Azure.KeyVault
         /// The vault name, e.g. https://myvault.vault.azure.net
         /// </param>
         /// <param name='maxresults'>
-        /// Maximum number of secrets to return.
+        /// Maximum number of results to return in a page. If not specified the
+        /// service will return up to 25 results.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -4156,6 +4175,14 @@ namespace Microsoft.Azure.KeyVault
             if (vaultBaseUrl == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "vaultBaseUrl");
+            }
+            if (maxresults > 25)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "maxresults", 25);
+            }
+            if (maxresults < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "maxresults", 1);
             }
             if (this.ApiVersion == null)
             {
@@ -4314,7 +4341,8 @@ namespace Microsoft.Azure.KeyVault
         /// The name of the secret in the given vault
         /// </param>
         /// <param name='maxresults'>
-        /// Maximum number of results to return.
+        /// Maximum number of results to return in a page. If not specified the
+        /// service will return up to 25 results.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -4343,6 +4371,14 @@ namespace Microsoft.Azure.KeyVault
             if (secretName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "secretName");
+            }
+            if (maxresults > 25)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "maxresults", 25);
+            }
+            if (maxresults < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "maxresults", 1);
             }
             if (this.ApiVersion == null)
             {
@@ -4500,7 +4536,8 @@ namespace Microsoft.Azure.KeyVault
         /// The vault name, e.g. https://myvault.vault.azure.net
         /// </param>
         /// <param name='maxresults'>
-        /// Maximum number of results to return.
+        /// Maximum number of results to return in a page. If not specified the
+        /// service will return up to 25 results.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -4525,6 +4562,14 @@ namespace Microsoft.Azure.KeyVault
             if (vaultBaseUrl == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "vaultBaseUrl");
+            }
+            if (maxresults > 25)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "maxresults", 25);
+            }
+            if (maxresults < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "maxresults", 1);
             }
             if (this.ApiVersion == null)
             {
@@ -5391,7 +5436,8 @@ namespace Microsoft.Azure.KeyVault
         /// The vault name, e.g. https://myvault.vault.azure.net
         /// </param>
         /// <param name='maxresults'>
-        /// Maximum number of results to return.
+        /// Maximum number of results to return in a page. If not specified the
+        /// service will return up to 25 results.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -5416,6 +5462,14 @@ namespace Microsoft.Azure.KeyVault
             if (vaultBaseUrl == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "vaultBaseUrl");
+            }
+            if (maxresults > 25)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "maxresults", 25);
+            }
+            if (maxresults < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "maxresults", 1);
             }
             if (this.ApiVersion == null)
             {
@@ -6801,7 +6855,8 @@ namespace Microsoft.Azure.KeyVault
         /// The name of the certificate
         /// </param>
         /// <param name='maxresults'>
-        /// Maximum number of results to return.
+        /// Maximum number of results to return in a page. If not specified the
+        /// service will return up to 25 results.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -6830,6 +6885,14 @@ namespace Microsoft.Azure.KeyVault
             if (certificateName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "certificateName");
+            }
+            if (maxresults > 25)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMaximum, "maxresults", 25);
+            }
+            if (maxresults < 1)
+            {
+                throw new ValidationException(ValidationRules.InclusiveMinimum, "maxresults", 1);
             }
             if (this.ApiVersion == null)
             {

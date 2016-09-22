@@ -38,17 +38,17 @@ namespace Microsoft.Azure.KeyVault.Models
         /// component of a certificate.</param>
         /// <param name="lifetimeActions">Actions that will be performed by
         /// Key Vault over the lifetime of a certificate.</param>
-        /// <param name="issuerReference">Reference to the issuer of the X509
-        /// component of a certificate.</param>
+        /// <param name="issuerParameters">Parameters for the issuer of the
+        /// X509 component of a certificate.</param>
         /// <param name="attributes">The certificate attributes.</param>
-        public CertificatePolicy(string id = default(string), KeyProperties keyProperties = default(KeyProperties), SecretProperties secretProperties = default(SecretProperties), X509CertificateProperties x509CertificateProperties = default(X509CertificateProperties), IList<LifetimeAction> lifetimeActions = default(IList<LifetimeAction>), IssuerReference issuerReference = default(IssuerReference), CertificateAttributes attributes = default(CertificateAttributes))
+        public CertificatePolicy(string id = default(string), KeyProperties keyProperties = default(KeyProperties), SecretProperties secretProperties = default(SecretProperties), X509CertificateProperties x509CertificateProperties = default(X509CertificateProperties), IList<LifetimeAction> lifetimeActions = default(IList<LifetimeAction>), IssuerParameters issuerParameters = default(IssuerParameters), CertificateAttributes attributes = default(CertificateAttributes))
         {
             Id = id;
             KeyProperties = keyProperties;
             SecretProperties = secretProperties;
             X509CertificateProperties = x509CertificateProperties;
             LifetimeActions = lifetimeActions;
-            IssuerReference = issuerReference;
+            IssuerParameters = issuerParameters;
             Attributes = attributes;
         }
 
@@ -84,11 +84,11 @@ namespace Microsoft.Azure.KeyVault.Models
         public IList<LifetimeAction> LifetimeActions { get; set; }
 
         /// <summary>
-        /// Gets or sets reference to the issuer of the X509 component of a
+        /// Gets or sets parameters for the issuer of the X509 component of a
         /// certificate.
         /// </summary>
         [JsonProperty(PropertyName = "issuer")]
-        public IssuerReference IssuerReference { get; set; }
+        public IssuerParameters IssuerParameters { get; set; }
 
         /// <summary>
         /// Gets or sets the certificate attributes.
