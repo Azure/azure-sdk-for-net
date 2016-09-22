@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.V2.Network
     /// Implementation for {@link NetworkSecurityRule} and its create and update interfaces.
     /// </summary>
     public partial class NetworkSecurityRuleImpl  :
-        ChildResource<SecurityRuleInner, INetworkSecurityGroup, NetworkSecurityGroupImpl>,
+        ChildResource<SecurityRuleInner, NetworkSecurityGroupImpl, INetworkSecurityGroup>,
         INetworkSecurityRule,
         IDefinition<IWithCreate>,
         IUpdateDefinition<NetworkSecurityGroup.Update.IUpdate>,

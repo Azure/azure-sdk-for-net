@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     /// The implementation for {@link DataDisk} and its create and update interfaces.
     /// </summary>
     public partial class DataDiskImpl :
-        ChildResource<DataDisk, IVirtualMachine, VirtualMachineImpl>,
+        ChildResource<DataDisk, VirtualMachineImpl, IVirtualMachine>,
         IVirtualMachineDataDisk,
         IDefinition<IWithCreate>,
         IUpdateDefinition<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>,

@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
     public abstract class ExternalChildResource<FluentModelT,
         InnerModelT,
         IParentT,
-        ParentImplT> : ChildResource<InnerModelT, IParentT, ParentImplT>
+        ParentImplT> : ChildResource<InnerModelT, ParentImplT, IParentT>
         where FluentModelT : IExternalChildResource<FluentModelT, IParentT>
         where ParentImplT : IParentT
     {

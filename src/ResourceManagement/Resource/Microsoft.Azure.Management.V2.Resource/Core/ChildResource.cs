@@ -10,9 +10,9 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
     /// (Internal use only)
     /// </summary>
     /// <typeparam name="InnerT">Azure inner child class type</typeparam>
-    /// <typeparam name="IParentT">Parent fluent interface</typeparam>
     /// <typeparam name="ParentImplT">Parent fluent interface implementation</typeparam>
-    public abstract class ChildResource<InnerT, IParentT, ParentImplT>
+    /// <typeparam name="IParentT">Parent fluent interface</typeparam>
+    public abstract class ChildResource<InnerT, ParentImplT, IParentT>
         : IndexableWrapper<InnerT>,
           IChildResource<IParentT>
         where ParentImplT : IParentT
