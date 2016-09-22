@@ -11,10 +11,7 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
     public static class SkuName
     {
         public const string Free = "Free";
-        public const string Free = "free";
         public const string Basic = "Basic";
-        public const string Basic = "basic";
         public const string Standard = "Standard";
-        public const string Standard = "standard";
     }
 }

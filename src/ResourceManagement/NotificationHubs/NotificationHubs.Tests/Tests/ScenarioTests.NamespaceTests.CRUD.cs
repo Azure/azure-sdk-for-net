@@ -48,7 +48,7 @@ namespace NotificationHubs.Tests.ScenarioTests
                     {
                         Location = location,
                         NamespaceType = NamespaceType.NotificationHub,
-                        Sku = new Sku { Name = "Standard" }
+                        Sku = new Sku { Name = SkuName.Standard }
                     });
 
                 Assert.NotNull(createNamespaceResponse);
@@ -131,7 +131,7 @@ namespace NotificationHubs.Tests.ScenarioTests
                             {"tag5", "value5"},
                             {"tag6", "value6"},
                         },
-                    Sku = new Sku { Name = "Basic"}
+                    Sku = new Sku { Name = SkuName.Basic}
                 };
 
                 var updateNamespacePatchResponse = NotificationHubsManagementClient.Namespaces.Patch(resourceGroup, namespaceName, updateNamespacePatchParameter);

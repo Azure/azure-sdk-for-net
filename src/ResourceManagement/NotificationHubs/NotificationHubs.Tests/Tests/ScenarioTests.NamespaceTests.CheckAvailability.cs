@@ -34,6 +34,7 @@ namespace NotificationHubs.Tests.ScenarioTests
                 InitializeClients(context);
 
                 var validNamespaceName = TestUtilities.GenerateName(NotificationHubsManagementHelper.NamespacePrefix);
+                //var validNamespaceName = "amol-" + Guid.NewGuid().ToString();
                 var response = NotificationHubsManagementClient.Namespaces.CheckAvailability(new CheckAvailabilityParameters(NotificationHubsManagementHelper.DefaultLocation, name:validNamespaceName));
                 Assert.NotNull(response);
                 Assert.True(response.IsAvailiable);

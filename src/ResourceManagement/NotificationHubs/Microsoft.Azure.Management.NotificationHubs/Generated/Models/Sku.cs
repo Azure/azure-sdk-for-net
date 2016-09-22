@@ -20,8 +20,7 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// Initializes a new instance of the Sku class.
         /// </summary>
         /// <param name="name">Name of the notification hub sku. Possible
-        /// values include: 'Free', 'free', 'Basic', 'basic', 'Standard',
-        /// 'standard'</param>
+        /// values include: 'Free', 'Basic', 'Standard'</param>
         /// <param name="tier">The tier of particular sku</param>
         /// <param name="size">The Sku size</param>
         /// <param name="family">The Sku Family</param>
@@ -37,7 +36,7 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
 
         /// <summary>
         /// Gets or sets name of the notification hub sku. Possible values
-        /// include: 'Free', 'free', 'Basic', 'basic', 'Standard', 'standard'
+        /// include: 'Free', 'Basic', 'Standard'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
