@@ -24,15 +24,18 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
     /// i.e.CRUD on child resource does not require CRUD on the parent
     /// (Internal use only)
     /// </summary>
-    /// <typeparam name="FluentModelT">the fluent model type of the child resource</typeparam>
+    /// <typeparam name="FluentModelT">the external child resource fluent interface</typeparam>
     /// <typeparam name="InnerModelT">Azure inner resource class type representing the child resource</typeparam>
-    /// <typeparam name="ParentImplT">the parent Azure resource class type of the child resource</typeparam>
+    /// <typeparam name="IParentT">parent fluent interface</typeparam>
+    /// <typeparam name="ParentImplT">parent resource implementation type</typeparam>
     public abstract class ExternalChildResource<FluentModelT,
         InnerModelT,
-        ParentImplT> : IndexableRefreshableWrapper<FluentModelT, InnerModelT>
-        where FluentModelT : IExternalChildResource<FluentModelT>
+        IParentT,
+        ParentImplT> : ChildResource<InnerModelT, IParentT, ParentImplT>
+        where FluentModelT : IExternalChildResource<FluentModelT, IParentT>
+        where ParentImplT : IParentT
     {
-        protected readonly ParentImplT parent;
+        private readonly string name;
 
         /// <summary>
         /// Creates an instance of external child resource in-memory.
@@ -40,17 +43,18 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
         /// <param name="name">the name of this external child resource</param>
         /// <param name="parent">reference to the parent of this external child resource</param>
         /// <param name="innerObject">reference to the inner object representing this external child resource</param>
-        public ExternalChildResource(string name, ParentImplT parent, InnerModelT innerObject) : base(name, innerObject)
+        public ExternalChildResource(string name, ParentImplT parent, InnerModelT innerObject) : base(name, innerObject, parent)
         {
-            this.Name = name;
-            this.parent = parent;
+            this.name = name;
             this.State = State.None;
         }
 
-        /// <returns>the resource name</returns>
-        public string Name
+        public override string Name
         {
-            get; private set;
+            get
+            {
+                return this.name;
+            }
         }
 
         /// <returns>the in-memory state of this child resource and state represents any pending action on the child resource.</returns>

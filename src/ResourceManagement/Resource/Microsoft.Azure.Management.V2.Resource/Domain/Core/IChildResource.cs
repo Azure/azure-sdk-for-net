@@ -12,11 +12,12 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
     /// <summary>
     /// Base interface used by child resources.
     /// </summary>
-    public interface IChildResource  :
+    public interface IChildResource<IParentT> :
         IIndexable
     {
         /// <returns>the name of the child resource</returns>
         string Name { get; }
 
+        IParentT Parent { get; }
     }
 }

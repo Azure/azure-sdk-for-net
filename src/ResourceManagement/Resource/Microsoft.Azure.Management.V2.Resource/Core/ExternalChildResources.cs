@@ -9,9 +9,10 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.V2.Resource.Core
 {
-    public abstract class ExternalChildResources<FluentModelTImpl, FluentModelT, InnerModelT, ParentImplT>
-        where FluentModelT : IExternalChildResource<FluentModelT>
-        where FluentModelTImpl : ExternalChildResource<FluentModelT, InnerModelT, ParentImplT>
+    public abstract class ExternalChildResources<FluentModelTImpl, IFluentModelT, InnerModelT, IParentT, ParentImplT>
+        where ParentImplT : IParentT
+        where IFluentModelT : IExternalChildResource<IFluentModelT, IParentT>
+        where FluentModelTImpl : ExternalChildResource<IFluentModelT, InnerModelT, IParentT, ParentImplT>, IFluentModelT
     {
         /// <summary>
         /// Used to construct error string, this is user friendly name of the child resource (e.g. Subnet, Extension).

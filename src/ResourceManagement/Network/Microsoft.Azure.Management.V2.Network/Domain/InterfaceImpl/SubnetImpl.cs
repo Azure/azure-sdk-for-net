@@ -23,13 +23,14 @@ namespace Microsoft.Azure.Management.V2.Network
         }
 
         /// <returns>the name of the child resource</returns>
-        string Microsoft.Azure.Management.V2.Resource.Core.IChildResource.Name
+        string Microsoft.Azure.Management.V2.Resource.Core.IChildResource<INetwork>.Name
         {
             get
             {
                 return this.Name as string;
             }
         }
+
         /// <summary>
         /// Assigns an existing network security group to this subnet.
         /// </summary>

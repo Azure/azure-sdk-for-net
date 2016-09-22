@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.V2.Network
     /// </summary>
     public interface INetworkSecurityRule  :
         IWrapper<Microsoft.Azure.Management.Network.Models.SecurityRuleInner>,
-        IChildResource
+        IChildResource<INetworkSecurityGroup>
     {
         /// <returns>the network traffic direction the rule applies to</returns>
         string Direction { get; }

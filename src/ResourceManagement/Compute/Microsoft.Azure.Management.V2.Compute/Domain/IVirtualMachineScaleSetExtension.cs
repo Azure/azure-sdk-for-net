@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     /// </summary>
     public interface IVirtualMachineScaleSetExtension  :
         IWrapper<VirtualMachineScaleSetExtensionInner>,
-        IChildResource
+        IChildResource<IVirtualMachineScaleSet>
     {
         /// <returns>the publisher name of the virtual machine scale set extension image this extension is created from</returns>
         string PublisherName { get; }

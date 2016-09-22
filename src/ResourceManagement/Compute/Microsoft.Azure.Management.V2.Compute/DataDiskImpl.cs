@@ -25,18 +25,18 @@ namespace Microsoft.Azure.Management.V2.Compute
     /// The implementation for {@link DataDisk} and its create and update interfaces.
     /// </summary>
     public partial class DataDiskImpl :
-        ChildResource<DataDisk, IVirtualMachine>,
+        ChildResource<DataDisk, IVirtualMachine, VirtualMachineImpl>,
         IVirtualMachineDataDisk,
         IDefinition<IWithCreate>,
         IUpdateDefinition<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>,
         Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Update.IUpdate
     {
-        internal DataDiskImpl(DataDisk inner, IVirtualMachine parent) :
+        internal DataDiskImpl(DataDisk inner, VirtualMachineImpl parent) :
             base(inner.Name, inner, parent)
         {
         }
 
-        internal static DataDiskImpl PrepareDataDisk(string name, DiskCreateOptionTypes createOption, IVirtualMachine parent)
+        internal static DataDiskImpl PrepareDataDisk(string name, DiskCreateOptionTypes createOption, VirtualMachineImpl parent)
         {
             DataDisk dataDiskInner = new DataDisk();
             dataDiskInner.Lun = -1;
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return new DataDiskImpl(dataDiskInner, parent);
         }
 
-        internal static DataDiskImpl CreateNewDataDisk(int sizeInGB, IVirtualMachine parent)
+        internal static DataDiskImpl CreateNewDataDisk(int sizeInGB, VirtualMachineImpl parent)
         {
 
             DataDiskImpl dataDiskImpl = PrepareDataDisk(null, DiskCreateOptionTypes.Empty, parent);
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return dataDiskImpl;
         }
 
-        internal static DataDiskImpl CreateFromExistingDisk(string storageAccountName, string containerName, string vhdName, IVirtualMachine parent)
+        internal static DataDiskImpl CreateFromExistingDisk(string storageAccountName, string containerName, string vhdName, VirtualMachineImpl parent)
         {
             DataDiskImpl dataDiskImpl = PrepareDataDisk(null, DiskCreateOptionTypes.Attach, parent);
             VirtualHardDisk diskVhd = new VirtualHardDisk();
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return dataDiskImpl;
         }
 
-        public string Name
+        public override string Name
         {
             get
             {

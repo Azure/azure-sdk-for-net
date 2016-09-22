@@ -3,5 +3,7 @@
     public interface IWrapper<T>
     {
         T Inner { get; }
+
+        void SetInner(T inner);
     }
 }

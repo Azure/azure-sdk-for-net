@@ -243,11 +243,11 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <returns>the stage of  parent resource update</returns>
         Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate Microsoft.Azure.Management.V2.Resource.Core.ChildResourceActions.ISettable<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>.Parent () {
-            return this.Parent() as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate;
+            return this.Parent as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate;
         }
 
         /// <returns>the id of the external child resource</returns>
-        string Microsoft.Azure.Management.V2.Resource.Core.IExternalChildResource<Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtension>.Id
+        string Microsoft.Azure.Management.V2.Resource.Core.IExternalChildResource<Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtension, IVirtualMachine>.Id
         {
             get
             {

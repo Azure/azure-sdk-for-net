@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     /// Represents a extension collection associated with a virtual machine.
     /// </summary>
     public partial class VirtualMachineExtensionsImpl :
-        ExternalChildResources<VirtualMachineExtensionImpl, IVirtualMachineExtension, VirtualMachineExtensionInner, VirtualMachineImpl>
+        ExternalChildResources<VirtualMachineExtensionImpl, IVirtualMachineExtension, VirtualMachineExtensionInner, IVirtualMachine, VirtualMachineImpl>
     {
         private IVirtualMachineExtensionsOperations client;
         /// <summary>

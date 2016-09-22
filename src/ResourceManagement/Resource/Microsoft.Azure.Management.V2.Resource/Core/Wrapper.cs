@@ -1,4 +1,6 @@
-﻿namespace Microsoft.Azure.Management.V2.Resource.Core
+﻿using System;
+
+namespace Microsoft.Azure.Management.V2.Resource.Core
 {
     public class Wrapper<InnerT> : IWrapper<InnerT>
     {
@@ -10,6 +12,11 @@
         public InnerT Inner
         {
             get; private set;
+        }
+
+        public void SetInner(InnerT inner)
+        {
+            this.Inner = inner;
         }
     }
 }

@@ -18,13 +18,5 @@ namespace Microsoft.Azure.Management.V2.Resource
                 return Inner.TenantId;
             }
         }
-
-        TenantIdDescriptionInner IWrapper<TenantIdDescriptionInner>.Inner
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-        }
     }
 }

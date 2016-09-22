@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.V2.Network
     /// Implementation for {@link NicIpConfiguration} and its create and update interfaces.
     /// </summary>
     public partial class NicIpConfigurationImpl :
-        ChildResource<NetworkInterfaceIPConfigurationInner, NetworkInterfaceImpl>,
+        ChildResource<NetworkInterfaceIPConfigurationInner, INetworkInterface, NetworkInterfaceImpl>,
         INicIpConfiguration,
         NicIpConfiguration.Definition.IDefinition<NetworkInterface.Definition.IWithCreate>,
         NicIpConfiguration.UpdateDefinition.IUpdateDefinition<NetworkInterface.Update.IUpdate>,
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.V2.Network
                 true);
         }
 
-        public string Name
+        public override string Name
         {
             get
             {

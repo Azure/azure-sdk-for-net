@@ -250,7 +250,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         }
 
         /// <returns>the name of this child object</returns>
-        string Microsoft.Azure.Management.V2.Resource.Core.IChildResource.Name {
+        string Microsoft.Azure.Management.V2.Resource.Core.IChildResource<IVirtualMachineScaleSet>.Name {
             get
             {
                 return this.Name as string;

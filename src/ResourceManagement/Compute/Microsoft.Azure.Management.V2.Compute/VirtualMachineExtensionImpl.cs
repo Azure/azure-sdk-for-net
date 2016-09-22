@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     /// Implementation of {@link VirtualMachineExtension}.
     /// </summary>
     public partial class VirtualMachineExtensionImpl  :
-        ExternalChildResource<IVirtualMachineExtension, VirtualMachineExtensionInner, VirtualMachineImpl>,
+        ExternalChildResource<IVirtualMachineExtension, VirtualMachineExtensionInner, IVirtualMachine, VirtualMachineImpl>,
         IVirtualMachineExtension,
         IDefinition<IWithCreate>,
         IUpdateDefinition<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>,
@@ -58,6 +58,7 @@ namespace Microsoft.Azure.Management.V2.Compute
                 return this.Inner.Id;
             }
         }
+
         public string PublisherName
         {
             get
@@ -222,19 +223,13 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this;
         }
 
-        public VirtualMachineImpl Parent()
-        {
-            this.NullifySettingsIfEmpty();
-            return base.parent;
-        }
-
         public VirtualMachineImpl Attach ()
         {
             this.NullifySettingsIfEmpty();
-            return base.parent.WithExtension(this);
+            return base.Parent.WithExtension(this);
         }
 
-        public override async Task<IVirtualMachineExtension> Refresh ()
+        public VirtualMachineExtensionImpl Refresh()
         {
             string name;
             if (this.IsReference.Value) {
@@ -242,15 +237,15 @@ namespace Microsoft.Azure.Management.V2.Compute
             } else {
                 name = this.Inner.Name;
             }
-            VirtualMachineExtensionInner inner = await this.client.GetAsync(this.Parent().ResourceGroupName, this.Parent().Name, name);
+            VirtualMachineExtensionInner inner = this.client.Get(this.Parent.ResourceGroupName, this.Parent.Name, name);
             this.SetInner(inner);
             return this;
         }
 
         public override async Task<IVirtualMachineExtension> CreateAsync (CancellationToken cancellationToken = default(CancellationToken))
         {
-            VirtualMachineExtensionInner inner = await this.client.CreateOrUpdateAsync(this.parent.ResourceGroupName,
-                this.parent.Name,
+            VirtualMachineExtensionInner inner = await this.client.CreateOrUpdateAsync(this.Parent.ResourceGroupName,
+                this.Parent.Name,
                 this.Name,
                 this.Inner,
                 cancellationToken);
@@ -261,10 +256,11 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         public override async Task<IVirtualMachineExtension> UpdateAsync (CancellationToken cancellationToken = default(CancellationToken))
         {
+            this.NullifySettingsIfEmpty();
             if (this.IsReference.Value)
             {
                 string extensionName = ResourceUtils.NameFromResourceId(this.Inner.Id);
-                var resource = await this.client.GetAsync(this.parent.ResourceGroupName, this.parent.Name, extensionName);
+                var resource = await this.client.GetAsync(this.Parent.ResourceGroupName, this.Parent.Name, extensionName);
                 this.Inner.Publisher = resource.Publisher;
                 this.Inner.VirtualMachineExtensionType = resource.VirtualMachineExtensionType;
                 if (this.Inner.AutoUpgradeMinorVersion == null)
@@ -294,8 +290,8 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         public override Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.client.DeleteAsync(this.parent.ResourceGroupName,
-                this.parent.Name,
+            return this.client.DeleteAsync(this.Parent.ResourceGroupName,
+                this.Parent.Name,
                 this.Name);
         }
 

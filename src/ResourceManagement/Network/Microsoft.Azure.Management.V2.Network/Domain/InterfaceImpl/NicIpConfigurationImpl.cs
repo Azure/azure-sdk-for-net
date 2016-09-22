@@ -268,13 +268,14 @@ namespace Microsoft.Azure.Management.V2.Network
         }
 
         /// <returns>the name of the child resource</returns>
-        string Microsoft.Azure.Management.V2.Resource.Core.IChildResource.Name
+        string Microsoft.Azure.Management.V2.Resource.Core.IChildResource<INetworkInterface>.Name
         {
             get
             {
                 return this.Name as string;
             }
         }
+
         /// <summary>
         /// Specifies the load balancer to associate this IP configuration with.
         /// </summary>

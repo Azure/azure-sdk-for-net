@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.V2.Resource
     /// </summary>
     public interface ITenant  :
         IIndexable,
-        IWrapper<TenantIdDescriptionInner>
+        IWrapper<TenantIdDescription>
     {
         /// <returns>a UUID of the tenant</returns>
         string TenantId { get; }

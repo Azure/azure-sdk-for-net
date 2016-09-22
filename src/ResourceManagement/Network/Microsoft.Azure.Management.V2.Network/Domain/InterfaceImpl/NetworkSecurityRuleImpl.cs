@@ -573,7 +573,7 @@ namespace Microsoft.Azure.Management.V2.Network
         }
 
         /// <returns>the name of the child resource</returns>
-        string Microsoft.Azure.Management.V2.Resource.Core.IChildResource.Name
+        string Microsoft.Azure.Management.V2.Resource.Core.IChildResource<INetworkSecurityGroup>.Name
         {
             get
             {

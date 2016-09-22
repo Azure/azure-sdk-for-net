@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     /// An extension associated with a virtual machine will be created from a {@link VirtualMachineExtensionImage }.
     /// </summary>
     public interface IVirtualMachineExtension  :
-        IExternalChildResource<IVirtualMachineExtension>,
+        IExternalChildResource<IVirtualMachineExtension, IVirtualMachine>,
         IWrapper<VirtualMachineExtensionInner>
     {
         /// <returns>the publisher name of the virtual machine extension image this extension is created from</returns>
