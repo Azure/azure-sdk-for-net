@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
         IWrapper<InnerT>
 
     {
-        protected IndexableWrapper(String name, InnerT innerObject) : base(name)
+        protected IndexableWrapper(string key, InnerT innerObject) : base(key)
         {
             Inner = innerObject;
         }
@@ -22,6 +22,11 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
         {
             get; private set;
             
+        }
+
+        public void SetInner(InnerT innerObject)
+        {
+            this.Inner = innerObject;
         }
     }
 }

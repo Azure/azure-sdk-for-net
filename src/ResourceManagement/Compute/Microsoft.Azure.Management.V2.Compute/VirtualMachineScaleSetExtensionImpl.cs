@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     /// Implementation of {@link VirtualMachineScaleSetExtension}.
     /// </summary>
     public partial class VirtualMachineScaleSetExtensionImpl  :
-        ChildResource<VirtualMachineScaleSetExtensionInner, VirtualMachineScaleSetImpl>,
+        ChildResource<VirtualMachineScaleSetExtensionInner, VirtualMachineScaleSetImpl, IVirtualMachineScaleSet>,
         IVirtualMachineScaleSetExtension,
         IDefinition<IWithCreate>,
         IUpdateDefinition<IWithApplicable>,
@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             InitializeSettings();
         }
 
-        public string Name
+        public override string Name
         {
             get
             {

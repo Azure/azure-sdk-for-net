@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
             get; private set;
         }
 
-        protected void SetInner(InnerResourceT innerObject)
+        public void SetInner(InnerResourceT innerObject)
         {
             Inner = innerObject;
         }
