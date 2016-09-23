@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         IVirtualMachineExtensionImage
     {
         private IVirtualMachineExtensionImageVersion version;
-        private  VirtualMachineExtensionImageImpl (IVirtualMachineExtensionImageVersion version, VirtualMachineExtensionImageInner inner) : base(inner)
+        internal  VirtualMachineExtensionImageImpl (IVirtualMachineExtensionImageVersion version, VirtualMachineExtensionImageInner inner) : base(inner)
         {
             this.version = version;
         }
