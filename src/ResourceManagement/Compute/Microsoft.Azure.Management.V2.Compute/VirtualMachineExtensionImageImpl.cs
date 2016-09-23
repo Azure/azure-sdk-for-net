@@ -6,131 +6,139 @@
 
 namespace Microsoft.Azure.Management.V2.Compute
 {
-
+    using Management.Compute.Models;
     using Microsoft.Azure.Management.V2.Resource.Core;
     /// <summary>
     /// The implementation for {@link VirtualMachineExtensionImage}.
     /// </summary>
     public partial class VirtualMachineExtensionImageImpl  :
-        WrapperImpl<VirtualMachineExtensionImageInner>,
+        Wrapper<VirtualMachineExtensionImageInner>,
         IVirtualMachineExtensionImage
     {
         private IVirtualMachineExtensionImageVersion version;
-        private  VirtualMachineExtensionImageImpl (IVirtualMachineExtensionImageVersion version, VirtualMachineExtensionImageInner inner)
+        private  VirtualMachineExtensionImageImpl (IVirtualMachineExtensionImageVersion version, VirtualMachineExtensionImageInner inner) : base(inner)
         {
-
-            //$ super(inner);
-            //$ this.version = version;
-            //$ }
-
+            this.version = version;
         }
 
-        public string Id
+        public string Id()
         {
-            get
+            return this.Inner.Id;
+            //get
+            //{
+            //    return this.Inner.Id;
+            //}
+        }
+
+        public string RegionName()
+        {
+            return this.Inner.Location;
+            //get
+            //{
+            //    return this.Inner.Location;
+            //}
+        }
+
+        public string PublisherName()
+        {
+            return this.Version().Type.Publisher.Name;
+            //get
+            //{
+            //    return this.Version.Type.Publisher.Name;
+            //}
+        }
+
+        public string TypeName()
+        {
+            return this.Version().Type.Name;
+            //get
+            //{
+            //    return this.Version.Type.Name;
+            //}
+        }
+
+        public string VersionName()
+        {
+            return this.Version().Name;
+            //get
+            //{
+            //    return this.Version.Name;
+            //}
+        }
+
+        public OperatingSystemTypes? OsType()
+        {
+            if (this.Inner.OperatingSystem == null)
             {
-            //$ return this.inner().id();
-
-
                 return null;
             }
+            // OperatingSystemTypes is an AutoRest generated type from the swagger
+            return EnumHelper.FromEnumMemberSerializationValue<OperatingSystemTypes>(this.Inner.OperatingSystem);
+
+            //get
+            //{
+            //    if (this.Inner.OperatingSystem == null)
+            //    {
+            //        return null;
+            //    }
+            //    // OperatingSystemTypes is an AutoRest generated type from the swagger
+            //    return EnumHelper.FromEnumMemberSerializationValue<OperatingSystemTypes>(this.Inner.OperatingSystem);
+            //}
         }
-        public string RegionName
+
+        public ComputeRoles? ComputeRole()
         {
-            get
+            if (this.Inner.ComputeRole == null)
             {
-            //$ return this.inner().location();
-
-
                 return null;
             }
+            // ComputeRole is a fluent level convinence enum
+            return EnumNameAttribute.FromName<ComputeRoles>(this.Inner.ComputeRole);
+
+            //get {
+            //    if (this.Inner.ComputeRole == null)
+            //    {
+            //        return null;
+            //    }
+            //    // ComputeRole is a fluent level convinence enum
+            //    return EnumNameAttribute.FromName<ComputeRoles>(this.Inner.ComputeRole);
+            //}
         }
-        public string PublisherName
+
+        public string HandlerSchema()
         {
-            get
-            {
-            //$ return this.version().type().publisher().name();
-
-
-                return null;
-            }
+            return this.Inner.HandlerSchema;
+            //get
+            //{
+            //    return this.Inner.HandlerSchema;
+            //}
         }
-        public string TypeName
+
+        public bool? VmScaleSetEnabled()
         {
-            get
-            {
-            //$ return this.version().type().name();
-
-
-                return null;
-            }
+            return this.Inner.VmScaleSetEnabled;
+            //get
+            //{
+            //    return this.Inner.VmScaleSetEnabled;
+            //}
         }
-        public string VersionName
+
+        public bool? SupportsMultipleExtensions()
         {
-            get
-            {
-            //$ return this.version().name();
-
-
-                return null;
-            }
+            return this.Inner.SupportsMultipleExtensions;
+            //get
+            //{
+            //    return this.Inner.SupportsMultipleExtensions;
+            //}
         }
-        public OperatingSystemTypes? OsType
+
+        public IVirtualMachineExtensionImageVersion Version()
         {
-            get
-            {
-            //$ return OperatingSystemTypes.fromString(this.inner().operatingSystem());
-
-
-                return null;
-            }
-        }
-        public ComputeRoles? ComputeRole
-        {
-            get
-            {
-            //$ return ComputeRoles.fromString(this.inner().computeRole());
-
-
-                return null;
-            }
-        }
-        public string HandlerSchema
-        {
-            get
-            {
-            //$ return this.inner().handlerSchema();
-
-
-                return null;
-            }
-        }
-        public bool? VmScaleSetEnabled
-        {
-            get
-            {
-            //$ return this.inner().vmScaleSetEnabled();
-
-
-                return null;
-            }
-        }
-        public bool? SupportsMultipleExtensions
-        {
-            get
-            {
-            //$ return this.inner().supportsMultipleExtensions();
-
-
-                return null;
-            }
-        }
-        public IVirtualMachineExtensionImageVersion Version ()
-        {
-
-            //$ return this.version;
-
-            return null;
+            return this.version;
+            //get
+            //{
+            //    return this.version;
+            //}
         }
 
     }
