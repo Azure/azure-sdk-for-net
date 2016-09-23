@@ -1,4 +1,6 @@
-﻿
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
 using Microsoft.Azure.Management.Fluent.KeyVault;
 using Microsoft.Azure.Management.KeyVault.Models;
 using Microsoft.Azure.Management.Network.Models;
@@ -11,12 +13,7 @@ using Microsoft.Rest;
 using Microsoft.Rest.Azure.Authentication;
 using System.Linq;
 using Xunit;
-/**
-*
-* Copyright (c) Microsoft Corporation. All rights reserved.
-* Licensed under the MIT License. See License.txt in the project root for license information.
-*
-*/
+
 namespace Azure.Tests
 {
 

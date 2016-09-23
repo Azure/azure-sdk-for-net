@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
     /// Implementation for AccessPolicy and its parent interfaces.
     /// </summary>
     public partial class AccessPolicyImpl  :
-        ChildResource<AccessPolicyEntry,VaultImpl>,
+        ChildResource<AccessPolicyEntry, VaultImpl, IVault>,
         IAccessPolicy,
         IDefinition<IWithCreate>,
         IUpdateDefinition<Vault.Update.IUpdate>,
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
                 return Inner.Permissions;
             }
         }
-        public string Name
+        public override string Name
         {
             get
             {

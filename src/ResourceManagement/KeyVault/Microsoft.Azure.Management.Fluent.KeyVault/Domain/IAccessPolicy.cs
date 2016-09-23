@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
     /// An immutable client-side representation of a key vault access policy.
     /// </summary>
     public interface IAccessPolicy  :
-        IChildResource,
+        IChildResource<IVault>,
         IWrapper<AccessPolicyEntry>
     {
         /// <returns>The Azure Active Directory tenant ID that should be used for</returns>
