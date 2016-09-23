@@ -28,6 +28,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         #region Fluent private collections
         private IVirtualMachines virtualMachines;
         private IVirtualMachineImages virtualMachineImages;
+        private IVirtualMachineExtensionImages virtualMachineExtensionImages;
         private IAvailabilitySets availabilitySets;
         private IVirtualMachineScaleSets virtualMachineScaleSets;
         #endregion
@@ -116,12 +117,23 @@ namespace Microsoft.Azure.Management.V2.Compute
             {
                 if (virtualMachineImages == null)
                 {
-                    virtualMachineImages = new VirtualMachineImagesImpl(client.VirtualMachineImages);
+                    virtualMachineImages = new VirtualMachineImagesImpl(new VirtualMachinePublishersImpl(client.VirtualMachineImages, client.VirtualMachineExtensionImages));
                 }
                 return virtualMachineImages;
             }
         }
 
+        public IVirtualMachineExtensionImages VirtualMachineExtensionImages
+        {
+            get
+            {
+                if (virtualMachineExtensionImages == null)
+                {
+                    virtualMachineExtensionImages = new VirtualMachineExtensionImagesImpl(new VirtualMachinePublishersImpl(client.VirtualMachineImages, client.VirtualMachineExtensionImages));
+                }
+                return virtualMachineExtensionImages;
+            }
+        }
 
         public IAvailabilitySets AvailabilitySets
         {

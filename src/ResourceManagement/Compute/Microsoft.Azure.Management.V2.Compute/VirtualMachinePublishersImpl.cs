@@ -13,8 +13,9 @@ namespace Microsoft.Azure.Management.V2.Compute
           IVirtualMachinePublishers
     {
         private IVirtualMachineImagesOperations innerCollection;
+        private IVirtualMachineExtensionImagesOperations extensionsInnerCollection;
 
-        internal VirtualMachinePublishersImpl(IVirtualMachineImagesOperations innerCollection)
+        internal VirtualMachinePublishersImpl(IVirtualMachineImagesOperations innerCollection, IVirtualMachineExtensionImagesOperations extensionsInnerCollection)
         {
             this.innerCollection = innerCollection;
         }
@@ -33,7 +34,9 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         protected override IVirtualMachinePublisher WrapModel(VirtualMachineImageResourceInner inner)
         {
-            return new VirtualMachinePublisherImpl(EnumNameAttribute.FromName<Region>(inner.Location), inner.Name, this.innerCollection);
+            return new VirtualMachinePublisherImpl(EnumNameAttribute.FromName<Region>(inner.Location), inner.Name, 
+                this.innerCollection, 
+                this.extensionsInnerCollection);
         }
     }
 }

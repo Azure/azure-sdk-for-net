@@ -13,51 +13,51 @@ namespace Microsoft.Azure.Management.V2.Compute
         Wrapper<Microsoft.Azure.Management.Compute.Models.VirtualMachineExtensionImageInner>,
         IVirtualMachineExtensionImageVersion
     {
-        private VirtualMachineExtensionImagesOperations client;
+        private IVirtualMachineExtensionImagesOperations client;
         private IVirtualMachineExtensionImageType type;
-        private  VirtualMachineExtensionImageVersionImpl (VirtualMachineExtensionImagesOperations client, IVirtualMachineExtensionImageType extensionImageType, VirtualMachineExtensionImageInner inner) : base(inner)
+        internal  VirtualMachineExtensionImageVersionImpl (IVirtualMachineExtensionImagesOperations client, IVirtualMachineExtensionImageType extensionImageType, VirtualMachineExtensionImageInner inner) : base(inner)
         {
             this.client = client;
             this.type = extensionImageType;
         }
 
-        public string Id()
+        public string Id
         {
-            return this.Inner.Id;
-            //get
-            //{
-            //    return this.Inner.Id;
-            //}
+            get
+            {
+                return this.Inner.Id;
+            }
         }
 
-        public string Name()
+        public string Name
         {
-            return this.Inner.Name;
-            //get
-            //{
-            //    return this.Inner.Name;
-            //}
+            get
+            {
+                return this.Inner.Name;
+            }
         }
 
-        public string RegionName()
+        public string RegionName
         {
-            return this.Inner.Name;
-            //get
-            //{
-            //    return this.Inner.Location;
-            //}
+            get
+            {
+                return this.Inner.Location;
+            }
         }
 
-        public IVirtualMachineExtensionImageType Type ()
+        public IVirtualMachineExtensionImageType Type
         {
-            return this.type;
+            get 
+            {
+                return this.type;
+            }
         }
 
         public IVirtualMachineExtensionImage Image ()
         {
             VirtualMachineExtensionImageInner inner = this.client.Get(this.RegionName,
-                this.Type().Publisher.Name,
-                this.Type().Name,
+                this.Type.Publisher.Name,
+                this.Type.Name,
                 this.Name);
             return new VirtualMachineExtensionImageImpl(this, inner);
         }
