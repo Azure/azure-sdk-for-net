@@ -21,27 +21,33 @@ namespace Microsoft.Azure.Management.V2.Compute
             this.type = extensionImageType;
         }
 
-        public string Id
+        public string Id()
         {
-            get
-            {
-                return this.Inner.Id;
-            }
+            return this.Inner.Id;
+            //get
+            //{
+            //    return this.Inner.Id;
+            //}
         }
-        public string Name
+
+        public string Name()
         {
-            get
-            {
-                return this.Inner.Name;
-            }
+            return this.Inner.Name;
+            //get
+            //{
+            //    return this.Inner.Name;
+            //}
         }
-        public string RegionName
+
+        public string RegionName()
         {
-            get
-            {
-                return this.Inner.Location;
-            }
+            return this.Inner.Name;
+            //get
+            //{
+            //    return this.Inner.Location;
+            //}
         }
+
         public IVirtualMachineExtensionImageType Type ()
         {
             return this.type;
