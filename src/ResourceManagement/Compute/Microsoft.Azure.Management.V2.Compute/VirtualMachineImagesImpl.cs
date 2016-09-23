@@ -10,9 +10,9 @@ namespace Microsoft.Azure.Management.V2.Compute
     {
         private IVirtualMachinePublishers publishers;
 
-        internal VirtualMachineImagesImpl(IVirtualMachineImagesOperations client)
+        internal VirtualMachineImagesImpl(IVirtualMachinePublishers publishers)
         {
-            publishers = new VirtualMachinePublishersImpl(client);
+            this.publishers = publishers;
         }
 
         public PagedList<IVirtualMachineImage> ListByRegion(Region region)

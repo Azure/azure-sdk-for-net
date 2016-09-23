@@ -159,33 +159,46 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
         {
             return new PagedList<U>(new OnePage<U>(new List<U>()));
         }
+    }
 
-        protected class OnePage<U> : IPage<U>
+    internal class OnePage<U> : IPage<U>
+    {
+        private IEnumerable<U> enumerable;
+
+        public OnePage(IEnumerable<U> enumerable)
         {
-            private IEnumerable<U> enumerable;
+            this.enumerable = enumerable;
+        }
 
-            public OnePage(IEnumerable<U> enumerable)
+        public string NextPageLink
+        {
+            get
             {
-                this.enumerable = enumerable;
+                return null;
             }
+        }
 
-            public string NextPageLink
-            {
-                get
-                {
-                    return null;
-                }
-            }
+        public IEnumerator<U> GetEnumerator()
+        {
+            return enumerable.GetEnumerator();
+        }
 
-            public IEnumerator<U> GetEnumerator()
-            {
-                return enumerable.GetEnumerator();
-            }
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+    }
 
-            IEnumerator IEnumerable.GetEnumerator()
+    public static class PagedListConverter
+    {
+        public static PagedList<TargetT> Convert<SourceT, TargetT>(PagedList<SourceT> sourceList, Func<SourceT, TargetT> converter)
+        {
+            return new PagedList<TargetT>(new WrappedPage<SourceT, TargetT>(sourceList.CurrentPage, converter),
+            (string nextPageLink) =>
             {
-                return GetEnumerator();
-            }
+                sourceList.LoadNextPage();
+                return new WrappedPage<SourceT, TargetT>(sourceList.CurrentPage, converter);
+            });
         }
     }
 }

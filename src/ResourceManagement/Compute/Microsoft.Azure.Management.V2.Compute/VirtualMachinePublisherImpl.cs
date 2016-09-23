@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using System;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.V2.Resource.Core;
 
@@ -9,12 +10,17 @@ namespace Microsoft.Azure.Management.V2.Compute
     public partial class VirtualMachinePublisherImpl : IVirtualMachinePublisher
     {
         private IVirtualMachineOffers offers;
+        private IVirtualMachineExtensionImageTypes extensionTypes;
 
-        internal VirtualMachinePublisherImpl(Region location, string publisher, IVirtualMachineImagesOperations client)
+        internal VirtualMachinePublisherImpl(Region location, 
+            string publisher, 
+            IVirtualMachineImagesOperations vmImagesClient,
+            IVirtualMachineExtensionImagesOperations vmExtensionImagesClient)
         {
             Region = location;
             Name = publisher;
-            offers = new VirtualMachineOffersImpl(client, this);
+            offers = new VirtualMachineOffersImpl(vmImagesClient, this);
+            extensionTypes = new VirtualMachineExtensionImageTypesImpl(vmExtensionImagesClient, this);
         }
 
         public string Name
@@ -30,6 +36,11 @@ namespace Microsoft.Azure.Management.V2.Compute
         public IVirtualMachineOffers Offers()
         {
             return offers;
+        }
+
+        public IVirtualMachineExtensionImageTypes ExtensionTypes()
+        {
+            return extensionTypes;
         }
     }
 }
