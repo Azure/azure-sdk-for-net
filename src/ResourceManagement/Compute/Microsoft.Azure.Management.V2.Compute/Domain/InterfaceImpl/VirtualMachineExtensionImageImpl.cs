@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         }
 
         /// <returns>the operating system this virtual machine extension image supports</returns>
-        Microsoft.Azure.Management.V2.Compute.OperatingSystemTypes? Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtensionImage.OsType () {
+        Microsoft.Azure.Management.Compute.Models.OperatingSystemTypes? Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtensionImage.OsType () {
             return this.OsType();
         }
 
