@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Fluent.Redis
         IRedisCachePremium AsPremium ();
 
         /// <returns>returns true if current Redis Cache instance has Premium Sku.</returns>
-        bool? IsPremium { get; }
+        bool IsPremium { get; }
 
         /// <returns>the provisioningState value</returns>
         string ProvisioningState { get; }

@@ -6,6 +6,6 @@
     "src/ResourceManagement/Network/Microsoft.Azure.Management.Network",
     "src/ResourceManagement/Resource/Microsoft.Azure.Management.ResourceManager",
     "src/ResourceManagement/Storage/Microsoft.Azure.Management.Storage",
-    "src/ResourceManagement/Azure/Microsoft.Azure.Management",
+    "src/ResourceManagement/Azure/Microsoft.Azure.Management"
   ]
 }
