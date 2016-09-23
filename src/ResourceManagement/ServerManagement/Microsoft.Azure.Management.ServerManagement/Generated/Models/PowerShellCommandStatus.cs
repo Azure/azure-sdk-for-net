@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.ServerManagement.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// result status from invoking a powershell command
+    /// </summary>
     [JsonTransformation]
     public partial class PowerShellCommandStatus : Resource
     {

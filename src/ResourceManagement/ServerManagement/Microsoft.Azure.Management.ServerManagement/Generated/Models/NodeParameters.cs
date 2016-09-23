@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.ServerManagement.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// parameter collection for operations on arm node resource
+    /// </summary>
     [JsonTransformation]
     public partial class NodeParameters
     {

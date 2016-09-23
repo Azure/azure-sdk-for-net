@@ -1,115 +1,130 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/3e82a90d-d19e-42f9-bb43-9112945846ef/resourceGroups/sdktest/providers/Microsoft.ServerManagement/gateways/test_gateway_1234635981?api-version=2015-07-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U4MmE5MGQtZDE5ZS00MmY5LWJiNDMtOTExMjk0NTg0NmVmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5TZXJ2ZXJNYW5hZ2VtZW50L2dhdGV3YXlzL3Rlc3RfZ2F0ZXdheV8xMjM0NjM1OTgxP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourceGroups/sdktest/providers/Microsoft.ServerManagement/gateways/test_gateway_654056619?api-version=2016-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTAxZmJhYjgtMTcxNC00Zjk0LThiNjctNDBkNzgyN2E1ZWZkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5TZXJ2ZXJNYW5hZ2VtZW50L2dhdGV3YXlzL3Rlc3RfZ2F0ZXdheV82NTQwNTY2MTk/YXBpLXZlcnNpb249MjAxNi0wNy0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"autoUpgrade\": \"On\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"upgradeMode\": \"Automatic\"\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "81"
+          "88"
         ],
         "x-ms-client-request-id": [
-          "ee89470b-e661-42ce-a576-060b6788d1a8"
+          "7127d8df-c25e-47f5-b566-028a61cb00c2"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.ServerManagement.ServerManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.ServerManagement.ServerManagementClient/1.0.7"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3e82a90d-d19e-42f9-bb43-9112945846ef/resourcegroups/sdktest/providers/microsoft.servermanagement/gateways/test_gateway_1234635981\",\r\n  \"name\": \"test_gateway_1234635981\",\r\n  \"type\": \"microsoft.servermanagement/gateways\",\r\n  \"location\": \"centralus\",\r\n  \"etag\": \"W/\\\"datetime'2016-04-29T22%3A35%3A01.5472691Z'\\\"\",\r\n  \"properties\": {\r\n    \"created\": \"2016-04-29T22:35:00.4390805Z\",\r\n    \"updated\": \"2016-04-29T22:35:00.4390805Z\",\r\n    \"autoUpgrade\": \"On\",\r\n    \"desiredVersion\": null,\r\n    \"minimumVersion\": \"1.0.0.0\",\r\n    \"betaFeatures\": \"Off\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/sdktest/providers/microsoft.servermanagement/gateways/test_gateway_654056619\",\r\n  \"name\": \"test_gateway_654056619\",\r\n  \"type\": \"microsoft.servermanagement/gateways\",\r\n  \"location\": \"centralus\",\r\n  \"etag\": \"W/\\\"datetime'2016-09-23T21%3A34%3A31.3578759Z'\\\"\",\r\n  \"properties\": {\r\n    \"created\": \"2016-09-23T21:34:28.8479579Z\",\r\n    \"updated\": \"2016-09-23T21:34:28.8479579Z\",\r\n    \"autoUpgrade\": \"On\",\r\n    \"upgradeMode\": \"Automatic\",\r\n    \"desiredVersion\": null,\r\n    \"minimumVersion\": \"1.0.1547.0\"\r\n  }\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "498"
-        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
         ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 23 Sep 2016 21:34:30 GMT"
+        ],
         "Pragma": [
           "no-cache"
         ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
         "x-ms-request-id": [
-          "c8769da7-c43b-434e-843b-0cefa295f588"
+          "f973377a-e914-4bae-b28e-fb999ce6fc5b"
         ],
         "x-managementservice-fileversion": [
-          "1.0.1187.0"
+          "1.0.1684.0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1199"
         ],
         "x-ms-correlation-request-id": [
-          "c8769da7-c43b-434e-843b-0cefa295f588"
+          "f973377a-e914-4bae-b28e-fb999ce6fc5b"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160429T223502Z:c8769da7-c43b-434e-843b-0cefa295f588"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 29 Apr 2016 22:35:01 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
+          "WESTUS2:20160923T213431Z:f973377a-e914-4bae-b28e-fb999ce6fc5b"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3e82a90d-d19e-42f9-bb43-9112945846ef/resourceGroups/sdktest/providers/Microsoft.ServerManagement/gateways/test_gateway_1234635981?api-version=2015-07-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U4MmE5MGQtZDE5ZS00MmY5LWJiNDMtOTExMjk0NTg0NmVmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5TZXJ2ZXJNYW5hZ2VtZW50L2dhdGV3YXlzL3Rlc3RfZ2F0ZXdheV8xMjM0NjM1OTgxP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourceGroups/sdktest/providers/Microsoft.ServerManagement/gateways/test_gateway_654056619?api-version=2016-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTAxZmJhYjgtMTcxNC00Zjk0LThiNjctNDBkNzgyN2E1ZWZkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5TZXJ2ZXJNYW5hZ2VtZW50L2dhdGV3YXlzL3Rlc3RfZ2F0ZXdheV82NTQwNTY2MTk/YXBpLXZlcnNpb249MjAxNi0wNy0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1ae887a2-fc81-4f28-8eb7-ce4fb8033007"
+          "8539c741-1d67-445e-b13b-64b598b5affb"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.ServerManagement.ServerManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.ServerManagement.ServerManagementClient/1.0.7"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3e82a90d-d19e-42f9-bb43-9112945846ef/resourcegroups/sdktest/providers/microsoft.servermanagement/gateways/test_gateway_1234635981\",\r\n  \"name\": \"test_gateway_1234635981\",\r\n  \"type\": \"microsoft.servermanagement/gateways\",\r\n  \"location\": \"centralus\",\r\n  \"etag\": \"W/\\\"datetime'2016-04-29T22%3A35%3A01.5472691Z'\\\"\",\r\n  \"properties\": {\r\n    \"created\": \"2016-04-29T22:35:00.4390805Z\",\r\n    \"updated\": \"2016-04-29T22:35:00.4390805Z\",\r\n    \"autoUpgrade\": \"On\",\r\n    \"desiredVersion\": null,\r\n    \"minimumVersion\": \"1.0.0.0\",\r\n    \"betaFeatures\": \"Off\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/sdktest/providers/microsoft.servermanagement/gateways/test_gateway_654056619\",\r\n  \"name\": \"test_gateway_654056619\",\r\n  \"type\": \"microsoft.servermanagement/gateways\",\r\n  \"location\": \"centralus\",\r\n  \"etag\": \"W/\\\"datetime'2016-09-23T21%3A34%3A31.3578759Z'\\\"\",\r\n  \"properties\": {\r\n    \"created\": \"2016-09-23T21:34:28.8479579Z\",\r\n    \"updated\": \"2016-09-23T21:34:28.8479579Z\",\r\n    \"autoUpgrade\": \"On\",\r\n    \"upgradeMode\": \"Automatic\",\r\n    \"desiredVersion\": null,\r\n    \"minimumVersion\": \"1.0.1547.0\"\r\n  }\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "498"
-        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
         ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 23 Sep 2016 21:34:30 GMT"
+        ],
         "Pragma": [
           "no-cache"
         ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
         "x-ms-request-id": [
-          "858ba0aa-9813-4f1f-beec-d07bcc5fde4b"
+          "072171d8-faf2-4d2b-af7d-13883468f8bf"
         ],
         "x-managementservice-fileversion": [
-          "1.0.1187.0"
+          "1.0.1684.0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -117,59 +132,56 @@
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14949"
-        ],
-        "x-ms-correlation-request-id": [
-          "858ba0aa-9813-4f1f-beec-d07bcc5fde4b"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160429T223502Z:858ba0aa-9813-4f1f-beec-d07bcc5fde4b"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 29 Apr 2016 22:35:01 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
         "X-AspNet-Version": [
           "4.0.30319"
         ],
         "X-Powered-By": [
           "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14993"
+        ],
+        "x-ms-correlation-request-id": [
+          "072171d8-faf2-4d2b-af7d-13883468f8bf"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20160923T213431Z:072171d8-faf2-4d2b-af7d-13883468f8bf"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3e82a90d-d19e-42f9-bb43-9112945846ef/resourceGroups/sdktest/providers/Microsoft.ServerManagement/gateways/test_gateway_1234635981?api-version=2015-07-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U4MmE5MGQtZDE5ZS00MmY5LWJiNDMtOTExMjk0NTg0NmVmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5TZXJ2ZXJNYW5hZ2VtZW50L2dhdGV3YXlzL3Rlc3RfZ2F0ZXdheV8xMjM0NjM1OTgxP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourceGroups/sdktest/providers/Microsoft.ServerManagement/gateways/test_gateway_654056619?api-version=2016-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTAxZmJhYjgtMTcxNC00Zjk0LThiNjctNDBkNzgyN2E1ZWZkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5TZXJ2ZXJNYW5hZ2VtZW50L2dhdGV3YXlzL3Rlc3RfZ2F0ZXdheV82NTQwNTY2MTk/YXBpLXZlcnNpb249MjAxNi0wNy0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "9084210d-8113-4df4-9a63-5bbb7ec59461"
+          "efcd0d3e-44db-4cb3-b646-6adee1a62e7c"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.ServerManagement.ServerManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.ServerManagement.ServerManagementClient/1.0.7"
         ]
       },
-      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.ServerManagement/gateways/test_gateway_1234635981' under resource group 'sdktest' was not found.\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"error\": {\r\n    \"code\": \"ResourceNotFound\",\r\n    \"message\": \"The Resource 'Microsoft.ServerManagement/gateways/test_gateway_654056619' under resource group 'sdktest' was not found.\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "170"
+          "169"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 23 Sep 2016 21:34:36 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -178,136 +190,145 @@
           "gateway"
         ],
         "x-ms-request-id": [
-          "d86da40a-d6fa-4a1a-a3d1-43fa0f4bf2cb"
+          "42a6eb0e-52c2-4fbc-820f-374443719aa8"
         ],
         "x-ms-correlation-request-id": [
-          "d86da40a-d6fa-4a1a-a3d1-43fa0f4bf2cb"
+          "42a6eb0e-52c2-4fbc-820f-374443719aa8"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160429T223506Z:d86da40a-d6fa-4a1a-a3d1-43fa0f4bf2cb"
+          "WESTUS2:20160923T213436Z:42a6eb0e-52c2-4fbc-820f-374443719aa8"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 29 Apr 2016 22:35:06 GMT"
         ]
       },
       "StatusCode": 404
     },
     {
-      "RequestUri": "/subscriptions/3e82a90d-d19e-42f9-bb43-9112945846ef/resourceGroups/sdktest/providers/Microsoft.ServerManagement/gateways/test_gateway_1234635981?api-version=2015-07-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U4MmE5MGQtZDE5ZS00MmY5LWJiNDMtOTExMjk0NTg0NmVmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5TZXJ2ZXJNYW5hZ2VtZW50L2dhdGV3YXlzL3Rlc3RfZ2F0ZXdheV8xMjM0NjM1OTgxP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourceGroups/sdktest/providers/Microsoft.ServerManagement/gateways/test_gateway_654056619?api-version=2016-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTAxZmJhYjgtMTcxNC00Zjk0LThiNjctNDBkNzgyN2E1ZWZkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5TZXJ2ZXJNYW5hZ2VtZW50L2dhdGV3YXlzL3Rlc3RfZ2F0ZXdheV82NTQwNTY2MTk/YXBpLXZlcnNpb249MjAxNi0wNy0wMS1wcmV2aWV3",
       "RequestMethod": "PATCH",
-      "RequestBody": "{\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"autoUpgrade\": \"Off\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"centralus\",\r\n  \"properties\": {\r\n    \"upgradeMode\": \"Automatic\"\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "82"
+          "88"
         ],
         "x-ms-client-request-id": [
-          "6a52b8ea-4e4f-486e-a78c-7d7a95f6e808"
+          "42e26da5-7775-4680-a506-50f870f3fc1c"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.ServerManagement.ServerManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.ServerManagement.ServerManagementClient/1.0.7"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3e82a90d-d19e-42f9-bb43-9112945846ef/resourcegroups/sdktest/providers/microsoft.servermanagement/gateways/test_gateway_1234635981\",\r\n  \"name\": \"test_gateway_1234635981\",\r\n  \"type\": \"microsoft.servermanagement/gateways\",\r\n  \"location\": \"centralus\",\r\n  \"etag\": \"W/\\\"datetime'2016-04-29T22%3A35%3A02.4124511Z'\\\"\",\r\n  \"properties\": {\r\n    \"created\": \"2016-04-29T22:35:00.4390805Z\",\r\n    \"updated\": \"2016-04-29T22:35:01.9839696Z\",\r\n    \"autoUpgrade\": \"Off\",\r\n    \"desiredVersion\": null,\r\n    \"minimumVersion\": \"1.0.0.0\",\r\n    \"betaFeatures\": \"Off\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/sdktest/providers/microsoft.servermanagement/gateways/test_gateway_654056619\",\r\n  \"name\": \"test_gateway_654056619\",\r\n  \"type\": \"microsoft.servermanagement/gateways\",\r\n  \"location\": \"centralus\",\r\n  \"etag\": \"W/\\\"datetime'2016-09-23T21%3A34%3A31.8135824Z'\\\"\",\r\n  \"properties\": {\r\n    \"created\": \"2016-09-23T21:34:28.8479579Z\",\r\n    \"updated\": \"2016-09-23T21:34:32.1544659Z\",\r\n    \"autoUpgrade\": \"On\",\r\n    \"upgradeMode\": \"Automatic\",\r\n    \"desiredVersion\": null,\r\n    \"minimumVersion\": \"1.0.1547.0\"\r\n  }\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "499"
-        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
         ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 23 Sep 2016 21:34:31 GMT"
+        ],
         "Pragma": [
           "no-cache"
         ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
         "x-ms-request-id": [
-          "d27c56d9-6413-4ae3-b4b8-fe19fcd96207"
+          "d5b740ad-8b42-48aa-bbcc-29c31472ef55"
         ],
         "x-managementservice-fileversion": [
-          "1.0.1187.0"
+          "1.0.1684.0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
           "1198"
         ],
         "x-ms-correlation-request-id": [
-          "d27c56d9-6413-4ae3-b4b8-fe19fcd96207"
+          "d5b740ad-8b42-48aa-bbcc-29c31472ef55"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160429T223503Z:d27c56d9-6413-4ae3-b4b8-fe19fcd96207"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 29 Apr 2016 22:35:02 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-AspNet-Version": [
-          "4.0.30319"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
+          "WESTUS2:20160923T213432Z:d5b740ad-8b42-48aa-bbcc-29c31472ef55"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3e82a90d-d19e-42f9-bb43-9112945846ef/resourceGroups/sdktest/providers/Microsoft.ServerManagement/gateways/test_gateway_1234635981?api-version=2015-07-01-preview&$expand=status",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U4MmE5MGQtZDE5ZS00MmY5LWJiNDMtOTExMjk0NTg0NmVmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5TZXJ2ZXJNYW5hZ2VtZW50L2dhdGV3YXlzL3Rlc3RfZ2F0ZXdheV8xMjM0NjM1OTgxP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldyYkZXhwYW5kPXN0YXR1cw==",
+      "RequestUri": "/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourceGroups/sdktest/providers/Microsoft.ServerManagement/gateways/test_gateway_654056619?api-version=2016-07-01-preview&$expand=status",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTAxZmJhYjgtMTcxNC00Zjk0LThiNjctNDBkNzgyN2E1ZWZkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5TZXJ2ZXJNYW5hZ2VtZW50L2dhdGV3YXlzL3Rlc3RfZ2F0ZXdheV82NTQwNTY2MTk/YXBpLXZlcnNpb249MjAxNi0wNy0wMS1wcmV2aWV3JiRleHBhbmQ9c3RhdHVz",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "a18ce85a-eaf5-4c8b-96f7-2eff9696cea6"
+          "3b6d2e4e-2cbf-4e52-9630-59d24501ce92"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.ServerManagement.ServerManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.ServerManagement.ServerManagementClient/1.0.7"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3e82a90d-d19e-42f9-bb43-9112945846ef/resourcegroups/sdktest/providers/microsoft.servermanagement/gateways/test_gateway_1234635981\",\r\n  \"name\": \"test_gateway_1234635981\",\r\n  \"type\": \"microsoft.servermanagement/gateways\",\r\n  \"location\": \"centralus\",\r\n  \"etag\": \"W/\\\"datetime'2016-04-29T22%3A35%3A02.4124511Z'\\\"\",\r\n  \"properties\": {\r\n    \"created\": \"2016-04-29T22:35:00.4390805Z\",\r\n    \"updated\": \"2016-04-29T22:35:01.9839696Z\",\r\n    \"autoUpgrade\": \"Off\",\r\n    \"desiredVersion\": null,\r\n    \"minimumVersion\": \"1.0.0.0\",\r\n    \"betaFeatures\": \"Off\",\r\n    \"instances\": [],\r\n    \"activeMessageCount\": 0,\r\n    \"latestPublishedMsiVersion\": \"1.0.1187.0\",\r\n    \"publishedTimeUtc\": \"2016-04-28T18:07:20Z\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/sdktest/providers/microsoft.servermanagement/gateways/test_gateway_654056619\",\r\n  \"name\": \"test_gateway_654056619\",\r\n  \"type\": \"microsoft.servermanagement/gateways\",\r\n  \"location\": \"centralus\",\r\n  \"etag\": \"W/\\\"datetime'2016-09-23T21%3A34%3A31.8135824Z'\\\"\",\r\n  \"properties\": {\r\n    \"created\": \"2016-09-23T21:34:28.8479579Z\",\r\n    \"updated\": \"2016-09-23T21:34:32.1544659Z\",\r\n    \"autoUpgrade\": \"On\",\r\n    \"upgradeMode\": \"Automatic\",\r\n    \"desiredVersion\": null,\r\n    \"minimumVersion\": \"1.0.1547.0\",\r\n    \"instances\": [],\r\n    \"activeMessageCount\": 0,\r\n    \"latestPublishedMsiVersion\": \"1.0.1645.0\",\r\n    \"publishedTimeUtc\": \"2016-09-12T17:52:47Z\"\r\n  }\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "628"
-        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
         ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 23 Sep 2016 21:34:31 GMT"
+        ],
         "Pragma": [
           "no-cache"
         ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
         "x-ms-request-id": [
-          "cd8a1d89-99ae-4b37-b365-df0bbf61a073"
+          "8af2f4be-84bc-400d-ab4e-d59387f6845d"
         ],
         "x-managementservice-fileversion": [
-          "1.0.1187.0"
+          "1.0.1684.0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -315,185 +336,150 @@
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14948"
-        ],
-        "x-ms-correlation-request-id": [
-          "cd8a1d89-99ae-4b37-b365-df0bbf61a073"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160429T223503Z:cd8a1d89-99ae-4b37-b365-df0bbf61a073"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 29 Apr 2016 22:35:02 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
         "X-AspNet-Version": [
           "4.0.30319"
         ],
         "X-Powered-By": [
           "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14992"
+        ],
+        "x-ms-correlation-request-id": [
+          "8af2f4be-84bc-400d-ab4e-d59387f6845d"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20160923T213432Z:8af2f4be-84bc-400d-ab4e-d59387f6845d"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3e82a90d-d19e-42f9-bb43-9112945846ef/providers/Microsoft.ServerManagement/gateways?api-version=2015-07-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U4MmE5MGQtZDE5ZS00MmY5LWJiNDMtOTExMjk0NTg0NmVmL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmVyTWFuYWdlbWVudC9nYXRld2F5cz9hcGktdmVyc2lvbj0yMDE1LTA3LTAxLXByZXZpZXc=",
+      "RequestUri": "/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/providers/Microsoft.ServerManagement/gateways?api-version=2016-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTAxZmJhYjgtMTcxNC00Zjk0LThiNjctNDBkNzgyN2E1ZWZkL3Byb3ZpZGVycy9NaWNyb3NvZnQuU2VydmVyTWFuYWdlbWVudC9nYXRld2F5cz9hcGktdmVyc2lvbj0yMDE2LTA3LTAxLXByZXZpZXc=",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "123280d4-7cdf-43d4-94c5-6e180ad765e7"
+          "c87132d7-0e5b-4702-90d1-ba64d0464e37"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.ServerManagement.ServerManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.ServerManagement.ServerManagementClient/1.0.7"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/3e82a90d-d19e-42f9-bb43-9112945846ef/resourcegroups/rsmt-eu-perf/providers/microsoft.servermanagement/gateways/rsmt-eu-gw\",\r\n      \"name\": \"rsmt-eu-gw\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"eastus\",\r\n      \"etag\": \"W/\\\"datetime'2016-04-15T00%3A53%3A06.1964139Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-02-18T18:13:31.7195592Z\",\r\n        \"updated\": \"2016-04-15T00:53:06.4177616Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.0.0\",\r\n        \"betaFeatures\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3e82a90d-d19e-42f9-bb43-9112945846ef/resourcegroups/sdktest/providers/microsoft.servermanagement/gateways/mygateway\",\r\n      \"name\": \"mygateway\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"centralus\",\r\n      \"etag\": \"W/\\\"datetime'2016-04-26T21%3A37%3A09.5950388Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-04-26T21:34:03.8509205Z\",\r\n        \"updated\": \"2016-04-26T21:37:09.5373202Z\",\r\n        \"autoUpgrade\": \"Off\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.0.0\",\r\n        \"betaFeatures\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3e82a90d-d19e-42f9-bb43-9112945846ef/resourcegroups/sdktest/providers/microsoft.servermanagement/gateways/test_gateway_1234635981\",\r\n      \"name\": \"test_gateway_1234635981\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"centralus\",\r\n      \"etag\": \"W/\\\"datetime'2016-04-29T22%3A35%3A02.4124511Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-04-29T22:35:00.4390805Z\",\r\n        \"updated\": \"2016-04-29T22:35:01.9839696Z\",\r\n        \"autoUpgrade\": \"Off\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.0.0\",\r\n        \"betaFeatures\": \"Off\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3e82a90d-d19e-42f9-bb43-9112945846ef/resourcegroups/test/providers/microsoft.servermanagement/gateways/gwondevbox\",\r\n      \"name\": \"gwondevbox\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"centralus\",\r\n      \"etag\": \"W/\\\"datetime'2016-02-12T02%3A14%3A49.45197Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-02-12T00:36:06.0055445Z\",\r\n        \"updated\": \"2016-02-12T02:14:49.3375206Z\",\r\n        \"autoUpgrade\": \"Off\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.0.0\",\r\n        \"betaFeatures\": null\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/3e82a90d-d19e-42f9-bb43-9112945846ef/resourcegroups/test/providers/microsoft.servermanagement/gateways/harshasgtw\",\r\n      \"name\": \"harshasgtw\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"centralus\",\r\n      \"etag\": \"W/\\\"datetime'2016-04-28T17%3A24%3A23.5423966Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-04-28T17:24:02.5838531Z\",\r\n        \"updated\": \"2016-04-28T17:24:22.8444066Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.0.0\",\r\n        \"betaFeatures\": null\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/02776bea-5584-4db6-bc5d-07cab28259aa\",\r\n      \"name\": \"02776bea-5584-4db6-bc5d-07cab28259aa\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-13T23%3A58%3A45.2669937Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-13T23:58:21.290441Z\",\r\n        \"updated\": \"2016-09-13T23:58:21.290441Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/0744a32f-3382-4062-9555-061b8ededd46\",\r\n      \"name\": \"0744a32f-3382-4062-9555-061b8ededd46\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-20T00%3A13%3A28.1706134Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-20T00:13:24.6930563Z\",\r\n        \"updated\": \"2016-09-20T00:13:24.6930563Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/0b3a1060-06cf-48db-aee6-1e0971f68496\",\r\n      \"name\": \"0b3a1060-06cf-48db-aee6-1e0971f68496\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-16T23%3A28%3A28.8018839Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-16T23:28:24.8960475Z\",\r\n        \"updated\": \"2016-09-16T23:28:24.8960475Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/11be3985-d23a-40ee-9790-b714465c04c6\",\r\n      \"name\": \"11be3985-d23a-40ee-9790-b714465c04c6\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-15T12%3A43%3A42.1953779Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-15T12:43:24.3581911Z\",\r\n        \"updated\": \"2016-09-15T12:43:24.3581911Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/1f2935a9-16cc-40a8-929a-c54cd8b1e5f8\",\r\n      \"name\": \"1f2935a9-16cc-40a8-929a-c54cd8b1e5f8\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-17T08%3A43%3A22.6267318Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-17T08:43:20.1300555Z\",\r\n        \"updated\": \"2016-09-17T08:43:20.1300555Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/28d1ad94-0056-4814-93d5-01854cf607ff\",\r\n      \"name\": \"28d1ad94-0056-4814-93d5-01854cf607ff\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-20T13%3A51%3A37.3083493Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-20T13:51:00.2932668Z\",\r\n        \"updated\": \"2016-09-20T13:51:00.2932668Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/2ec4ad99-6d7f-49b4-9a51-4ff208a9b25e\",\r\n      \"name\": \"2ec4ad99-6d7f-49b4-9a51-4ff208a9b25e\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-17T08%3A28%3A22.4275906Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-17T08:28:17.6418627Z\",\r\n        \"updated\": \"2016-09-17T08:28:17.6418627Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/39c361fe-89fb-4585-827e-9abc65265587\",\r\n      \"name\": \"39c361fe-89fb-4585-827e-9abc65265587\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-20T15%3A21%3A45.6815668Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-20T15:20:56.7669735Z\",\r\n        \"updated\": \"2016-09-20T15:20:56.7669735Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/3c26a62c-bbe6-4d53-a62b-1d030013319a\",\r\n      \"name\": \"3c26a62c-bbe6-4d53-a62b-1d030013319a\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-20T15%3A06%3A53.1161706Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-20T15:05:56.6703851Z\",\r\n        \"updated\": \"2016-09-20T15:05:56.6703851Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/3df5bc55-0f77-41a1-8ea4-2169760e5a07\",\r\n      \"name\": \"3df5bc55-0f77-41a1-8ea4-2169760e5a07\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-16T23%3A13%3A24.022067Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-16T23:13:20.9967639Z\",\r\n        \"updated\": \"2016-09-16T23:13:20.9967639Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/3f8aa10d-feef-45c6-b158-b22513b2fe23\",\r\n      \"name\": \"3f8aa10d-feef-45c6-b158-b22513b2fe23\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-17T06%3A58%3A21.5403311Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-17T06:58:17.3658052Z\",\r\n        \"updated\": \"2016-09-17T06:58:17.3658052Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/401f82f2-2ab8-4500-8238-db25b7b9b96f\",\r\n      \"name\": \"401f82f2-2ab8-4500-8238-db25b7b9b96f\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-19T21%3A13%3A54.5280632Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-19T21:13:24.1756477Z\",\r\n        \"updated\": \"2016-09-19T21:13:24.1756477Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/4f440bc1-74a0-474e-b829-57accb70db47\",\r\n      \"name\": \"4f440bc1-74a0-474e-b829-57accb70db47\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-17T05%3A20%3A59.2711606Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-17T05:20:55.9492008Z\",\r\n        \"updated\": \"2016-09-17T05:20:55.9492008Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/50fc31b7-97ee-4335-b7f4-be1ccfa9ddc6\",\r\n      \"name\": \"50fc31b7-97ee-4335-b7f4-be1ccfa9ddc6\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-21T15%3A43%3A44.0609779Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-21T15:43:19.9662875Z\",\r\n        \"updated\": \"2016-09-21T15:43:19.9662875Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/5879c79e-101d-48dd-916b-4382a3a4a60e\",\r\n      \"name\": \"5879c79e-101d-48dd-916b-4382a3a4a60e\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-15T14%3A51%3A33.3518295Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-15T14:51:02.6994879Z\",\r\n        \"updated\": \"2016-09-15T14:51:02.6994879Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/5f43f5dc-0f8d-478f-b375-05b4bface702\",\r\n      \"name\": \"5f43f5dc-0f8d-478f-b375-05b4bface702\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-15T01%3A28%3A45.9746227Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-15T01:28:21.8116775Z\",\r\n        \"updated\": \"2016-09-15T01:28:21.8116775Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/61b699bc-6a56-42b1-98d6-887d5ca0acb0\",\r\n      \"name\": \"61b699bc-6a56-42b1-98d6-887d5ca0acb0\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-17T06%3A21%3A02.0011865Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-17T06:20:58.0050205Z\",\r\n        \"updated\": \"2016-09-17T06:20:58.0050205Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/64fbccc8-c017-4c2f-b016-03e7809156d4\",\r\n      \"name\": \"64fbccc8-c017-4c2f-b016-03e7809156d4\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-21T00%3A21%3A06.6472473Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-21T00:21:02.9606206Z\",\r\n        \"updated\": \"2016-09-21T00:21:02.9606206Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/677fbe17-21ea-4059-bfc1-2fed0e14ca10\",\r\n      \"name\": \"677fbe17-21ea-4059-bfc1-2fed0e14ca10\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-17T03%3A21%3A00.2804075Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-17T03:20:58.2733349Z\",\r\n        \"updated\": \"2016-09-17T03:20:58.2733349Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/7715c13b-5722-4daa-ba21-12bed14d572a\",\r\n      \"name\": \"7715c13b-5722-4daa-ba21-12bed14d572a\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-17T02%3A35%3A59.6084013Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-17T02:35:58.054676Z\",\r\n        \"updated\": \"2016-09-17T02:35:58.054676Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/78a60c73-aa12-4827-8f0d-53edd9666a26\",\r\n      \"name\": \"78a60c73-aa12-4827-8f0d-53edd9666a26\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-17T08%3A58%3A22.3321687Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-17T08:58:18.868124Z\",\r\n        \"updated\": \"2016-09-17T08:58:18.868124Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/7e63cfac-3fed-4b64-a11b-251a63cad4ca\",\r\n      \"name\": \"7e63cfac-3fed-4b64-a11b-251a63cad4ca\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-17T03%3A35%3A59.7644843Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-17T03:35:58.5546742Z\",\r\n        \"updated\": \"2016-09-17T03:35:58.5546742Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/8483e0ae-00bb-418f-a79b-6483dc7f687d\",\r\n      \"name\": \"8483e0ae-00bb-418f-a79b-6483dc7f687d\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-17T09%3A36%3A00.1238623Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-17T09:35:55.6907618Z\",\r\n        \"updated\": \"2016-09-17T09:35:55.6907618Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/96261a38-f969-4104-9f34-e5152bfc7fba\",\r\n      \"name\": \"96261a38-f969-4104-9f34-e5152bfc7fba\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-15T16%3A58%3A44.3933924Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-15T16:58:25.1533877Z\",\r\n        \"updated\": \"2016-09-15T16:58:25.1533877Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/a05fa403-3ac6-4638-9b6c-127653bd6f35\",\r\n      \"name\": \"a05fa403-3ac6-4638-9b6c-127653bd6f35\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-17T08%3A13%3A36.2279469Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-17T08:13:32.9813526Z\",\r\n        \"updated\": \"2016-09-17T08:13:32.9813526Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/a8c248d0-ff86-413d-981b-3c1debcb51bd\",\r\n      \"name\": \"a8c248d0-ff86-413d-981b-3c1debcb51bd\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-17T09%3A13%3A23.9279971Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-17T09:13:19.3273792Z\",\r\n        \"updated\": \"2016-09-17T09:13:19.3273792Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/ad0243ce-c339-4d05-923e-b8d830cbca91\",\r\n      \"name\": \"ad0243ce-c339-4d05-923e-b8d830cbca91\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-17T07%3A43%3A25.9256173Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-17T07:43:23.7375379Z\",\r\n        \"updated\": \"2016-09-17T07:43:23.7375379Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/bd483470-440a-43a4-97ac-9ead34612a4a\",\r\n      \"name\": \"bd483470-440a-43a4-97ac-9ead34612a4a\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-17T08%3A06%3A02.4400174Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-17T08:05:58.4631139Z\",\r\n        \"updated\": \"2016-09-17T08:05:58.4631139Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/bf7022a1-771e-409c-bed2-784c0045142a\",\r\n      \"name\": \"bf7022a1-771e-409c-bed2-784c0045142a\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-17T07%3A21%3A01.6856177Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-17T07:20:57.7843892Z\",\r\n        \"updated\": \"2016-09-17T07:20:57.7843892Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/bff484ec-5e11-40a6-93c4-a234099028d7\",\r\n      \"name\": \"bff484ec-5e11-40a6-93c4-a234099028d7\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-23T00%3A28%3A23.0591677Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-23T00:28:20.5842829Z\",\r\n        \"updated\": \"2016-09-23T00:28:20.5842829Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/d09587dd-89f1-4f2d-ae09-200a87372645\",\r\n      \"name\": \"d09587dd-89f1-4f2d-ae09-200a87372645\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-22T11%3A58%3A48.6266453Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-22T11:58:29.4424442Z\",\r\n        \"updated\": \"2016-09-22T11:58:29.4424442Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/d3973d4f-1c06-45ee-8715-1a6f463e25fe\",\r\n      \"name\": \"d3973d4f-1c06-45ee-8715-1a6f463e25fe\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-15T13%3A51%3A51.9918713Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-15T13:50:55.4708643Z\",\r\n        \"updated\": \"2016-09-15T13:50:55.4708643Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/d431442c-5f4b-48ec-a8c5-8c2468eb5226\",\r\n      \"name\": \"d431442c-5f4b-48ec-a8c5-8c2468eb5226\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-17T06%3A28%3A32.3466842Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-17T06:28:30.3306534Z\",\r\n        \"updated\": \"2016-09-17T06:28:30.3306534Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/e43cde45-7a59-4278-9604-b58abd54bde2\",\r\n      \"name\": \"e43cde45-7a59-4278-9604-b58abd54bde2\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-17T05%3A43%3A30.1828065Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-17T05:43:27.1443939Z\",\r\n        \"updated\": \"2016-09-17T05:43:27.1443939Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/f4cb784d-4834-43a0-80cc-7a81e0c42b4c\",\r\n      \"name\": \"f4cb784d-4834-43a0-80cc-7a81e0c42b4c\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-15T13%3A06%3A56.0916593Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-15T13:06:01.2414047Z\",\r\n        \"updated\": \"2016-09-15T13:06:01.2414047Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/f56bd635-c8fb-4a2c-8d9d-d81731227511\",\r\n      \"name\": \"f56bd635-c8fb-4a2c-8d9d-d81731227511\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-22T00%3A21%3A03.6962167Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-22T00:20:58.7043323Z\",\r\n        \"updated\": \"2016-09-22T00:20:58.7043323Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch2-rg/providers/microsoft.servermanagement/gateways/fe99ad52-a964-4b18-8ef3-8aa9c26a94d9\",\r\n      \"name\": \"fe99ad52-a964-4b18-8ef3-8aa9c26a94d9\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"Central US\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-13T03%3A58%3A28.2468873Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-13T03:58:19.3966906Z\",\r\n        \"updated\": \"2016-09-13T03:58:19.3966906Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-wellknown-rg/providers/microsoft.servermanagement/gateways/pd-gw-cu-01\",\r\n      \"name\": \"pd-gw-cu-01\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"centralus\",\r\n      \"etag\": \"W/\\\"datetime'2016-08-17T19%3A29%3A20.702571Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-08-12T17:44:04.6061445Z\",\r\n        \"updated\": \"2016-08-17T19:29:21.571621Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/rsmt-rnr-rg/providers/microsoft.servermanagement/gateways/rameshr12\",\r\n      \"name\": \"rameshr12\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"centralus\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-16T19%3A04%3A41.4798931Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-16T18:39:51.3851949Z\",\r\n        \"updated\": \"2016-09-16T19:04:40.0479978Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/rsmt-rnr-rg/providers/microsoft.servermanagement/gateways/rnr-gw-tp3-01\",\r\n      \"name\": \"rnr-gw-tp3-01\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"centralus\",\r\n      \"etag\": \"W/\\\"datetime'2016-02-08T22%3A21%3A19.2125602Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-01-26T19:09:40.9945377Z\",\r\n        \"updated\": \"2016-02-08T22:21:18.1682149Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/rsmt-rnr-rg/providers/microsoft.servermanagement/gateways/sdk-test-gw-10334\",\r\n      \"name\": \"sdk-test-gw-10334\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"centralus\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-21T19%3A48%3A18.5779915Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-21T19:48:13.059018Z\",\r\n        \"updated\": \"2016-09-21T19:48:13.059018Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/rsmt-rnr-rg/providers/microsoft.servermanagement/gateways/sdk-test-gw-13331\",\r\n      \"name\": \"sdk-test-gw-13331\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"centralus\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-21T19%3A51%3A34.9055622Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-21T19:51:31.0440885Z\",\r\n        \"updated\": \"2016-09-21T19:51:31.0440885Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/rsmt-rnr-rg/providers/microsoft.servermanagement/gateways/sdk-test-gw-15928\",\r\n      \"name\": \"sdk-test-gw-15928\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"centralus\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-21T19%3A30%3A43.8320245Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-21T19:30:41.0002422Z\",\r\n        \"updated\": \"2016-09-21T19:30:41.0002422Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/rsmt-rnr-rg/providers/microsoft.servermanagement/gateways/sdk-test-gw-24744\",\r\n      \"name\": \"sdk-test-gw-24744\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"centralus\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-21T19%3A34%3A16.9578366Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-21T19:34:13.6622311Z\",\r\n        \"updated\": \"2016-09-21T19:34:13.6622311Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/rsmt-rnr-rg/providers/microsoft.servermanagement/gateways/sdk-test-gw-29682\",\r\n      \"name\": \"sdk-test-gw-29682\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"centralus\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-21T19%3A31%3A17.9895293Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-21T19:31:14.6538619Z\",\r\n        \"updated\": \"2016-09-21T19:31:14.6538619Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/rsmt-rnr-rg/providers/microsoft.servermanagement/gateways/sdk-test-gw-31232\",\r\n      \"name\": \"sdk-test-gw-31232\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"centralus\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-21T19%3A48%3A03.4157969Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-21T19:47:59.5785267Z\",\r\n        \"updated\": \"2016-09-21T19:47:59.5785267Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/rsmt-rnr-rg/providers/microsoft.servermanagement/gateways/sdk-test-gw-34640\",\r\n      \"name\": \"sdk-test-gw-34640\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"centralus\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-21T19%3A43%3A01.4015723Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-21T19:43:00.4226278Z\",\r\n        \"updated\": \"2016-09-21T19:43:00.4226278Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/rsmt-rnr-rg/providers/microsoft.servermanagement/gateways/sdk-test-gw-36509\",\r\n      \"name\": \"sdk-test-gw-36509\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"centralus\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-21T20%3A49%3A49.1052067Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-21T20:49:45.5062958Z\",\r\n        \"updated\": \"2016-09-21T20:49:45.5062958Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/rsmt-rnr-rg/providers/microsoft.servermanagement/gateways/sdk-test-gw-45578\",\r\n      \"name\": \"sdk-test-gw-45578\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"centralus\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-21T20%3A49%3A38.5814677Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-21T20:49:38.1645868Z\",\r\n        \"updated\": \"2016-09-21T20:49:38.1645868Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/rsmt-rnr-rg/providers/microsoft.servermanagement/gateways/sdk-test-gw-45905\",\r\n      \"name\": \"sdk-test-gw-45905\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"centralus\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-21T19%3A42%3A53.7714059Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-21T19:42:52.1430737Z\",\r\n        \"updated\": \"2016-09-21T19:42:52.1430737Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/rsmt-rnr-rg/providers/microsoft.servermanagement/gateways/sdk-test-gw-7485\",\r\n      \"name\": \"sdk-test-gw-7485\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"centralus\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-21T20%3A51%3A29.5491893Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-21T20:51:27.2728362Z\",\r\n        \"updated\": \"2016-09-21T20:51:27.2728362Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/rsmt-rnr-rg/providers/microsoft.servermanagement/gateways/sdk-test-gw-8014\",\r\n      \"name\": \"sdk-test-gw-8014\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"centralus\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-21T19%3A39%3A55.1061298Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-21T19:39:53.149456Z\",\r\n        \"updated\": \"2016-09-21T19:39:53.149456Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/sdktest/providers/microsoft.servermanagement/gateways/rameshr12\",\r\n      \"name\": \"rameshr12\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"centralus\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-22T19%3A48%3A35.9490958Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-22T19:32:15.1387289Z\",\r\n        \"updated\": \"2016-09-22T19:48:34.2572838Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/sdktest/providers/microsoft.servermanagement/gateways/test_gateway_654056619\",\r\n      \"name\": \"test_gateway_654056619\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"centralus\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-23T21%3A34%3A31.8135824Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-23T21:34:28.8479579Z\",\r\n        \"updated\": \"2016-09-23T21:34:32.1544659Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/wenjunp/providers/microsoft.servermanagement/gateways/wenjunp-vm2\",\r\n      \"name\": \"wenjunp-vm2\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"centralus\",\r\n      \"etag\": \"W/\\\"datetime'2016-06-14T20%3A35%3A49.1145753Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-03-22T22:27:47.6812427Z\",\r\n        \"updated\": \"2016-06-14T20:35:49.8871391Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-scratch-nu-rg/providers/microsoft.servermanagement/gateways/552c3cf4-7a04-4ba4-8236-484247f78b4d\",\r\n      \"name\": \"552c3cf4-7a04-4ba4-8236-484247f78b4d\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"North Europe\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-19T09%3A53%3A21.9278213Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-19T09:52:56.2424474Z\",\r\n        \"updated\": \"2016-09-19T09:52:56.2424474Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    },\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/pd-rnr-wellknown-nu-rg/providers/microsoft.servermanagement/gateways/rnr-gw-nu-01\",\r\n      \"name\": \"rnr-gw-nu-01\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"northeurope\",\r\n      \"etag\": \"W/\\\"datetime'2016-04-13T23%3A06%3A45.7160507Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-04-13T23:05:24.8818636Z\",\r\n        \"updated\": \"2016-04-13T23:06:45.2100617Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    }\r\n  ]\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "2393"
-        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
         ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "790e1be4-cd22-4932-ba8c-7cf9b797536d"
-        ],
-        "x-managementservice-fileversion": [
-          "1.0.1187.0"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14947"
-        ],
-        "x-ms-correlation-request-id": [
-          "790e1be4-cd22-4932-ba8c-7cf9b797536d"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160429T223504Z:790e1be4-cd22-4932-ba8c-7cf9b797536d"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 29 Apr 2016 22:35:04 GMT"
+          "Fri, 23 Sep 2016 21:34:34 GMT"
         ],
-        "Server": [
-          "Microsoft-IIS/8.5"
+        "Pragma": [
+          "no-cache"
         ],
-        "X-AspNet-Version": [
-          "4.0.30319"
+        "Vary": [
+          "Accept-Encoding"
         ],
-        "X-Powered-By": [
-          "ASP.NET"
+        "x-ms-original-request-ids": [
+          "5d740cdf-7dd0-4d00-9042-cc41767b1ac5",
+          "5d740cdf-7dd0-4d00-9042-cc41767b1ac5"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14991"
+        ],
+        "x-ms-request-id": [
+          "5d740cdf-7dd0-4d00-9042-cc41767b1ac5"
+        ],
+        "x-ms-correlation-request-id": [
+          "5d740cdf-7dd0-4d00-9042-cc41767b1ac5"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20160923T213434Z:5d740cdf-7dd0-4d00-9042-cc41767b1ac5"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3e82a90d-d19e-42f9-bb43-9112945846ef/resourceGroups/sdktest/providers/Microsoft.ServerManagement/nodes?api-version=2015-07-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U4MmE5MGQtZDE5ZS00MmY5LWJiNDMtOTExMjk0NTg0NmVmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5TZXJ2ZXJNYW5hZ2VtZW50L25vZGVzP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourceGroups/sdktest/providers/Microsoft.ServerManagement/nodes?api-version=2016-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTAxZmJhYjgtMTcxNC00Zjk0LThiNjctNDBkNzgyN2E1ZWZkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5TZXJ2ZXJNYW5hZ2VtZW50L25vZGVzP2FwaS12ZXJzaW9uPTIwMTYtMDctMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "f297fc30-afd4-4b2c-884f-c8eb82e30fbe"
+          "79f6677f-19f7-466a-bafb-45464cbc9786"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.ServerManagement.ServerManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.ServerManagement.ServerManagementClient/1.0.7"
         ]
       },
-      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/3e82a90d-d19e-42f9-bb43-9112945846ef/resourcegroups/sdktest/providers/microsoft.servermanagement/nodes/saddlebags\",\r\n      \"name\": \"saddlebags\",\r\n      \"type\": \"microsoft.servermanagement/nodes\",\r\n      \"location\": \"centralus\",\r\n      \"etag\": \"W/\\\"datetime'2016-04-29T00%3A27%3A46.6808222Z'\\\"\",\r\n      \"properties\": {\r\n        \"gatewayId\": \"/subscriptions/3e82a90d-d19e-42f9-bb43-9112945846ef/resourcegroups/sdktest/providers/microsoft.servermanagement/gateways/mygateway\",\r\n        \"connectionName\": \"saddlebags\",\r\n        \"created\": \"2016-04-29T00:27:46.6042374Z\",\r\n        \"updated\": \"2016-04-29T00:27:46.6042374Z\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
       "ResponseHeaders": {
-        "Content-Length": [
-          "564"
-        ],
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Expires": [
           "-1"
         ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "16eaf609-6bef-4972-991f-755cbecd9c0f"
-        ],
-        "x-managementservice-fileversion": [
-          "1.0.1187.0"
-        ],
-        "X-Content-Type-Options": [
-          "nosniff"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14946"
-        ],
-        "x-ms-correlation-request-id": [
-          "16eaf609-6bef-4972-991f-755cbecd9c0f"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160429T223505Z:16eaf609-6bef-4972-991f-755cbecd9c0f"
-        ],
         "Cache-Control": [
           "no-cache"
         ],
         "Date": [
-          "Fri, 29 Apr 2016 22:35:04 GMT"
+          "Fri, 23 Sep 2016 21:34:34 GMT"
         ],
-        "Server": [
-          "Microsoft-IIS/8.5"
+        "Pragma": [
+          "no-cache"
         ],
-        "X-AspNet-Version": [
-          "4.0.30319"
+        "Vary": [
+          "Accept-Encoding"
         ],
-        "X-Powered-By": [
-          "ASP.NET"
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14990"
+        ],
+        "x-ms-request-id": [
+          "2a493d9e-35fc-4cb8-9e06-8d596081013e"
+        ],
+        "x-ms-correlation-request-id": [
+          "2a493d9e-35fc-4cb8-9e06-8d596081013e"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20160923T213434Z:2a493d9e-35fc-4cb8-9e06-8d596081013e"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3e82a90d-d19e-42f9-bb43-9112945846ef/resourceGroups/sdktest/providers/Microsoft.ServerManagement/gateways/test_gateway_1234635981?api-version=2015-07-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvM2U4MmE5MGQtZDE5ZS00MmY5LWJiNDMtOTExMjk0NTg0NmVmL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5TZXJ2ZXJNYW5hZ2VtZW50L2dhdGV3YXlzL3Rlc3RfZ2F0ZXdheV8xMjM0NjM1OTgxP2FwaS12ZXJzaW9uPTIwMTUtMDctMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourceGroups/sdktest/providers/Microsoft.ServerManagement/gateways/test_gateway_654056619?api-version=2016-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTAxZmJhYjgtMTcxNC00Zjk0LThiNjctNDBkNzgyN2E1ZWZkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5TZXJ2ZXJNYW5hZ2VtZW50L2dhdGV3YXlzL3Rlc3RfZ2F0ZXdheV82NTQwNTY2MTk/YXBpLXZlcnNpb249MjAxNi0wNy0wMS1wcmV2aWV3",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "1b0bac4c-f898-49d2-b0c9-a6e38cb68c72"
+          "3876bc68-a724-4037-a790-2157adb4e808"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.ServerManagement.ServerManagementClient/1.0.0.0"
+          "Microsoft.Azure.Management.ServerManagement.ServerManagementClient/1.0.7"
         ]
       },
       "ResponseBody": "",
@@ -504,14 +490,23 @@
         "Expires": [
           "-1"
         ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 23 Sep 2016 21:34:36 GMT"
+        ],
         "Pragma": [
           "no-cache"
         ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
         "x-ms-request-id": [
-          "d90537e5-b032-446c-bebc-9e2bb69515b3"
+          "98acaeb2-3d61-4cf0-9d00-73a354e27193"
         ],
         "x-managementservice-fileversion": [
-          "1.0.1187.0"
+          "1.0.1684.0"
         ],
         "X-Content-Type-Options": [
           "nosniff"
@@ -519,29 +514,20 @@
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
-        "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
-        ],
-        "x-ms-correlation-request-id": [
-          "d90537e5-b032-446c-bebc-9e2bb69515b3"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160429T223506Z:d90537e5-b032-446c-bebc-9e2bb69515b3"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Fri, 29 Apr 2016 22:35:05 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
         "X-AspNet-Version": [
           "4.0.30319"
         ],
         "X-Powered-By": [
           "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-writes": [
+          "1197"
+        ],
+        "x-ms-correlation-request-id": [
+          "98acaeb2-3d61-4cf0-9d00-73a354e27193"
+        ],
+        "x-ms-routing-request-id": [
+          "WESTUS2:20160923T213436Z:98acaeb2-3d61-4cf0-9d00-73a354e27193"
         ]
       },
       "StatusCode": 200
@@ -549,8 +535,7 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "3e82a90d-d19e-42f9-bb43-9112945846ef",
-    "SMT_GATEWAY_1": "test_gateway_1234635981",
-    "SMT_TEST_LOCATION": "centralus"
+    "SubscriptionId": "a01fbab8-1714-4f94-8b67-40d7827a5efd",
+    "SMT_GATEWAY_1": "test_gateway_654056619"
   }
 }

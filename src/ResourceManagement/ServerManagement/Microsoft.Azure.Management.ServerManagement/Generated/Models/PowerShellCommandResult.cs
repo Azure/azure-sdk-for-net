@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.ServerManagement.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// results from invoking a powershell command
+    /// </summary>
     public partial class PowerShellCommandResult
     {
         /// <summary>

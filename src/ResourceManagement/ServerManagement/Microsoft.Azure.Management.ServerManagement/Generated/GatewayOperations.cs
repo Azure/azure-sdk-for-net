@@ -65,10 +65,10 @@ namespace Microsoft.Azure.Management.ServerManagement
         /// <param name='tags'>
         /// resource tags
         /// </param>
-        /// <param name='autoUpgrade'>
-        /// The autoUpgrade property gives the flexibility to gateway to auto upgrade
-        /// itself. If properties value not specified, then we assume autoUpgrade =
-        /// Off. Possible values include: 'On', 'Off'
+        /// <param name='upgradeMode'>
+        /// The upgradeMode property gives the flexibility to gateway to auto upgrade
+        /// itself. If properties value not specified, then we assume upgradeMode =
+        /// Automatic. Possible values include: 'Manual', 'Automatic'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -76,11 +76,11 @@ namespace Microsoft.Azure.Management.ServerManagement
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<GatewayResource>> CreateWithHttpMessagesAsync(string resourceGroupName, string gatewayName, string location = default(string), object tags = default(object), AutoUpgrade? autoUpgrade = default(AutoUpgrade?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<GatewayResource>> CreateWithHttpMessagesAsync(string resourceGroupName, string gatewayName, string location = default(string), object tags = default(object), UpgradeMode? upgradeMode = default(UpgradeMode?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
             AzureOperationResponse<GatewayResource> _response = await BeginCreateWithHttpMessagesAsync(
-                resourceGroupName, gatewayName, location, tags, autoUpgrade, customHeaders, cancellationToken);
+                resourceGroupName, gatewayName, location, tags, upgradeMode, customHeaders, cancellationToken);
             return await this.Client.GetPutOrPatchOperationResultAsync(_response,
                 customHeaders,
                 cancellationToken);
@@ -102,10 +102,10 @@ namespace Microsoft.Azure.Management.ServerManagement
         /// <param name='tags'>
         /// resource tags
         /// </param>
-        /// <param name='autoUpgrade'>
-        /// The autoUpgrade property gives the flexibility to gateway to auto upgrade
-        /// itself. If properties value not specified, then we assume autoUpgrade =
-        /// Off. Possible values include: 'On', 'Off'
+        /// <param name='upgradeMode'>
+        /// The upgradeMode property gives the flexibility to gateway to auto upgrade
+        /// itself. If properties value not specified, then we assume upgradeMode =
+        /// Automatic. Possible values include: 'Manual', 'Automatic'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.ServerManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<GatewayResource>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string gatewayName, string location = default(string), object tags = default(object), AutoUpgrade? autoUpgrade = default(AutoUpgrade?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<GatewayResource>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string gatewayName, string location = default(string), object tags = default(object), UpgradeMode? upgradeMode = default(UpgradeMode?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.SubscriptionId == null)
             {
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.ServerManagement
             {
                 gatewayParameters.Location = location;
                 gatewayParameters.Tags = tags;
-                gatewayParameters.AutoUpgrade = autoUpgrade;
+                gatewayParameters.UpgradeMode = upgradeMode;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -349,10 +349,10 @@ namespace Microsoft.Azure.Management.ServerManagement
         /// <param name='tags'>
         /// resource tags
         /// </param>
-        /// <param name='autoUpgrade'>
-        /// The autoUpgrade property gives the flexibility to gateway to auto upgrade
-        /// itself. If properties value not specified, then we assume autoUpgrade =
-        /// Off. Possible values include: 'On', 'Off'
+        /// <param name='upgradeMode'>
+        /// The upgradeMode property gives the flexibility to gateway to auto upgrade
+        /// itself. If properties value not specified, then we assume upgradeMode =
+        /// Automatic. Possible values include: 'Manual', 'Automatic'
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -360,11 +360,11 @@ namespace Microsoft.Azure.Management.ServerManagement
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<GatewayResource>> UpdateWithHttpMessagesAsync(string resourceGroupName, string gatewayName, string location = default(string), object tags = default(object), AutoUpgrade? autoUpgrade = default(AutoUpgrade?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<GatewayResource>> UpdateWithHttpMessagesAsync(string resourceGroupName, string gatewayName, string location = default(string), object tags = default(object), UpgradeMode? upgradeMode = default(UpgradeMode?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
             AzureOperationResponse<GatewayResource> _response = await BeginUpdateWithHttpMessagesAsync(
-                resourceGroupName, gatewayName, location, tags, autoUpgrade, customHeaders, cancellationToken);
+                resourceGroupName, gatewayName, location, tags, upgradeMode, customHeaders, cancellationToken);
             return await this.Client.GetPutOrPatchOperationResultAsync(_response,
                 customHeaders,
                 cancellationToken);
@@ -386,10 +386,10 @@ namespace Microsoft.Azure.Management.ServerManagement
         /// <param name='tags'>
         /// resource tags
         /// </param>
-        /// <param name='autoUpgrade'>
-        /// The autoUpgrade property gives the flexibility to gateway to auto upgrade
-        /// itself. If properties value not specified, then we assume autoUpgrade =
-        /// Off. Possible values include: 'On', 'Off'
+        /// <param name='upgradeMode'>
+        /// The upgradeMode property gives the flexibility to gateway to auto upgrade
+        /// itself. If properties value not specified, then we assume upgradeMode =
+        /// Automatic. Possible values include: 'Manual', 'Automatic'
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -400,7 +400,7 @@ namespace Microsoft.Azure.Management.ServerManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<GatewayResource>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string gatewayName, string location = default(string), object tags = default(object), AutoUpgrade? autoUpgrade = default(AutoUpgrade?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<GatewayResource>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string gatewayName, string location = default(string), object tags = default(object), UpgradeMode? upgradeMode = default(UpgradeMode?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.SubscriptionId == null)
             {
@@ -449,7 +449,7 @@ namespace Microsoft.Azure.Management.ServerManagement
             {
                 gatewayParameters.Location = location;
                 gatewayParameters.Tags = tags;
-                gatewayParameters.AutoUpgrade = autoUpgrade;
+                gatewayParameters.UpgradeMode = upgradeMode;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

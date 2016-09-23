@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.ServerManagement.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// collection of parameters for powershell tab completion
+    /// </summary>
     public partial class PowerShellTabCompletionParameters
     {
         /// <summary>

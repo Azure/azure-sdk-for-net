@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.ServerManagement.Models
         /// <summary>
         /// Initializes a new instance of the GatewayStatus class.
         /// </summary>
-        public GatewayStatus(double? availableMemoryMByte = default(double?), double? gatewayCpuUtilizationPercent = default(double?), double? totalCpuUtilizationPercent = default(double?), string gatewayVersion = default(string), string friendlyOsName = default(string), DateTime? installedDate = default(DateTime?), int? logicalProcessorCount = default(int?), string name = default(string), string gatewayId = default(string), double? gatewayWorkingSetMByte = default(double?), DateTime? statusUpdated = default(DateTime?))
+        public GatewayStatus(double? availableMemoryMByte = default(double?), double? gatewayCpuUtilizationPercent = default(double?), double? totalCpuUtilizationPercent = default(double?), string gatewayVersion = default(string), string friendlyOsName = default(string), DateTime? installedDate = default(DateTime?), int? logicalProcessorCount = default(int?), string name = default(string), string gatewayId = default(string), double? gatewayWorkingSetMByte = default(double?), DateTime? statusUpdated = default(DateTime?), string groupPolicyError = default(string), bool? allowGatewayGroupPolicyStatus = default(bool?), bool? requireMfaGroupPolicyStatus = default(bool?), string encryptionCertificateThumbprint = default(string), string secondaryEncryptionCertificateThumbprint = default(string), EncryptionJwkResource encryptionJwk = default(EncryptionJwkResource), EncryptionJwkResource secondaryEncryptionJwk = default(EncryptionJwkResource), int? activeMessageCount = default(int?), string latestPublishedMsiVersion = default(string), DateTime? publishedTimeUtc = default(DateTime?))
         {
             AvailableMemoryMByte = availableMemoryMByte;
             GatewayCpuUtilizationPercent = gatewayCpuUtilizationPercent;
@@ -42,6 +42,16 @@ namespace Microsoft.Azure.Management.ServerManagement.Models
             GatewayId = gatewayId;
             GatewayWorkingSetMByte = gatewayWorkingSetMByte;
             StatusUpdated = statusUpdated;
+            GroupPolicyError = groupPolicyError;
+            AllowGatewayGroupPolicyStatus = allowGatewayGroupPolicyStatus;
+            RequireMfaGroupPolicyStatus = requireMfaGroupPolicyStatus;
+            EncryptionCertificateThumbprint = encryptionCertificateThumbprint;
+            SecondaryEncryptionCertificateThumbprint = secondaryEncryptionCertificateThumbprint;
+            EncryptionJwk = encryptionJwk;
+            SecondaryEncryptionJwk = secondaryEncryptionJwk;
+            ActiveMessageCount = activeMessageCount;
+            LatestPublishedMsiVersion = latestPublishedMsiVersion;
+            PublishedTimeUtc = publishedTimeUtc;
         }
 
         /// <summary>
@@ -110,6 +120,66 @@ namespace Microsoft.Azure.Management.ServerManagement.Models
         /// </summary>
         [JsonProperty(PropertyName = "statusUpdated")]
         public DateTime? StatusUpdated { get; set; }
+
+        /// <summary>
+        /// The group policy error
+        /// </summary>
+        [JsonProperty(PropertyName = "groupPolicyError")]
+        public string GroupPolicyError { get; set; }
+
+        /// <summary>
+        /// Status of the allowGatewayGroupPolicy setting
+        /// </summary>
+        [JsonProperty(PropertyName = "allowGatewayGroupPolicyStatus")]
+        public bool? AllowGatewayGroupPolicyStatus { get; set; }
+
+        /// <summary>
+        /// Status of the requireMfaGroupPolicy setting
+        /// </summary>
+        [JsonProperty(PropertyName = "requireMfaGroupPolicyStatus")]
+        public bool? RequireMfaGroupPolicyStatus { get; set; }
+
+        /// <summary>
+        /// Thumbprint of the encryption certificate
+        /// </summary>
+        [JsonProperty(PropertyName = "encryptionCertificateThumbprint")]
+        public string EncryptionCertificateThumbprint { get; set; }
+
+        /// <summary>
+        /// Secondary thumbprint of the encryption certificate
+        /// </summary>
+        [JsonProperty(PropertyName = "secondaryEncryptionCertificateThumbprint")]
+        public string SecondaryEncryptionCertificateThumbprint { get; set; }
+
+        /// <summary>
+        /// The encryption cerfiticate key
+        /// </summary>
+        [JsonProperty(PropertyName = "encryptionJwk")]
+        public EncryptionJwkResource EncryptionJwk { get; set; }
+
+        /// <summary>
+        /// The secondary encryption cerfiticate key
+        /// </summary>
+        [JsonProperty(PropertyName = "secondaryEncryptionJwk")]
+        public EncryptionJwkResource SecondaryEncryptionJwk { get; set; }
+
+        /// <summary>
+        /// active message count
+        /// </summary>
+        [JsonProperty(PropertyName = "activeMessageCount")]
+        public int? ActiveMessageCount { get; set; }
+
+        /// <summary>
+        /// latest published version of the gateway install msi
+        /// </summary>
+        [JsonProperty(PropertyName = "latestPublishedMsiVersion")]
+        public string LatestPublishedMsiVersion { get; set; }
+
+        /// <summary>
+        /// gateway install msi published time
+        /// </summary>
+        [JsonProperty(PropertyName = "publishedTimeUtc")]
+        public DateTime? PublishedTimeUtc { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.

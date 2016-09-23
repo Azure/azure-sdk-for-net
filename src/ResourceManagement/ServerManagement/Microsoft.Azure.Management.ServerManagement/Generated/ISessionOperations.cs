@@ -36,10 +36,20 @@ namespace Microsoft.Azure.Management.ServerManagement
         /// The sessionId from the user
         /// </param>
         /// <param name='userName'>
-        /// User name to be used to connect to node
+        /// encrypted User name to be used to connect to node
         /// </param>
         /// <param name='password'>
-        /// Password associated with user name
+        /// encrypted Password associated with user name
+        /// </param>
+        /// <param name='retentionPeriod'>
+        /// session retention period. Possible values include: 'Session',
+        /// 'Persistent'
+        /// </param>
+        /// <param name='credentialDataFormat'>
+        /// credential data format. Possible values include: 'RsaEncrypted'
+        /// </param>
+        /// <param name='encryptionCertificateThumbprint'>
+        /// encryption certificate thumbprint
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -47,7 +57,7 @@ namespace Microsoft.Azure.Management.ServerManagement
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<SessionResource>> CreateWithHttpMessagesAsync(string resourceGroupName, string nodeName, string session, string userName = default(string), string password = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SessionResource>> CreateWithHttpMessagesAsync(string resourceGroupName, string nodeName, string session, string userName = default(string), string password = default(string), RetentionPeriod? retentionPeriod = default(RetentionPeriod?), CredentialDataFormat? credentialDataFormat = default(CredentialDataFormat?), string encryptionCertificateThumbprint = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates a session for a node
         /// </summary>
@@ -62,10 +72,20 @@ namespace Microsoft.Azure.Management.ServerManagement
         /// The sessionId from the user
         /// </param>
         /// <param name='userName'>
-        /// User name to be used to connect to node
+        /// encrypted User name to be used to connect to node
         /// </param>
         /// <param name='password'>
-        /// Password associated with user name
+        /// encrypted Password associated with user name
+        /// </param>
+        /// <param name='retentionPeriod'>
+        /// session retention period. Possible values include: 'Session',
+        /// 'Persistent'
+        /// </param>
+        /// <param name='credentialDataFormat'>
+        /// credential data format. Possible values include: 'RsaEncrypted'
+        /// </param>
+        /// <param name='encryptionCertificateThumbprint'>
+        /// encryption certificate thumbprint
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -73,7 +93,7 @@ namespace Microsoft.Azure.Management.ServerManagement
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<SessionResource>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string nodeName, string session, string userName = default(string), string password = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SessionResource>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string nodeName, string session, string userName = default(string), string password = default(string), RetentionPeriod? retentionPeriod = default(RetentionPeriod?), CredentialDataFormat? credentialDataFormat = default(CredentialDataFormat?), string encryptionCertificateThumbprint = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a session for a node
         /// </summary>

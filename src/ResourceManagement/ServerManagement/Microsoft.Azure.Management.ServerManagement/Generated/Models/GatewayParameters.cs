@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.ServerManagement.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// collection of parameters for operations on a gateway resource
+    /// </summary>
     [JsonTransformation]
     public partial class GatewayParameters
     {
@@ -27,11 +30,11 @@ namespace Microsoft.Azure.Management.ServerManagement.Models
         /// <summary>
         /// Initializes a new instance of the GatewayParameters class.
         /// </summary>
-        public GatewayParameters(string location = default(string), object tags = default(object), AutoUpgrade? autoUpgrade = default(AutoUpgrade?))
+        public GatewayParameters(string location = default(string), object tags = default(object), UpgradeMode? upgradeMode = default(UpgradeMode?))
         {
             Location = location;
             Tags = tags;
-            AutoUpgrade = autoUpgrade;
+            UpgradeMode = upgradeMode;
         }
 
         /// <summary>
@@ -47,12 +50,13 @@ namespace Microsoft.Azure.Management.ServerManagement.Models
         public object Tags { get; set; }
 
         /// <summary>
-        /// The autoUpgrade property gives the flexibility to gateway to auto
+        /// The upgradeMode property gives the flexibility to gateway to auto
         /// upgrade itself. If properties value not specified, then we assume
-        /// autoUpgrade = Off. Possible values include: 'On', 'Off'
+        /// upgradeMode = Automatic. Possible values include: 'Manual',
+        /// 'Automatic'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.autoUpgrade")]
-        public AutoUpgrade? AutoUpgrade { get; set; }
+        [JsonProperty(PropertyName = "properties.upgradeMode")]
+        public UpgradeMode? UpgradeMode { get; set; }
 
     }
 }

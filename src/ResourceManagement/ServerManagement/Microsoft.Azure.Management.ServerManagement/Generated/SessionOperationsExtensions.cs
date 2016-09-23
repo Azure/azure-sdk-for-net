@@ -39,14 +39,23 @@ namespace Microsoft.Azure.Management.ServerManagement
             /// The sessionId from the user
             /// </param>
             /// <param name='userName'>
-            /// User name to be used to connect to node
+            /// encrypted User name to be used to connect to node
             /// </param>
             /// <param name='password'>
-            /// Password associated with user name
+            /// encrypted Password associated with user name
             /// </param>
-            public static SessionResource Create(this ISessionOperations operations, string resourceGroupName, string nodeName, string session, string userName = default(string), string password = default(string))
+            /// <param name='retentionPeriod'>
+            /// session retention period. Possible values include: 'Session', 'Persistent'
+            /// </param>
+            /// <param name='credentialDataFormat'>
+            /// credential data format. Possible values include: 'RsaEncrypted'
+            /// </param>
+            /// <param name='encryptionCertificateThumbprint'>
+            /// encryption certificate thumbprint
+            /// </param>
+            public static SessionResource Create(this ISessionOperations operations, string resourceGroupName, string nodeName, string session, string userName = default(string), string password = default(string), RetentionPeriod? retentionPeriod = default(RetentionPeriod?), CredentialDataFormat? credentialDataFormat = default(CredentialDataFormat?), string encryptionCertificateThumbprint = default(string))
             {
-                return Task.Factory.StartNew(s => ((ISessionOperations)s).CreateAsync(resourceGroupName, nodeName, session, userName, password), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISessionOperations)s).CreateAsync(resourceGroupName, nodeName, session, userName, password, retentionPeriod, credentialDataFormat, encryptionCertificateThumbprint), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -66,17 +75,26 @@ namespace Microsoft.Azure.Management.ServerManagement
             /// The sessionId from the user
             /// </param>
             /// <param name='userName'>
-            /// User name to be used to connect to node
+            /// encrypted User name to be used to connect to node
             /// </param>
             /// <param name='password'>
-            /// Password associated with user name
+            /// encrypted Password associated with user name
+            /// </param>
+            /// <param name='retentionPeriod'>
+            /// session retention period. Possible values include: 'Session', 'Persistent'
+            /// </param>
+            /// <param name='credentialDataFormat'>
+            /// credential data format. Possible values include: 'RsaEncrypted'
+            /// </param>
+            /// <param name='encryptionCertificateThumbprint'>
+            /// encryption certificate thumbprint
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SessionResource> CreateAsync(this ISessionOperations operations, string resourceGroupName, string nodeName, string session, string userName = default(string), string password = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SessionResource> CreateAsync(this ISessionOperations operations, string resourceGroupName, string nodeName, string session, string userName = default(string), string password = default(string), RetentionPeriod? retentionPeriod = default(RetentionPeriod?), CredentialDataFormat? credentialDataFormat = default(CredentialDataFormat?), string encryptionCertificateThumbprint = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, nodeName, session, userName, password, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, nodeName, session, userName, password, retentionPeriod, credentialDataFormat, encryptionCertificateThumbprint, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -99,14 +117,23 @@ namespace Microsoft.Azure.Management.ServerManagement
             /// The sessionId from the user
             /// </param>
             /// <param name='userName'>
-            /// User name to be used to connect to node
+            /// encrypted User name to be used to connect to node
             /// </param>
             /// <param name='password'>
-            /// Password associated with user name
+            /// encrypted Password associated with user name
             /// </param>
-            public static SessionResource BeginCreate(this ISessionOperations operations, string resourceGroupName, string nodeName, string session, string userName = default(string), string password = default(string))
+            /// <param name='retentionPeriod'>
+            /// session retention period. Possible values include: 'Session', 'Persistent'
+            /// </param>
+            /// <param name='credentialDataFormat'>
+            /// credential data format. Possible values include: 'RsaEncrypted'
+            /// </param>
+            /// <param name='encryptionCertificateThumbprint'>
+            /// encryption certificate thumbprint
+            /// </param>
+            public static SessionResource BeginCreate(this ISessionOperations operations, string resourceGroupName, string nodeName, string session, string userName = default(string), string password = default(string), RetentionPeriod? retentionPeriod = default(RetentionPeriod?), CredentialDataFormat? credentialDataFormat = default(CredentialDataFormat?), string encryptionCertificateThumbprint = default(string))
             {
-                return Task.Factory.StartNew(s => ((ISessionOperations)s).BeginCreateAsync(resourceGroupName, nodeName, session, userName, password), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISessionOperations)s).BeginCreateAsync(resourceGroupName, nodeName, session, userName, password, retentionPeriod, credentialDataFormat, encryptionCertificateThumbprint), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -126,17 +153,26 @@ namespace Microsoft.Azure.Management.ServerManagement
             /// The sessionId from the user
             /// </param>
             /// <param name='userName'>
-            /// User name to be used to connect to node
+            /// encrypted User name to be used to connect to node
             /// </param>
             /// <param name='password'>
-            /// Password associated with user name
+            /// encrypted Password associated with user name
+            /// </param>
+            /// <param name='retentionPeriod'>
+            /// session retention period. Possible values include: 'Session', 'Persistent'
+            /// </param>
+            /// <param name='credentialDataFormat'>
+            /// credential data format. Possible values include: 'RsaEncrypted'
+            /// </param>
+            /// <param name='encryptionCertificateThumbprint'>
+            /// encryption certificate thumbprint
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SessionResource> BeginCreateAsync(this ISessionOperations operations, string resourceGroupName, string nodeName, string session, string userName = default(string), string password = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SessionResource> BeginCreateAsync(this ISessionOperations operations, string resourceGroupName, string nodeName, string session, string userName = default(string), string password = default(string), RetentionPeriod? retentionPeriod = default(RetentionPeriod?), CredentialDataFormat? credentialDataFormat = default(CredentialDataFormat?), string encryptionCertificateThumbprint = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, nodeName, session, userName, password, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, nodeName, session, userName, password, retentionPeriod, credentialDataFormat, encryptionCertificateThumbprint, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

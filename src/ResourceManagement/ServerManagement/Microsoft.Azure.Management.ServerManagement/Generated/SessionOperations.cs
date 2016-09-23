@@ -63,10 +63,19 @@ namespace Microsoft.Azure.Management.ServerManagement
         /// The sessionId from the user
         /// </param>
         /// <param name='userName'>
-        /// User name to be used to connect to node
+        /// encrypted User name to be used to connect to node
         /// </param>
         /// <param name='password'>
-        /// Password associated with user name
+        /// encrypted Password associated with user name
+        /// </param>
+        /// <param name='retentionPeriod'>
+        /// session retention period. Possible values include: 'Session', 'Persistent'
+        /// </param>
+        /// <param name='credentialDataFormat'>
+        /// credential data format. Possible values include: 'RsaEncrypted'
+        /// </param>
+        /// <param name='encryptionCertificateThumbprint'>
+        /// encryption certificate thumbprint
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -74,11 +83,11 @@ namespace Microsoft.Azure.Management.ServerManagement
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<SessionResource>> CreateWithHttpMessagesAsync(string resourceGroupName, string nodeName, string session, string userName = default(string), string password = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SessionResource>> CreateWithHttpMessagesAsync(string resourceGroupName, string nodeName, string session, string userName = default(string), string password = default(string), RetentionPeriod? retentionPeriod = default(RetentionPeriod?), CredentialDataFormat? credentialDataFormat = default(CredentialDataFormat?), string encryptionCertificateThumbprint = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send Request
             AzureOperationResponse<SessionResource> _response = await BeginCreateWithHttpMessagesAsync(
-                resourceGroupName, nodeName, session, userName, password, customHeaders, cancellationToken);
+                resourceGroupName, nodeName, session, userName, password, retentionPeriod, credentialDataFormat, encryptionCertificateThumbprint, customHeaders, cancellationToken);
             return await this.Client.GetPutOrPatchOperationResultAsync(_response,
                 customHeaders,
                 cancellationToken);
@@ -98,10 +107,19 @@ namespace Microsoft.Azure.Management.ServerManagement
         /// The sessionId from the user
         /// </param>
         /// <param name='userName'>
-        /// User name to be used to connect to node
+        /// encrypted User name to be used to connect to node
         /// </param>
         /// <param name='password'>
-        /// Password associated with user name
+        /// encrypted Password associated with user name
+        /// </param>
+        /// <param name='retentionPeriod'>
+        /// session retention period. Possible values include: 'Session', 'Persistent'
+        /// </param>
+        /// <param name='credentialDataFormat'>
+        /// credential data format. Possible values include: 'RsaEncrypted'
+        /// </param>
+        /// <param name='encryptionCertificateThumbprint'>
+        /// encryption certificate thumbprint
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -112,7 +130,7 @@ namespace Microsoft.Azure.Management.ServerManagement
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SessionResource>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string nodeName, string session, string userName = default(string), string password = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SessionResource>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string nodeName, string session, string userName = default(string), string password = default(string), RetentionPeriod? retentionPeriod = default(RetentionPeriod?), CredentialDataFormat? credentialDataFormat = default(CredentialDataFormat?), string encryptionCertificateThumbprint = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (this.Client.SubscriptionId == null)
             {
@@ -161,10 +179,13 @@ namespace Microsoft.Azure.Management.ServerManagement
                 throw new ValidationException(ValidationRules.CannotBeNull, "session");
             }
             SessionParameters sessionParameters = new SessionParameters();
-            if (userName != null || password != null)
+            if (userName != null || password != null || encryptionCertificateThumbprint != null)
             {
                 sessionParameters.UserName = userName;
                 sessionParameters.Password = password;
+                sessionParameters.RetentionPeriod = retentionPeriod;
+                sessionParameters.CredentialDataFormat = credentialDataFormat;
+                sessionParameters.EncryptionCertificateThumbprint = encryptionCertificateThumbprint;
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;

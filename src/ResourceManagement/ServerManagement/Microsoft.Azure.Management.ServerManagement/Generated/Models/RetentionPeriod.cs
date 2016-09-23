@@ -13,14 +13,14 @@ namespace Microsoft.Azure.Management.ServerManagement.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for AutoUpgrade.
+    /// Defines values for RetentionPeriod.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum AutoUpgrade
+    public enum RetentionPeriod
     {
-        [EnumMember(Value = "On")]
-        On,
-        [EnumMember(Value = "Off")]
-        Off
+        [EnumMember(Value = "Session")]
+        Session,
+        [EnumMember(Value = "Persistent")]
+        Persistent
     }
 }

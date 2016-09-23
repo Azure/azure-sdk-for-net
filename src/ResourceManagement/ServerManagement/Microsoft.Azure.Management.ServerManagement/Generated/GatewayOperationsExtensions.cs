@@ -41,14 +41,14 @@ namespace Microsoft.Azure.Management.ServerManagement
             /// <param name='tags'>
             /// resource tags
             /// </param>
-            /// <param name='autoUpgrade'>
-            /// The autoUpgrade property gives the flexibility to gateway to auto upgrade
-            /// itself. If properties value not specified, then we assume autoUpgrade =
-            /// Off. Possible values include: 'On', 'Off'
+            /// <param name='upgradeMode'>
+            /// The upgradeMode property gives the flexibility to gateway to auto upgrade
+            /// itself. If properties value not specified, then we assume upgradeMode =
+            /// Automatic. Possible values include: 'Manual', 'Automatic'
             /// </param>
-            public static GatewayResource Create(this IGatewayOperations operations, string resourceGroupName, string gatewayName, string location = default(string), object tags = default(object), AutoUpgrade? autoUpgrade = default(AutoUpgrade?))
+            public static GatewayResource Create(this IGatewayOperations operations, string resourceGroupName, string gatewayName, string location = default(string), object tags = default(object), UpgradeMode? upgradeMode = default(UpgradeMode?))
             {
-                return Task.Factory.StartNew(s => ((IGatewayOperations)s).CreateAsync(resourceGroupName, gatewayName, location, tags, autoUpgrade), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IGatewayOperations)s).CreateAsync(resourceGroupName, gatewayName, location, tags, upgradeMode), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -70,17 +70,17 @@ namespace Microsoft.Azure.Management.ServerManagement
             /// <param name='tags'>
             /// resource tags
             /// </param>
-            /// <param name='autoUpgrade'>
-            /// The autoUpgrade property gives the flexibility to gateway to auto upgrade
-            /// itself. If properties value not specified, then we assume autoUpgrade =
-            /// Off. Possible values include: 'On', 'Off'
+            /// <param name='upgradeMode'>
+            /// The upgradeMode property gives the flexibility to gateway to auto upgrade
+            /// itself. If properties value not specified, then we assume upgradeMode =
+            /// Automatic. Possible values include: 'Manual', 'Automatic'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<GatewayResource> CreateAsync(this IGatewayOperations operations, string resourceGroupName, string gatewayName, string location = default(string), object tags = default(object), AutoUpgrade? autoUpgrade = default(AutoUpgrade?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<GatewayResource> CreateAsync(this IGatewayOperations operations, string resourceGroupName, string gatewayName, string location = default(string), object tags = default(object), UpgradeMode? upgradeMode = default(UpgradeMode?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, gatewayName, location, tags, autoUpgrade, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, gatewayName, location, tags, upgradeMode, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -105,14 +105,14 @@ namespace Microsoft.Azure.Management.ServerManagement
             /// <param name='tags'>
             /// resource tags
             /// </param>
-            /// <param name='autoUpgrade'>
-            /// The autoUpgrade property gives the flexibility to gateway to auto upgrade
-            /// itself. If properties value not specified, then we assume autoUpgrade =
-            /// Off. Possible values include: 'On', 'Off'
+            /// <param name='upgradeMode'>
+            /// The upgradeMode property gives the flexibility to gateway to auto upgrade
+            /// itself. If properties value not specified, then we assume upgradeMode =
+            /// Automatic. Possible values include: 'Manual', 'Automatic'
             /// </param>
-            public static GatewayResource BeginCreate(this IGatewayOperations operations, string resourceGroupName, string gatewayName, string location = default(string), object tags = default(object), AutoUpgrade? autoUpgrade = default(AutoUpgrade?))
+            public static GatewayResource BeginCreate(this IGatewayOperations operations, string resourceGroupName, string gatewayName, string location = default(string), object tags = default(object), UpgradeMode? upgradeMode = default(UpgradeMode?))
             {
-                return Task.Factory.StartNew(s => ((IGatewayOperations)s).BeginCreateAsync(resourceGroupName, gatewayName, location, tags, autoUpgrade), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IGatewayOperations)s).BeginCreateAsync(resourceGroupName, gatewayName, location, tags, upgradeMode), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -134,17 +134,17 @@ namespace Microsoft.Azure.Management.ServerManagement
             /// <param name='tags'>
             /// resource tags
             /// </param>
-            /// <param name='autoUpgrade'>
-            /// The autoUpgrade property gives the flexibility to gateway to auto upgrade
-            /// itself. If properties value not specified, then we assume autoUpgrade =
-            /// Off. Possible values include: 'On', 'Off'
+            /// <param name='upgradeMode'>
+            /// The upgradeMode property gives the flexibility to gateway to auto upgrade
+            /// itself. If properties value not specified, then we assume upgradeMode =
+            /// Automatic. Possible values include: 'Manual', 'Automatic'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<GatewayResource> BeginCreateAsync(this IGatewayOperations operations, string resourceGroupName, string gatewayName, string location = default(string), object tags = default(object), AutoUpgrade? autoUpgrade = default(AutoUpgrade?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<GatewayResource> BeginCreateAsync(this IGatewayOperations operations, string resourceGroupName, string gatewayName, string location = default(string), object tags = default(object), UpgradeMode? upgradeMode = default(UpgradeMode?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, gatewayName, location, tags, autoUpgrade, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, gatewayName, location, tags, upgradeMode, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -169,14 +169,14 @@ namespace Microsoft.Azure.Management.ServerManagement
             /// <param name='tags'>
             /// resource tags
             /// </param>
-            /// <param name='autoUpgrade'>
-            /// The autoUpgrade property gives the flexibility to gateway to auto upgrade
-            /// itself. If properties value not specified, then we assume autoUpgrade =
-            /// Off. Possible values include: 'On', 'Off'
+            /// <param name='upgradeMode'>
+            /// The upgradeMode property gives the flexibility to gateway to auto upgrade
+            /// itself. If properties value not specified, then we assume upgradeMode =
+            /// Automatic. Possible values include: 'Manual', 'Automatic'
             /// </param>
-            public static GatewayResource Update(this IGatewayOperations operations, string resourceGroupName, string gatewayName, string location = default(string), object tags = default(object), AutoUpgrade? autoUpgrade = default(AutoUpgrade?))
+            public static GatewayResource Update(this IGatewayOperations operations, string resourceGroupName, string gatewayName, string location = default(string), object tags = default(object), UpgradeMode? upgradeMode = default(UpgradeMode?))
             {
-                return Task.Factory.StartNew(s => ((IGatewayOperations)s).UpdateAsync(resourceGroupName, gatewayName, location, tags, autoUpgrade), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IGatewayOperations)s).UpdateAsync(resourceGroupName, gatewayName, location, tags, upgradeMode), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -198,17 +198,17 @@ namespace Microsoft.Azure.Management.ServerManagement
             /// <param name='tags'>
             /// resource tags
             /// </param>
-            /// <param name='autoUpgrade'>
-            /// The autoUpgrade property gives the flexibility to gateway to auto upgrade
-            /// itself. If properties value not specified, then we assume autoUpgrade =
-            /// Off. Possible values include: 'On', 'Off'
+            /// <param name='upgradeMode'>
+            /// The upgradeMode property gives the flexibility to gateway to auto upgrade
+            /// itself. If properties value not specified, then we assume upgradeMode =
+            /// Automatic. Possible values include: 'Manual', 'Automatic'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<GatewayResource> UpdateAsync(this IGatewayOperations operations, string resourceGroupName, string gatewayName, string location = default(string), object tags = default(object), AutoUpgrade? autoUpgrade = default(AutoUpgrade?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<GatewayResource> UpdateAsync(this IGatewayOperations operations, string resourceGroupName, string gatewayName, string location = default(string), object tags = default(object), UpgradeMode? upgradeMode = default(UpgradeMode?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, gatewayName, location, tags, autoUpgrade, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, gatewayName, location, tags, upgradeMode, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -233,14 +233,14 @@ namespace Microsoft.Azure.Management.ServerManagement
             /// <param name='tags'>
             /// resource tags
             /// </param>
-            /// <param name='autoUpgrade'>
-            /// The autoUpgrade property gives the flexibility to gateway to auto upgrade
-            /// itself. If properties value not specified, then we assume autoUpgrade =
-            /// Off. Possible values include: 'On', 'Off'
+            /// <param name='upgradeMode'>
+            /// The upgradeMode property gives the flexibility to gateway to auto upgrade
+            /// itself. If properties value not specified, then we assume upgradeMode =
+            /// Automatic. Possible values include: 'Manual', 'Automatic'
             /// </param>
-            public static GatewayResource BeginUpdate(this IGatewayOperations operations, string resourceGroupName, string gatewayName, string location = default(string), object tags = default(object), AutoUpgrade? autoUpgrade = default(AutoUpgrade?))
+            public static GatewayResource BeginUpdate(this IGatewayOperations operations, string resourceGroupName, string gatewayName, string location = default(string), object tags = default(object), UpgradeMode? upgradeMode = default(UpgradeMode?))
             {
-                return Task.Factory.StartNew(s => ((IGatewayOperations)s).BeginUpdateAsync(resourceGroupName, gatewayName, location, tags, autoUpgrade), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IGatewayOperations)s).BeginUpdateAsync(resourceGroupName, gatewayName, location, tags, upgradeMode), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -262,17 +262,17 @@ namespace Microsoft.Azure.Management.ServerManagement
             /// <param name='tags'>
             /// resource tags
             /// </param>
-            /// <param name='autoUpgrade'>
-            /// The autoUpgrade property gives the flexibility to gateway to auto upgrade
-            /// itself. If properties value not specified, then we assume autoUpgrade =
-            /// Off. Possible values include: 'On', 'Off'
+            /// <param name='upgradeMode'>
+            /// The upgradeMode property gives the flexibility to gateway to auto upgrade
+            /// itself. If properties value not specified, then we assume upgradeMode =
+            /// Automatic. Possible values include: 'Manual', 'Automatic'
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<GatewayResource> BeginUpdateAsync(this IGatewayOperations operations, string resourceGroupName, string gatewayName, string location = default(string), object tags = default(object), AutoUpgrade? autoUpgrade = default(AutoUpgrade?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<GatewayResource> BeginUpdateAsync(this IGatewayOperations operations, string resourceGroupName, string gatewayName, string location = default(string), object tags = default(object), UpgradeMode? upgradeMode = default(UpgradeMode?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, gatewayName, location, tags, autoUpgrade, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, gatewayName, location, tags, upgradeMode, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

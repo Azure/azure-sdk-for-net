@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.ServerManagement.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// parameter collection for creation and other operations on sessions
+    /// </summary>
     [JsonTransformation]
     public partial class SessionParameters
     {
@@ -27,23 +30,45 @@ namespace Microsoft.Azure.Management.ServerManagement.Models
         /// <summary>
         /// Initializes a new instance of the SessionParameters class.
         /// </summary>
-        public SessionParameters(string userName = default(string), string password = default(string))
+        public SessionParameters(string userName = default(string), string password = default(string), RetentionPeriod? retentionPeriod = default(RetentionPeriod?), CredentialDataFormat? credentialDataFormat = default(CredentialDataFormat?), string encryptionCertificateThumbprint = default(string))
         {
             UserName = userName;
             Password = password;
+            RetentionPeriod = retentionPeriod;
+            CredentialDataFormat = credentialDataFormat;
+            EncryptionCertificateThumbprint = encryptionCertificateThumbprint;
         }
 
         /// <summary>
-        /// User name to be used to connect to node
+        /// encrypted User name to be used to connect to node
         /// </summary>
         [JsonProperty(PropertyName = "properties.userName")]
         public string UserName { get; set; }
 
         /// <summary>
-        /// Password associated with user name
+        /// encrypted Password associated with user name
         /// </summary>
         [JsonProperty(PropertyName = "properties.password")]
         public string Password { get; set; }
+
+        /// <summary>
+        /// session retention period. Possible values include: 'Session',
+        /// 'Persistent'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.retentionPeriod")]
+        public RetentionPeriod? RetentionPeriod { get; set; }
+
+        /// <summary>
+        /// credential data format. Possible values include: 'RsaEncrypted'
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.credentialDataFormat")]
+        public CredentialDataFormat? CredentialDataFormat { get; set; }
+
+        /// <summary>
+        /// encryption certificate thumbprint
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.EncryptionCertificateThumbprint")]
+        public string EncryptionCertificateThumbprint { get; set; }
 
     }
 }

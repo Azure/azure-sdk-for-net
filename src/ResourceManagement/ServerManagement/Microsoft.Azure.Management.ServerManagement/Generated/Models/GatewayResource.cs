@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.ServerManagement.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// data model for an arm gateway resource
+    /// </summary>
     [JsonTransformation]
     public partial class GatewayResource : Resource
     {
@@ -27,12 +30,12 @@ namespace Microsoft.Azure.Management.ServerManagement.Models
         /// <summary>
         /// Initializes a new instance of the GatewayResource class.
         /// </summary>
-        public GatewayResource(string id = default(string), string type = default(string), string name = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), DateTime? created = default(DateTime?), DateTime? updated = default(DateTime?), AutoUpgrade? autoUpgrade = default(AutoUpgrade?), string desiredVersion = default(string), IList<GatewayStatus> instances = default(IList<GatewayStatus>), int? activeMessageCount = default(int?), string latestPublishedMsiVersion = default(string), DateTime? publishedTimeUtc = default(DateTime?))
+        public GatewayResource(string id = default(string), string type = default(string), string name = default(string), string location = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string etag = default(string), DateTime? created = default(DateTime?), DateTime? updated = default(DateTime?), UpgradeMode? upgradeMode = default(UpgradeMode?), string desiredVersion = default(string), IList<GatewayStatus> instances = default(IList<GatewayStatus>), int? activeMessageCount = default(int?), string latestPublishedMsiVersion = default(string), DateTime? publishedTimeUtc = default(DateTime?))
             : base(id, type, name, location, tags, etag)
         {
             Created = created;
             Updated = updated;
-            AutoUpgrade = autoUpgrade;
+            UpgradeMode = upgradeMode;
             DesiredVersion = desiredVersion;
             Instances = instances;
             ActiveMessageCount = activeMessageCount;
@@ -54,10 +57,13 @@ namespace Microsoft.Azure.Management.ServerManagement.Models
         public DateTime? Updated { get; set; }
 
         /// <summary>
-        /// setting of the autoupgrade. Possible values include: 'On', 'Off'
+        /// The upgradeMode property gives the flexibility to gateway to auto
+        /// upgrade itself. If properties value not specified, then we assume
+        /// upgradeMode = Automatic. Possible values include: 'Manual',
+        /// 'Automatic'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.autoUpgrade")]
-        public AutoUpgrade? AutoUpgrade { get; set; }
+        [JsonProperty(PropertyName = "properties.upgradeMode")]
+        public UpgradeMode? UpgradeMode { get; set; }
 
         /// <summary>
         /// latest available msi version

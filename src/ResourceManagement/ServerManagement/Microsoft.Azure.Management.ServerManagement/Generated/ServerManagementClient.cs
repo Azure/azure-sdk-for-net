@@ -283,7 +283,7 @@ namespace Microsoft.Azure.Management.ServerManagement
             this.Session = new SessionOperations(this);
             this.PowerShell = new PowerShellOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
-            this.ApiVersion = "2015-07-01-preview";
+            this.ApiVersion = "2016-07-01-preview";
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;
             this.GenerateClientRequestId = true;
