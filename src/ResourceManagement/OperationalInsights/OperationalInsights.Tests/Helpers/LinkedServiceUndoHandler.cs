@@ -34,7 +34,11 @@ namespace OperationalInsights.Tests.Helpers
         /// <param name="parameters">The parameters passed to the operation</param>
         /// <param name="undoAction">The undo action for the given operation, if any</param>
         /// <returns>True if an undo operation is found, otherwise false</returns>
-        protected override bool DoLookup(IServiceOperations<OperationalInsightsManagementClient> client, string method, IDictionary<string, object> parameters, out Action undoAction)
+        protected override bool DoLookup(
+            IServiceOperations<OperationalInsightsManagementClient> client, 
+            string method, 
+            IDictionary<string, object> parameters, 
+            out Action undoAction)
         {
             undoAction = null;
             switch (method)
