@@ -1,8 +1,5 @@
-/**
-* Copyright (c) Microsoft Corporation. All rights reserved.
-* Licensed under the MIT License. See License.txt in the project root for
-* license information.
-*/ 
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information. 
 
 namespace Microsoft.Azure.Management.V2.Compute
 {
@@ -22,7 +19,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     /// Implementation of {@link VirtualMachineScaleSetExtension}.
     /// </summary>
     public partial class VirtualMachineScaleSetExtensionImpl  :
-        ChildResource<VirtualMachineScaleSetExtensionInner, VirtualMachineScaleSetImpl>,
+        ChildResource<VirtualMachineScaleSetExtensionInner, VirtualMachineScaleSetImpl, IVirtualMachineScaleSet>,
         IVirtualMachineScaleSetExtension,
         IDefinition<IWithCreate>,
         IUpdateDefinition<IWithApplicable>,
@@ -35,7 +32,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             InitializeSettings();
         }
 
-        public string Name
+        public override string Name
         {
             get
             {

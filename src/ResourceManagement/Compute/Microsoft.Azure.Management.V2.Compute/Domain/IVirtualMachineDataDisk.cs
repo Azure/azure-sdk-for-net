@@ -1,8 +1,5 @@
-/**
-* Copyright (c) Microsoft Corporation. All rights reserved.
-* Licensed under the MIT License. See License.txt in the project root for
-* license information.
-*/ 
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information. 
 
 namespace Microsoft.Azure.Management.V2.Compute
 {
@@ -14,7 +11,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     /// </summary>
     public interface IVirtualMachineDataDisk  :
         IWrapper<DataDisk>,
-        IChildResource
+        IChildResource<IVirtualMachine>
     {
         /// <returns>the size of this data disk in GB</returns>
         int? Size { get; }

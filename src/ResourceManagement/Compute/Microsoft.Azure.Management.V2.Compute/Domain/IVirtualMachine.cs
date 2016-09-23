@@ -1,8 +1,5 @@
-/**
-* Copyright (c) Microsoft Corporation. All rights reserved.
-* Licensed under the MIT License. See License.txt in the project root for
-* license information.
-*/ 
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information. 
 
 namespace Microsoft.Azure.Management.V2.Compute
 {
@@ -124,8 +121,8 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// <returns>the licenseType value</returns>
         string LicenseType { get; }
 
-        /// <returns>the resources value</returns>
-        IList<VirtualMachineExtensionInner> Resources { get; }
+        /// <returns>the extensions attached to the Azure Virtual Machine</returns>
+        IDictionary<string, IVirtualMachineExtension> Extensions { get; }
 
         /// <returns>the plan value</returns>
         Plan Plan { get; }

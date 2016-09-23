@@ -1,4 +1,7 @@
-﻿using Microsoft.Azure.Management.V2.Batch;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using Microsoft.Azure.Management.V2.Batch;
 using Microsoft.Azure.Management.V2.Compute;
 using Microsoft.Azure.Management.V2.Network;
 using Microsoft.Azure.Management.V2.Resource;
@@ -8,6 +11,7 @@ using Microsoft.Azure.Management.V2.Storage;
 using Microsoft.Rest;
 using System.Linq;
 using System;
+using Microsoft.Azure.Management.Fluent.Redis;
 
 namespace Microsoft.Azure.Management
 {
@@ -20,6 +24,7 @@ namespace Microsoft.Azure.Management
         private IComputeManager computeManager;
         private INetworkManager networkManager;
         private IBatchManager batchManager;
+        private IRedisManager redisManager;
 
         #endregion Service Managers
 
@@ -118,6 +123,13 @@ namespace Microsoft.Azure.Management
             }
         }
 
+        public IRedisCaches RedisCaches
+        {
+            get
+            {
+                return redisManager.RedisCaches;
+            }
+        }
         #endregion Getters
 
         #region ctrs
@@ -129,6 +141,7 @@ namespace Microsoft.Azure.Management
             computeManager = ComputeManager.Authenticate(restClient, subscriptionId);
             networkManager = NetworkManager.Authenticate(restClient, subscriptionId);
             batchManager = BatchManager.Authenticate(restClient, subscriptionId);
+            redisManager = RedisManager.Authenticate(restClient, subscriptionId);
             SubscriptionId = subscriptionId;
         }
 
@@ -287,5 +300,7 @@ namespace Microsoft.Azure.Management
         IAvailabilitySets AvailabilitySets { get; }
 
         IBatchAccounts BatchAccounts { get; }
+
+        IRedisCaches RedisCaches { get; }
     }
 }

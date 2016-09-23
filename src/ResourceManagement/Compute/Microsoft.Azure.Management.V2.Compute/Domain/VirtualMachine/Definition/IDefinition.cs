@@ -1,8 +1,5 @@
-/**
-* Copyright (c) Microsoft Corporation. All rights reserved.
-* Licensed under the MIT License. See License.txt in the project root for
-* license information.
-*/ 
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information. 
 
 namespace Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition
 {
@@ -52,6 +49,21 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition
         IWithOS WithoutPrimaryPublicIpAddress ();
 
     }
+
+    /// <summary>
+    /// The stage of the virtual machine definition allowing to specify extensions.
+    /// </summary>
+    public interface IWithExtension
+    {
+        /// <summary>
+        /// Specifies definition of an extension to be attached to the virtual machine.
+        /// </summary>
+        /// <param name="name">name the reference name for the extension</param>
+        /// <returns>the stage representing configuration for the extension</returns>
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.Definition.IBlank<IWithCreate> DefineNewExtension(string name);
+
+    }
+
     /// <summary>
     /// The entirety of the virtual machine definition.
     /// </summary>
@@ -425,7 +437,8 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition
         IWithStorageAccount,
         IWithDataDisk,
         IWithAvailabilitySet,
-        IWithSecondaryNetworkInterface
+        IWithSecondaryNetworkInterface,
+        IWithExtension
     {
     }
     /// <summary>

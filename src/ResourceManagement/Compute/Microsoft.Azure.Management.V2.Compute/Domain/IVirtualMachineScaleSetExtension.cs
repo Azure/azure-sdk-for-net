@@ -1,8 +1,5 @@
-/**
-* Copyright (c) Microsoft Corporation. All rights reserved.
-* Licensed under the MIT License. See License.txt in the project root for
-* license information.
-*/ 
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information. 
 
 namespace Microsoft.Azure.Management.V2.Compute
 {
@@ -15,7 +12,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     /// </summary>
     public interface IVirtualMachineScaleSetExtension  :
         IWrapper<VirtualMachineScaleSetExtensionInner>,
-        IChildResource
+        IChildResource<IVirtualMachineScaleSet>
     {
         /// <returns>the publisher name of the virtual machine scale set extension image this extension is created from</returns>
         string PublisherName { get; }

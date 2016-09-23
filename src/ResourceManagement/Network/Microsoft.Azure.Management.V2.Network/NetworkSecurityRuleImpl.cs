@@ -1,8 +1,5 @@
-/**
-* Copyright (c) Microsoft Corporation. All rights reserved.
-* Licensed under the MIT License. See License.txt in the project root for
-* license information.
-*/ 
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information. 
 
 namespace Microsoft.Azure.Management.V2.Network
 {
@@ -21,7 +18,7 @@ namespace Microsoft.Azure.Management.V2.Network
     /// Implementation for {@link NetworkSecurityRule} and its create and update interfaces.
     /// </summary>
     public partial class NetworkSecurityRuleImpl  :
-        ChildResource<SecurityRuleInner,NetworkSecurityGroupImpl>,
+        ChildResource<SecurityRuleInner, NetworkSecurityGroupImpl, INetworkSecurityGroup>,
         INetworkSecurityRule,
         IDefinition<IWithCreate>,
         IUpdateDefinition<NetworkSecurityGroup.Update.IUpdate>,
@@ -32,13 +29,14 @@ namespace Microsoft.Azure.Management.V2.Network
         {
         }
 
-        public string Name
+        public override string Name
         {
             get
             {
                 return this.Inner.Name;
             }
         }
+
         public string Direction
         {
             get

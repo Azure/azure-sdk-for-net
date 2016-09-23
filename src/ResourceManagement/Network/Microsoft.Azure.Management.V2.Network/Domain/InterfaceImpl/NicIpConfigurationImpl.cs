@@ -1,8 +1,5 @@
-/**
-* Copyright (c) Microsoft Corporation. All rights reserved.
-* Licensed under the MIT License. See License.txt in the project root for
-* license information.
-*/ 
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information. 
 
 namespace Microsoft.Azure.Management.V2.Network
 {
@@ -268,13 +265,14 @@ namespace Microsoft.Azure.Management.V2.Network
         }
 
         /// <returns>the name of the child resource</returns>
-        string Microsoft.Azure.Management.V2.Resource.Core.IChildResource.Name
+        string Microsoft.Azure.Management.V2.Resource.Core.IChildResource<INetworkInterface>.Name
         {
             get
             {
                 return this.Name as string;
             }
         }
+
         /// <summary>
         /// Specifies the load balancer to associate this IP configuration with.
         /// </summary>

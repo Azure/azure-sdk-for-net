@@ -1,8 +1,5 @@
-/**
-* Copyright (c) Microsoft Corporation. All rights reserved.
-* Licensed under the MIT License. See License.txt in the project root for
-* license information.
-*/ 
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information. 
 
 namespace Microsoft.Azure.Management.V2.Network
 {
@@ -14,7 +11,7 @@ namespace Microsoft.Azure.Management.V2.Network
     /// </summary>
     public interface INicIpConfiguration  :
         IWrapper<Microsoft.Azure.Management.Network.Models.NetworkInterfaceIPConfigurationInner>,
-        IChildResource
+        IChildResource<INetworkInterface>
     {
         /// <summary>
         /// Gets the resource id of the public IP address associated with this IP configuration.
