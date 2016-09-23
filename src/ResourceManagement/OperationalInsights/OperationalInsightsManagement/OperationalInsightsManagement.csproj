@@ -15,10 +15,13 @@
     <Compile Include="Generated\DataSourceOperations.cs" />
     <Compile Include="Generated\DataSourceOperationsExtensions.cs" />
     <Compile Include="Generated\IDataSourceOperations.cs" />
+    <Compile Include="Generated\ILinkedServiceOperations.cs" />
     <Compile Include="Generated\IOperationalInsightsManagementClient.cs" />
     <Compile Include="Generated\ISearchOperations.cs" />
     <Compile Include="Generated\IStorageInsightOperations.cs" />
     <Compile Include="Generated\IWorkspaceOperations.cs" />
+    <Compile Include="Generated\LinkedServiceOperations.cs" />
+    <Compile Include="Generated\LinkedServiceOperationsExtensions.cs" />
     <Compile Include="Generated\Models\Account.cs" />
     <Compile Include="Generated\Models\CoreSummary.cs" />
     <Compile Include="Generated\Models\DataSource.cs" />
@@ -29,6 +32,12 @@
     <Compile Include="Generated\Models\EntityStatus.cs" />
     <Compile Include="Generated\Models\Highlight.cs" />
     <Compile Include="Generated\Models\IntelligencePack.cs" />
+    <Compile Include="Generated\Models\LinkedService.cs" />
+    <Compile Include="Generated\Models\LinkedServiceCreateOrUpdateParameters.cs" />
+    <Compile Include="Generated\Models\LinkedServiceCreateOrUpdateResponse.cs" />
+    <Compile Include="Generated\Models\LinkedServiceGetResponse.cs" />
+    <Compile Include="Generated\Models\LinkedServiceListResponse.cs" />
+    <Compile Include="Generated\Models\LinkedServiceProperties.cs" />
     <Compile Include="Generated\Models\ManagementGroup.cs" />
     <Compile Include="Generated\Models\ManagementGroupProperties.cs" />
     <Compile Include="Generated\Models\MetadataSchema.cs" />

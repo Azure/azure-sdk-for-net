@@ -34,6 +34,7 @@ namespace OperationalInsights.Tests.Helpers
         public const string WorkspaceResourceType = "Microsoft.OperationalInsights/workspaces";
         public const string StorageInsightResourceType = "Microsoft.OperationalInsights/storageinsightconfigs";
         public const string DataSourceResourceType = "Microsoft.OperationalInsights/workspaces/datasources";
+        public const string LinkedServiceResourceType = "Microsoft.OperationalInsights/workspaces/linkedServices";
 
         /// <summary>
         /// Generate a Resource Management client from the test base to use for managing resource groups.
@@ -159,6 +160,21 @@ namespace OperationalInsights.Tests.Helpers
             Assert.Equal(DataSourceResourceType, actual.Type);
 
             Assert.NotNull(actual.Properties);
+        }
+
+        /// <summary>
+        /// Validates a linked service matches the expected properties. Throws assertion exceptions if validation fails.
+        /// </summary>
+        /// <param name="expected">Expected linked service</param>
+        /// <param name="actual">Actual linked service</param>
+        internal static void ValidateLinkedService(LinkedServiceCreateOrUpdateParameters expected, LinkedService actual)
+        {
+            Assert.NotNull(actual);
+            Assert.NotNull(actual.Id);
+            Assert.Equal(LinkedServiceResourceType.ToLower(), actual.Type.ToLower());
+
+            Assert.NotNull(actual.Properties);
+            Assert.Equal(expected.Properties.ResourceId.ToLower(), actual.Properties.ResourceId.ToLower());
         }
 
         /// <summary>
