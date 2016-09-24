@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
     using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
     using System.Threading.Tasks;
     using Microsoft.Azure.Management.V2.Resource.Core;
-    public partial class ServicePrincipalsImpl 
+    internal partial class ServicePrincipalsImpl 
     {
         /// <summary>
         /// Deletes a resource from Azure, identifying it by its resource ID.

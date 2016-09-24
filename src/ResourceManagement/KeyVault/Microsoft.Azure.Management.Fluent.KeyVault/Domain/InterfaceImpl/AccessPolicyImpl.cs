@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
     using Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Update;
     using System;
     using Microsoft.Azure.Management.Fluent.KeyVault.Vault.Definition;
-    public partial class AccessPolicyImpl 
+    internal partial class AccessPolicyImpl 
     {
         /// <returns>the name of the child resource</returns>
         string Microsoft.Azure.Management.V2.Resource.Core.IChildResource<IVault>.Name

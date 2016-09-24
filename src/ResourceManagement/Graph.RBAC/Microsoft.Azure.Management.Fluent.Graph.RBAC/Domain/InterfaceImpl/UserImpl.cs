@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
     using Microsoft.Azure.Management.V2.Resource.Core;
     using Microsoft.Azure.Management.Fluent.Graph.RBAC.User.Update;
     using System.Threading;
-    public partial class UserImpl 
+    internal partial class UserImpl 
     {
         /// <summary>
         /// Specifies if the user account is enabled upon creation.

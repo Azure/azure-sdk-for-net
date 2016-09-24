@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
     /// <summary>
     /// The implementation of ServicePrincipals and its parent interfaces.
     /// </summary>
-    public partial class ServicePrincipalsImpl  :
+    internal partial class ServicePrincipalsImpl  :
         CreatableWrappers<IServicePrincipal, ServicePrincipalImpl, ServicePrincipalInner>,
         IServicePrincipals
     {

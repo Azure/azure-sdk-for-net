@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
     using Microsoft.Azure.Management.Fluent.Graph.RBAC.ServicePrincipal.Definition;
     using Microsoft.Azure.Management.V2.Resource.Core;
     using Microsoft.Azure.Management.Fluent.Graph.RBAC.ServicePrincipal.Update;
-    public partial class ServicePrincipalImpl 
+    internal partial class ServicePrincipalImpl 
     {
         /// <summary>
         /// Specifies whether the service principal account is enabled upon creation.

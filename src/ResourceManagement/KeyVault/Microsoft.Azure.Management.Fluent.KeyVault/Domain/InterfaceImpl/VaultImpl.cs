@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Azure.Management.V2.Resource;
-    public partial class VaultImpl 
+    internal partial class VaultImpl 
     {
         /// <summary>
         /// Refreshes the resource to sync with Azure.

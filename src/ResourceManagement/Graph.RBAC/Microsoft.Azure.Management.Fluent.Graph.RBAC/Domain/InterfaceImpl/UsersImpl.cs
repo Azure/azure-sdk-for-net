@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
     using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
     using Microsoft.Azure.Management.V2.Resource.Core;
     using System.Threading.Tasks;
-    public partial class UsersImpl 
+    internal partial class UsersImpl 
     {
         /// <summary>
         /// Gets the information about a user.

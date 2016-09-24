@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
     /// <summary>
     /// Implementation for AccessPolicy and its parent interfaces.
     /// </summary>
-    public partial class AccessPolicyImpl  :
+    internal partial class AccessPolicyImpl  :
         ChildResource<AccessPolicyEntry, VaultImpl, IVault>,
         IAccessPolicy,
         IDefinition<IWithCreate>,

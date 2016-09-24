@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
     /// <summary>
     /// The implementation of Vaults and its parent interfaces.
     /// </summary>
-    public partial class VaultsImpl  :
+    internal partial class VaultsImpl  :
         GroupableResources<IVault, VaultImpl, VaultInner, IVaultsOperations, IKeyVaultManager>,
         IVaults
     {

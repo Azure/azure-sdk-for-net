@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
     /// <summary>
     /// Implementation for Vault and its parent interfaces.
     /// </summary>
-    public partial class VaultImpl  :
+    internal partial class VaultImpl  :
         GroupableResource<IVault, 
             VaultInner,
             Rest.Azure.Resource,

@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
     using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
     using Microsoft.Azure.Management.Graph.RBAC.Models;
     using Microsoft.Azure.Management.V2.Resource;
-    public partial class VaultsImpl 
+    internal partial class VaultsImpl 
     {
         /// <summary>
         /// Begins a definition for a new resource.
