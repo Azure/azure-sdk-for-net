@@ -7,5 +7,11 @@
     "src/ResourceManagement/Resource/Microsoft.Azure.Management.ResourceManager",
     "src/ResourceManagement/Storage/Microsoft.Azure.Management.Storage",
     "src/ResourceManagement/Azure/Microsoft.Azure.Management",
+    "src/ResourceManagement/Storage",
+    "src/ResourceManagement/Azure",
+    "src/ResourceManagement-Samples/Common",
+    "src/ResourceManagement/Compute",
+    "src/ResourceManagement.Samples/Common",
+    "src/ResourceManagement.Samples/Samples"
   ]
 }

@@ -1,22 +1,21 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
-
-using Microsoft.Azure.Management;
+﻿using Microsoft.Azure.Management;
 using Microsoft.Azure.Management.V2.Resource.Authentication;
 using Microsoft.Azure.Management.V2.Resource.Core;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Samples
+namespace ListVirtualMachineImages
 {
     /**
-     * List all virtual machine image publishers and
-     * list all virtual machine images published by Canonical, Red Hat and
-     * SUSE by browsing through locations, publishers, offers, SKUs and images.
-     */
-
-    public class ListVirtualMachineImages
+ * List all virtual machine image publishers and
+ * list all virtual machine images published by Canonical, Red Hat and
+ * SUSE by browsing through locations, publishers, offers, SKUs and images.
+ */
+     public class Program
     {
-        public static void TestListVirtualMachineImages()
+        public static void Main(string[] args)
         {
             try
             {

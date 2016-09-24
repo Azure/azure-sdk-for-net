@@ -1,15 +1,16 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
-
-using Microsoft.Azure.Management;
+﻿using Microsoft.Azure.Management;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.V2.Compute;
 using Microsoft.Azure.Management.V2.Network;
 using Microsoft.Azure.Management.V2.Resource.Authentication;
 using Microsoft.Azure.Management.V2.Resource.Core;
+using Samples;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Samples
+namespace ManageAvailabilitySet
 {
     /**
      * Azure Compute sample for managing availability sets -
@@ -22,9 +23,9 @@ namespace Samples
      *  - Delete an availability set.
      */
 
-    public class ManageAvailabilitySet
+    public class Program
     {
-        public static void TestAvailabilitySet()
+        public static void Main(string[] args)
         {
             var rgName = Utilities.createRandomName("rgCOMA");
             var availSetName1 = Utilities.createRandomName("av1");

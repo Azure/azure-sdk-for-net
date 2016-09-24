@@ -1,15 +1,15 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
-
-using Microsoft.Azure.Management;
+﻿using Microsoft.Azure.Management;
 using Microsoft.Azure.Management.V2.Resource;
 using Microsoft.Azure.Management.V2.Resource.Authentication;
 using Microsoft.Azure.Management.V2.Resource.Core;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Samples
+namespace ManageResource
 {
-    public static class ManageResource
+    public class Program
     {
         /**
          * Azure Resource sample for managing resources -
@@ -20,7 +20,7 @@ namespace Samples
          * - Delete a resource.
          */
 
-        public static void TestManageResource()
+        public static void Main(string[] args)
         {
             var rgName = ResourceNamer.RandomResourceName("rgRSMA", 24);
             var resourceName1 = ResourceNamer.RandomResourceName("rn1", 24);

@@ -1,25 +1,22 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
-
-using Microsoft.Azure.Management;
+﻿using Microsoft.Azure.Management;
 using Microsoft.Azure.Management.V2.Resource.Authentication;
 using Microsoft.Azure.Management.V2.Resource.Core;
+using Samples;
 using System;
 
-namespace Samples
+namespace ManageStorageAccount
 {
-    /**
-     * Azure Storage sample for managing storage accounts -
-     *  - Create a storage account
-     *  - Get | regenerate storage account access keys
-     *  - Create another storage account
-     *  - List storage accounts
-     *  - Delete a storage account.
-     */
-
-    public static class ManageStorageAccount
+    public class Program
     {
-        public static void TestStorageAccount()
+        /**
+         * Azure Storage sample for managing storage accounts -
+         *  - Create a storage account
+         *  - Get | regenerate storage account access keys
+         *  - Create another storage account
+         *  - List storage accounts
+         *  - Delete a storage account.
+         */
+        public static void Main(string[] args)
         {
             var storageAccountName = Utilities.createRandomName("sa");
             var storageAccountName2 = Utilities.createRandomName("sa2");

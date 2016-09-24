@@ -1,6 +1,5 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information.
-
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.Azure.Management.Storage.Models;
 using Microsoft.Azure.Management.V2.Compute;
 using Microsoft.Azure.Management.V2.Storage;
@@ -118,7 +117,7 @@ namespace Samples
                     .ToString());
         }
 
-        internal static void PrintStorageAccountKeys(IList<StorageAccountKey> storageAccountKeys)
+        public static void PrintStorageAccountKeys(IList<StorageAccountKey> storageAccountKeys)
         {
             foreach (var storageAccountKey in storageAccountKeys)
             {
@@ -126,7 +125,7 @@ namespace Samples
             }
         }
 
-        internal static void PrintStorageAccount(IStorageAccount storageAccount)
+        public static void PrintStorageAccount(IStorageAccount storageAccount)
         {
             Console.WriteLine($"{storageAccount.Name} created @ {storageAccount.CreationTime}");
         }
