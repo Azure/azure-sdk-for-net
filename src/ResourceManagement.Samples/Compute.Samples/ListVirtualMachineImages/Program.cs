@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 namespace ListVirtualMachineImages
 {
     /**
- * List all virtual machine image publishers and
- * list all virtual machine images published by Canonical, Red Hat and
- * SUSE by browsing through locations, publishers, offers, SKUs and images.
- */
+     * List all virtual machine image publishers and
+     * list all virtual machine images published by Canonical, Red Hat and
+     * SUSE by browsing through locations, publishers, offers, SKUs and images.
+     */
      public class Program
     {
         public static void Main(string[] args)

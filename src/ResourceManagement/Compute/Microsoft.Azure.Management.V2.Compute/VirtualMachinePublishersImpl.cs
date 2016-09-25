@@ -12,12 +12,13 @@ namespace Microsoft.Azure.Management.V2.Compute
         : ReadableWrappers<IVirtualMachinePublisher, VirtualMachinePublisherImpl, VirtualMachineImageResourceInner>,
           IVirtualMachinePublishers
     {
-        private IVirtualMachineImagesOperations innerCollection;
-        private IVirtualMachineExtensionImagesOperations extensionsInnerCollection;
+        private readonly IVirtualMachineImagesOperations innerCollection;
+        private readonly IVirtualMachineExtensionImagesOperations extensionsInnerCollection;
 
         internal VirtualMachinePublishersImpl(IVirtualMachineImagesOperations innerCollection, IVirtualMachineExtensionImagesOperations extensionsInnerCollection)
         {
             this.innerCollection = innerCollection;
+            this.extensionsInnerCollection = extensionsInnerCollection;
         }
 
         public PagedList<IVirtualMachinePublisher> ListByRegion(string regionName)
