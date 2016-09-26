@@ -431,7 +431,7 @@ namespace Microsoft.Azure.Management.Fluent.Redis
             var newSku = new Sku
             {
                 Name = SkuName.Premium,
-                Family = SkuFamily.C,
+                Family = SkuFamily.P,
                 Capacity = 1
             };
 

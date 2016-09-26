@@ -29,6 +29,9 @@ namespace Samples
 
             Console.WriteLine("Manage resources");
             ManageResource.TestManageResource();
+
+            Console.WriteLine("Manage Redis Cache");
+            ManageRedis.TestRedisCache();
         }
     }
 }
