@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     /// <summary>
     /// The implementation for {@link VirtualMachineExtensionImages}.
     /// </summary>
-    public partial class VirtualMachineExtensionImagesImpl  :
+    internal partial class VirtualMachineExtensionImagesImpl  :
         IVirtualMachineExtensionImages
     {
         private IVirtualMachinePublishers publishers;

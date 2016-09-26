@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.V2.Compute
 
     using Microsoft.Azure.Management.Compute.Models;
     using Microsoft.Azure.Management.V2.Resource.Core;
-    public partial class VirtualMachineSkuImpl 
+    internal partial class VirtualMachineSkuImpl 
     {
         /// <returns>virtual machine images in the sku</returns>
         Microsoft.Azure.Management.V2.Compute.IVirtualMachineImagesInSku Microsoft.Azure.Management.V2.Compute.IVirtualMachineSku.Images () {

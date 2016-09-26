@@ -26,7 +26,7 @@ using System.Text.RegularExpressions;
 
 namespace Microsoft.Azure.Management.V2.Compute
 {
-    public partial class VirtualMachineScaleSetImpl :
+    internal partial class VirtualMachineScaleSetImpl :
         GroupableResource<IVirtualMachineScaleSet,
             VirtualMachineScaleSetInner,
             Rest.Azure.Resource,
@@ -1563,7 +1563,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         #endregion
     }
 
-    public partial class VirtualMachineScaleSetImpl
+    internal partial class VirtualMachineScaleSetImpl
     {
         Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate
             Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate.DisableAutoUpdate()

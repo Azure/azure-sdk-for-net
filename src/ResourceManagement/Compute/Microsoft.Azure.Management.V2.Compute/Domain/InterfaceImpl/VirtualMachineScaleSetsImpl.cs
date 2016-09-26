@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     using Microsoft.Azure.Management.V2.Network;
     using Microsoft.Azure.Management.V2.Resource.Core;
     using Microsoft.Azure.Management.V2.Storage;
-    public partial class VirtualMachineScaleSetsImpl 
+    internal partial class VirtualMachineScaleSetsImpl 
     {
         /// <summary>
         /// Deletes a resource from Azure, identifying it by its resource ID.

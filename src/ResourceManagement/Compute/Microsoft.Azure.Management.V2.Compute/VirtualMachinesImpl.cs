@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     /// <summary>
     /// The implementation for {@link VirtualMachines}.
     /// </summary>
-    public partial class VirtualMachinesImpl :
+    internal partial class VirtualMachinesImpl :
         GroupableResources<IVirtualMachine,
             VirtualMachineImpl,
             VirtualMachineInner,

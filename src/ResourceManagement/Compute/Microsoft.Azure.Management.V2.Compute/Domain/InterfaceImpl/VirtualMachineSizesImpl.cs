@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     using Microsoft.Azure.Management.Compute.Models;
     using Microsoft.Azure.Management.V2.Resource.Core;
     using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
-    public partial class VirtualMachineSizesImpl 
+    internal partial class VirtualMachineSizesImpl 
     {
         /// <summary>
         /// Lists all the resources of the specified type in the specified region.

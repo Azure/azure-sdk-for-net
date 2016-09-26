@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     using Microsoft.Azure.Management.V2.Resource.Core;
     using Microsoft.Azure.Management.Compute.Models;
     using Microsoft.Azure.Management.V2.Resource;
-    public partial class AvailabilitySetsImpl 
+    internal partial class AvailabilitySetsImpl 
     {
         /// <summary>
         /// Begins a definition for a new resource.

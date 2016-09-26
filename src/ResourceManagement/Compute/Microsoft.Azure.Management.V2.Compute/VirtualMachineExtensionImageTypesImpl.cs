@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     /// <summary>
     /// The implementation for {@link VirtualMachineExtensionImageTypes}.
     /// </summary>
-    public partial class VirtualMachineExtensionImageTypesImpl  :
+    internal partial class VirtualMachineExtensionImageTypesImpl  :
         ReadableWrappers<Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtensionImageType,Microsoft.Azure.Management.V2.Compute.VirtualMachineExtensionImageTypeImpl,Microsoft.Azure.Management.Compute.Models .VirtualMachineExtensionImageInner>,
         IVirtualMachineExtensionImageTypes
     {

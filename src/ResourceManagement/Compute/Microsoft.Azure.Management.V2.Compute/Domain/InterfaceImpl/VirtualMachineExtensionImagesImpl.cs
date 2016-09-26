@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.V2.Compute
 
     using Microsoft.Azure.Management.V2.Resource.Core;
     using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
-    public partial class VirtualMachineExtensionImagesImpl 
+    internal partial class VirtualMachineExtensionImagesImpl 
     {
         /// <returns>entry point to virtual machine extension image publishers</returns>
         Microsoft.Azure.Management.V2.Compute.IVirtualMachinePublishers Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtensionImages.Publishers () {

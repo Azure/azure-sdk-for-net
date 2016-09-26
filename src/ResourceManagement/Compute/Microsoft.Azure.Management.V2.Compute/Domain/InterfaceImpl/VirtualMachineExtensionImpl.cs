@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     using System.Threading;
     using Microsoft.Azure.Management.V2.Resource.Core.ChildResourceActions;
-    public partial class VirtualMachineExtensionImpl 
+    internal partial class VirtualMachineExtensionImpl 
     {
         /// <summary>
         /// Adds a tag to the virtual machine extension.

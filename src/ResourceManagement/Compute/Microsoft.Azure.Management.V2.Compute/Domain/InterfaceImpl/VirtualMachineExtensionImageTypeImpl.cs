@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.V2.Compute
 {
     using Microsoft.Azure.Management.Compute.Models ;
     using Microsoft.Azure.Management.V2.Resource.Core;
-    public partial class VirtualMachineExtensionImageTypeImpl 
+    internal partial class VirtualMachineExtensionImageTypeImpl 
     {
         /// <returns>Virtual machine image extension versions available in this type</returns>
         Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtensionImageVersions Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtensionImageType.Versions {

@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     /// <summary>
     /// The implementation for {@link VirtualMachine} and its create and update interfaces.
     /// </summary>
-    public partial class VirtualMachineImpl :
+    internal partial class VirtualMachineImpl :
         GroupableResource<IVirtualMachine,
             VirtualMachineInner,
             Rest.Azure.Resource,

@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.V2.Compute
 
     using Microsoft.Azure.Management.V2.Resource.Core;
     using Microsoft.Azure.Management.Compute.Models;
-    public partial class VirtualMachineExtensionImageImpl
+    internal partial class VirtualMachineExtensionImageImpl
     {
         /// <returns>the region in which virtual machine extension image is available</returns>
         string Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtensionImage.RegionName
@@ -16,9 +16,9 @@ namespace Microsoft.Azure.Management.V2.Compute
                 return this.RegionName as string;
             }
         }
-        /// <returns>the schema defined by publisher, where extension consumers should provide settings in a matching schema</returns>
-        /// <returns><p></returns>
-        /// <returns>Note this field will be null since server provide null for them</returns>
+
+        /// Gets the schema defined by publisher, where extension consumers should provide settings in a matching schema
+        /// Note this field will be null since server provide null for them
         string Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtensionImage.HandlerSchema
         {
             get
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
         /// <returns>the type of role this virtual machine extension image supports</returns>
-        Microsoft.Azure.Management.Compute.Models.ComputeRoles? Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtensionImage.ComputeRole
+        ComputeRoles? Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtensionImage.ComputeRole
         {
             get
             {

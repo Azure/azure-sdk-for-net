@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.V2.Compute
 
     using Microsoft.Azure.Management.V2.Resource.Core;
     using Microsoft.Azure.Management.Compute.Models ;
-    public partial class VirtualMachineExtensionImageVersionImpl 
+    internal partial class VirtualMachineExtensionImageVersionImpl 
     {
         /// <returns>the name of the virtual machine extension image version</returns>
         string Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtensionImageVersion.Name

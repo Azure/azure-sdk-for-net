@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.V2.Compute
 
     using Microsoft.Azure.Management.V2.Resource.Core;
     using Microsoft.Azure.Management.Compute.Models;
-    public partial class VirtualMachineOfferImpl 
+    internal partial class VirtualMachineOfferImpl 
     {
         /// <returns>the name of the virtual machine image offer</returns>
         string Microsoft.Azure.Management.V2.Compute.IVirtualMachineOffer.Name

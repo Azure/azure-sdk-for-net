@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     /// <summary>
     /// Implementation of {@link VirtualMachineExtension}.
     /// </summary>
-    public partial class VirtualMachineExtensionImpl  :
+    internal partial class VirtualMachineExtensionImpl  :
         ExternalChildResource<IVirtualMachineExtension, VirtualMachineExtensionInner, IVirtualMachine, VirtualMachineImpl>,
         IVirtualMachineExtension,
         IDefinition<IWithCreate>,

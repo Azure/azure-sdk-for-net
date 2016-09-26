@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     using Microsoft.Azure.Management.Compute.Models ;
     using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
     using Microsoft.Azure.Management.V2.Resource.Core;
-    public partial class VirtualMachineExtensionImageTypesImpl 
+    internal partial class VirtualMachineExtensionImageTypesImpl 
     {
         /// <summary>
         /// Lists all the resources of the specified type in the currently selected subscription.

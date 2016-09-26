@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     /// <summary>
     /// The implementation for {@link VirtualMachineExtensionImageVersion}.
     /// </summary>
-    public partial class VirtualMachineExtensionImageVersionImpl  :
+    internal partial class VirtualMachineExtensionImageVersionImpl  :
         Wrapper<Microsoft.Azure.Management.Compute.Models.VirtualMachineExtensionImageInner>,
         IVirtualMachineExtensionImageVersion
     {

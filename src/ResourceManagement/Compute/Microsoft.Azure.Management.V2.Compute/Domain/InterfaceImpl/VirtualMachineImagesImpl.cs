@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.V2.Compute
 
     using Microsoft.Azure.Management.V2.Resource.Core;
     using Microsoft.Azure.Management.Compute.Models;
-    public partial class VirtualMachineImagesImpl 
+    internal partial class VirtualMachineImagesImpl 
     {
         /// <summary>
         /// Lists all the virtual machine images available in a given region.

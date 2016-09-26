@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     using Microsoft.Azure.Management.V2.Resource.Core;
     using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition;
     using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update;
-    public partial class DataDiskImpl 
+    internal partial class DataDiskImpl 
     {
         /// <summary>
         /// Specifies an existing VHD that needs to be attached to the virtual machine as data disk.

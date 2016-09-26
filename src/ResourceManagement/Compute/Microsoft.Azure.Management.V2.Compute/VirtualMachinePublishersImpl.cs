@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Microsoft.Azure.Management.V2.Compute
 {
-    public partial class VirtualMachinePublishersImpl
+    internal partial class VirtualMachinePublishersImpl
         : ReadableWrappers<IVirtualMachinePublisher, VirtualMachinePublisherImpl, VirtualMachineImageResourceInner>,
           IVirtualMachinePublishers
     {
