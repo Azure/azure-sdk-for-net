@@ -19,6 +19,7 @@ using Microsoft.Azure.Management.Resources.Models;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Microsoft.Azure.Management.RecoveryServices.Tests
@@ -50,9 +51,29 @@ namespace Microsoft.Azure.Management.RecoveryServices.Tests
             }
         }
 
-        public VaultList ListVaults()
+        public List<Vault> ListVaults()
         {
-            return VaultClient.Vaults.ListByResourceGroup(resourceGroup);
+            var vaults = new List<Vault>();
+            string nextLink = null;
+
+            var pagedVaults = VaultClient.Vaults.ListByResourceGroup(resourceGroup);
+
+            foreach (var pagedVault in pagedVaults)
+            {
+                vaults.Add(pagedVault);
+            }
+
+            while (!string.IsNullOrEmpty(nextLink))
+            {
+                nextLink = pagedVaults.NextPageLink;
+
+                foreach (var pagedVault in VaultClient.Vaults.ListByResourceGroupNext(nextLink))
+                {
+                    vaults.Add(pagedVault);
+                }
+            }
+
+            return vaults;
         }
 
         public void DeleteVault(string vaultName)
@@ -67,18 +88,22 @@ namespace Microsoft.Azure.Management.RecoveryServices.Tests
 
         public void CreateVault(string vaultName)
         {
-            VaultCreationArgs vaultCreationArgs = new VaultCreationArgs();
-            vaultCreationArgs.Location = location;
-            vaultCreationArgs.Properties = new VaultProperties();
-            vaultCreationArgs.Sku = new Sku();
-            vaultCreationArgs.Sku.Name = "standard";
-            VaultClient.Vaults.Create(resourceGroup, vaultName, vaultCreationArgs);
+            Vault vault = new Vault()
+            {
+                Location = location,
+                Sku = new Sku()
+                {
+                    Name = SkuName.Standard,
+                },
+                Properties = new VaultProperties(),
+            };
+            VaultClient.Vaults.CreateOrUpdate(resourceGroup, vaultName, vault);
         }
 
         public void DisposeVaults()
         {
             var vaults = VaultClient.Vaults.ListByResourceGroup(resourceGroup);
-            foreach (var vault in vaults.Value)
+            foreach (var vault in vaults)
             {
                 VaultClient.Vaults.Delete(resourceGroup, vault.Name);
             }

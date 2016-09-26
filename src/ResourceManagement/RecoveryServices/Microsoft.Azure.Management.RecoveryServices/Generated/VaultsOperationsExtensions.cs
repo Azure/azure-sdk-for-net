@@ -68,12 +68,12 @@ namespace Microsoft.Azure.Management.RecoveryServices
             /// <param name='vaultName'>
             /// The name of the recovery services vault.
             /// </param>
-            /// <param name='vaultCreationArgs'>
-            /// Vault object to be created.
+            /// <param name='vault'>
+            /// Recovery Services Vault to be created.
             /// </param>
-            public static Vault Create(this IVaultsOperations operations, string resourceGroupName, string vaultName, VaultCreationArgs vaultCreationArgs)
+            public static Vault CreateOrUpdate(this IVaultsOperations operations, string resourceGroupName, string vaultName, Vault vault)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IVaultsOperations)s).CreateAsync(resourceGroupName, vaultName, vaultCreationArgs), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IVaultsOperations)s).CreateOrUpdateAsync(resourceGroupName, vaultName, vault), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -89,15 +89,15 @@ namespace Microsoft.Azure.Management.RecoveryServices
             /// <param name='vaultName'>
             /// The name of the recovery services vault.
             /// </param>
-            /// <param name='vaultCreationArgs'>
-            /// Vault object to be created.
+            /// <param name='vault'>
+            /// Recovery Services Vault to be created.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<Vault> CreateAsync(this IVaultsOperations operations, string resourceGroupName, string vaultName, VaultCreationArgs vaultCreationArgs, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<Vault> CreateOrUpdateAsync(this IVaultsOperations operations, string resourceGroupName, string vaultName, Vault vault, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, vaultName, vaultCreationArgs, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, vaultName, vault, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -116,11 +116,9 @@ namespace Microsoft.Azure.Management.RecoveryServices
             /// <param name='vaultName'>
             /// The name of the recovery services vault.
             /// </param>
-            /// <param name='isGlobalRPContext'>
-            /// </param>
-            public static void Delete(this IVaultsOperations operations, string resourceGroupName, string vaultName, bool? isGlobalRPContext = default(bool?))
+            public static void Delete(this IVaultsOperations operations, string resourceGroupName, string vaultName)
             {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IVaultsOperations)s).DeleteAsync(resourceGroupName, vaultName, isGlobalRPContext), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IVaultsOperations)s).DeleteAsync(resourceGroupName, vaultName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -136,14 +134,12 @@ namespace Microsoft.Azure.Management.RecoveryServices
             /// <param name='vaultName'>
             /// The name of the recovery services vault.
             /// </param>
-            /// <param name='isGlobalRPContext'>
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task DeleteAsync(this IVaultsOperations operations, string resourceGroupName, string vaultName, bool? isGlobalRPContext = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task DeleteAsync(this IVaultsOperations operations, string resourceGroupName, string vaultName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                await operations.DeleteWithHttpMessagesAsync(resourceGroupName, vaultName, isGlobalRPContext, null, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteWithHttpMessagesAsync(resourceGroupName, vaultName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -156,7 +152,7 @@ namespace Microsoft.Azure.Management.RecoveryServices
             /// The name of the resource group where the recovery services vault is
             /// present.
             /// </param>
-            public static VaultList ListByResourceGroup(this IVaultsOperations operations, string resourceGroupName)
+            public static Microsoft.Rest.Azure.IPage<Vault> ListByResourceGroup(this IVaultsOperations operations, string resourceGroupName)
             {
                 return System.Threading.Tasks.Task.Factory.StartNew(s => ((IVaultsOperations)s).ListByResourceGroupAsync(resourceGroupName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -174,9 +170,43 @@ namespace Microsoft.Azure.Management.RecoveryServices
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<VaultList> ListByResourceGroupAsync(this IVaultsOperations operations, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<Vault>> ListByResourceGroupAsync(this IVaultsOperations operations, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Retrieve a list of Vaults.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            public static Microsoft.Rest.Azure.IPage<Vault> ListByResourceGroupNext(this IVaultsOperations operations, string nextPageLink)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IVaultsOperations)s).ListByResourceGroupNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Retrieve a list of Vaults.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='nextPageLink'>
+            /// The NextLink from the previous successful call to List operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Microsoft.Rest.Azure.IPage<Vault>> ListByResourceGroupNextAsync(this IVaultsOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

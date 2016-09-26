@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
     /// <summary>
     /// Resource information, as returned by the resource provider.
     /// </summary>
-    public partial class Vault
+    public partial class Vault : Resource
     {
         /// <summary>
         /// Initializes a new instance of the Vault class.
@@ -19,63 +19,29 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// <summary>
         /// Initializes a new instance of the Vault class.
         /// </summary>
-        /// <param name="location">Location of the resource.</param>
-        /// <param name="name">The name of the resource.</param>
+        /// <param name="id">Resource Id</param>
+        /// <param name="name">Resource Name</param>
+        /// <param name="type">Resource Type</param>
+        /// <param name="location">Resource Location</param>
+        /// <param name="tags">Resource Tags</param>
         /// <param name="etag">ETag of the Vault.</param>
-        /// <param name="tags">The tags attached to the resource.</param>
-        /// <param name="id">The Id of the resource.</param>
-        /// <param name="type">Type of the resource.</param>
-        public Vault(string location = default(string), string name = default(string), string etag = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), VaultProperties properties = default(VaultProperties), string id = default(string), string type = default(string))
+        public Vault(string id = default(string), string name = default(string), string type = default(string), string location = default(string), Sku sku = default(Sku), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string etag = default(string), VaultProperties properties = default(VaultProperties))
+            : base(id, name, type, location, sku, tags)
         {
-            Location = location;
-            Name = name;
             Etag = etag;
-            Tags = tags;
             Properties = properties;
-            Id = id;
-            Type = type;
         }
 
         /// <summary>
-        /// Gets or sets location of the resource.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the resource.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets eTag of the Vault.
+        /// Gets eTag of the Vault.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "etag")]
-        public string Etag { get; set; }
-
-        /// <summary>
-        /// Gets or sets the tags attached to the resource.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "tags")]
-        public System.Collections.Generic.IDictionary<string, string> Tags { get; set; }
+        public string Etag { get; private set; }
 
         /// <summary>
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties")]
         public VaultProperties Properties { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Id of the resource.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
-
-        /// <summary>
-        /// Gets or sets type of the resource.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "type")]
-        public string Type { get; set; }
 
     }
 }

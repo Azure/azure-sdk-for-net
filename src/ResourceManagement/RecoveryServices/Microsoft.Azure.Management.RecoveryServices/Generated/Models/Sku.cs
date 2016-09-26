@@ -19,14 +19,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// <summary>
         /// Initializes a new instance of the Sku class.
         /// </summary>
-        /// <param name="name">Name.</param>
+        /// <param name="name">The Sku name. Possible values include:
+        /// 'Standard'</param>
         public Sku(string name = default(string))
         {
             Name = name;
         }
 
         /// <summary>
-        /// Gets or sets name.
+        /// Gets or sets the Sku name. Possible values include: 'Standard'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

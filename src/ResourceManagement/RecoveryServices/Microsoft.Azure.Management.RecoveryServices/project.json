@@ -41,8 +41,5 @@
         "Microsoft.Rest.ClientRuntime.Azure": "[3.3.1,4.0.0)"
       }
     }
-  },
-  "configurations": {
-    "Debug-Net45": {}
   }
 }

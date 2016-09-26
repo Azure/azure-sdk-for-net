@@ -26,10 +26,10 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         }
 
         /// <summary>
-        /// Gets or sets provisioning State.
+        /// Gets provisioning State.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "provisioningState")]
-        public string ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
     }
 }
