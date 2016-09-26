@@ -22,19 +22,19 @@ using Xunit;
 
 namespace Microsoft.Azure.Batch.Tests
 {
-    public class InMemorySubscriptionTests
+    public class InMemoryLocationTests
     {
         [Fact]
-        public void GetSubscriptionQuotasThrowsException()
+        public void GetLocationQuotasThrowsException()
         {
             var handler = new RecordedDelegatingHandler();
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
-            Assert.Throws<ValidationException>(() => client.Subscription.GetSubscriptionQuotas(null));
+            Assert.Throws<ValidationException>(() => client.Location.GetQuotas(null));
         }
 
         [Fact]
-        public void GetSubscriptionQuotasValidateResponse()
+        public void GetLocationQuotasValidateResponse()
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK)
             {
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Batch.Tests
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
-            var result = client.Subscription.GetSubscriptionQuotas("westus");
+            var result = client.Location.GetQuotas("westus");
 
             // Validate headers
             Assert.Equal(HttpMethod.Get, handler.Method);
