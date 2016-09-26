@@ -36,7 +36,7 @@ namespace Batch.Tests.InMemoryTests
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
             // If storageId is not set this will throw an ValidationException
-            var ex = Assert.Throws<ValidationException>(() => client.Account.Create("resourceGroupName", "acctName", new BatchAccountCreateParameters
+            var ex = Assert.Throws<ValidationException>(() => client.BatchAccount.Create("resourceGroupName", "acctName", new BatchAccountCreateParameters
             {
                 Location = "South Central US",
                 AutoStorage = new AutoStorageBaseProperties()
@@ -67,7 +67,7 @@ namespace Batch.Tests.InMemoryTests
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
             var result = Task.Factory.StartNew(() =>
-                client.Application.AddApplicationPackageWithHttpMessagesAsync(
+                client.ApplicationPackage.CreateWithHttpMessagesAsync(
                 "resourceGroupName",
                 "acctName",
                 "appId",
@@ -108,7 +108,7 @@ namespace Batch.Tests.InMemoryTests
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
             var result = Task.Factory.StartNew(() =>
-                client.Application.AddApplicationWithHttpMessagesAsync(
+                client.Application.CreateWithHttpMessagesAsync(
                 "resourceGroupName",
                 "acctName",
                 "appId",
@@ -140,12 +140,12 @@ namespace Batch.Tests.InMemoryTests
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
             var result = Task.Factory.StartNew(() =>
-                client.Application.ActivateApplicationPackageWithHttpMessagesAsync(
+                client.ApplicationPackage.ActivateWithHttpMessagesAsync(
                 "resourceGroupName",
                 "acctName",
                 "appId",
                 "version",
-                new ActivateApplicationPackageParameters("zip"))).Unwrap().GetAwaiter().GetResult();
+                "zip")).Unwrap().GetAwaiter().GetResult();
 
 
             // Validate headers - User-Agent for certs, Authorization for tokens
@@ -169,7 +169,7 @@ namespace Batch.Tests.InMemoryTests
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
             var result = Task.Factory.StartNew(() =>
-                client.Application.DeleteApplicationWithHttpMessagesAsync(
+                client.Application.DeleteWithHttpMessagesAsync(
                 "resourceGroupName",
                 "acctName",
                 "appId")).Unwrap().GetAwaiter().GetResult();
@@ -195,7 +195,7 @@ namespace Batch.Tests.InMemoryTests
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
             var result = Task.Factory.StartNew(() =>
-                client.Application.DeleteApplicationPackageWithHttpMessagesAsync(
+                client.ApplicationPackage.DeleteWithHttpMessagesAsync(
                 "resourceGroupName",
                 "acctName",
                 "appId",
@@ -234,7 +234,7 @@ namespace Batch.Tests.InMemoryTests
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
             var result = Task.Factory.StartNew(() =>
-                client.Application.GetApplicationWithHttpMessagesAsync(
+                client.Application.GetWithHttpMessagesAsync(
                 "applicationId",
                 "acctName",
                 "id")).Unwrap().GetAwaiter().GetResult();
@@ -282,7 +282,7 @@ namespace Batch.Tests.InMemoryTests
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
             var result = Task.Factory.StartNew(() =>
-                client.Application.GetApplicationPackageWithHttpMessagesAsync(
+                client.ApplicationPackage.GetWithHttpMessagesAsync(
                 "resourceGroupName",
                 "acctName",
                 "id",
@@ -373,7 +373,7 @@ namespace Batch.Tests.InMemoryTests
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
             var result = Task.Factory.StartNew(() =>
-                client.Application.UpdateApplicationWithHttpMessagesAsync(
+                client.Application.UpdateWithHttpMessagesAsync(
                 "resourceGroupName",
                 "acctName",
                 "appId",
@@ -400,11 +400,11 @@ namespace Batch.Tests.InMemoryTests
             var handler = new RecordedDelegatingHandler();
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
-            Assert.Throws<ValidationException>(() => client.Application.ActivateApplicationPackage(null, "foo", "foo", "foo", new ActivateApplicationPackageParameters()));
-            Assert.Throws<ValidationException>(() => client.Application.ActivateApplicationPackage("foo", null, "foo", "foo", new ActivateApplicationPackageParameters()));
-            Assert.Throws<ValidationException>(() => client.Application.ActivateApplicationPackage("foo", "foo", null, "foo", new ActivateApplicationPackageParameters()));
-            Assert.Throws<ValidationException>(() => client.Application.ActivateApplicationPackage("foo", "foo", "foo", null, new ActivateApplicationPackageParameters()));
-            Assert.Throws<ValidationException>(() => client.Application.ActivateApplicationPackage("foo", "foo", "foo", "foo", null));
+            Assert.Throws<ValidationException>(() => client.ApplicationPackage.Activate(null, "foo", "foo", "foo", "foo"));
+            Assert.Throws<ValidationException>(() => client.ApplicationPackage.Activate("foo", null, "foo", "foo", "foo"));
+            Assert.Throws<ValidationException>(() => client.ApplicationPackage.Activate("foo", "foo", null, "foo", "foo"));
+            Assert.Throws<ValidationException>(() => client.ApplicationPackage.Activate("foo", "foo", "foo", null, "foo"));
+            Assert.Throws<ValidationException>(() => client.ApplicationPackage.Activate("foo", "foo", "foo", "foo", null));
         }
 
         [Fact]
@@ -413,10 +413,10 @@ namespace Batch.Tests.InMemoryTests
             var handler = new RecordedDelegatingHandler();
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
-            Assert.Throws<ValidationException>(() => client.Application.AddApplication(null, "foo", "foo", new AddApplicationParameters()));
-            Assert.Throws<ValidationException>(() => client.Application.AddApplication("foo", null, "foo", new AddApplicationParameters()));
-            Assert.Throws<ValidationException>(() => client.Application.AddApplication("foo", "foo", null, new AddApplicationParameters()));
-            Assert.Throws<NullReferenceException>(() => client.Application.AddApplication("foo", "foo", "foo", null));
+            Assert.Throws<ValidationException>(() => client.Application.Create(null, "foo", "foo", new AddApplicationParameters()));
+            Assert.Throws<ValidationException>(() => client.Application.Create("foo", null, "foo", new AddApplicationParameters()));
+            Assert.Throws<ValidationException>(() => client.Application.Create("foo", "foo", null, new AddApplicationParameters()));
+            Assert.Throws<NullReferenceException>(() => client.Application.Create("foo", "foo", "foo", null));
         }
 
         [Fact]
@@ -425,9 +425,9 @@ namespace Batch.Tests.InMemoryTests
             var handler = new RecordedDelegatingHandler();
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
-            Assert.Throws<ValidationException>(() => client.Application.DeleteApplication(null, "foo", "foo"));
-            Assert.Throws<ValidationException>(() => client.Application.DeleteApplication("foo", null, "foo"));
-            Assert.Throws<ValidationException>(() => client.Application.DeleteApplication("foo", "foo", null));
+            Assert.Throws<ValidationException>(() => client.Application.Delete(null, "foo", "foo"));
+            Assert.Throws<ValidationException>(() => client.Application.Delete("foo", null, "foo"));
+            Assert.Throws<ValidationException>(() => client.Application.Delete("foo", "foo", null));
         }
 
         [Fact]
@@ -436,10 +436,10 @@ namespace Batch.Tests.InMemoryTests
             var handler = new RecordedDelegatingHandler();
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
-            Assert.Throws<ValidationException>(() => client.Application.DeleteApplicationPackage(null, "foo", "foo", "foo"));
-            Assert.Throws<ValidationException>(() => client.Application.DeleteApplicationPackage("foo", null, "foo", "foo"));
-            Assert.Throws<ValidationException>(() => client.Application.DeleteApplicationPackage("foo", "foo", null, "foo"));
-            Assert.Throws<ValidationException>(() => client.Application.DeleteApplicationPackage("foo", "foo", "bar", null));
+            Assert.Throws<ValidationException>(() => client.ApplicationPackage.Delete(null, "foo", "foo", "foo"));
+            Assert.Throws<ValidationException>(() => client.ApplicationPackage.Delete("foo", null, "foo", "foo"));
+            Assert.Throws<ValidationException>(() => client.ApplicationPackage.Delete("foo", "foo", null, "foo"));
+            Assert.Throws<ValidationException>(() => client.ApplicationPackage.Delete("foo", "foo", "bar", null));
         }
 
         [Fact]
@@ -447,9 +447,9 @@ namespace Batch.Tests.InMemoryTests
         {
             var handler = new RecordedDelegatingHandler();
             var client = BatchTestHelper.GetBatchManagementClient(handler);
-            Assert.Throws<ValidationException>(() => client.Application.GetApplication(null, "foo", "foo"));
-            Assert.Throws<ValidationException>(() => client.Application.GetApplication("foo", null, "foo"));
-            Assert.Throws<ValidationException>(() => client.Application.GetApplication("foo", "foo", null));
+            Assert.Throws<ValidationException>(() => client.Application.Get(null, "foo", "foo"));
+            Assert.Throws<ValidationException>(() => client.Application.Get("foo", null, "foo"));
+            Assert.Throws<ValidationException>(() => client.Application.Get("foo", "foo", null));
         }
 
         [Fact]
@@ -468,10 +468,10 @@ namespace Batch.Tests.InMemoryTests
             var handler = new RecordedDelegatingHandler();
             var client = BatchTestHelper.GetBatchManagementClient(handler);
 
-            Assert.Throws<ValidationException>(() => client.Application.UpdateApplication(null, "foo", "foo", new UpdateApplicationParameters()));
-            Assert.Throws<ValidationException>(() => client.Application.UpdateApplication("foo", null, "foo", new UpdateApplicationParameters()));
-            Assert.Throws<ValidationException>(() => client.Application.UpdateApplication("foo", "foo", null, new UpdateApplicationParameters()));
-            Assert.Throws<ValidationException>(() => client.Application.UpdateApplication("foo", "foo", "foo", null));
+            Assert.Throws<ValidationException>(() => client.Application.Update(null, "foo", "foo", new UpdateApplicationParameters()));
+            Assert.Throws<ValidationException>(() => client.Application.Update("foo", null, "foo", new UpdateApplicationParameters()));
+            Assert.Throws<ValidationException>(() => client.Application.Update("foo", "foo", null, new UpdateApplicationParameters()));
+            Assert.Throws<ValidationException>(() => client.Application.Update("foo", "foo", "foo", null));
         }
     }
 }
