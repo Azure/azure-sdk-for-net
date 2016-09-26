@@ -20,16 +20,22 @@ namespace Microsoft.Azure.Management.V2.Resource.Authentication
     public class AzureCredentials : ServiceClientCredentials
     {
         private string username, password;
-        private string clientId, clientSecret;
-        private string tenantId;
-        private AzureEnvironment environment;
+        private string clientSecret;
         private Func<DeviceCodeResult, bool> deviceCodeHandler;
-        private IDictionary<string, ServiceClientCredentials> credentials;
+        private IDictionary<Uri, ServiceClientCredentials> credentialsCache;
+
         public string DefaultSubscriptionId { get; private set; }
 
-        private AzureCredentials() {
-            environment = AzureEnvironment.AzureGlobalCloud;
-            credentials = new Dictionary<string, ServiceClientCredentials>();
+        public string TenantId { get; private set; }
+
+        public string ClientId { get; private set; }
+
+        public AzureEnvironment Environment { get; private set; }
+
+        private AzureCredentials() 
+        {
+            Environment = AzureEnvironment.AzureGlobalCloud;
+            credentialsCache = new Dictionary<Uri, ServiceClientCredentials>();
         }
 
         /// <summary>
@@ -47,9 +53,9 @@ namespace Microsoft.Azure.Management.V2.Resource.Authentication
             {
                 username = username,
                 password = password,
-                clientId = clientId,
-                tenantId = tenantId,
-                environment = environment
+                ClientId = clientId,
+                TenantId = tenantId,
+                Environment = environment
             };
             return credentials;
         }
@@ -67,9 +73,9 @@ namespace Microsoft.Azure.Management.V2.Resource.Authentication
         {
             AzureCredentials credentials = new AzureCredentials()
             {
-                clientId = clientId,
-                tenantId = tenantId,
-                environment = environment
+                ClientId = clientId,
+                TenantId = tenantId,
+                Environment = environment
             };
             return credentials;
         }
@@ -87,10 +93,10 @@ namespace Microsoft.Azure.Management.V2.Resource.Authentication
         {
             AzureCredentials credentials = new AzureCredentials()
             {
-                clientId = clientId,
                 clientSecret = clientSecret,
-                tenantId = tenantId,
-                environment = environment
+                ClientId = clientId,
+                TenantId = tenantId,
+                Environment = environment
             };
             return credentials;
         }
@@ -137,11 +143,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Authentication
             credentials.WithDefaultSubscription(config["subscription"]);
             return credentials;
         }
-
-        public string TenantId { get { return tenantId; } }
-
-        public string ClientId { get { return clientId; } }
-
+        
         public AzureCredentials WithDefaultSubscription(string subscriptionId)
         {
             DefaultSubscriptionId = subscriptionId;
@@ -152,37 +154,37 @@ namespace Microsoft.Azure.Management.V2.Resource.Authentication
         {
             var adSettings = new ActiveDirectoryServiceSettings
             {
-                AuthenticationEndpoint = new Uri(environment.AuthenticationEndpoint),
-                TokenAudience = new Uri(environment.ResourceManagerEndpoint),
+                AuthenticationEndpoint = new Uri(Environment.AuthenticationEndpoint),
+                TokenAudience = new Uri(Environment.ResourceManagerEndpoint),
                 ValidateAuthority = true
             };
             string url = request.RequestUri.ToString();
-            if (url.StartsWith(environment.GraphEndpoint, StringComparison.OrdinalIgnoreCase))
+            if (url.StartsWith(Environment.GraphEndpoint, StringComparison.OrdinalIgnoreCase))
             {
-                adSettings.TokenAudience = new Uri(environment.GraphEndpoint);
+                adSettings.TokenAudience = new Uri(Environment.GraphEndpoint);
             }
 
-            if (!credentials.ContainsKey(adSettings.TokenAudience.ToString()))
+            if (!credentialsCache.ContainsKey(adSettings.TokenAudience))
             {
                 if (username != null && password != null)
                 {
-                    credentials[adSettings.TokenAudience.ToString()] = await UserTokenProvider.LoginSilentAsync(
-                        clientId, tenantId, username, password, adSettings, TokenCache.DefaultShared);
+                    credentialsCache[adSettings.TokenAudience] = await UserTokenProvider.LoginSilentAsync(
+                        ClientId, TenantId, username, password, adSettings, TokenCache.DefaultShared);
                 }
                 else if (clientSecret != null)
                 {
-                    credentials[adSettings.TokenAudience.ToString()] = await ApplicationTokenProvider.LoginSilentAsync(
-                        tenantId, clientId, clientSecret, adSettings, TokenCache.DefaultShared);
+                    credentialsCache[adSettings.TokenAudience] = await ApplicationTokenProvider.LoginSilentAsync(
+                        TenantId, ClientId, clientSecret, adSettings, TokenCache.DefaultShared);
                 }
 #if PORTABLE
                 else if (deviceCodeHandler != null)
                 {
-                    credentials[adSettings.TokenAudience.ToString()] = await UserTokenProvider.LoginByDeviceCodeAsync(
-                        clientId, tenantId, adSettings, TokenCache.DefaultShared, deviceCodeHandler);
+                    credentialsCache[adSettings.TokenAudience] = await UserTokenProvider.LoginByDeviceCodeAsync(
+                        ClientId, TenantId, adSettings, TokenCache.DefaultShared, deviceCodeHandler);
                 }
 #endif
             }
-            await credentials[adSettings.TokenAudience.ToString()].ProcessHttpRequestAsync(request, cancellationToken);
+            await credentialsCache[adSettings.TokenAudience].ProcessHttpRequestAsync(request, cancellationToken);
         }
     }
 }
