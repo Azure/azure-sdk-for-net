@@ -127,14 +127,14 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
             return this;
         }
 
-        public override async Task<IUser> Refresh ()
+        public override IUser Refresh ()
         {
-            var inner = await client.GetAsync(UserPrincipalName);
+            var inner = client.Get(UserPrincipalName);
             SetInner(inner);
             return this;
         }
 
-        public override async Task<IUser> CreateResourceAsync (CancellationToken cancellationToken = default(CancellationToken))
+        public override Task<IUser> CreateResourceAsync (CancellationToken cancellationToken = default(CancellationToken))
         {
             throw new NotImplementedException();
         }

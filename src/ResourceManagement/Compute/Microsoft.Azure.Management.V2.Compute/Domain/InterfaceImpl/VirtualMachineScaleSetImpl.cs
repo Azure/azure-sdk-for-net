@@ -832,11 +832,11 @@ namespace Microsoft.Azure.Management.V2.Compute
         #endregion
 
         #region Actions
-        public async override Task<IVirtualMachineScaleSet> Refresh()
+        public override IVirtualMachineScaleSet Refresh()
         {
-            var response = await client.GetWithHttpMessagesAsync(this.ResourceGroupName,
+            var response = client.Get(this.ResourceGroupName,
                 this.Name);
-            SetInner(response.Body);
+            SetInner(response);
             return this;
         }
 

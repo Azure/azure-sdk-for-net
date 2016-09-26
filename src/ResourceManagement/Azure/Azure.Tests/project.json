@@ -27,6 +27,7 @@
     "Microsoft.Rest.ClientRuntime.Azure.Authentication": "[2.2.2-preview,3.0.0)",
     "Microsoft.Azure.Management.Fluent.Graph.RBAC": "0.0.1-prerelease",
     "Microsoft.Azure.Management.Fluent.KeyVault": "0.0.1-prerelease",
-    "Microsoft.Azure.Management.Fluent.Redis": "0.0.1-prerelease"
+    "Microsoft.Azure.Management.Fluent.Redis": "0.0.1-prerelease",
+    "Microsoft.Azure.Management.Fluent.Batch": "0.0.1-prerelease"
   }
 }

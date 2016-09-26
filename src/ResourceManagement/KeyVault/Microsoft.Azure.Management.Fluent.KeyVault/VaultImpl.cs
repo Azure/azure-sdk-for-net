@@ -263,9 +263,9 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
             return this;
         }
 
-        public override async Task<IVault> Refresh ()
+        public override IVault Refresh ()
         {
-            var inner = await client.GetAsync(ResourceGroupName, Name);
+            var inner = client.Get(ResourceGroupName, Name);
             SetInner(inner);
             return this;
         }

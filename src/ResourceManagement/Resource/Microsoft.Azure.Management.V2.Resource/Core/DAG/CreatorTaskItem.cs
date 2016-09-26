@@ -27,12 +27,6 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 
         public async Task ExecuteAsync(CancellationToken cancellationToken)
         {
-            if (createdResource != null)
-            {
-                await Task.Yield();
-                return;
-            }
-
             createdResource = await resourceCreator.CreateResourceAsync(cancellationToken);
         }
     }
