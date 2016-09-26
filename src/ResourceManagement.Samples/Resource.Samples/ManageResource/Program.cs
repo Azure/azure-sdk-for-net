@@ -30,13 +30,13 @@ namespace ManageResource
             {
                 //=================================================================
                 // Authenticate
-
-                var tokenCredentials = AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                AzureCredentials credentials = AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()
                     .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                    .Authenticate(tokenCredentials).WithSubscription(tokenCredentials.DefaultSubscriptionId);
+                    .Authenticate(credentials)
+                    .WithSubscription(credentials.DefaultSubscriptionId);
 
                 try
                 {

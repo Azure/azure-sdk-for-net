@@ -41,13 +41,13 @@ namespace ManageAvailabilitySet
             {
                 //=============================================================
                 // Authenticate
-
-                var tokenCredentials = AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                AzureCredentials credentials = AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()
                     .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                    .Authenticate(tokenCredentials).WithSubscription(tokenCredentials.DefaultSubscriptionId);
+                    .Authenticate(credentials)
+                    .WithSubscription(credentials.DefaultSubscriptionId);
 
                 // Print selected subscription
                 Console.WriteLine("Selected subscription: " + azure.SubscriptionId);
@@ -73,11 +73,7 @@ namespace ManageAvailabilitySet
 
                     //=============================================================
                     // Define a virtual network for the VMs in this availability set
-                    var networkManager = NetworkManager
-                        .Configure()
-                        .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                        .Authenticate(tokenCredentials, tokenCredentials.DefaultSubscriptionId); ;
-                    var network = networkManager.Networks
+                    var network = azure.Networks
                             .Define(vnetName)
                             .WithRegion(Region.US_EAST)
                             .WithExistingResourceGroup(rgName)

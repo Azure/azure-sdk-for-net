@@ -25,12 +25,15 @@ namespace ManageStorageAccount
         {
             try
             {
-                var tokenCredentials = AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                //=================================================================
+                // Authenticate
+                AzureCredentials credentials = AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                 var azure = Azure
                     .Configure()
                     .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                    .Authenticate(tokenCredentials).WithSubscription(tokenCredentials.DefaultSubscriptionId);
+                    .Authenticate(credentials)
+                    .WithSubscription(credentials.DefaultSubscriptionId);
 
                 // Print selected subscription
                 Console.WriteLine("Selected subscription: " + azure.SubscriptionId);
