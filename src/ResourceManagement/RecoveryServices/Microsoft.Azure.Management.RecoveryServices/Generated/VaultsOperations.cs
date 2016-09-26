@@ -282,6 +282,10 @@ namespace Microsoft.Azure.Management.RecoveryServices
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "vault");
             }
+            if (vault != null)
+            {
+                vault.Validate();
+            }
             // Tracing
             bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;

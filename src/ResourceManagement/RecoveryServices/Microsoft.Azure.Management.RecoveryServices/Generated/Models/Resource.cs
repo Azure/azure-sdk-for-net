@@ -66,5 +66,18 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         [Newtonsoft.Json.JsonProperty(PropertyName = "tags")]
         public System.Collections.Generic.IDictionary<string, string> Tags { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (this.Sku != null)
+            {
+                this.Sku.Validate();
+            }
+        }
     }
 }

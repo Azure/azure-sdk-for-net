@@ -43,5 +43,15 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties")]
         public VaultProperties Properties { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public override void Validate()
+        {
+            base.Validate();
+        }
     }
 }

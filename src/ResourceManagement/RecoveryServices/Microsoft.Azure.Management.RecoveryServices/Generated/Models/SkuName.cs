@@ -11,5 +11,6 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
     public static class SkuName
     {
         public const string Standard = "Standard";
+        public const string RS0 = "RS0";
     }
 }

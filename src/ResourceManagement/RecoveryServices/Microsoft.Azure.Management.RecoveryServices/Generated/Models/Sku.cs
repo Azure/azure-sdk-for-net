@@ -20,17 +20,31 @@ namespace Microsoft.Azure.Management.RecoveryServices.Models
         /// Initializes a new instance of the Sku class.
         /// </summary>
         /// <param name="name">The Sku name. Possible values include:
-        /// 'Standard'</param>
-        public Sku(string name = default(string))
+        /// 'Standard', 'RS0'</param>
+        public Sku(string name)
         {
             Name = name;
         }
 
         /// <summary>
-        /// Gets or sets the Sku name. Possible values include: 'Standard'
+        /// Gets or sets the Sku name. Possible values include: 'Standard',
+        /// 'RS0'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Name == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Name");
+            }
+        }
     }
 }
