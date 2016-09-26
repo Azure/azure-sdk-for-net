@@ -12,6 +12,7 @@ using Microsoft.Rest;
 using System.Linq;
 using System;
 using Microsoft.Azure.Management.Fluent.Redis;
+using Microsoft.Azure.Management.Fluent.KeyVault;
 
 namespace Microsoft.Azure.Management
 {
@@ -25,6 +26,7 @@ namespace Microsoft.Azure.Management
         private INetworkManager networkManager;
         private IBatchManager batchManager;
         private IRedisManager redisManager;
+        private IKeyVaultManager keyVaultManager;
 
         #endregion Service Managers
 
@@ -130,11 +132,20 @@ namespace Microsoft.Azure.Management
                 return redisManager.RedisCaches;
             }
         }
+        
+        public IVaults Vaults
+        {
+            get
+            {
+                return keyVaultManager.Vaults;
+            }
+        }
+
         #endregion Getters
 
         #region ctrs
 
-        private Azure(RestClient restClient, string subscriptionId)
+        private Azure(RestClient restClient, string subscriptionId, string tenantId)
         {
             resourceManager = ResourceManager2.Authenticate(restClient).WithSubscription(subscriptionId);
             storageManager = StorageManager.Authenticate(restClient, subscriptionId);
@@ -142,6 +153,7 @@ namespace Microsoft.Azure.Management
             networkManager = NetworkManager.Authenticate(restClient, subscriptionId);
             batchManager = BatchManager.Authenticate(restClient, subscriptionId);
             redisManager = RedisManager.Authenticate(restClient, subscriptionId);
+            keyVaultManager = KeyVaultManager.Authenticate(restClient, subscriptionId, tenantId);
             SubscriptionId = subscriptionId;
         }
 
@@ -149,29 +161,38 @@ namespace Microsoft.Azure.Management
 
         #region Azure builder
 
-        public static IAuthenticated Authenticate(ServiceClientCredentials serviceClientCredentials)
+        public static IAuthenticated Authenticate(ServiceClientCredentials serviceClientCredentials, string tenantId)
         {
             return new Authenticated(RestClient.Configure()
                     .withEnvironment(AzureEnvironment.AzureGlobalCloud)
                     .withCredentials(serviceClientCredentials)
-                    .build()
+                    .build(), tenantId
+                );
+        }
+
+        public static IAuthenticated Authenticate(AzureCredentials azureCredentials)
+        {
+            return new Authenticated(RestClient.Configure()
+                    .withEnvironment(AzureEnvironment.AzureGlobalCloud)
+                    .withCredentials(azureCredentials)
+                    .build(), azureCredentials.TenantId
                 );
         }
 
         public static IAuthenticated Authenticate(string authFile)
         {
-            ApplicationTokenCredentials credentials = new ApplicationTokenCredentials(authFile);
+            AzureCredentials credentials = AzureCredentials.FromFile(authFile);
             var authenticated = new Authenticated(RestClient.Configure()
                     .withEnvironment(AzureEnvironment.AzureGlobalCloud)
                     .withCredentials(credentials)
-                    .build());
+                    .build(), credentials.TenantId);
             authenticated.SetDefaultSubscription(credentials.DefaultSubscriptionId);
             return authenticated;
         }
 
-        public static IAuthenticated Authenticate(RestClient restClient)
+        public static IAuthenticated Authenticate(RestClient restClient, string tenantId)
         {
-            return new Authenticated(restClient);
+            return new Authenticated(restClient, tenantId);
         }
 
         public static IConfigurable Configure()
@@ -199,6 +220,7 @@ namespace Microsoft.Azure.Management
             private RestClient restClient;
             private ResourceManager2.IAuthenticated resourceManagerAuthenticated;
             private string defaultSubscription;
+            private string tenantId;
 
             public ITenants Tenants
             {
@@ -216,7 +238,7 @@ namespace Microsoft.Azure.Management
                 }
             }
 
-            public Authenticated(RestClient restClient)
+            public Authenticated(RestClient restClient, string tenantId)
             {
                 this.restClient = restClient;
                 resourceManagerAuthenticated = ResourceManager2.Authenticate(this.restClient);
@@ -229,7 +251,7 @@ namespace Microsoft.Azure.Management
 
             public IAzure WithSubscription(string subscriptionId)
             {
-                return new Azure(restClient, subscriptionId);
+                return new Azure(restClient, subscriptionId, tenantId);
             }
 
             public IAzure WithDefaultSubscription()
@@ -259,16 +281,23 @@ namespace Microsoft.Azure.Management
 
         public interface IConfigurable : IAzureConfigurable<IConfigurable>
         {
-            IAuthenticated Authenticate(ServiceClientCredentials serviceClientCredentials);
+            IAuthenticated Authenticate(ServiceClientCredentials serviceClientCredentials, string tenantId);
+
+            IAuthenticated Authenticate(AzureCredentials azureCredentials);
         }
 
         protected class Configurable :
             AzureConfigurable<IConfigurable>,
             IConfigurable
         {
-            IAuthenticated IConfigurable.Authenticate(ServiceClientCredentials credentials)
+            IAuthenticated IConfigurable.Authenticate(ServiceClientCredentials credentials, string tenantId)
             {
-                return new Authenticated(BuildRestClient(credentials));
+                return new Authenticated(BuildRestClient(credentials), tenantId);
+            }
+
+            IAuthenticated IConfigurable.Authenticate(AzureCredentials credentials)
+            {
+                return new Authenticated(BuildRestClient(credentials), credentials.TenantId);
             }
         }
 
@@ -302,5 +331,7 @@ namespace Microsoft.Azure.Management
         IBatchAccounts BatchAccounts { get; }
 
         IRedisCaches RedisCaches { get; }
+
+        IVaults Vaults { get; }
     }
 }

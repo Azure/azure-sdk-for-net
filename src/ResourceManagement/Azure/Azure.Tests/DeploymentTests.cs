@@ -122,7 +122,7 @@ namespace Azure.Tests
 
         private IResourceManager CreateResourceManager()
         {
-            ApplicationTokenCredentials credentials = new ApplicationTokenCredentials(@"C:\my.azureauth");
+            AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
             IResourceManager resourceManager = ResourceManager2.Configure()
                 .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                 .Authenticate(credentials)
