@@ -201,7 +201,7 @@ namespace Azure.Tests
         
         private IRedisManager CreateRedisManager()
         {
-            ApplicationTokenCredentials credentials = new ApplicationTokenCredentials(@"C:\my.azureauth");
+            AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
             return RedisManager
                 .Configure()
                 .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
@@ -210,7 +210,7 @@ namespace Azure.Tests
 
         private IResourceManager CreateResourceManager()
         {
-            ApplicationTokenCredentials credentials = new ApplicationTokenCredentials(@"C:\my.azureauth");
+            AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
             IResourceManager resourceManager = ResourceManager2.Configure()
                 .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                 .Authenticate(credentials)

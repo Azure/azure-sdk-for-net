@@ -1,0 +1,3 @@
+{
+    "projects": [ "Microsoft.Azure.Management.Fluent.Graph.RBAC", "../Resource" ]
+}
