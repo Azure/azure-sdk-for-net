@@ -7,6 +7,8 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
     {
         [EnumName("westus")]
         US_WEST,
+        [EnumName("westcentralus")]
+        US_WEST_CENTRAL,
         [EnumName("centralus")]
         US_CENTRAL,
         [EnumName("eastus")]

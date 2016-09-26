@@ -172,7 +172,7 @@ namespace Micosoft.Azure.Management.Samples.Common
                              .Append("' : '").Append(rc.Value).AppendLine("'");
                 }
             }
-            if (redisCache.IsPremium.Value)
+            if (redisCache.IsPremium)
             {
                 var premium = redisCache.AsPremium();
                 var scheduleEntries = premium.GetPatchSchedules();

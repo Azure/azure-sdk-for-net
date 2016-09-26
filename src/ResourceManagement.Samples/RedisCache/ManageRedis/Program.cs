@@ -107,7 +107,7 @@ namespace ManageRedis
 
                     // List Redis Caches and select Premium Sku instances only
                     var caches = redisCaches.ListByGroup(rgName)
-                        .Where(rc => rc.IsPremium.Value)
+                        .Where(rc => rc.IsPremium)
                         .Select(rc => rc.AsPremium());
 
                     foreach (var premium in caches)

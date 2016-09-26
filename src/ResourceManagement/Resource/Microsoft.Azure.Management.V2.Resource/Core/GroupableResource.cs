@@ -24,27 +24,27 @@ namespace Microsoft.Azure.Management.V2.Resource
         InnerResourceBaseT,
         FluentResourceT,
         ManagerT,
-        IDefintionAfterRegion,
-        IDefintionAfterResourceGroup,
+        IDefinitionAfterRegion,
+        IDefinitionAfterResourceGroup,
         DefTypeWithTags,
         UTypeWithTags> :
-        ResourceBase<IFluentResourceT, InnerResourceT, InnerResourceBaseT, FluentResourceT, IDefintionAfterRegion, DefTypeWithTags, UTypeWithTags>,
+        ResourceBase<IFluentResourceT, InnerResourceT, InnerResourceBaseT, FluentResourceT, IDefinitionAfterRegion, DefTypeWithTags, UTypeWithTags>,
         IGroupableResource
         where FluentResourceT : GroupableResource<IFluentResourceT,
             InnerResourceT,
             InnerResourceBaseT,
             FluentResourceT,
             ManagerT,
-            IDefintionAfterRegion,
-            IDefintionAfterResourceGroup,
+            IDefinitionAfterRegion,
+            IDefinitionAfterResourceGroup,
             DefTypeWithTags, 
             UTypeWithTags>, IFluentResourceT
         where ManagerT : IManagerBase
         where IFluentResourceT : class, IResource
         where InnerResourceBaseT: class
         where InnerResourceT : class, InnerResourceBaseT
-        where IDefintionAfterRegion : class
-        where IDefintionAfterResourceGroup : class
+        where IDefinitionAfterRegion : class
+        where IDefinitionAfterResourceGroup : class
         where DefTypeWithTags : class
         where UTypeWithTags : class
     {
@@ -83,12 +83,12 @@ namespace Microsoft.Azure.Management.V2.Resource
 
         #region Fluent Setters [Implementation of GroupableResource.Definition interfaces]
 
-        public IDefintionAfterResourceGroup WithNewResourceGroup()
+        public IDefinitionAfterResourceGroup WithNewResourceGroup()
         {
             return WithNewResourceGroup(this.Name + "group");
         }
 
-        public IDefintionAfterResourceGroup WithNewResourceGroup(string groupName)
+        public IDefinitionAfterResourceGroup WithNewResourceGroup(string groupName)
         {
             ICreatable<IResourceGroup> creatable = manager
                 .ResourceManager
@@ -98,21 +98,21 @@ namespace Microsoft.Azure.Management.V2.Resource
             return WithNewResourceGroup(creatable);
         }
 
-        public IDefintionAfterResourceGroup WithNewResourceGroup(ICreatable<IResourceGroup> creatable)
+        public IDefinitionAfterResourceGroup WithNewResourceGroup(ICreatable<IResourceGroup> creatable)
         {
             groupName = creatable.Key;
             newGroup = creatable;
             AddCreatableDependency(creatable as IResourceCreator<IResource>);
-            return this as IDefintionAfterResourceGroup;
+            return this as IDefinitionAfterResourceGroup;
         }
 
-        public IDefintionAfterResourceGroup WithExistingResourceGroup(String groupName)
+        public IDefinitionAfterResourceGroup WithExistingResourceGroup(String groupName)
         {
             this.groupName = groupName;
-            return this as IDefintionAfterResourceGroup; 
+            return this as IDefinitionAfterResourceGroup;
         }
 
-        public IDefintionAfterResourceGroup WithExistingResourceGroup(IResourceGroup group)
+        public IDefinitionAfterResourceGroup WithExistingResourceGroup(IResourceGroup group)
         {
             return WithExistingResourceGroup(group.Name);
         }

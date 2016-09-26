@@ -1,17 +1,11 @@
 {
-  "projects": [
-    "src/TestFramework/Microsoft.Azure.Test.HttpRecorder",
-    "src/TestFramework/Microsoft.Rest.ClientRuntime.Azure.TestFramework",
-    "src/ResourceManagement/Compute/Microsoft.Azure.Management.Compute",
-    "src/ResourceManagement/Network/Microsoft.Azure.Management.Network",
-    "src/ResourceManagement/Resource/Microsoft.Azure.Management.ResourceManager",
-    "src/ResourceManagement/Storage/Microsoft.Azure.Management.Storage",
-    "src/ResourceManagement/Azure/Microsoft.Azure.Management",
-    "src/ResourceManagement/Storage",
-    "src/ResourceManagement/Azure",
-    "src/ResourceManagement-Samples/Common",
-    "src/ResourceManagement/Compute",
-    "src/ResourceManagement.Samples/Common",
-    "src/ResourceManagement.Samples/Samples"
-  ]
+    "projects": [
+        "src/TestFramework/Microsoft.Azure.Test.HttpRecorder",
+        "src/TestFramework/Microsoft.Rest.ClientRuntime.Azure.TestFramework",
+        "src/ResourceManagement/Compute/Microsoft.Azure.Management.Compute",
+        "src/ResourceManagement/Network/Microsoft.Azure.Management.Network",
+        "src/ResourceManagement/Resource/Microsoft.Azure.Management.ResourceManager",
+        "src/ResourceManagement/Storage/Microsoft.Azure.Management.Storage",
+        "src/ResourceManagement/Azure/Microsoft.Azure.Management"
+    ]
 }
