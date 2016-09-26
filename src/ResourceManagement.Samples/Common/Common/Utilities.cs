@@ -9,6 +9,7 @@ using Microsoft.Azure.Management.V2.Storage;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Azure.Management.Fluent.Redis;
 
 namespace Micosoft.Azure.Management.Samples.Common
 {
@@ -149,6 +150,56 @@ namespace Micosoft.Azure.Management.Samples.Common
                 .Append("\n\tFault domain count: ").Append(resource.FaultDomainCount)
                 .Append("\n\tUpdate domain count: ").Append(resource.UpdateDomainCount)
                 .ToString());
+        }
+
+        public static void PrintRedisCache(IRedisCache redisCache)
+        {
+            StringBuilder redisInfo = new StringBuilder();
+            redisInfo.Append("Redis Cache Name: ").AppendLine(redisCache.Name)
+                     .Append("\tResource group: ").AppendLine(redisCache.ResourceGroupName)
+                     .Append("\tRegion: ").AppendLine(redisCache.Region.ToString())
+                     .Append("\tSKU Name: ").AppendLine(redisCache.Sku.Name)
+                     .Append("\tSKU Family: ").AppendLine(redisCache.Sku.Family)
+                     .Append("\tHost name: ").AppendLine(redisCache.HostName)
+                     .Append("\tSSL port: ").AppendLine(redisCache.SslPort?.ToString())
+                     .Append("\tNon-SSL port (6379) enabled: ").AppendLine(redisCache.NonSslPort?.ToString());
+            if (redisCache.RedisConfiguration != null && redisCache.RedisConfiguration.Count > 0)
+            {
+                redisInfo.AppendLine("\tRedis Configuration:");
+                foreach (KeyValuePair<string, string> rc in redisCache.RedisConfiguration)
+                {
+                    redisInfo.Append("\t  '").Append(rc.Key)
+                             .Append("' : '").Append(rc.Value).AppendLine("'");
+                }
+            }
+            if (redisCache.IsPremium.Value)
+            {
+                var premium = redisCache.AsPremium();
+                var scheduleEntries = premium.GetPatchSchedules();
+                if (scheduleEntries != null && scheduleEntries.Any())
+                {
+                    redisInfo.AppendLine("\tRedis Patch Schedule:");
+                    foreach (var schedule in scheduleEntries)
+                    {
+                        redisInfo.Append("\t\tDay: '").Append(schedule.DayOfWeek)
+                                .Append("', start at: '").Append(schedule.StartHourUtc)
+                                .Append("', maintenance window: '").Append(schedule.MaintenanceWindow)
+                                .AppendLine("'");
+                    }
+                }
+            }
+
+            Console.WriteLine(redisInfo.ToString());
+        }
+
+        public static void PrintRedisAccessKeys(IRedisAccessKeys redisAccessKeys)
+        {
+            StringBuilder redisKeys = new StringBuilder();
+            redisKeys.AppendLine("Redis Access Keys: ")
+                     .Append("\tPrimary Key: '").Append(redisAccessKeys.PrimaryKey).AppendLine("', ")
+                     .Append("\tSecondary Key: '").Append(redisAccessKeys.SecondaryKey).AppendLine("', ");
+
+            Console.WriteLine(redisKeys.ToString());
         }
     }
 }

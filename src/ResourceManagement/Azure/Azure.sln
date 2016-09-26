@@ -56,6 +56,10 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageResource", "..\..\Res
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageResourceGroup", "..\..\ResourceManagement.Samples\Resource\ManageResourceGroup\ManageResourceGroup.xproj", "{6EE9937C-7C9E-4B99-8D1A-48773DD05A0D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RedisCache", "RedisCache", "{E629A4CC-B49F-4A59-9402-8580B4559545}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageRedis", "..\..\ResourceManagement.Samples\RedisCache\ManageRedis\ManageRedis.xproj", "{29DA48F8-08E0-46CE-A0E6-CF590844B30F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -142,6 +146,10 @@ Global
 		{6EE9937C-7C9E-4B99-8D1A-48773DD05A0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6EE9937C-7C9E-4B99-8D1A-48773DD05A0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6EE9937C-7C9E-4B99-8D1A-48773DD05A0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29DA48F8-08E0-46CE-A0E6-CF590844B30F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29DA48F8-08E0-46CE-A0E6-CF590844B30F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29DA48F8-08E0-46CE-A0E6-CF590844B30F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29DA48F8-08E0-46CE-A0E6-CF590844B30F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -161,5 +169,7 @@ Global
 		{33C50EB8-FDBB-4633-B810-5D0107F5A898} = {80E5CDEE-00C8-4DE9-9238-9197FC4E99FE}
 		{62855AC1-BA09-4C91-9134-1D6EF08C7A11} = {80E5CDEE-00C8-4DE9-9238-9197FC4E99FE}
 		{6EE9937C-7C9E-4B99-8D1A-48773DD05A0D} = {80E5CDEE-00C8-4DE9-9238-9197FC4E99FE}
+		{E629A4CC-B49F-4A59-9402-8580B4559545} = {DE2621DE-D61C-4BCC-B939-89B13BE834CC}
+		{29DA48F8-08E0-46CE-A0E6-CF590844B30F} = {E629A4CC-B49F-4A59-9402-8580B4559545}
 	EndGlobalSection
 EndGlobal
