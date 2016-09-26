@@ -10,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Samples
+namespace Micosoft.Azure.Management.Samples.Common
 {
     public static class Utilities
     {

@@ -1,10 +1,11 @@
-﻿{
+{
   "version": "1.0.0-*",
   "buildOptions": {
     "emitEntryPoint": true
   },
 
   "dependencies": {
+    "Microsoft.Azure.Management": "1.0.0-*",
     "Microsoft.NETCore.App": {
         "type": "platform",
         "version": "1.0.0"
