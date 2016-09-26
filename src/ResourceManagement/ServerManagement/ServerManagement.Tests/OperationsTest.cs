@@ -335,7 +335,11 @@ namespace ServerManagement.Tests
                 {
                     if (gateway == null)
                     {
-                        gateway = await CreateAndConfigureGateway(client, GatewayTwo);
+                        // create gateway
+                        await CreateAndConfigureGateway(client, GatewayTwo);
+
+                        // get gateway status
+                        gateway = await client.Gateway.GetAsync(ResourceGroup, GatewayTwo, GatewayExpandOption.Status);
                     }
 
                     WriteLine("Creating Node");
@@ -446,7 +450,11 @@ namespace ServerManagement.Tests
                 {
                     if (gateway == null)
                     {
-                        gateway = await CreateAndConfigureGateway(client, GatewayTwo);
+                        // create gateway
+                        await CreateAndConfigureGateway(client, GatewayTwo);
+
+                        // get gateway status
+                        gateway = await client.Gateway.GetAsync(ResourceGroup, GatewayTwo, GatewayExpandOption.Status);
                     }
 
                     WriteLine("Creating Node");
@@ -467,9 +475,9 @@ namespace ServerManagement.Tests
                     var username =  Utility.EncryptUsingGatwewaySettings(gateway.Instances[0], NodeUserName);
                     var password =  Utility.EncryptUsingGatwewaySettings(gateway.Instances[0], NodePassword);
 
-                    var session = await client.Session.CreateAsync(ResourceGroup, node.Name, SessionId, username, password, RetentionPeriod.Session, CredentialDataFormat.RsaEncrypted);
+                    var session = await client.Session.CreateAsync(ResourceGroup, node.Name, SessionIdTwo, username, password, RetentionPeriod.Session, CredentialDataFormat.RsaEncrypted);
                     Assert.NotNull(session);
-                    Assert.Equal(session.Name, SessionId);
+                    Assert.Equal(session.Name, SessionIdTwo);
 
                     // Get the same session again
                     WriteLine("Getting Session");
