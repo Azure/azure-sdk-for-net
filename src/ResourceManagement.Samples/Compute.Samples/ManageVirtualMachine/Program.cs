@@ -29,15 +29,15 @@ namespace ManageVirtualMachine
          *  - Delete a virtual machine.
          */
 
+        readonly static string rgName = ResourceNamer.RandomResourceName("rgCOMV", 24);
+        readonly static string windowsVMName = ResourceNamer.RandomResourceName("wVM", 24);
+        readonly static string linuxVMName = ResourceNamer.RandomResourceName("lVM", 24);
+        readonly static string userName = "tirekicker";
+        readonly static string password = "12NewPA$$w0rd!";
+        readonly static string dataDiskName = "disk2";
+
         public static void Main(string[] args)
         {
-            var windowsVMName = ResourceNamer.RandomResourceName("wVM", 24);
-            var linuxVMName = ResourceNamer.RandomResourceName("lVM", 24);
-            var rgName = ResourceNamer.RandomResourceName("rgCOMV", 24);
-            var userName = "tirekicker";
-            var password = "12NewPA$$w0rd!";
-            var dataDiskName = "disk2";
-
             try
             {
                 //=============================================================

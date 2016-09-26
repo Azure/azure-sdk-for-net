@@ -22,6 +22,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     using Management.Compute;
     using System;
     using System.Text.RegularExpressions;
+    using Newtonsoft.Json;
 
     /// <summary>
     /// The implementation for {@link VirtualMachine} and its create and update interfaces.
@@ -61,8 +62,6 @@ namespace Microsoft.Azure.Management.V2.Compute
         private IWithPrimaryPrivateIp nicDefinitionWithPrivateIp;
         private IWithPrimaryNetworkSubnet nicDefinitionWithSubnet;
         private Network.NetworkInterface.Definition.IWithCreate nicDefinitionWithCreate;
-        //private PagedListConverter<VirtualMachineSizeOperations,IVirtualMachineSize> virtualMachineSizeConverter;
-        // The entry point to manage extensions associated with the virtual machine
         private VirtualMachineExtensionsImpl virtualMachineExtensions;
 
         internal VirtualMachineImpl(string name,
@@ -83,15 +82,8 @@ namespace Microsoft.Azure.Management.V2.Compute
             this.namer = new ResourceNamer(this.vmName);
             this.creatableSecondaryNetworkInterfaceKeys = new List<string>();
             this.existingSecondaryNetworkInterfacesToAssociate = new List<INetworkInterface>();
-            // this.virtualMachineSizeConverter = new PagedListConverter<VirtualMachineSizeInner, VirtualMachineSize>() {
-            // @Override
-            // public VirtualMachineSize typeConvert(VirtualMachineSizeInner inner) {
-            // return new VirtualMachineSizeImpl(inner);
-            // }
-            // };
             this.virtualMachineExtensions = new VirtualMachineExtensionsImpl(extensionsClient, this);
             InitializeDataDisks();
-            // }
         }
 
         public async override Task<IVirtualMachine> Refresh()
@@ -137,17 +129,11 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         public PagedList<IVirtualMachineSize> AvailableSizes()
         {
-            // PageImpl<VirtualMachineSizeInner> page = new PageImpl<>();
-            // page.setItems(this.client.listAvailableSizes(this.ResourceGroupName, this.Name).getBody());
-            // page.setNextPageLink(null);
-            // return this.virtualMachineSizeConverter.convert(new PagedList<VirtualMachineSizeInner>(page) {
-            // @Override
-            // public Page<VirtualMachineSizeInner> nextPage(String nextPageLink) throws RestException, IOException {
-            // return null;
-            // }
-            // });
-
-            return null;
+            return PagedListConverter.Convert<VirtualMachineSize, IVirtualMachineSize>(this.client.ListAvailableSizes(this.ResourceGroupName, 
+                this.Name), innerSize =>
+            {
+                return new VirtualMachineSizeImpl(innerSize);
+            });
         }
 
         public string Capture(string containerName, bool overwriteVhd)
@@ -155,8 +141,9 @@ namespace Microsoft.Azure.Management.V2.Compute
             VirtualMachineCaptureParametersInner parameters = new VirtualMachineCaptureParametersInner();
             parameters.DestinationContainerName = containerName;
             parameters.OverwriteVhds = overwriteVhd;
+            parameters.VhdPrefix = this.Name.ToLower();
             VirtualMachineCaptureResultInner captureResult = this.client.Capture(this.ResourceGroupName, this.Name, parameters);
-            return captureResult.ToString();
+            return JsonConvert.SerializeObject(captureResult.Output);
         }
 
         public VirtualMachineInstanceView RefreshInstanceView()

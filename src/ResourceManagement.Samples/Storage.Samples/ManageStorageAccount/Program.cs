@@ -16,12 +16,13 @@ namespace ManageStorageAccount
          *  - List storage accounts
          *  - Delete a storage account.
          */
+
+        readonly static string rgName = Utilities.createRandomName("rgSTMS");
+        readonly static string storageAccountName = Utilities.createRandomName("sa");
+        readonly static string storageAccountName2 = Utilities.createRandomName("sa2");
+
         public static void Main(string[] args)
         {
-            var storageAccountName = Utilities.createRandomName("sa");
-            var storageAccountName2 = Utilities.createRandomName("sa2");
-            var rgName = Utilities.createRandomName("rgSTMS");
-
             try
             {
                 var tokenCredentials = new ApplicationTokenCredentials(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));

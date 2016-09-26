@@ -106,16 +106,22 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
         {
             try
             {
-                await node.Data.ExecuteAsync(cancellationToken);
-                DAG.ReportCompleted(node);
-                if (DAG.IsRootNode(node))
+                TaskResultT cachedResult = node.Data.Result;
+                if (cachedResult != null && !DAG.IsRootNode(node))
                 {
-                    taskCompletionSource.SetResult(null);
+                    DAG.ReportCompleted(node);
                 }
                 else
                 {
-                    ExecuteReadyTasksAsync(cancellationToken);
+                    await node.Data.ExecuteAsync(cancellationToken);
+                    DAG.ReportCompleted(node);
+                    if (DAG.IsRootNode(node))
+                    {
+                        taskCompletionSource.SetResult(null);
+                        return;
+                    }
                 }
+                ExecuteReadyTasksAsync(cancellationToken);
             }
             catch (Exception exception)
             {

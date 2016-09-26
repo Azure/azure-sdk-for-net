@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
             foreach (FluentModelTImpl resource in resources.Where(r => r.State == State.ToBeUpdated))
             {
                 FluentModelTImpl res = resource;
-                Task task = res.CreateAsync(cacellationToken).ContinueWith(updateTask =>
+                Task task = res.UpdateAsync(cacellationToken).ContinueWith(updateTask =>
                 {
                     if (updateTask.IsFaulted)
                     {

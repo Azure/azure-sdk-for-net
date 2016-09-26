@@ -11,9 +11,11 @@ namespace Azure.Tests
 {
     public class TestHelper
     {
+        private static string authFileLocation = @"C:\my2.azureauth";
+
         public static INetworkManager CreateNetworkManager()
         {
-            ApplicationTokenCredentials credentials = new ApplicationTokenCredentials(@"C:\my.azureauth");
+            ApplicationTokenCredentials credentials = new ApplicationTokenCredentials(authFileLocation);
             return NetworkManager
                 .Configure()
                 .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
@@ -22,7 +24,7 @@ namespace Azure.Tests
 
         public static IComputeManager CreateComputeManager()
         {
-            ApplicationTokenCredentials credentials = new ApplicationTokenCredentials(@"C:\my.azureauth");
+            ApplicationTokenCredentials credentials = new ApplicationTokenCredentials(authFileLocation);
             return ComputeManager
                 .Configure()
                 .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
@@ -31,7 +33,7 @@ namespace Azure.Tests
 
         public static IResourceManager CreateResourceManager()
         {
-            ApplicationTokenCredentials credentials = new ApplicationTokenCredentials(@"C:\my.azureauth");
+            ApplicationTokenCredentials credentials = new ApplicationTokenCredentials(authFileLocation);
             IResourceManager resourceManager = ResourceManager2.Configure()
                 .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                 .Authenticate(credentials)

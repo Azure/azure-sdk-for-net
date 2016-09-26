@@ -33,12 +33,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
         /// <returns>The paged list of wrapped resources</returns>
         protected PagedList<IFluentResourceT> WrapList(IList<InnerResourceT> innerList)
         {
-            var singleWrappedPage = new WrappedPage<InnerResourceT, IFluentResourceT>(new OnePage<InnerResourceT>(innerList), WrapModel);
-            return new PagedList<IFluentResourceT>(singleWrappedPage,
-                (string nextPageLink) =>
-                {
-                    return null;
-                });
+            return PagedListConverter.Convert(innerList, WrapModel);
         }
     }
 }

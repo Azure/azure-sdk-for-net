@@ -21,7 +21,7 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microsoft.Azure.Management.Samples", "Microsoft.Azure.Management.Samples", "{DE2621DE-D61C-4BCC-B939-89B13BE834CC}"
 	ProjectSection(SolutionItems) = preProject
-		Authoring-Sample.txt = Authoring-Sample.txt
+		..\..\ResourceManagement.Samples\Authoring-Sample.txt = ..\..\ResourceManagement.Samples\Authoring-Sample.txt
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Compute.Samples", "Compute.Samples", "{754CA731-F802-4084-B73F-EB9B023DF865}"

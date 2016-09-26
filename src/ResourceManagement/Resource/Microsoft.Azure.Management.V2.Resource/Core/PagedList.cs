@@ -200,5 +200,25 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
                 return new WrappedPage<SourceT, TargetT>(sourceList.CurrentPage, converter);
             });
         }
+
+        public static PagedList<TargetT> Convert<SourceT, TargetT>(IEnumerable<SourceT> sourceList, Func<SourceT, TargetT> converter)
+        {
+            var singleWrappedPage = new WrappedPage<SourceT, TargetT>(new OnePage<SourceT>(sourceList), converter);
+            return new PagedList<TargetT>(singleWrappedPage,
+                (string nextPageLink) =>
+                {
+                    return null;
+                });
+        }
+
+        public static PagedList<TargetT> Convert<SourceT, TargetT>(IList<SourceT> sourceList, Func<SourceT, TargetT> converter)
+        {
+            return Convert((IEnumerable < SourceT >)sourceList, converter);
+        }
+
+        public static PagedList<TargetT> Convert<SourceT, TargetT>(IPage<SourceT> sourceList, Func<SourceT, TargetT> converter)
+        {
+            throw new ArgumentException("IPage<T> cannot be Converted, consider using Convert<T, U>(PagedList<T>, Func<SourceT, TargetT>)");
+        }
     }
 }

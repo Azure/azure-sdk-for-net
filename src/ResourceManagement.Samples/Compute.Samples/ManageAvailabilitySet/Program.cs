@@ -25,18 +25,18 @@ namespace ManageAvailabilitySet
 
     public class Program
     {
+        readonly static string rgName = Utilities.createRandomName("rgCOMA");
+        readonly static string availSetName1 = Utilities.createRandomName("av1");
+        readonly static string availSetName2 = Utilities.createRandomName("av2");
+        readonly static string vm1Name = Utilities.createRandomName("vm1");
+        readonly static string vm2Name = Utilities.createRandomName("vm2");
+        readonly static string vnetName = Utilities.createRandomName("vnet");
+
+        readonly static string userName = "tirekicker";
+        readonly static string password = "12NewPA$$w0rd!";
+
         public static void Main(string[] args)
         {
-            var rgName = Utilities.createRandomName("rgCOMA");
-            var availSetName1 = Utilities.createRandomName("av1");
-            var availSetName2 = Utilities.createRandomName("av2");
-            var vm1Name = Utilities.createRandomName("vm1");
-            var vm2Name = Utilities.createRandomName("vm2");
-            var vnetName = Utilities.createRandomName("vnet");
-
-            var userName = "tirekicker";
-            var password = "12NewPA$$w0rd!";
-
             try
             {
                 //=============================================================
