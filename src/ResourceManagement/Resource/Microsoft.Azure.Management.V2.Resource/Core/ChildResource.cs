@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
         /// method to add the child resource impl to collection of child resources
         /// maintined by the parent.
         /// </summary>
-        protected ParentImplT Parent { get; private set; }
+        public ParentImplT Parent { get; private set; }
 
         public abstract string Name { get; }
 

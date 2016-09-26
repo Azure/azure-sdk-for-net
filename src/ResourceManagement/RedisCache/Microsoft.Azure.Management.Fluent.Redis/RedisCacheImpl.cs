@@ -227,9 +227,9 @@ namespace Microsoft.Azure.Management.Fluent.Redis
             this.client.ExportData(this.ResourceGroupName, this.Name, parameters);
         }
 
-        public override async Task<IRedisCache> Refresh ()
+        public override IRedisCache Refresh ()
         {
-            var redisResourceInner = await this.client.GetAsync(this.ResourceGroupName, this.Name);
+            var redisResourceInner = this.client.Get(this.ResourceGroupName, this.Name);
             this.SetInner(redisResourceInner);
             return this;
         }

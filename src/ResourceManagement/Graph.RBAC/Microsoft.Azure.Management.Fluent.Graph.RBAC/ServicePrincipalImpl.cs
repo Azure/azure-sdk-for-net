@@ -80,9 +80,9 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
             return this;
         }
 
-        public override async Task<IServicePrincipal> Refresh ()
+        public override IServicePrincipal Refresh ()
         {
-            var inner = await client.ListAsync(new Rest.Azure.OData.ODataQuery<ServicePrincipalInner>(string.Format("servicePrincipalNames/any(c:c eq '{0}')", AppId)));
+            var inner = client.List(new Rest.Azure.OData.ODataQuery<ServicePrincipalInner>(string.Format("servicePrincipalNames/any(c:c eq '{0}')", AppId)));
             SetInner(inner.ToList()[0]);
             return this;
         }

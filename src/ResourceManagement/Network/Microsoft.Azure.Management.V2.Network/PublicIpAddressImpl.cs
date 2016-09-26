@@ -194,11 +194,11 @@ namespace Microsoft.Azure.Management.V2.Network
             return this;
         }
 
-        public async override Task<IPublicIpAddress> Refresh()
+        public override IPublicIpAddress Refresh()
         {
-            var response = await client.GetWithHttpMessagesAsync(this.ResourceGroupName,
+            var response = client.Get(this.ResourceGroupName,
                 this.Inner.Name);
-            SetInner(response.Body);
+            SetInner(response);
             return this;
         }
 
