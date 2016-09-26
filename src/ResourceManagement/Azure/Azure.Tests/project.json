@@ -19,10 +19,13 @@
         "NETStandard.Library": "1.6.0",
         "xunit": "2.2.0-beta2-build3300",
         "dotnet-test-xunit": "2.2.0-preview2-build1029",
+        "Microsoft.Rest.ClientRuntime.Azure.Authentication": "[2.2.2-preview,3.0.0)",
         "Microsoft.Azure.Management.V2.Resource": "0.0.1-prerelease",
         "Microsoft.Azure.Management.V2.Storage": "0.0.1-prerelease",
         "Microsoft.Azure.Management.V2.Compute": "0.0.1-prerelease",
         "Microsoft.Azure.Management": "1.0.0-*",
-        "Microsoft.Azure.Management.V2.Network": "0.0.1-prerelease"
+        "Microsoft.Azure.Management.V2.Network": "0.0.1-prerelease",
+        "Microsoft.Azure.Management.Fluent.Graph.RBAC": "0.0.1-prerelease",
+        "Microsoft.Azure.Management.Fluent.KeyVault": "0.0.1-prerelease"
     }
 }

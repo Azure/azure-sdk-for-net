@@ -11,25 +11,29 @@ namespace Microsoft.Azure.Management.V2.Resource
             {
                 AuthenticationEndpoint = "https://login.microsoftonline.com/",
                 ResourceManagerEndpoint = "https://management.azure.com/",
-                TokenAudience = "https://management.core.windows.net/"
+                ManagementEnpoint = "https://management.core.windows.net/",
+                GraphEndpoint = "https://graph.windows.net/"
             };
             AzureChinaCloud = new AzureEnvironment()
             {
                 AuthenticationEndpoint = "https://login.chinacloudapi.cn/",
                 ResourceManagerEndpoint = "https://management.chinacloudapi.cn/",
-                TokenAudience = "https://management.core.chinacloudapi.cn/"
+                ManagementEnpoint = "https://management.core.chinacloudapi.cn/",
+                GraphEndpoint = "https://graph.chinacloudapi.cn/"
             };
             AzureUSGovernment = new AzureEnvironment()
             {
                 AuthenticationEndpoint = "https://login-us.crosoftonlinmie.com/",
                 ResourceManagerEndpoint = "https://management.core.usgovcloudapi.net/",
-                TokenAudience = "https://management.core.usgovcloudapi.net/"
+                ManagementEnpoint = "https://management.core.usgovcloudapi.net/",
+                GraphEndpoint = "https://graph.windows.net/"
             };
             AzureGermanCloud = new AzureEnvironment()
             {
                 AuthenticationEndpoint = "https://login-us.crosoftonlinmie.com/",
                 ResourceManagerEndpoint = "https://management.core.usgovcloudapi.net/",
-                TokenAudience = "https://management.core.usgovcloudapi.net/"
+                ManagementEnpoint = "https://management.core.usgovcloudapi.net/",
+                GraphEndpoint = "https://graph.cloudapi.de/"
             };
         }
 
@@ -45,9 +49,14 @@ namespace Microsoft.Azure.Management.V2.Resource
         public string ResourceManagerEndpoint { get; set; }
 
         /// <summary>
-        /// The unique id (in the form of url) of the ARM resource management service <service cref="ResourceManagerEndpoint" />.
+        /// Active Directory graph endpoint.
         /// </summary>
-        public string TokenAudience { get; set; }
+        public string GraphEndpoint { get; set; }
+
+        /// <summary>
+        /// Base URL for calls to service management and authentications to Active Directory.
+        /// </summary>
+        public string ManagementEnpoint { get; set; }
 
         public static AzureEnvironment AzureGlobalCloud
         {

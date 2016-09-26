@@ -108,7 +108,7 @@ namespace Azure.Tests
 
         public INetworkManager CreateNetworkManager()
         {
-            ApplicationTokenCredentials credentials = new ApplicationTokenCredentials(@"C:\my.azureauth");
+            AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
             return NetworkManager
                 .Configure()
                 .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)

@@ -24,7 +24,7 @@ namespace DeployUsingARMTemplate
                     //=================================================================
                     // Authenticate
 
-                    var tokenCredentials = new ApplicationTokenCredentials(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
+                    var tokenCredentials = AzureCredentials.FromFile(Environment.GetEnvironmentVariable("AZURE_AUTH_LOCATION"));
 
                     var azure = Azure
                         .Configure()
