@@ -168,6 +168,10 @@
   </Target>
   
   <PropertyGroup>
+    <!--This property is used by build script at CI server. Do not remove it unless you will update CI as well -->
+    <!--TODO: research to include all library folders but exlude test folders with huge recorded json files.
+      For now we run subset of folders to avoid long build delay and avoid errors reported on recorded json files-->
+    <CorporateScanPaths>$(LibrarySourceFolder)</CorporateScanPaths>    
     <!--public token associated with MSSharedLibKey.snk-->
     <StrongNameToken Condition=" '$(StrongNameToken)' == '' ">31bf3856ad364e35</StrongNameToken>
   </PropertyGroup>
