@@ -14,10 +14,11 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
     /// Implementation of <see cref="ICreatableUpdatableResourcesRoot{IFluentResourceT}">
     /// </summary>
     /// <typeparam name="IFluentResourceT">the type of resources in the batch</typeparam>
-    internal class CreatableUpdatableResourcesRoot<IFluentResourceT> :
+    /// <typeparam name="InnerResourceT">the type of inner resource that IFluentResourceT wraps</typeparam>
+    internal class CreatableUpdatableResourcesRoot<IFluentResourceT, InnerResourceT> :
         CreatableUpdatable<ICreatableUpdatableResourcesRoot<IFluentResourceT>,
-            object,
-            CreatableUpdatableResourcesRoot<IFluentResourceT>,
+            InnerResourceT,
+            CreatableUpdatableResourcesRoot<IFluentResourceT, InnerResourceT>,
             IResource,
             object>,
         ICreatableUpdatableResourcesRoot<IFluentResourceT>
@@ -25,7 +26,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
     {
         private List<string> keys;
 
-        internal CreatableUpdatableResourcesRoot() : base("CreatableUpdatableResourcesRoot", null)
+        internal CreatableUpdatableResourcesRoot() : base("CreatableUpdatableResourcesRoot", default(InnerResourceT))
         {
             this.keys = new List<string>();
         }

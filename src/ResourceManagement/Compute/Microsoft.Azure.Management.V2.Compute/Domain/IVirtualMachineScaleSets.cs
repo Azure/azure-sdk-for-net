@@ -19,15 +19,10 @@ namespace Microsoft.Azure.Management.V2.Compute
         ISupportsDeleting,
         ISupportsDeletingByGroup,
         ISupportsBatchCreation<IVirtualMachineScaleSet>
-    /*,
-    //TODO Uncomment this after supporting ISupportsBatchCreation in C#
-    ISupportsBatchCreation<IVirtualMachineScaleSet>
-    */
     {
         /// <summary>
         /// Shuts down the Virtual Machine in the scale set and releases the compute resources.
-        /// <p>
-        /// You are not billed for the compute resources that the Virtual Machines uses
+        /// Note: You are not billed for the compute resources that the Virtual Machines uses
         /// </summary>
         /// <param name="groupName">groupName the name of the resource group the virtual machine scale set is in</param>
         /// <param name="name">name the name of the virtual machine scale set</param>
@@ -35,8 +30,7 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         /// <summary>
         /// Power off (stop) the virtual machines in the scale set.
-        /// <p>
-        /// You will be billed for the compute resources that the Virtual Machines uses.
+        /// Note: You will be billed for the compute resources that the Virtual Machines uses.
         /// </summary>
         /// <param name="groupName">groupName the name of the resource group the virtual machine scale set is in</param>
         /// <param name="name">name the name of the virtual machine scale set</param>
