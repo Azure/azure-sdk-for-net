@@ -47,7 +47,7 @@ namespace Fluent.Tests
             manager.NetworkInterfaces.Delete(resource.Id);
         }
 
-        [Fact]
+        [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CreateBatchOfNetworkInterfaces()
         {
             var azure = TestHelper.CreateRollupClient();
