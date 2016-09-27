@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.V2.Compute
 
     using Microsoft.Azure.Management.V2.Resource.Core;
     using Microsoft.Azure.Management.Compute.Models;
-    public partial class VirtualMachinePublisherImpl 
+    internal partial class VirtualMachinePublisherImpl 
     {
         /// <returns>the name of the publisher</returns>
         string Microsoft.Azure.Management.V2.Compute.IVirtualMachinePublisher.Name

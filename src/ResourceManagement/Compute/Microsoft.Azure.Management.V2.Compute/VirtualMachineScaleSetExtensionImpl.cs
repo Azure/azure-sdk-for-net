@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     /// <summary>
     /// Implementation of {@link VirtualMachineScaleSetExtension}.
     /// </summary>
-    public partial class VirtualMachineScaleSetExtensionImpl  :
+    internal partial class VirtualMachineScaleSetExtensionImpl  :
         ChildResource<VirtualMachineScaleSetExtensionInner, VirtualMachineScaleSetImpl, IVirtualMachineScaleSet>,
         IVirtualMachineScaleSetExtension,
         IDefinition<IWithCreate>,

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Microsoft.Azure.Management.V2.Compute
 {
-    public partial class VirtualMachineImagesInSkuImpl : IVirtualMachineImagesInSku
+    internal partial class VirtualMachineImagesInSkuImpl : IVirtualMachineImagesInSku
     {
         private IVirtualMachineSku sku;
         private IVirtualMachineImagesOperations innerCollection;

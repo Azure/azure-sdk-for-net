@@ -8,7 +8,7 @@ using System.Collections.Generic;
 
 namespace Microsoft.Azure.Management.V2.Compute
 {
-    public partial class VirtualMachineOffersImpl :
+    internal partial class VirtualMachineOffersImpl :
         ReadableWrappers<IVirtualMachineOffer, VirtualMachineOfferImpl, VirtualMachineImageResourceInner>,
         IVirtualMachineOffers
     {

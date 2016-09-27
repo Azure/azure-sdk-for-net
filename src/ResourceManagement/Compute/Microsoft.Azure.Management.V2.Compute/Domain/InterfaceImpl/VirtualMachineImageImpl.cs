@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     using System.Collections.Generic;
     using Microsoft.Azure.Management.Compute.Models;
     using Microsoft.Azure.Management.V2.Resource.Core;
-    public partial class VirtualMachineImageImpl 
+    internal partial class VirtualMachineImageImpl 
     {
         /// <returns>description of the OS Disk image in the virtual machine image.</returns>
         Microsoft.Azure.Management.Compute.Models.OSDiskImage Microsoft.Azure.Management.V2.Compute.IVirtualMachineImage.OsDiskImage

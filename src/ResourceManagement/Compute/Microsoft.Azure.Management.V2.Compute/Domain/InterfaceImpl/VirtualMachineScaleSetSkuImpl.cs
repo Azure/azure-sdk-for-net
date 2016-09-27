@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     using Management.Compute.Models;
 
     using Microsoft.Azure.Management.V2.Resource.Core;
-    public partial class VirtualMachineScaleSetSkuImpl 
+    internal partial class VirtualMachineScaleSetSkuImpl 
     {
         /// <returns>the Sku type.</returns>
         Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetSkuTypes Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSetSku.SkuType () {

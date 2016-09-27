@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     using System.Threading;
     using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update;
     using Microsoft.Azure.Management.Network.Models;
-    public partial class VirtualMachineImpl 
+    internal partial class VirtualMachineImpl 
     {
         /// <summary>
         /// Specifies an existing VHD that needs to be attached to the virtual machine as data disk.

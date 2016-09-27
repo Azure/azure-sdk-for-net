@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.V2.Compute
 {
-    public partial class AvailabilitySetsImpl : 
+    internal partial class AvailabilitySetsImpl : 
         GroupableResources<IAvailabilitySet,
             AvailabilitySetImpl,
             AvailabilitySetInner,

@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update;
     using Microsoft.Azure.Management.V2.Resource.Core;
     using System.Collections.Generic;
-    public partial class VirtualMachineScaleSetExtensionImpl 
+    internal partial class VirtualMachineScaleSetExtensionImpl 
     {
         /// <summary>
         /// Specifies the type of the virtual machine scale set extension image.

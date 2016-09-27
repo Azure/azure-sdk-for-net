@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     /// <summary>
     /// The implementation for {@link VirtualMachineScaleSets}.
     /// </summary>
-    public partial class VirtualMachineScaleSetsImpl  :
+    internal partial class VirtualMachineScaleSetsImpl  :
         GroupableResources<IVirtualMachineScaleSet,VirtualMachineScaleSetImpl,VirtualMachineScaleSetInner, IVirtualMachineScaleSetsOperations, ComputeManager>,
         IVirtualMachineScaleSets
     {

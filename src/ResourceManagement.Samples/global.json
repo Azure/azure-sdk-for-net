@@ -1,0 +1,3 @@
+{
+    "projects": [ "./../ResourceManagement/Azure/Microsoft.Azure.Management", "../ResourceManagement/Azure", "Common" ]
+}

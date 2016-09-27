@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     /// <summary>
     /// The implementation for {@link VirtualMachineSizes}.
     /// </summary>
-    public partial class VirtualMachineSizesImpl :
+    internal partial class VirtualMachineSizesImpl :
         ReadableWrappers<IVirtualMachineSize, VirtualMachineSizeImpl, VirtualMachineSize>,
         IVirtualMachineSizes
     {

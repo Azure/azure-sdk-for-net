@@ -6,7 +6,7 @@ using Microsoft.Azure.Management.V2.Resource.Core;
 
 namespace Microsoft.Azure.Management.V2.Compute
 {
-    public partial class VirtualMachineOfferImpl : IVirtualMachineOffer
+    internal partial class VirtualMachineOfferImpl : IVirtualMachineOffer
     {
         private IVirtualMachinePublisher publisher;
         private IVirtualMachineSkus skus;

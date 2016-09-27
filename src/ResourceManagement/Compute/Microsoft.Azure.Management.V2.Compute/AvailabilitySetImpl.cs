@@ -14,7 +14,7 @@ using Microsoft.Rest.Azure;
 
 namespace Microsoft.Azure.Management.V2.Compute
 {
-    public partial class AvailabilitySetImpl : GroupableResource<IAvailabilitySet,
+    internal partial class AvailabilitySetImpl : GroupableResource<IAvailabilitySet,
         AvailabilitySetInner,
         Rest.Azure.Resource,
         AvailabilitySetImpl,

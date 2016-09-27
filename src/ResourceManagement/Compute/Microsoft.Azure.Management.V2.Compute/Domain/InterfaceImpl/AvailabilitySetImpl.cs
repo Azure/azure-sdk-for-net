@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     using Microsoft.Azure.Management.V2.Resource;
     using Microsoft.Azure.Management.V2.Compute.AvailabilitySet.Update;
     using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
-    public partial class AvailabilitySetImpl 
+    internal partial class AvailabilitySetImpl 
     {
         /// <summary>
         /// Returns the fault domain count of availability set.
