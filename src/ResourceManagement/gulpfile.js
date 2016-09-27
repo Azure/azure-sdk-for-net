@@ -6,42 +6,42 @@ var fs = require('fs');
 
 var mappings = {
     'compute': {
-        'dir': 'Compute/Microsoft.Azure.Management.V2.Compute',
+        'dir': 'Compute/Microsoft.Azure.Management.Fluent.Compute',
         'source': 'arm-compute/2016-03-30/swagger/compute.json',
-        'package': 'Microsoft.Azure.Management.Compute',
+        'package': 'Microsoft.Azure.Management.Fluent.Compute',
         'args': '-FT 1'
     },
     'storage': {
-        'dir': 'Storage/Microsoft.Azure.Management.V2.Storage',
+        'dir': 'Storage/Microsoft.Azure.Management.Fluent.Storage',
         'source': 'arm-storage/2016-01-01/swagger/storage.json',
-        'package': 'Microsoft.Azure.Management.Storage',
+        'package': 'Microsoft.Azure.Management.Fluent.Storage',
         'args': '-FT 2'
     },
     'resources': {
-        'dir': 'Resource/Microsoft.Azure.Management.V2.Resource',
+        'dir': 'ResourceManager/Microsoft.Azure.Management.Fluent.ResourceManager',
         'source': 'arm-resources/resources/2016-02-01/swagger/resources.json',
-        'package': 'Microsoft.Azure.Management.ResourceManager'
+        'package': 'Microsoft.Azure.Management.Fluent.ResourceManager'
     },
     'subscriptions': {
-        'dir': 'Resource/Microsoft.Azure.Management.V2.Resource',
+        'dir': 'ResourceManager/Microsoft.Azure.Management.Fluent.ResourceManager',
         'source': 'arm-resources/subscriptions/2015-11-01/swagger/subscriptions.json',
-        'package': 'Microsoft.Azure.Management.ResourceManager'
+        'package': 'Microsoft.Azure.Management.Fluent.ResourceManager'
     },
     'features': {
-        'dir': 'Resource/Microsoft.Azure.Management.V2.Resource',
+        'dir': 'ResourceManager/Microsoft.Azure.Management.Fluent.ResourceManager',
         'source': 'arm-resources/features/2015-12-01/swagger/features.json',
-        'package': 'Microsoft.Azure.Management.ResourceManager'
+        'package': 'Microsoft.Azure.Management.Fluent.ResourceManager'
     },
     'network': {
-        'dir': 'Network/Microsoft.Azure.Management.V2.Network',
+        'dir': 'Network/Microsoft.Azure.Management.Fluent.Network',
         'source': 'arm-network/2016-06-01/swagger/network.json',
-        'package': 'Microsoft.Azure.Management.Network',
+        'package': 'Microsoft.Azure.Management.Fluent.Network',
         'args': '-FT 1'
     },
     'batch': {
-        'dir': 'Batch/Microsoft.Azure.Management.V2.Batch',
+        'dir': 'Batch/Microsoft.Azure.Management.Fluent.Batch',
         'source': 'arm-batch/2015-12-01/swagger/BatchManagement.json',
-        'package': 'Microsoft.Azure.Management.Batch',
+        'package': 'Microsoft.Azure.Management.Fluent.Batch',
         'args': '-FT 1'
     },
     'redis': {
@@ -51,14 +51,14 @@ var mappings = {
         'args': '-FT 1'
     },
     'graphrbac': {
-        'dir': 'Graph.RBAC/Microsoft.Azure.Management.V2.Graph.RBAC',
+        'dir': 'Graph.RBAC/Microsoft.Azure.Management.Fluent.Graph.RBAC',
         'source': 'arm-graphrbac/1.6/swagger/graphrbac.json',
-        'package': 'Microsoft.Azure.Management.Graph.RBAC',
+        'package': 'Microsoft.Azure.Management.Fluent.Graph.RBAC',
     },
     'keyvault': {
-        'dir': 'KeyVault/Microsoft.Azure.Management.V2.KeyVault',
+        'dir': 'KeyVault/Microsoft.Azure.Management.Fluent.KeyVault',
         'source': 'arm-keyvault/2015-06-01/swagger/keyvault.json',
-        'package': 'Microsoft.Azure.Management.KeyVault',
+        'package': 'Microsoft.Azure.Management.Fluent.KeyVault',
     }
 };
 

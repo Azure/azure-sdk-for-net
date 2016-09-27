@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.Batch.Models
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public virtual void Validate()
+        public override void Validate()
         {
             if (this.AutoStorage != null)
             {

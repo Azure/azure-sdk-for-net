@@ -14,9 +14,6 @@ namespace Microsoft.Azure.Management.Fluent.Batch
         IExternalChildResource<Microsoft.Azure.Management.Fluent.Batch.IApplicationPackage,Microsoft.Azure.Management.Fluent.Batch.IApplication>,
         IWrapper<Microsoft.Azure.Management.Batch.Models.ApplicationPackageInner>
     {
-        /// <returns>the name of application package.</returns>
-        string Name { get; }
-
         /// <returns>the sate of the application package</returns>
         PackageState? State { get; }
 

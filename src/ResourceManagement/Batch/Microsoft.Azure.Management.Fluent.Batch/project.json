@@ -1,48 +1,49 @@
 {
   "version": "0.0.1-prerelease",
-  "title": "Microsoft Azure Batch Management Fluent Library",
-  "description": "Provides management capabilities for Azure Batch service accounts.",
+  "description": "Microsoft Azure Batch Management Fluent Library.",
   "authors": [ "Microsoft" ],
 
   "packOptions": {
-    "summary": "Provides management capabilities for Azure Batch service accounts.",
+    "summary": "Microsoft Azure Batch Management Fluent Library.",
     "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
-    "tags": [ "Microsoft Azure batch management", "REST HTTP client", "azureofficial", "windowsazureofficial" ],
+    "tags": [ "Microsoft Azure batch management", "REST HTTP client", "azureofficial", "windowsazureofficial", "Fluent" ],
     "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
     "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
-    "requireLicenseAcceptance":  true,
-	"releaseNotes": "Added support for .NETStandard and fixed the .NETFramework 4.5 dependencies. This library targets REST API version 2015-12-01."
+    "requireLicenseAcceptance": true
   },
+
   "buildOptions": {
     "delaySign": true,
     "publicSign": false,
     "keyFile": "../../../../tools/MSSharedLibKey.snk"
   },
+
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.1, 4.0)",
-    "Microsoft.Azure.Management.V2.Resource": "0.0.1-prerelease",
-    "Microsoft.Azure.Management.V2.Storage": "0.0.1-prerelease"
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.2, 4.0)",
+    "Microsoft.Azure.Management.Fluent.ResourceManager": "0.0.1-prerelease",
+    "Microsoft.Azure.Management.Fluent.Storage": "0.0.1-prerelease"
   },
+
   "frameworks": {
-        "net45": {
-            "dependencies": {
-            }
-        },
-        "netstandard1.5": {
-            "imports": [ "dnxcore50" ],
-            "dependencies": {
-                "Microsoft.NETCore.Platforms": "1.0.1",
-                "System.Diagnostics.Tools": "4.0.1",
-                "System.Net.Http": "4.1.0",
-                "System.Runtime.Serialization.Primitives": "4.1.1",
-                "System.Threading.Tasks": "4.0.11"
-            }
-        },
-        "netstandard1.1": {
-            "imports": [ "dnxcore50" ],
-            "dependencies": {
-                "System.Runtime.Serialization.Primitives": "4.1.1"
-            }
-        }
+    "net45": {
+      "dependencies": {
+      }
+    },
+    "netstandard1.5": {
+      "imports": [ "dnxcore50" ],
+      "dependencies": {
+        "Microsoft.NETCore.Platforms": "1.0.1",
+        "System.Diagnostics.Tools": "4.0.1",
+        "System.Net.Http": "4.1.0",
+        "System.Runtime.Serialization.Primitives": "4.1.1",
+        "System.Threading.Tasks": "4.0.11"
+      }
+    },
+    "netstandard1.1": {
+      "imports": [ "dnxcore50" ],
+      "dependencies": {
+        "System.Runtime.Serialization.Primitives": "4.1.1"
+      }
     }
+  }
 }
