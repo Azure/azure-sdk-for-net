@@ -1,18 +1,20 @@
 {
+    "version": "1.0.0-*",
     "buildOptions": {
         "emitEntryPoint": true
     },
+
     "dependencies": {
         "Common": "1.0.0-*",
-        "Microsoft.Azure.Management.V2.Storage": "0.0.1-prerelease",
         "Microsoft.NETCore.App": {
             "type": "platform",
             "version": "1.0.0"
-        }    },
+        }
+    },
+
     "frameworks": {
         "netcoreapp1.0": {
             "imports": "dnxcore50"
         }
-    },
-    "version": "1.0.0-*"
+    }
 }
