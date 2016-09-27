@@ -195,6 +195,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
             this.AdditionalStorageAccounts = new Dictionary<string, string>();
             this.Configurations = new Dictionary<string, Dictionary<string, string>>();
             this.ScriptActions =  new Dictionary<ClusterNodeType, List<ScriptAction>>();
+            this.ComponentVersion = new Dictionary<string, string>();
 
             //set defaults
             this.Version = "default";
