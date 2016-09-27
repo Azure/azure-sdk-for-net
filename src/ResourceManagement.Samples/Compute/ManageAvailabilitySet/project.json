@@ -6,8 +6,6 @@
 
   "dependencies": {
     "Common": "1.0.0-*",
-    "Microsoft.Azure.Management": "1.0.0-*",
-    "Microsoft.Azure.Management.V2.Compute": "0.0.1-prerelease",
     "Microsoft.NETCore.App": {
         "type": "platform",
         "version": "1.0.0"
