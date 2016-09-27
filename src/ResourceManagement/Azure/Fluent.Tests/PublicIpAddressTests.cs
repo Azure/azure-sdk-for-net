@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Azure.Tests
+namespace Fluent.Tests
 {
     public class IPublicIpAddressTests
     {

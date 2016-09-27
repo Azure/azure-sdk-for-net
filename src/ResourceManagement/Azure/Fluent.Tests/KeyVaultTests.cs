@@ -14,7 +14,7 @@ using Microsoft.Rest.Azure.Authentication;
 using System.Linq;
 using Xunit;
 
-namespace Azure.Tests
+namespace Fluent.Tests
 {
 
     public class ManageKeyVault {

@@ -12,7 +12,7 @@ using System;
 using Xunit;
 using DayOfWeek = Microsoft.Azure.Management.Fluent.Redis.Models.DayOfWeek;
 
-namespace Azure.Tests
+namespace Fluent.Tests
 {
     public class RedisCachesTests
     {

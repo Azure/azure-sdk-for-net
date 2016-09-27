@@ -8,7 +8,7 @@ using Microsoft.Azure.Management.V2.Resource.Core;
 using System;
 using Xunit;
 
-namespace Azure.Tests
+namespace Fluent.Tests
 {
     public class AvailabilitySetsTests
     {

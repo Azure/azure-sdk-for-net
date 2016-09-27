@@ -8,7 +8,7 @@ using System;
 using System.Linq;
 using Xunit;
 
-namespace Azure.Tests
+namespace Fluent.Tests
 {
     public class VirtualMachineTests
     {

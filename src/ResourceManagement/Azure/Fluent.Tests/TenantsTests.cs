@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using Xunit;
 using static Microsoft.Azure.Management.V2.Resource.ResourceManager2;
 
-namespace Azure.Tests
+namespace Fluent.Tests
 {
     public class TenantsTests
     {

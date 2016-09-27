@@ -7,7 +7,7 @@ using Microsoft.Azure.Management.V2.Resource;
 using Microsoft.Azure.Management.V2.Resource.Authentication;
 using Microsoft.Azure.Management.V2.Resource.Core;
 
-namespace Azure.Tests
+namespace Fluent.Tests
 {
     public class TestHelper
     {
