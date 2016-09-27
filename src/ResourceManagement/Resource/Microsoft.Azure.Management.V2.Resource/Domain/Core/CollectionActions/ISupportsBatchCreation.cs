@@ -8,7 +8,6 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.CollectionActions
 {
     /// <summary>
     /// Providing access to creating a batch of Azure top level resources of same type.
-    /// Note: this interface is not intended to be implemented by user code)
     /// </summary>
     /// <typeparam name="IFluentResourceT">the top level Azure resource type</typeparam>
     public interface ISupportsBatchCreation<IFluentResourceT>
