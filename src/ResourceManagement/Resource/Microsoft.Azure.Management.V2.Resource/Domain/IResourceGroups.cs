@@ -14,7 +14,8 @@ namespace Microsoft.Azure.Management.V2.Resource
         ISupportsListing<IResourceGroup>,
         ISupportsGettingByName<IResourceGroup>,
         ISupportsCreating<IBlank>,
-        ISupportsDeleting
+        ISupportsDeleting,
+        ISupportsBatchCreation<IResourceGroup>
     {
         /// <summary>
         /// Checks whether resource group exists.

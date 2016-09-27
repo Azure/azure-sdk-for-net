@@ -16,7 +16,8 @@ namespace Microsoft.Azure.Management.V2.Network
         ISupportsGettingByGroup<Microsoft.Azure.Management.V2.Network.ILoadBalancer>,
         ISupportsGettingById<Microsoft.Azure.Management.V2.Network.ILoadBalancer>,
         ISupportsDeleting,
-        ISupportsDeletingByGroup
+        ISupportsDeletingByGroup,
+        ISupportsBatchCreation<Microsoft.Azure.Management.V2.Network.ILoadBalancer>
     {
     }
 }

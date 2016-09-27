@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Management.Fluent.Batch
         ISupportsGettingByGroup<Microsoft.Azure.Management.Fluent.Batch.IBatchAccount>,
         ISupportsGettingById<Microsoft.Azure.Management.Fluent.Batch.IBatchAccount>,
         ISupportsDeleting,
-        ISupportsDeletingByGroup
+        ISupportsDeletingByGroup,
+        ISupportsBatchCreation<Microsoft.Azure.Management.Fluent.Batch.IBatchAccount>
     {
     }
 }

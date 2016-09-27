@@ -12,7 +12,7 @@ using Microsoft.Azure.Management.ResourceManager.Models;
 namespace Microsoft.Azure.Management.V2.Resource
 {
     internal class ResourceGroupsImpl : 
-        CreatableWrappers<IResourceGroup, ResourceGroupImpl, ResourceGroupInner>,
+        CreatableResources<IResourceGroup, ResourceGroupImpl, ResourceGroupInner>,
         IResourceGroups
     {
         private IResourceGroupsOperations InnerCollection { get; set; }
