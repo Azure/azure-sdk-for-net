@@ -16,7 +16,8 @@ namespace Microsoft.Azure.Management.V2.Compute
         ISupportsGettingById<IVirtualMachine>,
         ISupportsCreating<IBlank>,
         ISupportsDeleting,
-        ISupportsDeletingByGroup
+        ISupportsDeletingByGroup,
+        ISupportsBatchCreation<IVirtualMachine>
     {
         /// <returns>entry point to virtual machine sizes</returns>
         IVirtualMachineSizes Sizes ();

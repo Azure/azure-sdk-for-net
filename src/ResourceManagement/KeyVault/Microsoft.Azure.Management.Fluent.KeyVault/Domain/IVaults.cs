@@ -16,7 +16,8 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
         ISupportsListingByGroup<IVault>,
         ISupportsGettingByGroup<IVault>,
         ISupportsGettingById<IVault>,
-        ISupportsDeletingByGroup
+        ISupportsDeletingByGroup,
+        ISupportsBatchCreation<IVault>
     {
     }
 }

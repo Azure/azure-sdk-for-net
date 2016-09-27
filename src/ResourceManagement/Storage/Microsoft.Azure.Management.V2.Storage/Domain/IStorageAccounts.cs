@@ -16,7 +16,8 @@ namespace Microsoft.Azure.Management.V2.Storage
         ISupportsListingByGroup<IStorageAccount>,
         ISupportsGettingByGroup<IStorageAccount>,
         ISupportsGettingById<IStorageAccount>,
-        ISupportsDeletingByGroup
+        ISupportsDeletingByGroup,
+        ISupportsBatchCreation<Microsoft.Azure.Management.V2.Storage.IStorageAccount>
     {
         /// <summary>
         /// Checks that account name is valid and is not in use.

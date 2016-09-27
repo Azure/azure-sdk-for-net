@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.V2.Network
         ISupportsGettingById<Microsoft.Azure.Management.V2.Network.INetworkInterface>,
         ISupportsDeleting,
         ISupportsDeletingByGroup,
-        ISupportsBatchCreation<INetworkInterface>
+        ISupportsBatchCreation<Microsoft.Azure.Management.V2.Network.INetworkInterface>
     {
     }
 }

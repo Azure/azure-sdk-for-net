@@ -16,7 +16,8 @@ namespace Microsoft.Azure.Management.V2.Compute
         ISupportsListing<IAvailabilitySet>,
         ISupportsCreating<IBlank>,
         ISupportsDeleting,
-        ISupportsDeletingByGroup
+        ISupportsDeletingByGroup,
+        ISupportsBatchCreation<IAvailabilitySet>
     {
     }
 }

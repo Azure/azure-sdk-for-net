@@ -17,7 +17,8 @@ namespace Microsoft.Azure.Management.V2.Compute
         ISupportsGettingById<IVirtualMachineScaleSet>,
         ISupportsCreating<IBlank>,
         ISupportsDeleting,
-        ISupportsDeletingByGroup
+        ISupportsDeletingByGroup,
+        ISupportsBatchCreation<IVirtualMachineScaleSet>
     /*,
     //TODO Uncomment this after supporting ISupportsBatchCreation in C#
     ISupportsBatchCreation<IVirtualMachineScaleSet>

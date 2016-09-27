@@ -16,7 +16,8 @@ namespace Microsoft.Azure.Management.V2.Network
         ISupportsGettingByGroup<Microsoft.Azure.Management.V2.Network.INetworkSecurityGroup>,
         ISupportsGettingById<Microsoft.Azure.Management.V2.Network.INetworkSecurityGroup>,
         ISupportsDeleting,
-        ISupportsDeletingByGroup
+        ISupportsDeletingByGroup,
+        ISupportsBatchCreation<Microsoft.Azure.Management.V2.Network.INetworkSecurityGroup>
     {
     }
 }
