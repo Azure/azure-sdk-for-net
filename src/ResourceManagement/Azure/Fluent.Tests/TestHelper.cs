@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Microsoft.Azure.Management.Fluent.Batch;
 using Microsoft.Azure.Management.V2.Compute;
 using Microsoft.Azure.Management.V2.Network;
 using Microsoft.Azure.Management.V2.Resource;
@@ -38,5 +39,15 @@ namespace Fluent.Tests
                 .WithSubscription(credentials.DefaultSubscriptionId);
             return resourceManager;
         }
+
+        public static IBatchManager CreateBatchManager()
+        {
+            AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
+            return BatchManager
+                .Configure()
+                .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .Authenticate(credentials, credentials.DefaultSubscriptionId);
+        }
+
     }
 }

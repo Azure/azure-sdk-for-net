@@ -88,9 +88,9 @@ namespace Microsoft.Azure.Management.V2.Network
             return new NetworkSecurityRuleImpl(inner, this);
         }
 
-        public async override Task<INetworkSecurityGroup> Refresh()
+        public override INetworkSecurityGroup Refresh()
         {
-            var response = await this.innerCollection.GetAsync(this.ResourceGroupName, this.Name);
+            var response = this.innerCollection.Get(this.ResourceGroupName, this.Name);
             SetInner(response);
             return this;
         }

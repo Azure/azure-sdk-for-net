@@ -286,9 +286,9 @@ namespace Microsoft.Azure.Management.V2.Storage
 
         #region Implementation of IRefreshable interface
 
-        public override async Task<IStorageAccount> Refresh()
+        public override IStorageAccount Refresh()
         {
-            var response = await client.GetPropertiesAsync(ResourceGroupName, Name);
+            var response = client.GetProperties(ResourceGroupName, Name);
             SetInner(response);
             return this;
         }

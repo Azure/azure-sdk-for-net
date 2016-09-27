@@ -64,10 +64,10 @@ namespace Microsoft.Azure.Management.V2.Network
             }
         }
 
-        public async override Task<INetworkInterface> Refresh()
+        public override INetworkInterface Refresh()
         {
-            var response = await client.GetWithHttpMessagesAsync(this.ResourceGroupName, this.nicName);
-            SetInner(response.Body);
+            var response = client.Get(ResourceGroupName, nicName);
+            SetInner(response);
             return this;
         }
 

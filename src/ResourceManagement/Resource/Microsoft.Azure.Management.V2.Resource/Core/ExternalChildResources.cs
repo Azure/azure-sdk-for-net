@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
         private ConcurrentDictionary<string, FluentModelTImpl> collection = new ConcurrentDictionary<string, FluentModelTImpl>();
 
         /// <summary>
-        /// Creates a new ExternalChildResourcesImpl.
+        /// Creates a new ExternalChildResources.
         /// </summary>
         /// <param name="parent">the parent Azure resource</param>
         /// <param name="childResourceName">the child resource name</param>
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
             }
 
             List<Task> allTasks = new List<Task>();
-            foreach(FluentModelTImpl resource in resources.Where(r => r.State == State.ToBeRemoved))
+            foreach(FluentModelTImpl resource in resources.Where(r => r.PendingOperation == PendingOperation.ToBeRemoved))
             {
                 FluentModelTImpl res = resource;
                 Task task = res.DeleteAsync(cacellationToken).ContinueWith(deleteTask =>
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
                     else
                     {
                         comitted.Add(res);
-                        res.State = State.None;
+                        res.PendingOperation = PendingOperation.None;
                         FluentModelTImpl val;
                         this.collection.TryRemove(res.Name, out val);
                     }
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
                 allTasks.Add(task);
             }
 
-            foreach (FluentModelTImpl resource in resources.Where(r => r.State == State.ToBeCreated))
+            foreach (FluentModelTImpl resource in resources.Where(r => r.PendingOperation == PendingOperation.ToBeCreated))
             {
                 FluentModelTImpl res = resource;
                 Task task = res.CreateAsync(cacellationToken).ContinueWith(createTask =>
@@ -119,13 +119,13 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
                     else
                     {
                         comitted.Add(res);
-                        res.State = State.None;
+                        res.PendingOperation = PendingOperation.None;
                     }
                 });
                 allTasks.Add(task);
             }
 
-            foreach (FluentModelTImpl resource in resources.Where(r => r.State == State.ToBeUpdated))
+            foreach (FluentModelTImpl resource in resources.Where(r => r.PendingOperation == PendingOperation.ToBeUpdated))
             {
                 FluentModelTImpl res = resource;
                 Task task = res.UpdateAsync(cacellationToken).ContinueWith(updateTask =>
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
                     else
                     {
                         comitted.Add(res);
-                        res.State = State.None;
+                        res.PendingOperation = PendingOperation.None;
                     }
                 });
                 allTasks.Add(task);
@@ -171,7 +171,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
                 throw new ArgumentException("A child resource ('" + childResourceName + "') with name  '" + name + "' already exists");
             }
             FluentModelTImpl childResource = NewChildResource(name);
-            childResource.State = State.ToBeCreated;
+            childResource.PendingOperation = PendingOperation.ToBeCreated;
             return childResource;
         }
 
@@ -184,15 +184,15 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
         {
             FluentModelTImpl childResource = Find(name);
             if (childResource == null
-                    || childResource.State == State.ToBeCreated)
+                    || childResource.PendingOperation == PendingOperation.ToBeCreated)
             {
                 throw new ArgumentException("A child resource ('" + childResourceName + "') with name  '" + name + "' not found");
             }
-            if (childResource.State == State.ToBeRemoved)
+            if (childResource.PendingOperation == PendingOperation.ToBeRemoved)
             {
                 throw new ArgumentException("A child resource ('" + childResourceName + "') with name  '" + name + "' is marked for deletion");
             }
-            childResource.State = State.ToBeUpdated;
+            childResource.PendingOperation = PendingOperation.ToBeUpdated;
             return childResource;
         }
 
@@ -204,11 +204,11 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
         {
             FluentModelTImpl childResource = Find(name);
             if (childResource == null
-                    || childResource.State == State.ToBeCreated)
+                    || childResource.PendingOperation == PendingOperation.ToBeCreated)
             {
                 throw new ArgumentException("A child resource ('" + childResourceName + "') with name  '" + name + "' not found");
             }
-            childResource.State = State.ToBeRemoved;
+            childResource.PendingOperation = PendingOperation.ToBeRemoved;
         }
 
         /// <summary>

@@ -88,9 +88,9 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         #region Implementation of IRefreshable
 
-        public override async Task<IAvailabilitySet> Refresh()
+        public override IAvailabilitySet Refresh()
         {
-            var availabilitySetInner = await client.GetAsync(ResourceGroupName, Name);
+            var availabilitySetInner = client.Get(ResourceGroupName, Name);
             SetInner(availabilitySetInner);
             idOfVMsInSet = null;
             return this;

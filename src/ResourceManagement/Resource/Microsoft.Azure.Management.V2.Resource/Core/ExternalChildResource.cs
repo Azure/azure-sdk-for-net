@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
         public ExternalChildResource(string name, ParentImplT parent, InnerModelT innerObject) : base(name, innerObject, parent)
         {
             this.name = name;
-            this.State = State.None;
+            this.PendingOperation = PendingOperation.None;
         }
 
         public override string Name
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
         }
 
         /// <returns>the in-memory state of this child resource and state represents any pending action on the child resource.</returns>
-        public State State
+        public PendingOperation PendingOperation
         {
             get; internal set;
         }
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
     /// <summary>
     /// The possible states of a child resource in-memory.
     /// </summary>
-    public enum State
+    public enum PendingOperation
     {
         /// <summary>
         /// No action needs to be taken on resource.

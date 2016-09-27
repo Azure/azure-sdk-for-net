@@ -86,14 +86,14 @@ namespace Microsoft.Azure.Management.V2.Compute
             InitializeDataDisks();
         }
 
-        public async override Task<IVirtualMachine> Refresh()
+        public override IVirtualMachine Refresh()
         {
-            var response = await client.GetWithHttpMessagesAsync(this.ResourceGroupName,
-                this.Name);
-            SetInner(response.Body);
+            var response = client.Get(ResourceGroupName, Name);
+
+            SetInner(response);
             ClearCachedRelatedResources();
             InitializeDataDisks();
-            this.virtualMachineExtensions.Refresh();
+            virtualMachineExtensions.Refresh();
             return this;
         }
 

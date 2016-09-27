@@ -12,11 +12,6 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.ResourceActions
     {
         protected IndexableRefreshable(string name) : base(name) {}
 
-        public abstract Task<IFluentResourceT> Refresh();
-
-        IFluentResourceT IRefreshable<IFluentResourceT>.Refresh()
-        {
-            throw new NotImplementedException();
-        }
+        public abstract IFluentResourceT Refresh();
     }
 }

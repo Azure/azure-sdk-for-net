@@ -16,6 +16,7 @@ EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management", "Microsoft.Azure.Management\Microsoft.Azure.Management.xproj", "{B1032273-B366-4751-B216-36332A06CBC6}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.V2.Batch", "..\Batch\Microsoft.Azure.Management.V2.Batch\Microsoft.Azure.Management.V2.Batch.xproj", "{1B1752E0-264D-4A34-8E73-5A8EF18CC660}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Samples", "Samples\Samples.xproj", "{F47E6D07-2D06-4DDD-8DAA-C235FB192BE8}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Fluent.Graph.RBAC", "..\Graph.RBAC\Microsoft.Azure.Management.Fluent.Graph.RBAC\Microsoft.Azure.Management.Fluent.Graph.RBAC.xproj", "{148A7E48-BBB2-4F38-8708-DF0CB128DE50}"
 EndProject
@@ -59,6 +60,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RedisCache", "RedisCache", "{E629A4CC-B49F-4A59-9402-8580B4559545}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageRedis", "..\..\ResourceManagement.Samples\RedisCache\ManageRedis\ManageRedis.xproj", "{29DA48F8-08E0-46CE-A0E6-CF590844B30F}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Fluent.Batch", "..\Batch\Microsoft.Azure.Management.Fluent.Batch\Microsoft.Azure.Management.Fluent.Batch.xproj", "{1B1752E0-264D-4A34-8E73-5A8EF18CC660}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -94,6 +96,10 @@ Global
 		{1B1752E0-264D-4A34-8E73-5A8EF18CC660}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B1752E0-264D-4A34-8E73-5A8EF18CC660}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B1752E0-264D-4A34-8E73-5A8EF18CC660}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F47E6D07-2D06-4DDD-8DAA-C235FB192BE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F47E6D07-2D06-4DDD-8DAA-C235FB192BE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F47E6D07-2D06-4DDD-8DAA-C235FB192BE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F47E6D07-2D06-4DDD-8DAA-C235FB192BE8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{148A7E48-BBB2-4F38-8708-DF0CB128DE50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{148A7E48-BBB2-4F38-8708-DF0CB128DE50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{148A7E48-BBB2-4F38-8708-DF0CB128DE50}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -150,6 +156,10 @@ Global
 		{29DA48F8-08E0-46CE-A0E6-CF590844B30F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29DA48F8-08E0-46CE-A0E6-CF590844B30F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29DA48F8-08E0-46CE-A0E6-CF590844B30F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B1752E0-264D-4A34-8E73-5A8EF18CC660}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B1752E0-264D-4A34-8E73-5A8EF18CC660}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B1752E0-264D-4A34-8E73-5A8EF18CC660}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B1752E0-264D-4A34-8E73-5A8EF18CC660}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

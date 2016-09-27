@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.V2.Resource
 
         #endregion
 
-        public override Task<IGenericResource> Refresh()
+        public override IGenericResource Refresh()
         {
             return null;
         }

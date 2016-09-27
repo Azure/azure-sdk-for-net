@@ -409,9 +409,9 @@ namespace Microsoft.Azure.Management.V2.Resource
 
         #region Implementation of IRefreshable interface
 
-        public async override Task<IDeployment> Refresh()
+        public override IDeployment Refresh()
         {
-            DeploymentExtendedInner inner = await client.GetAsync(ResourceGroupName, Name);
+            DeploymentExtendedInner inner = client.Get(ResourceGroupName, Name);
             SetInner(inner);
             return this;
         }
