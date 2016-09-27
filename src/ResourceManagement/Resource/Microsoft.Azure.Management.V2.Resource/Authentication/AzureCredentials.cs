@@ -120,7 +120,8 @@ namespace Microsoft.Azure.Management.V2.Resource.Authentication
             {
                 { "authurl", AzureEnvironment.AzureGlobalCloud.AuthenticationEndpoint },
                 { "baseurl", AzureEnvironment.AzureGlobalCloud.ResourceManagerEndpoint },
-                { "managementuri", AzureEnvironment.AzureGlobalCloud.ManagementEnpoint }
+                { "managementuri", AzureEnvironment.AzureGlobalCloud.ManagementEnpoint },
+                { "graphurl", AzureEnvironment.AzureGlobalCloud.GraphEndpoint }
             };
 
             File.ReadLines(authFile)
@@ -136,7 +137,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Authentication
                 AuthenticationEndpoint = config["authurl"].Replace("\\", ""),
                 ManagementEnpoint = config["managementuri"].Replace("\\", ""),
                 ResourceManagerEndpoint = config["baseurl"].Replace("\\", ""),
-                GraphEndpoint = config.ContainsKey("graphurl") ? config["graphurl"].Replace("\\", "") : "https://graph.windows.net"
+                GraphEndpoint = config["graphurl"].Replace("\\", "")
             };
 
             AzureCredentials credentials = FromServicePrincipal(config["client"], config["key"], config["tenant"], env);
