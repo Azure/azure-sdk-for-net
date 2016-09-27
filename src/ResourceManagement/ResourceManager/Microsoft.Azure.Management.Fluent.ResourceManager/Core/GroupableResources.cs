@@ -9,10 +9,10 @@ using System.Threading;
 namespace Microsoft.Azure.Management.V2.Resource.Core
 {
     public abstract class GroupableResources<IFluentResourceT, FluentResourceT, InnerResourceT, InnerCollectionT, ManagerT> :
-        CreatableWrappers<IFluentResourceT, FluentResourceT, InnerResourceT>,
+        CreatableResources<IFluentResourceT, FluentResourceT, InnerResourceT>,
         ISupportsGettingByGroup<IFluentResourceT>,
         ISupportsGettingById<IFluentResourceT>
-        where IFluentResourceT : IGroupableResource
+        where IFluentResourceT : class, IGroupableResource
         where FluentResourceT : IFluentResourceT
         where ManagerT : IManagerBase
     {

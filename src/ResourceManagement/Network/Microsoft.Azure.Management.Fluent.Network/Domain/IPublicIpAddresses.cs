@@ -16,7 +16,8 @@ namespace Microsoft.Azure.Management.V2.Network
         ISupportsListingByGroup<Microsoft.Azure.Management.V2.Network.IPublicIpAddress>,
         ISupportsGettingByGroup<Microsoft.Azure.Management.V2.Network.IPublicIpAddress>,
         ISupportsGettingById<Microsoft.Azure.Management.V2.Network.IPublicIpAddress>,
-        ISupportsDeletingByGroup
+        ISupportsDeletingByGroup,
+        ISupportsBatchCreation<Microsoft.Azure.Management.V2.Network.IPublicIpAddress>
     {
     }
 }

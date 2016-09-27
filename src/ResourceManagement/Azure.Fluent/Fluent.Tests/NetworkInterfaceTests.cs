@@ -2,8 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.V2.Network;
+using Microsoft.Azure.Management.V2.Resource;
 using Microsoft.Azure.Management.V2.Resource.Authentication;
 using Microsoft.Azure.Management.V2.Resource.Core;
+using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,6 +45,70 @@ namespace Fluent.Tests
             Assert.True(resource.Tags.ContainsKey("tag1"));
 
             manager.NetworkInterfaces.Delete(resource.Id);
+        }
+
+        [Fact(Skip = "TODO: Convert to recorded tests")]
+        public void CreateBatchOfNetworkInterfaces()
+        {
+            var azure = TestHelper.CreateRollupClient();
+            var region = Region.US_EAST;
+
+            ICreatable<IResourceGroup> rgCreatable = azure.ResourceGroups
+                .Define("rg" + testId)
+                .WithRegion(region);
+
+            string vnetName = "vnet1212";
+            ICreatable<INetwork> networkCreatable = azure.Networks
+                .Define(vnetName)
+                .WithRegion(region)
+                .WithNewResourceGroup(rgCreatable)
+                .WithAddressSpace("10.0.0.0/28");
+
+            string nic1Name = "nic1";
+            ICreatable<INetworkInterface> nic1Creatable = azure.NetworkInterfaces
+                .Define(nic1Name)
+                .WithRegion(region)
+                .WithNewResourceGroup(rgCreatable)
+                .WithNewPrimaryNetwork(networkCreatable)
+                .WithPrimaryPrivateIpAddressStatic("10.0.0.5");
+
+            string nic2Name = "nic2";
+            ICreatable<INetworkInterface> nic2Creatable = azure.NetworkInterfaces
+            .Define(nic2Name)
+            .WithRegion(region)
+            .WithNewResourceGroup(rgCreatable)
+            .WithNewPrimaryNetwork(networkCreatable)
+            .WithPrimaryPrivateIpAddressStatic("10.0.0.6");
+
+            string nic3Name = "nic3";
+            ICreatable<INetworkInterface> nic3Creatable = azure.NetworkInterfaces
+            .Define(nic3Name)
+            .WithRegion(region)
+            .WithNewResourceGroup(rgCreatable)
+            .WithNewPrimaryNetwork(networkCreatable)
+            .WithPrimaryPrivateIpAddressStatic("10.0.0.7");
+
+            string nic4Name = "nic4";
+            ICreatable<INetworkInterface> nic4Creatable = azure.NetworkInterfaces
+            .Define(nic4Name)
+            .WithRegion(region)
+            .WithNewResourceGroup(rgCreatable)
+            .WithNewPrimaryNetwork(networkCreatable)
+            .WithPrimaryPrivateIpAddressStatic("10.0.0.8");
+
+            ICreatedResources<INetworkInterface> batchNics = azure.NetworkInterfaces
+                                                                .Create(nic1Creatable, nic2Creatable, nic3Creatable, nic4Creatable);
+
+            Assert.True(batchNics.Count() == 4);
+            Assert.True(batchNics.Any(nic => nic.Name.Equals(nic1Name, StringComparison.OrdinalIgnoreCase)));
+            Assert.True(batchNics.Any(nic => nic.Name.Equals(nic2Name, StringComparison.OrdinalIgnoreCase)));
+            Assert.True(batchNics.Any(nic => nic.Name.Equals(nic3Name, StringComparison.OrdinalIgnoreCase)));
+            Assert.True(batchNics.Any(nic => nic.Name.Equals(nic4Name, StringComparison.OrdinalIgnoreCase)));
+
+            IResourceGroup resourceGroup = (IResourceGroup) batchNics.CreatedRelatedResource(rgCreatable.Key);
+            Assert.NotNull(resourceGroup);
+            INetwork network = (INetwork)batchNics.CreatedRelatedResource(networkCreatable.Key);
+            Assert.NotNull(network);
         }
 
         public void print(INetworkInterface resource)
