@@ -1,0 +1,129 @@
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace Microsoft.Azure.Management.V2.Resource.Core
+{
+    /// <summary>
+    /// Implementation of <see cref="ICreatableUpdatableResourcesRoot{IFluentResourceT}">
+    /// </summary>
+    /// <typeparam name="IFluentResourceT">the type of resources in the batch</typeparam>
+    internal class CreatableUpdatableResourcesRoot<IFluentResourceT> :
+        CreatableUpdatable<ICreatableUpdatableResourcesRoot<IFluentResourceT>,
+            object,
+            CreatableUpdatableResourcesRoot<IFluentResourceT>,
+            IResource,
+            object>,
+        ICreatableUpdatableResourcesRoot<IFluentResourceT>
+        where IFluentResourceT : class, IResource
+    {
+        private List<string> keys;
+
+        internal CreatableUpdatableResourcesRoot() : base("CreatableUpdatableResourcesRoot", null)
+        {
+            this.keys = new List<string>();
+        }
+
+        internal void AddCreatableDependencies(params ICreatable<IFluentResourceT>[] creatables)
+        {
+            foreach (ICreatable<IFluentResourceT> item in creatables)
+            {
+                this.keys.Add(item.Key);
+                this.AddCreatableDependency(item as IResourceCreator<IResource>);
+            }
+        }
+
+        public IResource CreatedRelatedResource(string key)
+        {
+            return this.CreatorTaskGroup.CreatedResource(key);
+        }
+
+        public IEnumerable<IFluentResourceT> createdTopLevelResources()
+        {
+            List<IFluentResourceT> resources = new List<IFluentResourceT>();
+            foreach (string resourceKey in keys)
+            {
+                resources.Add((IFluentResourceT)this.CreatorTaskGroup.CreatedResource(resourceKey));
+            }
+            return new ReadOnlyCollection<IFluentResourceT>(resources);
+        }
+
+        public override Task<ICreatableUpdatableResourcesRoot<IFluentResourceT>> CreateResourceAsync(CancellationToken cancellationToken)
+        {
+            TaskCompletionSource<ICreatableUpdatableResourcesRoot<IFluentResourceT>> tcs = new TaskCompletionSource<ICreatableUpdatableResourcesRoot<IFluentResourceT>>();
+            tcs.SetResult(this as ICreatableUpdatableResourcesRoot<IFluentResourceT>);
+            return tcs.Task;
+        }
+
+        #region IndexableRefreshable.Refresh empty Impl 
+        public override ICreatableUpdatableResourcesRoot<IFluentResourceT> Refresh()
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+        #region IResource empty Impl
+        public string Id
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public new string Key
+        {
+            get
+            {
+                return null;
+            }
+        }
+
+        public new string Name
+        {
+            get
+            {
+                return null;
+            }
+        }
+
+        public Region Region
+        {
+            get
+            {
+                return default(Region);
+            }
+        }
+
+        public string RegionName
+        {
+            get
+            {
+                return null;
+            }
+        }
+
+        public IDictionary<string, string> Tags
+        {
+            get
+            {
+                return null;
+            }
+        }
+
+        public string Type
+        {
+            get
+            {
+                return null;
+            }
+        }
+        #endregion
+    }
+}
