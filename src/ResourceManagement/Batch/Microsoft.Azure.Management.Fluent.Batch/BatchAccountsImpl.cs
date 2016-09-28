@@ -131,7 +131,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
 
         public int GetBatchAccountQuotaByLocation(Region region)
         {
-            return locationClient.GetQuotas(region.ToString()).AccountQuota.GetValueOrDefault();
+            return locationClient.GetQuotas(EnumNameAttribute.GetName(region)).AccountQuota.GetValueOrDefault();
         }
     }
 }
