@@ -2,171 +2,125 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.V2.Network
 {
-
-    using Microsoft.Azure.Management.V2.Network.TcpProbe.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Network.TcpProbe.Definition;
-    using Microsoft.Azure.Management.V2.Network.HttpProbe.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Network.LoadBalancer.Definition;
-    using Microsoft.Azure.Management.V2.Network.TcpProbe.Update;
-    using Microsoft.Azure.Management.V2.Network.HttpProbe.Update;
-    using Microsoft.Azure.Management.V2.Network.HttpProbe.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Network.LoadBalancer.Update;
-    using Microsoft.Azure.Management.Network.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
+    using Resource.Core;
+    using Management.Network.Models;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
     using Resource.Core.ChildResourceActions;
     using System;
+    using Rest.Azure;
 
-    /// <summary>
-    /// Implementation for {@link TcpProbe} and its create and update interfaces.
-    /// </summary>
     public partial class ProbeImpl  :
-        ChildResource<Microsoft.Azure.Management.Network.Models.ProbeInner,Microsoft.Azure.Management.V2.Network.LoadBalancerImpl,Microsoft.Azure.Management.V2.Network.ILoadBalancer>,
+        ChildResource<ProbeInner, Microsoft.Azure.Management.V2.Network.LoadBalancerImpl, ILoadBalancer>,
         ITcpProbe,
-        Microsoft.Azure.Management.V2.Network.TcpProbe.Definition.IDefinition<Microsoft.Azure.Management.V2.Network.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>,
-        Microsoft.Azure.Management.V2.Network.TcpProbe.UpdateDefinition.IUpdateDefinition<Microsoft.Azure.Management.V2.Network.LoadBalancer.Update.IUpdate>,
-        Microsoft.Azure.Management.V2.Network.TcpProbe.Update.IUpdate,
+        TcpProbe.Definition.IDefinition<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>,
+        TcpProbe.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
+        TcpProbe.Update.IUpdate,
         IHttpProbe,
-        Microsoft.Azure.Management.V2.Network.HttpProbe.Definition.IDefinition<Microsoft.Azure.Management.V2.Network.LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>,
-        Microsoft.Azure.Management.V2.Network.HttpProbe.UpdateDefinition.IUpdateDefinition<Microsoft.Azure.Management.V2.Network.LoadBalancer.Update.IUpdate>,
-        Microsoft.Azure.Management.V2.Network.HttpProbe.Update.IUpdate
+        HttpProbe.Definition.IDefinition<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>,
+        HttpProbe.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
+        HttpProbe.Update.IUpdate
     {
         internal ProbeImpl (ProbeInner inner, LoadBalancerImpl parent) : base(inner.Name, inner, parent)
         {
-
-            //$ super(inner, parent);
-            //$ }
-
         }
 
-        public int? IntervalInSeconds
+        public int IntervalInSeconds
         {
             get
             {
-            //$ return this.inner().intervalInSeconds();
-
-
-                return null;
+                return (Inner.IntervalInSeconds.HasValue) ? Inner.IntervalInSeconds.Value : 0;
             }
         }
-        public int? Port
+
+        public int Port
         {
             get
             {
-            //$ return this.inner().port();
-
-
-                return null;
+                return Inner.Port;
             }
         }
-        public int? NumberOfProbes
+
+        public int NumberOfProbes
         {
             get
             {
-            //$ return this.inner().numberOfProbes();
-
-
-                return null;
+                return (Inner.NumberOfProbes.HasValue) ? Inner.NumberOfProbes.Value : 0;
             }
         }
+
         override public string Name
         {
             get
             {
-            //$ return this.inner().name();
-
-
-                return null;
+                return Inner.Name;
             }
         }
+
         public string Protocol
         {
             get
             {
-            //$ return this.inner().protocol();
-
-
-                return null;
+                return Inner.Protocol;
             }
         }
+
         public string RequestPath
         {
             get
             {
-            //$ return this.inner().requestPath();
-
-
-                return null;
+                return Inner.RequestPath;
             }
         }
-        public IDictionary<string,Microsoft.Azure.Management.V2.Network.ILoadBalancingRule> LoadBalancingRules ()
+        public IDictionary<string, ILoadBalancingRule> LoadBalancingRules ()
         {
-
-            //$ final Map<String, LoadBalancingRule> rules = new TreeMap<>();
-            //$ if (this.inner().loadBalancingRules() != null) {
-            //$ for (SubResource inner : this.inner().loadBalancingRules()) {
-            //$ String name = ResourceUtils.nameFromResourceId(inner.id());
-            //$ LoadBalancingRule rule = this.parent().loadBalancingRules().get(name);
-            //$ if (rule != null) {
-            //$ rules.put(name, rule);
-            //$ }
-            //$ }
-            //$ }
-            //$ 
-            //$ return Collections.unmodifiableMap(rules);
-
-            return null;
+            IDictionary<string, ILoadBalancingRule> rules = new SortedDictionary<string, ILoadBalancingRule>();
+            if (Inner.LoadBalancingRules != null)
+            {
+                foreach (SubResource inner in Inner.LoadBalancingRules)
+                {
+                    string name = ResourceUtils.NameFromResourceId(inner.Id);
+                    ILoadBalancingRule rule;
+                    if (Parent.LoadBalancingRules().TryGetValue(name, out rule))
+                    {
+                        rules[name] = rule;
+                    }
+                }   
+            }
+            return rules;
         }
 
         public ProbeImpl WithPort (int port)
         {
-
-            //$ this.inner().withPort(port);
-            //$ return this;
-
+            Inner.Port = port;
             return this;
         }
 
         public ProbeImpl WithRequestPath (string requestPath)
         {
-
-            //$ this.inner().withRequestPath(requestPath);
-            //$ return this;
-
+            Inner.RequestPath = requestPath;
             return this;
         }
 
         public ProbeImpl WithIntervalInSeconds (int seconds)
         {
-
-            //$ this.inner().withIntervalInSeconds(seconds);
-            //$ return this;
-
+            Inner.IntervalInSeconds = seconds;
             return this;
         }
 
         public ProbeImpl WithNumberOfProbes (int probes)
         {
-
-            //$ this.inner().withNumberOfProbes(probes);
-            //$ return this;
-
+            Inner.NumberOfProbes = probes;
             return this;
         }
 
         public LoadBalancerImpl Attach ()
         {
-
-            //$ return this.parent().withProbe(this);
-
-            return null;
+            return Parent.WithProbe(this);
         }
 
         LoadBalancer.Update.IUpdate ISettable<LoadBalancer.Update.IUpdate>.Parent()
         {
-            throw new NotImplementedException();
+            return Parent;
         }
     }
 }
