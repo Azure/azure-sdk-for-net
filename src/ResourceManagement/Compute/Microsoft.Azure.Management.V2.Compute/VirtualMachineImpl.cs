@@ -1,37 +1,35 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
 namespace Microsoft.Azure.Management.V2.Compute
 {
 
-    using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.V2.Network;
-    using Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition;
-    using System.Threading.Tasks;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
-    using Microsoft.Rest;
-    using Microsoft.Azure.Management.Storage.Models;
-    using Microsoft.Azure.Management.V2.Storage;
-    using Microsoft.Azure.Management.V2.Resource;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update;
     using System.Threading;
+    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using System.Collections.Generic;
+    using Microsoft.Azure.Management.Compute.Models;
+    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition;
+    using Microsoft.Azure.Management.V2.Network;
+    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update;
+    using Microsoft.Azure.Management.V2.Storage;
+    using Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition;
     using Microsoft.Azure.Management.Network.Models;
+    using Microsoft.Azure.Management.Storage.Models;
+    using System.Threading.Tasks;
+    using Microsoft.Azure.Management.V2.Resource;
+    using Newtonsoft.Json;
+    using System.Text.RegularExpressions;
     using Management.Compute;
     using System;
-    using System.Text.RegularExpressions;
-    using Newtonsoft.Json;
 
     /// <summary>
     /// The implementation for {@link VirtualMachine} and its create and update interfaces.
     /// </summary>
-    internal partial class VirtualMachineImpl :
-        GroupableResource<IVirtualMachine,
-            VirtualMachineInner,
+    internal partial class VirtualMachineImpl  :
+        GroupableResource<Microsoft.Azure.Management.V2.Compute.IVirtualMachine,
+            Microsoft.Azure.Management.Compute.Models.VirtualMachineInner,
             Rest.Azure.Resource,
-            VirtualMachineImpl,
+            Microsoft.Azure.Management.V2.Compute.VirtualMachineImpl,
             IComputeManager,
             VirtualMachine.Definition.IWithGroup,
             VirtualMachine.Definition.IWithNetwork,
@@ -86,7 +84,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             InitializeDataDisks();
         }
 
-        public override IVirtualMachine Refresh()
+        public override IVirtualMachine Refresh ()
         {
             var response = client.Get(ResourceGroupName, Name);
 
@@ -127,16 +125,16 @@ namespace Microsoft.Azure.Management.V2.Compute
             this.client.Redeploy(this.ResourceGroupName, this.Name);
         }
 
-        public PagedList<IVirtualMachineSize> AvailableSizes()
+        public PagedList<Microsoft.Azure.Management.V2.Compute.IVirtualMachineSize> AvailableSizes ()
         {
-            return PagedListConverter.Convert<VirtualMachineSize, IVirtualMachineSize>(this.client.ListAvailableSizes(this.ResourceGroupName, 
+            return PagedListConverter.Convert<VirtualMachineSize, IVirtualMachineSize>(this.client.ListAvailableSizes(this.ResourceGroupName,
                 this.Name), innerSize =>
-            {
-                return new VirtualMachineSizeImpl(innerSize);
-            });
+                {
+                    return new VirtualMachineSizeImpl(innerSize);
+                });
         }
 
-        public string Capture(string containerName, bool overwriteVhd)
+        public string Capture (string containerName, bool overwriteVhd)
         {
             VirtualMachineCaptureParametersInner parameters = new VirtualMachineCaptureParametersInner();
             parameters.DestinationContainerName = containerName;
@@ -146,7 +144,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return JsonConvert.SerializeObject(captureResult.Output);
         }
 
-        public VirtualMachineInstanceView RefreshInstanceView()
+        public VirtualMachineInstanceView RefreshInstanceView() // TODO: Converter emit this as property in Impl (but method as in IVirtualMachine), this should be emitted as method
         {
             this.virtualMachineInstanceView = this.client.Get(this.ResourceGroupName,
                 this.Name,
@@ -158,49 +156,49 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// .
         /// Setters
         /// </summary>
-        public VirtualMachineImpl WithNewPrimaryNetwork(ICreatable<INetwork> creatable)
+        public VirtualMachineImpl WithNewPrimaryNetwork (ICreatable<Microsoft.Azure.Management.V2.Network.INetwork> creatable)
         {
             this.nicDefinitionWithPrivateIp = this.PreparePrimaryNetworkInterface(this.namer.RandomName("nic", 20))
                 .WithNewPrimaryNetwork(creatable);
             return this;
         }
 
-        public VirtualMachineImpl WithNewPrimaryNetwork(string addressSpace)
+        public VirtualMachineImpl WithNewPrimaryNetwork (string addressSpace)
         {
             this.nicDefinitionWithPrivateIp = this.PreparePrimaryNetworkInterface(this.namer.RandomName("nic", 20))
                 .WithNewPrimaryNetwork(addressSpace);
             return this;
         }
 
-        public VirtualMachineImpl WithExistingPrimaryNetwork(INetwork network)
+        public VirtualMachineImpl WithExistingPrimaryNetwork (INetwork network)
         {
             this.nicDefinitionWithSubnet = this.PreparePrimaryNetworkInterface(this.namer.RandomName("nic", 20))
                 .WithExistingPrimaryNetwork(network);
             return this;
         }
 
-        public VirtualMachineImpl WithSubnet(string name)
+        public VirtualMachineImpl WithSubnet (string name)
         {
             this.nicDefinitionWithPrivateIp = this.nicDefinitionWithSubnet
                 .WithSubnet(name);
             return this;
         }
 
-        public VirtualMachineImpl WithPrimaryPrivateIpAddressDynamic()
+        public VirtualMachineImpl WithPrimaryPrivateIpAddressDynamic ()
         {
             this.nicDefinitionWithCreate = this.nicDefinitionWithPrivateIp
                 .WithPrimaryPrivateIpAddressDynamic();
             return this;
         }
 
-        public VirtualMachineImpl WithPrimaryPrivateIpAddressStatic(string staticPrivateIpAddress)
+        public VirtualMachineImpl WithPrimaryPrivateIpAddressStatic (string staticPrivateIpAddress)
         {
             this.nicDefinitionWithCreate = this.nicDefinitionWithPrivateIp
                 .WithPrimaryPrivateIpAddressStatic(staticPrivateIpAddress);
             return this;
         }
 
-        public VirtualMachineImpl WithNewPrimaryPublicIpAddress(ICreatable<IPublicIpAddress> creatable)
+        public VirtualMachineImpl WithNewPrimaryPublicIpAddress (ICreatable<Microsoft.Azure.Management.V2.Network.IPublicIpAddress> creatable)
         {
             var nicCreatable = this.nicDefinitionWithCreate
                 .WithNewPrimaryPublicIpAddress(creatable);
@@ -208,7 +206,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this;
         }
 
-        public VirtualMachineImpl WithNewPrimaryPublicIpAddress(string leafDnsLabel)
+        public VirtualMachineImpl WithNewPrimaryPublicIpAddress (string leafDnsLabel)
         {
             var nicCreatable = this.nicDefinitionWithCreate
                 .WithNewPrimaryPublicIpAddress(leafDnsLabel);
@@ -217,7 +215,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this;
         }
 
-        public VirtualMachineImpl WithExistingPrimaryPublicIpAddress(IPublicIpAddress publicIpAddress)
+        public VirtualMachineImpl WithExistingPrimaryPublicIpAddress (IPublicIpAddress publicIpAddress)
         {
             var nicCreatable = this.nicDefinitionWithCreate
                 .WithExistingPrimaryPublicIpAddress(publicIpAddress);
@@ -226,7 +224,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this;
         }
 
-        public VirtualMachineImpl WithoutPrimaryPublicIpAddress()
+        public VirtualMachineImpl WithoutPrimaryPublicIpAddress ()
         {
             var nicCreatable = this.nicDefinitionWithCreate;
             this.creatablePrimaryNetworkInterfaceKey = nicCreatable.Key;
@@ -234,27 +232,27 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this;
         }
 
-        public VirtualMachineImpl WithNewPrimaryNetworkInterface(ICreatable<INetworkInterface> creatable)
+        public VirtualMachineImpl WithNewPrimaryNetworkInterface (ICreatable<Microsoft.Azure.Management.V2.Network.INetworkInterface> creatable)
         {
             this.creatablePrimaryNetworkInterfaceKey = creatable.Key;
             this.AddCreatableDependency(creatable as IResourceCreator<IResource>);
             return this;
         }
 
-        public VirtualMachineImpl WithNewPrimaryNetworkInterface(string name, string publicDnsNameLabel)
+        public VirtualMachineImpl WithNewPrimaryNetworkInterface (string name, string publicDnsNameLabel)
         {
             var definitionCreatable = PrepareNetworkInterface(name)
                 .WithNewPrimaryPublicIpAddress(publicDnsNameLabel);
             return WithNewPrimaryNetworkInterface(definitionCreatable);
         }
 
-        public VirtualMachineImpl WithExistingPrimaryNetworkInterface(INetworkInterface networkInterface)
+        public VirtualMachineImpl WithExistingPrimaryNetworkInterface (INetworkInterface networkInterface)
         {
             this.existingPrimaryNetworkInterfaceToAssociate = networkInterface;
             return this;
         }
 
-        public VirtualMachineImpl WithStoredWindowsImage(string imageUrl)
+        public VirtualMachineImpl WithStoredWindowsImage (string imageUrl)
         {
             VirtualHardDisk userImageVhd = new VirtualHardDisk();
             userImageVhd.Uri = imageUrl;
@@ -269,7 +267,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this;
         }
 
-        public VirtualMachineImpl WithStoredLinuxImage(string imageUrl)
+        public VirtualMachineImpl WithStoredLinuxImage (string imageUrl)
         {
             VirtualHardDisk userImageVhd = new VirtualHardDisk();
             userImageVhd.Uri = imageUrl;
@@ -281,17 +279,17 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this;
         }
 
-        public VirtualMachineImpl WithPopularWindowsImage(KnownWindowsVirtualMachineImage knownImage)
+        public VirtualMachineImpl WithPopularWindowsImage (KnownWindowsVirtualMachineImage knownImage)
         {
             return WithSpecificWindowsImageVersion(knownImage.ImageReference());
         }
 
-        public VirtualMachineImpl WithPopularLinuxImage(KnownLinuxVirtualMachineImage knownImage)
+        public VirtualMachineImpl WithPopularLinuxImage (KnownLinuxVirtualMachineImage knownImage)
         {
             return WithSpecificLinuxImageVersion(knownImage.ImageReference());
         }
 
-        public VirtualMachineImpl WithSpecificWindowsImageVersion(ImageReference imageReference)
+        public VirtualMachineImpl WithSpecificWindowsImageVersion (ImageReference imageReference)
         {
             this.Inner.StorageProfile.OsDisk.CreateOption = DiskCreateOptionTypes.FromImage;
             this.Inner.StorageProfile.ImageReference = imageReference;
@@ -302,7 +300,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this;
         }
 
-        public VirtualMachineImpl WithSpecificLinuxImageVersion(ImageReference imageReference)
+        public VirtualMachineImpl WithSpecificLinuxImageVersion (ImageReference imageReference)
         {
             this.Inner.StorageProfile.OsDisk.CreateOption = DiskCreateOptionTypes.FromImage;
             this.Inner.StorageProfile.ImageReference = imageReference;
@@ -311,7 +309,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this;
         }
 
-        public VirtualMachineImpl WithLatestWindowsImage(string publisher, string offer, string sku)
+        public VirtualMachineImpl WithLatestWindowsImage (string publisher, string offer, string sku)
         {
             ImageReference imageReference = new ImageReference();
             imageReference.Publisher = publisher;
@@ -321,7 +319,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return WithSpecificWindowsImageVersion(imageReference);
         }
 
-        public VirtualMachineImpl WithLatestLinuxImage(string publisher, string offer, string sku)
+        public VirtualMachineImpl WithLatestLinuxImage (string publisher, string offer, string sku)
         {
             ImageReference imageReference = new ImageReference();
             imageReference.Publisher = publisher;
@@ -331,7 +329,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return WithSpecificLinuxImageVersion(imageReference);
         }
 
-        public VirtualMachineImpl WithOsDisk(string osDiskUrl, OperatingSystemTypes osType)
+        public VirtualMachineImpl WithOsDisk (string osDiskUrl, OperatingSystemTypes osType)
         {
             VirtualHardDisk osDisk = new VirtualHardDisk();
             osDisk.Uri = osDiskUrl;
@@ -341,19 +339,19 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this;
         }
 
-        public VirtualMachineImpl WithRootUserName(string rootUserName)
+        public VirtualMachineImpl WithRootUserName (string rootUserName)
         {
             this.Inner.OsProfile.AdminUsername = rootUserName;
             return this;
         }
 
-        public VirtualMachineImpl WithAdminUserName(string adminUserName)
+        public VirtualMachineImpl WithAdminUserName (string adminUserName)
         {
             this.Inner.OsProfile.AdminUsername = adminUserName;
             return this;
         }
 
-        public VirtualMachineImpl WithSsh(string publicKeyData)
+        public VirtualMachineImpl WithSsh (string publicKeyData)
         {
             OSProfile osProfile = this.Inner.OsProfile;
             if (osProfile.LinuxConfiguration.Ssh == null)
@@ -370,25 +368,25 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this;
         }
 
-        public VirtualMachineImpl DisableVmAgent()
+        public VirtualMachineImpl DisableVmAgent ()
         {
             this.Inner.OsProfile.WindowsConfiguration.ProvisionVMAgent = false;
             return this;
         }
 
-        public VirtualMachineImpl DisableAutoUpdate()
+        public VirtualMachineImpl DisableAutoUpdate ()
         {
             this.Inner.OsProfile.WindowsConfiguration.EnableAutomaticUpdates = false;
             return this;
         }
 
-        public VirtualMachineImpl WithTimeZone(string timeZone)
+        public VirtualMachineImpl WithTimeZone (string timeZone)
         {
             this.Inner.OsProfile.WindowsConfiguration.TimeZone = timeZone;
             return this;
         }
 
-        public VirtualMachineImpl WithWinRm(WinRMListener listener)
+        public VirtualMachineImpl WithWinRm (WinRMListener listener)
         {
             if (this.Inner.OsProfile.WindowsConfiguration.WinRM == null)
             {
@@ -404,25 +402,31 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this;
         }
 
-        public VirtualMachineImpl WithPassword(string password)
+        public VirtualMachineImpl WithPassword (string password)
         {
             this.Inner.OsProfile.AdminPassword = password;
             return this;
         }
 
-        public VirtualMachineImpl WithSize(string sizeName)
+        public VirtualMachineImpl WithSize (string sizeName)
         {
             this.Inner.HardwareProfile.VmSize = sizeName;
             return this;
         }
 
-        public VirtualMachineImpl WithOsDiskCaching(CachingTypes cachingType)
+        public VirtualMachineImpl WithSize (VirtualMachineSizeTypes size)
+        {
+            this.Inner.HardwareProfile.VmSize = size.ToString();
+            return this;
+        }
+
+        public VirtualMachineImpl WithOsDiskCaching (CachingTypes cachingType)
         {
             this.Inner.StorageProfile.OsDisk.Caching = cachingType;
             return this;
         }
 
-        public VirtualMachineImpl WithOsDiskVhdLocation(string containerName, string vhdName)
+        public VirtualMachineImpl WithOsDiskVhdLocation (string containerName, string vhdName)
         {
             VirtualHardDisk osVhd = new VirtualHardDisk();
             osVhd.Uri = this.TemporaryBlobUrl(containerName, vhdName);
@@ -430,46 +434,45 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this;
         }
 
-        public VirtualMachineImpl WithOsDiskEncryptionSettings(DiskEncryptionSettings settings)
+        public VirtualMachineImpl WithOsDiskEncryptionSettings (DiskEncryptionSettings settings)
         {
             this.Inner.StorageProfile.OsDisk.EncryptionSettings = settings;
             return this;
         }
 
-        public VirtualMachineImpl WithOsDiskSizeInGb(int? size)
+        public VirtualMachineImpl WithOsDiskSizeInGb (int? size)
         {
             this.Inner.StorageProfile.OsDisk.DiskSizeGB = size;
             return this;
         }
 
-        public VirtualMachineImpl WithOsDiskName(string name)
+        public VirtualMachineImpl WithOsDiskName (string name)
         {
             this.Inner.StorageProfile.OsDisk.Name = name;
             return this;
         }
 
-        public DataDiskImpl DefineNewDataDisk(string name)
+        public DataDiskImpl DefineNewDataDisk (string name)
         {
             return DataDiskImpl.PrepareDataDisk(name, DiskCreateOptionTypes.Empty, this);
         }
 
-        public DataDiskImpl DefineExistingDataDisk(string name)
+        public DataDiskImpl DefineExistingDataDisk (string name)
         {
-
             return DataDiskImpl.PrepareDataDisk(name, DiskCreateOptionTypes.Attach, this);
         }
 
-        public VirtualMachineImpl WithNewDataDisk(int? sizeInGB)
+        public VirtualMachineImpl WithNewDataDisk (int? sizeInGB)
         {
             return WithDataDisk(DataDiskImpl.CreateNewDataDisk(sizeInGB.HasValue ? sizeInGB.Value : 0, this));
         }
 
-        public VirtualMachineImpl WithExistingDataDisk(string storageAccountName, string containerName, string vhdName)
+        public VirtualMachineImpl WithExistingDataDisk (string storageAccountName, string containerName, string vhdName)
         {
-            return WithDataDisk(DataDiskImpl.CreateFromExistingDisk(storageAccountName, containerName, vhdName, this));
+            return WithDataDisk(DataDiskImpl.CreateFromExistingDisk(storageAccountName, containerName, vhdName, this)); ;
         }
 
-        public VirtualMachineImpl WithNewStorageAccount(ICreatable<IStorageAccount> creatable)
+        public VirtualMachineImpl WithNewStorageAccount (ICreatable<Microsoft.Azure.Management.V2.Storage.IStorageAccount> creatable)
         {
             // This method's effect is NOT additive.
             if (this.creatableStorageAccountKey == null)
@@ -480,32 +483,33 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this;
         }
 
-        public VirtualMachineImpl WithNewStorageAccount(string name)
+        public VirtualMachineImpl WithNewStorageAccount (string name)
         {
-
             Storage.StorageAccount.Definition.IWithGroup definitionWithGroup = this.storageManager
                 .StorageAccounts
                 .Define(name)
                 .WithRegion(this.RegionName);
             Storage.StorageAccount.Definition.IWithCreate definitionAfterGroup;
-            if (this.newGroup != null) {
+            if (this.newGroup != null)
+            {
                 definitionAfterGroup = definitionWithGroup.WithNewResourceGroup(this.newGroup);
-            } else {
+            }
+            else
+            {
                 definitionAfterGroup = definitionWithGroup.WithExistingResourceGroup(this.ResourceGroupName);
             }
 
             return WithNewStorageAccount(definitionAfterGroup);
         }
 
-        public VirtualMachineImpl WithExistingStorageAccount(IStorageAccount storageAccount)
+        public VirtualMachineImpl WithExistingStorageAccount (IStorageAccount storageAccount)
         {
             this.existingStorageAccountToAssociate = storageAccount;
             return this;
         }
 
-        public VirtualMachineImpl WithNewAvailabilitySet(ICreatable<IAvailabilitySet> creatable)
+        public VirtualMachineImpl WithNewAvailabilitySet (ICreatable<Microsoft.Azure.Management.V2.Compute.IAvailabilitySet> creatable)
         {
-
             // This method's effect is NOT additive.
             if (this.creatableAvailabilitySetKey == null)
             {
@@ -515,38 +519,38 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this;
         }
 
-        public VirtualMachineImpl WithNewAvailabilitySet(string name)
+        public VirtualMachineImpl WithNewAvailabilitySet (string name)
         {
             return WithNewAvailabilitySet(base.MyManager.AvailabilitySets.Define(name)
                 .WithRegion(this.RegionName)
                 .WithExistingResourceGroup(this.ResourceGroupName));
         }
 
-        public VirtualMachineImpl WithExistingAvailabilitySet(IAvailabilitySet availabilitySet)
+        public VirtualMachineImpl WithExistingAvailabilitySet (IAvailabilitySet availabilitySet)
         {
             this.existingAvailabilitySetToAssociate = availabilitySet;
             return this;
         }
 
-        public VirtualMachineImpl WithNewSecondaryNetworkInterface(ICreatable<INetworkInterface> creatable)
+        public VirtualMachineImpl WithNewSecondaryNetworkInterface (ICreatable<Microsoft.Azure.Management.V2.Network.INetworkInterface> creatable)
         {
             this.creatableSecondaryNetworkInterfaceKeys.Add(creatable.Key);
             this.AddCreatableDependency(creatable as IResourceCreator<IResource>);
             return this;
         }
 
-        public VirtualMachineImpl WithExistingSecondaryNetworkInterface(INetworkInterface networkInterface)
+        public VirtualMachineImpl WithExistingSecondaryNetworkInterface (INetworkInterface networkInterface)
         {
             this.existingSecondaryNetworkInterfacesToAssociate.Add(networkInterface);
             return this;
         }
 
-        public VirtualMachineExtensionImpl DefineNewExtension(string name)
+        public VirtualMachineExtensionImpl DefineNewExtension (string name)
         {
             return this.virtualMachineExtensions.Define(name);
         }
 
-        public VirtualMachineImpl WithoutDataDisk(string name)
+        public VirtualMachineImpl WithoutDataDisk (string name)
         {
             int idx = -1;
             foreach (IVirtualMachineDataDisk dataDisk in this.dataDisks)
@@ -563,7 +567,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this;
         }
 
-        public VirtualMachineImpl WithoutDataDisk(int lun)
+        public VirtualMachineImpl WithoutDataDisk (int lun)
         {
             int idx = -1;
             foreach (IVirtualMachineDataDisk dataDisk in this.dataDisks)
@@ -580,7 +584,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this;
         }
 
-        public DataDiskImpl UpdateDataDisk(string name)
+        public DataDiskImpl UpdateDataDisk (string name)
         {
             foreach (IVirtualMachineDataDisk dataDisk in this.dataDisks)
             {
@@ -593,7 +597,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             throw new Exception("A data disk with name  '" + name + "' not found");
         }
 
-        public VirtualMachineImpl WithoutSecondaryNetworkInterface(string name)
+        public VirtualMachineImpl WithoutSecondaryNetworkInterface (string name)
         {
             if (this.Inner.NetworkProfile != null
             && this.Inner.NetworkProfile.NetworkInterfaces != null)
@@ -603,7 +607,8 @@ namespace Microsoft.Azure.Management.V2.Compute
                 {
                     idx++;
                     if (!nicReference.Primary == true
-                        && name.Equals(ResourceUtils.NameFromResourceId(nicReference.Id), StringComparison.OrdinalIgnoreCase)) {
+                        && name.Equals(ResourceUtils.NameFromResourceId(nicReference.Id), StringComparison.OrdinalIgnoreCase))
+                    {
                         this.Inner.NetworkProfile.NetworkInterfaces.RemoveAt(idx);
                         break;
                     }
@@ -612,21 +617,17 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this;
         }
 
-        public VirtualMachineExtensionImpl UpdateExtension(string name)
+        public VirtualMachineExtensionImpl UpdateExtension (string name)
         {
             return this.virtualMachineExtensions.Update(name);
         }
 
-        public VirtualMachineImpl WithoutExtension(string name)
+        public VirtualMachineImpl WithoutExtension (string name)
         {
             this.virtualMachineExtensions.Remove(name);
             return this;
         }
 
-        /// <summary>
-        /// .
-        /// Getters
-        /// </summary>
         public string ComputerName
         {
             get
@@ -641,6 +642,7 @@ namespace Microsoft.Azure.Management.V2.Compute
                 return Inner.HardwareProfile.VmSize;
             }
         }
+
         public OperatingSystemTypes? OsType
         {
             get
@@ -684,28 +686,22 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this.dataDisks;
         }
 
-        public INetworkInterface PrimaryNetworkInterface()
+        public INetworkInterface GetPrimaryNetworkInterface ()
         {
-            if (this.primaryNetworkInterface == null)
-            {
-                String primaryNicId = this.PrimaryNetworkInterfaceId;
-                this.primaryNetworkInterface = this.networkManager.NetworkInterfaces.GetById(primaryNicId);
-            }
-
-            return this.primaryNetworkInterface;
+            return this.primaryNetworkInterface = this.networkManager.NetworkInterfaces.GetById(this.PrimaryNetworkInterfaceId);
         }
 
-        public IPublicIpAddress PrimaryPublicIpAddress()
+        public IPublicIpAddress GetPrimaryPublicIpAddress ()
         {
-            if (this.primaryPublicIpAddress == null)
-            {
-                this.primaryPublicIpAddress = this.PrimaryNetworkInterface().PrimaryPublicIpAddress();
-            }
-
-            return this.primaryPublicIpAddress;
+            return this.GetPrimaryNetworkInterface().PrimaryIpConfiguration().GetPublicIpAddress();
         }
 
-        public IList<string> NetworkInterfaceIds
+        public string GetPrimaryPublicIpAddressId()
+        {
+            return this.GetPrimaryNetworkInterface().PrimaryIpConfiguration().PublicIpAddressId;
+        }
+
+        public List<string> NetworkInterfaceIds
         {
             get
             {
@@ -717,7 +713,6 @@ namespace Microsoft.Azure.Management.V2.Compute
                 return nicIds;
             }
         }
-
         public string PrimaryNetworkInterfaceId
         {
             get
@@ -834,6 +829,7 @@ namespace Microsoft.Azure.Management.V2.Compute
                 return Inner.VmId;
             }
         }
+
         public VirtualMachineInstanceView InstanceView
         {
             get
@@ -846,6 +842,7 @@ namespace Microsoft.Azure.Management.V2.Compute
                 return this.virtualMachineInstanceView;
             }
         }
+
         public PowerState? PowerState
         {
             get
@@ -859,14 +856,10 @@ namespace Microsoft.Azure.Management.V2.Compute
                 return null;
             }
         }
-        public override IVirtualMachine CreateResource()
+        public override async Task<IVirtualMachine> CreateResourceAsync (CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.CreateResourceAsync().Result;
-        }
-
-        public override async Task<IVirtualMachine> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (IsInCreateMode) {
+            if (IsInCreateMode)
+            {
                 SetOSDiskAndOSProfileDefaults();
                 SetHardwareProfileDefaults();
             }
@@ -883,13 +876,13 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this;
         }
 
-        internal VirtualMachineImpl WithExtension(VirtualMachineExtensionImpl extension)
+        internal VirtualMachineImpl WithExtension (VirtualMachineExtensionImpl extension)
         {
             this.virtualMachineExtensions.AddExtension(extension);
             return this;
         }
 
-        private VirtualMachineImpl WithDataDisk(DataDiskImpl dataDisk)
+        internal VirtualMachineImpl WithDataDisk (DataDiskImpl dataDisk)
         {
             this.Inner
                 .StorageProfile
@@ -965,13 +958,8 @@ namespace Microsoft.Azure.Management.V2.Compute
             HardwareProfile hardwareProfile = this.Inner.HardwareProfile;
             if (hardwareProfile.VmSize == null)
             {
-                hardwareProfile.VmSize = VirtualMachineSizeTypes.BasicA0;
+                hardwareProfile.VmSize = VirtualMachineSizeTypes.BasicA0.ToString();
             }
-        }
-
-        private void HandleStorageSettings()
-        {
-            this.HandleStorageSettingsAsync().Wait();
         }
 
         private async Task HandleStorageSettingsAsync(CancellationToken cancellationToken = default(CancellationToken))
@@ -1092,7 +1080,7 @@ namespace Microsoft.Azure.Management.V2.Compute
                     this.Inner.AvailabilitySet = new Rest.Azure.SubResource();
                 }
 
-                this.Inner.AvailabilitySet.Id  = availabilitySet.Id;
+                this.Inner.AvailabilitySet.Id = availabilitySet.Id;
             }
         }
 
@@ -1125,7 +1113,7 @@ namespace Microsoft.Azure.Management.V2.Compute
                 bool hasEmptyVhd = false;
                 foreach (IVirtualMachineDataDisk dataDisk in this.dataDisks)
                 {
-                    if (dataDisk.CreateOption == DiskCreateOptionTypes.Empty)
+                    if (dataDisk.CreationMethod == DiskCreateOptionTypes.Empty)
                     {
                         if (dataDisk.Inner.Vhd == null)
                         {
@@ -1146,7 +1134,7 @@ namespace Microsoft.Azure.Management.V2.Compute
                     // to store this disk, no need to create a storage account implicitly.
                     foreach (IVirtualMachineDataDisk dataDisk in this.dataDisks)
                     {
-                        if (dataDisk.CreateOption == DiskCreateOptionTypes.Attach && dataDisk.Inner.Vhd != null)
+                        if (dataDisk.CreationMethod == DiskCreateOptionTypes.Attach && dataDisk.Inner.Vhd != null)
                         {
                             return false;
                         }
@@ -1245,6 +1233,5 @@ namespace Microsoft.Azure.Management.V2.Compute
             this.primaryPublicIpAddress = null;
             this.virtualMachineInstanceView = null;
         }
-
     }
 }

@@ -13,10 +13,10 @@ namespace Microsoft.Azure.Management.V2.Network
     public class NetworkManager : ManagerBase, INetworkManager
     {
         private NetworkManagementClient networkManagementClient;
-        //$ private PublicIpAddressesImpl publicIpAddresses;
+        private PublicIpAddressesImpl publicIpAddresses;
         private NetworkInterfacesImpl networkInterfaces;
-        //$ private NetworkSecurityGroupsImpl networkSecurityGroups;
-        //$ private NetworksImpl networks;
+        private NetworkSecurityGroupsImpl networkSecurityGroups;
+        private NetworksImpl networks;
 
         private NetworkManager(RestClient restClient, string subscriptionId) : base(restClient, subscriptionId)
         {
@@ -90,7 +90,6 @@ namespace Microsoft.Azure.Management.V2.Network
         /// <summary>
         /// return entry point to virtual network management
         /// </summary>
-        /*$
         public INetworks Networks
         {
             get
@@ -129,14 +128,13 @@ namespace Microsoft.Azure.Management.V2.Network
             {
                 if (publicIpAddresses == null)
                 {
-                    publicIpAddresses = new PublicIpAddressesImpl(networkManagementClient.PublicIPAddresses, this);
+                    publicIpAddresses = new PublicIpAddressesImpl(networkManagementClient, this);
                 }
 
                 return publicIpAddresses;
             }
         }
 
-        */
         /// <summary>
         /// return entry point to network interface management
         /// </summary>
@@ -152,17 +150,21 @@ namespace Microsoft.Azure.Management.V2.Network
                 return networkInterfaces;
             }
         }
-        /*
+
         /// <summary>
         /// return entry point to load balancer management
         /// </summary>
-        public ILoadBalancers LoadBalancers { get { return null; } }
-        */
+        public ILoadBalancers LoadBalancers
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 
     public interface INetworkManager : IManagerBase
     {
-        /*$
         /// <summary>
         /// return entry point to virtual network management
         /// </summary>
@@ -187,6 +189,5 @@ namespace Microsoft.Azure.Management.V2.Network
         /// return entry point to load balancer management
         /// </summary>
         ILoadBalancers LoadBalancers { get; }
-        */
     }
 }
