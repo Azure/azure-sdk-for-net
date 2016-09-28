@@ -39,10 +39,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
         int? ActiveJobAndJobScheduleQuota { get; }
 
         /// <returns>the access keys for this batch account</returns>
-        BatchAccountKeys Keys ();
-
-        /// <returns>the access keys for this batch account</returns>
-        BatchAccountKeys RefreshKeys ();
+        BatchAccountKeys GetKeys ();
 
         /// <summary>
         /// Regenerates the access keys for batch account.

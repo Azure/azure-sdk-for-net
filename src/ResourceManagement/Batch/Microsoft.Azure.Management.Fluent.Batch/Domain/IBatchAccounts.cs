@@ -20,5 +20,12 @@ namespace Microsoft.Azure.Management.Fluent.Batch
         ISupportsDeletingByGroup,
         ISupportsBatchCreation<Microsoft.Azure.Management.Fluent.Batch.IBatchAccount>
     {
+        /// <summary>
+        /// Queries the number of the batch account can be created in specified region`.
+        /// </summary>
+        /// <param name="region">region the region in for which to check quota</param>
+        /// <returns>whether the number of batch accounts can be created in specified region.</returns>
+        int GetBatchAccountQuotaByLocation (Region region);
+
     }
 }
