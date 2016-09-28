@@ -10,12 +10,16 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
 {
 
     /// <summary>
-    /// Defines values for policyType.
+    /// Defines values for spendingLimit.
     /// </summary>
-    public static class policyType
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+    public enum spendingLimit
     {
-        public const string NotSpecified = "NotSpecified";
-        public const string BuiltIn = "BuiltIn";
-        public const string Custom = "Custom";
+        [System.Runtime.Serialization.EnumMember(Value = "On")]
+        On,
+        [System.Runtime.Serialization.EnumMember(Value = "Off")]
+        Off,
+        [System.Runtime.Serialization.EnumMember(Value = "CurrentPeriodOff")]
+        CurrentPeriodOff
     }
 }
