@@ -3,33 +3,14 @@
 namespace Microsoft.Azure.Management.V2.Network
 {
 
-    using Microsoft.Azure.Management.V2.Network.LoadBalancingRule.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Update;
-    using Microsoft.Azure.Management.V2.Network.HasFloatingIp.Definition;
-    using Microsoft.Azure.Management.Network.Models;
-    using Microsoft.Azure.Management.V2.Network.HasFrontend.Definition;
-    using Microsoft.Azure.Management.V2.Network.HasProtocol.Definition;
-    using Microsoft.Azure.Management.V2.Network.LoadBalancer.Definition;
-    using Microsoft.Azure.Management.V2.Network.HasFrontend.Update;
-    using Microsoft.Azure.Management.V2.Network.HasFloatingIp.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Network.LoadBalancer.Update;
-    using Microsoft.Azure.Management.V2.Network.HasBackendPort.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Network.HasBackendPort.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Network.HasFloatingIp.Update;
-    using Microsoft.Azure.Management.V2.Network.HasProtocol.Update;
-    using Microsoft.Azure.Management.V2.Network.HasFrontend.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Network.HasProtocol.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Definition;
-    using Microsoft.Azure.Management.V2.Network.HasBackendPort.Update;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
+    using LoadBalancingRule.UpdateDefinition;
+    using Management.Network.Models;
+    using Resource.Core;
+    using LoadBalancingRule.Definition;
     using Resource.Core.ChildResourceActions;
     using System;
+    using Rest.Azure;
 
-    /// <summary>
-    /// Implementation for {@link LoadBalancingRule}.
-    /// </summary>
     public partial class LoadBalancingRuleImpl  :
         ChildResource<Microsoft.Azure.Management.Network.Models.LoadBalancingRuleInner,Microsoft.Azure.Management.V2.Network.LoadBalancerImpl,Microsoft.Azure.Management.V2.Network.ILoadBalancer>,
         ILoadBalancingRule,
@@ -39,254 +20,197 @@ namespace Microsoft.Azure.Management.V2.Network
     {
         internal  LoadBalancingRuleImpl (LoadBalancingRuleInner inner, LoadBalancerImpl parent) : base(inner.Name, inner, parent)
         {
-
-            //$ super(inner, parent);
-            //$ }
-
         }
 
         override public string Name
         {
             get
             {
-            //$ return this.inner().name();
-
-
-                return null;
+                return Inner.Name;
             }
         }
+
         public string Protocol
         {
             get
             {
-            //$ return this.inner().protocol();
-
-
-                return null;
+                return Inner.Protocol;
             }
         }
-        public bool? FloatingIpEnabled
+
+        public bool FloatingIpEnabled
         {
             get
             {
-            //$ return this.inner().enableFloatingIP();
-
-
-                return null;
+                return (Inner.EnableFloatingIP.HasValue) ? Inner.EnableFloatingIP.Value : false;
             }
         }
-        public int? IdleTimeoutInMinutes
+
+        public int IdleTimeoutInMinutes
         {
             get
             {
-            //$ return this.inner().idleTimeoutInMinutes();
-
-
-                return null;
+                return (Inner.IdleTimeoutInMinutes.HasValue) ? Inner.IdleTimeoutInMinutes.Value : 0;
             }
         }
-        public int? FrontendPort
+
+        public int FrontendPort
         {
             get
             {
-            //$ return this.inner().frontendPort();
-
-
-                return null;
+                return Inner.FrontendPort;
             }
         }
-        public int? BackendPort
+
+        public int BackendPort
         {
             get
             {
-            //$ if (this.inner().backendPort() == null) {
-            //$ return 0;
-            //$ } else {
-            //$ return this.inner().backendPort();
-            //$ }
-
-
-                return null;
+                return (Inner.BackendPort.HasValue) ? Inner.BackendPort.Value : 0;
             }
         }
+
         public string LoadDistribution
         {
             get
             {
-            //$ return this.inner().loadDistribution();
-
-
-                return null;
+                return Inner.LoadDistribution;
             }
         }
+
         public IFrontend Frontend ()
         {
-
-            //$ SubResource frontendRef = this.inner().frontendIPConfiguration();
-            //$ if (frontendRef == null) {
-            //$ return null;
-            //$ } else {
-            //$ String frontendName = ResourceUtils.nameFromResourceId(frontendRef.id());
-            //$ return this.parent().frontends().get(frontendName);
-            //$ }
-
-            return null;
+            var frontendRef = Inner.FrontendIPConfiguration;
+            if (frontendRef == null)
+            {
+                return null;
+            }
+            else
+            {
+                string frontendName = ResourceUtils.NameFromResourceId(frontendRef.Id);
+                IFrontend frontend;
+                Parent.Frontends().TryGetValue(frontendName, out frontend);
+                return frontend;
+            }
         }
 
         public IBackend Backend ()
         {
-
-            //$ SubResource backendRef = this.inner().backendAddressPool();
-            //$ if (backendRef == null) {
-            //$ return null;
-            //$ } else {
-            //$ String backendName = ResourceUtils.nameFromResourceId(backendRef.id());
-            //$ return this.parent().backends().get(backendName);
-            //$ }
-
-            return null;
+            var backendRef = Inner.BackendAddressPool;
+            if (backendRef == null)
+            {
+                return null;
+            }
+            else
+            {
+                string backendName = ResourceUtils.NameFromResourceId(backendRef.Id);
+                IBackend backend;
+                Parent.Backends().TryGetValue(backendName, out backend);
+                return backend;
+            }
         }
 
-        public IProbe Probe ()
+        public IProbe Probe()
         {
-
-            //$ SubResource probeRef = this.inner().probe();
-            //$ if (probeRef == null) {
-            //$ return null;
-            //$ } else {
-            //$ String probeName = ResourceUtils.nameFromResourceId(probeRef.id());
-            //$ if (this.parent().httpProbes().containsKey(probeName)) {
-            //$ return this.parent().httpProbes().get(probeName);
-            //$ } else if (this.parent().tcpProbes().containsKey(probeName)) {
-            //$ return this.parent().tcpProbes().get(probeName);
-            //$ } else {
-            //$ return null;
-            //$ }
-            //$ }
-
-            return null;
+            var probeRef = Inner.Probe;
+            if (probeRef == null)
+            {
+                return null;
+            }
+            else
+            {
+                string probeName = ResourceUtils.NameFromResourceId(probeRef.Id);
+                if (Parent.HttpProbes().ContainsKey(probeName))
+                    return Parent.HttpProbes()[probeName];
+                else if (Parent.TcpProbes().ContainsKey(probeName))
+                    return Parent.TcpProbes()[probeName];
+                else
+                    return null;
+            }
         }
 
         public LoadBalancingRuleImpl WithIdleTimeoutInMinutes (int minutes)
         {
-
-            //$ this.inner().withIdleTimeoutInMinutes(minutes);
-            //$ return this;
-
+            Inner.IdleTimeoutInMinutes = minutes;
             return this;
         }
 
         public LoadBalancingRuleImpl WithFloatingIp (bool enable)
         {
-
-            //$ this.inner().withEnableFloatingIP(enable);
-            //$ return this;
-
+            Inner.EnableFloatingIP = enable;
             return this;
         }
 
         public LoadBalancingRuleImpl WithFloatingIpEnabled ()
         {
-
-            //$ return withFloatingIp(true);
-
-            return this;
+            return WithFloatingIp(true);
         }
 
         public LoadBalancingRuleImpl WithFloatingIpDisabled ()
         {
-
-            //$ return withFloatingIp(false);
-
-            return this;
+            return WithFloatingIp(false);
         }
 
         public LoadBalancingRuleImpl WithProtocol (string protocol)
         {
-
-            //$ this.inner().withProtocol(protocol);
-            //$ return this;
-
+            Inner.Protocol = protocol;
             return this;
         }
 
         public LoadBalancingRuleImpl WithFrontendPort (int port)
         {
+            Inner.FrontendPort = port;
 
-            //$ this.inner().withFrontendPort(port);
-            //$ 
-            //$ // If backend port not specified earlier, make it the same as the frontend by default
-            //$ if (this.inner().backendPort() == null || this.inner().backendPort() == 0) {
-            //$ this.inner().withBackendPort(port);
-            //$ }
-            //$ 
-            //$ return this;
-
+            // If backend port not specified earlier, make it the same as the frontend by default
+            if (Inner.BackendPort == null || Inner.BackendPort == 0)
+                Inner.BackendPort = port;
             return this;
         }
 
         public LoadBalancingRuleImpl WithBackendPort (int port)
         {
-
-            //$ this.inner().withBackendPort(port);
-            //$ return this;
-
+            Inner.BackendPort = port;
             return this;
         }
 
         public LoadBalancingRuleImpl WithLoadDistribution (string loadDistribution)
         {
-
-            //$ this.inner().withLoadDistribution(loadDistribution);
-            //$ return this;
-
+            Inner.LoadDistribution = loadDistribution;
             return this;
         }
 
         public LoadBalancingRuleImpl WithFrontend (string frontendName)
         {
-
-            //$ SubResource frontendRef = new SubResource()
-            //$ .withId(this.parent().futureResourceId() + "/frontendIPConfigurations/" + frontendName);
-            //$ this.inner().withFrontendIPConfiguration(frontendRef);
-            //$ return this;
-
+            string id = Parent.FutureResourceId + "/frontendIPConfigurations/" + frontendName;
+            var frontendRef = new SubResource(id);
+            Inner.FrontendIPConfiguration = frontendRef;
             return this;
         }
 
         public LoadBalancingRuleImpl WithBackend (string backendName)
         {
-
-            //$ SubResource backendRef = new SubResource()
-            //$ .withId(this.parent().futureResourceId() + "/backendAddressPools/" + backendName);
-            //$ this.inner().withBackendAddressPool(backendRef);
-            //$ return this;
-
+            string id = Parent.FutureResourceId + "/backendAddressPools/" + backendName;
+            var backendRef = new SubResource(id);
+            Inner.BackendAddressPool = backendRef;
             return this;
         }
 
         public LoadBalancingRuleImpl WithProbe (string name)
         {
-
-            //$ SubResource probeRef = new SubResource()
-            //$ .withId(this.parent().futureResourceId() + "/probes/" + name);
-            //$ this.inner().withProbe(probeRef);
-            //$ return this;
-
+            string id = Parent.FutureResourceId + "/probes/" + name;
+            var probeRef = new SubResource(id);
+            Inner.Probe = probeRef;
             return this;
         }
 
         public LoadBalancerImpl Attach ()
         {
-
-            //$ return this.parent().withLoadBalancingRule(this);
-
-            return null;
+            return Parent.WithLoadBalancingRule(this);
         }
 
         LoadBalancer.Update.IUpdate ISettable<LoadBalancer.Update.IUpdate>.Parent()
         {
-            throw new NotImplementedException();
+            return Parent;
         }
     }
 }

@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.V2.Network
         }
 
         /// <returns>true if the frontend is public, i.e. it has a public IP address associated with it</returns>
-        bool? Microsoft.Azure.Management.V2.Network.IFrontend.IsPublic
+        bool Microsoft.Azure.Management.V2.Network.IFrontend.IsPublic
         {
             get
             {
