@@ -1,0 +1,30 @@
+{
+  "version": "2.0.0-preview",
+  "authors": [ "Microsoft" ],
+
+  "packOptions": {
+    "summary": "ClientRuntime Tests.",
+    "tags": [ "Microsoft AutoRest ClientRuntime REST" ],
+    "projectUrl": "https://github.com/Azure/AutoRest",
+    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+  },
+
+  "testRunner": "xunit",
+  "frameworks": {
+    "netcoreapp1.0": {
+      "buildOptions": { "define": [ "PORTABLE" ] },
+      "imports": ["dnxcore50", "portable-net45+win8"]
+    }
+  },
+  "dependencies": {
+    "Microsoft.NETCore.App": {
+      "type": "platform",
+      "version": "1.0.0"
+    }, 
+    "Microsoft.NETCore.Platforms": "1.0.1",
+    "Microsoft.Rest.ClientRuntime.Azure": "[3.3.2,4.0.0)",
+    "Microsoft.Rest.ClientRuntime.Azure.Authentication": "[2.2.7-preview,3.0.0)",
+    "xunit": "2.2.0-beta2-build3300",
+    "dotnet-test-xunit": "2.2.0-preview2-build1029"
+  }
+}
