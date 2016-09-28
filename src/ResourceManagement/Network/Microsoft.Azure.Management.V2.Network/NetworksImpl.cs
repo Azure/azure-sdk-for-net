@@ -1,131 +1,146 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
 namespace Microsoft.Azure.Management.V2.Network
 {
-    using Management.Network;
-    using Microsoft.Azure.Management.Network.Models;
+
     using Microsoft.Azure.Management.V2.Resource.Core;
-    using System;
-    using System.Collections.Generic;
-    using System.Threading;
+    using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
+    using Microsoft.Azure.Management.Network.Models;
     using System.Threading.Tasks;
+    using System.Threading;
+    using Microsoft.Azure.Management.V2.Resource;
+    using Management.Network;
+    using System;
 
     /// <summary>
-    /// Implementation for {@link Networks}.
+    /// Implementation for Networks.
     /// </summary>
-    public partial class NetworksImpl :
-        GroupableResources<INetwork, NetworkImpl, VirtualNetworkInner, IVirtualNetworksOperations, NetworkManager>,
+    public partial class NetworksImpl  :
+        GroupableResources<
+            Microsoft.Azure.Management.V2.Network.INetwork,
+            Microsoft.Azure.Management.V2.Network.NetworkImpl,
+            Microsoft.Azure.Management.Network.Models.VirtualNetworkInner,
+            IVirtualNetworksOperations,
+            NetworkManager>,
         INetworks
     {
-        internal NetworksImpl(NetworkManagementClient networkClient, NetworkManager networkManager) :
-            base(networkClient.VirtualNetworks, networkManager)
+        internal  NetworksImpl (NetworkManagementClient networkClient, NetworkManager networkManager)
+            : base(networkClient.VirtualNetworks, networkManager)
         {
+
+            //$ final NetworkManagementClientImpl networkClient,
+            //$ final NetworkManager networkManager) {
+            //$ super(networkClient.virtualNetworks(), networkManager);
+            //$ }
+
         }
 
-        public PagedList<INetwork> List()
+        public PagedList<Microsoft.Azure.Management.V2.Network.INetwork> List ()
         {
-            var firstPage = InnerCollection.ListAll();
-            var pagedList = new PagedList<VirtualNetworkInner>(firstPage, (string nextPageLink) =>
-            {
-                return InnerCollection.ListAllNext(nextPageLink);
-            });
 
-            return this.WrapList(pagedList);
+            //$ return wrapList(this.innerCollection.listAll());
+
+            return null;
         }
 
-        public PagedList<INetwork> ListByGroup(string groupName)
+        public PagedList<Microsoft.Azure.Management.V2.Network.INetwork> ListByGroup (string groupName)
         {
-            var firstPage = InnerCollection.List(groupName);
-            var pagedList = new PagedList<VirtualNetworkInner>(firstPage, (string nextPageLink) =>
-            {
-                return InnerCollection.ListNext(nextPageLink);
-            });
-            return this.WrapList(pagedList);
+
+            //$ return wrapList(this.innerCollection.list(groupName));
+
+            return null;
         }
 
-        public void Delete(string id)
+        public NetworkImpl Define (string name)
         {
-            this.Delete(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
+
+            //$ return wrapModel(name);
+
+            return null;
         }
 
-        public void Delete(string groupName, string name)
+        Task DeleteAsync(string groupName, string name)
         {
-            this.InnerCollection.Delete(groupName, name);
+            throw new NotImplementedException();
         }
 
-        public NetworkImpl Define(string name)
+        public override async Task<INetwork> GetByGroupAsync(string groupName, string name)
         {
-            return this.WrapModel(name);
+            return this as INetwork;
         }
 
-        protected override NetworkImpl WrapModel(string name)
+        override protected NetworkImpl WrapModel (string name)
         {
-            VirtualNetworkInner inner = new VirtualNetworkInner(default(string), default(string), name);
 
-            // Initialize address space
-            AddressSpace addressSpace = inner.AddressSpace;
-            if (addressSpace == null)
-            {
-                addressSpace = new AddressSpace();
-                inner.AddressSpace = addressSpace;
-            }
+            //$ VirtualNetworkInner inner = new VirtualNetworkInner();
+            //$ 
+            //$ // Initialize address space
+            //$ AddressSpace addressSpace = inner.addressSpace();
+            //$ if (addressSpace == null) {
+            //$ addressSpace = new AddressSpace();
+            //$ inner.withAddressSpace(addressSpace);
+            //$ }
+            //$ 
+            //$ if (addressSpace.addressPrefixes() == null) {
+            //$ addressSpace.withAddressPrefixes(new ArrayList<String>());
+            //$ }
+            //$ 
+            //$ // Initialize subnets
+            //$ if (inner.subnets() == null) {
+            //$ inner.withSubnets(new ArrayList<SubnetInner>());
+            //$ }
+            //$ 
+            //$ // Initialize DHCP options (DNS servers)
+            //$ DhcpOptions dhcp = inner.dhcpOptions();
+            //$ if (dhcp == null) {
+            //$ dhcp = new DhcpOptions();
+            //$ inner.withDhcpOptions(dhcp);
+            //$ }
+            //$ 
+            //$ if (dhcp.dnsServers() == null) {
+            //$ dhcp.withDnsServers(new ArrayList<String>());
+            //$ }
+            //$ 
+            //$ return new NetworkImpl(
+            //$ name,
+            //$ inner,
+            //$ this.innerCollection,
+            //$ super.myManager);
 
-            if (addressSpace.AddressPrefixes == null)
-            {
-                addressSpace.AddressPrefixes = new List<string>();
-            }
-
-            // Initialize subnets
-            if (inner.Subnets == null)
-            {
-                inner.Subnets = new List<SubnetInner>();
-            }
-
-            // Initialize DHCP options (DNS servers)
-            DhcpOptions dhcp = inner.DhcpOptions;
-            if (dhcp == null)
-            {
-                dhcp = new DhcpOptions();
-                inner.DhcpOptions = dhcp;
-            }
-
-            if (dhcp.DnsServers == null)
-            {
-                dhcp.DnsServers = new List<string>();
-            }
-
-            return this.WrapModel(inner) as NetworkImpl;
+            return null;
         }
 
-        protected override INetwork WrapModel(VirtualNetworkInner inner)
+        //$TODO: this should return NetworkImpl
+        override protected INetwork WrapModel (VirtualNetworkInner inner)
         {
-            return new NetworkImpl(
-                inner.Name,
-                inner,
-                this.InnerCollection as VirtualNetworksOperations,
-                this.MyManager);
+
+            //$ return new NetworkImpl(
+            //$ inner.name(),
+            //$ inner,
+            //$ this.innerCollection,
+            //$ this.myManager);
+
+            return null;
         }
 
-        public Task<PagedList<INetwork>> ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken)
+        Task<PagedList<INetwork>> ISupportsListingByGroup<INetwork>.ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken)
         {
-            throw new NotSupportedException();
+            throw new NotImplementedException();
         }
 
-        public async Task DeleteAsync(string id, CancellationToken cancellationToken)
+        void ISupportsDeleting.Delete(string id)
         {
-            await this.InnerCollection.DeleteAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id), cancellationToken);
+            throw new NotImplementedException();
         }
 
-        public async Task DeleteAsync(string groupName, string name, CancellationToken cancellationToken)
+        Task ISupportsDeleting.DeleteAsync(string id, CancellationToken cancellationToken)
         {
-            await this.InnerCollection.DeleteAsync(groupName, name, cancellationToken);
+            throw new NotImplementedException();
         }
 
-        public async override Task<INetwork> GetByGroupAsync(string groupName, string name)
+        void ISupportsDeletingByGroup.Delete(string groupName, string name)
         {
-            var data = await this.InnerCollection.GetAsync(groupName, name);
-            return this.WrapModel(data);
+            throw new NotImplementedException();
         }
     }
 }

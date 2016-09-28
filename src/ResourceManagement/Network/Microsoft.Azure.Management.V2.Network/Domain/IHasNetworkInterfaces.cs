@@ -1,6 +1,5 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
-
+// Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.V2.Network
 {
 
@@ -8,7 +7,7 @@ namespace Microsoft.Azure.Management.V2.Network
     /// <summary>
     /// Interface exposing a list of network interfaces.
     /// </summary>
-    public interface ISupportsNetworkInterfaces 
+    public interface IHasNetworkInterfaces 
     {
         /// <summary>
         /// Gets the primary network interface.
@@ -22,7 +21,7 @@ namespace Microsoft.Azure.Management.V2.Network
         string PrimaryNetworkInterfaceId { get; }
 
         /// <returns>the list of resource IDs of the network interfaces associated with this resource</returns>
-        IList<string> NetworkInterfaceIds { get; }
+        List<string> NetworkInterfaceIds { get; }
 
     }
 }

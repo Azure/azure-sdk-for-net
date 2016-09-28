@@ -6,7 +6,7 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>4f22b186-deb4-4b95-ba58-0187f0e33003</ProjectGuid>
+    <ProjectGuid>7c44c420-6019-48b3-91c4-04a325b9ddad</ProjectGuid>
     <RootNamespace>Microsoft.Azure.Management.V2.Network</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>

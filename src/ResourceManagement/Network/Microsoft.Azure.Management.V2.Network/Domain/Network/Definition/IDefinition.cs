@@ -1,26 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
-
+// Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.V2.Network.Network.Definition
 {
 
     using System.Collections.Generic;
     using Microsoft.Azure.Management.V2.Network.Subnet.Definition;
     using Microsoft.Azure.Management.V2.Resource.Core.Resource.Definition;
-    using Microsoft.Azure.Management.V2.Network;
     using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.V2.Network;
     using Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition;
-    /// <summary>
-    /// The entirety of the virtual network definition.
-    /// </summary>
-    public interface IDefinition  :
-        Microsoft.Azure.Management.V2.Network.Network.Definition.IBlank,
-        Microsoft.Azure.Management.V2.Network.Network.Definition.IWithGroup,
-        IWithSubnet,
-        IWithCreate,
-        IWithCreateAndSubnet
-    {
-    }
     /// <summary>
     /// The stage of the virtual network definition allowing to add subnets.
     /// </summary>
@@ -53,8 +41,26 @@ namespace Microsoft.Azure.Management.V2.Network.Network.Definition
         /// </summary>
         /// <param name="name">name the name of the subnet</param>
         /// <returns>the first stage of the new subnet definition</returns>
-        Microsoft.Azure.Management.V2.Network.Subnet.Definition.IBlank<Microsoft.Azure.Management.V2.Network.Network.Definition.IWithCreateAndSubnet> DefineSubnet (string name);
+        IBlank<Microsoft.Azure.Management.V2.Network.Network.Definition.IWithCreateAndSubnet> DefineSubnet (string name);
 
+    }
+    /// <summary>
+    /// The first stage of a virtual network definition.
+    /// </summary>
+    public interface IBlank  :
+        IDefinitionWithRegion<Microsoft.Azure.Management.V2.Network.Network.Definition.IWithGroup>
+    {
+    }
+    /// <summary>
+    /// The entirety of the virtual network definition.
+    /// </summary>
+    public interface IDefinition  :
+        IBlank,
+        Microsoft.Azure.Management.V2.Network.Network.Definition.IWithGroup,
+        IWithSubnet,
+        IWithCreate,
+        IWithCreateAndSubnet
+    {
     }
     /// <summary>
     /// The stage of the public IP definition which contains all the minimum required inputs for
@@ -102,13 +108,6 @@ namespace Microsoft.Azure.Management.V2.Network.Network.Definition
         /// <returns>the next stage of the virtual network definition</returns>
         IWithCreateAndSubnet WithAddressSpace (string cidr);
 
-    }
-    /// <summary>
-    /// The first stage of a virtual network definition.
-    /// </summary>
-    public interface IBlank  :
-        IDefinitionWithRegion<Microsoft.Azure.Management.V2.Network.Network.Definition.IWithGroup>
-    {
     }
     /// <summary>
     /// The stage of the virtual network definition allowing to specify the resource group.

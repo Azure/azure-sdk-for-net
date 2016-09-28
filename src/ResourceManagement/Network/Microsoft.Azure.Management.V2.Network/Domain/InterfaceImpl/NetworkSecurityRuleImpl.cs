@@ -1,18 +1,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
-
+// Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.V2.Network
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
     using Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition;
-    using Microsoft.Azure.Management.Network.Models;
     using Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update;
-    using Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition;
     using Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition;
     using Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update;
     using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.Network.Models;
+    using Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition;
     using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
     public partial class NetworkSecurityRuleImpl 
     {
         /// <summary>
@@ -22,7 +21,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="priority">priority the priority number in the range 100 to 4096</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.WithPriority (int priority) {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.WithPriority (int priority) { 
             return this.WithPriority( priority) as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>;
         }
 
@@ -31,7 +30,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="descrtiption">descrtiption a text description to associate with the security rule</param>
         /// <returns>the next stage</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.WithDescription (string descrtiption) {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.WithDescription (string descrtiption) { 
             return this.WithDescription( descrtiption) as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>;
         }
 
@@ -42,7 +41,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="priority">priority the priority number in the range 100 to 4096</param>
         /// <returns>the next stage</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithAttach<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithPriority<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.WithPriority (int priority) {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithAttach<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithPriority<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.WithPriority (int priority) { 
             return this.WithPriority( priority) as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithAttach<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>;
         }
 
@@ -51,7 +50,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="description">description the text description to associate with this security rule</param>
         /// <returns>the next stage</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithAttach<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDescription<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.WithDescription (string description) {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithAttach<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDescription<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.WithDescription (string description) { 
             return this.WithDescription( description) as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithAttach<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>;
         }
 
@@ -60,7 +59,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="protocol">protocol one of the supported protocols</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithAttach<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithProtocol<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.WithProtocol (string protocol) {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithAttach<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithProtocol<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.WithProtocol (string protocol) { 
             return this.WithProtocol( protocol) as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithAttach<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>;
         }
 
@@ -68,7 +67,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// Makes this rule apply to any supported protocol.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithAttach<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithProtocol<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.WithAnyProtocol () {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithAttach<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithProtocol<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.WithAnyProtocol () { 
             return this.WithAnyProtocol() as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithAttach<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>;
         }
 
@@ -77,7 +76,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="protocol">protocol one of the supported protocols</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithProtocol<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.WithProtocol (string protocol) {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithProtocol<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.WithProtocol (string protocol) { 
             return this.WithProtocol( protocol) as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>;
         }
 
@@ -85,7 +84,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// Makes this rule apply to any supported protocol.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithProtocol<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.WithAnyProtocol () {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithProtocol<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.WithAnyProtocol () { 
             return this.WithAnyProtocol() as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>;
         }
 
@@ -96,7 +95,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="priority">priority the priority number in the range 100 to 4096</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate.WithPriority (int priority) {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate.WithPriority (int priority) { 
             return this.WithPriority( priority) as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate;
         }
 
@@ -105,11 +104,15 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="description">description a text description to associate with this security rule</param>
         /// <returns>the next stage</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate.WithDescription (string description) {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate.WithDescription (string description) { 
             return this.WithDescription( description) as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate;
         }
 
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update.IInUpdate<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.Attach () {
+        /// <summary>
+        /// Attaches the child definition to the parent resource update.
+        /// </summary>
+        /// <returns>the next stage of the parent definition</returns>
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update.IInUpdate<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.Attach () { 
             return this.Attach() as Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate;
         }
 
@@ -118,7 +121,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="port">port the source port number</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IWithSourcePort.FromPort (int port) {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IWithSourcePort.FromPort (int port) { 
             return this.FromPort( port) as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate;
         }
 
@@ -128,7 +131,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// <param name="from">from the starting port number</param>
         /// <param name="to">to the ending port number</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IWithSourcePort.FromPortRange (int from, int to) {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IWithSourcePort.FromPortRange (int from, int to) { 
             return this.FromPortRange( from,  to) as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate;
         }
 
@@ -136,24 +139,30 @@ namespace Microsoft.Azure.Management.V2.Network
         /// Makes this rule apply to any source port.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IWithSourcePort.FromAnyPort () {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IWithSourcePort.FromAnyPort
+        {
+            get
+            { 
             return this.FromAnyPort() as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate;
+            }
         }
-
         /// <summary>
         /// Specifies that the rule applies to any traffic source address.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IWithSourceAddress.FromAnyAddress () {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IWithSourceAddress.FromAnyAddress
+        {
+            get
+            { 
             return this.FromAnyAddress() as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate;
+            }
         }
-
         /// <summary>
         /// Specifies the traffic source address prefix to which this rule applies.
         /// </summary>
         /// <param name="cidr">cidr an IP address prefix expressed in the CIDR notation</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IWithSourceAddress.FromAddress (string cidr) {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IWithSourceAddress.FromAddress (string cidr) { 
             return this.FromAddress( cidr) as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate;
         }
 
@@ -161,67 +170,95 @@ namespace Microsoft.Azure.Management.V2.Network
         /// Blocks outbound traffic.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithSourceAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDirectionAccess<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.DenyOutbound () {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithSourceAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDirectionAccess<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.DenyOutbound
+        {
+            get
+            { 
             return this.DenyOutbound() as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithSourceAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>;
+            }
         }
-
         /// <summary>
         /// Allows inbound traffic.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithSourceAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDirectionAccess<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.AllowInbound () {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithSourceAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDirectionAccess<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.AllowInbound
+        {
+            get
+            { 
             return this.AllowInbound() as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithSourceAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>;
+            }
         }
-
         /// <summary>
         /// Allows outbound traffic.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithSourceAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDirectionAccess<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.AllowOutbound () {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithSourceAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDirectionAccess<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.AllowOutbound
+        {
+            get
+            { 
             return this.AllowOutbound() as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithSourceAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>;
+            }
         }
-
         /// <summary>
         /// Blocks inbound traffic.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithSourceAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDirectionAccess<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.DenyInbound () {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithSourceAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDirectionAccess<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.DenyInbound
+        {
+            get
+            { 
             return this.DenyInbound() as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithSourceAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>;
+            }
         }
-
         /// <summary>
         /// Blocks outbound traffic.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithSourceAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithDirectionAccess<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.DenyOutbound () {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithSourceAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithDirectionAccess<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.DenyOutbound
+        {
+            get
+            { 
             return this.DenyOutbound() as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithSourceAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>;
+            }
         }
-
         /// <summary>
         /// Allows inbound traffic.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithSourceAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithDirectionAccess<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.AllowInbound () {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithSourceAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithDirectionAccess<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.AllowInbound
+        {
+            get
+            { 
             return this.AllowInbound() as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithSourceAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>;
+            }
         }
-
         /// <summary>
         /// Allows outbound traffic.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithSourceAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithDirectionAccess<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.AllowOutbound () {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithSourceAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithDirectionAccess<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.AllowOutbound
+        {
+            get
+            { 
             return this.AllowOutbound() as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithSourceAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>;
+            }
         }
-
         /// <summary>
         /// Blocks inbound traffic.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithSourceAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithDirectionAccess<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.DenyInbound () {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithSourceAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithDirectionAccess<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.DenyInbound
+        {
+            get
+            { 
             return this.DenyInbound() as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithSourceAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>;
+            }
         }
-
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition.IInDefinition<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.Attach () {
+        /// <summary>
+        /// Attaches the child definition to the parent resource definiton.
+        /// </summary>
+        /// <returns>the next stage of the parent definition</returns>
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition.IInDefinition<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.Attach () { 
             return this.Attach() as Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate;
         }
 
@@ -292,7 +329,7 @@ namespace Microsoft.Azure.Management.V2.Network
                 return this.Priority;
             }
         }
-        /// <returns>the network traffic direction the rule applies to</returns>
+        /// <returns>the direction of the network traffic that the network security rule applies to.</returns>
         string Microsoft.Azure.Management.V2.Network.INetworkSecurityRule.Direction
         {
             get
@@ -300,20 +337,31 @@ namespace Microsoft.Azure.Management.V2.Network
                 return this.Direction as string;
             }
         }
+        /// <returns>the name of this child object</returns>
+        string Microsoft.Azure.Management.V2.Resource.Core.IChildResource<Microsoft.Azure.Management.V2.Network.INetworkSecurityGroup>.Name
+        {
+            get
+            {
+                return this.Name as string;
+            }
+        }
         /// <summary>
         /// Specifies that the rule applies to any traffic source address.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithSourcePort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithSourceAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.FromAnyAddress () {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithSourcePort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithSourceAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.FromAnyAddress
+        {
+            get
+            { 
             return this.FromAnyAddress() as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithSourcePort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>;
+            }
         }
-
         /// <summary>
         /// Specifies the traffic source address prefix to which this rule applies.
         /// </summary>
         /// <param name="cidr">cidr an IP address prefix expressed in the CIDR notation</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithSourcePort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithSourceAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.FromAddress (string cidr) {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithSourcePort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithSourceAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.FromAddress (string cidr) { 
             return this.FromAddress( cidr) as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithSourcePort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>;
         }
 
@@ -321,16 +369,19 @@ namespace Microsoft.Azure.Management.V2.Network
         /// Specifies that the rule applies to any traffic source address.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithSourcePort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithSourceAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.FromAnyAddress () {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithSourcePort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithSourceAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.FromAnyAddress
+        {
+            get
+            { 
             return this.FromAnyAddress() as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithSourcePort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>;
+            }
         }
-
         /// <summary>
         /// Specifies the traffic source address prefix to which this rule applies.
         /// </summary>
         /// <param name="cidr">cidr an IP address prefix expressed in the CIDR notation</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithSourcePort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithSourceAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.FromAddress (string cidr) {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithSourcePort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithSourceAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.FromAddress (string cidr) { 
             return this.FromAddress( cidr) as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithSourcePort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>;
         }
 
@@ -338,40 +389,52 @@ namespace Microsoft.Azure.Management.V2.Network
         /// Blocks outbound traffic.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IWithDirectionAccess.DenyOutbound () {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IWithDirectionAccess.DenyOutbound
+        {
+            get
+            { 
             return this.DenyOutbound() as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate;
+            }
         }
-
         /// <summary>
         /// Allows inbound traffic.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IWithDirectionAccess.AllowInbound () {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IWithDirectionAccess.AllowInbound
+        {
+            get
+            { 
             return this.AllowInbound() as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate;
+            }
         }
-
         /// <summary>
         /// Allows outbound traffic.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IWithDirectionAccess.AllowOutbound () {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IWithDirectionAccess.AllowOutbound
+        {
+            get
+            { 
             return this.AllowOutbound() as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate;
+            }
         }
-
         /// <summary>
         /// Blocks inbound traffic.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IWithDirectionAccess.DenyInbound () {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IWithDirectionAccess.DenyInbound
+        {
+            get
+            { 
             return this.DenyInbound() as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate;
+            }
         }
-
         /// <summary>
         /// Specifies the protocol that this rule applies to.
         /// </summary>
         /// <param name="protocol">protocol one of the supported protocols</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IWithProtocol.WithProtocol (string protocol) {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IWithProtocol.WithProtocol (string protocol) { 
             return this.WithProtocol( protocol) as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate;
         }
 
@@ -379,7 +442,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// Makes this rule apply to any supported protocol.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IWithProtocol.WithAnyProtocol () {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IWithProtocol.WithAnyProtocol () { 
             return this.WithAnyProtocol() as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate;
         }
 
@@ -388,7 +451,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="cidr">cidr an IP address range expressed in the CIDR notation</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IWithDestinationAddress.ToAddress (string cidr) {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IWithDestinationAddress.ToAddress (string cidr) { 
             return this.ToAddress( cidr) as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate;
         }
 
@@ -396,16 +459,19 @@ namespace Microsoft.Azure.Management.V2.Network
         /// Makes the rule apply to any traffic destination address.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IWithDestinationAddress.ToAnyAddress () {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IWithDestinationAddress.ToAnyAddress
+        {
+            get
+            { 
             return this.ToAnyAddress() as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate;
+            }
         }
-
         /// <summary>
         /// Specifies the source port to which this rule applies.
         /// </summary>
         /// <param name="port">port the source port number</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDestinationAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithSourcePort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.FromPort (int port) {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDestinationAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithSourcePort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.FromPort (int port) { 
             return this.FromPort( port) as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDestinationAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>;
         }
 
@@ -415,7 +481,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// <param name="from">from the starting port number</param>
         /// <param name="to">to the ending port number</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDestinationAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithSourcePort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.FromPortRange (int from, int to) {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDestinationAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithSourcePort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.FromPortRange (int from, int to) { 
             return this.FromPortRange( from,  to) as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDestinationAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>;
         }
 
@@ -423,16 +489,19 @@ namespace Microsoft.Azure.Management.V2.Network
         /// Makes this rule apply to any source port.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDestinationAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithSourcePort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.FromAnyPort () {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDestinationAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithSourcePort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.FromAnyPort
+        {
+            get
+            { 
             return this.FromAnyPort() as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDestinationAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>;
+            }
         }
-
         /// <summary>
         /// Specifies the source port to which this rule applies.
         /// </summary>
         /// <param name="port">port the source port number</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithDestinationAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithSourcePort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.FromPort (int port) {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithDestinationAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithSourcePort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.FromPort (int port) { 
             return this.FromPort( port) as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithDestinationAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>;
         }
 
@@ -442,7 +511,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// <param name="from">from the starting port number</param>
         /// <param name="to">to the ending port number</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithDestinationAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithSourcePort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.FromPortRange (int from, int to) {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithDestinationAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithSourcePort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.FromPortRange (int from, int to) { 
             return this.FromPortRange( from,  to) as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithDestinationAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>;
         }
 
@@ -450,16 +519,19 @@ namespace Microsoft.Azure.Management.V2.Network
         /// Makes this rule apply to any source port.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithDestinationAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithSourcePort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.FromAnyPort () {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithDestinationAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithSourcePort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.FromAnyPort
+        {
+            get
+            { 
             return this.FromAnyPort() as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithDestinationAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>;
+            }
         }
-
         /// <summary>
         /// Specifies the traffic destination address range to which this rule applies.
         /// </summary>
         /// <param name="cidr">cidr an IP address range expressed in the CIDR notation</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDestinationPort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDestinationAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.ToAddress (string cidr) {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDestinationPort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDestinationAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.ToAddress (string cidr) { 
             return this.ToAddress( cidr) as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDestinationPort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>;
         }
 
@@ -467,16 +539,19 @@ namespace Microsoft.Azure.Management.V2.Network
         /// Makes the rule apply to any traffic destination address.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDestinationPort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDestinationAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.ToAnyAddress () {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDestinationPort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDestinationAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.ToAnyAddress
+        {
+            get
+            { 
             return this.ToAnyAddress() as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDestinationPort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>;
+            }
         }
-
         /// <summary>
         /// Specifies the traffic destination address range to which this rule applies.
         /// </summary>
         /// <param name="cidr">cidr an IP address range expressed in the CIDR notation</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithDestinationPort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithDestinationAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.ToAddress (string cidr) {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithDestinationPort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithDestinationAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.ToAddress (string cidr) { 
             return this.ToAddress( cidr) as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithDestinationPort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>;
         }
 
@@ -484,17 +559,20 @@ namespace Microsoft.Azure.Management.V2.Network
         /// Makes the rule apply to any traffic destination address.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithDestinationPort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithDestinationAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.ToAnyAddress () {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithDestinationPort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithDestinationAddress<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.ToAnyAddress
+        {
+            get
+            { 
             return this.ToAnyAddress() as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithDestinationPort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>;
+            }
         }
-
         /// <summary>
         /// Specifies the destination port range to which this rule applies.
         /// </summary>
         /// <param name="from">from the starting port number</param>
         /// <param name="to">to the ending port number</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithProtocol<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDestinationPort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.ToPortRange (int from, int to) {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithProtocol<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDestinationPort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.ToPortRange (int from, int to) { 
             return this.ToPortRange( from,  to) as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithProtocol<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>;
         }
 
@@ -503,7 +581,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="port">port the destination port number</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithProtocol<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDestinationPort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.ToPort (int port) {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithProtocol<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDestinationPort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.ToPort (int port) { 
             return this.ToPort( port) as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithProtocol<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>;
         }
 
@@ -511,17 +589,20 @@ namespace Microsoft.Azure.Management.V2.Network
         /// Makes this rule apply to any destination port.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithProtocol<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDestinationPort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.ToAnyPort () {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithProtocol<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithDestinationPort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>.ToAnyPort
+        {
+            get
+            { 
             return this.ToAnyPort() as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition.IWithProtocol<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>;
+            }
         }
-
         /// <summary>
         /// Specifies the destination port range to which this rule applies.
         /// </summary>
         /// <param name="from">from the starting port number</param>
         /// <param name="to">to the ending port number</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithProtocol<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithDestinationPort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.ToPortRange (int from, int to) {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithProtocol<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithDestinationPort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.ToPortRange (int from, int to) { 
             return this.ToPortRange( from,  to) as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithProtocol<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>;
         }
 
@@ -530,7 +611,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="port">port the destination port number</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithProtocol<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithDestinationPort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.ToPort (int port) {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithProtocol<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithDestinationPort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.ToPort (int port) { 
             return this.ToPort( port) as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithProtocol<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>;
         }
 
@@ -538,17 +619,20 @@ namespace Microsoft.Azure.Management.V2.Network
         /// Makes this rule apply to any destination port.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithProtocol<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithDestinationPort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.ToAnyPort () {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithProtocol<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithDestinationPort<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>.ToAnyPort
+        {
+            get
+            { 
             return this.ToAnyPort() as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition.IWithProtocol<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>;
+            }
         }
-
         /// <summary>
         /// Specifies the destination port range to which this rule applies.
         /// </summary>
         /// <param name="from">from the starting port number</param>
         /// <param name="to">to the ending port number</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IWithDestinationPort.ToPortRange (int from, int to) {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IWithDestinationPort.ToPortRange (int from, int to) { 
             return this.ToPortRange( from,  to) as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate;
         }
 
@@ -557,7 +641,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="port">port the destination port number</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IWithDestinationPort.ToPort (int port) {
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IWithDestinationPort.ToPort (int port) { 
             return this.ToPort( port) as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate;
         }
 
@@ -565,16 +649,11 @@ namespace Microsoft.Azure.Management.V2.Network
         /// Makes this rule apply to any destination port.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IWithDestinationPort.ToAnyPort () {
-            return this.ToAnyPort() as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate;
-        }
-
-        /// <returns>the name of the child resource</returns>
-        string Microsoft.Azure.Management.V2.Resource.Core.IChildResource<INetworkSecurityGroup>.Name
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IWithDestinationPort.ToAnyPort
         {
             get
-            {
-                return this.Name as string;
+            { 
+            return this.ToAnyPort() as Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate;
             }
         }
     }

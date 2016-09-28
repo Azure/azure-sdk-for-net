@@ -1,33 +1,20 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
-
+// Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.V2.Network.PublicIpAddress.Definition
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core.Resource.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.V2.Network;
     using Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition;
+    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.V2.Resource.Core.Resource.Definition;
+    using Microsoft.Azure.Management.V2.Network;
     /// <summary>
-    /// A public IP address definition allowing to set the IP allocation method (static or dynamic).
+    /// Container interface for all the definitions.
     /// </summary>
-    public interface IWithIpAddress 
+    public interface IDefinition  :
+        IBlank,
+        Microsoft.Azure.Management.V2.Network.PublicIpAddress.Definition.IWithGroup,
+        IWithCreate
     {
-        /// <summary>
-        /// Enables static IP address allocation.
-        /// <p>
-        /// Use {@link PublicIpAddress#ipAddress()} after the public IP address is created to obtain the
-        /// actual IP address allocated for this resource by Azure
-        /// </summary>
-        /// <returns>the next stage of the public IP address definition</returns>
-        IWithCreate WithStaticIp ();
-
-        /// <summary>
-        /// Enables dynamic IP address allocation.
-        /// </summary>
-        /// <returns>the next stage of the public IP address definition</returns>
-        IWithCreate WithDynamicIp ();
-
     }
     /// <summary>
     /// A public IP address definition allowing to specify the leaf domain label, if any.
@@ -54,24 +41,32 @@ namespace Microsoft.Azure.Management.V2.Network.PublicIpAddress.Definition
 
     }
     /// <summary>
-    /// The first stage of a public IP address definition.
+    /// A public IP address definition allowing to set the IP allocation method (static or dynamic).
     /// </summary>
-    public interface IBlank  :
-        IDefinitionWithRegion<Microsoft.Azure.Management.V2.Network.PublicIpAddress.Definition.IWithGroup>
-    {
-    }
-    /// <summary>
-    /// A public IP address definition allowing the idle timeout to be specified.
-    /// </summary>
-    public interface IWithIdleTimeout 
+    public interface IWithIpAddress 
     {
         /// <summary>
-        /// Specifies the timeout (in minutes) for an idle connection.
+        /// Enables static IP address allocation.
+        /// <p>
+        /// Use {@link PublicIpAddress#ipAddress()} after the public IP address is created to obtain the
+        /// actual IP address allocated for this resource by Azure
         /// </summary>
-        /// <param name="minutes">minutes the length of the time out in minutes</param>
-        /// <returns>the next stage of the resource definition</returns>
-        IWithCreate WithIdleTimeoutInMinutes (int minutes);
+        /// <returns>the next stage of the public IP address definition</returns>
+        IWithCreate WithStaticIp ();
 
+        /// <summary>
+        /// Enables dynamic IP address allocation.
+        /// </summary>
+        /// <returns>the next stage of the public IP address definition</returns>
+        IWithCreate WithDynamicIp ();
+
+    }
+    /// <summary>
+    /// The stage of the public IP address definition allowing to specify the resource group.
+    /// </summary>
+    public interface IWithGroup  :
+        Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.V2.Network.PublicIpAddress.Definition.IWithCreate>
+    {
     }
     /// <summary>
     /// A public IP address definition allowing the reverse FQDN to be specified.
@@ -108,19 +103,23 @@ namespace Microsoft.Azure.Management.V2.Network.PublicIpAddress.Definition
     {
     }
     /// <summary>
-    /// Container interface for all the definitions.
+    /// A public IP address definition allowing the idle timeout to be specified.
     /// </summary>
-    public interface IDefinition  :
-        IBlank,
-        Microsoft.Azure.Management.V2.Network.PublicIpAddress.Definition.IWithGroup,
-        IWithCreate
+    public interface IWithIdleTimeout 
     {
+        /// <summary>
+        /// Specifies the timeout (in minutes) for an idle connection.
+        /// </summary>
+        /// <param name="minutes">minutes the length of the time out in minutes</param>
+        /// <returns>the next stage of the resource definition</returns>
+        IWithCreate WithIdleTimeoutInMinutes (int minutes);
+
     }
     /// <summary>
-    /// The stage of the public IP address definition allowing to specify the resource group.
+    /// The first stage of a public IP address definition.
     /// </summary>
-    public interface IWithGroup  :
-        Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.V2.Network.PublicIpAddress.Definition.IWithCreate>
+    public interface IBlank  :
+        IDefinitionWithRegion<Microsoft.Azure.Management.V2.Network.PublicIpAddress.Definition.IWithGroup>
     {
     }
 }

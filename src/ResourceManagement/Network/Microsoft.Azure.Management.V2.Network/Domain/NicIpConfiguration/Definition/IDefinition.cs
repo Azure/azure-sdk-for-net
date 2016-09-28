@@ -1,68 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
-
+// Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.V2.Network.NicIpConfiguration.Definition
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.V2.Network;
-    /// <summary>
-    /// The final stage of network interface IP configuration.
-    /// <p>
-    /// At this stage, any remaining optional settings can be specified, or the network interface IP configuration
-    /// definition can be attached to the parent network interface definition using {@link WithAttach#attach()}.
-    /// 
-    /// @param <ParentT> the return type of the final {@link Attachable#attach()}
-    /// </summary>
-    public interface IWithAttach<ParentT>  :
-        IInDefinition<ParentT>,
-        IWithPublicIpAddress<ParentT>
-    {
-    }
-    /// <summary>
-    /// The stage of the network interface IP configuration definition allowing to associate it with
-    /// a public IP address.
-    /// 
-    /// @param <ParentT> the return type of the final {@link Attachable#attach()}
-    /// </summary>
-    public interface IWithPublicIpAddress<ParentT> 
-    {
-        /// <summary>
-        /// Create a new public IP address to associate with the network interface IP configuration,
-        /// based on the provided definition.
-        /// </summary>
-        /// <param name="creatable">creatable a creatable definition for a new public IP</param>
-        /// <returns>the next stage of the network interface IP configuration definition</returns>
-        IWithAttach<ParentT> WithNewPublicIpAddress (ICreatable<Microsoft.Azure.Management.V2.Network.IPublicIpAddress> creatable);
-
-        /// <summary>
-        /// Creates a new public IP address in the same region and group as the resource and associate it
-        /// with with the network interface IP configuration.
-        /// <p>
-        /// The internal name and DNS label for the public IP address will be derived from the network interface name.
-        /// </summary>
-        /// <returns>the next stage of the network interface IP configuration definition</returns>
-        IWithAttach<ParentT> WithNewPublicIpAddress ();
-
-        /// <summary>
-        /// Creates a new public IP address in the same region and group as the resource, with the specified DNS label
-        /// and associate it with the network interface IP configuration.
-        /// <p>
-        /// The internal name for the public IP address will be derived from the DNS label.
-        /// </summary>
-        /// <param name="leafDnsLabel">leafDnsLabel the leaf domain label</param>
-        /// <returns>tthe next stage of the IP configuration definition</returns>
-        IWithAttach<ParentT> WithNewPublicIpAddress (string leafDnsLabel);
-
-        /// <summary>
-        /// Associates an existing public IP address with the network interface IP configuration.
-        /// </summary>
-        /// <param name="publicIpAddress">publicIpAddress an existing public IP address</param>
-        /// <returns>the next stage of the IP configuration definition</returns>
-        IWithAttach<ParentT> WithExistingPublicIpAddress (IPublicIpAddress publicIpAddress);
-
-    }
+    using Microsoft.Azure.Management.V2.Network.HasPrivateIpAddress.Definition;
+    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.V2.Network.HasPublicIpAddress.Definition;
     /// <summary>
     /// The stage of the network interface IP configuration definition allowing to specify subnet.
     /// 
@@ -77,6 +22,57 @@ namespace Microsoft.Azure.Management.V2.Network.NicIpConfiguration.Definition
         /// <returns>the next stage of the network interface IP configuration definition</returns>
         IWithPrivateIp<ParentT> WithSubnet (string name);
 
+    }
+    /// <summary>
+    /// The stage of the network interface IP configuration definition allowing to specify the load balancer
+    /// to associate this IP configuration with.
+    /// 
+    /// @param <ParentT> the return type of the final {@link Attachable#attach()}
+    /// </summary>
+    public interface IWithLoadBalancer<ParentT> 
+    {
+        /// <summary>
+        /// Specifies the load balancer backend to associate this IP configuration with.
+        /// </summary>
+        /// <param name="loadBalancer">loadBalancer an existing load balancer</param>
+        /// <param name="backendName">backendName the name of an existing backend on that load balancer</param>
+        /// <returns>the next stage of the update</returns>
+        IWithAttach<ParentT> WithExistingLoadBalancerBackend (ILoadBalancer loadBalancer, string backendName);
+
+        /// <summary>
+        /// Specifies the load balancer inbound NAT rule to associate this IP configuration with.
+        /// </summary>
+        /// <param name="loadBalancer">loadBalancer an existing load balancer</param>
+        /// <param name="inboundNatRuleName">inboundNatRuleName the name of an existing inbound NAT rule on the selected load balancer</param>
+        /// <returns>the next stage of the update</returns>
+        IWithAttach<ParentT> WithExistingLoadBalancerInboundNatRule (ILoadBalancer loadBalancer, string inboundNatRuleName);
+
+    }
+    /// <summary>
+    /// The stage of the network interface IP configuration definition allowing to specify private IP address
+    /// within a virtual network subnet.
+    /// 
+    /// @param <ParentT> the return type of the final {@link Attachable#attach()}
+    /// </summary>
+    public interface IWithPrivateIp<ParentT>  :
+        IWithPrivateIpAddress<Microsoft.Azure.Management.V2.Network.NicIpConfiguration.Definition.IWithAttach<ParentT>>
+    {
+        /// <summary>
+        /// Specifies the IP version for the private IP address.
+        /// </summary>
+        /// <param name="ipVersion">ipVersion an IP version</param>
+        /// <returns>the next stage of the definition</returns>
+        IWithAttach<ParentT> WithPrivateIpVersion (string ipVersion);
+
+    }
+    /// <summary>
+    /// The first stage of network interface IP configuration definition.
+    /// 
+    /// @param <ParentT> the return type of the final {@link Attachable#attach()}
+    /// </summary>
+    public interface IBlank<ParentT>  :
+        IWithNetwork<ParentT>
+    {
     }
     /// <summary>
     /// The stage of the network interface IP configuration definition allowing to specify the virtual network.
@@ -125,37 +121,17 @@ namespace Microsoft.Azure.Management.V2.Network.NicIpConfiguration.Definition
 
     }
     /// <summary>
-    /// The stage of the network interface IP configuration definition allowing to specify private IP address
-    /// within a virtual network subnet.
+    /// The final stage of network interface IP configuration.
+    /// <p>
+    /// At this stage, any remaining optional settings can be specified, or the network interface IP configuration
+    /// definition can be attached to the parent network interface definition using {@link WithAttach#attach()}.
     /// 
     /// @param <ParentT> the return type of the final {@link Attachable#attach()}
     /// </summary>
-    public interface IWithPrivateIp<ParentT> 
-    {
-        /// <summary>
-        /// Enables dynamic private IP address allocation within the specified existing virtual network
-        /// subnet for the network interface IP configuration.
-        /// </summary>
-        /// <returns>the next stage of network interface IP configuration definition</returns>
-        IWithAttach<ParentT> WithPrivateIpAddressDynamic ();
-
-        /// <summary>
-        /// Assigns the specified static private IP address within the specified existing virtual network
-        /// subnet to the network interface IP configuration.
-        /// </summary>
-        /// <param name="staticPrivateIpAddress">staticPrivateIpAddress the static IP address within the specified subnet to assign to</param>
-        /// <param name="the">the network interface</param>
-        /// <returns>the next stage of network interface IP configuration definition</returns>
-        IWithAttach<ParentT> WithPrivateIpAddressStatic (string staticPrivateIpAddress);
-
-    }
-    /// <summary>
-    /// The first stage of network interface IP configuration definition.
-    /// 
-    /// @param <ParentT> the return type of the final {@link Attachable#attach()}
-    /// </summary>
-    public interface IBlank<ParentT>  :
-        IWithNetwork<ParentT>
+    public interface IWithAttach<ParentT>  :
+        IInDefinition<ParentT>,
+        Microsoft.Azure.Management.V2.Network.NicIpConfiguration.Definition.IWithPublicIpAddress<ParentT>,
+        IWithLoadBalancer<ParentT>
     {
     }
     /// <summary>
@@ -168,6 +144,16 @@ namespace Microsoft.Azure.Management.V2.Network.NicIpConfiguration.Definition
         IWithNetwork<ParentT>,
         IWithSubnet<ParentT>,
         IWithPrivateIp<ParentT>
+    {
+    }
+    /// <summary>
+    /// The stage of the network interface IP configuration definition allowing to associate it with
+    /// a public IP address.
+    /// 
+    /// @param <ParentT> the return type of the final {@link Attachable#attach()}
+    /// </summary>
+    public interface IWithPublicIpAddress<ParentT>  :
+        Microsoft.Azure.Management.V2.Network.HasPublicIpAddress.Definition.IWithPublicIpAddress<Microsoft.Azure.Management.V2.Network.NicIpConfiguration.Definition.IWithAttach<ParentT>>
     {
     }
 }

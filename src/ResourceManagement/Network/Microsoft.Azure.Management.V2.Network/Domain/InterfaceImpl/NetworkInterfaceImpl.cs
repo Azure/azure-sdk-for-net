@@ -1,19 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
-
+// Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.V2.Network
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.V2.Network.NetworkInterface.Update;
     using Microsoft.Azure.Management.Network.Models;
     using Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition;
-    using System.Threading;
-    using Microsoft.Rest;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     using System.Collections.Generic;
+    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.V2.Resource;
-    using Microsoft.Azure.Management.V2.Network.NetworkInterface.Update;
     using System.Threading.Tasks;
+    using Microsoft.Azure.Management.V2.Resource.Core;
     public partial class NetworkInterfaceImpl 
     {
         /// <summary>
@@ -21,7 +18,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="ipAddress">ipAddress the IP address of the DNS server</param>
         /// <returns>the next stage of the network interface update</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithDnsServer.WithoutDnsServer (string ipAddress) {
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithDnsServer.WithoutDnsServer (string ipAddress) { 
             return this.WithoutDnsServer( ipAddress) as Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate;
         }
 
@@ -33,7 +30,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="ipAddress">ipAddress the IP address of the DNS server</param>
         /// <returns>the next stage of the network interface update</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithDnsServer.WithDnsServer (string ipAddress) {
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithDnsServer.WithDnsServer (string ipAddress) { 
             return this.WithDnsServer( ipAddress) as Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate;
         }
 
@@ -43,7 +40,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// Using azure DNS server will remove any custom DNS server associated with this network interface.
         /// </summary>
         /// <returns>the next stage of the network interface update</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithDnsServer.WithAzureDnsServer () {
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithDnsServer.WithAzureDnsServer () { 
             return this.WithAzureDnsServer() as Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate;
         }
 
@@ -52,7 +49,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="networkSecurityGroup">networkSecurityGroup an existing network security group</param>
         /// <returns>the next stage of the network interface update</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithNetworkSecurityGroup.WithExistingNetworkSecurityGroup (INetworkSecurityGroup networkSecurityGroup) {
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithNetworkSecurityGroup.WithExistingNetworkSecurityGroup (INetworkSecurityGroup networkSecurityGroup) { 
             return this.WithExistingNetworkSecurityGroup( networkSecurityGroup) as Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate;
         }
 
@@ -60,7 +57,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// Specifies that remove any network security group associated with the network interface.
         /// </summary>
         /// <returns>the next stage of the network interface update</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithNetworkSecurityGroup.WithoutNetworkSecurityGroup () {
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithNetworkSecurityGroup.WithoutNetworkSecurityGroup () { 
             return this.WithoutNetworkSecurityGroup() as Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate;
         }
 
@@ -69,7 +66,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="creatable">creatable a creatable definition for a new network security group</param>
         /// <returns>the next stage of the network interface update</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithNetworkSecurityGroup.WithNewNetworkSecurityGroup (ICreatable<Microsoft.Azure.Management.V2.Network.INetworkSecurityGroup> creatable) {
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithNetworkSecurityGroup.WithNewNetworkSecurityGroup (ICreatable<Microsoft.Azure.Management.V2.Network.INetworkSecurityGroup> creatable) { 
             return this.WithNewNetworkSecurityGroup( creatable) as Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate;
         }
 
@@ -78,7 +75,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="networkSecurityGroup">networkSecurityGroup an existing network security group</param>
         /// <returns>the next stage of the network interface definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithNetworkSecurityGroup.WithExistingNetworkSecurityGroup (INetworkSecurityGroup networkSecurityGroup) {
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithNetworkSecurityGroup.WithExistingNetworkSecurityGroup (INetworkSecurityGroup networkSecurityGroup) { 
             return this.WithExistingNetworkSecurityGroup( networkSecurityGroup) as Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate;
         }
 
@@ -87,7 +84,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="creatable">creatable a creatable definition for a new network security group</param>
         /// <returns>the next stage of the network interface definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithNetworkSecurityGroup.WithNewNetworkSecurityGroup (ICreatable<Microsoft.Azure.Management.V2.Network.INetworkSecurityGroup> creatable) {
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithNetworkSecurityGroup.WithNewNetworkSecurityGroup (ICreatable<Microsoft.Azure.Management.V2.Network.INetworkSecurityGroup> creatable) { 
             return this.WithNewNetworkSecurityGroup( creatable) as Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate;
         }
 
@@ -100,7 +97,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="creatable">creatable a creatable definition for a new public IP</param>
         /// <returns>the next stage of the network interface update</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithPrimaryPublicIpAddress.WithNewPrimaryPublicIpAddress (ICreatable<Microsoft.Azure.Management.V2.Network.IPublicIpAddress> creatable) {
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithPrimaryPublicIpAddress.WithNewPrimaryPublicIpAddress (ICreatable<Microsoft.Azure.Management.V2.Network.IPublicIpAddress> creatable) { 
             return this.WithNewPrimaryPublicIpAddress( creatable) as Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate;
         }
 
@@ -112,7 +109,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// if there is an existing public IP association then that will be removed in favour of this
         /// </summary>
         /// <returns>the next stage of the network interface update</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithPrimaryPublicIpAddress.WithNewPrimaryPublicIpAddress () {
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithPrimaryPublicIpAddress.WithNewPrimaryPublicIpAddress () { 
             return this.WithNewPrimaryPublicIpAddress() as Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate;
         }
 
@@ -125,7 +122,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="leafDnsLabel">leafDnsLabel the leaf domain label</param>
         /// <returns>the next stage of the network interface update</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithPrimaryPublicIpAddress.WithNewPrimaryPublicIpAddress (string leafDnsLabel) {
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithPrimaryPublicIpAddress.WithNewPrimaryPublicIpAddress (string leafDnsLabel) { 
             return this.WithNewPrimaryPublicIpAddress( leafDnsLabel) as Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate;
         }
 
@@ -133,7 +130,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// Specifies that remove any public IP associated with the network interface's primary IP configuration.
         /// </summary>
         /// <returns>the next stage of the network interface update</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithPrimaryPublicIpAddress.WithoutPrimaryPublicIpAddress () {
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithPrimaryPublicIpAddress.WithoutPrimaryPublicIpAddress () { 
             return this.WithoutPrimaryPublicIpAddress() as Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate;
         }
 
@@ -143,7 +140,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="publicIpAddress">publicIpAddress an existing public IP address</param>
         /// <returns>the next stage of the network interface update</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithPrimaryPublicIpAddress.WithExistingPrimaryPublicIpAddress (IPublicIpAddress publicIpAddress) {
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithPrimaryPublicIpAddress.WithExistingPrimaryPublicIpAddress (IPublicIpAddress publicIpAddress) { 
             return this.WithExistingPrimaryPublicIpAddress( publicIpAddress) as Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate;
         }
 
@@ -153,7 +150,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="creatable">creatable a creatable definition for a new public IP</param>
         /// <returns>the next stage of the network interface definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryPublicIpAddress.WithNewPrimaryPublicIpAddress (ICreatable<Microsoft.Azure.Management.V2.Network.IPublicIpAddress> creatable) {
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryPublicIpAddress.WithNewPrimaryPublicIpAddress (ICreatable<Microsoft.Azure.Management.V2.Network.IPublicIpAddress> creatable) { 
             return this.WithNewPrimaryPublicIpAddress( creatable) as Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate;
         }
 
@@ -164,7 +161,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// the internal name and DNS label for the public IP address will be derived from the network interface name
         /// </summary>
         /// <returns>the next stage of the network interface definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryPublicIpAddress.WithNewPrimaryPublicIpAddress () {
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryPublicIpAddress.WithNewPrimaryPublicIpAddress () { 
             return this.WithNewPrimaryPublicIpAddress() as Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate;
         }
 
@@ -176,7 +173,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="leafDnsLabel">leafDnsLabel the leaf domain label</param>
         /// <returns>the next stage of the network interface definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryPublicIpAddress.WithNewPrimaryPublicIpAddress (string leafDnsLabel) {
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryPublicIpAddress.WithNewPrimaryPublicIpAddress (string leafDnsLabel) { 
             return this.WithNewPrimaryPublicIpAddress( leafDnsLabel) as Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate;
         }
 
@@ -185,7 +182,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="publicIpAddress">publicIpAddress an existing public IP address</param>
         /// <returns>the next stage of the network interface definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryPublicIpAddress.WithExistingPrimaryPublicIpAddress (IPublicIpAddress publicIpAddress) {
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryPublicIpAddress.WithExistingPrimaryPublicIpAddress (IPublicIpAddress publicIpAddress) { 
             return this.WithExistingPrimaryPublicIpAddress( publicIpAddress) as Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate;
         }
 
@@ -194,7 +191,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// subnet for the network interface's primary IP configuration.
         /// </summary>
         /// <returns>the next stage of network interface update</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithPrimaryPrivateIp.WithPrimaryPrivateIpAddressDynamic () {
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithPrimaryPrivateIp.WithPrimaryPrivateIpAddressDynamic () { 
             return this.WithPrimaryPrivateIpAddressDynamic() as Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate;
         }
 
@@ -205,7 +202,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// <param name="staticPrivateIpAddress">staticPrivateIpAddress the static IP address within the specified subnet to assign to</param>
         /// <param name="the">the primary IP configuration</param>
         /// <returns>the next stage of network interface update</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithPrimaryPrivateIp.WithPrimaryPrivateIpAddressStatic (string staticPrivateIpAddress) {
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithPrimaryPrivateIp.WithPrimaryPrivateIpAddressStatic (string staticPrivateIpAddress) { 
             return this.WithPrimaryPrivateIpAddressStatic( staticPrivateIpAddress) as Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate;
         }
 
@@ -214,7 +211,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// subnet for the network interface's primary IP configuration.
         /// </summary>
         /// <returns>the next stage of network interface definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryPrivateIp.WithPrimaryPrivateIpAddressDynamic () {
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryPrivateIp.WithPrimaryPrivateIpAddressDynamic () { 
             return this.WithPrimaryPrivateIpAddressDynamic() as Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate;
         }
 
@@ -225,7 +222,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// <param name="staticPrivateIpAddress">staticPrivateIpAddress the static IP address within the specified subnet to assign to</param>
         /// <param name="the">the network interface</param>
         /// <returns>the next stage of network interface definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryPrivateIp.WithPrimaryPrivateIpAddressStatic (string staticPrivateIpAddress) {
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryPrivateIp.WithPrimaryPrivateIpAddressStatic (string staticPrivateIpAddress) { 
             return this.WithPrimaryPrivateIpAddressStatic( staticPrivateIpAddress) as Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate;
         }
 
@@ -233,7 +230,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// Enable IP forwarding in the network interface.
         /// </summary>
         /// <returns>the next stage of the network interface definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate.WithIpForwarding () {
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate.WithIpForwarding () { 
             return this.WithIpForwarding() as Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate;
         }
 
@@ -245,7 +242,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="ipAddress">ipAddress the IP address of the DNS server</param>
         /// <returns>the next stage of the network interface definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate.WithDnsServer (string ipAddress) {
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate.WithDnsServer (string ipAddress) { 
             return this.WithDnsServer( ipAddress) as Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate;
         }
 
@@ -254,18 +251,8 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="dnsNameLabel">dnsNameLabel the internal DNS name label</param>
         /// <returns>the next stage of the network interface definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate.WithInternalDnsNameLabel (string dnsNameLabel) {
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate.WithInternalDnsNameLabel (string dnsNameLabel) { 
             return this.WithInternalDnsNameLabel( dnsNameLabel) as Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate;
-        }
-
-        /// <summary>
-        /// Gets the public IP address associated with this network interface.
-        /// <p>
-        /// This method makes a rest API call to fetch the public IP.
-        /// </summary>
-        /// <returns>the public IP associated with this network interface</returns>
-        Microsoft.Azure.Management.V2.Network.IPublicIpAddress Microsoft.Azure.Management.V2.Network.INetworkInterface.PrimaryPublicIpAddress () {
-            return this.PrimaryPublicIpAddress() as Microsoft.Azure.Management.V2.Network.IPublicIpAddress;
         }
 
         /// <summary>
@@ -281,24 +268,22 @@ namespace Microsoft.Azure.Management.V2.Network
                 return this.PrimaryPrivateIp as string;
             }
         }
-        /// <returns>IP addresses of this network interface's DNS servers</returns>
-        System.Collections.Generic.IList<string> Microsoft.Azure.Management.V2.Network.INetworkInterface.DnsServers
+        /// <returns>the resource ID of the associated virtual machine, or null if none.</returns>
+        string Microsoft.Azure.Management.V2.Network.INetworkInterface.VirtualMachineId
         {
             get
             {
-                return this.DnsServers as System.Collections.Generic.IList<string>;
+                return this.VirtualMachineId as string;
             }
         }
-        /// <summary>
-        /// Gets the virtual network associated this network interface's primary IP configuration.
-        /// <p>
-        /// This method makes a rest API call to fetch the virtual network.
-        /// </summary>
-        /// <returns>the virtual network associated with this network interface.</returns>
-        Microsoft.Azure.Management.V2.Network.INetwork Microsoft.Azure.Management.V2.Network.INetworkInterface.PrimaryNetwork () {
-            return this.PrimaryNetwork() as Microsoft.Azure.Management.V2.Network.INetwork;
+        /// <returns>IP addresses of this network interface's DNS servers</returns>
+        System.Collections.Generic.List<string> Microsoft.Azure.Management.V2.Network.INetworkInterface.DnsServers
+        {
+            get
+            {
+                return this.DnsServers as System.Collections.Generic.List<string>;
+            }
         }
-
         /// <summary>
         /// Gets the fully qualified domain name of this network interface.
         /// <p>
@@ -328,16 +313,42 @@ namespace Microsoft.Azure.Management.V2.Network
                 return this.MacAddress as string;
             }
         }
-        /// <returns>the IP configurations of this network interface</returns>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.V2.Network.INicIpConfiguration> Microsoft.Azure.Management.V2.Network.INetworkInterface.IpConfigurations () {
-            return this.IpConfigurations() as System.Collections.Generic.IList<Microsoft.Azure.Management.V2.Network.INicIpConfiguration>;
+        /// <returns>the IP configurations of this network interface, indexed by their names</returns>
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.V2.Network.INicIpConfiguration> Microsoft.Azure.Management.V2.Network.INetworkInterface.IpConfigurations () { 
+            return this.IpConfigurations() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.V2.Network.INicIpConfiguration>;
         }
 
+        /// <returns>applied DNS servers</returns>
+        System.Collections.Generic.List<string> Microsoft.Azure.Management.V2.Network.INetworkInterface.AppliedDnsServers
+        {
+            get
+            {
+                return this.AppliedDnsServers as System.Collections.Generic.List<string>;
+            }
+        }
         /// <returns>the primary IP configuration of this network interface</returns>
-        Microsoft.Azure.Management.V2.Network.INicIpConfiguration Microsoft.Azure.Management.V2.Network.INetworkInterface.PrimaryIpConfiguration () {
+        Microsoft.Azure.Management.V2.Network.INicIpConfiguration Microsoft.Azure.Management.V2.Network.INetworkInterface.PrimaryIpConfiguration () { 
             return this.PrimaryIpConfiguration() as Microsoft.Azure.Management.V2.Network.INicIpConfiguration;
         }
 
+        /// <summary>
+        /// Gets the network security group associated this network interface.
+        /// <p>
+        /// This method makes a rest API call to fetch the Network Security Group resource.
+        /// </summary>
+        /// <returns>the network security group associated with this network interface.</returns>
+        Microsoft.Azure.Management.V2.Network.INetworkSecurityGroup Microsoft.Azure.Management.V2.Network.INetworkInterface.GetNetworkSecurityGroup () { 
+            return this.GetNetworkSecurityGroup() as Microsoft.Azure.Management.V2.Network.INetworkSecurityGroup;
+        }
+
+        /// <returns>the internal domain name suffix</returns>
+        string Microsoft.Azure.Management.V2.Network.INetworkInterface.InternalDomainNameSuffix
+        {
+            get
+            {
+                return this.InternalDomainNameSuffix as string;
+            }
+        }
         /// <returns>the private IP allocation method (Dynamic, Static) of this network interface's</returns>
         /// <returns>primary IP configuration.</returns>
         string Microsoft.Azure.Management.V2.Network.INetworkInterface.PrimaryPrivateIpAllocationMethod
@@ -355,16 +366,6 @@ namespace Microsoft.Azure.Management.V2.Network
                 return this.InternalDnsNameLabel as string;
             }
         }
-        /// <summary>
-        /// Gets the network security group associated this network interface.
-        /// <p>
-        /// This method makes a rest API call to fetch the Network Security Group resource.
-        /// </summary>
-        /// <returns>the network security group associated with this network interface.</returns>
-        Microsoft.Azure.Management.V2.Network.INetworkSecurityGroup Microsoft.Azure.Management.V2.Network.INetworkInterface.NetworkSecurityGroup () {
-            return this.NetworkSecurityGroup() as Microsoft.Azure.Management.V2.Network.INetworkSecurityGroup;
-        }
-
         /// <returns>the network security group resource id or null if there is no network security group</returns>
         /// <returns>associated with this network interface.</returns>
         string Microsoft.Azure.Management.V2.Network.INetworkInterface.NetworkSecurityGroupId
@@ -374,29 +375,60 @@ namespace Microsoft.Azure.Management.V2.Network
                 return this.NetworkSecurityGroupId as string;
             }
         }
-        /// <returns>the resource id of the virtual network subnet associated with this network interface.</returns>
-        string Microsoft.Azure.Management.V2.Network.INetworkInterface.PrimarySubnetId
-        {
-            get
-            {
-                return this.PrimarySubnetId as string;
-            }
-        }
         /// <summary>
-        /// Execute the update request asynchronously.
+        /// Associates the network interface's primary IP configuration with an inbound NAT rule of an existing load balancer.
         /// </summary>
-        /// <param name="cancellationToken">cancellationToken the cancellation token</param>
-        /// <returns>the handle to the REST call</returns>
-        async Task<Microsoft.Azure.Management.V2.Network.INetworkInterface> Microsoft.Azure.Management.V2.Resource.Core.ResourceActions.IAppliable<Microsoft.Azure.Management.V2.Network.INetworkInterface>.ApplyAsync (CancellationToken cancellationToken = default(CancellationToken), bool multiThreaded = true) {
-            return await this.ApplyAsync() as INetworkInterface;
+        /// <param name="loadBalancer">loadBalancer an existing load balancer</param>
+        /// <param name="inboundNatRuleName">inboundNatRuleName the name of an existing inbound NAT rule on the selected load balancer</param>
+        /// <returns>the next stage of the update</returns>
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithLoadBalancer.WithExistingLoadBalancerInboundNatRule (ILoadBalancer loadBalancer, string inboundNatRuleName) { 
+            return this.WithExistingLoadBalancerInboundNatRule( loadBalancer,  inboundNatRuleName) as Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate;
         }
 
         /// <summary>
-        /// Execute the update request.
+        /// Associates the network interface's primary IP configuration with a backend of an existing load balancer.
         /// </summary>
-        /// <returns>the updated resource</returns>
-        Microsoft.Azure.Management.V2.Network.INetworkInterface Microsoft.Azure.Management.V2.Resource.Core.ResourceActions.IAppliable<Microsoft.Azure.Management.V2.Network.INetworkInterface>.Apply () {
-            return this.Apply() as Microsoft.Azure.Management.V2.Network.INetworkInterface;
+        /// <param name="loadBalancer">loadBalancer an existing load balancer</param>
+        /// <param name="backendName">backendName the name of an existing backend on that load balancer</param>
+        /// <returns>the next stage of the update</returns>
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithLoadBalancer.WithExistingLoadBalancerBackend (ILoadBalancer loadBalancer, string backendName) { 
+            return this.WithExistingLoadBalancerBackend( loadBalancer,  backendName) as Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Removes all the existing associations with any load balancer backends.
+        /// </summary>
+        /// <returns>the next stage of the update</returns>
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithLoadBalancer.WithoutLoadBalancerBackends () { 
+            return this.WithoutLoadBalancerBackends() as Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Removes all the existing associations with any load balancer inbound NAT rules.
+        /// </summary>
+        /// <returns>the next stage of the update</returns>
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithLoadBalancer.WithoutLoadBalancerInboundNatRules () { 
+            return this.WithoutLoadBalancerInboundNatRules() as Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Associates the network interface's primary IP configuration with an inbound NAT rule of an existing load balancer.
+        /// </summary>
+        /// <param name="loadBalancer">loadBalancer an existing load balancer</param>
+        /// <param name="inboundNatRuleName">inboundNatRuleName the name of an existing inbound NAT rule on the selected load balancer</param>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithLoadBalancer.WithExistingLoadBalancerInboundNatRule (ILoadBalancer loadBalancer, string inboundNatRuleName) { 
+            return this.WithExistingLoadBalancerInboundNatRule( loadBalancer,  inboundNatRuleName) as Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate;
+        }
+
+        /// <summary>
+        /// Associates the network interface's primary IP configuration with a backend of an existing load balancer.
+        /// </summary>
+        /// <param name="loadBalancer">loadBalancer an existing load balancer</param>
+        /// <param name="backendName">backendName the name of an existing backend on that load balancer</param>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithLoadBalancer.WithExistingLoadBalancerBackend (ILoadBalancer loadBalancer, string backendName) { 
+            return this.WithExistingLoadBalancerBackend( loadBalancer,  backendName) as Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -404,7 +436,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="name">name name for the IP configuration</param>
         /// <returns>the first stage of a secondary IP configuration definition</returns>
-        Microsoft.Azure.Management.V2.Network.NicIpConfiguration.Definition.IBlank<Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithSecondaryIpConfiguration.DefineSecondaryIpConfiguration (string name) {
+        Microsoft.Azure.Management.V2.Network.NicIpConfiguration.Definition.IBlank<Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate> Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithSecondaryIpConfiguration.DefineSecondaryIpConfiguration (string name) { 
             return this.DefineSecondaryIpConfiguration( name) as Microsoft.Azure.Management.V2.Network.NicIpConfiguration.Definition.IBlank<Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate>;
         }
 
@@ -413,7 +445,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="network">network an existing virtual network</param>
         /// <returns>the next stage of the network interface definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryNetworkSubnet Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryNetwork.WithExistingPrimaryNetwork (INetwork network) {
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryNetworkSubnet Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryNetwork.WithExistingPrimaryNetwork (INetwork network) { 
             return this.WithExistingPrimaryNetwork( network) as Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryNetworkSubnet;
         }
 
@@ -423,7 +455,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="creatable">creatable a creatable definition for a new virtual network</param>
         /// <returns>the next stage of the network interface definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryPrivateIp Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryNetwork.WithNewPrimaryNetwork (ICreatable<Microsoft.Azure.Management.V2.Network.INetwork> creatable) {
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryPrivateIp Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryNetwork.WithNewPrimaryNetwork (ICreatable<Microsoft.Azure.Management.V2.Network.INetwork> creatable) { 
             return this.WithNewPrimaryNetwork( creatable) as Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryPrivateIp;
         }
 
@@ -437,7 +469,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// <param name="name">name the name of the new virtual network</param>
         /// <param name="addressSpace">addressSpace the address space for rhe virtual network</param>
         /// <returns>the next stage of the network interface definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryPrivateIp Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryNetwork.WithNewPrimaryNetwork (string name, string addressSpace) {
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryPrivateIp Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryNetwork.WithNewPrimaryNetwork (string name, string addressSpace) { 
             return this.WithNewPrimaryNetwork( name,  addressSpace) as Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryPrivateIp;
         }
 
@@ -450,7 +482,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="addressSpace">addressSpace the address space for the virtual network</param>
         /// <returns>the next stage of the network interface definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryPrivateIp Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryNetwork.WithNewPrimaryNetwork (string addressSpace) {
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryPrivateIp Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryNetwork.WithNewPrimaryNetwork (string addressSpace) { 
             return this.WithNewPrimaryNetwork( addressSpace) as Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryPrivateIp;
         }
 
@@ -459,7 +491,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="name">name name of the IP configuration</param>
         /// <returns>the first stage of an IP configuration update</returns>
-        Microsoft.Azure.Management.V2.Network.NicIpConfiguration.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithIpConfiguration.UpdateIpConfiguration (string name) {
+        Microsoft.Azure.Management.V2.Network.NicIpConfiguration.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithIpConfiguration.UpdateIpConfiguration (string name) { 
             return this.UpdateIpConfiguration( name) as Microsoft.Azure.Management.V2.Network.NicIpConfiguration.Update.IUpdate;
         }
 
@@ -468,7 +500,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="name">name name for the IP configuration</param>
         /// <returns>the first stage of a secondary IP configuration definition</returns>
-        Microsoft.Azure.Management.V2.Network.NicIpConfiguration.UpdateDefinition.IBlank<Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithIpConfiguration.DefineSecondaryIpConfiguration (string name) {
+        Microsoft.Azure.Management.V2.Network.NicIpConfiguration.UpdateDefinition.IBlank<Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate> Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithIpConfiguration.DefineSecondaryIpConfiguration (string name) { 
             return this.DefineSecondaryIpConfiguration( name) as Microsoft.Azure.Management.V2.Network.NicIpConfiguration.UpdateDefinition.IBlank<Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate>;
         }
 
@@ -477,7 +509,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="name">name the subnet name</param>
         /// <returns>the next stage of the network interface update</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithPrimaryNetworkSubnet.WithSubnet (string name) {
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithPrimaryNetworkSubnet.WithSubnet (string name) { 
             return this.WithSubnet( name) as Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate;
         }
 
@@ -486,7 +518,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// </summary>
         /// <param name="name">name the subnet name</param>
         /// <returns>the next stage of the network interface definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryPrivateIp Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryNetworkSubnet.WithSubnet (string name) {
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryPrivateIp Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryNetworkSubnet.WithSubnet (string name) { 
             return this.WithSubnet( name) as Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithPrimaryPrivateIp;
         }
 
@@ -494,7 +526,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// Refreshes the resource to sync with Azure.
         /// </summary>
         /// <returns>the refreshed resource</returns>
-        Microsoft.Azure.Management.V2.Network.INetworkInterface Microsoft.Azure.Management.V2.Resource.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.V2.Network.INetworkInterface>.Refresh () {
+        Microsoft.Azure.Management.V2.Network.INetworkInterface Microsoft.Azure.Management.V2.Resource.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.V2.Network.INetworkInterface>.Refresh () { 
             return this.Refresh() as Microsoft.Azure.Management.V2.Network.INetworkInterface;
         }
 
@@ -502,7 +534,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// Enable IP forwarding in the network interface.
         /// </summary>
         /// <returns>the next stage of the network interface update</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithIpForwarding.WithIpForwarding () {
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithIpForwarding.WithIpForwarding () { 
             return this.WithIpForwarding() as Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate;
         }
 
@@ -510,7 +542,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// Disable IP forwarding in the network interface.
         /// </summary>
         /// <returns>the next stage of the network interface update</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithIpForwarding.WithoutIpForwarding () {
+        Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IWithIpForwarding.WithoutIpForwarding () { 
             return this.WithoutIpForwarding() as Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate;
         }
 

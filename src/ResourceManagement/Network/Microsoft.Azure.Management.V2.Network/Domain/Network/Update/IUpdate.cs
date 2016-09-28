@@ -1,15 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
-
+// Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.V2.Network.Network.Update
 {
 
-    using Microsoft.Azure.Management.V2.Network.Subnet.Update;
-    using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Network.Subnet.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Network;
     using Microsoft.Azure.Management.V2.Resource.Core.Resource.Update;
     using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.V2.Network;
+    using System.Collections.Generic;
+    using Microsoft.Azure.Management.V2.Network.Subnet.Update;
+    using Microsoft.Azure.Management.V2.Network.Subnet.UpdateDefinition;
     /// <summary>
     /// The stage of the virtual network update allowing to specify the DNS server.
     /// </summary>
@@ -25,6 +24,38 @@ namespace Microsoft.Azure.Management.V2.Network.Network.Update
         /// <returns>the next stage of the virtual network update</returns>
         Microsoft.Azure.Management.V2.Network.Network.Update.IUpdate WithDnsServer (string ipAddress);
 
+    }
+    /// <summary>
+    /// The stage of the virtual network update allowing to specify the address space.
+    /// </summary>
+    public interface IWithAddressSpace 
+    {
+        /// <summary>
+        /// Explicitly adds an address space to the virtual network.
+        /// <p>
+        /// Note this method's effect is additive, i.e. each time it is used, a new address space is added to the network.
+        /// <p>
+        /// This method does not check for conflicts or overlaps with other address spaces. If there is a conflict,
+        /// a cloud exception may be thrown after the update is applied.
+        /// </summary>
+        /// <param name="cidr">cidr the CIDR representation of the address space</param>
+        /// <returns>the next stage of the virtual network update</returns>
+        Microsoft.Azure.Management.V2.Network.Network.Update.IUpdate WithAddressSpace (string cidr);
+
+    }
+    /// <summary>
+    /// The template for a virtual network update operation, containing all the settings that
+    /// can be modified.
+    /// <p>
+    /// Call {@link Update#apply()} to apply the changes to the resource in Azure.
+    /// </summary>
+    public interface IUpdate  :
+        IAppliable<Microsoft.Azure.Management.V2.Network.INetwork>,
+        IUpdateWithTags<Microsoft.Azure.Management.V2.Network.Network.Update.IUpdate>,
+        IWithSubnet,
+        IWithDnsServer,
+        IWithAddressSpace
+    {
     }
     /// <summary>
     /// The stage of the virtual network update allowing to add or remove subnets.
@@ -71,37 +102,5 @@ namespace Microsoft.Azure.Management.V2.Network.Network.Update
         /// <returns>the first stage of the new subnet definition</returns>
         IBlank<Microsoft.Azure.Management.V2.Network.Network.Update.IUpdate> DefineSubnet (string name);
 
-    }
-    /// <summary>
-    /// The stage of the virtual network update allowing to specify the address space.
-    /// </summary>
-    public interface IWithAddressSpace 
-    {
-        /// <summary>
-        /// Explicitly adds an address space to the virtual network.
-        /// <p>
-        /// Note this method's effect is additive, i.e. each time it is used, a new address space is added to the network.
-        /// <p>
-        /// This method does not check for conflicts or overlaps with other address spaces. If there is a conflict,
-        /// a cloud exception may be thrown after the update is applied.
-        /// </summary>
-        /// <param name="cidr">cidr the CIDR representation of the address space</param>
-        /// <returns>the next stage of the virtual network update</returns>
-        Microsoft.Azure.Management.V2.Network.Network.Update.IUpdate WithAddressSpace (string cidr);
-
-    }
-    /// <summary>
-    /// The template for a virtual network update operation, containing all the settings that
-    /// can be modified.
-    /// <p>
-    /// Call {@link Update#apply()} to apply the changes to the resource in Azure.
-    /// </summary>
-    public interface IUpdate  :
-        IAppliable<Microsoft.Azure.Management.V2.Network.INetwork>,
-        IUpdateWithTags<Microsoft.Azure.Management.V2.Network.Network.Update.IUpdate>,
-        IWithSubnet,
-        IWithDnsServer,
-        IWithAddressSpace
-    {
     }
 }

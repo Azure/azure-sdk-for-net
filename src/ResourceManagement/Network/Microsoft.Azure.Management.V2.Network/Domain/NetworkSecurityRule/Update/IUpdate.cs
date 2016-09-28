@@ -1,38 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
-
+// Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update
 {
 
-    using Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update;
     using Microsoft.Azure.Management.V2.Resource.Core.ChildResourceActions;
-    /// <summary>
-    /// The stage of the network rule description allowing the destination port(s) to be specified.
-    /// </summary>
-    public interface IWithDestinationPort 
-    {
-        /// <summary>
-        /// Specifies the destination port to which this rule applies.
-        /// </summary>
-        /// <param name="port">port the destination port number</param>
-        /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate ToPort (int port);
-
-        /// <summary>
-        /// Makes this rule apply to any destination port.
-        /// </summary>
-        /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate ToAnyPort ();
-
-        /// <summary>
-        /// Specifies the destination port range to which this rule applies.
-        /// </summary>
-        /// <param name="from">from the starting port number</param>
-        /// <param name="to">to the ending port number</param>
-        /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate ToPortRange (int from, int to);
-
-    }
+    using Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update;
     /// <summary>
     /// The stage of the network rule description allowing the direction and the access type to be specified.
     /// </summary>
@@ -42,25 +14,25 @@ namespace Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update
         /// Allows inbound traffic.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate AllowInbound ();
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate AllowInbound { get; }
 
         /// <summary>
         /// Allows outbound traffic.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate AllowOutbound ();
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate AllowOutbound { get; }
 
         /// <summary>
         /// Blocks inbound traffic.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate DenyInbound ();
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate DenyInbound { get; }
 
         /// <summary>
         /// Blocks outbound traffic.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate DenyOutbound ();
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate DenyOutbound { get; }
 
     }
     /// <summary>
@@ -79,7 +51,7 @@ namespace Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update
         /// Specifies that the rule applies to any traffic source address.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate FromAnyAddress ();
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate FromAnyAddress { get; }
 
     }
     /// <summary>
@@ -112,33 +84,6 @@ namespace Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update
 
     }
     /// <summary>
-    /// The stage of the network rule description allowing the source port(s) to be specified.
-    /// </summary>
-    public interface IWithSourcePort 
-    {
-        /// <summary>
-        /// Specifies the source port to which this rule applies.
-        /// </summary>
-        /// <param name="port">port the source port number</param>
-        /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate FromPort (int port);
-
-        /// <summary>
-        /// Makes this rule apply to any source port.
-        /// </summary>
-        /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate FromAnyPort ();
-
-        /// <summary>
-        /// Specifies the source port range to which this rule applies.
-        /// </summary>
-        /// <param name="from">from the starting port number</param>
-        /// <param name="to">to the ending port number</param>
-        /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate FromPortRange (int from, int to);
-
-    }
-    /// <summary>
     /// The stage of the security rule description allowing the protocol that the rule applies to to be specified.
     /// </summary>
     public interface IWithProtocol 
@@ -158,6 +103,33 @@ namespace Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update
 
     }
     /// <summary>
+    /// The stage of the network rule description allowing the source port(s) to be specified.
+    /// </summary>
+    public interface IWithSourcePort 
+    {
+        /// <summary>
+        /// Specifies the source port to which this rule applies.
+        /// </summary>
+        /// <param name="port">port the source port number</param>
+        /// <returns>the next stage of the security rule definition</returns>
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate FromPort (int port);
+
+        /// <summary>
+        /// Makes this rule apply to any source port.
+        /// </summary>
+        /// <returns>the next stage of the security rule definition</returns>
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate FromAnyPort { get; }
+
+        /// <summary>
+        /// Specifies the source port range to which this rule applies.
+        /// </summary>
+        /// <param name="from">from the starting port number</param>
+        /// <param name="to">to the ending port number</param>
+        /// <returns>the next stage of the security rule definition</returns>
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate FromPortRange (int from, int to);
+
+    }
+    /// <summary>
     /// The stage of the network rule description allowing the destination address to be specified.
     /// </summary>
     public interface IWithDestinationAddress 
@@ -173,7 +145,34 @@ namespace Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update
         /// Makes the rule apply to any traffic destination address.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate ToAnyAddress ();
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate ToAnyAddress { get; }
+
+    }
+    /// <summary>
+    /// The stage of the network rule description allowing the destination port(s) to be specified.
+    /// </summary>
+    public interface IWithDestinationPort 
+    {
+        /// <summary>
+        /// Specifies the destination port to which this rule applies.
+        /// </summary>
+        /// <param name="port">port the destination port number</param>
+        /// <returns>the next stage of the security rule definition</returns>
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate ToPort (int port);
+
+        /// <summary>
+        /// Makes this rule apply to any destination port.
+        /// </summary>
+        /// <returns>the next stage of the security rule definition</returns>
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate ToAnyPort { get; }
+
+        /// <summary>
+        /// Specifies the destination port range to which this rule applies.
+        /// </summary>
+        /// <param name="from">from the starting port number</param>
+        /// <param name="to">to the ending port number</param>
+        /// <returns>the next stage of the security rule definition</returns>
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate ToPortRange (int from, int to);
 
     }
 }

@@ -1,17 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
-
+// Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.V2.Network
 {
 
-    using Microsoft.Azure.Management.Network.Models;
     using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.Network.Models;
     /// <summary>
     /// An immutable client-side representation of a subnet of a virtual network.
     /// </summary>
     public interface ISubnet  :
         IWrapper<Microsoft.Azure.Management.Network.Models.SubnetInner>,
-        IChildResource<INetwork>
+        IChildResource<Microsoft.Azure.Management.V2.Network.INetwork>
     {
         /// <returns>the address space prefix, in CIDR notation, assigned to this subnet</returns>
         string AddressPrefix { get; }

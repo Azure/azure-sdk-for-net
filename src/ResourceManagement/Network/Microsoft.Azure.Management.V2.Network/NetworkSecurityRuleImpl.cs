@@ -1,16 +1,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
-
+// Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.V2.Network
 {
 
-    using NetworkSecurityRule.Update;
-    using NetworkSecurityRule.Definition;
-    using Microsoft.Azure.Management.Network.Models;
-    using NetworkSecurityRule.UpdateDefinition;
-    using NetworkSecurityGroup.Definition;
+    using Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition;
+    using Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update;
+    using Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition;
+    using Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update;
     using Microsoft.Azure.Management.V2.Resource.Core;
-    using NetworkSecurityGroup.Update;
+    using Microsoft.Azure.Management.Network.Models;
+    using Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition;
+    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
     using Resource.Core.ChildResourceActions;
     using System;
 
@@ -18,226 +19,320 @@ namespace Microsoft.Azure.Management.V2.Network
     /// Implementation for {@link NetworkSecurityRule} and its create and update interfaces.
     /// </summary>
     public partial class NetworkSecurityRuleImpl  :
-        ChildResource<SecurityRuleInner, NetworkSecurityGroupImpl, INetworkSecurityGroup>,
+        ChildResource<Microsoft.Azure.Management.Network.Models.SecurityRuleInner,Microsoft.Azure.Management.V2.Network.NetworkSecurityGroupImpl,Microsoft.Azure.Management.V2.Network.INetworkSecurityGroup>,
         INetworkSecurityRule,
-        IDefinition<IWithCreate>,
-        IUpdateDefinition<NetworkSecurityGroup.Update.IUpdate>,
-        NetworkSecurityRule.Update.IUpdate
+        IDefinition<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>,
+        IUpdateDefinition<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>,
+        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate
     {
-        internal  NetworkSecurityRuleImpl (SecurityRuleInner inner, NetworkSecurityGroupImpl parent) :
-            base(inner.Id, inner, parent)
+        protected  NetworkSecurityRuleImpl (SecurityRuleInner inner, NetworkSecurityGroupImpl parent) : base(inner.Name, inner, parent)
         {
+
+            //$ super(inner, parent);
+            //$ }
+
         }
 
-        public override string Name
+        override public string Name
         {
             get
             {
-                return this.Inner.Name;
+            //$ return this.inner().name();
+
+
+                return null;
             }
         }
-
         public string Direction
         {
             get
             {
-                return this.Inner.Direction;
+            //$ return this.inner().direction();
+
+
+                return null;
             }
         }
         public string Protocol
         {
             get
             {
-                return this.Inner.Protocol;
+            //$ return this.inner().protocol();
+
+
+                return null;
             }
         }
         public string Access
         {
             get
             {
-                return this.Inner.Access;
+            //$ return this.inner().access();
+
+
+                return null;
             }
         }
         public string SourceAddressPrefix
         {
             get
             {
-                return this.Inner.SourceAddressPrefix;
+            //$ return this.inner().sourceAddressPrefix();
+
+
+                return null;
             }
         }
         public string SourcePortRange
         {
             get
             {
-                return this.Inner.SourcePortRange;
+            //$ return this.inner().sourcePortRange();
+
+
+                return null;
             }
         }
-
         public string DestinationAddressPrefix
         {
             get
             {
-                return this.Inner.DestinationAddressPrefix;
+            //$ return this.inner().destinationAddressPrefix();
+
+
+                return null;
             }
         }
         public string DestinationPortRange
         {
             get
             {
-                return this.Inner.DestinationPortRange;
+            //$ return this.inner().destinationPortRange();
+
+
+                return null;
             }
         }
         public int? Priority
         {
             get
             {
-                return this.Inner.Priority;
+            //$ return this.inner().priority();
+
+
+                return null;
             }
         }
         public NetworkSecurityRuleImpl AllowInbound ()
         {
-            return this
-                .WithDirection(SecurityRuleDirection.Inbound)
-                .WithAccess(SecurityRuleAccess.Allow);
+
+            //$ return this
+            //$ .withDirection(SecurityRuleDirection.INBOUND)
+            //$ .withAccess(SecurityRuleAccess.ALLOW);
+
+            return this;
         }
 
         public NetworkSecurityRuleImpl AllowOutbound ()
         {
-            return this
-                .WithDirection(SecurityRuleDirection.Outbound)
-                .WithAccess(SecurityRuleAccess.Allow);
+
+            //$ return this
+            //$ .withDirection(SecurityRuleDirection.OUTBOUND)
+            //$ .withAccess(SecurityRuleAccess.ALLOW);
+
+            return this;
         }
 
         public NetworkSecurityRuleImpl DenyInbound ()
         {
-            return this
-                .WithDirection(SecurityRuleDirection.Inbound)
-                .WithAccess(SecurityRuleAccess.Deny);
+
+            //$ return this
+            //$ .withDirection(SecurityRuleDirection.INBOUND)
+            //$ .withAccess(SecurityRuleAccess.DENY);
+
+            return this;
         }
 
         public NetworkSecurityRuleImpl DenyOutbound ()
         {
-            return this
-                .WithDirection(SecurityRuleDirection.Outbound)
-                .WithAccess(SecurityRuleAccess.Deny);
+
+            //$ return this
+            //$ .withDirection(SecurityRuleDirection.OUTBOUND)
+            //$ .withAccess(SecurityRuleAccess.DENY);
+
+            return this;
         }
 
         public NetworkSecurityRuleImpl WithProtocol (string protocol)
         {
-            this.Inner.Protocol = protocol;
+
+            //$ this.inner().withProtocol(protocol);
+            //$ return this;
+
             return this;
         }
 
         public NetworkSecurityRuleImpl WithAnyProtocol ()
         {
-            return this.WithProtocol(SecurityRuleProtocol.Asterisk);
+
+            //$ return this.withProtocol(SecurityRuleProtocol.ASTERISK);
+
+            return this;
         }
 
         public NetworkSecurityRuleImpl FromAddress (string cidr)
         {
-            this.Inner.SourceAddressPrefix = cidr;
+
+            //$ this.inner().withSourceAddressPrefix(cidr);
+            //$ return this;
+
             return this;
         }
 
         public NetworkSecurityRuleImpl FromAnyAddress ()
         {
-            this.Inner.SourceAddressPrefix = "*";
+
+            //$ this.inner().withSourceAddressPrefix("*");
+            //$ return this;
+
             return this;
         }
 
         public NetworkSecurityRuleImpl FromPort (int port)
         {
-            this.Inner.SourcePortRange = port.ToString();
+
+            //$ this.inner().withSourcePortRange(String.valueOf(port));
+            //$ return this;
+
             return this;
         }
 
         public NetworkSecurityRuleImpl FromAnyPort ()
         {
-            this.Inner.SourcePortRange = "*";
+
+            //$ this.inner().withSourcePortRange("*");
+            //$ return this;
+
             return this;
         }
 
         public NetworkSecurityRuleImpl FromPortRange (int from, int to)
         {
-            this.Inner.SourcePortRange = from + "-" + to;
+
+            //$ this.inner().withSourcePortRange(String.valueOf(from) + "-" + String.valueOf(to));
+            //$ return this;
+
             return this;
         }
 
         public NetworkSecurityRuleImpl ToAddress (string cidr)
         {
-            this.Inner.DestinationAddressPrefix = cidr;
+
+            //$ this.inner().withDestinationAddressPrefix(cidr);
+            //$ return this;
+
             return this;
         }
 
         public NetworkSecurityRuleImpl ToAnyAddress ()
         {
-            this.Inner.DestinationAddressPrefix = "*";
+
+            //$ this.inner().withDestinationAddressPrefix("*");
+            //$ return this;
+
             return this;
         }
 
         public NetworkSecurityRuleImpl ToPort (int port)
         {
-            this.Inner.DestinationPortRange = port.ToString();
+
+            //$ this.inner().withDestinationPortRange(String.valueOf(port));
+            //$ return this;
+
             return this;
         }
 
         public NetworkSecurityRuleImpl ToAnyPort ()
         {
-            this.Inner.DestinationPortRange = "*";
+
+            //$ this.inner().withDestinationPortRange("*");
+            //$ return this;
+
             return this;
         }
 
         public NetworkSecurityRuleImpl ToPortRange (int from, int to)
         {
-            this.Inner.DestinationPortRange = from + "-" + to;
+
+            //$ this.inner().withDestinationPortRange(String.valueOf(from) + "-" + String.valueOf(to));
+            //$ return this;
+
             return this;
         }
 
         public NetworkSecurityRuleImpl WithPriority (int priority)
         {
-            if (priority < 100 || priority > 4096)
-            {
-                throw new System.ArgumentOutOfRangeException("The priority number of a network security rule must be between 100 and 4096.");
-            }
 
-            this.Inner.Priority = priority;
+            //$ if (priority < 100 || priority > 4096) {
+            //$ throw new IllegalArgumentException("The priority number of a network security rule must be between 100 and 4096.");
+            //$ }
+            //$ 
+            //$ this.inner().withPriority(priority);
+            //$ return this;
+
             return this;
         }
 
         public NetworkSecurityRuleImpl WithDescription (string description)
         {
-            this.Inner.Description = description;
+
+            //$ this.inner().withDescription(description);
+            //$ return this;
+
             return this;
         }
 
         private NetworkSecurityRuleImpl WithDirection (string direction)
         {
-            this.Inner.Direction = direction;
+
+            //$ this.inner().withDirection(direction);
+            //$ return this;
+            //$ }
+
             return this;
         }
 
         private NetworkSecurityRuleImpl WithAccess (string permission)
         {
-            this.Inner.Access = permission;
+
+            //$ this.inner().withAccess(permission);
+            //$ return this;
+            //$ }
+
             return this;
         }
 
         public NetworkSecurityGroupImpl Attach ()
         {
-            this.Parent.Inner.SecurityRules.Add(this.Inner);
-            return this.Parent;
+
+            //$ return this.parent().withRule(this);
+
+            return null;
         }
 
         NetworkSecurityGroup.Update.IUpdate ISettable<NetworkSecurityGroup.Update.IUpdate>.Parent()
         {
-            return base.Parent;
+            throw new NotImplementedException();
         }
 
         public string Description
         {
             get
             {
-                return this.Inner.Description;
+            //$ return this.inner().description();
+
+
+                return null;
             }
         }
     }

@@ -1,26 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
-
+// Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update
 {
 
-    using Microsoft.Azure.Management.V2.Network;
-    using Microsoft.Azure.Management.V2.Resource.Core.Resource.Update;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition;
     using Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update;
-    /// <summary>
-    /// The template for an update operation, containing all the settings that
-    /// can be modified.
-    /// <p>
-    /// Call {@link Update#apply()} to apply the changes to the resource in Azure.
-    /// </summary>
-    public interface IUpdate  :
-        IAppliable<Microsoft.Azure.Management.V2.Network.INetworkSecurityGroup>,
-        IUpdateWithTags<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>,
-        IWithRule
-    {
-    }
+    using Microsoft.Azure.Management.V2.Network;
+    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.V2.Resource.Core.Resource.Update;
     /// <summary>
     /// The stage of the resource definition allowing to add or remove security rules.
     /// </summary>
@@ -47,5 +34,17 @@ namespace Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update
         /// <returns>the first stage of the security rule update description</returns>
         Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate UpdateRule (string name);
 
+    }
+    /// <summary>
+    /// The template for an update operation, containing all the settings that
+    /// can be modified.
+    /// <p>
+    /// Call {@link Update#apply()} to apply the changes to the resource in Azure.
+    /// </summary>
+    public interface IUpdate  :
+        IAppliable<Microsoft.Azure.Management.V2.Network.INetworkSecurityGroup>,
+        IUpdateWithTags<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>,
+        IWithRule
+    {
     }
 }

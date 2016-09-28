@@ -1,283 +1,411 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
 namespace Microsoft.Azure.Management.V2.Network
 {
 
-    using NicIpConfiguration.Update;
-    using NicIpConfiguration.Definition;
-    using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
-    using NicIpConfiguration.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.V2.Network.NicIpConfiguration.Update;
     using Microsoft.Azure.Management.Network.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using NetworkInterface.Update;
+    using Microsoft.Azure.Management.V2.Network.HasPrivateIpAddress.Definition;
+    using Microsoft.Azure.Management.V2.Network.HasPublicIpAddress.Definition;
+    using Microsoft.Azure.Management.V2.Network.NicIpConfiguration.UpdateDefinition;
+    using System.Collections.Generic;
     using Microsoft.Azure;
+    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.V2.Network.HasPublicIpAddress.UpdateDefinition;
+    using Microsoft.Azure.Management.V2.Network.NicIpConfiguration.Definition;
+    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.V2.Network.NetworkInterface.Update;
+    using Microsoft.Azure.Management.V2.Network.HasPublicIpAddress.Update;
+    using Microsoft.Azure.Management.V2.Network.HasPrivateIpAddress.Update;
+    using Microsoft.Azure.Management.V2.Network.HasPrivateIpAddress.UpdateDefinition;
+    using Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition;
     using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
-    using NetworkInterface.Definition;
-    using Microsoft.Rest.Azure;
     using Resource.Core.ChildResourceActions;
     using System;
+    using Rest.Azure;
 
     /// <summary>
     /// Implementation for {@link NicIpConfiguration} and its create and update interfaces.
     /// </summary>
-    public partial class NicIpConfigurationImpl :
-        ChildResource<NetworkInterfaceIPConfigurationInner, NetworkInterfaceImpl, INetworkInterface>,
+    public partial class NicIpConfigurationImpl  :
+        ChildResource<Microsoft.Azure.Management.Network.Models.NetworkInterfaceIPConfigurationInner,Microsoft.Azure.Management.V2.Network.NetworkInterfaceImpl,Microsoft.Azure.Management.V2.Network.INetworkInterface>,
         INicIpConfiguration,
-        NicIpConfiguration.Definition.IDefinition<NetworkInterface.Definition.IWithCreate>,
-        NicIpConfiguration.UpdateDefinition.IUpdateDefinition<NetworkInterface.Update.IUpdate>,
-        NicIpConfiguration.Update.IUpdate
+        IDefinition<Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition.IWithCreate>,
+        IUpdateDefinition<Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate>,
+        Microsoft.Azure.Management.V2.Network.NicIpConfiguration.Update.IUpdate
     {
-        private INetworkManager NetworkManager;
+        private NetworkManager networkManager;
         private bool isInCreateMode;
         private string creatableVirtualNetworkKey;
         private string creatablePublicIpKey;
         private INetwork existingVirtualNetworkToAssociate;
-        private IPublicIpAddress existingPublicIpAddressToAssociate;
+        private string existingPublicIpAddressIdToAssociate;
         private string subnetToAssociate;
         private bool removePrimaryPublicIPAssociation;
-        private ILoadBalancer loadBalancerToAssociate;
-
-        internal NicIpConfigurationImpl(NetworkInterfaceIPConfigurationInner inner, NetworkInterfaceImpl parent, INetworkManager NetworkManager, bool isInCreateModel) :
-            base(inner.Id, inner, parent)
+        protected  NicIpConfigurationImpl (NetworkInterfaceIPConfigurationInner inner, NetworkInterfaceImpl parent, NetworkManager networkManager, bool isInCreateModel) : base(inner.Name, inner, parent)
         {
-            this.isInCreateMode = isInCreateModel;
-            this.NetworkManager = NetworkManager;
+
+            //$ NetworkInterfaceImpl parent,
+            //$ NetworkManager networkManager,
+            //$ final boolean isInCreateModel) {
+            //$ super(inner, parent);
+            //$ this.isInCreateMode = isInCreateModel;
+            //$ this.networkManager = networkManager;
+            //$ }
+
         }
 
-        internal static NicIpConfigurationImpl PrepareNicIpConfiguration(string name, NetworkInterfaceImpl parent, INetworkManager NetworkManager)
+        protected static NicIpConfigurationImpl PrepareNicIpConfiguration (string name, NetworkInterfaceImpl parent, NetworkManager networkManager)
         {
-            NetworkInterfaceIPConfigurationInner ipConfigurationInner = new NetworkInterfaceIPConfigurationInner();
-            ipConfigurationInner.Name = name;
-            return new NicIpConfigurationImpl(ipConfigurationInner,
-                parent,
-                NetworkManager,
-                true);
+
+            //$ String name,
+            //$ NetworkInterfaceImpl parent,
+            //$ final NetworkManager networkManager) {
+            //$ NetworkInterfaceIPConfigurationInner ipConfigurationInner = new NetworkInterfaceIPConfigurationInner();
+            //$ ipConfigurationInner.withName(name);
+            //$ return new NicIpConfigurationImpl(ipConfigurationInner,
+            //$ parent,
+            //$ networkManager,
+            //$ true);
+            //$ }
+
+            return null;
         }
 
-        public override string Name
+        override public string Name
         {
             get
             {
-                return Inner.Name;
+            //$ return inner().name();
+
+
+                return null;
+            }
+        }
+        public string PrivateIpAddressVersion
+        {
+            get
+            {
+            //$ return this.inner().privateIPAddressVersion();
+
+
+                return null;
             }
         }
         public string PublicIpAddressId
         {
             get
             {
-                if (this.Inner.PublicIPAddress == null)
-                {
-                    return null;
-                }
-                return this.Inner.PublicIPAddress.Id;
-            }
-        }
-        public IPublicIpAddress PublicIpAddress()
-        {
-            string id = this.Inner.PublicIPAddress.Id;
-            if (id == null)
-            {
+            //$ if (this.inner().publicIPAddress() == null) {
+            //$ return null;
+            //$ }
+            //$ return this.inner().publicIPAddress().id();
+
+
                 return null;
             }
+        }
+        public IPublicIpAddress GetPublicIpAddress ()
+        {
 
-            return this.NetworkManager.PublicIpAddresses.GetByGroup(
-                ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
+            //$ String id = publicIpAddressId();
+            //$ if (id == null) {
+            //$ return null;
+            //$ }
+            //$ 
+            //$ return this.networkManager.publicIpAddresses().getById(id);
+
+            return null;
         }
 
-        public string SubnetId
+        public string SubnetName
         {
             get
             {
-                return this.Inner.Subnet.Id;
+            //$ SubResource subnetRef = this.inner().subnet();
+            //$ if (subnetRef != null) {
+            //$ return ResourceUtils.nameFromResourceId(subnetRef.id());
+            //$ } else {
+            //$ return null;
+            //$ }
+
+
+                return null;
             }
         }
-        public INetwork Network()
-        {
-            string id = this.SubnetId;
-            return this.NetworkManager.Networks.GetByGroup(ResourceUtils.GroupFromResourceId(id),
-                ResourceUtils.ExtractFromResourceId(id, "virtualNetworks"));
-        }
-
-        public string PrivateIp
+        public string NetworkId
         {
             get
             {
-                return this.Inner.PrivateIPAddress;
+            //$ SubResource subnetRef = this.inner().subnet();
+            //$ if (subnetRef != null) {
+            //$ return ResourceUtils.parentResourcePathFromResourceId(subnetRef.id());
+            //$ } else {
+            //$ return null;
+            //$ }
+
+
+                return null;
+            }
+        }
+        public INetwork GetNetwork ()
+        {
+
+            //$ String id = this.networkId();
+            //$ return this.networkManager.networks().getById(id);
+
+            return null;
+        }
+
+        public string PrivateIpAddress
+        {
+            get
+            {
+            //$ return this.inner().privateIPAddress();
+
+
+                return null;
             }
         }
         public string PrivateIpAllocationMethod
         {
             get
             {
-                return this.Inner.PrivateIPAllocationMethod;
+            //$ return this.inner().privateIPAllocationMethod();
+
+
+                return null;
             }
         }
-        public NetworkInterfaceImpl Attach()
+        public NetworkInterfaceImpl Attach ()
         {
-            return Parent.WithIpConfiguration(this);
+
+            //$ return parent().withIpConfiguration(this);
+
+            return null;
         }
 
-        public NicIpConfigurationImpl WithNewNetwork(ICreatable<INetwork> creatable)
-        {
-            this.creatableVirtualNetworkKey = creatable.Key;
-            this.Parent.AddToCreatableDependencies(creatable);
-            return this;
-        }
-
-        public NicIpConfigurationImpl WithNewNetwork(string name, string addressSpaceCidr)
+        public NicIpConfigurationImpl WithNewNetwork (ICreatable<Microsoft.Azure.Management.V2.Network.INetwork> creatable)
         {
 
-            var definitionWithGroup = this.NetworkManager.Networks
-                .Define(name)
-                .WithRegion(this.Parent.RegionName);
-
-            V2.Network.Network.Definition.IWithCreate definitionAfterGroup;
-            if (this.Parent.NewGroup() != null)
-            {
-                definitionAfterGroup = definitionWithGroup.WithNewResourceGroup(this.Parent.NewGroup());
-            }
-            else
-            {
-                definitionAfterGroup = definitionWithGroup.WithExistingResourceGroup(this.Parent.ResourceGroupName);
-            }
-
-            return WithNewNetwork(definitionAfterGroup.WithAddressSpace(addressSpaceCidr));
-        }
-
-        public NicIpConfigurationImpl WithNewNetwork(string addressSpaceCidr)
-        {
-            return WithNewNetwork(this.Parent.Namer.RandomName("vnet", 20), addressSpaceCidr);
-        }
-
-        public NicIpConfigurationImpl WithExistingNetwork(INetwork network)
-        {
-            this.existingVirtualNetworkToAssociate = network;
-            return this;
-        }
-
-        public NicIpConfigurationImpl WithPrivateIpAddressDynamic()
-        {
-            this.Inner.PrivateIPAllocationMethod = IPAllocationMethod.Dynamic;
-            this.Inner.PrivateIPAddress = null;
-            return this;
-        }
-
-        public NicIpConfigurationImpl WithPrivateIpAddressStatic(string staticPrivateIpAddress)
-        {
-            this.Inner.PrivateIPAllocationMethod = IPAllocationMethod.Static;
-            this.Inner.PrivateIPAddress = staticPrivateIpAddress;
-            return this;
-        }
-
-        public NicIpConfigurationImpl WithNewPublicIpAddress(ICreatable<IPublicIpAddress> creatable)
-        {
-            if (this.creatablePublicIpKey == null)
-            {
-                this.creatablePublicIpKey = creatable.Key;
-                this.Parent.AddToCreatableDependencies(creatable);
-            }
-            return this;
-        }
-
-        public NicIpConfigurationImpl WithNewPublicIpAddress()
-        {
-            string name = this.Parent.Namer.RandomName("pip", 15);
-            return WithNewPublicIpAddress(PrepareCreatablePublicIp(name, name));
-        }
-
-        public NicIpConfigurationImpl WithNewPublicIpAddress(string leafDnsLabel)
-        {
-            return WithNewPublicIpAddress(PrepareCreatablePublicIp(this.Parent.Namer.RandomName("pip", 15), leafDnsLabel));
-        }
-
-        public NicIpConfigurationImpl WithExistingPublicIpAddress(IPublicIpAddress publicIpAddress)
-        {
-            this.existingPublicIpAddressToAssociate = publicIpAddress;
-            return this;
-        }
-
-        public NicIpConfigurationImpl WithoutPublicIpAddress()
-        {
-            this.removePrimaryPublicIPAssociation = true;
-            return this;
-        }
-
-        public NicIpConfigurationImpl WithSubnet(string name)
-        {
-            this.subnetToAssociate = name;
-            return this;
-        }
-
-        public NicIpConfigurationImpl WithExistingLoadBalancer(ILoadBalancer loadBalancer)
-        {
-            this.loadBalancerToAssociate = loadBalancer;
-            return this;
-        }
-
-        public NicIpConfigurationImpl WithBackendAddressPool(string name)
-        {
-            foreach (BackendAddressPoolInner pool in this.loadBalancerToAssociate.Inner.BackendAddressPools)
-            {
-                if (pool.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
-                {
-                    EnsureBackendAddressPools.Add(pool);
-                    return this;
-                }
-            }
+            //$ this.creatableVirtualNetworkKey = creatable.key();
+            //$ this.parent().addToCreatableDependencies(creatable);
+            //$ return this;
 
             return this;
         }
 
-        private IList<BackendAddressPoolInner> EnsureBackendAddressPools
+        public NicIpConfigurationImpl WithNewNetwork (string name, string addressSpaceCidr)
+        {
+
+            //$ Network.DefinitionStages.WithGroup definitionWithGroup = this.networkManager.networks()
+            //$ .define(name)
+            //$ .withRegion(this.parent().regionName());
+            //$ 
+            //$ Network.DefinitionStages.WithCreate definitionAfterGroup;
+            //$ if (this.parent().newGroup() != null) {
+            //$ definitionAfterGroup = definitionWithGroup.withNewResourceGroup(this.parent().newGroup());
+            //$ } else {
+            //$ definitionAfterGroup = definitionWithGroup.withExistingResourceGroup(this.parent().resourceGroupName());
+            //$ }
+            //$ return withNewNetwork(definitionAfterGroup.withAddressSpace(addressSpaceCidr));
+
+            return this;
+        }
+
+        public NicIpConfigurationImpl WithNewNetwork (string addressSpaceCidr)
+        {
+
+            //$ return withNewNetwork(this.parent().namer.randomName("vnet", 20), addressSpaceCidr);
+
+            return this;
+        }
+
+        public NicIpConfigurationImpl WithExistingNetwork (INetwork network)
+        {
+
+            //$ this.existingVirtualNetworkToAssociate = network;
+            //$ return this;
+
+            return this;
+        }
+
+        public NicIpConfigurationImpl WithPrivateIpAddressDynamic ()
+        {
+
+            //$ this.inner().withPrivateIPAllocationMethod(IPAllocationMethod.DYNAMIC);
+            //$ this.inner().withPrivateIPAddress(null);
+            //$ return this;
+
+            return this;
+        }
+
+        public NicIpConfigurationImpl WithPrivateIpAddressStatic (string staticPrivateIpAddress)
+        {
+
+            //$ this.inner().withPrivateIPAllocationMethod(IPAllocationMethod.STATIC);
+            //$ this.inner().withPrivateIPAddress(staticPrivateIpAddress);
+            //$ return this;
+
+            return this;
+        }
+
+        public NicIpConfigurationImpl WithNewPublicIpAddress (ICreatable<Microsoft.Azure.Management.V2.Network.IPublicIpAddress> creatable)
+        {
+
+            //$ if (this.creatablePublicIpKey == null) {
+            //$ this.creatablePublicIpKey = creatable.key();
+            //$ this.parent().addToCreatableDependencies(creatable);
+            //$ }
+            //$ return this;
+
+            return this;
+        }
+
+        public NicIpConfigurationImpl WithNewPublicIpAddress ()
+        {
+
+            //$ String name = this.parent().namer.randomName("pip", 15);
+            //$ return withNewPublicIpAddress(prepareCreatablePublicIp(name, name));
+
+            return this;
+        }
+
+        public NicIpConfigurationImpl WithNewPublicIpAddress (string leafDnsLabel)
+        {
+
+            //$ return withNewPublicIpAddress(prepareCreatablePublicIp(this.parent().namer.randomName("pip", 15), leafDnsLabel));
+
+            return this;
+        }
+
+        public NicIpConfigurationImpl WithExistingPublicIpAddress (IPublicIpAddress publicIpAddress)
+        {
+
+            //$ return this.withExistingPublicIpAddress(publicIpAddress.id());
+
+            return this;
+        }
+
+        public NicIpConfigurationImpl WithExistingPublicIpAddress (string resourceId)
+        {
+
+            //$ this.existingPublicIpAddressIdToAssociate = resourceId;
+            //$ return this;
+
+            return this;
+        }
+
+        public NicIpConfigurationImpl WithoutPublicIpAddress ()
+        {
+
+            //$ this.removePrimaryPublicIPAssociation = true;
+            //$ return this;
+
+            return this;
+        }
+
+        public NicIpConfigurationImpl WithSubnet (string name)
+        {
+
+            //$ this.subnetToAssociate = name;
+            //$ return this;
+
+            return this;
+        }
+
+        public NicIpConfigurationImpl WithExistingLoadBalancerBackend (ILoadBalancer loadBalancer, string backendName)
+        {
+
+            //$ for (BackendAddressPoolInner pool : loadBalancer.inner().backendAddressPools()) {
+            //$ if (pool.name().equalsIgnoreCase(backendName)) {
+            //$ ensureBackendAddressPools().add(pool);
+            //$ return this;
+            //$ }
+            //$ }
+            //$ 
+            //$ return null;
+
+            return this;
+        }
+
+        public NicIpConfigurationImpl WithExistingLoadBalancerInboundNatRule (ILoadBalancer loadBalancer, string inboundNatRuleName)
+        {
+
+            //$ for (InboundNatRuleInner rule : loadBalancer.inner().inboundNatRules()) {
+            //$ if (rule.name().equalsIgnoreCase(inboundNatRuleName)) {
+            //$ ensureInboundNatRules().add(rule);
+            //$ return this;
+            //$ }
+            //$ }
+            //$ 
+            //$ return null;
+
+            return this;
+        }
+
+        private List<Microsoft.Azure.Management.Network.Models.BackendAddressPoolInner> EnsureBackendAddressPools
         {
             get
             {
-                IList<BackendAddressPoolInner> poolRefs = this.Inner.LoadBalancerBackendAddressPools;
-                if (poolRefs == null)
-                {
-                    poolRefs = new List<BackendAddressPoolInner>();
-                    this.Inner.LoadBalancerBackendAddressPools = poolRefs;
-                }
+            //$ List<BackendAddressPoolInner> poolRefs = this.inner().loadBalancerBackendAddressPools();
+            //$ if (poolRefs == null) {
+            //$ poolRefs = new ArrayList<>();
+            //$ this.inner().withLoadBalancerBackendAddressPools(poolRefs);
+            //$ }
+            //$ return poolRefs;
+            //$ }
 
-                return poolRefs;
+
+                return null;
             }
         }
-        internal static void EnsureConfigurations(IList<INicIpConfiguration> nicIpConfigurations)
+        private List<Microsoft.Azure.Management.Network.Models.InboundNatRuleInner> EnsureInboundNatRules
         {
-            foreach (INicIpConfiguration nicIpConfiguration in nicIpConfigurations)
+            get
             {
-                NicIpConfigurationImpl config = (NicIpConfigurationImpl)nicIpConfiguration;
-                config.Inner.Subnet = config.SubnetToAssociate;
-                config.Inner.PublicIPAddress = config.PublicIpToAssociate;
+            //$ List<InboundNatRuleInner> natRefs = this.inner().loadBalancerInboundNatRules();
+            //$ if (natRefs == null) {
+            //$ natRefs = new ArrayList<>();
+            //$ this.inner().withLoadBalancerInboundNatRules(natRefs);
+            //$ }
+            //$ return natRefs;
+            //$ }
+
+
+                return null;
             }
         }
-
-        private ICreatable<IPublicIpAddress> PrepareCreatablePublicIp(string name, string leafDnsLabel)
+        protected static void EnsureConfigurations (List<Microsoft.Azure.Management.V2.Network.INicIpConfiguration> nicIpConfigurations)
         {
 
-            var definitionWithGroup = this.NetworkManager.PublicIpAddresses
-                .Define(name)
-                .WithRegion(this.Parent.RegionName);
+            //$ for (NicIpConfiguration nicIpConfiguration : nicIpConfigurations) {
+            //$ NicIpConfigurationImpl config = (NicIpConfigurationImpl) nicIpConfiguration;
+            //$ config.inner().withSubnet(config.subnetToAssociate());
+            //$ config.inner().withPublicIPAddress(config.publicIpToAssociate());
+            //$ }
+            //$ }
 
-            PublicIpAddress.Definition.IWithCreate definitionAfterGroup;
-            if (this.Parent.NewGroup() != null)
-            {
-                definitionAfterGroup = definitionWithGroup.WithNewResourceGroup(this.Parent.NewGroup());
-            }
-            else
-            {
-                definitionAfterGroup = definitionWithGroup.WithExistingResourceGroup(this.Parent.ResourceGroupName);
-            }
-
-            return definitionAfterGroup.WithLeafDomainLabel(leafDnsLabel);
         }
 
-        NetworkInterface.Update.IUpdate ISettable<NetworkInterface.Update.IUpdate>.Parent()
+        private ICreatable<Microsoft.Azure.Management.V2.Network.IPublicIpAddress> PrepareCreatablePublicIp (string name, string leafDnsLabel)
         {
-            return base.Parent;
+
+            //$ PublicIpAddress.DefinitionStages.WithGroup definitionWithGroup = this.networkManager.publicIpAddresses()
+            //$ .define(name)
+            //$ .withRegion(this.parent().regionName());
+            //$ 
+            //$ PublicIpAddress.DefinitionStages.WithCreate definitionAfterGroup;
+            //$ if (this.parent().newGroup() != null) {
+            //$ definitionAfterGroup = definitionWithGroup.withNewResourceGroup(this.parent().newGroup());
+            //$ } else {
+            //$ definitionAfterGroup = definitionWithGroup.withExistingResourceGroup(this.parent().resourceGroupName());
+            //$ }
+            //$ return definitionAfterGroup.withLeafDomainLabel(leafDnsLabel);
+            //$ }
+
+            return null;
         }
 
         /// <summary>
@@ -293,47 +421,38 @@ namespace Microsoft.Azure.Management.V2.Network
         {
             get
             {
-                SubnetInner subnetInner = new SubnetInner();
-                if (this.isInCreateMode)
-                {
-                    if (this.creatableVirtualNetworkKey != null)
-                    {
-                        INetwork network = (INetwork)this.Parent.CreatedDependencyResource(this.creatableVirtualNetworkKey);
-                        subnetInner.Id = network.Inner.Subnets[0].Id;
-                        return subnetInner;
-                    }
+            //$ SubnetInner subnetInner = new SubnetInner();
+            //$ if (this.isInCreateMode) {
+            //$ if (this.creatableVirtualNetworkKey != null) {
+            //$ Network network = (Network) parent().createdDependencyResource(this.creatableVirtualNetworkKey);
+            //$ subnetInner.withId(network.inner().subnets().get(0).id());
+            //$ return subnetInner;
+            //$ }
+            //$ 
+            //$ for (SubnetInner subnet : this.existingVirtualNetworkToAssociate.inner().subnets()) {
+            //$ if (subnet.name().compareToIgnoreCase(this.subnetToAssociate) == 0) {
+            //$ subnetInner.withId(subnet.id());
+            //$ return subnetInner;
+            //$ }
+            //$ }
+            //$ 
+            //$ throw new RuntimeException("A subnet with name '" + subnetToAssociate + "' not found under the network '" + this.existingVirtualNetworkToAssociate.name() + "'");
+            //$ 
+            //$ } else {
+            //$ if (subnetToAssociate != null) {
+            //$ int idx = this.inner().subnet().id().lastIndexOf('/');
+            //$ subnetInner.withId(this.inner().subnet().id().substring(0, idx) + subnetToAssociate);
+            //$ } else {
+            //$ subnetInner.withId(this.inner().subnet().id());
+            //$ }
+            //$ return subnetInner;
+            //$ }
+            //$ }
 
-                    foreach (SubnetInner subnet in this.existingVirtualNetworkToAssociate.Inner.Subnets)
-                    {
-                        if (subnet.Name.Equals(this.subnetToAssociate, StringComparison.OrdinalIgnoreCase))
-                        {
-                            subnetInner.Id = subnet.Id;
-                            return subnetInner;
-                        }
-                    }
 
-                    throw new Exception(string.Format("A subnet with name '{0}' not found under the network '{0}'",
-                        this.subnetToAssociate,
-                        this.existingVirtualNetworkToAssociate.Name));
-
-                }
-                else
-                {
-                    if (subnetToAssociate != null)
-                    {
-                        int idx = this.Inner.Subnet.Id.LastIndexOf('/');
-                        subnetInner.Id = this.Inner.Subnet.Id.Substring(0, idx) + subnetToAssociate;
-                    }
-                    else
-                    {
-                        subnetInner.Id = this.Inner.Subnet.Id;
-                    }
-
-                    return subnetInner;
-                }
+                return null;
             }
         }
-
         /// <summary>
         /// Get the SubResource instance representing a public IP that needs to be associated with the
         /// IP configuration.
@@ -343,44 +462,115 @@ namespace Microsoft.Azure.Management.V2.Network
         /// not specified then existing associated (if any) public IP will be returned.
         /// </summary>
         /// <returns>public ip SubResource</returns>
-        private PublicIPAddressInner PublicIpToAssociate
+        private SubResource PublicIpToAssociate
         {
             get
             {
-                if (this.removePrimaryPublicIPAssociation)
-                {
-                    return null;
-                }
+            //$ String pipId = null;
+            //$ if (this.removePrimaryPublicIPAssociation) {
+            //$ return null;
+            //$ } else if (this.creatablePublicIpKey != null) {
+            //$ pipId = ((PublicIpAddress) this.parent()
+            //$ .createdDependencyResource(this.creatablePublicIpKey)).id();
+            //$ } else if (this.existingPublicIpAddressIdToAssociate != null) {
+            //$ pipId = this.existingPublicIpAddressIdToAssociate;
+            //$ }
+            //$ 
+            //$ if (pipId != null) {
+            //$ return new SubResource().withId(pipId);
+            //$ } else if (!this.isInCreateMode) {
+            //$ return this.inner().publicIPAddress();
+            //$ } else {
+            //$ return null;
+            //$ }
+            //$ }
 
-                PublicIPAddressInner publicIPAddressInner = null;
-                if (this.creatablePublicIpKey != null)
-                {
-                    IPublicIpAddress publicIpAddress = (IPublicIpAddress)this.Parent
-                        .CreatedDependencyResource(this.creatablePublicIpKey);
-                    publicIPAddressInner = publicIpAddress.Inner;
-                }
-
-                if (this.existingPublicIpAddressToAssociate != null)
-                {
-                    publicIPAddressInner = this.existingPublicIpAddressToAssociate.Inner;
-                }
-
-                if (publicIPAddressInner != null)
-                {
-                    //TODO: validate that this is correct
-                    return publicIPAddressInner;
-                    //SubResource subResource = new SubResource();
-                    //subResource.withId(publicIPAddressInner.id());
-                    //return subResource;
-                }
-
-                if (!this.isInCreateMode)
-                {
-                    return this.Inner.PublicIPAddress;
-                }
 
                 return null;
             }
+        }
+        public NicIpConfigurationImpl WithPrivateIpVersion (string ipVersion)
+        {
+
+            //$ this.inner().withPrivateIPAddressVersion(ipVersion);
+            //$ return this;
+
+            return this;
+        }
+
+        public NicIpConfigurationImpl WithoutLoadBalancerBackends ()
+        {
+
+            //$ this.inner().withLoadBalancerBackendAddressPools(null);
+            //$ return this;
+
+            return this;
+        }
+
+        public NicIpConfigurationImpl WithoutLoadBalancerInboundNatRules ()
+        {
+
+            //$ this.inner().withLoadBalancerInboundNatRules(null);
+            //$ return this;
+
+            return this;
+        }
+
+        public List<Microsoft.Azure.Management.V2.Network.IInboundNatRule> ListAssociatedLoadBalancerInboundNatRules ()
+        {
+
+            //$ final List<InboundNatRuleInner> refs = this.inner().loadBalancerInboundNatRules();
+            //$ final Map<String, LoadBalancer> loadBalancers = new HashMap<>();
+            //$ final List<InboundNatRule> rules = new ArrayList<>();
+            //$ 
+            //$ if (refs != null) {
+            //$ for (InboundNatRuleInner ref : refs) {
+            //$ String loadBalancerId = ResourceUtils.parentResourcePathFromResourceId(ref.id());
+            //$ LoadBalancer loadBalancer = loadBalancers.get(loadBalancerId);
+            //$ if (loadBalancer == null) {
+            //$ loadBalancer = this.parent().manager().loadBalancers().getById(loadBalancerId);
+            //$ loadBalancers.put(loadBalancerId, loadBalancer);
+            //$ }
+            //$ 
+            //$ String ruleName = ResourceUtils.nameFromResourceId(ref.id());
+            //$ rules.add(loadBalancer.inboundNatRules().get(ruleName));
+            //$ }
+            //$ }
+            //$ 
+            //$ return Collections.unmodifiableList(rules);
+
+            return null;
+        }
+
+        public List<Microsoft.Azure.Management.V2.Network.IBackend> ListAssociatedLoadBalancerBackends ()
+        {
+
+            //$ final List<BackendAddressPoolInner> backendRefs = this.inner().loadBalancerBackendAddressPools();
+            //$ final Map<String, LoadBalancer> loadBalancers = new HashMap<>();
+            //$ final List<Backend> backends = new ArrayList<>();
+            //$ 
+            //$ if (backendRefs != null) {
+            //$ for (BackendAddressPoolInner backendRef : backendRefs) {
+            //$ String loadBalancerId = ResourceUtils.parentResourcePathFromResourceId(backendRef.id());
+            //$ LoadBalancer loadBalancer = loadBalancers.get(loadBalancerId);
+            //$ if (loadBalancer == null) {
+            //$ loadBalancer = this.parent().manager().loadBalancers().getById(loadBalancerId);
+            //$ loadBalancers.put(loadBalancerId, loadBalancer);
+            //$ }
+            //$ 
+            //$ String backendName = ResourceUtils.nameFromResourceId(backendRef.id());
+            //$ backends.add(loadBalancer.backends().get(backendName));
+            //$ }
+            //$ }
+            //$ 
+            //$ return Collections.unmodifiableList(backends);
+
+            return null;
+        }
+
+        NetworkInterface.Update.IUpdate ISettable<NetworkInterface.Update.IUpdate>.Parent()
+        {
+            throw new NotImplementedException();
         }
     }
 }

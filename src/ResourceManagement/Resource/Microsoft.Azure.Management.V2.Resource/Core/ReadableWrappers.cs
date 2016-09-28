@@ -13,6 +13,8 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
     public abstract class ReadableWrappers<IFluentResourceT, FluentResourceT, InnerResourceT>
         where FluentResourceT : IFluentResourceT
     {
+
+        //$TODO: this should return FluentResourceT
         protected abstract IFluentResourceT WrapModel(InnerResourceT inner);
 
         protected PagedList<IFluentResourceT> WrapList(PagedList<InnerResourceT> innerList)
