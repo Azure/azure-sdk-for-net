@@ -1,5 +1,4 @@
-﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
@@ -59,8 +58,6 @@ EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageRedis", "..\..\ResourceManagement.Samples\RedisCache\ManageRedis\ManageRedis.xproj", "{29DA48F8-08E0-46CE-A0E6-CF590844B30F}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Fluent.Batch", "..\Batch\Microsoft.Azure.Management.Fluent.Batch\Microsoft.Azure.Management.Fluent.Batch.xproj", "{08BACF2F-33C9-498D-81DC-377291356F39}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageVirtualMachinesInParallel", "..\..\ResourceManagement.Samples\Compute\ManageVirtualMachinesInParallel\ManageVirtualMachinesInParallel.xproj", "{3A1AA1AC-2B74-4EC6-A777-4A79023B05E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -152,10 +149,6 @@ Global
 		{08BACF2F-33C9-498D-81DC-377291356F39}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{08BACF2F-33C9-498D-81DC-377291356F39}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{08BACF2F-33C9-498D-81DC-377291356F39}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3A1AA1AC-2B74-4EC6-A777-4A79023B05E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3A1AA1AC-2B74-4EC6-A777-4A79023B05E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3A1AA1AC-2B74-4EC6-A777-4A79023B05E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3A1AA1AC-2B74-4EC6-A777-4A79023B05E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -177,6 +170,5 @@ Global
 		{6EE9937C-7C9E-4B99-8D1A-48773DD05A0D} = {80E5CDEE-00C8-4DE9-9238-9197FC4E99FE}
 		{E629A4CC-B49F-4A59-9402-8580B4559545} = {DE2621DE-D61C-4BCC-B939-89B13BE834CC}
 		{29DA48F8-08E0-46CE-A0E6-CF590844B30F} = {E629A4CC-B49F-4A59-9402-8580B4559545}
-		{3A1AA1AC-2B74-4EC6-A777-4A79023B05E1} = {754CA731-F802-4084-B73F-EB9B023DF865}
 	EndGlobalSection
 EndGlobal
