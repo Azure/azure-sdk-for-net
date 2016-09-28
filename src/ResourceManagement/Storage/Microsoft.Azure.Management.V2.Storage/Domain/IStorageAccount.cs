@@ -1,24 +1,22 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
-
+// Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.V2.Storage
 {
 
-    using Microsoft.Azure.Management.V2.Storage.StorageAccount.Update;
-    using System.Collections.Generic;
-    using System;
     using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.V2.Storage.StorageAccount.Update;
+    using System;
+    using Microsoft.Azure.Management.Storage.Models;
     using Microsoft.Azure.Management.V2.Resource.Core;
-    using Management.Storage.Models;
-
+    using System.Collections.Generic;
     /// <summary>
     /// An immutable client-side representation of an Azure storage account.
     /// </summary>
     public interface IStorageAccount  :
         IGroupableResource,
-        IRefreshable<IStorageAccount>,
-        IUpdatable<IUpdate>,
-        IWrapper<StorageAccountInner>
+        IRefreshable<Microsoft.Azure.Management.V2.Storage.IStorageAccount>,
+        IUpdatable<Microsoft.Azure.Management.V2.Storage.StorageAccount.Update.IUpdate>,
+        IWrapper<Microsoft.Azure.Management.Storage.Models.StorageAccountInner>
     {
         /// <returns>the status indicating whether the primary and secondary location of</returns>
         /// <returns>the storage account is available or unavailable. Possible values include:</returns>
@@ -66,21 +64,18 @@ namespace Microsoft.Azure.Management.V2.Storage
         /// <returns>Possible values include: 'Hot', 'Cool'.</returns>
         AccessTier? AccessTier { get; }
 
-        /// <returns>the access keys for this storage account</returns>
-        IList<StorageAccountKey> Keys { get; }
-
         /// <summary>
         /// Fetch the up-to-date access keys from Azure for this storage account.
         /// </summary>
         /// <returns>the access keys for this storage account</returns>
-        IList<StorageAccountKey> RefreshKeys();
+        IList<Microsoft.Azure.Management.Storage.Models.StorageAccountKey> GetKeys ();
 
         /// <summary>
         /// Regenerates the access keys for this storage account.
         /// </summary>
         /// <param name="keyName">keyName if the key name</param>
         /// <returns>the generated access keys for this storage account</returns>
-        IList<StorageAccountKey> RegenerateKey(string keyName);
+        IList<Microsoft.Azure.Management.Storage.Models.StorageAccountKey> RegenerateKey (string keyName);
 
     }
 }

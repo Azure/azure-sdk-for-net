@@ -61,7 +61,7 @@ namespace ManageStorageAccount
 
                     Console.WriteLine("Getting storage account access keys");
 
-                    var storageAccountKeys = storageAccount.Keys;
+                    var storageAccountKeys = storageAccount.GetKeys();
 
                     Utilities.PrintStorageAccountKeys(storageAccountKeys);
 

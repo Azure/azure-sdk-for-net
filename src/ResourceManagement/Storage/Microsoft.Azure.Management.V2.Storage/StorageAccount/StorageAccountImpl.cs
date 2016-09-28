@@ -128,16 +128,13 @@ namespace Microsoft.Azure.Management.V2.Storage
             }
         }
 
-        public IList<StorageAccountKey> Keys
+        public IList<StorageAccountKey> GetKeys()
         {
-            get
+            if (cachedAccountKeys == null)
             {
-                if (cachedAccountKeys == null)
-                {
-                    cachedAccountKeys = RefreshKeys();
-                }
-                return cachedAccountKeys;
+                cachedAccountKeys = RefreshKeys();
             }
+            return cachedAccountKeys;
         }
 
         #endregion

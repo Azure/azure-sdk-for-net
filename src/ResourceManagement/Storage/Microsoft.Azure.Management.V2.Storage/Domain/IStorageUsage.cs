@@ -1,15 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
-
+// Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.V2.Storage
 {
-    using Management.Storage.Models;
+
     using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.Storage.Models;
     /// <summary>
     /// An immutable client-side representation of an Azure storage resource usage info object.
     /// </summary>
     public interface IStorageUsage  :
-        IWrapper<UsageInner>
+        IWrapper<Microsoft.Azure.Management.Storage.Models.UsageInner>
     {
         /// <returns>the unit of measurement. Possible values include: 'Count',</returns>
         /// <returns>'Bytes', 'Seconds', 'Percent', 'CountsPerSecond', 'BytesPerSecond'.</returns>

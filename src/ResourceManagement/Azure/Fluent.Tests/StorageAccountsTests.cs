@@ -50,10 +50,10 @@ namespace Fluent.Tests
                 Assert.NotNull(storageAccount);
 
                 // Get keys 
-                Assert.True(storageAccount.Keys.Count() > 0);
+                Assert.True(storageAccount.GetKeys().Count() > 0);
 
                 // Regen Key
-                StorageAccountKey oldKey = storageAccount.Keys.FirstOrDefault();
+                StorageAccountKey oldKey = storageAccount.GetKeys().FirstOrDefault();
                 var updatedKeys = storageAccount.RegenerateKey(oldKey.KeyName);
                 Assert.True(updatedKeys.Count() > 0);
                 var updatedKey = updatedKeys.FirstOrDefault((StorageAccountKey key) => { return string.Equals(key.KeyName, oldKey.KeyName); });
