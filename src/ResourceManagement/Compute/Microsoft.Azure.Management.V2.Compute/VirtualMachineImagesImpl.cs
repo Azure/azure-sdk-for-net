@@ -6,13 +6,13 @@ using Microsoft.Azure.Management.V2.Resource.Core;
 
 namespace Microsoft.Azure.Management.V2.Compute
 {
-    public partial class VirtualMachineImagesImpl : IVirtualMachineImages
+    internal partial class VirtualMachineImagesImpl : IVirtualMachineImages
     {
         private IVirtualMachinePublishers publishers;
 
-        internal VirtualMachineImagesImpl(IVirtualMachineImagesOperations client)
+        internal VirtualMachineImagesImpl(IVirtualMachinePublishers publishers)
         {
-            publishers = new VirtualMachinePublishersImpl(client);
+            this.publishers = publishers;
         }
 
         public PagedList<IVirtualMachineImage> ListByRegion(Region region)

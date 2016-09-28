@@ -46,16 +46,6 @@ namespace Microsoft.Azure.Management.V2.Network
 
         }
 
-        override public Task<IPublicIpAddress> Refresh ()
-        {
-
-            //$ PublicIPAddressInner response = this.client.get(this.resourceGroupName(), this.name());
-            //$ this.setInner(response);
-            //$ return this;
-
-            return null;
-        }
-
         public PublicIpAddressImpl WithIdleTimeoutInMinutes (int minutes)
         {
 
@@ -245,7 +235,8 @@ namespace Microsoft.Azure.Management.V2.Network
                 return null;
             }
         }
-        public IPublicFrontend GetAssignedLoadBalancerFrontend ()
+
+        public IPublicFrontend GetAssignedLoadBalancerFrontend()
         {
 
             //$ if (this.hasAssignedLoadBalancer()) {
@@ -259,6 +250,14 @@ namespace Microsoft.Azure.Management.V2.Network
             //$ }
 
             return null;
+        }
+
+        public override IPublicIpAddress Refresh()
+        {
+            var response = client.Get(this.ResourceGroupName,
+                this.Inner.Name);
+            SetInner(response);
+            return this;
         }
 
         public bool? HasAssignedNetworkInterface

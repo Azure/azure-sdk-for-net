@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     /// <summary>
     /// implementation of {@link VirtualMachineScaleSetSku}.
     /// </summary>
-    public partial class VirtualMachineScaleSetSkuImpl  :
+    internal partial class VirtualMachineScaleSetSkuImpl  :
         Wrapper<VirtualMachineScaleSetSku>,
         IVirtualMachineScaleSetSku
     {

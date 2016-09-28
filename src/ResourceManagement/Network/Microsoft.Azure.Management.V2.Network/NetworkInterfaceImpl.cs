@@ -58,18 +58,6 @@ namespace Microsoft.Azure.Management.V2.Network
 
         }
 
-        override public Task<INetworkInterface> Refresh ()
-        {
-
-            //$ NetworkInterfaceInner inner = this.innerCollection.get(this.resourceGroupName(), this.name());
-            //$ this.setInner(inner);
-            //$ clearCachedRelatedResources();
-            //$ initializeChildrenFromInner();
-            //$ return this;
-
-            return null;
-        }
-
         public NetworkInterfaceImpl WithNewPrimaryNetwork (ICreatable<Microsoft.Azure.Management.V2.Network.INetwork> creatable)
         {
 
@@ -79,12 +67,18 @@ namespace Microsoft.Azure.Management.V2.Network
             return this;
         }
 
-        public NetworkInterfaceImpl WithNewPrimaryNetwork (string name, string addressSpaceCidr)
+        public NetworkInterfaceImpl WithNewPrimaryNetwork(string name, string addressSpaceCidr)
         {
 
             //$ this.primaryIpConfiguration().withNewNetwork(name, addressSpaceCidr);
             //$ return this;
+            return this;
+        }
 
+        public override INetworkInterface Refresh()
+        {
+            var response = this.innerCollection.Get(ResourceGroupName, nicName);
+            SetInner(response);
             return this;
         }
 

@@ -89,18 +89,7 @@ namespace Microsoft.Azure.Management.V2.Network
             return null;
         }
 
-        override public Task<INetworkSecurityGroup> Refresh ()
-        {
-
-            //$ NetworkSecurityGroupInner response = this.innerCollection.get(this.resourceGroupName(), this.name());
-            //$ this.setInner(response);
-            //$ initializeChildrenFromInner();
-            //$ return this;
-
-            return null;
-        }
-
-        public List<Microsoft.Azure.Management.V2.Network.ISubnet> ListAssociatedSubnets ()
+        public List<Microsoft.Azure.Management.V2.Network.ISubnet> ListAssociatedSubnets()
         {
 
             //$ final List<SubnetInner> subnetRefs = this.inner().subnets();
@@ -124,6 +113,13 @@ namespace Microsoft.Azure.Management.V2.Network
             //$ return Collections.unmodifiableList(subnets);
 
             return null;
+        }
+
+        public override INetworkSecurityGroup Refresh()
+        {
+            var response = this.innerCollection.Get(this.ResourceGroupName, this.Name);
+            SetInner(response);
+            return this;
         }
 
         public IUpdate WithoutRule (string name)

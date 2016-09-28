@@ -17,14 +17,25 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
         //$TODO: this should return FluentResourceT
         protected abstract IFluentResourceT WrapModel(InnerResourceT inner);
 
+        /// <summary>
+        /// This method returns a paged list where each page contains the instances that wraps inner resources in the corrosponding
+        /// page of given inner paged list.
+        /// </summary>
+        /// <param name="innerList">The paged list of inner resources</param>
+        /// <returns>The paged list of wrapped resources</returns>
         protected PagedList<IFluentResourceT> WrapList(PagedList<InnerResourceT> innerList)
         {
-            return new PagedList<IFluentResourceT>(new WrappedPage<InnerResourceT, IFluentResourceT>(innerList.CurrentPage, WrapModel),
-                (string nextPageLink) =>
-                {
-                    innerList.LoadNextPage();
-                    return new WrappedPage<InnerResourceT, IFluentResourceT>(innerList.CurrentPage, WrapModel);
-                });
+            return PagedListConverter.Convert(innerList, WrapModel);
+        }
+
+        /// <summary>
+        /// This method returns a paged list with single page containing instances that wraps inner resources in the given list.
+        /// </summary>
+        /// <param name="innerList">The list of inner resources</param>
+        /// <returns>The paged list of wrapped resources</returns>
+        protected PagedList<IFluentResourceT> WrapList(IList<InnerResourceT> innerList)
+        {
+            return PagedListConverter.Convert(innerList, WrapModel);
         }
     }
 }

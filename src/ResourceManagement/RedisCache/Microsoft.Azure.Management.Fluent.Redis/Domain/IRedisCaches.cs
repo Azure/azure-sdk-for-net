@@ -17,10 +17,8 @@ namespace Microsoft.Azure.Management.Fluent.Redis
         ISupportsGettingByGroup<IRedisCache>,
         ISupportsGettingById<IRedisCache>,
         ISupportsDeleting,
-        ISupportsDeletingByGroup
-    /* ,
-    //TODO Uncomment this after supporting ISupportsBatchCreation in C#
-    ISupportsBatchCreation<IRedisCache>*/
+        ISupportsDeletingByGroup,
+        ISupportsBatchCreation<IRedisCache>
     {
     }
 }

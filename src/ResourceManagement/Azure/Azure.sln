@@ -11,18 +11,54 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.V2.Resource", "..\Resource\Microsoft.Azure.Management.V2.Resource\Microsoft.Azure.Management.V2.Resource.xproj", "{A5986BDB-0D0D-48AA-9E49-ECE96BAC8AEE}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AzureTests", "Azure.Tests\AzureTests.xproj", "{BF7B919F-53F0-4216-84BC-722786A3AEA0}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Fluent.Tests", "Fluent.Tests\Fluent.Tests.xproj", "{BF7B919F-53F0-4216-84BC-722786A3AEA0}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management", "Microsoft.Azure.Management\Microsoft.Azure.Management.xproj", "{B1032273-B366-4751-B216-36332A06CBC6}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Samples", "Samples\Samples.xproj", "{F47E6D07-2D06-4DDD-8DAA-C235FB192BE8}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.V2.Batch", "..\Batch\Microsoft.Azure.Management.V2.Batch\Microsoft.Azure.Management.V2.Batch.xproj", "{1B1752E0-264D-4A34-8E73-5A8EF18CC660}"
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Fluent.Graph.RBAC", "..\Graph.RBAC\Microsoft.Azure.Management.Fluent.Graph.RBAC\Microsoft.Azure.Management.Fluent.Graph.RBAC.xproj", "{148A7E48-BBB2-4F38-8708-DF0CB128DE50}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Fluent.KeyVault", "..\KeyVault\Microsoft.Azure.Management.Fluent.KeyVault\Microsoft.Azure.Management.Fluent.KeyVault.xproj", "{6A390125-3757-480E-BB6C-38EC622160D1}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Fluent.Redis", "..\RedisCache\Microsoft.Azure.Management.Fluent.Redis\Microsoft.Azure.Management.Fluent.Redis.xproj", "{DF96DEE6-1215-4B27-AAEE-1CD91D62E476}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Microsoft.Azure.Management.Samples", "Microsoft.Azure.Management.Samples", "{DE2621DE-D61C-4BCC-B939-89B13BE834CC}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\ResourceManagement.Samples\Authoring-Sample.txt = ..\..\ResourceManagement.Samples\Authoring-Sample.txt
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Compute", "Compute", "{754CA731-F802-4084-B73F-EB9B023DF865}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Resource", "Resource", "{80E5CDEE-00C8-4DE9-9238-9197FC4E99FE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Storage", "Storage", "{7DFB777A-1C15-475A-ABA8-DD8B346BB9E9}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageStorageAccount", "..\..\ResourceManagement.Samples\Storage\ManageStorageAccount\ManageStorageAccount.xproj", "{F2DC2BE3-D750-42FB-88A4-B58CFC5E9546}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{1FD03FC0-D806-47F1-B18E-6CCB1B266A3F}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Common", "..\..\ResourceManagement.Samples\Common\Common\Common.xproj", "{674645AE-B061-421E-AEFF-EBC8A881635E}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ListVirtualMachineImages", "..\..\ResourceManagement.Samples\Compute\ListVirtualMachineImages\ListVirtualMachineImages.xproj", "{FB048969-8679-42B9-8F87-40310D837E56}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ListVirtualMachineExtensionImages", "..\..\ResourceManagement.Samples\Compute\ListVirtualMachineExtensionImages\ListVirtualMachineExtensionImages.xproj", "{2828BA4A-0E02-43F9-AC41-7AE806F3D6BA}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageVirtualMachine", "..\..\ResourceManagement.Samples\Compute\ManageVirtualMachine\ManageVirtualMachine.xproj", "{9C9ECADB-F0F8-4172-B5B6-3FA073559841}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageVirtualMachineExtension", "..\..\ResourceManagement.Samples\Compute\ManageVirtualMachineExtension\ManageVirtualMachineExtension.xproj", "{9095E59B-21DE-4A2C-99DC-17C71C08527B}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageAvailabilitySet", "..\..\ResourceManagement.Samples\Compute\ManageAvailabilitySet\ManageAvailabilitySet.xproj", "{2DE9B751-55BB-4421-8042-AD38DAC5B4BC}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "DeployUsingARMTemplate", "..\..\ResourceManagement.Samples\Resource\DeployUsingARMTemplate\DeployUsingARMTemplate.xproj", "{33C50EB8-FDBB-4633-B810-5D0107F5A898}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageResource", "..\..\ResourceManagement.Samples\Resource\ManageResource\ManageResource.xproj", "{62855AC1-BA09-4C91-9134-1D6EF08C7A11}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageResourceGroup", "..\..\ResourceManagement.Samples\Resource\ManageResourceGroup\ManageResourceGroup.xproj", "{6EE9937C-7C9E-4B99-8D1A-48773DD05A0D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RedisCache", "RedisCache", "{E629A4CC-B49F-4A59-9402-8580B4559545}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageRedis", "..\..\ResourceManagement.Samples\RedisCache\ManageRedis\ManageRedis.xproj", "{29DA48F8-08E0-46CE-A0E6-CF590844B30F}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Fluent.Batch", "..\Batch\Microsoft.Azure.Management.Fluent.Batch\Microsoft.Azure.Management.Fluent.Batch.xproj", "{08BACF2F-33C9-498D-81DC-377291356F39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,18 +90,6 @@ Global
 		{B1032273-B366-4751-B216-36332A06CBC6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1032273-B366-4751-B216-36332A06CBC6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1032273-B366-4751-B216-36332A06CBC6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F47E6D07-2D06-4DDD-8DAA-C235FB192BE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F47E6D07-2D06-4DDD-8DAA-C235FB192BE8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F47E6D07-2D06-4DDD-8DAA-C235FB192BE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F47E6D07-2D06-4DDD-8DAA-C235FB192BE8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1B1752E0-264D-4A34-8E73-5A8EF18CC660}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1B1752E0-264D-4A34-8E73-5A8EF18CC660}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1B1752E0-264D-4A34-8E73-5A8EF18CC660}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1B1752E0-264D-4A34-8E73-5A8EF18CC660}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DF96DEE6-1215-4B27-AAEE-1CD91D62E476}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DF96DEE6-1215-4B27-AAEE-1CD91D62E476}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DF96DEE6-1215-4B27-AAEE-1CD91D62E476}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DF96DEE6-1215-4B27-AAEE-1CD91D62E476}.Release|Any CPU.Build.0 = Release|Any CPU
 		{148A7E48-BBB2-4F38-8708-DF0CB128DE50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{148A7E48-BBB2-4F38-8708-DF0CB128DE50}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{148A7E48-BBB2-4F38-8708-DF0CB128DE50}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -74,8 +98,78 @@ Global
 		{6A390125-3757-480E-BB6C-38EC622160D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A390125-3757-480E-BB6C-38EC622160D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A390125-3757-480E-BB6C-38EC622160D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF96DEE6-1215-4B27-AAEE-1CD91D62E476}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF96DEE6-1215-4B27-AAEE-1CD91D62E476}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF96DEE6-1215-4B27-AAEE-1CD91D62E476}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF96DEE6-1215-4B27-AAEE-1CD91D62E476}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F2DC2BE3-D750-42FB-88A4-B58CFC5E9546}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2DC2BE3-D750-42FB-88A4-B58CFC5E9546}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2DC2BE3-D750-42FB-88A4-B58CFC5E9546}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2DC2BE3-D750-42FB-88A4-B58CFC5E9546}.Release|Any CPU.Build.0 = Release|Any CPU
+		{674645AE-B061-421E-AEFF-EBC8A881635E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{674645AE-B061-421E-AEFF-EBC8A881635E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{674645AE-B061-421E-AEFF-EBC8A881635E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{674645AE-B061-421E-AEFF-EBC8A881635E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB048969-8679-42B9-8F87-40310D837E56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB048969-8679-42B9-8F87-40310D837E56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB048969-8679-42B9-8F87-40310D837E56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB048969-8679-42B9-8F87-40310D837E56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2828BA4A-0E02-43F9-AC41-7AE806F3D6BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2828BA4A-0E02-43F9-AC41-7AE806F3D6BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2828BA4A-0E02-43F9-AC41-7AE806F3D6BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2828BA4A-0E02-43F9-AC41-7AE806F3D6BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C9ECADB-F0F8-4172-B5B6-3FA073559841}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C9ECADB-F0F8-4172-B5B6-3FA073559841}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C9ECADB-F0F8-4172-B5B6-3FA073559841}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C9ECADB-F0F8-4172-B5B6-3FA073559841}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9095E59B-21DE-4A2C-99DC-17C71C08527B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9095E59B-21DE-4A2C-99DC-17C71C08527B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9095E59B-21DE-4A2C-99DC-17C71C08527B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9095E59B-21DE-4A2C-99DC-17C71C08527B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2DE9B751-55BB-4421-8042-AD38DAC5B4BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2DE9B751-55BB-4421-8042-AD38DAC5B4BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2DE9B751-55BB-4421-8042-AD38DAC5B4BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2DE9B751-55BB-4421-8042-AD38DAC5B4BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33C50EB8-FDBB-4633-B810-5D0107F5A898}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33C50EB8-FDBB-4633-B810-5D0107F5A898}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33C50EB8-FDBB-4633-B810-5D0107F5A898}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33C50EB8-FDBB-4633-B810-5D0107F5A898}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62855AC1-BA09-4C91-9134-1D6EF08C7A11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62855AC1-BA09-4C91-9134-1D6EF08C7A11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62855AC1-BA09-4C91-9134-1D6EF08C7A11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62855AC1-BA09-4C91-9134-1D6EF08C7A11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EE9937C-7C9E-4B99-8D1A-48773DD05A0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EE9937C-7C9E-4B99-8D1A-48773DD05A0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EE9937C-7C9E-4B99-8D1A-48773DD05A0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EE9937C-7C9E-4B99-8D1A-48773DD05A0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29DA48F8-08E0-46CE-A0E6-CF590844B30F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29DA48F8-08E0-46CE-A0E6-CF590844B30F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29DA48F8-08E0-46CE-A0E6-CF590844B30F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29DA48F8-08E0-46CE-A0E6-CF590844B30F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08BACF2F-33C9-498D-81DC-377291356F39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08BACF2F-33C9-498D-81DC-377291356F39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08BACF2F-33C9-498D-81DC-377291356F39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08BACF2F-33C9-498D-81DC-377291356F39}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{754CA731-F802-4084-B73F-EB9B023DF865} = {DE2621DE-D61C-4BCC-B939-89B13BE834CC}
+		{80E5CDEE-00C8-4DE9-9238-9197FC4E99FE} = {DE2621DE-D61C-4BCC-B939-89B13BE834CC}
+		{7DFB777A-1C15-475A-ABA8-DD8B346BB9E9} = {DE2621DE-D61C-4BCC-B939-89B13BE834CC}
+		{F2DC2BE3-D750-42FB-88A4-B58CFC5E9546} = {7DFB777A-1C15-475A-ABA8-DD8B346BB9E9}
+		{1FD03FC0-D806-47F1-B18E-6CCB1B266A3F} = {DE2621DE-D61C-4BCC-B939-89B13BE834CC}
+		{674645AE-B061-421E-AEFF-EBC8A881635E} = {1FD03FC0-D806-47F1-B18E-6CCB1B266A3F}
+		{FB048969-8679-42B9-8F87-40310D837E56} = {754CA731-F802-4084-B73F-EB9B023DF865}
+		{2828BA4A-0E02-43F9-AC41-7AE806F3D6BA} = {754CA731-F802-4084-B73F-EB9B023DF865}
+		{9C9ECADB-F0F8-4172-B5B6-3FA073559841} = {754CA731-F802-4084-B73F-EB9B023DF865}
+		{9095E59B-21DE-4A2C-99DC-17C71C08527B} = {754CA731-F802-4084-B73F-EB9B023DF865}
+		{2DE9B751-55BB-4421-8042-AD38DAC5B4BC} = {754CA731-F802-4084-B73F-EB9B023DF865}
+		{33C50EB8-FDBB-4633-B810-5D0107F5A898} = {80E5CDEE-00C8-4DE9-9238-9197FC4E99FE}
+		{62855AC1-BA09-4C91-9134-1D6EF08C7A11} = {80E5CDEE-00C8-4DE9-9238-9197FC4E99FE}
+		{6EE9937C-7C9E-4B99-8D1A-48773DD05A0D} = {80E5CDEE-00C8-4DE9-9238-9197FC4E99FE}
+		{E629A4CC-B49F-4A59-9402-8580B4559545} = {DE2621DE-D61C-4BCC-B939-89B13BE834CC}
+		{29DA48F8-08E0-46CE-A0E6-CF590844B30F} = {E629A4CC-B49F-4A59-9402-8580B4559545}
 	EndGlobalSection
 EndGlobal

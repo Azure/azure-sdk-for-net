@@ -15,7 +15,8 @@ namespace Microsoft.Azure.Management.V2.Resource
         ISupportsListingByGroup<IGenericResource>,
         ISupportsGettingByGroup<IGenericResource>,
         ISupportsGettingById<IGenericResource>,
-        ISupportsCreating<GenericResource.Definition.IBlank>
+        ISupportsCreating<GenericResource.Definition.IBlank>,
+        ISupportsBatchCreation<IGenericResource>
     {
         /// <summary>
         /// Checks if a resource exists in a resource group.

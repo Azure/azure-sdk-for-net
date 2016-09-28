@@ -11,6 +11,7 @@ using Microsoft.Azure.Management.V2.Resource.ResourceGroup.Definition;
 using Microsoft.Azure.Management.V2.Resource.Core.Resource.Update;
 using Microsoft.Azure.Management.V2.Resource.ResourceGroup.Update;
 using Microsoft.Azure.Management.ResourceManager.Models;
+using Microsoft.Azure.Management.ResourceManager;
 
 namespace Microsoft.Azure.Management.V2.Resource
 {
@@ -170,10 +171,10 @@ namespace Microsoft.Azure.Management.V2.Resource
 
         #region Implementation of IRefreshable interface
 
-        public override async Task<IResourceGroup> Refresh()
+        public override IResourceGroup Refresh()
         {
-            var result = await client.GetWithHttpMessagesAsync(Name);
-            SetInner(result.Body);
+            var result = client.Get(Name);
+            SetInner(result);
             return this;
         }
 

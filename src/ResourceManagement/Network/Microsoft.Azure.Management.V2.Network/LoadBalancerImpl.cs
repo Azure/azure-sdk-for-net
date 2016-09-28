@@ -56,15 +56,11 @@ namespace Microsoft.Azure.Management.V2.Network
 
         }
 
-        override public Task<ILoadBalancer> Refresh ()
+        override public ILoadBalancer Refresh ()
         {
-
-            //$ LoadBalancerInner inner = this.innerCollection.get(this.resourceGroupName(), this.name());
-            //$ this.setInner(inner);
-            //$ initializeChildrenFromInner();
-            //$ return this;
-
-            return null;
+            var response = this.innerCollection.Get(this.ResourceGroupName, this.Name);
+            SetInner(response);
+            return this;
         }
 
         override protected void InitializeChildrenFromInner ()

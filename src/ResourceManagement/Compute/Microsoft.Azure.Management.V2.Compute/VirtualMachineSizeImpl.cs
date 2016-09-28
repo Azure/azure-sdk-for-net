@@ -8,17 +8,14 @@ namespace Microsoft.Azure.Management.V2.Compute
     /// <summary>
     /// The implementation for {@link VirtualMachineSize}.
     /// </summary>
-    public partial class VirtualMachineSizeImpl  :
+    internal partial class VirtualMachineSizeImpl  :
         IVirtualMachineSize
     {
         private VirtualMachineSize innerModel;
 
         internal  VirtualMachineSizeImpl (VirtualMachineSize innerModel)
         {
-
-            // this.innerModel = innerModel;
-            // }
-
+            this.innerModel = innerModel;
         }
 
         public string Name
@@ -28,6 +25,7 @@ namespace Microsoft.Azure.Management.V2.Compute
                 return innerModel.Name;
             }
         }
+
         public int? NumberOfCores
         {
             get
@@ -35,6 +33,7 @@ namespace Microsoft.Azure.Management.V2.Compute
                 return innerModel.NumberOfCores;
             }
         }
+
         public int? OsDiskSizeInMB
         {
             get

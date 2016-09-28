@@ -159,33 +159,66 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
         {
             return new PagedList<U>(new OnePage<U>(new List<U>()));
         }
+    }
 
-        protected class OnePage<U> : IPage<U>
+    internal class OnePage<U> : IPage<U>
+    {
+        private IEnumerable<U> enumerable;
+
+        public OnePage(IEnumerable<U> enumerable)
         {
-            private IEnumerable<U> enumerable;
+            this.enumerable = enumerable;
+        }
 
-            public OnePage(IEnumerable<U> enumerable)
+        public string NextPageLink
+        {
+            get
             {
-                this.enumerable = enumerable;
+                return null;
             }
+        }
 
-            public string NextPageLink
+        public IEnumerator<U> GetEnumerator()
+        {
+            return enumerable.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+    }
+
+    public static class PagedListConverter
+    {
+        public static PagedList<TargetT> Convert<SourceT, TargetT>(PagedList<SourceT> sourceList, Func<SourceT, TargetT> converter)
+        {
+            return new PagedList<TargetT>(new WrappedPage<SourceT, TargetT>(sourceList.CurrentPage, converter),
+            (string nextPageLink) =>
             {
-                get
+                sourceList.LoadNextPage();
+                return new WrappedPage<SourceT, TargetT>(sourceList.CurrentPage, converter);
+            });
+        }
+
+        public static PagedList<TargetT> Convert<SourceT, TargetT>(IEnumerable<SourceT> sourceList, Func<SourceT, TargetT> converter)
+        {
+            var singleWrappedPage = new WrappedPage<SourceT, TargetT>(new OnePage<SourceT>(sourceList), converter);
+            return new PagedList<TargetT>(singleWrappedPage,
+                (string nextPageLink) =>
                 {
                     return null;
-                }
-            }
+                });
+        }
 
-            public IEnumerator<U> GetEnumerator()
-            {
-                return enumerable.GetEnumerator();
-            }
+        public static PagedList<TargetT> Convert<SourceT, TargetT>(IList<SourceT> sourceList, Func<SourceT, TargetT> converter)
+        {
+            return Convert((IEnumerable < SourceT >)sourceList, converter);
+        }
 
-            IEnumerator IEnumerable.GetEnumerator()
-            {
-                return GetEnumerator();
-            }
+        public static PagedList<TargetT> Convert<SourceT, TargetT>(IPage<SourceT> sourceList, Func<SourceT, TargetT> converter)
+        {
+            throw new ArgumentException("IPage<T> cannot be Converted, consider using Convert<T, U>(PagedList<T>, Func<SourceT, TargetT>)");
         }
     }
 }

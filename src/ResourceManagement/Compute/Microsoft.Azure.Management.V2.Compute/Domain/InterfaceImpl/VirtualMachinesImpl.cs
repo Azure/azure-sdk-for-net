@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     using Microsoft.Azure.Management.V2.Resource.Core;
     using Microsoft.Azure.Management.Storage.Models;
     using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition;
-    public partial class VirtualMachinesImpl
+    internal partial class VirtualMachinesImpl
     {
         /// <summary>
         /// Deletes a resource from Azure, identifying it by its resource ID.

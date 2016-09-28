@@ -8,15 +8,17 @@ using System.Collections.Generic;
 
 namespace Microsoft.Azure.Management.V2.Compute
 {
-    public partial class VirtualMachinePublishersImpl
+    internal partial class VirtualMachinePublishersImpl
         : ReadableWrappers<IVirtualMachinePublisher, VirtualMachinePublisherImpl, VirtualMachineImageResourceInner>,
           IVirtualMachinePublishers
     {
-        private IVirtualMachineImagesOperations innerCollection;
+        private readonly IVirtualMachineImagesOperations innerCollection;
+        private readonly IVirtualMachineExtensionImagesOperations extensionsInnerCollection;
 
-        internal VirtualMachinePublishersImpl(IVirtualMachineImagesOperations innerCollection)
+        internal VirtualMachinePublishersImpl(IVirtualMachineImagesOperations innerCollection, IVirtualMachineExtensionImagesOperations extensionsInnerCollection)
         {
             this.innerCollection = innerCollection;
+            this.extensionsInnerCollection = extensionsInnerCollection;
         }
 
         public PagedList<IVirtualMachinePublisher> ListByRegion(string regionName)
@@ -33,7 +35,9 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         protected override IVirtualMachinePublisher WrapModel(VirtualMachineImageResourceInner inner)
         {
-            return new VirtualMachinePublisherImpl(EnumNameAttribute.FromName<Region>(inner.Location), inner.Name, this.innerCollection);
+            return new VirtualMachinePublisherImpl(EnumNameAttribute.FromName<Region>(inner.Location), inner.Name, 
+                this.innerCollection, 
+                this.extensionsInnerCollection);
         }
     }
 }

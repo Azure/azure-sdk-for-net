@@ -26,7 +26,7 @@ using System.Text.RegularExpressions;
 
 namespace Microsoft.Azure.Management.V2.Compute
 {
-    public partial class VirtualMachineScaleSetImpl :
+    internal partial class VirtualMachineScaleSetImpl :
         GroupableResource<IVirtualMachineScaleSet,
             VirtualMachineScaleSetInner,
             Rest.Azure.Resource,
@@ -832,11 +832,11 @@ namespace Microsoft.Azure.Management.V2.Compute
         #endregion
 
         #region Actions
-        public async override Task<IVirtualMachineScaleSet> Refresh()
+        public override IVirtualMachineScaleSet Refresh()
         {
-            var response = await client.GetWithHttpMessagesAsync(this.ResourceGroupName,
+            var response = client.Get(this.ResourceGroupName,
                 this.Name);
-            SetInner(response.Body);
+            SetInner(response);
             return this;
         }
 
@@ -1563,7 +1563,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         #endregion
     }
 
-    public partial class VirtualMachineScaleSetImpl
+    internal partial class VirtualMachineScaleSetImpl
     {
         Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate
             Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate.DisableAutoUpdate()

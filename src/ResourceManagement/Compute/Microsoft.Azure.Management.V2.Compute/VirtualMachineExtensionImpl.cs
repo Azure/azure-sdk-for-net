@@ -20,11 +20,12 @@ namespace Microsoft.Azure.Management.V2.Compute
     using Management.Compute.Models;
     using Management.Compute;
     using System.Collections.ObjectModel;
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Implementation of {@link VirtualMachineExtension}.
     /// </summary>
-    public partial class VirtualMachineExtensionImpl  :
+    internal partial class VirtualMachineExtensionImpl  :
         ExternalChildResource<IVirtualMachineExtension, VirtualMachineExtensionInner, IVirtualMachine, VirtualMachineImpl>,
         IVirtualMachineExtension,
         IDefinition<IWithCreate>,
@@ -100,9 +101,14 @@ namespace Microsoft.Azure.Management.V2.Compute
         {
             get
             {
-                return null;
+                if (this.publicSettings == null)
+                {
+                    return null;
+                }
+                return JsonConvert.SerializeObject(this.publicSettings);
             }
         }
+
         public VirtualMachineExtensionInstanceView InstanceView
         {
             get

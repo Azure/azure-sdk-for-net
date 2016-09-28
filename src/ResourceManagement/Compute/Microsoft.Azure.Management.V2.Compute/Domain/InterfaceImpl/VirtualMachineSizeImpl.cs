@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.V2.Compute
 {
 
     using Microsoft.Azure.Management.Compute.Models;
-    public partial class VirtualMachineSizeImpl 
+    internal partial class VirtualMachineSizeImpl 
     {
         /// <returns>the maximum number of data disks allowed by a VM size</returns>
         int? Microsoft.Azure.Management.V2.Compute.IVirtualMachineSize.MaxDataDiskCount

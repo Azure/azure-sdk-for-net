@@ -19,5 +19,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// <returns>the offers from this publisher</returns>
         IVirtualMachineOffers Offers ();
 
+        /// <returns>the virtual machine image extensions from this publisher.</returns>
+        IVirtualMachineExtensionImageTypes ExtensionTypes();
     }
 }

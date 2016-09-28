@@ -61,15 +61,11 @@ namespace Microsoft.Azure.Management.V2.Network
 
         }
 
-        override public Task<INetwork> Refresh ()
+        public override INetwork Refresh()
         {
-
-            //$ VirtualNetworkInner inner = this.innerCollection.get(this.resourceGroupName(), this.name());
-            //$ this.setInner(inner);
-            //$ initializeChildrenFromInner();
-            //$ return this;
-
-            return null;
+            var response = this.innerCollection.Get(this.ResourceGroupName, this.Name);
+            SetInner(response);
+            return this;
         }
 
         internal NetworkImpl WithSubnet (SubnetImpl subnet)
