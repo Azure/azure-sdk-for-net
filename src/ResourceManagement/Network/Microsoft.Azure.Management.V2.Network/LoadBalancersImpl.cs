@@ -9,7 +9,6 @@ namespace Microsoft.Azure.Management.V2.Network
     using Management.Network.Models;
     using Resource.Core.CollectionActions;
     using Management.Network;
-    using System;
 
     /// <summary>
     /// Implementation for ILoadBalancers.
