@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.V2.Network
         IHasLoadBalancingRules
     {
         /// <returns>true if the frontend is public, i.e. it has a public IP address associated with it</returns>
-        bool? IsPublic { get; }
+        bool IsPublic { get; }
 
         /// <returns>the inbound NAT pools on this load balancer that use this frontend, indexed by their names</returns>
         IDictionary<string,Microsoft.Azure.Management.V2.Network.IInboundNatPool> InboundNatPools ();

@@ -521,7 +521,7 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         public VirtualMachineImpl WithNewAvailabilitySet (string name)
         {
-            return WithNewAvailabilitySet(base.MyManager.AvailabilitySets.Define(name)
+            return WithNewAvailabilitySet(base.Manager.AvailabilitySets.Define(name)
                 .WithRegion(this.RegionName)
                 .WithExistingResourceGroup(this.ResourceGroupName));
         }

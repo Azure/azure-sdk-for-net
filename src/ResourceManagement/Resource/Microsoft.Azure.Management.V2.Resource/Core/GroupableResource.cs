@@ -4,6 +4,7 @@
 using Microsoft.Azure.Management.V2.Resource.Core;
 using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
 using System;
+using System.Text;
 
 namespace Microsoft.Azure.Management.V2.Resource
 {
@@ -57,11 +58,21 @@ namespace Microsoft.Azure.Management.V2.Resource
             this.manager = manager;
         }
 
-        public ManagerT MyManager
+        public ManagerT Manager
         {
             get
             {
                 return this.manager;
+            }
+        }
+
+        protected string ResourceIdBase
+        {
+            get
+            {
+                return new StringBuilder()
+                .Append("/subscriptions/").Append(Manager.SubscriptionId)
+                .Append("/resourceGroups/").Append(ResourceGroupName).ToString();
             }
         }
 

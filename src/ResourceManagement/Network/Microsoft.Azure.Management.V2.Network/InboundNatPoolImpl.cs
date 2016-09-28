@@ -2,156 +2,109 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.V2.Network
 {
-
-    using Microsoft.Azure.Management.V2.Network.InboundNatPool.Definition;
-    using Microsoft.Azure.Management.Network.Models;
-    using Microsoft.Azure.Management.V2.Network.HasProtocol.Definition;
-    using Microsoft.Azure.Management.V2.Network.HasFrontend.Definition;
-    using Microsoft.Azure.Management.V2.Network.InboundNatPool.Update;
-    using Microsoft.Azure.Management.V2.Network.LoadBalancer.Update;
-    using Microsoft.Azure.Management.V2.Network.HasFrontend.Update;
-    using Microsoft.Azure.Management.V2.Network.HasBackendPort.Update;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.V2.Network.HasBackendPort.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Network.InboundNatPool.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Network.HasBackendPort.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Network.LoadBalancer.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
-    using Microsoft.Azure.Management.V2.Network.HasProtocol.Update;
-    using Microsoft.Azure.Management.V2.Network.HasProtocol.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Network.HasFrontend.UpdateDefinition;
+    using InboundNatPool.Definition;
+    using Management.Network.Models;
+    using InboundNatPool.UpdateDefinition;
+    using Resource.Core;
     using Resource.Core.ChildResourceActions;
     using System;
+    using Rest.Azure;
 
     /// <summary>
-    /// Implementation for {@link InboundNatRule}.
+    /// Implementation for InboundNatRule.
     /// </summary>
     public partial class InboundNatPoolImpl  :
-        ChildResource<Microsoft.Azure.Management.Network.Models.InboundNatPoolInner,Microsoft.Azure.Management.V2.Network.LoadBalancerImpl,Microsoft.Azure.Management.V2.Network.ILoadBalancer>,
+        ChildResource<InboundNatPoolInner, LoadBalancerImpl, ILoadBalancer>,
         IInboundNatPool,
-        IDefinition<Microsoft.Azure.Management.V2.Network.LoadBalancer.Definition.IWithCreateAndInboundNatPool>,
-        IUpdateDefinition<Microsoft.Azure.Management.V2.Network.LoadBalancer.Update.IUpdate>,
-        Microsoft.Azure.Management.V2.Network.InboundNatPool.Update.IUpdate
+        IDefinition<LoadBalancer.Definition.IWithCreateAndInboundNatPool>,
+        IUpdateDefinition<LoadBalancer.Update.IUpdate>,
+        InboundNatPool.Update.IUpdate
     {
-        protected  InboundNatPoolImpl (InboundNatPoolInner inner, LoadBalancerImpl parent) : base(inner.Name, inner, parent)
+        internal InboundNatPoolImpl (InboundNatPoolInner inner, LoadBalancerImpl parent) 
+            : base(inner.Name, inner, parent)
         {
-
-            //$ super(inner, parent);
-            //$ }
-
         }
 
         override public string Name
         {
             get
             {
-            //$ return this.inner().name();
-
-
-                return null;
+                return Inner.Name;
             }
         }
         public string Protocol
         {
             get
             {
-            //$ return this.inner().protocol();
-
-
-                return null;
+                return Inner.Protocol;
             }
         }
-        public int? BackendPort
+        public int BackendPort
         {
             get
             {
-            //$ return this.inner().backendPort();
-
-
-                return null;
+                return Inner.BackendPort;
             }
         }
+
         public IFrontend Frontend ()
         {
-
-            //$ return this.parent().frontends().get(
-            //$ ResourceUtils.nameFromResourceId(
-            //$ this.inner().frontendIPConfiguration().id()));
-
-            return null;
+            IFrontend frontend;
+            string name = ResourceUtils.NameFromResourceId(Inner.FrontendIPConfiguration.Id);
+            Parent.Frontends().TryGetValue(name, out frontend);
+            return frontend;
         }
 
-        public int? FrontendPortRangeStart
+        public int FrontendPortRangeStart
         {
             get
             {
-            //$ return this.inner().frontendPortRangeStart();
-
-
-                return null;
+                return Inner.FrontendPortRangeStart;
             }
         }
-        public int? FrontendPortRangeEnd
+
+        public int FrontendPortRangeEnd
         {
             get
             {
-            //$ return this.inner().frontendPortRangeEnd();
-
-
-                return null;
+                return Inner.FrontendPortRangeEnd;
             }
         }
+
         public InboundNatPoolImpl WithBackendPort (int port)
         {
-
-            //$ this.inner().withBackendPort(port);
-            //$ return this;
-
+            Inner.BackendPort = port;
             return this;
         }
 
         public InboundNatPoolImpl WithProtocol (string protocol)
         {
-
-            //$ this.inner().withProtocol(protocol);
-            //$ return this;
-
+            Inner.Protocol = protocol;
             return this;
         }
 
         public InboundNatPoolImpl WithFrontend (string frontendName)
         {
-
-            //$ SubResource frontendRef = new SubResource()
-            //$ .withId(this.parent().futureResourceId() + "/frontendIPConfigurations/" + frontendName);
-            //$ this.inner().withFrontendIPConfiguration(frontendRef);
-            //$ return this;
-
+            SubResource frontendRef = new SubResource(Parent.FutureResourceId + "/frontendIPConfigurations/" + frontendName);
+            Inner.FrontendIPConfiguration = frontendRef;
             return this;
         }
 
         public InboundNatPoolImpl WithFrontendPortRange (int from, int to)
         {
-
-            //$ this.inner().withFrontendPortRangeStart(from);
-            //$ this.inner().withFrontendPortRangeEnd(to);
-            //$ return this;
-
+            Inner.FrontendPortRangeStart = from;
+            Inner.FrontendPortRangeEnd = to;
             return this;
         }
 
         public LoadBalancerImpl Attach ()
         {
-
-            //$ return this.parent().withInboundNatPool(this);
-
-            return null;
+            return Parent.WithInboundNatPool(this);
         }
 
         LoadBalancer.Update.IUpdate ISettable<LoadBalancer.Update.IUpdate>.Parent()
         {
-            throw new NotImplementedException();
+            return Parent;
         }
     }
 }

@@ -2,296 +2,221 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.V2.Network
 {
-
-    using Microsoft.Azure.Management.V2.Network.PublicFrontend.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Network.PrivateFrontend.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Network.LoadBalancer.Update;
-    using Microsoft.Azure.Management.V2.Network.HasPrivateIpAddress.Definition;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResourceActions;
-    using Microsoft.Azure.Management.Network.Models;
-    using Microsoft.Azure.Management.V2.Network.PrivateFrontend.Update;
-    using Microsoft.Azure.Management.V2.Network.PrivateFrontend.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Network.PublicFrontend.Update;
-    using Microsoft.Azure.Management.V2.Resource.Core.HasSubnet.Definition;
-    using Microsoft.Azure.Management.V2.Network.HasPublicIpAddress.Definition;
-    using Microsoft.Azure.Management.V2.Network.HasPrivateIpAddress.Update;
-    using Microsoft.Azure.Management.V2.Network.HasPublicIpAddress.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Network.LoadBalancer.Definition;
-    using Microsoft.Azure.Management.V2.Network.HasPrivateIpAddress.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.V2.Network.PublicFrontend.Definition;
-    using Microsoft.Azure.Management.V2.Network.HasPublicIpAddress.Update;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
+    using Resource.Core.ChildResourceActions;
+    using Management.Network.Models;
+    using Resource.Core;
     using System;
 
     /// <summary>
-    /// Implementation for {@link PublicFrontend}.
+    /// Implementation for PublicFrontend.
     /// </summary>
     public partial class FrontendImpl  :
-        ChildResource<Microsoft.Azure.Management.Network.Models.FrontendIPConfigurationInner,Microsoft.Azure.Management.V2.Network.LoadBalancerImpl,Microsoft.Azure.Management.V2.Network.ILoadBalancer>,
+        ChildResource<FrontendIPConfigurationInner, LoadBalancerImpl, ILoadBalancer>,
         IFrontend,
         IPrivateFrontend,
-        Microsoft.Azure.Management.V2.Network.PrivateFrontend.Definition.IDefinition<Microsoft.Azure.Management.V2.Network.LoadBalancer.Definition.IWithPrivateFrontendOrBackend>,
-        Microsoft.Azure.Management.V2.Network.PrivateFrontend.UpdateDefinition.IUpdateDefinition<Microsoft.Azure.Management.V2.Network.LoadBalancer.Update.IUpdate>,
-        Microsoft.Azure.Management.V2.Network.PrivateFrontend.Update.IUpdate,
+        PrivateFrontend.Definition.IDefinition<LoadBalancer.Definition.IWithPrivateFrontendOrBackend>,
+        PrivateFrontend.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
+        PrivateFrontend.Update.IUpdate,
         IPublicFrontend,
-        Microsoft.Azure.Management.V2.Network.PublicFrontend.Definition.IDefinition<Microsoft.Azure.Management.V2.Network.LoadBalancer.Definition.IWithPublicFrontendOrBackend>,
-        Microsoft.Azure.Management.V2.Network.PublicFrontend.UpdateDefinition.IUpdateDefinition<Microsoft.Azure.Management.V2.Network.LoadBalancer.Update.IUpdate>,
-        Microsoft.Azure.Management.V2.Network.PublicFrontend.Update.IUpdate
+        PublicFrontend.Definition.IDefinition<LoadBalancer.Definition.IWithPublicFrontendOrBackend>,
+        PublicFrontend.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
+        PublicFrontend.Update.IUpdate
     {
-        protected  FrontendImpl (FrontendIPConfigurationInner inner, LoadBalancerImpl parent) : base(inner.Name, inner, parent)
+        internal  FrontendImpl (FrontendIPConfigurationInner inner, LoadBalancerImpl parent)
+            : base(inner.Name, inner, parent)
         {
-
-            //$ super(inner, parent);
-            //$ }
-
         }
 
         public string NetworkId
         {
             get
             {
-            //$ SubResource subnetRef = this.inner().subnet();
-            //$ if (subnetRef != null) {
-            //$ return ResourceUtils.parentResourcePathFromResourceId(subnetRef.id());
-            //$ } else {
-            //$ return null;
-            //$ }
-
-
-                return null;
+                var subnetRef = Inner.Subnet;
+                return (subnetRef != null) ? ResourceUtils.ParentResourcePathFromResourceId(subnetRef.Id) : null;
             }
         }
+
         public string SubnetName
         {
             get
             {
-            //$ SubResource subnetRef = this.inner().subnet();
-            //$ if (subnetRef != null) {
-            //$ return ResourceUtils.nameFromResourceId(subnetRef.id());
-            //$ } else {
-            //$ return null;
-            //$ }
-
-
-                return null;
+                var subnetRef = Inner.Subnet;
+                return (subnetRef != null) ? ResourceUtils.NameFromResourceId(subnetRef.Id) : null;
             }
         }
+
         public string PrivateIpAddress
         {
             get
             {
-            //$ return this.inner().privateIPAddress();
-
-
-                return null;
+                return this.Inner.PrivateIPAddress;
             }
         }
+
         public string PrivateIpAllocationMethod
         {
             get
             {
-            //$ return this.inner().privateIPAllocationMethod();
-
-
-                return null;
+                return Inner.PrivateIPAllocationMethod;
             }
         }
+
         override public string Name
         {
             get
             {
-            //$ return this.inner().name();
-
-
-                return null;
+                return Inner.Name;
             }
         }
+
         public string PublicIpAddressId
         {
             get
             {
-            //$ return this.inner().publicIPAddress().id();
-
-
-                return null;
+                return Inner.PublicIPAddress.Id;
             }
         }
-        public bool? IsPublic
+
+        public bool IsPublic
         {
             get
             {
-            //$ return (this.inner().publicIPAddress() != null);
-
-
-                return null;
+                return Inner.PublicIPAddress != null;
             }
         }
+
         public IDictionary<string,Microsoft.Azure.Management.V2.Network.ILoadBalancingRule> LoadBalancingRules ()
         {
+            IDictionary<string, ILoadBalancingRule> rules = new SortedDictionary<string, ILoadBalancingRule>();
+            if(Inner.LoadBalancingRules != null)
+            {
+                foreach(var innerRef in Inner.LoadBalancingRules)
+                {
+                    string name = ResourceUtils.NameFromResourceId(innerRef.Id);
+                    ILoadBalancingRule rule;
+                    Parent.LoadBalancingRules().TryGetValue(name, out rule);
+                    if(rule != null)
+                    {
+                        rules[name] = rule;
+                    }
+                }
+            }
 
-            //$ final Map<String, LoadBalancingRule> rules = new TreeMap<>();
-            //$ if (this.inner().loadBalancingRules() != null) {
-            //$ for (SubResource innerRef : this.inner().loadBalancingRules()) {
-            //$ String name = ResourceUtils.nameFromResourceId(innerRef.id());
-            //$ LoadBalancingRule rule = this.parent().loadBalancingRules().get(name);
-            //$ if (rule != null) {
-            //$ rules.put(name, rule);
-            //$ }
-            //$ }
-            //$ }
-            //$ 
-            //$ return Collections.unmodifiableMap(rules);
-
-            return null;
+            return rules;
         }
 
-        public IDictionary<string,Microsoft.Azure.Management.V2.Network.IInboundNatPool> InboundNatPools ()
+        public IDictionary<string, IInboundNatPool> InboundNatPools ()
         {
+            IDictionary<string, IInboundNatPool> pools = new SortedDictionary<string, IInboundNatPool>();
+            if (Inner.InboundNatPools != null)
+            {
+                foreach (var innerRef in Inner.InboundNatPools)
+                {
+                    string name = ResourceUtils.NameFromResourceId(innerRef.Id);
+                    IInboundNatPool pool;
+                    Parent.InboundNatPools().TryGetValue(name, out pool);
+                    if (pool != null)
+                    {
+                        pools[name] = pool;
+                    }
+                }
+            }
 
-            //$ final Map<String, InboundNatPool> pools = new TreeMap<>();
-            //$ if (this.inner().inboundNatPools() != null) {
-            //$ for (SubResource innerRef : this.inner().inboundNatPools()) {
-            //$ String name = ResourceUtils.nameFromResourceId(innerRef.id());
-            //$ InboundNatPool pool = this.parent().inboundNatPools().get(name);
-            //$ if (pool != null) {
-            //$ pools.put(name, pool);
-            //$ }
-            //$ }
-            //$ }
-            //$ 
-            //$ return Collections.unmodifiableMap(pools);
-
-            return null;
+            return pools;
         }
 
-        public IDictionary<string,Microsoft.Azure.Management.V2.Network.IInboundNatRule> InboundNatRules ()
+        public IDictionary<string, IInboundNatRule> InboundNatRules ()
         {
+            IDictionary<string, IInboundNatRule> rules = new SortedDictionary<string, IInboundNatRule>();
+            if (Inner.InboundNatRules != null)
+            {
+                foreach (var innerRef in Inner.InboundNatRules)
+                {
+                    string name = ResourceUtils.NameFromResourceId(innerRef.Id);
+                    IInboundNatRule rule;
+                    Parent.InboundNatRules().TryGetValue(name, out rule);
+                    if (rule != null)
+                    {
+                        rules[name] = rule;
+                    }
+                }
+            }
 
-            //$ final Map<String, InboundNatRule> rules = new TreeMap<>();
-            //$ if (this.inner().inboundNatRules() != null) {
-            //$ for (SubResource innerRef : this.inner().inboundNatRules()) {
-            //$ String name = ResourceUtils.nameFromResourceId(innerRef.id());
-            //$ InboundNatRule rule = this.parent().inboundNatRules().get(name);
-            //$ if (rule != null) {
-            //$ rules.put(name, rule);
-            //$ }
-            //$ }
-            //$ }
-            //$ 
-            //$ return Collections.unmodifiableMap(rules);
-
-            return null;
+            return rules;
         }
 
         public FrontendImpl WithExistingSubnet (INetwork network, string subnetName)
         {
-
-            //$ return this.withExistingSubnet(network.id(), subnetName);
-
-            return this;
+            return this.WithExistingSubnet(network.Id, subnetName);
         }
 
         public FrontendImpl WithExistingSubnet (string parentNetworkResourceId, string subnetName)
         {
-
-            //$ SubResource subnetRef = new SubResource()
-            //$ .withId(parentNetworkResourceId + "/subnets/" + subnetName);
-            //$ this.inner()
-            //$ .withSubnet(subnetRef)
-            //$ .withPublicIPAddress(null); // Ensure no conflicting public and private settings
-            //$ return this;
-
+            var subnetRef = new SubnetInner();
+            subnetRef.Id = parentNetworkResourceId + "/subnets/" + subnetName;
+            Inner.Subnet = subnetRef;
+            Inner.PublicIPAddress = null; // Ensure no conflicting public and private settings
             return this;
         }
 
         public FrontendImpl WithExistingPublicIpAddress (IPublicIpAddress pip)
         {
-
-            //$ return this.withExistingPublicIpAddress(pip.id());
-
-            return this;
+            return WithExistingPublicIpAddress(pip.Id);
         }
 
         public FrontendImpl WithExistingPublicIpAddress (string resourceId)
         {
+            var pipRef = new PublicIPAddressInner(id: resourceId);
+            Inner.PublicIPAddress = pipRef;
 
-            //$ SubResource pipRef = new SubResource().withId(resourceId);
-            //$ this.inner()
-            //$ .withPublicIPAddress(pipRef)
-            //$ 
-            //$ // Ensure no conflicting public and private settings
-            //$ .withSubnet(null)
-            //$ .withPrivateIPAddress(null)
-            //$ .withPrivateIPAllocationMethod(null);
-            //$ return this;
-
+            // Ensure no conflicting public and private settings
+            Inner.Subnet = null;
+            Inner.PrivateIPAddress = null;
+            Inner.PrivateIPAllocationMethod = null;
             return this;
         }
 
         public FrontendImpl WithoutPublicIpAddress ()
         {
-
-            //$ this.inner().withPublicIPAddress(null);
-            //$ return this;
-
+            Inner.PublicIPAddress = null;
             return this;
         }
 
         public FrontendImpl WithPrivateIpAddressDynamic ()
         {
+            Inner.PrivateIPAddress = null;
+            Inner.PrivateIPAllocationMethod = IPAllocationMethod.Dynamic;
 
-            //$ this.inner()
-            //$ .withPrivateIPAddress(null)
-            //$ .withPrivateIPAllocationMethod(IPAllocationMethod.DYNAMIC)
-            //$ 
-            //$ // Ensure no conflicting public and private settings
-            //$ .withPublicIPAddress(null);
-            //$ return this;
-
+            // Ensure no conflicting public and private settings
+            Inner.PublicIPAddress = null;
             return this;
         }
 
         public FrontendImpl WithPrivateIpAddressStatic (string ipAddress)
         {
+            Inner.PrivateIPAddress = ipAddress;
+            Inner.PrivateIPAllocationMethod = IPAllocationMethod.Static;
 
-            //$ this.inner()
-            //$ .withPrivateIPAddress(ipAddress)
-            //$ .withPrivateIPAllocationMethod(IPAllocationMethod.STATIC)
-            //$ 
-            //$ // Ensure no conflicting public and private settings
-            //$ .withPublicIPAddress(null);
-            //$ return this;
-
+            // Ensure no conflicting public and private settings
+            Inner.PublicIPAddress = null;
             return this;
         }
 
         public LoadBalancerImpl Attach ()
         {
-
-            //$ return this.parent().withFrontend(this);
-
-            return null;
+            return Parent.WithFrontend(this);
         }
 
         public IPublicIpAddress GetPublicIpAddress ()
         {
-
-            //$ final String pipId = this.publicIpAddressId();
-            //$ if (pipId == null) {
-            //$ return null;
-            //$ } else {
-            //$ return this.parent().manager().publicIpAddresses().getById(pipId);
-            //$ }
-
-            return null;
+            string pipId = PublicIpAddressId;
+            return (pipId != null) ? Parent.Manager.PublicIpAddresses.GetById(pipId) : null;
         }
 
         LoadBalancer.Update.IUpdate ISettable<LoadBalancer.Update.IUpdate>.Parent()
         {
-            throw new NotImplementedException();
+            return Parent;
         }
     }
 }
