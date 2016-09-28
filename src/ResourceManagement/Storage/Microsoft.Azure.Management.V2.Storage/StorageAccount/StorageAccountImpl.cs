@@ -9,11 +9,8 @@ using Microsoft.Azure.Management.V2.Resource;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.V2.Resource.Core;
 using System.Threading;
-using Microsoft.Azure.Management.V2.Resource.Core.Resource.Definition;
 using Microsoft.Azure.Management.V2.Storage.StorageAccount.Definition;
-using Microsoft.Azure.Management.V2.Resource.Core.Resource.Update;
 using Microsoft.Azure.Management.V2.Storage.StorageAccount.Update;
-using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
 
 namespace Microsoft.Azure.Management.V2.Storage
 {
@@ -128,16 +125,13 @@ namespace Microsoft.Azure.Management.V2.Storage
             }
         }
 
-        public IList<StorageAccountKey> Keys
+        public IList<StorageAccountKey> GetKeys()
         {
-            get
+            if (cachedAccountKeys == null)
             {
-                if (cachedAccountKeys == null)
-                {
-                    cachedAccountKeys = RefreshKeys();
-                }
-                return cachedAccountKeys;
+                cachedAccountKeys = RefreshKeys();
             }
+            return cachedAccountKeys;
         }
 
         #endregion
