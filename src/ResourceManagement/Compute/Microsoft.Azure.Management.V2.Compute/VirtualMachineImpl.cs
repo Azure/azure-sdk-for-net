@@ -635,11 +635,12 @@ namespace Microsoft.Azure.Management.V2.Compute
                 return Inner.OsProfile.ComputerName;
             }
         }
-        public string Size
+
+        public VirtualMachineSizeTypes Size
         {
             get
             {
-                return Inner.HardwareProfile.VmSize;
+                return new VirtualMachineSizeTypes(Inner.HardwareProfile.VmSize);
             }
         }
 

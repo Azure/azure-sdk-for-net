@@ -225,11 +225,10 @@ namespace Microsoft.Azure.Management.V2.Compute
         {
             get
             {
-                // TODO: no this.Size as, instead should create 'Microsoft.Azure.Management.Compute.Models.VirtualMachineSizeTypes'
-                // return this.Size as Microsoft.Azure.Management.Compute.Models.VirtualMachineSizeTypes;
-                return new Microsoft.Azure.Management.Compute.Models.VirtualMachineSizeTypes(this.Size);
+                return this.Size as Microsoft.Azure.Management.Compute.Models.VirtualMachineSizeTypes;
             }
         }
+
         /// <summary>
         /// Power off (stop) the virtual machine.
         /// <p>
