@@ -159,7 +159,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return new VirtualMachineScaleSetImpl(name,
                 inner,
                 this.InnerCollection,
-                this.MyManager,
+                this.Manager,
                 this.storageManager,
                 this.networkManager);
         }
@@ -169,7 +169,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return new VirtualMachineScaleSetImpl(inner.Name,
                 inner,
                 this.InnerCollection,
-                this.MyManager,
+                this.Manager,
                 this.storageManager,
                 this.networkManager);
         }

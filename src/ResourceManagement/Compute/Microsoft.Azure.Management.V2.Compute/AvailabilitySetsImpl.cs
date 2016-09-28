@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         {
             // There is no API supporting listing of availabiltiy set across subscription so enumerate all RGs and then
             // flatten the "list of list of availibility sets" as "list of availibility sets" .
-            return new ChildListFlattener<IResourceGroup, IAvailabilitySet>(MyManager.ResourceManager.ResourceGroups.List(), (IResourceGroup resourceGroup) =>
+            return new ChildListFlattener<IResourceGroup, IAvailabilitySet>(Manager.ResourceManager.ResourceGroups.List(), (IResourceGroup resourceGroup) =>
             {
                 return ListByGroup(resourceGroup.Name);
             }).Flatten();
@@ -80,12 +80,12 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         protected override IAvailabilitySet WrapModel(AvailabilitySetInner availabilitySetInner)
         {
-            return new AvailabilitySetImpl(availabilitySetInner.Name, availabilitySetInner, InnerCollection, MyManager);
+            return new AvailabilitySetImpl(availabilitySetInner.Name, availabilitySetInner, InnerCollection, Manager);
         }
 
         protected override AvailabilitySetImpl WrapModel(string name)
         {
-            return new AvailabilitySetImpl(name, new AvailabilitySetInner(), InnerCollection, MyManager);
+            return new AvailabilitySetImpl(name, new AvailabilitySetInner(), InnerCollection, Manager);
         }
 
         #endregion
