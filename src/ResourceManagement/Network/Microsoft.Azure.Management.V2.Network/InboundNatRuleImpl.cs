@@ -3,242 +3,168 @@
 namespace Microsoft.Azure.Management.V2.Network
 {
 
-    using Microsoft.Azure.Management.Network.Models;
-    using Microsoft.Azure.Management.V2.Network.InboundNatRule.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Network.HasFloatingIp.Definition;
-    using Microsoft.Azure.Management.V2.Network.HasFrontend.Definition;
-    using Microsoft.Azure.Management.V2.Network.HasProtocol.Definition;
-    using Microsoft.Azure.Management.V2.Network.HasFrontend.Update;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Network.InboundNatRule.Definition;
-    using Microsoft.Azure.Management.V2.Network.InboundNatRule.Update;
-    using Microsoft.Azure.Management.V2.Network.HasFloatingIp.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Network.HasBackendPort.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Network.HasBackendPort.Definition;
-    using Microsoft.Azure.Management.V2.Network.HasFloatingIp.Update;
-    using Microsoft.Azure.Management.V2.Network.HasFrontend.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Network.HasProtocol.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Network.HasProtocol.Update;
-    using Microsoft.Azure.Management.V2.Network.HasBackendPort.Update;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.V2.Network.LoadBalancer.Update;
-    using Microsoft.Azure.Management.V2.Network.LoadBalancer.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
+    using Management.Network.Models;
+    using InboundNatRule.UpdateDefinition;
+    using Resource.Core;
+    using InboundNatRule.Definition;
     using Resource.Core.ChildResourceActions;
     using System;
+    using Rest.Azure;
 
     /// <summary>
-    /// Implementation for {@link InboundNatRule}.
+    /// Implementation for IInboundNatRule.
     /// </summary>
     public partial class InboundNatRuleImpl  :
-        ChildResource<Microsoft.Azure.Management.Network.Models.InboundNatRuleInner,Microsoft.Azure.Management.V2.Network.LoadBalancerImpl,Microsoft.Azure.Management.V2.Network.ILoadBalancer>,
+        ChildResource<InboundNatRuleInner, LoadBalancerImpl, ILoadBalancer>,
         IInboundNatRule,
-        IDefinition<Microsoft.Azure.Management.V2.Network.LoadBalancer.Definition.IWithCreateAndInboundNatRule>,
-        IUpdateDefinition<Microsoft.Azure.Management.V2.Network.LoadBalancer.Update.IUpdate>,
-        Microsoft.Azure.Management.V2.Network.InboundNatRule.Update.IUpdate
+        IDefinition<LoadBalancer.Definition.IWithCreateAndInboundNatRule>,
+        IUpdateDefinition<LoadBalancer.Update.IUpdate>,
+        InboundNatRule.Update.IUpdate
     {
-        protected  InboundNatRuleImpl (InboundNatRuleInner inner, LoadBalancerImpl parent) : base(inner.Name, inner, parent)
+        internal InboundNatRuleImpl (InboundNatRuleInner inner, LoadBalancerImpl parent) 
+            : base(inner.Name, inner, parent)
         {
-
-            //$ super(inner, parent);
-            //$ }
-
         }
 
         override public string Name
         {
             get
             {
-            //$ return this.inner().name();
-
-
-                return null;
+                return Inner.Name;
             }
         }
+
         public string BackendNicIpConfigurationName
         {
             get
             {
-            //$ if (this.inner().backendIPConfiguration() == null) {
-            //$ return null;
-            //$ } else {
-            //$ return ResourceUtils.nameFromResourceId(this.inner().backendIPConfiguration().id());
-            //$ }
-
-
-                return null;
+                var backendRef = Inner.BackendIPConfiguration;
+                return (backendRef != null) ? backendRef.Id : null;
             }
         }
-        public int? BackendPort
+
+        public int BackendPort
         {
             get
             {
-            //$ if (this.inner().backendPort() == null) {
-            //$ return 0;
-            //$ } else {
-            //$ return this.inner().backendPort().intValue();
-            //$ }
-
-
-                return null;
+                return (Inner.BackendPort.HasValue) ? (int) Inner.BackendPort.Value : 0;
             }
         }
         public string BackendNetworkInterfaceId
         {
             get
             {
-            //$ if (this.inner().backendIPConfiguration() == null) {
-            //$ return null;
-            //$ } else {
-            //$ return ResourceUtils.parentResourcePathFromResourceId(this.inner().backendIPConfiguration().id());
-            //$ }
-
-
-                return null;
+                var backendRef = Inner.BackendIPConfiguration;
+                return (backendRef != null) ? ResourceUtils.ParentResourcePathFromResourceId(backendRef.Id) : null;
             }
         }
+
         public string Protocol
         {
             get
             {
-            //$ return this.inner().protocol();
-
-
-                return null;
+                return Inner.Protocol;
             }
         }
-        public int? FrontendPort
+
+        public int FrontendPort
         {
             get
             {
-            //$ if (this.inner().frontendPort() == null) {
-            //$ return 0;
-            //$ } else {
-            //$ return this.inner().frontendPort().intValue();
-            //$ }
-
-
-                return null;
+                return (Inner.FrontendPort.HasValue) ? Inner.FrontendPort.Value : 0;
             }
         }
-        public bool? FloatingIpEnabled
+
+        public bool FloatingIpEnabled
         {
             get
             {
-            //$ return this.inner().enableFloatingIP().booleanValue();
-
-
-                return null;
+                return (Inner.EnableFloatingIP.HasValue) ? Inner.EnableFloatingIP.Value : false;
             }
         }
+
         public IFrontend Frontend ()
         {
-
-            //$ return this.parent().frontends().get(
-            //$ ResourceUtils.nameFromResourceId(
-            //$ this.inner().frontendIPConfiguration().id()));
-
-            return null;
+            var frontendRef = Inner.FrontendIPConfiguration;
+            if (frontendRef == null)
+            {
+                return null;
+            }
+            else
+            {
+                string name = ResourceUtils.NameFromResourceId(frontendRef.Id);
+                IFrontend frontend;
+                Parent.Frontends().TryGetValue(name, out frontend);
+                return frontend;
+            }
         }
 
-        public int? IdleTimeoutInMinutes
+        public int IdleTimeoutInMinutes
         {
             get
             {
-            //$ return this.inner().idleTimeoutInMinutes();
-
-
-                return null;
+                return (Inner.IdleTimeoutInMinutes.HasValue) ? Inner.IdleTimeoutInMinutes.Value : 0;
             }
         }
+
         public InboundNatRuleImpl WithBackendPort (int port)
         {
-
-            //$ this.inner().withBackendPort(port);
-            //$ return this;
-
+            Inner.BackendPort = port;
             return this;
         }
 
         public InboundNatRuleImpl WithFloatingIpEnabled ()
         {
-
-            //$ return withFloatingIp(true);
-
-            return this;
+            return WithFloatingIp(true);
         }
 
         public InboundNatRuleImpl WithFloatingIpDisabled ()
         {
-
-            //$ return withFloatingIp(false);
-
-            return this;
+            return WithFloatingIp(false);
         }
 
         public InboundNatRuleImpl WithFloatingIp (bool enabled)
         {
-
-            //$ this.inner().withEnableFloatingIP(enabled);
-            //$ return this;
-
+            Inner.EnableFloatingIP = enabled;
             return this;
         }
 
         public InboundNatRuleImpl WithFrontendPort (int port)
         {
+            Inner.FrontendPort = port;
 
-            //$ this.inner().withFrontendPort(port);
-            //$ if (this.backendPort() == 0) {
-            //$ // By default, assume the same backend port
-            //$ return this.withBackendPort(port);
-            //$ } else {
-            //$ return this;
-            //$ }
-
-            return this;
+            // By default, assume the same backend port
+            return (BackendPort == 0) ? WithBackendPort(port) : this;
         }
 
         public InboundNatRuleImpl WithIdleTimeoutInMinutes (int minutes)
         {
-
-            //$ this.inner().withIdleTimeoutInMinutes(minutes);
-            //$ return this;
-
+            Inner.IdleTimeoutInMinutes = minutes;
             return this;
         }
 
         public InboundNatRuleImpl WithProtocol (string protocol)
         {
-
-            //$ this.inner().withProtocol(protocol);
-            //$ return this;
-
+            Inner.Protocol = protocol;
             return this;
         }
 
         public InboundNatRuleImpl WithFrontend (string frontendName)
         {
-
-            //$ SubResource frontendRef = new SubResource()
-            //$ .withId(this.parent().futureResourceId() + "/frontendIPConfigurations/" + frontendName);
-            //$ this.inner().withFrontendIPConfiguration(frontendRef);
-            //$ return this;
-
+            string frontendId = Parent.FutureResourceId + "/frontendIPConfigurations/" + frontendName;
+            SubResource frontendRef = new SubResource(frontendId);
+            this.Inner.FrontendIPConfiguration = frontendRef;
             return this;
         }
 
         public LoadBalancerImpl Attach ()
         {
-
-            //$ return this.parent().withInboundNatRule(this);
-
-            return null;
+            return Parent.WithInboundNatRule(this);
         }
 
         LoadBalancer.Update.IUpdate ISettable<LoadBalancer.Update.IUpdate>.Parent()
         {
-            throw new NotImplementedException();
+            return Parent;
         }
     }
 }

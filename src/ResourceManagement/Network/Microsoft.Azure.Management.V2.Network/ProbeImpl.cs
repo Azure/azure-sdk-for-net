@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.V2.Network
         Microsoft.Azure.Management.V2.Network.HttpProbe.UpdateDefinition.IUpdateDefinition<Microsoft.Azure.Management.V2.Network.LoadBalancer.Update.IUpdate>,
         Microsoft.Azure.Management.V2.Network.HttpProbe.Update.IUpdate
     {
-        protected  ProbeImpl (ProbeInner inner, LoadBalancerImpl parent) : base(inner.Name, inner, parent)
+        internal ProbeImpl (ProbeInner inner, LoadBalancerImpl parent) : base(inner.Name, inner, parent)
         {
 
             //$ super(inner, parent);
