@@ -6,8 +6,8 @@ using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Microsoft Azure Rollup Fluent Management Library")]
-[assembly: AssemblyDescription("Provides Microsoft Azure Rollup Management Fluent APIs.")]
+[assembly: AssemblyTitle("Microsoft Azure Resource Manager Fluent Management Library")]
+[assembly: AssemblyDescription("Provides Microsoft Azure Resource Manager management Fluent APIs.")]
 
 [assembly: AssemblyVersion("0.0.1.0")]
 [assembly: AssemblyFileVersion("0.0.1.0")]
