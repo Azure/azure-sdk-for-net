@@ -38,7 +38,6 @@ namespace Microsoft.Azure.Management.Fluent.Batch
         private string creatableStorageAccountKey;
         private IStorageAccount existingStorageAccountToAssociate;
         private ApplicationsImpl applicationsImpl;
-        private BatchAccountKeys cachedKeys;
 
         internal BatchAccountImpl(string name,
                 BatchAccountInner innerObject,
@@ -137,30 +136,16 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             }
         }
 
-        public BatchAccountKeys Keys()
-        {
-            if (cachedKeys == null)
-            {
-                cachedKeys = RefreshKeys();
-            }
-
-            return cachedKeys;
-        }
-
-        public BatchAccountKeys RefreshKeys()
+        public BatchAccountKeys GetKeys()
         {
             BatchAccountKeysInner keys = innerCollection.GetKeys(ResourceGroupName, Name);
-            cachedKeys = new BatchAccountKeys(keys.Primary, keys.Secondary);
-
-            return cachedKeys;
+            return new BatchAccountKeys(keys.Primary, keys.Secondary);
         }
 
         public BatchAccountKeys RegenerateKeys(AccountKeyType keyType)
         {
             BatchAccountKeysInner keys = innerCollection.RegenerateKey(ResourceGroupName, Name, keyType);
-            cachedKeys = new BatchAccountKeys(keys.Primary, keys.Secondary);
-
-            return cachedKeys;
+            return new BatchAccountKeys(keys.Primary, keys.Secondary);
         }
 
         public void SynchronizeAutoStorageKeys()

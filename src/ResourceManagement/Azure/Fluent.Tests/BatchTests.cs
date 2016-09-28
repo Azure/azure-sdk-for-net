@@ -42,7 +42,7 @@ namespace Fluent.Tests
                 Assert.NotNull(batchAccount);
 
                 // Get Keys
-                BatchAccountKeys keys = batchAccount.Keys();
+                BatchAccountKeys keys = batchAccount.GetKeys();
                 Assert.NotNull(keys.Primary);
                 Assert.NotNull(keys.Secondary);
 
