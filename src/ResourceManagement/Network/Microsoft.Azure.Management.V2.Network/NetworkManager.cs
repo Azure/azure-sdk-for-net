@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.V2.Network
     public class NetworkManager : ManagerBase, INetworkManager
     {
         private NetworkManagementClient networkManagementClient;
-        //$ private PublicIpAddressesImpl publicIpAddresses;
+        private PublicIpAddressesImpl publicIpAddresses;
         private NetworkInterfacesImpl networkInterfaces;
         //$ private NetworkSecurityGroupsImpl networkSecurityGroups;
         //$ private NetworksImpl networks;
@@ -120,6 +120,7 @@ namespace Microsoft.Azure.Management.V2.Network
             }
         }
 
+            */
         /// <summary>
         /// return entry point to public IP address management
         /// </summary>
@@ -129,14 +130,13 @@ namespace Microsoft.Azure.Management.V2.Network
             {
                 if (publicIpAddresses == null)
                 {
-                    publicIpAddresses = new PublicIpAddressesImpl(networkManagementClient.PublicIPAddresses, this);
+                    publicIpAddresses = new PublicIpAddressesImpl(networkManagementClient, this);
                 }
 
                 return publicIpAddresses;
             }
         }
 
-        */
         /// <summary>
         /// return entry point to network interface management
         /// </summary>
@@ -162,16 +162,16 @@ namespace Microsoft.Azure.Management.V2.Network
 
     public interface INetworkManager : IManagerBase
     {
-        /*$
+        
         /// <summary>
         /// return entry point to virtual network management
         /// </summary>
-        INetworks Networks { get; }
+        //$ INetworks Networks { get; }
 
         /// <summary>
         /// return entry point to network security group management
         /// </summary>
-        INetworkSecurityGroups NetworkSecurityGroups { get; }
+        //$ INetworkSecurityGroups NetworkSecurityGroups { get; }
 
         /// <summary>
         /// return entry point to public IP address management
@@ -186,7 +186,6 @@ namespace Microsoft.Azure.Management.V2.Network
         /// <summary>
         /// return entry point to load balancer management
         /// </summary>
-        ILoadBalancers LoadBalancers { get; }
-        */
+        //$ ILoadBalancers LoadBalancers { get; }
     }
 }

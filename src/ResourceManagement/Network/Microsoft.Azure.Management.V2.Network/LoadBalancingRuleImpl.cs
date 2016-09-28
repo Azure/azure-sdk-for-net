@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.V2.Network
         IUpdateDefinition<Microsoft.Azure.Management.V2.Network.LoadBalancer.Update.IUpdate>,
         Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Update.IUpdate
     {
-        protected  LoadBalancingRuleImpl (LoadBalancingRuleInner inner, LoadBalancerImpl parent) : base(inner.Name, inner, parent)
+        internal  LoadBalancingRuleImpl (LoadBalancingRuleInner inner, LoadBalancerImpl parent) : base(inner.Name, inner, parent)
         {
 
             //$ super(inner, parent);

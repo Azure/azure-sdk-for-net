@@ -4,13 +4,16 @@ namespace Microsoft.Azure.Management.V2.Network
 {
 
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Network.Models;
-    using Microsoft.Azure.Management.V2.Network.LoadBalancer.Definition;
-    using Microsoft.Azure.Management.V2.Network.LoadBalancer.Update;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Management.Network.Models;
+    using LoadBalancer.Definition;
+    using LoadBalancer.Update;
+    using Resource.Core.ResourceActions;
+    using Resource.Core;
     using Management.Network;
     using System.Threading.Tasks;
+    using System.Text;
+    using Rest.Azure;
+    using System;
 
     /// <summary>
     /// Implementation of the LoadBalancer interface.
@@ -21,39 +24,33 @@ namespace Microsoft.Azure.Management.V2.Network
             Rest.Azure.Resource,
             LoadBalancerImpl,
             INetworkManager,
-            LoadBalancer.Definition.IWithGroup,
-            LoadBalancer.Definition.IWithFrontend,
-            LoadBalancer.Definition.IWithCreate,
-            LoadBalancer.Update.IUpdate>,
+            IWithGroup,
+            IWithFrontend,
+            IWithCreate,
+            IUpdate>,
         ILoadBalancer,
         IDefinition,
         IUpdate
     {
-        static string DEFAULT;
+        static string DEFAULT = "default";
         private ILoadBalancersOperations innerCollection;
         private IDictionary<string,string> nicsInBackends;
         private IDictionary<string,string> creatablePIPKeys;
-        private IDictionary<string,Microsoft.Azure.Management.V2.Network.IBackend> backends;
-        private IDictionary<string,Microsoft.Azure.Management.V2.Network.ITcpProbe> tcpProbes;
-        private IDictionary<string,Microsoft.Azure.Management.V2.Network.IHttpProbe> httpProbes;
-        private IDictionary<string,Microsoft.Azure.Management.V2.Network.ILoadBalancingRule> loadBalancingRules;
-        private IDictionary<string,Microsoft.Azure.Management.V2.Network.IFrontend> frontends;
-        private IDictionary<string,Microsoft.Azure.Management.V2.Network.IInboundNatRule> inboundNatRules;
-        private IDictionary<string,Microsoft.Azure.Management.V2.Network.IInboundNatPool> inboundNatPools;
+        private IDictionary<string, IBackend> backends;
+        private IDictionary<string, ITcpProbe> tcpProbes;
+        private IDictionary<string, IHttpProbe> httpProbes;
+        private IDictionary<string, ILoadBalancingRule> loadBalancingRules;
+        private IDictionary<string, IFrontend> frontends;
+        private IDictionary<string, IInboundNatRule> inboundNatRules;
+        private IDictionary<string, IInboundNatPool> inboundNatPools;
+
         internal  LoadBalancerImpl (
             string name, 
             LoadBalancerInner innerModel, 
             ILoadBalancersOperations innerCollection, 
             NetworkManager networkManager) : base(name, innerModel, networkManager)
         {
-
-            //$ final LoadBalancerInner innerModel,
-            //$ final LoadBalancersInner innerCollection,
-            //$ final NetworkManager networkManager) {
-            //$ super(name, innerModel, networkManager);
-            //$ this.innerCollection = innerCollection;
-            //$ }
-
+            this.innerCollection = innerCollection;
         }
 
         override public ILoadBalancer Refresh ()
@@ -65,797 +62,682 @@ namespace Microsoft.Azure.Management.V2.Network
 
         override protected void InitializeChildrenFromInner ()
         {
-
-            //$ initializeFrontendsFromInner();
-            //$ initializeProbesFromInner();
-            //$ initializeBackendsFromInner();
-            //$ initializeLoadBalancingRulesFromInner();
-            //$ initializeInboundNatRulesFromInner();
-            //$ initializeInboundNatPoolsFromInner();
-
+            InitializeFrontendsFromInner();
+            InitializeProbesFromInner();
+            InitializeBackendsFromInner();
+            InitializeLoadBalancingRulesFromInner();
+            InitializeInboundNatRulesFromInner();
+            InitializeInboundNatPoolsFromInner();
         }
 
         override protected void BeforeCreating ()
         {
+            // Account for the newly created public IPs
+            foreach (var pipFrontendAssociation in creatablePIPKeys)
+            {
+                IPublicIpAddress pip = (IPublicIpAddress)this.CreatedResource(pipFrontendAssociation.Key);
+                if (pip != null)
+                {
+                    WithExistingPublicIpAddress(pip.Id, pipFrontendAssociation.Value);
+                }
+            }
 
-            //$ // Account for the newly created public IPs
-            //$ for (Entry<String, String> pipFrontendAssociation : this.creatablePIPKeys.entrySet()) {
-            //$ PublicIpAddress pip = (PublicIpAddress) this.createdResource(pipFrontendAssociation.getKey());
-            //$ if (pip != null) {
-            //$ withExistingPublicIpAddress(pip.id(), pipFrontendAssociation.getValue());
-            //$ }
-            //$ }
-            //$ this.creatablePIPKeys.clear();
-            //$ 
-            //$ // Reset and update probes
-            //$ this.inner().withProbes(innersFromWrappers(this.httpProbes.values()));
-            //$ this.inner().withProbes(innersFromWrappers(this.tcpProbes.values(), this.inner().probes()));
-            //$ 
-            //$ // Reset and update backends
-            //$ this.inner().withBackendAddressPools(innersFromWrappers(this.backends.values()));
-            //$ 
-            //$ // Reset and update frontends
-            //$ this.inner().withFrontendIPConfigurations(innersFromWrappers(this.frontends.values()));
-            //$ 
-            //$ // Reset and update inbound NAT rules
-            //$ this.inner().withInboundNatRules(innersFromWrappers(this.inboundNatRules.values()));
-            //$ for (InboundNatRule natRule : this.inboundNatRules.values()) {
-            //$ // Clear deleted frontend references
-            //$ SubResource frontendRef = natRule.inner().frontendIPConfiguration();
-            //$ if (frontendRef != null
-            //$ && !this.frontends().containsKey(ResourceUtils.nameFromResourceId(frontendRef.id()))) {
-            //$ natRule.inner().withFrontendIPConfiguration(null);
-            //$ }
-            //$ }
-            //$ 
-            //$ // Reset and update inbound NAT pools
-            //$ this.inner().withInboundNatPools(innersFromWrappers(this.inboundNatPools.values()));
-            //$ for (InboundNatPool natPool : this.inboundNatPools.values()) {
-            //$ // Clear deleted frontend references
-            //$ SubResource frontendRef = natPool.inner().frontendIPConfiguration();
-            //$ if (frontendRef != null
-            //$ && !this.frontends().containsKey(ResourceUtils.nameFromResourceId(frontendRef.id()))) {
-            //$ natPool.inner().withFrontendIPConfiguration(null);
-            //$ }
-            //$ }
-            //$ 
-            //$ // Reset and update load balancing rules
-            //$ this.inner().withLoadBalancingRules(innersFromWrappers(this.loadBalancingRules.values()));
-            //$ for (LoadBalancingRule lbRule : this.loadBalancingRules.values()) {
-            //$ // Clear deleted frontend references
-            //$ SubResource frontendRef = lbRule.inner().frontendIPConfiguration();
-            //$ if (frontendRef != null
-            //$ && !this.frontends().containsKey(ResourceUtils.nameFromResourceId(frontendRef.id()))) {
-            //$ lbRule.inner().withFrontendIPConfiguration(null);
-            //$ }
-            //$ 
-            //$ // Clear deleted backend references
-            //$ SubResource backendRef = lbRule.inner().backendAddressPool();
-            //$ if (backendRef != null
-            //$ && !this.backends().containsKey(ResourceUtils.nameFromResourceId(backendRef.id()))) {
-            //$ lbRule.inner().withBackendAddressPool(null);
-            //$ }
-            //$ 
-            //$ // Clear deleted probe references
-            //$ SubResource probeRef = lbRule.inner().probe();
-            //$ if (probeRef != null
-            //$ && !this.httpProbes().containsKey(ResourceUtils.nameFromResourceId(probeRef.id()))
-            //$ && !this.tcpProbes().containsKey(ResourceUtils.nameFromResourceId(probeRef.id()))) {
-            //$ lbRule.inner().withProbe(null);
-            //$ }
-            //$ }
+            creatablePIPKeys.Clear();
 
+            // Reset and update probes
+            Inner.Probes = InnersFromWrappers<ProbeInner, IHttpProbe>(httpProbes.Values);
+            Inner.Probes = InnersFromWrappers(tcpProbes.Values, Inner.Probes);
+
+            // Reset and update backends
+            Inner.BackendAddressPools = InnersFromWrappers<BackendAddressPoolInner, IBackend>(backends.Values);
+
+            // Reset and update frontends
+            Inner.FrontendIPConfigurations = InnersFromWrappers<FrontendIPConfigurationInner, IFrontend>(frontends.Values);
+
+            // Reset and update inbound NAT rules
+            Inner.InboundNatRules = InnersFromWrappers<InboundNatRuleInner, IInboundNatRule>(inboundNatRules.Values);
+            foreach (var natRule in inboundNatRules.Values) {
+                // Clear deleted frontend references
+                var frontendRef = natRule.Inner.FrontendIPConfiguration;
+                if (frontendRef != null && !this.Frontends().ContainsKey(ResourceUtils.NameFromResourceId(frontendRef.Id)))
+                {
+                    natRule.Inner.FrontendIPConfiguration = null;
+                }
+            }
+
+            // Reset and update inbound NAT pools
+            Inner.InboundNatPools = InnersFromWrappers<InboundNatPoolInner, IInboundNatPool>(inboundNatPools.Values);
+            foreach (var natPool in inboundNatPools.Values) {
+                // Clear deleted frontend references
+                var frontendRef = natPool.Inner.FrontendIPConfiguration;
+                if (frontendRef != null && !Frontends().ContainsKey(ResourceUtils.NameFromResourceId(frontendRef.Id)))
+                {
+                    natPool.Inner.FrontendIPConfiguration = null;
+                }
+            }
+
+            // Reset and update load balancing rules
+            Inner.LoadBalancingRules = InnersFromWrappers<LoadBalancingRuleInner, ILoadBalancingRule>(loadBalancingRules.Values);
+            foreach (var lbRule in loadBalancingRules.Values) {
+                // Clear deleted frontend references
+                var frontendRef = lbRule.Inner.FrontendIPConfiguration;
+                if (frontendRef != null && !Frontends().ContainsKey(ResourceUtils.NameFromResourceId(frontendRef.Id)))
+                {
+                    lbRule.Inner.FrontendIPConfiguration = null;
+                }
+
+                // Clear deleted backend references
+                var backendRef = lbRule.Inner.BackendAddressPool;
+                if (backendRef != null && !Backends().ContainsKey(ResourceUtils.NameFromResourceId(backendRef.Id)))
+                {
+                    lbRule.Inner.BackendAddressPool = null;
+                }
+
+                // Clear deleted probe references
+                var probeRef = lbRule.Inner.Probe;
+                if (probeRef != null 
+                    && !HttpProbes().ContainsKey(ResourceUtils.NameFromResourceId(probeRef.Id))
+                    && !TcpProbes().ContainsKey(ResourceUtils.NameFromResourceId(probeRef.Id))) {
+                    lbRule.Inner.Probe = null;
+                }
+            }
         }
 
         override protected void AfterCreating ()
         {
+            // Update the NICs to point to the backend pool
+            foreach (var nicInBackend in nicsInBackends)
+            {
+                string nicId = nicInBackend.Key;
+                string backendName = nicInBackend.Value;
+                try
+                {
+                    var nic = this.Manager.NetworkInterfaces.GetById(nicId);
+                    var nicIp = nic.PrimaryIpConfiguration();
+                    nic.Update()
+                        .UpdateIpConfiguration(nicIp.Name)
+                        .WithExistingLoadBalancerBackend(this, backendName)
+                        .Parent()
+                    .Apply();
 
-            //$ // Update the NICs to point to the backend pool
-            //$ for (Entry<String, String> nicInBackend : this.nicsInBackends.entrySet()) {
-            //$ String nicId = nicInBackend.getKey();
-            //$ String backendName = nicInBackend.getValue();
-            //$ try {
-            //$ NetworkInterface nic = this.manager().networkInterfaces().getById(nicId);
-            //$ NicIpConfiguration nicIp = nic.primaryIpConfiguration();
-            //$ nic.update()
-            //$ .updateIpConfiguration(nicIp.name())
-            //$ .withExistingLoadBalancerBackend(this, backendName)
-            //$ .parent()
-            //$ .apply();
-            //$ this.nicsInBackends.clear();
-            //$ this.refresh();
-            //$ } catch (Exception e) {
-            //$ e.printStackTrace();
-            //$ }
-            //$ }
-
+                    this.nicsInBackends.Clear();
+                    this.Refresh();
+                }
+                catch
+                {
+                    // Skip and continue
+                }
+            }
         }
 
         override protected Task<LoadBalancerInner> CreateInner()
         {
-            //$ return this.innerCollection.createOrUpdateAsync(this.resourceGroupName(), this.name(), this.inner());
-
-
-                return null;
+            return this.innerCollection.CreateOrUpdateAsync(this.ResourceGroupName, this.Name, this.Inner);
         }
+
         private void InitializeFrontendsFromInner ()
         {
-
-            //$ this.frontends = new TreeMap<>();
-            //$ List<FrontendIPConfigurationInner> frontendsInner = this.inner().frontendIPConfigurations();
-            //$ if (frontendsInner != null) {
-            //$ for (FrontendIPConfigurationInner frontendInner : frontendsInner) {
-            //$ FrontendImpl frontend = new FrontendImpl(frontendInner, this);
-            //$ this.frontends.put(frontendInner.name(), frontend);
-            //$ }
-            //$ }
-            //$ }
-
+            frontends = new SortedDictionary<string, IFrontend>();
+            IList<FrontendIPConfigurationInner> frontendsInner = this.Inner.FrontendIPConfigurations;
+            if (frontendsInner != null)
+            {
+                foreach (var frontendInner in frontendsInner)
+                {
+                    var frontend = new FrontendImpl(frontendInner, this);
+                    frontends.Add(frontendInner.Name, frontend);
+                }
+            }
         }
 
         private void InitializeBackendsFromInner ()
         {
+            backends = new SortedDictionary<string, IBackend>();
+            IList<BackendAddressPoolInner> backendsInner = this.Inner.BackendAddressPools;
+            if (backendsInner != null)
+            {
+                foreach (var backendInner in backendsInner)
+                {
+                    var backend = new BackendImpl(backendInner, this);
+                    backends.Add(backendInner.Name, backend);
+                }
+            }
+        }
 
-            //$ this.backends = new TreeMap<>();
-            //$ List<BackendAddressPoolInner> backendsInner = this.inner().backendAddressPools();
-            //$ if (backendsInner != null) {
-            //$ for (BackendAddressPoolInner backendInner : backendsInner) {
-            //$ BackendImpl backend = new BackendImpl(backendInner, this);
-            //$ this.backends.put(backendInner.name(), backend);
-            //$ }
-            //$ }
-            //$ }
-
+        private void InitializeLoadBalancingRulesFromInner()
+        {
+            loadBalancingRules = new SortedDictionary<string, ILoadBalancingRule>();
+            IList<LoadBalancingRuleInner> rulesInner = this.Inner.LoadBalancingRules;
+            if (rulesInner != null)
+            {
+                foreach (var ruleInner in rulesInner) {
+                    var rule = new LoadBalancingRuleImpl(ruleInner, this);
+                    loadBalancingRules.Add(ruleInner.Name, rule);
+                }
+            }
         }
 
         private void InitializeProbesFromInner ()
         {
-
-            //$ this.httpProbes = new TreeMap<>();
-            //$ this.tcpProbes = new TreeMap<>();
-            //$ if (this.inner().probes() != null) {
-            //$ for (ProbeInner probeInner : this.inner().probes()) {
-            //$ ProbeImpl probe = new ProbeImpl(probeInner, this);
-            //$ if (probeInner.protocol().equals(ProbeProtocol.TCP)) {
-            //$ this.tcpProbes.put(probeInner.name(), probe);
-            //$ } else if (probeInner.protocol().equals(ProbeProtocol.HTTP)) {
-            //$ this.httpProbes.put(probeInner.name(), probe);
-            //$ }
-            //$ }
-            //$ }
-            //$ }
-
+            httpProbes = new SortedDictionary<string, IHttpProbe>();
+            tcpProbes = new SortedDictionary<string, ITcpProbe>();
+            if (Inner.Probes != null) {
+                foreach (var probeInner in Inner.Probes) {
+                    var probe = new ProbeImpl(probeInner, this);
+                    if (probeInner.Protocol.Equals(ProbeProtocol.Tcp))
+                    {
+                        tcpProbes.Add(probeInner.Name, probe);
+                    }
+                    else if (probeInner.Protocol.Equals(ProbeProtocol.Http))
+                    {
+                        httpProbes.Add(probeInner.Name, probe);
+                    }
+                }
+            }
         }
 
-        private void InitializeLoadBalancingRulesFromInner ()
-        {
-
-            //$ this.loadBalancingRules = new TreeMap<>();
-            //$ List<LoadBalancingRuleInner> rulesInner = this.inner().loadBalancingRules();
-            //$ if (rulesInner != null) {
-            //$ for (LoadBalancingRuleInner ruleInner : rulesInner) {
-            //$ LoadBalancingRuleImpl rule = new LoadBalancingRuleImpl(ruleInner, this);
-            //$ this.loadBalancingRules.put(ruleInner.name(), rule);
-            //$ }
-            //$ }
-            //$ }
-
-        }
 
         private void InitializeInboundNatPoolsFromInner ()
         {
 
-            //$ this.inboundNatPools = new TreeMap<>();
-            //$ List<InboundNatPoolInner> inners = this.inner().inboundNatPools();
-            //$ if (inners != null) {
-            //$ for (InboundNatPoolInner inner : inners) {
-            //$ InboundNatPoolImpl wrapper = new InboundNatPoolImpl(inner, this);
-            //$ this.inboundNatPools.put(wrapper.name(), wrapper);
-            //$ }
-            //$ }
-            //$ }
-
+            inboundNatPools = new SortedDictionary<string, IInboundNatPool>();
+            if (Inner.InboundNatPools != null) {
+                foreach (var inner in Inner.InboundNatPools)
+                {
+                    var wrapper = new InboundNatPoolImpl(inner, this);
+                    inboundNatPools.Add(inner.Name, wrapper);
+                }
+            }
         }
 
         private void InitializeInboundNatRulesFromInner ()
         {
-
-            //$ this.inboundNatRules = new TreeMap<>();
-            //$ List<InboundNatRuleInner> rulesInner = this.inner().inboundNatRules();
-            //$ if (rulesInner != null) {
-            //$ for (InboundNatRuleInner ruleInner : rulesInner) {
-            //$ InboundNatRuleImpl rule = new InboundNatRuleImpl(ruleInner, this);
-            //$ this.inboundNatRules.put(ruleInner.name(), rule);
-            //$ }
-            //$ }
-            //$ }
-
-        }
-
-        internal NetworkManager Manager
-        {
-            get
-            {
-            //$ return this.myManager;
-            //$ }
-
-
-                return null;
+            inboundNatRules = new SortedDictionary<string, IInboundNatRule>();
+            if (Inner.InboundNatRules != null) {
+                foreach (var inner in Inner.InboundNatRules) {
+                    var rule = new InboundNatRuleImpl(inner, this);
+                    inboundNatRules.Add(inner.Name, rule);
+                }
             }
         }
+
         internal string FutureResourceId
         {
             get
             {
-            //$ return new StringBuilder()
-            //$ .append(super.resourceIdBase())
-            //$ .append("/providers/Microsoft.Network/loadBalancers/")
-            //$ .append(this.name()).toString();
-            //$ }
-
-
-                return null;
+                return new StringBuilder()
+                    .Append(base.ResourceIdBase)
+                    .Append("/providers/Microsoft.Network/loadBalancers/")
+                    .Append(this.Name)
+                    .ToString();
             }
         }
+
         internal LoadBalancerImpl WithFrontend (FrontendImpl frontend)
         {
-
-            //$ this.frontends.put(frontend.name(), frontend);
-            //$ return this;
-            //$ }
-
-            return this;
+            if (frontend == null)
+                return null;
+            else 
+            {
+                frontends[frontend.Name] = frontend;
+                return this;
+            }
         }
 
         internal LoadBalancerImpl WithProbe (ProbeImpl probe)
         {
-
-            //$ if (probe.protocol() == ProbeProtocol.HTTP) {
-            //$ httpProbes.put(probe.name(), probe);
-            //$ } else if (probe.protocol() == ProbeProtocol.TCP) {
-            //$ tcpProbes.put(probe.name(), probe);
-            //$ }
-            //$ return this;
-            //$ }
-
+            if (probe == null)
+                return this;
+            else if (probe.Protocol.Equals(ProbeProtocol.Http))
+            {
+                httpProbes[probe.Name] = probe;
+            }
+            else if (probe.Protocol.Equals(ProbeProtocol.Tcp))
+            {
+                tcpProbes[probe.Name]= probe;
+            }
             return this;
         }
 
         internal LoadBalancerImpl WithLoadBalancingRule (LoadBalancingRuleImpl loadBalancingRule)
         {
-
-            //$ this.loadBalancingRules.put(loadBalancingRule.name(), loadBalancingRule);
-            //$ return this;
-            //$ }
-
-            return this;
+            if (loadBalancingRule == null)
+                return null;
+            else {
+                loadBalancingRules[loadBalancingRule.Name] = loadBalancingRule;
+                return this;
+            }
         }
 
         internal LoadBalancerImpl WithInboundNatRule (InboundNatRuleImpl inboundNatRule)
         {
-
-            //$ this.inboundNatRules.put(inboundNatRule.name(), inboundNatRule);
-            //$ return this;
-            //$ }
-
-            return this;
+            if (inboundNatRule == null)
+                return null;
+            else {
+                inboundNatRules[inboundNatRule.Name] = inboundNatRule;
+                return this;
+            }
         }
 
         internal LoadBalancerImpl WithInboundNatPool (InboundNatPoolImpl inboundNatPool)
         {
-
-            //$ this.inboundNatPools.put(inboundNatPool.name(), inboundNatPool);
-            //$ return this;
-            //$ }
-
-            return this;
+            if (inboundNatPool == null)
+                return null;
+            else {
+                inboundNatPools[inboundNatPool.Name] = inboundNatPool;
+                return this;
+            }
         }
 
         internal LoadBalancerImpl WithBackend (BackendImpl backend)
         {
-
-            //$ this.backends.put(backend.name(), backend);
-            //$ return this;
-            //$ }
-
-            return this;
+            if (backend == null)
+                return null;
+            else {
+                backends[backend.Name] = backend;
+                return this;
+            }
         }
 
         public LoadBalancerImpl WithNewPublicIpAddress ()
         {
-
-            //$ // Autogenerated DNS leaf label for the PIP
-            //$ String dnsLeafLabel = this.name().toLowerCase().replace("\\s", "");
-            //$ return withNewPublicIpAddress(dnsLeafLabel);
-
-            return this;
+            // Autogenerated DNS leaf label for the PIP
+            string dnsLeafLabel = Name.ToLower().Replace(" ", "").Replace("\t", "").Replace("\n", "");
+            return WithNewPublicIpAddress(dnsLeafLabel);
         }
 
         public LoadBalancerImpl WithNewPublicIpAddress (string dnsLeafLabel)
         {
+            var precreatablePIP = Manager.PublicIpAddresses.Define(dnsLeafLabel)
+                .WithRegion(Region);
+            ICreatable<IPublicIpAddress> creatablePip;
+            if (newGroup == null)
+            {
+                creatablePip = precreatablePIP.WithExistingResourceGroup(ResourceGroupName);
+            }
+            else
+            {
+                creatablePip = precreatablePIP.WithNewResourceGroup(newGroup);
+            }
 
-            //$ WithGroup precreatablePIP = manager().publicIpAddresses().define(dnsLeafLabel)
-            //$ .withRegion(this.regionName());
-            //$ Creatable<PublicIpAddress> creatablePip;
-            //$ if (super.creatableGroup == null) {
-            //$ creatablePip = precreatablePIP.withExistingResourceGroup(this.resourceGroupName());
-            //$ } else {
-            //$ creatablePip = precreatablePIP.withNewResourceGroup(super.creatableGroup);
-            //$ }
-            //$ 
-            //$ return withNewPublicIpAddress(creatablePip);
-
-            return this;
+            return WithNewPublicIpAddress(creatablePip);
         }
 
-        public LoadBalancerImpl WithNewPublicIpAddress (ICreatable<Microsoft.Azure.Management.V2.Network.IPublicIpAddress> creatablePIP)
+        public LoadBalancerImpl WithNewPublicIpAddress (ICreatable<IPublicIpAddress> creatablePIP)
         {
-
-            //$ this.creatablePIPKeys.put(creatablePIP.key(), DEFAULT);
-            //$ this.addCreatableDependency(creatablePIP);
-            //$ return this;
-
+            creatablePIPKeys.Add(creatablePIP.Key, DEFAULT);
+            AddCreatableDependency(creatablePIP as IResourceCreator<V2.Resource.Core.IResource>);
             return this;
         }
 
         public LoadBalancerImpl WithExistingPublicIpAddress (IPublicIpAddress publicIpAddress)
         {
-
-            //$ return withExistingPublicIpAddress(publicIpAddress.id(), DEFAULT);
-
-            return this;
+            return WithExistingPublicIpAddress(publicIpAddress.Id, DEFAULT);
         }
 
         private LoadBalancerImpl WithExistingPublicIpAddress (string resourceId, string frontendName)
         {
+            if (frontendName == null) {
+                frontendName = DEFAULT;
+            }
 
-            //$ if (frontendName == null) {
-            //$ frontendName = DEFAULT;
-            //$ }
-            //$ 
-            //$ return this.definePublicFrontend(frontendName)
-            //$ .withExistingPublicIpAddress(resourceId)
-            //$ .attach();
-            //$ }
-
-            return this;
+            return DefinePublicFrontend(frontendName)
+                .WithExistingPublicIpAddress(resourceId)
+                .Attach();
         }
 
         public LoadBalancerImpl WithExistingSubnet (INetwork network, string subnetName)
         {
-
-            //$ return this.definePrivateFrontend(DEFAULT)
-            //$ .withExistingSubnet(network, subnetName)
-            //$ .attach();
-
-            return this;
+            return DefinePrivateFrontend(DEFAULT)
+                .WithExistingSubnet(network, subnetName)
+                .Attach();
         }
 
         private LoadBalancerImpl WithExistingVirtualMachine (IHasNetworkInterfaces vm, string backendName)
         {
+            if (backendName == null) {
+                backendName = DEFAULT;
+            }
 
-            //$ if (backendName == null) {
-            //$ backendName = DEFAULT;
-            //$ }
-            //$ 
-            //$ this.defineBackend(backendName).attach();
-            //$ if (vm.primaryNetworkInterfaceId() != null) {
-            //$ this.nicsInBackends.put(vm.primaryNetworkInterfaceId(), backendName.toLowerCase());
-            //$ }
-            //$ 
-            //$ return this;
-            //$ }
+            DefineBackend(backendName).Attach();
+
+            if (vm.PrimaryNetworkInterfaceId != null) {
+                nicsInBackends[vm.PrimaryNetworkInterfaceId] = backendName.ToLower();
+            }
 
             return this;
         }
 
         public LoadBalancerImpl WithExistingVirtualMachines (params IHasNetworkInterfaces[] vms)
         {
-
-            //$ if (vms != null) {
-            //$ for (HasNetworkInterfaces vm : vms) {
-            //$ withExistingVirtualMachine(vm, null);
-            //$ }
-            //$ }
-            //$ return this;
-
+            if (vms != null) {
+                foreach (IHasNetworkInterfaces vm in vms) {
+                    WithExistingVirtualMachine(vm, null);
+                }
+            }
             return this;
         }
 
         public LoadBalancerImpl WithLoadBalancingRule (int frontendPort, string protocol, int backendPort)
         {
-
-            //$ this.defineLoadBalancingRule(DEFAULT)
-            //$ .withFrontendPort(frontendPort)
-            //$ .withFrontend(DEFAULT)
-            //$ .withBackendPort(backendPort)
-            //$ .withBackend(DEFAULT)
-            //$ .withProtocol(protocol)
-            //$ .withProbe(DEFAULT)
-            //$ .attach();
-            //$ return this;
-
+            DefineLoadBalancingRule(DEFAULT)
+                .WithFrontendPort(frontendPort)
+                .WithFrontend(DEFAULT)
+                .WithBackendPort(backendPort)
+                .WithBackend(DEFAULT)
+                .WithProtocol(protocol)
+                .WithProbe(DEFAULT)
+                .Attach();
             return this;
         }
 
         public LoadBalancerImpl WithLoadBalancingRule (int port, string protocol)
         {
-
-            //$ return withLoadBalancingRule(port, protocol, port);
-
-            return this;
+            return WithLoadBalancingRule(port, protocol, port);
         }
 
         public LoadBalancerImpl WithTcpProbe (int port)
         {
-
-            //$ return this.defineTcpProbe(DEFAULT)
-            //$ .withPort(port)
-            //$ .attach();
-
-            return this;
+            return DefineTcpProbe(DEFAULT)
+                .WithPort(port)
+                .Attach();
         }
 
         public LoadBalancerImpl WithHttpProbe (string path)
         {
-
-            //$ return this.defineHttpProbe(DEFAULT)
-            //$ .withRequestPath(path)
-            //$ .withPort(80)
-            //$ .attach();
-
-            return this;
+            return DefineHttpProbe(DEFAULT)
+                .WithRequestPath(path)
+                .WithPort(80)
+                .Attach();
         }
 
         public ProbeImpl DefineTcpProbe (string name)
         {
+            ITcpProbe tcpProbe;
+            tcpProbes.TryGetValue(name, out tcpProbe);
+            if (tcpProbe == null)
+            {
+                ProbeInner inner = new ProbeInner()
+                {
+                    Name = name,
+                    Protocol = ProbeProtocol.Tcp
+                };
 
-            //$ Probe probe = this.tcpProbes.get(name);
-            //$ if (probe == null) {
-            //$ ProbeInner inner = new ProbeInner()
-            //$ .withName(name)
-            //$ .withProtocol(ProbeProtocol.TCP);
-            //$ return new ProbeImpl(inner, this);
-            //$ } else {
-            //$ return (ProbeImpl) probe;
-            //$ }
-
-            return null;
+                return new ProbeImpl(inner, this);
+            }
+            else
+            {
+                return (ProbeImpl) tcpProbe;
+            }
         }
 
         public ProbeImpl DefineHttpProbe (string name)
         {
+            IHttpProbe httpProbe;
+            httpProbes.TryGetValue(name, out httpProbe);
+            if (httpProbe == null) {
+                ProbeInner inner = new ProbeInner()
+                {
+                    Name = name,
+                    Protocol = ProbeProtocol.Http,
+                    Port = 80
+                };
 
-            //$ Probe probe = this.httpProbes.get(name);
-            //$ if (probe == null) {
-            //$ ProbeInner inner = new ProbeInner()
-            //$ .withName(name)
-            //$ .withProtocol(ProbeProtocol.HTTP)
-            //$ .withPort(80);
-            //$ return new ProbeImpl(inner, this);
-            //$ } else {
-            //$ return (ProbeImpl) probe;
-            //$ }
-
-            return null;
+                return new ProbeImpl(inner, this);
+            } else {
+                return (ProbeImpl) httpProbe;
+            }
         }
 
         public LoadBalancingRuleImpl DefineLoadBalancingRule (string name)
         {
+            ILoadBalancingRule lbRule;
+            loadBalancingRules.TryGetValue(name, out lbRule);
+            if (lbRule == null) {
+                LoadBalancingRuleInner inner = new LoadBalancingRuleInner()
+                {
+                    Name = name
+                };
 
-            //$ LoadBalancingRule lbRule = this.loadBalancingRules.get(name);
-            //$ if (lbRule == null) {
-            //$ LoadBalancingRuleInner inner = new LoadBalancingRuleInner()
-            //$ .withName(name);
-            //$ return new LoadBalancingRuleImpl(inner, this);
-            //$ } else {
-            //$ return (LoadBalancingRuleImpl) lbRule;
-            //$ }
-
-            return null;
+                return new LoadBalancingRuleImpl(inner, this);
+            }
+            else
+            {
+                return (LoadBalancingRuleImpl) lbRule;
+            }
         }
 
         public InboundNatRuleImpl DefineInboundNatRule (string name)
         {
+            IInboundNatRule natRule;
+            inboundNatRules.TryGetValue(name, out natRule);
+            if (natRule == null)
+            {
+                InboundNatRuleInner inner = new InboundNatRuleInner()
+                {
+                    Name = name
+                };
 
-            //$ InboundNatRule natRule = this.inboundNatRules.get(name);
-            //$ if (natRule == null) {
-            //$ InboundNatRuleInner inner = new InboundNatRuleInner()
-            //$ .withName(name);
-            //$ return new InboundNatRuleImpl(inner, this);
-            //$ } else {
-            //$ return (InboundNatRuleImpl) natRule;
-            //$ }
-
-            return null;
+                return new InboundNatRuleImpl(inner, this);
+            }
+            else
+            {
+                return (InboundNatRuleImpl) natRule;
+            }
         }
 
         public InboundNatPoolImpl DefineInboundNatPool (string name)
         {
+            IInboundNatPool natPool; 
+            inboundNatPools.TryGetValue(name, out natPool);
+            if (natPool == null)
+            {
+                InboundNatPoolInner inner = new InboundNatPoolInner()
+                {
+                    Name = name
+                };
 
-            //$ InboundNatPool natPool = this.inboundNatPools.get(name);
-            //$ if (natPool == null) {
-            //$ InboundNatPoolInner inner = new InboundNatPoolInner()
-            //$ .withName(name);
-            //$ return new InboundNatPoolImpl(inner, this);
-            //$ } else {
-            //$ return (InboundNatPoolImpl) natPool;
-            //$ }
-
-            return null;
+                return new InboundNatPoolImpl(inner, this);
+            }
+            else
+            {
+                return (InboundNatPoolImpl) natPool;
+            }
         }
 
         public FrontendImpl DefinePrivateFrontend (string name)
         {
-
-            //$ return defineFrontend(name);
-
-            return null;
+            return DefineFrontend(name);
         }
 
         public FrontendImpl DefinePublicFrontend (string name)
         {
-
-            //$ return defineFrontend(name);
-
-            return null;
+            return DefineFrontend(name);
         }
 
         private FrontendImpl DefineFrontend (string name)
         {
+            IFrontend frontend;
+            frontends.TryGetValue(name, out frontend);
+            if (frontend == null)
+            {
+                FrontendIPConfigurationInner inner = new FrontendIPConfigurationInner()
+                {
+                    Name = name
+                };
 
-            //$ Frontend frontend = this.frontends.get(name);
-            //$ if (frontend == null) {
-            //$ FrontendIPConfigurationInner inner = new FrontendIPConfigurationInner()
-            //$ .withName(name);
-            //$ return new FrontendImpl(inner, this);
-            //$ } else {
-            //$ return (FrontendImpl) frontend;
-            //$ }
-            //$ }
-
-            return null;
+                return new FrontendImpl(inner, this);
+            }
+            else
+            {
+                return (FrontendImpl) frontend;
+            }
         }
 
         public BackendImpl DefineBackend (string name)
         {
+            IBackend backend;
+            backends.TryGetValue(name, out backend);
+            if (backend == null)
+            {
+                BackendAddressPoolInner inner = new BackendAddressPoolInner()
+                {
+                    Name = name
+                };
 
-            //$ Backend backend = this.backends.get(name);
-            //$ if (backend == null) {
-            //$ BackendAddressPoolInner inner = new BackendAddressPoolInner()
-            //$ .withName(name);
-            //$ return new BackendImpl(inner, this);
-            //$ } else {
-            //$ return (BackendImpl) backend;
-            //$ }
-
-            return null;
+                return new BackendImpl(inner, this);
+            }
+            else
+            {
+                return (BackendImpl) backend;
+            }
         }
 
         public LoadBalancerImpl WithoutFrontend (string name)
         {
+            frontends.Remove(name);
+            return this;
+        }
 
-            //$ Frontend frontend = this.frontends.get(name);
-            //$ this.frontends.remove(name);
-            //$ 
-            //$ final String frontendId;
-            //$ if (frontend != null) {
-            //$ frontendId = frontend.inner().id();
-            //$ } else {
-            //$ frontendId = null;
-            //$ }
-            //$ 
-            //$ // Remove references from inbound NAT rules
-            //$ List<InboundNatRuleInner> natRulesInner = this.inner().inboundNatRules();
-            //$ if (natRulesInner != null && frontendId != null) {
-            //$ for (InboundNatRuleInner natRuleInner : natRulesInner) {
-            //$ final SubResource frontendRef = natRuleInner.frontendIPConfiguration();
-            //$ if (frontendRef != null && frontendRef.id().equalsIgnoreCase(frontendId)) {
-            //$ natRuleInner.withFrontendIPConfiguration(null);
-            //$ }
-            //$ }
-            //$ }
-            //$ 
-            //$ return this;
+        public LoadBalancerImpl WithoutLoadBalancingRule(string name)
+        {
+            loadBalancingRules.Remove(name);
+            return this;
+        }
 
+        public LoadBalancerImpl WithoutInboundNatRule(string name)
+        {
+            inboundNatRules.Remove(name);
+            return this;
+        }
+
+        public LoadBalancerImpl WithoutBackend(string name)
+        {
+            backends.Remove(name);
+            return this;
+        }
+
+        public IUpdate WithoutInboundNatPool(string name)
+        {
+            this.inboundNatPools.Remove(name);
             return this;
         }
 
         public LoadBalancerImpl WithoutProbe (string name)
         {
-
-            //$ if (this.httpProbes.containsKey(name)) {
-            //$ this.httpProbes.remove(name);
-            //$ } else if (this.tcpProbes.containsKey(name)) {
-            //$ this.tcpProbes.remove(name);
-            //$ }
-            //$ 
-            //$ List<ProbeInner> probes = this.inner().probes();
-            //$ if (probes != null) {
-            //$ for (int i = 0; i < probes.size(); i++) {
-            //$ if (probes.get(i).name().equalsIgnoreCase(name)) {
-            //$ probes.remove(i);
-            //$ break;
-            //$ }
-            //$ }
-            //$ }
-            //$ 
-            //$ return this;
-
+            httpProbes.Remove(name);
+            tcpProbes.Remove(name);
             return this;
         }
 
         public ProbeImpl UpdateTcpProbe (string name)
         {
-
-            //$ return (ProbeImpl) this.tcpProbes.get(name);
-
-            return null;
+            return TryGetValue<ProbeImpl, ITcpProbe>(name, tcpProbes);
         }
 
         public BackendImpl UpdateBackend (string name)
         {
-
-            //$ return (BackendImpl) this.backends.get(name);
-
-            return null;
+            return TryGetValue<BackendImpl, IBackend>(name, backends);
         }
 
         public FrontendImpl UpdateInternetFrontend (string name)
         {
-
-            //$ return (FrontendImpl) this.frontends.get(name);
-
-            return null;
+            return UpdateFrontend(name);
         }
 
         public FrontendImpl UpdateInternalFrontend (string name)
         {
+            return UpdateFrontend(name);
+        }
 
-            //$ return (FrontendImpl) this.frontends.get(name);
+        private FrontendImpl UpdateFrontend (string name)
+        {
+            return TryGetValue<FrontendImpl, IFrontend>(name, frontends);
+        }
 
-            return null;
+        private WrapperT TryGetValue<WrapperT, IWrapperT>(string name, IDictionary<string, IWrapperT> dictionary) where WrapperT : IWrapperT
+        {
+            if (dictionary == null)
+            {
+                return default(WrapperT);
+            }
+            else
+            {
+                IWrapperT wrapper;
+                dictionary.TryGetValue(name, out wrapper);
+                return (WrapperT) wrapper;
+            }
         }
 
         public InboundNatRuleImpl UpdateInboundNatRule (string name)
         {
-
-            //$ return (InboundNatRuleImpl) this.inboundNatRules.get(name);
-
-            return null;
+            return TryGetValue<InboundNatRuleImpl, IInboundNatRule>(name, inboundNatRules);
         }
 
         public InboundNatPoolImpl UpdateInboundNatPool (string name)
         {
-
-            //$ return (InboundNatPoolImpl) this.inboundNatPools.get(name);
-
-            return null;
+            return TryGetValue<InboundNatPoolImpl, IInboundNatPool>(name, inboundNatPools);
         }
 
         public ProbeImpl UpdateHttpProbe (string name)
         {
-
-            //$ return (ProbeImpl) this.httpProbes.get(name);
-
-            return null;
+            return TryGetValue<ProbeImpl, IHttpProbe>(name, httpProbes);
         }
 
         public LoadBalancingRuleImpl UpdateLoadBalancingRule (string name)
         {
-
-            //$ return (LoadBalancingRuleImpl) this.loadBalancingRules.get(name);
-
-            return null;
+            return TryGetValue<LoadBalancingRuleImpl, ILoadBalancingRule>(name, loadBalancingRules);
         }
 
-        public LoadBalancerImpl WithoutLoadBalancingRule (string name)
+        public IDictionary<string, IBackend> Backends ()
         {
-
-            //$ this.loadBalancingRules.remove(name);
-            //$ return this;
-
-            return this;
+            return backends;
         }
 
-        public LoadBalancerImpl WithoutInboundNatRule (string name)
+        public IDictionary<string, IInboundNatPool> InboundNatPools ()
         {
-
-            //$ this.inboundNatRules.remove(name);
-            //$ return this;
-
-            return this;
+            return inboundNatPools;
         }
 
-        public LoadBalancerImpl WithoutBackend (string name)
+        public IDictionary<string, ITcpProbe> TcpProbes ()
         {
-
-            //$ this.backends.remove(name);
-            //$ return this;
-
-            return this;
+            return tcpProbes;
         }
 
-        public IUpdate WithoutInboundNatPool (string name)
+        public IDictionary<string, IFrontend> Frontends ()
         {
-
-            //$ this.inboundNatPools.remove(name);
-            //$ return this;
-
-            return null;
+            return frontends;
         }
 
-        public IDictionary<string,Microsoft.Azure.Management.V2.Network.IBackend> Backends ()
+        public IDictionary<string, IInboundNatRule> InboundNatRules ()
         {
-
-            //$ return Collections.unmodifiableMap(this.backends);
-
-            return null;
+            return inboundNatRules;
         }
 
-        public IDictionary<string,Microsoft.Azure.Management.V2.Network.IInboundNatPool> InboundNatPools ()
+        public IDictionary<string, IHttpProbe> HttpProbes ()
         {
-
-            //$ return Collections.unmodifiableMap(this.inboundNatPools);
-
-            return null;
+            return httpProbes;
         }
 
-        public IDictionary<string,Microsoft.Azure.Management.V2.Network.ITcpProbe> TcpProbes ()
+        public IDictionary<string, ILoadBalancingRule> LoadBalancingRules ()
         {
-
-            //$ return Collections.unmodifiableMap(this.tcpProbes);
-
-            return null;
-        }
-
-        public IDictionary<string,Microsoft.Azure.Management.V2.Network.IFrontend> Frontends ()
-        {
-
-            //$ return Collections.unmodifiableMap(this.frontends);
-
-            return null;
-        }
-
-        public IDictionary<string,Microsoft.Azure.Management.V2.Network.IInboundNatRule> InboundNatRules ()
-        {
-
-            //$ return Collections.unmodifiableMap(this.inboundNatRules);
-
-            return null;
-        }
-
-        public IDictionary<string,Microsoft.Azure.Management.V2.Network.IHttpProbe> HttpProbes ()
-        {
-
-            //$ return Collections.unmodifiableMap(this.httpProbes);
-
-            return null;
-        }
-
-        public IDictionary<string,Microsoft.Azure.Management.V2.Network.ILoadBalancingRule> LoadBalancingRules ()
-        {
-
-            //$ return Collections.unmodifiableMap(this.loadBalancingRules);
-
-            return null;
+            return loadBalancingRules;
         }
 
         public List<string> PublicIpAddressIds
         {
             get
             {
-            //$ List<String> publicIpAddressIds = new ArrayList<>();
-            //$ for (Frontend frontend : this.frontends().values()) {
-            //$ if (frontend.isPublic()) {
-            //$ String pipId = ((PublicFrontend) frontend).publicIpAddressId();
-            //$ publicIpAddressIds.add(pipId);
-            //$ }
-            //$ }
-            //$ return Collections.unmodifiableList(publicIpAddressIds);
+                List<string> publicIpAddressIds = new List<string>();
+                foreach (IFrontend frontend in Frontends().Values)
+                {
+                    if (frontend.IsPublic)
+                    {
+                        string pipId = ((IPublicFrontend) frontend).PublicIpAddressId;
+                        publicIpAddressIds.Add(pipId);
+                    }
+                }
 
-
-                return null;
+                return publicIpAddressIds;
             }
         }
     }

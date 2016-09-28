@@ -2,125 +2,112 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.V2.Network
 {
-
-    using Microsoft.Azure.Management.V2.Network.Backend.Update;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Network.LoadBalancer.Update;
-    using Microsoft.Azure.Management.V2.Network.LoadBalancer.Definition;
-    using Microsoft.Azure.Management.Network.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Network.Backend.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
-    using Microsoft.Azure.Management.V2.Network.Backend.Definition;
+    using LoadBalancer.Definition;
+    using Management.Network.Models;
+    using Resource.Core;
+    using Backend.UpdateDefinition;
+    using Backend.Definition;
     using Resource.Core.ChildResourceActions;
-    using System;
 
     /// <summary>
     /// Implementation for {@link Backend}.
     /// </summary>
     public partial class BackendImpl  :
-        ChildResource<Microsoft.Azure.Management.Network.Models.BackendAddressPoolInner,Microsoft.Azure.Management.V2.Network.LoadBalancerImpl,Microsoft.Azure.Management.V2.Network.ILoadBalancer>,
+        ChildResource<BackendAddressPoolInner, LoadBalancerImpl, ILoadBalancer>,
         IBackend,
-        IDefinition<Microsoft.Azure.Management.V2.Network.LoadBalancer.Definition.IWithBackendOrProbe>,
-        IUpdateDefinition<Microsoft.Azure.Management.V2.Network.LoadBalancer.Update.IUpdate>,
-        Microsoft.Azure.Management.V2.Network.Backend.Update.IUpdate
+        IDefinition<IWithBackendOrProbe>,
+        IUpdateDefinition<LoadBalancer.Update.IUpdate>,
+        Backend.Update.IUpdate
     {
-        protected  BackendImpl (BackendAddressPoolInner inner, LoadBalancerImpl parent) : base(inner.Name, inner, parent)
+        internal BackendImpl (BackendAddressPoolInner inner, LoadBalancerImpl parent) : base(inner.Name, inner, parent)
         {
-
-            //$ super(inner, parent);
-            //$ }
-
         }
 
         public IDictionary<string,string> BackendNicIpConfigurationNames
         {
             get
             {
-            //$ // This assumes a NIC can only have one IP config associated with the backend of an LB,
-            //$ // which is correct at the time of this implementation and seems unlikely to ever change
-            //$ final Map<String, String> ipConfigNames = new TreeMap<>();
-            //$ if (this.inner().backendIPConfigurations() != null) {
-            //$ for (NetworkInterfaceIPConfigurationInner inner : this.inner().backendIPConfigurations()) {
-            //$ String nicId = ResourceUtils.parentResourcePathFromResourceId(inner.id());
-            //$ String ipConfigName = ResourceUtils.nameFromResourceId(inner.id());
-            //$ ipConfigNames.put(nicId, ipConfigName);
-            //$ }
-            //$ }
-            //$ 
-            //$ return Collections.unmodifiableMap(ipConfigNames);
+                // This assumes a NIC can only have one IP config associated with the backend of an LB,
+                // which is correct at the time of this implementation and seems unlikely to ever change
+                IDictionary<string, string> ipConfigNames = new SortedDictionary<string, string>();
+                if (this.Inner.BackendIPConfigurations != null)
+                {
+                    foreach (var inner in Inner.BackendIPConfigurations)
+                    {
+                        string nicId = ResourceUtils.ParentResourcePathFromResourceId(inner.Id);
+                        string ipConfigName = ResourceUtils.NameFromResourceId(inner.Id);
+                        ipConfigNames[nicId] = ipConfigName;
+                    }
+                }
 
-
-                return null;
+                return ipConfigNames;
             }
         }
-        public IDictionary<string,Microsoft.Azure.Management.V2.Network.ILoadBalancingRule> LoadBalancingRules ()
+        public IDictionary<string, ILoadBalancingRule> LoadBalancingRules ()
         {
+            IDictionary<string, ILoadBalancingRule> rules = new SortedDictionary<string, ILoadBalancingRule>();
+            if (this.Inner.LoadBalancingRules != null)
+            {
+                foreach (var inner in this.Inner.LoadBalancingRules)
+                {
+                    string name = ResourceUtils.NameFromResourceId(inner.Id);
+                    ILoadBalancingRule rule;
+                    this.Parent.LoadBalancingRules().TryGetValue(name, out rule);
+                    if (rule != null)
+                    {
+                        rules[name] = rule;
+                    }
+                }
+            }
 
-            //$ final Map<String, LoadBalancingRule> rules = new TreeMap<>();
-            //$ if (this.inner().loadBalancingRules() != null) {
-            //$ for (SubResource inner : this.inner().loadBalancingRules()) {
-            //$ String name = ResourceUtils.nameFromResourceId(inner.id());
-            //$ LoadBalancingRule rule = this.parent().loadBalancingRules().get(name);
-            //$ if (rule != null) {
-            //$ rules.put(name, rule);
-            //$ }
-            //$ }
-            //$ }
-            //$ 
-            //$ return Collections.unmodifiableMap(rules);
-
-            return null;
+            return rules;
         }
 
         override public string Name
         {
             get
             {
-            //$ return this.inner().name();
-
-
-                return null;
+                return this.Inner.Name;
             }
         }
+
         public ISet<string> GetVirtualMachineIds ()
         {
-
-            //$ Set<String> vmIds = new HashSet<>();
-            //$ Map<String, String> nicConfigs = this.backendNicIpConfigurationNames();
-            //$ if (nicConfigs != null) {
-            //$ for (String nicId : nicConfigs.keySet()) {
-            //$ try {
-            //$ NetworkInterface nic = this.parent().manager().networkInterfaces().getById(nicId);
-            //$ if (nic == null || nic.virtualMachineId() == null) {
-            //$ continue;
-            //$ } else {
-            //$ vmIds.add(nic.virtualMachineId());
-            //$ }
-            //$ } catch (CloudException | IllegalArgumentException e) {
-            //$ continue;
-            //$ }
-            //$ }
-            //$ }
-            //$ 
-            //$ return vmIds;
-
-            return null;
+            ISet<string> vmIds = new HashSet<string>();
+            IDictionary<string, string> nicConfigs = this.BackendNicIpConfigurationNames;
+            if (nicConfigs != null)
+            {
+                foreach (string nicId in nicConfigs.Keys)
+                {
+                    try
+                    {
+                        var nic = this.Parent.Manager.NetworkInterfaces.GetById(nicId);
+                        if (nic == null || nic.VirtualMachineId == null)
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            vmIds.Add(nic.VirtualMachineId);
+                        }
+                    }
+                    catch
+                    {
+                    }
+                }
+            }
+            return vmIds;
         }
 
         public LoadBalancerImpl Attach ()
         {
-
-            //$ this.parent().withBackend(this);
-            //$ return this.parent();
-
-            return null;
+            return Parent.WithBackend(this);
         }
 
         LoadBalancer.Update.IUpdate ISettable<LoadBalancer.Update.IUpdate>.Parent()
         {
-            throw new NotImplementedException();
+            return Parent;
         }
     }
 }
