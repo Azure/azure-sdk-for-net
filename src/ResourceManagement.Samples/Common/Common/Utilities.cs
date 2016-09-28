@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Azure.Management.Fluent.Redis;
+using Microsoft.Azure.Management.V2.Network;
 
 namespace Micosoft.Azure.Management.Samples.Common
 {
@@ -200,6 +201,31 @@ namespace Micosoft.Azure.Management.Samples.Common
                      .Append("\tSecondary Key: '").Append(redisAccessKeys.SecondaryKey).AppendLine("', ");
 
             Console.WriteLine(redisKeys.ToString());
+        }
+
+        public static void PrintNetworkSecurityGroup(INetworkSecurityGroup resource)
+        {
+            StringBuilder info = new StringBuilder();
+            info.Append("NSG: ").Append(resource.Id)
+                    .Append("Name: ").Append(resource.Name)
+                    .Append("\n\tResource group: ").Append(resource.ResourceGroupName)
+                    .Append("\n\tRegion: ").Append(resource.RegionName)
+                    .Append("\n\tTags: ").Append(resource.Tags);
+
+            // Output security rules
+            foreach (var rule in resource.SecurityRules())
+            {
+                info.Append("\n\tRule: ").Append(rule.Name)
+                        .Append("\n\t\tAccess: ").Append(rule.Access)
+                        .Append("\n\t\tDirection: ").Append(rule.Direction)
+                        .Append("\n\t\tFrom address: ").Append(rule.SourceAddressPrefix)
+                        .Append("\n\t\tFrom port range: ").Append(rule.SourcePortRange)
+                        .Append("\n\t\tTo address: ").Append(rule.DestinationAddressPrefix)
+                        .Append("\n\t\tTo port: ").Append(rule.DestinationPortRange)
+                        .Append("\n\t\tProtocol: ").Append(rule.Protocol)
+                        .Append("\n\t\tPriority: ").Append(rule.Priority);
+            }
+            Console.WriteLine(info.ToString());
         }
     }
 }
