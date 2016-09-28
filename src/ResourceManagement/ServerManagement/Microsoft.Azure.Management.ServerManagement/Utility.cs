@@ -29,7 +29,8 @@ namespace Microsoft.Azure.Management.ServerManagement
             var result = string.Empty;
             var jwk = status.EncryptionJwk;
 
-            using (var rsa = new RSACryptoServiceProvider())
+#if PORTABLE
+            using (var rsa = RSA.Create())
             {
                 rsa.ImportParameters(
                     new RSAParameters
@@ -42,9 +43,27 @@ namespace Microsoft.Azure.Management.ServerManagement
                                 .PadRight(jwk.N.Length + ((4 - (jwk.N.Length % 4)) % 4), '='))
                     });
 
-                var bytes = rsa.Encrypt(Encoding.UTF8.GetBytes(source), true);
+                var bytes = rsa.Encrypt(Encoding.UTF8.GetBytes(source), RSAEncryptionPadding.Pkcs1);
                 result = System.Convert.ToBase64String(bytes);
             }
+#else
+            using (var rsa = RSA.Create())
+            {
+                rsa.ImportParameters(
+                    new RSAParameters
+                    {
+                        Exponent = Convert.FromBase64String(jwk.E),
+                        Modulus =
+                                Convert.FromBase64String(
+                                    jwk.N.Replace('_', '/')
+                                .Replace('-', '+')
+                                .PadRight(jwk.N.Length + ((4 - (jwk.N.Length % 4)) % 4), '='))
+                    });
+
+                var bytes = rsa.EncryptValue(Encoding.UTF8.GetBytes(source));
+                result = System.Convert.ToBase64String(bytes);
+            }
+#endif
 
             return result;
         }
