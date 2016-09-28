@@ -5,11 +5,14 @@
   },
 
   "dependencies": {
-    "Common": "1.0.0-*",
+    "Common": {
+      "target": "project"
+    },
     "Microsoft.NETCore.App": {
-        "type": "platform",
-        "version": "1.0.0"
-    }  },
+      "type": "platform",
+      "version": "1.0.0"
+    }
+  },
 
   "frameworks": {
     "netcoreapp1.0": {

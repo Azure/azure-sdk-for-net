@@ -1,14 +1,34 @@
 {
   "version": "1.0.0-*",
 
-    "dependencies": {
-        "Microsoft.Azure.Management.Fluent": "1.0.0-*",
-        "NETStandard.Library": "1.6.0"
-    },
+  "dependencies": {
+    "Microsoft.Azure.Management.Fluent": "0.0.1-*"
+  },
 
   "frameworks": {
-    "netstandard1.6": {
-      "imports": "dnxcore50"
+    "net45": {
+      "dependencies": {
+      }
+    },
+    "netstandard1.5": {
+      "imports": [ "dnxcore50" ],
+      "buildOptions": { "define": [ "PORTABLE" ] },
+      "dependencies": {
+        "Microsoft.NETCore.Platforms": "1.0.1",
+        "System.Diagnostics.Tools": "4.0.1",
+        "System.Net.Http": "4.1.0",
+        "System.Runtime.Serialization.Primitives": "4.1.1",
+        "System.Threading.Tasks": "4.0.11",
+        "System.Console": "4.0.0"
+      }
+    },
+    "netstandard1.1": {
+      "imports": [ "dnxcore50" ],
+      "buildOptions": { "define": [ "PORTABLE" ] },
+      "dependencies": {
+        "System.Runtime.Serialization.Primitives": "4.1.1",
+        "System.Console": "4.0.0"
+      }
     }
   }
 }
