@@ -31,8 +31,9 @@ namespace ObjectModelCodeGenerator
 
         private static void GenerateModelFiles()
         {
-            var inputFile = @"BatchProperties.json";
-            var model = new FileReader(inputFile).ReadTypes();
+            var inputFolder = Path.Combine(GetSourceDirectory(), @"Spec");
+            var inputPattern = "*.json";
+            var model = new FileReader(inputFolder, inputPattern).ReadTypes();
 
             var seen = new HashSet<string>();
 
@@ -40,7 +41,7 @@ namespace ObjectModelCodeGenerator
             {
                 if (seen.Contains(type.Name))
                 {
-                    System.Console.WriteLine($"Duplicate type in {inputFile}: {type.Name}");
+                    System.Console.WriteLine($"Duplicate type: {type.Name}");
                 }
                 seen.Add(type.Name);
 
@@ -71,6 +72,11 @@ namespace ObjectModelCodeGenerator
 
                 File.WriteAllText(outputFilePath, batchModel.TransformText());
             }
+        }
+
+        private static string GetSourceDirectory([System.Runtime.CompilerServices.CallerFilePath] string thisFilePath = null)
+        {
+            return Path.GetDirectoryName(thisFilePath);
         }
 
         private static void GenerateSomeRoslynFiles()

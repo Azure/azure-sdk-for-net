@@ -1,0 +1,44 @@
+    {
+      "Name": "MultiInstanceSettings",
+      "ProtocolName": "Models.MultiInstanceSettings",
+      "Comment": "Settings which specify how to run a multi-instance task. Multi-instance tasks are commonly used to support MPI tasks. For more information see https://azure.microsoft.com/documentation/articles/batch-mpi/.",
+      "Properties": [
+        {
+          "Key": {
+            "Type": "IList<ResourceFile>",
+            "Name": "CommonResourceFiles",
+            "SummaryComment": "A list of files that the Batch service will download before running the coordination command line.",
+            "RemarksComment": "The difference between common resource files and task resource files is that common resource files are downloaded for all subtasks including the primary, whereas task resource files are downloaded only for the primary.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "IList<Models.ResourceFile>",
+            "Name": "CommonResourceFiles"
+          }
+        },
+        {
+          "Key": {
+            "Type": "string",
+            "Name": "CoordinationCommandLine",
+            "SummaryComment": "The command to run on the compute node instances for coordinating among the subtasks.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "int",
+            "Name": "NumberOfInstances",
+            "SummaryComment": "The number of compute nodes required by the multi-instance task.",
+            "RemarksComment": null,
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Required"
+          },
+          "Value": null
+        }
+      ]
+    }

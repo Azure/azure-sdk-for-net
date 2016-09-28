@@ -1,7 +1,7 @@
 {
   "version": "2.0.0-preview",
   "title": "Microsoft Azure Key Vault Management",
-  "description": "Provides resource group and resource management capabilities for Microsoft Azure.",
+  "description": "Provides key vault management capabilities for Microsoft Azure.",
   "authors": [ "Microsoft" ],
 
   "packOptions": {

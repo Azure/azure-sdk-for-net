@@ -1,0 +1,91 @@
+    {
+      "Name": "JobReleaseTask",
+      "ProtocolName": "Models.JobReleaseTask",
+      "Comment": "A Job Release task to run on job completion on any compute node where the job has run.",
+      "Properties": [
+        {
+          "Key": {
+            "Type": "string",
+            "Name": "Id",
+            "SummaryComment": "The id of the task.",
+            "RemarksComment": null,
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "string",
+            "Name": "CommandLine",
+            "SummaryComment": "The command line of the task.",
+            "RemarksComment": "The command line does not run under a shell, and therefore cannot take advantage of shell features such as environment variable expansion. If you want to take advantage of such features, you should invoke the shell in the command line, for example using \"cmd /c MyCommand\" in Windows or \"/bin/sh -c MyCommand\" in Linux.",
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write",
+            "ConstructorArgumentType": "Required"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "IList<ResourceFile>",
+            "Name": "ResourceFiles",
+            "SummaryComment": "A list of files that the Batch service will download to the compute node before running the command line.",
+            "RemarksComment": null,
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "IList<Models.ResourceFile>",
+            "Name": "ResourceFiles"
+          }
+        },
+        {
+          "Key": {
+            "Type": "IList<EnvironmentSetting>",
+            "Name": "EnvironmentSettings",
+            "SummaryComment": "The collection of EnvironmentSetting instances.",
+            "RemarksComment": null,
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": {
+            "Type": "IList<Models.EnvironmentSetting>",
+            "Name": "EnvironmentSettings"
+          }
+        },
+        {
+          "Key": {
+            "Type": "bool?",
+            "Name": "RunElevated",
+            "SummaryComment": "Whether to run the task in elevated mode.",
+            "RemarksComment": null,
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "TimeSpan?",
+            "Name": "MaxWallClockTime",
+            "SummaryComment": "The maximum duration of time for which a task is allowed to run from the time it is created.",
+            "RemarksComment": null,
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        },
+        {
+          "Key": {
+            "Type": "TimeSpan?",
+            "Name": "RetentionTime",
+            "SummaryComment": "The duration of time for which files in the task's working directory are retained, from the time it completes execution. After this duration, the task's working directory is reclaimed.",
+            "RemarksComment": null,
+            "BoundAccess": "read,write",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        }
+      ]
+    }

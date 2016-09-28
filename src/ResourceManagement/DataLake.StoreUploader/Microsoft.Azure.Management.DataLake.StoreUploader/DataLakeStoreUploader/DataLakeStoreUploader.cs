@@ -180,13 +180,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                         var allFiles = new ConcurrentQueue<UploadMetadata>(metadata.Files);
                         int threadCount = Math.Min(allFiles.Count, this.Parameters.ConcurrentFileCount);
 
-                        // add up to two threads, one for saving and one for progress, if necessary.
-                        var threads = new List<Thread>(threadCount + (progressThread != null ? 2 : 1));
+                        var executionThreads = new List<Thread>(threadCount);
 
+                        // add up to two threads, one for saving and one for progress, if necessary.
+                        var trackingThreads = new List<Thread>(progressThread != null ? 2 : 1);
                         if (progressThread != null)
                         {
                             progressThread.Start();
-                            threads.Add(progressThread);
+                            trackingThreads.Add(progressThread);
                         }
 
                         // break up the batch save into 100 even chunks. This is most important for very large directories
@@ -288,7 +289,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                                 }
                             });
                             t.Start();
-                            threads.Add(t);
+                            executionThreads.Add(t);
                         }
 
                         // create a thread that handles saving of the metadata so that there is no locking happening in the upload threads
@@ -330,9 +331,9 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                         });
 
                         saveThread.Start();
-                        threads.Add(saveThread);
+                        trackingThreads.Add(saveThread);
 
-                        foreach (var t in threads)
+                        foreach (var t in executionThreads)
                         {
                             t.Join();
                         }
@@ -343,6 +344,15 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                         }
 
                         metadata.DeleteFile();
+
+                        foreach(var t in trackingThreads)
+                        {
+                            if (t.ThreadState == ThreadState.Running)
+                            {
+                                // TODO: Log that the thread is still running when it should have finished
+                                t.Abort();
+                            }
+                        }
                     }
                     catch (OperationCanceledException)
                     {
@@ -931,6 +941,11 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <param name="metadata"></param>
         private void DownloadFile(UploadMetadata metadata, IProgress<SegmentUploadProgress> segmentProgressTracker = null)
         {
+            if (!_frontEnd.StreamExists(metadata.InputFilePath))
+            {
+                throw new FileNotFoundException("Unable to locate remote file", metadata.InputFilePath);
+            }
+
             try
             {
                 segmentProgressTracker = segmentProgressTracker ?? CreateSegmentProgressTracker(metadata);
@@ -945,6 +960,11 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                     //perform the multi-segment upload
                     // reducing the thread count to make it equal to the segment count
                     // if it is larger, since those extra threads will not be used.
+                    using (var targetStream = new FileStream(metadata.TargetStreamPath + ".inprogress", FileMode.Create, FileAccess.Write, FileShare.ReadWrite))
+                    {
+                        targetStream.SetLength(metadata.FileLength);
+                    }
+
                     var msu = new MultipleSegmentDownloader(metadata,
                         metadata.SegmentCount < this.Parameters.PerFileThreadCount ?
                         metadata.SegmentCount :
@@ -956,14 +976,22 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
                     //concatenate the files at the end
                     ConcatenateSegments(metadata);
+                    
                 }
                 else
                 {
                     //optimization if we only have one segment: upload it directly to the target stream
+
+                    using (var targetStream = new FileStream(metadata.TargetStreamPath, FileMode.Create, FileAccess.Write))
+                    {
+                        targetStream.SetLength(metadata.FileLength);
+                    }
+
                     metadata.Segments[0].Path = metadata.TargetStreamPath;
                     var ssu = new SingleSegmentDownloader(0, metadata, _frontEnd, _token, segmentProgressTracker);
                     ssu.UseBackOffRetryStrategy = this.Parameters.UseSegmentBlockBackOffRetryStrategy;
                     ssu.Download();
+                    ssu.VerifyDownloadedStream();
                 }
                 metadata.Status = SegmentUploadStatus.Complete;
 
@@ -1039,7 +1067,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <param name="metadata"></param>
         private void ConcatenateSegments(UploadMetadata metadata)
         {
-            string[] inputPaths = new string[metadata.SegmentCount];
+            string[] inputPaths = new string[this.Parameters.IsDownload ? 2 : metadata.SegmentCount];
             
             //verify if target stream exists
             if (_frontEnd.StreamExists(metadata.TargetStreamPath, this.Parameters.IsDownload))
@@ -1054,14 +1082,58 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 }
             }
 
-            //ensure all input streams exist and are of the expected length
-            //ensure all segments in the metadata are marked as 'complete'
             var exceptions = new ConcurrentQueue<Exception>();
-            Parallel.For(
-                0,
-                metadata.SegmentCount,
-                new ParallelOptions() { MaxDegreeOfParallelism = this.Parameters.PerFileThreadCount },
-                (i) =>
+            if (this.Parameters.IsDownload)
+            {
+                // call concatenate, which really just renames
+                // the "inprogress" file to complete.
+                inputPaths[0] = string.Format("{0}.inprogress", metadata.TargetStreamPath);
+                inputPaths[1] = metadata.TargetStreamPath;
+
+                // validate that the file is the right length.
+                var retryCount = 0;
+                long remoteLength = -1;
+                try
+                {
+                    while (retryCount < SingleSegmentUploader.MaxBufferUploadAttemptCount)
+                    {
+                        _token.ThrowIfCancellationRequested();
+                        retryCount++;
+                        try
+                        {
+                            remoteLength = _frontEnd.GetStreamLength(inputPaths[0], this.Parameters.IsDownload);
+                            break;
+                        }
+                        catch (Exception e)
+                        {
+                            _token.ThrowIfCancellationRequested();
+                            if (retryCount >= SingleSegmentUploader.MaxBufferUploadAttemptCount)
+                            {
+                                throw new UploadFailedException(
+                                    string.Format(
+                                        "Cannot perform 'Finalization' operation due to the following exception retrieving file information: {0}",
+                                        e));
+                            }
+
+                            SingleSegmentUploader.WaitForRetry(retryCount, Parameters.UseSegmentBlockBackOffRetryStrategy, _token);
+                        }
+                    }
+
+                    if (remoteLength != metadata.FileLength)
+                    {
+                        throw new UploadFailedException(string.Format("Cannot perform 'Finalization' operation because in progress file {0} has an incorrect length (expected {1}, actual {2}).", inputPaths[0], metadata.FileLength, remoteLength));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    exceptions.Enqueue(ex);
+                }
+            }
+            else
+            {
+                //ensure all segments in the metadata are marked as 'complete'
+                
+                for (int i = 0; i < metadata.SegmentCount; i++)
                 {
                     try
                     {
@@ -1070,48 +1142,15 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                             throw new UploadFailedException("Cannot perform 'Concatenate' operation because not all streams are fully uploaded.");
                         }
 
-                        var remoteStreamPath = metadata.Segments[i].Path;
-                        var retryCount = 0;
-                        long remoteLength = -1;
-                        
-                        while (retryCount < SingleSegmentUploader.MaxBufferUploadAttemptCount)
-                        {
-                            _token.ThrowIfCancellationRequested();
-                            retryCount++;
-                            try
-                            {
-                                remoteLength = _frontEnd.GetStreamLength(remoteStreamPath, this.Parameters.IsDownload);
-                                break;
-                            }
-                            catch (Exception e)
-                            {
-                                _token.ThrowIfCancellationRequested();
-                                if (retryCount >= SingleSegmentUploader.MaxBufferUploadAttemptCount)
-                                {
-                                    throw new UploadFailedException(
-                                        string.Format(
-                                            "Cannot perform 'Concatenate' operation due to the following exception retrieving file information: {0}",
-                                            e));
-                                }
-
-                                SingleSegmentUploader.WaitForRetry(retryCount, Parameters.UseSegmentBlockBackOffRetryStrategy, _token);
-                            }
-                        }
-
-                        
-                        if (remoteLength != metadata.Segments[i].Length)
-                        {
-                            throw new UploadFailedException(string.Format("Cannot perform 'Concatenate' operation because segment {0} has an incorrect length (expected {1}, actual {2}).", i, metadata.Segments[i].Length, remoteLength));
-                        }
-
-                        inputPaths[i] = remoteStreamPath;
+                        inputPaths[i] = metadata.Segments[i].Path;
                     }
                     catch (Exception ex)
                     {
                         //collect any exceptions, whether we just generated them above or whether they come from the Front End,
                         exceptions.Enqueue(ex);
                     }
-                });
+                }
+            }
 
             if (exceptions.Count > 0)
             {

@@ -1,5 +1,5 @@
 {
-  "version": "2.1.0",
+  "version": "3.0.0",
   "title": "Microsoft Azure Batch Management Library",
   "description": "Provides management capabilities for Azure Batch service accounts.",
   "authors": [ "Microsoft" ],
@@ -10,8 +10,8 @@
     "tags": [ "Microsoft Azure batch management", "REST HTTP client", "azureofficial", "windowsazureofficial" ],
     "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
     "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
-    "requireLicenseAcceptance":  true,
-	"releaseNotes": "Added support for .NETStandard and fixed the .NETFramework 4.5 dependencies. This library targets REST API version 2015-12-01."
+    "requireLicenseAcceptance": true,
+    "releaseNotes": "See https://github.com/matthchr/azure-sdk-for-net/blob/AutoRest/src/ResourceManagement/Batch/changelog.md for release notes."
   },
 
   "buildOptions": {

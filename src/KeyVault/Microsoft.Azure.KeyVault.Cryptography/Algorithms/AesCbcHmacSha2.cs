@@ -8,6 +8,9 @@ using System.Security.Cryptography;
 
 namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
 {
+    /// <summary>
+    /// Abstract base class for AESCBC-HMAC algorithms.
+    /// </summary>
     public abstract class AesCbcHmacSha2 : SymmetricEncryptionAlgorithm
     {
         internal static Aes Create( byte[] key, byte[] iv )
@@ -311,7 +314,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
                 _hmac.AppendData( _associated_data_length );
 
                 // Compute the tag
-                _tag = _hmac.GetHashAndReset();
+                _tag = _hmac.GetHashAndReset().Take( _hmac_key.Length );
 
                 return _inner.TransformFinalBlock( inputBuffer, inputOffset, inputCount );
             }

@@ -128,6 +128,14 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         public long UploadedFileCount { get; private set; }
 
         /// <summary>
+        /// Gets the count of files that failed.
+        /// </summary>
+        /// <value>
+        /// The failed file count.
+        /// </value>
+        public long FailedFileCount { get; private set; }
+
+        /// <summary>
         /// Gets the upload progress for a particular file.
         /// </summary>
         /// <param name="segmentNumber">The sequence number of the file to retrieve information for</param>
@@ -147,7 +155,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// </summary>
         internal void OnFileUploadThreadAborted(UploadMetadata failedFile)
         {
-            ++this.UploadedFileCount;
+            ++this.FailedFileCount;
             
             var previousProgress = _fileProgress.Where(p => p.UploadId.Equals(failedFile.UploadId, StringComparison.InvariantCultureIgnoreCase)).First();
             foreach (var segment in previousProgress._segmentProgress)
@@ -169,7 +177,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         private void SetSegmentProgress(CancellationToken token)
         {
             UploadProgress segmentProgress;
-            while (this.UploadedFileCount < this.TotalFileCount)
+            while (this.UploadedFileCount + this.FailedFileCount < this.TotalFileCount)
             {
                 token.ThrowIfCancellationRequested();
                 if(_progressBacklog.TryDequeue(out segmentProgress))

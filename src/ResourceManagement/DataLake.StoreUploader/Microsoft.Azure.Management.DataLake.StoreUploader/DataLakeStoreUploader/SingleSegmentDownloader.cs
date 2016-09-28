@@ -97,33 +97,23 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
         /// <returns></returns>
         public void Download()
         {
-            if (!_frontEnd.StreamExists(_metadata.InputFilePath, !_metadata.IsDownload))
-            {
-                throw new FileNotFoundException("Unable to locate input file", _metadata.InputFilePath);
-            }
-
             if (_token.IsCancellationRequested)
             {
                 _token.ThrowIfCancellationRequested();
             }
 
-            //open a file stream (truncate it if it already exists) for the target segment
-            // we always truncate here because overwrite validation should have already been done.
-            // always create the directory as well
-            Directory.CreateDirectory(Path.GetDirectoryName(_segmentMetadata.Path));
-            
             // download the data
-            DownloadSegmentContents();
-
-            VerifyDownloadedStream();
             //any exceptions are (re)thrown to be handled by the caller; we do not handle retries or other recovery techniques here
+            // NOTE: We don't validate the download contents for each individual segment because all segments are being downloaded,
+            // in parallel, into the same stream. We cannot confirm the size of the data downloaded here. Instead we do it once at the end.
+            DownloadSegmentContents();
         }
 
         /// <summary>
         /// Verifies the downloaded stream.
         /// </summary>
         /// <exception cref="UploadFailedException"></exception>
-        private void VerifyDownloadedStream()
+        internal void VerifyDownloadedStream()
         {
             //verify that the remote stream has the length we expected.
             var retryCount = 0;
@@ -174,8 +164,13 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
             // set the length remaining to ensure that only the exact number of bytes is ultimately downloaded
             // for this segment.
             var lengthRemaining = _segmentMetadata.Length;
-            using (var outputStream = new FileStream(_segmentMetadata.Path, FileMode.Create))
+
+            // for multi-segment files we append "inprogress" to indicate that the file is not yet ready for use. 
+            // This also protects the user from unintentionally using the file after a failed download.
+            var streamName = _metadata.SegmentCount > 1 ? string.Format("{0}.inprogress", _metadata.TargetStreamPath) : _metadata.TargetStreamPath;
+            using (var outputStream = new FileStream(streamName, FileMode.Open, FileAccess.Write, FileShare.ReadWrite))
             {
+                outputStream.Seek(curOffset, SeekOrigin.Begin);
                 for (int i = 0; i < numRequests; i++)
                 {
                     _token.ThrowIfCancellationRequested();
@@ -196,7 +191,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
                             using (var readStream = _frontEnd.ReadStream(_metadata.InputFilePath, curOffset, lengthToDownload, _metadata.IsDownload))
                             {
-                                readStream.CopyTo(outputStream);
+                                readStream.CopyTo(outputStream, (int)lengthToDownload);
                             }
 
                             downloadCompleted = true;
@@ -216,9 +211,9 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                             else
                             {
                                 WaitForRetry(attemptCount, this.UseBackOffRetryStrategy, _token);
-                                
+
                                 // forcibly put the stream back to where it should be based on where we think we are in the download.
-                                outputStream.Seek(localOffset, SeekOrigin.Begin); 
+                                outputStream.Seek(curOffset, SeekOrigin.Begin);
                             }
                         }
                     }
@@ -239,7 +234,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 return;
             }
 
-            int intervalSeconds = Math.Max(MaximumBackoffWaitSeconds, (int)Math.Pow(2, attemptCount));
+            int intervalSeconds = Math.Min(MaximumBackoffWaitSeconds, (int)Math.Pow(2, attemptCount));
             Thread.Sleep(TimeSpan.FromSeconds(intervalSeconds));
         }
 
