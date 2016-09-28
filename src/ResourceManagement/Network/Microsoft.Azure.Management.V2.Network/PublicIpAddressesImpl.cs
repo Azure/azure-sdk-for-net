@@ -110,11 +110,6 @@ namespace Microsoft.Azure.Management.V2.Network
             throw new NotImplementedException();
         }
 
-        Task<PagedList<IPublicIpAddress>> ISupportsListingByGroup<IPublicIpAddress>.ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
         void ISupportsDeletingByGroup.Delete(string groupName, string name)
         {
             throw new NotImplementedException();

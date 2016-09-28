@@ -51,11 +51,6 @@ namespace Microsoft.Azure.Management.V2.Compute
             return WrapList(pagedList);
         }
 
-        Task<PagedList<IVirtualMachineScaleSet>> ISupportsListingByGroup<IVirtualMachineScaleSet>.ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken)
-        {
-            throw new NotSupportedException();
-        }
-
         public void Delete (string id)
         {
             this.Delete(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
