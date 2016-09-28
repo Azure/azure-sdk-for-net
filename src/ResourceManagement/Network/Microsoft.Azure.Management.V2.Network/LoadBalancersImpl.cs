@@ -3,23 +3,22 @@
 namespace Microsoft.Azure.Management.V2.Network
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Resource.Core;
     using System.Threading.Tasks;
     using System.Threading;
-    using Microsoft.Azure.Management.V2.Resource;
-    using Microsoft.Azure.Management.Network.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
+    using Management.Network.Models;
+    using Resource.Core.CollectionActions;
     using Management.Network;
     using System;
 
     /// <summary>
-    /// Implementation for LoadBalancers.
+    /// Implementation for ILoadBalancers.
     /// </summary>
     public partial class LoadBalancersImpl  :
         GroupableResources<
-            Microsoft.Azure.Management.V2.Network.ILoadBalancer,
-            Microsoft.Azure.Management.V2.Network.LoadBalancerImpl,
-            Microsoft.Azure.Management.Network.Models.LoadBalancerInner,
+            ILoadBalancer,
+            LoadBalancerImpl,
+            LoadBalancerInner,
             ILoadBalancersOperations,
             NetworkManager>,
         ILoadBalancers
@@ -27,93 +26,69 @@ namespace Microsoft.Azure.Management.V2.Network
         internal LoadBalancersImpl(NetworkManagementClient networkClient, NetworkManager networkManager) 
             : base(networkClient.LoadBalancers, networkManager)
         {
-
-            //$ final NetworkManagementClientImpl networkClient,
-            //$ final NetworkManager networkManager) {
-            //$ super(networkClient.loadBalancers(), networkManager);
-            //$ }
-
         }
 
-        public PagedList<Microsoft.Azure.Management.V2.Network.ILoadBalancer> List ()
+        public PagedList<ILoadBalancer> List ()
         {
+            var pagedList = new PagedList<LoadBalancerInner>(InnerCollection.ListAll(), (string nextPageLink) =>
+            {
+                return InnerCollection.ListAllNext(nextPageLink);
+            });
 
-            //$ return wrapList(this.innerCollection.listAll());
-
-            return null;
+            return WrapList(pagedList);
         }
 
-        public PagedList<Microsoft.Azure.Management.V2.Network.ILoadBalancer> ListByGroup (string groupName)
+        public PagedList<ILoadBalancer> ListByGroup (string groupName)
         {
+            var pagedList = new PagedList<LoadBalancerInner>(InnerCollection.List(groupName), (string nextPageLink) =>
+            {
+                return InnerCollection.ListNext(nextPageLink);
+            });
 
-            //$ return wrapList(this.innerCollection.list(groupName));
-
-            return null;
+            return WrapList(pagedList);
         }
 
 
         public LoadBalancerImpl Define (string name)
         {
-
-            //$ return wrapModel(name);
-
-            return null;
+            return WrapModel(name);
         }
 
         override protected LoadBalancerImpl WrapModel (string name)
         {
-
-            //$ LoadBalancerInner inner = new LoadBalancerInner();
-            //$ return new LoadBalancerImpl(
-            //$ name,
-            //$ inner,
-            //$ this.innerCollection,
-            //$ super.myManager);
-
-            return null;
+            LoadBalancerInner inner = new LoadBalancerInner();
+            return new LoadBalancerImpl(name, inner, InnerCollection, Manager);
         }
 
         override protected ILoadBalancer WrapModel (LoadBalancerInner inner) //$TODO: This needs to return LoadBalancerImpl
         {
-
-            //$ return new LoadBalancerImpl(
-            //$ inner.name(),
-            //$ inner,
-            //$ this.innerCollection,
-            //$ this.myManager);
-
-            return null;
+            return new LoadBalancerImpl(inner.Name, inner, InnerCollection, Manager);
         }
 
         Task DeleteAsync(string groupName, string name)
         {
-            throw new NotImplementedException();
+            return InnerCollection.DeleteAsync(groupName, name);
         }
 
         public override async Task<ILoadBalancer> GetByGroupAsync(string groupName, string name)
         {
-            return this as ILoadBalancer;
+            var data = await InnerCollection.GetAsync(groupName, name);
+            return WrapModel(data);
         }
 
-
-        Task<PagedList<ILoadBalancer>> ISupportsListingByGroup<ILoadBalancer>.ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken)
+        public void Delete(string id)
         {
-            throw new NotImplementedException();
+            DeleteAsync(id).Wait();
         }
 
-        void ISupportsDeleting.Delete(string id)
+        public Task DeleteAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
-        }
-
-        Task ISupportsDeleting.DeleteAsync(string id, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
+            return DeleteAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
         }
 
         void ISupportsDeletingByGroup.Delete(string groupName, string name)
         {
-            throw new NotImplementedException();
+            DeleteAsync(groupName, name).Wait();
         }
     }
 }
