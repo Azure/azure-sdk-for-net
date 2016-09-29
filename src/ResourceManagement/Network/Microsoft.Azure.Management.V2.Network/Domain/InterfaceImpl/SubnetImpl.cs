@@ -69,8 +69,8 @@ namespace Microsoft.Azure.Management.V2.Network
         /// <returns>the network security group associated with this subnet</returns>
         /// <returns><p></returns>
         /// <returns>Note that this method will result in a call to Azure each time it is invoked.</returns>
-        Microsoft.Azure.Management.V2.Network.INetworkSecurityGroup Microsoft.Azure.Management.V2.Network.ISubnet.NetworkSecurityGroup () { 
-            return this.NetworkSecurityGroup() as Microsoft.Azure.Management.V2.Network.INetworkSecurityGroup;
+        Microsoft.Azure.Management.V2.Network.INetworkSecurityGroup Microsoft.Azure.Management.V2.Network.ISubnet.GetNetworkSecurityGroup () { 
+            return this.GetNetworkSecurityGroup() as Microsoft.Azure.Management.V2.Network.INetworkSecurityGroup;
         }
 
         /// <summary>
