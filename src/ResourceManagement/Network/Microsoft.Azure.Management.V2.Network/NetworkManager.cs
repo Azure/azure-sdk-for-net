@@ -18,6 +18,10 @@ namespace Microsoft.Azure.Management.V2.Network
         private NetworkSecurityGroupsImpl networkSecurityGroups;
         private NetworksImpl networks;
 
+        //$ private NetworkSecurityGroupsImpl networkSecurityGroups;
+        //$ private NetworksImpl networks;
+        private LoadBalancersImpl loadBalancers;
+
         private NetworkManager(RestClient restClient, string subscriptionId) : base(restClient, subscriptionId)
         {
             networkManagementClient = new NetworkManagementClient(new Uri(restClient.BaseUri),
@@ -158,7 +162,12 @@ namespace Microsoft.Azure.Management.V2.Network
         {
             get
             {
-                throw new NotImplementedException();
+                if (loadBalancers == null)
+                {
+                    loadBalancers = new LoadBalancersImpl(networkManagementClient, this);
+                }
+
+                return loadBalancers;
             }
         }
     }

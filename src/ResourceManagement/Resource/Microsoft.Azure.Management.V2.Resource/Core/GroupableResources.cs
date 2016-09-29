@@ -19,12 +19,12 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
         protected GroupableResources(InnerCollectionT innerCollection, ManagerT manager)
         {
             InnerCollection = innerCollection;
-            MyManager = manager;
+            Manager = manager;
         }
 
         protected InnerCollectionT InnerCollection { get; }
 
-        protected ManagerT MyManager { get; }
+        protected ManagerT Manager { get; }
 
         #region Implementation of ISupportsGettingByGroup interface
 

@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.V2.Storage
         GroupableResources<
                 IStorageAccount,
                 StorageAccountImpl,
-                Management.Storage.Models.StorageAccountInner,
+                StorageAccountInner,
                 IStorageAccountsOperations,
                 IStorageManager>,
         IStorageAccounts
@@ -116,7 +116,7 @@ namespace Microsoft.Azure.Management.V2.Storage
             return new StorageAccountImpl(inner.Name,
                 inner,
                 InnerCollection,
-                MyManager);
+                Manager);
         }
 
         #endregion Implementation of CreatableWrappers::WrapModel abstract method
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Management.V2.Storage
             return new StorageAccountImpl(name,
                 innerObject,
                 InnerCollection,
-                MyManager
+                Manager
             );
         }
 

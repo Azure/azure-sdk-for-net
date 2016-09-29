@@ -51,11 +51,6 @@ namespace Microsoft.Azure.Management.V2.Compute
             return WrapList(pagedList);
         }
 
-        Task<PagedList<IVirtualMachineScaleSet>> ISupportsListingByGroup<IVirtualMachineScaleSet>.ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken)
-        {
-            throw new NotSupportedException();
-        }
-
         public void Delete (string id)
         {
             this.Delete(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
@@ -159,7 +154,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return new VirtualMachineScaleSetImpl(name,
                 inner,
                 this.InnerCollection,
-                this.MyManager,
+                this.Manager,
                 this.storageManager,
                 this.networkManager);
         }
@@ -169,7 +164,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return new VirtualMachineScaleSetImpl(inner.Name,
                 inner,
                 this.InnerCollection,
-                this.MyManager,
+                this.Manager,
                 this.storageManager,
                 this.networkManager);
         }

@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.V2.Resource
 
         public IBlank Define(string name)
         {
-            return new GenericResourceImpl(name, new GenericResourceInner(), this.client.Resources, MyManager);
+            return new GenericResourceImpl(name, new GenericResourceInner(), this.client.Resources, Manager);
         }
 
         public void Delete(string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion)
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.V2.Resource
                     resourceName,
                     inner,
                     client.Resources,
-                    MyManager)
+                    Manager)
             {
                 resourceProviderNamespace = resourceProviderNamespace,
                 parentResourceId = parentResourcePath,
@@ -109,7 +109,7 @@ namespace Microsoft.Azure.Management.V2.Resource
 
         protected override IGenericResource WrapModel(GenericResourceInner inner)
         {
-            IGenericResource model = (IGenericResource)new GenericResourceImpl(inner.Id, inner, this.client.Resources, MyManager)
+            IGenericResource model = (IGenericResource)new GenericResourceImpl(inner.Id, inner, this.client.Resources, Manager)
             {
                 resourceProviderNamespace = ResourceUtils.ResourceProviderFromResourceId(inner.Id),
                 parentResourceId = ResourceUtils.ParentResourcePathFromResourceId(inner.Id),
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.V2.Resource
 
         protected override GenericResourceImpl WrapModel(string id)
         {
-            GenericResourceImpl model = (GenericResourceImpl)new GenericResourceImpl(id, new GenericResourceInner(), this.client.Resources, MyManager)
+            GenericResourceImpl model = (GenericResourceImpl)new GenericResourceImpl(id, new GenericResourceInner(), this.client.Resources, Manager)
             {
                 resourceProviderNamespace = ResourceUtils.ResourceProviderFromResourceId(id),
                 parentResourceId = ResourceUtils.ParentResourcePathFromResourceId(id),

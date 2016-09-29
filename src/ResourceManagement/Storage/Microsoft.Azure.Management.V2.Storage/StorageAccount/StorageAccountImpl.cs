@@ -9,22 +9,24 @@ using Microsoft.Azure.Management.V2.Resource;
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.V2.Resource.Core;
 using System.Threading;
-using Microsoft.Azure.Management.V2.Resource.Core.Resource.Definition;
 using Microsoft.Azure.Management.V2.Storage.StorageAccount.Definition;
-using Microsoft.Azure.Management.V2.Resource.Core.Resource.Update;
 using Microsoft.Azure.Management.V2.Storage.StorageAccount.Update;
-using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
 
 namespace Microsoft.Azure.Management.V2.Storage
 {
     internal class StorageAccountImpl :
-        GroupableResource<IStorageAccount, StorageAccountInner, Rest.Azure.Resource, StorageAccountImpl, IStorageManager,
-            StorageAccount.Definition.IWithGroup,
-            StorageAccount.Definition.IWithCreate,
-            StorageAccount.Definition.IWithCreate,
-            StorageAccount.Update.IUpdate>,
+        GroupableResource<
+            IStorageAccount,
+            StorageAccountInner,
+            Rest.Azure.Resource,
+            StorageAccountImpl,
+            IStorageManager,
+            IWithGroup,
+            IWithCreate,
+            IWithCreate,
+            IUpdate>,
         IStorageAccount,
-        StorageAccount.Definition.IDefinition,
+        IDefinition,
         StorageAccount.Update.IUpdate
     {
         private string name;
@@ -128,16 +130,13 @@ namespace Microsoft.Azure.Management.V2.Storage
             }
         }
 
-        public IList<StorageAccountKey> Keys
+        public IList<StorageAccountKey> GetKeys()
         {
-            get
+            if (cachedAccountKeys == null)
             {
-                if (cachedAccountKeys == null)
-                {
-                    cachedAccountKeys = RefreshKeys();
-                }
-                return cachedAccountKeys;
+                cachedAccountKeys = RefreshKeys();
             }
+            return cachedAccountKeys;
         }
 
         #endregion
@@ -324,7 +323,7 @@ namespace Microsoft.Azure.Management.V2.Storage
 
         public override async Task<IStorageAccount> ApplyAsync(CancellationToken cancellationToken = default(CancellationToken), bool multiThreaded = true)
         {
-            // overriding the base.ApplyAsync here since the parameter for update is different from the  one for create.
+            // overriding the base.ApplyAsync here since the parameter for update is different from the one for create.
             var response = await client.UpdateAsync(ResourceGroupName, this.name, updateParameters, cancellationToken);
             SetInner(response);
             return this;

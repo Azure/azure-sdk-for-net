@@ -142,7 +142,7 @@ namespace Microsoft.Azure.Management.V2.Compute
                 inner,
                 this.InnerCollection,
                 this.virtualMachineExtensionsClient,
-                base.MyManager,
+                base.Manager,
                 this.storageManager,
                 this.networkManager);
         }
@@ -153,7 +153,7 @@ namespace Microsoft.Azure.Management.V2.Compute
                 virtualMachineInner,
                 this.InnerCollection,
                 this.virtualMachineExtensionsClient,
-                base.MyManager,
+                base.Manager,
                 this.storageManager,
                 this.networkManager);
         }
@@ -161,11 +161,6 @@ namespace Microsoft.Azure.Management.V2.Compute
         public Task DeleteAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
             return ((ISupportsDeletingByGroup)this).DeleteAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id), cancellationToken);
-        }
-
-        public async Task<PagedList<IVirtualMachine>> ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken)
-        {
-            throw new NotSupportedException();
         }
 
         public async override Task<IVirtualMachine> GetByGroupAsync(string groupName, string name)
