@@ -240,7 +240,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// <returns>the refreshed instance view</returns>
         Microsoft.Azure.Management.Compute.Models.VirtualMachineInstanceView Microsoft.Azure.Management.V2.Compute.IVirtualMachine.RefreshInstanceView()
         {
-            return this.RefreshInstanceView as Microsoft.Azure.Management.Compute.Models.VirtualMachineInstanceView;
+            return this.RefreshInstanceView() as Microsoft.Azure.Management.Compute.Models.VirtualMachineInstanceView;
         }
 
         /// <returns>the provisioningState value</returns>
