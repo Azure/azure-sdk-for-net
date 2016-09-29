@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         {
             get
             {
-                return this.Version.Type.Publisher.Name;
+                return this.Version().Type().Publisher().Name;
             }
         }
 
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         {
             get
             {
-                return this.Version.Type.Name;
+                return this.Version().Type().Name;
             }
         }
 
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         {
             get
             {
-                return this.Version.Name;
+                return this.Version().Name;
             }
         }
         public OperatingSystemTypes? OsType
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
 
-        public bool? VmScaleSetEnabled
+        public bool? SupportsVirtualMachineScaleSets
         {
             get
             {
@@ -108,12 +108,9 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
 
-        public IVirtualMachineExtensionImageVersion Version
+        public IVirtualMachineExtensionImageVersion Version()
         {
-            get
-            {
-                return this.version;
-            }
+            return this.version;
         }
 
     }

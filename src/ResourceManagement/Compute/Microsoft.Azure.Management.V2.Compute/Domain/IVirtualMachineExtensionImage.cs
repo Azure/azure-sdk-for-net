@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information
-
+// Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.V2.Compute
 {
 
@@ -36,21 +35,16 @@ namespace Microsoft.Azure.Management.V2.Compute
         ComputeRoles? ComputeRole { get; }
 
         /// <returns>the schema defined by publisher, where extension consumers should provide settings in a matching schema</returns>
-        /// <returns><p></returns>
-        /// <returns>Note this field will be null since server provide null for them</returns>
         string HandlerSchema { get; }
 
-        /// <returns>true if the extension can be used on xRP Virtual Machine ScaleSets.</returns>
-        /// <returns><p></returns>
-        /// <returns>Note by default existing extensions are usable on scale sets, but there might be cases where a publisher wants to</returns>
-        /// <returns>explicitly indicate the extension is only enabled for Compute Resource Provider VMs but not Virtual Machine ScaleSets.</returns>
-        bool? VmScaleSetEnabled { get; }
+        /// <returns>true if the extension can be used with virtual machine scale sets, false otherwise</returns>
+        bool? SupportsVirtualMachineScaleSets { get; }
 
-        /// <returns>true if the handler can support multiple extensions.</returns>
+        /// <returns>true if the handler can support multiple extensions</returns>
         bool? SupportsMultipleExtensions { get; }
 
         /// <returns>the virtual machine extension image version this image belongs to</returns>
-        IVirtualMachineExtensionImageVersion Version { get; }
+        IVirtualMachineExtensionImageVersion Version();
 
     }
 }

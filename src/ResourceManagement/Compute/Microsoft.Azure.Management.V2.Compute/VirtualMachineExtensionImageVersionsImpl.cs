@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         public PagedList<Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtensionImageVersion> List ()
         {
             return WrapList(this.client.ListVersions(this.type.RegionName,
-            this.type.Publisher.Name,
+            this.type.Publisher().Name,
             this.type.Name));
         }
 
