@@ -1,5 +1,5 @@
 {
-  "version": "1.1.2",
+  "version": "4.0.1-preview",
   "description": "Provides developers with libraries for the updated recovery services backup feature under Azure Resource manager.",
   "authors": [ "Microsoft" ],
   "packOptions": {
