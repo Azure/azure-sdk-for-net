@@ -5,8 +5,8 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition
 
     using Microsoft.Azure.Management.Compute.Models;
     using Microsoft.Azure.Management.V2.Resource.Core.Resource.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.V2.Compute;
+    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.Definition;
     using Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition;
     using Microsoft.Azure.Management.V2.Network;
@@ -202,7 +202,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition
         /// </summary>
         /// <param name="size">size the VHD size.</param>
         /// <returns>the stage representing creatable VM definition</returns>
-        IWithCreate WithOsDiskSizeInGb (int? size);
+        IWithCreate WithOsDiskSizeInGb (int size);
 
         /// <summary>
         /// Specifies the name for the OS Disk.
@@ -358,7 +358,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition
         /// </summary>
         /// <param name="sizeInGB">sizeInGB the disk size in GB</param>
         /// <returns>the stage representing creatable VM definition</returns>
-        IWithCreate WithNewDataDisk (int? sizeInGB);
+        IWithCreate WithNewDataDisk (int sizeInGB);
 
         /// <summary>
         /// Specifies an existing VHD that needs to be attached to the virtual machine as data disk.
@@ -544,13 +544,13 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition
         /// Specifies that VM Agent should not be provisioned.
         /// </summary>
         /// <returns>the stage representing creatable Windows VM definition</returns>
-        IWithWindowsCreate DisableVmAgent { get; }
+        IWithWindowsCreate DisableVmAgent ();
 
         /// <summary>
         /// Specifies that automatic updates should be disabled.
         /// </summary>
         /// <returns>the stage representing creatable Windows VM definition</returns>
-        IWithWindowsCreate DisableAutoUpdate { get; }
+        IWithWindowsCreate DisableAutoUpdate ();
 
         /// <summary>
         /// Specifies the time-zone.

@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         public VirtualMachineImpl Attach ()
         {
-            Parent.DataDisks().Add(this);
+            Parent.WithDataDisk(this);
             return Parent;
         }
 

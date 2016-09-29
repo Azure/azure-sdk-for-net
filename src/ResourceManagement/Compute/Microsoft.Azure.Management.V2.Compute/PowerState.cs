@@ -7,6 +7,8 @@ namespace Microsoft.Azure.Management.V2.Compute
 {
     public enum PowerState
     {
+        [EnumName("PowerState/unknown")]
+        UNKNOWN,
         [EnumName("PowerState/running")]
         RUNNING,
         [EnumName("PowerState/deallocating")]

@@ -3,20 +3,20 @@
 namespace Microsoft.Azure.Management.V2.Compute
 {
 
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition;
-    using Microsoft.Azure.Management.V2.Network;
-    using System.Collections.Generic;
     using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition;
     using Microsoft.Azure.Management.V2.Storage;
     using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.V2.Resource;
-    using Microsoft.Azure.Management.Network.Models;
-    using Microsoft.Azure.Management.Storage.Models;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update;
     using Microsoft.Azure.Management.V2.Resource.Core;
-    using System.Threading;
+    using Microsoft.Azure.Management.V2.Network;
+    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition;
+    using System.Collections.Generic;
+    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update;
+    using Microsoft.Azure.Management.Storage.Models;
     using System.Threading.Tasks;
+    using Microsoft.Azure.Management.Network.Models;
+    using Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition;
+    using System.Threading;
+    using Microsoft.Azure.Management.V2.Resource;
     internal partial class VirtualMachineImpl
     {
         /// <summary>
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="sizeInGB">sizeInGB the disk size in GB</param>
         /// <returns>the stage representing creatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithDataDisk.WithNewDataDisk(int? sizeInGB)
+        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithDataDisk.WithNewDataDisk(int sizeInGB)
         {
             return this.WithNewDataDisk(sizeInGB) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate;
         }
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="sizeInGB">sizeInGB the disk size in GB</param>
         /// <returns>the stage representing creatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IWithDataDisk.WithNewDataDisk(int? sizeInGB)
+        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IWithDataDisk.WithNewDataDisk(int sizeInGB)
         {
             return this.WithNewDataDisk(sizeInGB) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate;
         }
@@ -136,11 +136,13 @@ namespace Microsoft.Azure.Management.V2.Compute
         }
 
         /// <returns>the extensions attached to the Azure Virtual Machine</returns>
-        System.Collections.Generic.IDictionary<string, Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtension> Microsoft.Azure.Management.V2.Compute.IVirtualMachine.Extensions()
+        System.Collections.Generic.IDictionary<string, Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtension> Microsoft.Azure.Management.V2.Compute.IVirtualMachine.Extensions
         {
-            return this.Extensions() as System.Collections.Generic.IDictionary<string, Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtension>;
+            get
+            {
+                return this.Extensions as System.Collections.Generic.IDictionary<string, Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtension>;
+            }
         }
-
         /// <summary>
         /// Returns id to the availability set this virtual machine associated with.
         /// <p>
@@ -156,7 +158,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
         /// <returns>the operating system disk caching type, valid values are 'None', 'ReadOnly', 'ReadWrite'</returns>
-        Microsoft.Azure.Management.Compute.Models.CachingTypes? Microsoft.Azure.Management.V2.Compute.IVirtualMachine.OsDiskCachingType
+        Microsoft.Azure.Management.Compute.Models.CachingTypes Microsoft.Azure.Management.V2.Compute.IVirtualMachine.OsDiskCachingType
         {
             get
             {
@@ -193,11 +195,11 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// <returns>the virtual machine sizes</returns>
         Microsoft.Azure.Management.V2.Resource.Core.PagedList<Microsoft.Azure.Management.V2.Compute.IVirtualMachineSize> Microsoft.Azure.Management.V2.Compute.IVirtualMachine.AvailableSizes()
         {
-            return this.AvailableSizes() as Microsoft.Azure.Management.V2.Resource.Core.PagedList<Microsoft.Azure.Management.V2.Compute.IVirtualMachineSize>;
+            return this.AvailableSizes as Microsoft.Azure.Management.V2.Resource.Core.PagedList<Microsoft.Azure.Management.V2.Compute.IVirtualMachineSize>;
         }
 
         /// <returns>the operating system of this virtual machine</returns>
-        Microsoft.Azure.Management.Compute.Models.OperatingSystemTypes? Microsoft.Azure.Management.V2.Compute.IVirtualMachine.OsType
+        Microsoft.Azure.Management.Compute.Models.OperatingSystemTypes Microsoft.Azure.Management.V2.Compute.IVirtualMachine.OsType
         {
             get
             {
@@ -240,7 +242,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// <returns>the refreshed instance view</returns>
         Microsoft.Azure.Management.Compute.Models.VirtualMachineInstanceView Microsoft.Azure.Management.V2.Compute.IVirtualMachine.RefreshInstanceView()
         {
-            return this.RefreshInstanceView() as Microsoft.Azure.Management.Compute.Models.VirtualMachineInstanceView;
+            return this.RefreshInstanceView as Microsoft.Azure.Management.Compute.Models.VirtualMachineInstanceView;
         }
 
         /// <returns>the provisioningState value</returns>
@@ -260,7 +262,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
         /// <returns>the power state of the virtual machine</returns>
-        Microsoft.Azure.Management.V2.Compute.PowerState? Microsoft.Azure.Management.V2.Compute.IVirtualMachine.PowerState
+        Microsoft.Azure.Management.V2.Compute.PowerState Microsoft.Azure.Management.V2.Compute.IVirtualMachine.PowerState
         {
             get
             {
@@ -385,7 +387,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         }
 
         /// <returns>the size of the operating system disk in GB</returns>
-        int? Microsoft.Azure.Management.V2.Compute.IVirtualMachine.OsDiskSize
+        int Microsoft.Azure.Management.V2.Compute.IVirtualMachine.OsDiskSize
         {
             get
             {
@@ -393,11 +395,13 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
         /// <returns>the list of data disks attached to this virtual machine</returns>
-        System.Collections.Generic.List<Microsoft.Azure.Management.V2.Compute.IVirtualMachineDataDisk> Microsoft.Azure.Management.V2.Compute.IVirtualMachine.DataDisks()
+        System.Collections.Generic.IList<Microsoft.Azure.Management.V2.Compute.IVirtualMachineDataDisk> Microsoft.Azure.Management.V2.Compute.IVirtualMachine.DataDisks
         {
-            return this.DataDisks() as System.Collections.Generic.List<Microsoft.Azure.Management.V2.Compute.IVirtualMachineDataDisk>;
+            get
+            {
+                return this.DataDisks as System.Collections.Generic.IList<Microsoft.Azure.Management.V2.Compute.IVirtualMachineDataDisk>;
+            }
         }
-
         /// <returns>the resource ID of the public IP address associated with this virtual machine's primary network interface</returns>
         string Microsoft.Azure.Management.V2.Compute.IVirtualMachine.GetPrimaryPublicIpAddressId()
         {
@@ -505,11 +509,11 @@ namespace Microsoft.Azure.Management.V2.Compute
         }
 
         /// <returns>the list of resource IDs of the network interfaces associated with this resource</returns>
-        System.Collections.Generic.List<string> Microsoft.Azure.Management.V2.Network.IHasNetworkInterfaces.NetworkInterfaceIds
+        System.Collections.Generic.IList<string> Microsoft.Azure.Management.V2.Network.IHasNetworkInterfaces.NetworkInterfaceIds
         {
             get
             {
-                return this.NetworkInterfaceIds as System.Collections.Generic.List<string>;
+                return this.NetworkInterfaceIds as System.Collections.Generic.IList<string>;
             }
         }
         /// <summary>
@@ -823,7 +827,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="size">size the VHD size.</param>
         /// <returns>the stage representing updatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate.WithOsDiskSizeInGb(int? size)
+        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate.WithOsDiskSizeInGb(int size)
         {
             return this.WithOsDiskSizeInGb(size) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate;
         }
@@ -874,24 +878,20 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// Specifies that automatic updates should be disabled.
         /// </summary>
         /// <returns>the stage representing creatable Windows VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithWindowsCreate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithWindowsCreate.DisableAutoUpdate
+        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithWindowsCreate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithWindowsCreate.DisableAutoUpdate()
         {
-            get
-            {
-                return this.DisableAutoUpdate() as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithWindowsCreate;
-            }
+            return this.DisableAutoUpdate as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithWindowsCreate;
         }
+
         /// <summary>
         /// Specifies that VM Agent should not be provisioned.
         /// </summary>
         /// <returns>the stage representing creatable Windows VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithWindowsCreate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithWindowsCreate.DisableVmAgent
+        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithWindowsCreate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithWindowsCreate.DisableVmAgent()
         {
-            get
-            {
-                return this.DisableVmAgent() as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithWindowsCreate;
-            }
+            return this.DisableVmAgent as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithWindowsCreate;
         }
+
         /// <summary>
         /// Specifies the time-zone.
         /// </summary>
@@ -917,7 +917,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="size">size the VHD size.</param>
         /// <returns>the stage representing creatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithOsDiskSettings.WithOsDiskSizeInGb(int? size)
+        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithOsDiskSettings.WithOsDiskSizeInGb(int size)
         {
             return this.WithOsDiskSizeInGb(size) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate;
         }

@@ -3,11 +3,11 @@
 namespace Microsoft.Azure.Management.V2.Compute
 {
 
+    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update;
     using Microsoft.Azure.Management.Compute.Models;
     using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.V2.Resource.Core;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update;
     using Microsoft.Azure.Management.V2.Network;
     /// <summary>
     /// An immutable client-side representation of an Azure virtual machine.
@@ -84,19 +84,19 @@ namespace Microsoft.Azure.Management.V2.Compute
         VirtualMachineSizeTypes Size { get; }
 
         /// <returns>the operating system of this virtual machine</returns>
-        OperatingSystemTypes? OsType { get; }
+        OperatingSystemTypes OsType { get; }
 
         /// <returns>the uri to the vhd file backing this virtual machine's operating system disk</returns>
         string OsDiskVhdUri { get; }
 
         /// <returns>the operating system disk caching type, valid values are 'None', 'ReadOnly', 'ReadWrite'</returns>
-        CachingTypes? OsDiskCachingType { get; }
+        CachingTypes OsDiskCachingType { get; }
 
         /// <returns>the size of the operating system disk in GB</returns>
-        int? OsDiskSize { get; }
+        int OsDiskSize { get; }
 
         /// <returns>the list of data disks attached to this virtual machine</returns>
-        List<Microsoft.Azure.Management.V2.Compute.IVirtualMachineDataDisk> DataDisks();
+        IList<Microsoft.Azure.Management.V2.Compute.IVirtualMachineDataDisk> DataDisks { get; }
 
         /// <summary>
         /// Gets the public IP address associated with this virtual machine's primary network interface.
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         string LicenseType { get; }
 
         /// <returns>the extensions attached to the Azure Virtual Machine</returns>
-        IDictionary<string, Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtension> Extensions();
+        IDictionary<string, Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtension> Extensions { get; }
 
         /// <returns>the plan value</returns>
         Plan Plan { get; }
@@ -159,7 +159,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         string VmId { get; }
 
         /// <returns>the power state of the virtual machine</returns>
-        PowerState? PowerState { get; }
+        PowerState PowerState { get; }
 
         /// <summary>
         /// Get the virtual machine instance view.
