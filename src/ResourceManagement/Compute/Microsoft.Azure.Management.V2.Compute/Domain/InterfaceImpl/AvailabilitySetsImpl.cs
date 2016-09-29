@@ -3,12 +3,12 @@
 namespace Microsoft.Azure.Management.V2.Compute
 {
 
-    using Microsoft.Azure.Management.Compute.Models;
-    using System.Threading;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Resource;
     using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
+    using Microsoft.Azure.Management.Compute.Models;
     using System.Threading.Tasks;
+    using Microsoft.Azure.Management.V2.Resource;
+    using Microsoft.Azure.Management.V2.Resource.Core;
+    using System.Threading;
     internal partial class AvailabilitySetsImpl
     {
         /// <summary>
@@ -60,9 +60,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// <param name="name">name The name of the resource</param>
         /// <param name="cancellationToken">cancellationToken the cancellation token</param>
         /// <returns>an observable to the request</returns>
-        Task Microsoft.Azure.Management.V2.Resource.Core.CollectionActions.ISupportsDeletingByGroup.DeleteAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        async Task Microsoft.Azure.Management.V2.Resource.Core.CollectionActions.ISupportsDeletingByGroup.DeleteAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return this.DeleteAsync(groupName, name) as Task;
+            await this.DeleteAsync(groupName, name);
         }
 
         /// <summary>

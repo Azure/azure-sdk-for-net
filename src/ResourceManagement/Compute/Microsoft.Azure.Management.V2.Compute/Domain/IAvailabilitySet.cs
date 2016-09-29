@@ -3,11 +3,11 @@
 namespace Microsoft.Azure.Management.V2.Compute
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.Compute.Models;
     using Microsoft.Azure.Management.V2.Compute.AvailabilitySet.Update;
+    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.V2.Resource.Core;
+    using System.Collections.Generic;
     /// <summary>
     /// An immutable client-side representation of an Azure availability set.
     /// </summary>
@@ -28,5 +28,6 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         /// <returns>the statuses of the existing virtual machines in the availability set</returns>
         List<Microsoft.Azure.Management.Compute.Models.InstanceViewStatus> Statuses { get; }
+
     }
 }

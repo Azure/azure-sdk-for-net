@@ -82,7 +82,6 @@ namespace Microsoft.Azure.Management.V2.Compute
             this.storageManager = storageManager;
             this.networkManager = networkManager;
             this.namer = new ResourceNamer(this.Name);
-            //TODO this.skuConverter = new PagedListConverter<VirtualMachineScaleSetSkuInner, VirtualMachineScaleSetSku>()
         }
 
         #region Getters
@@ -260,7 +259,15 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         public PagedList<Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSetSku> ListAvailableSkus()
         {
-            throw new NotImplementedException();
+            PagedList<VirtualMachineScaleSetSku> innerPagedList = new PagedList<VirtualMachineScaleSetSku>(this.client.ListSkus(this.ResourceGroupName, this.Name), nextLink =>
+            {
+                return this.client.ListSkusNext(nextLink);
+            });
+
+            return PagedListConverter.Convert<VirtualMachineScaleSetSku, IVirtualMachineScaleSetSku>(innerPagedList, inner =>
+            {
+                return new VirtualMachineScaleSetSkuImpl(inner);
+            });
         }
 
         public IDictionary<string, Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSetExtension> Extensions()

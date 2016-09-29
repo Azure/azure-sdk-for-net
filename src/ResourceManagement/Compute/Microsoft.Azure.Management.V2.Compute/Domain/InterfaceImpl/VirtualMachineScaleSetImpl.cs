@@ -3,18 +3,18 @@
 namespace Microsoft.Azure.Management.V2.Compute
 {
 
-    using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.V2.Network;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition;
-    using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update;
-    using Microsoft.Azure.Management.Storage.Models;
     using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.Compute.Models;
+    using System.Threading.Tasks;
+    using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition;
+    using Microsoft.Azure.Management.V2.Network;
+    using System.Collections.Generic;
+    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update;
+    using Microsoft.Azure.Management.V2.Storage;
+    using Microsoft.Azure.Management.Storage.Models;
     using System.Threading;
     using Microsoft.Azure.Management.Network.Models;
-    using System.Threading.Tasks;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.V2.Storage;
     internal partial class VirtualMachineScaleSetImpl
     {
         /// <summary>

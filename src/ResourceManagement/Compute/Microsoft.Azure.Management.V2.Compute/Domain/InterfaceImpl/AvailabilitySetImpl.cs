@@ -3,14 +3,14 @@
 namespace Microsoft.Azure.Management.V2.Compute
 {
 
-    using Microsoft.Azure.Management.Compute.Models;
-    using System.Threading.Tasks;
-    using System.Threading;
-    using Microsoft.Azure.Management.V2.Compute.AvailabilitySet.Definition;
     using Microsoft.Azure.Management.V2.Resource;
+    using Microsoft.Azure.Management.Compute.Models;
     using System.Collections.Generic;
+    using System.Threading;
+    using System.Threading.Tasks;
     using Microsoft.Azure.Management.V2.Compute.AvailabilitySet.Update;
     using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.V2.Compute.AvailabilitySet.Definition;
     internal partial class AvailabilitySetImpl
     {
         /// <returns>the fault domain count of this availability set</returns>

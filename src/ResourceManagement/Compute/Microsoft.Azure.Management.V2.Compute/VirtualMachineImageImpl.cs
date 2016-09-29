@@ -22,11 +22,11 @@ namespace Microsoft.Azure.Management.V2.Compute
             };
         }
 
-        public IList<DataDiskImage> DataDiskImages
+        public List<DataDiskImage> DataDiskImages
         {
             get
             {
-                return Inner.DataDiskImages;
+                return Inner.DataDiskImages as List<DataDiskImage>;
             }
         }
 

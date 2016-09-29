@@ -1,20 +1,18 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
 namespace Microsoft.Azure.Management.V2.Compute
 {
 
-    using System.Collections.Generic;
+    using Microsoft.Azure.Management.Compute.Models;
     using Microsoft.Azure.Management.V2.Resource.Core;
-    using Management.Compute.Models;
-
+    using System.Collections.Generic;
     /// <summary>
     /// An immutable client-side representation of an Azure virtual machine extension.
     /// An extension associated with a virtual machine will be created from a {@link VirtualMachineExtensionImage }.
     /// </summary>
-    public interface IVirtualMachineExtension  :
-        IExternalChildResource<IVirtualMachineExtension, IVirtualMachine>,
-        IWrapper<VirtualMachineExtensionInner>
+    public interface IVirtualMachineExtension :
+        IExternalChildResource<Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtension, Microsoft.Azure.Management.V2.Compute.IVirtualMachine>,
+        IWrapper<Microsoft.Azure.Management.Compute.Models.VirtualMachineExtensionInner>
     {
         /// <returns>the publisher name of the virtual machine extension image this extension is created from</returns>
         string PublisherName { get; }
@@ -30,7 +28,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         bool? AutoUpgradeMinorVersionEnabled { get; }
 
         /// <returns>the public settings of the virtual machine extension as key value pairs</returns>
-        IDictionary<string,object> PublicSettings { get; }
+        IDictionary<string, object> PublicSettings { get; }
 
         /// <returns>the public settings of the virtual machine extension as a json string</returns>
         string PublicSettingsAsJsonString { get; }
@@ -39,7 +37,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         VirtualMachineExtensionInstanceView InstanceView { get; }
 
         /// <returns>the tags for this virtual machine extension</returns>
-        IDictionary<string,string> Tags { get; }
+        IDictionary<string, string> Tags { get; }
 
         /// <returns>the provisioning state of this virtual machine extension</returns>
         string ProvisioningState { get; }
