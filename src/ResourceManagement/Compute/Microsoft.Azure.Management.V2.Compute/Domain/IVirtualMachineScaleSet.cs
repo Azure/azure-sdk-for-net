@@ -105,10 +105,10 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         /// <returns>the list of IDs of the public IP addresses associated with the primary Internet-facing load balancer</returns>
         /// <returns>of the scale set</returns>
-        IList<string> PrimaryPublicIpAddressIds { get; } // converter set return type as List but it should be IList
+        List<string> PrimaryPublicIpAddressIds { get; } // converter set return type as List but it should be IList
 
         /// <returns>the URL to storage containers that store the VHDs of the virtual machines in the scale set</returns>
-        IList<string> VhdContainers { get; }
+        List<string> VhdContainers { get; }
 
         /// <returns>the storage profile</returns>
         VirtualMachineScaleSetStorageProfile StorageProfile { get; }

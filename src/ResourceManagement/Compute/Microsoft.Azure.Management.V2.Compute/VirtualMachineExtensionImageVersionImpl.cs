@@ -45,19 +45,20 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
 
-        public IVirtualMachineExtensionImageType Type
+        public IVirtualMachineExtensionImageType Type()
         {
-            get 
-            {
-                return this.type;
-            }
+            return this.type;
+            //get 
+            //{
+            //    return this.type;
+            //}
         }
 
         public IVirtualMachineExtensionImage Image ()
         {
             VirtualMachineExtensionImageInner inner = this.client.Get(this.RegionName,
-                this.Type.Publisher.Name,
-                this.Type.Name,
+                this.Type().Publisher().Name,
+                this.Type().Name,
                 this.Name);
             return new VirtualMachineExtensionImageImpl(this, inner);
         }

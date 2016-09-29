@@ -44,8 +44,6 @@ namespace Microsoft.Azure.Management.V2.Compute
         // used to generate unique name for any dependency resources
         private ResourceNamer namer;
         private bool isMarketplaceLinuxImage = false;
-        // reference to an existing network that needs to be used in virtual machine's primary network interface
-        private INetwork existingPrimaryNetworkToAssociate;
         // name of an existing subnet in the primary network to use
         private string existingPrimaryNetworkSubnetNameToAssociate;
         // unique key of a creatable storage accounts to be used for virtual machines child resources that
@@ -93,7 +91,7 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         #region Getters
 
-        int? Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.Capacity
+        public int? Capacity
         {
             get
             {
@@ -101,7 +99,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
 
-        string Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.ComputerNamePrefix
+        public string ComputerNamePrefix
         {
             get
             {
@@ -109,7 +107,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
 
-        VirtualMachineScaleSetNetworkProfile Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.NetworkProfile
+        public VirtualMachineScaleSetNetworkProfile NetworkProfile
         {
             get
             {
@@ -117,7 +115,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
 
-        CachingTypes? Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.OsDiskCachingType
+        public CachingTypes? OsDiskCachingType
         {
             get
             {
@@ -125,7 +123,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
 
-        string Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.OsDiskName
+        public string OsDiskName
         {
             get
             {
@@ -133,7 +131,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
 
-        OperatingSystemTypes? Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.OsType
+        public OperatingSystemTypes? OsType
         {
             get
             {
@@ -141,7 +139,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
 
-        bool? Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.OverProvisionEnabled
+        public bool? OverProvisionEnabled
         {
             get
             {
@@ -150,7 +148,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         }
 
 
-        ILoadBalancer Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.GetPrimaryInternalLoadBalancer()
+        public ILoadBalancer GetPrimaryInternalLoadBalancer()
         {
             if (this.primaryInternalLoadBalancer == null)
             {
@@ -159,7 +157,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this.primaryInternalLoadBalancer;
         }
 
-        ILoadBalancer Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.GetPrimaryInternetFacingLoadBalancer()
+        public ILoadBalancer GetPrimaryInternetFacingLoadBalancer()
         {
             if (this.primaryInternetFacingLoadBalancer == null)
             {
@@ -168,7 +166,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this.primaryInternetFacingLoadBalancer;
         }
 
-        INetwork Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.GetPrimaryNetwork()
+        public INetwork GetPrimaryNetwork()
         {
             if (this.primaryVirtualNetwork == null)
             {
@@ -181,7 +179,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this.primaryVirtualNetwork;
         }
 
-        IDictionary<string, IBackend> Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.ListPrimaryInternalLoadBalancerBackends()
+        public IDictionary<string, IBackend> ListPrimaryInternalLoadBalancerBackends()
         {
             if ((this as Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet).GetPrimaryInternalLoadBalancer() != null)
             {
@@ -191,7 +189,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return new Dictionary<string, IBackend>();
         }
 
-        IDictionary<string, IInboundNatPool> Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.ListPrimaryInternalLoadBalancerInboundNatPools()
+        public IDictionary<string, IInboundNatPool> ListPrimaryInternalLoadBalancerInboundNatPools()
         {
             if ((this as Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet).GetPrimaryInternalLoadBalancer() != null)
             {
@@ -201,7 +199,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return new Dictionary<string, IInboundNatPool>();
         }
 
-        IDictionary<string, IBackend> Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.ListPrimaryInternetFacingLoadBalancerBackends()
+        public IDictionary<string, IBackend> ListPrimaryInternetFacingLoadBalancerBackends()
         {
             if ((this as Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet).GetPrimaryInternetFacingLoadBalancer() != null)
             {
@@ -211,7 +209,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return new Dictionary<string, IBackend>();
         }
 
-        IDictionary<string, IInboundNatPool> Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.ListPrimaryInternetFacingLoadBalancerInboundNatPools()
+        public IDictionary<string, IInboundNatPool> ListPrimaryInternetFacingLoadBalancerInboundNatPools()
         {
             if ((this as Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet).GetPrimaryInternetFacingLoadBalancer() != null)
             {
@@ -221,7 +219,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return new Dictionary<string, IInboundNatPool>();
         }
 
-        IList<string> Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.PrimaryPublicIpAddressIds
+        public IList<string> PrimaryPublicIpAddressIds
         {
             get
             {
@@ -234,7 +232,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
 
-        VirtualMachineScaleSetStorageProfile Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.StorageProfile
+        public VirtualMachineScaleSetStorageProfile StorageProfile
         {
             get
             {
@@ -242,7 +240,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
 
-        UpgradeMode? Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.UpgradeModel
+        public UpgradeMode? UpgradeModel
         {
             get
             {
@@ -250,7 +248,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
 
-        IList<string> IVirtualMachineScaleSet.VhdContainers
+        public IList<string> VhdContainers
         {
             get
             {
@@ -264,17 +262,17 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
 
-        PagedList<Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSetSku> Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.ListAvailableSkus()
+        public PagedList<Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSetSku> ListAvailableSkus()
         {
             throw new NotImplementedException();
         }
 
-        IDictionary<string, Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSetExtension> Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.Extensions()
+        public IDictionary<string, Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSetExtension> Extensions()
         {
             return this.extensions;
         }
 
-        VirtualMachineScaleSetSkuTypes Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.Sku()
+        public VirtualMachineScaleSetSkuTypes Sku()
         {
             return new VirtualMachineScaleSetSkuTypes(this.Inner.Sku);
         }
@@ -294,10 +292,9 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this.WithSku(sku.SkuType());
         }
 
-        public VirtualMachineScaleSetImpl WithExistingPrimaryNetworkSubnet(INetwork network, string subnet)
+        public VirtualMachineScaleSetImpl WithExistingPrimaryNetworkSubnet(INetwork network, string subnetName)
         {
-            this.existingPrimaryNetworkToAssociate = network;
-            // TODO Subnet
+            this.existingPrimaryNetworkSubnetNameToAssociate = mergePath(network.Id, "subnets", subnetName);
             return this;
         }
 
@@ -363,20 +360,17 @@ namespace Microsoft.Azure.Management.V2.Compute
                 throw new ArgumentException("Parameter loadBalancer must be an internal load balancer");
             }
             string lbNetworkId = null;
-            /**
-             * TODO Uncomment when FrontEnds are exposed in load blaancer.
-            foreach (IFrontend frontEnd in loadBalancer.Frontends.values())
+            foreach (IFrontend frontEnd in loadBalancer.Frontends().Values)
             {
                 if (frontEnd.Inner.Subnet.Id != null)
                 {
                     lbNetworkId = ResourceUtils.ParentResourcePathFromResourceId(frontEnd.Inner.Subnet.Id);
                 }
             }
-            **/
 
             if (this.IsInCreateMode)
             {
-                string vmNICNetworkId = this.existingPrimaryNetworkToAssociate.Id;
+                string vmNICNetworkId = ResourceUtils.ParentResourcePathFromResourceId(this.existingPrimaryNetworkSubnetNameToAssociate);
                 // Azure has a really wired BUG that - it throws exception when vnet of VMSS and LB are not same
                 // (code: NetworkInterfaceAndInternalLoadBalancerMustUseSameVnet) but at the same time Azure update
                 // the VMSS's network section to refer this invalid internal LB. This makes VMSS un-usable and portal
@@ -835,27 +829,27 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this;
         }
 
-        void Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.Deallocate()
+        public void Deallocate()
         {
             this.client.Deallocate(this.ResourceGroupName, this.Name);
         }
 
-        void Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.PowerOff()
+        public void PowerOff()
         {
             this.client.PowerOff(this.ResourceGroupName, this.Name);
         }
 
-        void Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.Reimage()
+        public void Reimage()
         {
             this.client.Reimage(this.ResourceGroupName, this.Name);
         }
 
-        void Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.Restart()
+        public void Restart()
         {
             this.client.Restart(this.ResourceGroupName, this.Name);
         }
 
-        void Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.Start()
+        public void Start()
         {
             this.client.Start(this.ResourceGroupName, this.Name);
         }
@@ -1055,13 +1049,9 @@ namespace Microsoft.Azure.Management.V2.Compute
             VirtualMachineScaleSetIPConfigurationInner ipConfig = this.primaryNicDefaultIPConfiguration();
             ipConfig.Subnet = new ApiEntityReference
             {
-                Id = this.existingPrimaryNetworkToAssociate.Id
-                    + "/"
-                    + "subnets"
-                    + "/"
-                    + existingPrimaryNetworkSubnetNameToAssociate
+                    Id = this.existingPrimaryNetworkSubnetNameToAssociate
             };
-            this.existingPrimaryNetworkToAssociate = null;
+            this.existingPrimaryNetworkSubnetNameToAssociate = null;
         }
 
         private void setPrimaryIpConfigurationBackendsAndInboundNatPools()
@@ -1374,7 +1364,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         {
             string loadBalancerId = loadBalancer.Id;
             IDictionary<string, IBackend> attachedBackends = new Dictionary<string, IBackend>();
-            IDictionary<string, IBackend> lbBackends = null; // TODO: once Backends is available - loadBalancer.Backends;
+            IDictionary<string, IBackend> lbBackends = loadBalancer.Backends();
             foreach (IBackend lbBackend in lbBackends.Values)
             {
                 string backendId = mergePath(loadBalancerId, "backendAddressPools", lbBackend.Name);
@@ -1394,7 +1384,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         {
             String loadBalancerId = loadBalancer.Id;
             IDictionary<string, IInboundNatPool> attachedInboundNatPools = new Dictionary<string, IInboundNatPool>();
-            IDictionary<string, IInboundNatPool> lbInboundNatPools = null; // TODO: once InboundNatPools is available - loadBalancer.InboundNatPools;
+            IDictionary<string, IInboundNatPool> lbInboundNatPools = loadBalancer.InboundNatPools();
             foreach (IInboundNatPool lbInboundNatPool in lbInboundNatPools.Values)
             {
                 String inboundNatPoolId = mergePath(loadBalancerId, "inboundNatPools", lbInboundNatPool.Name);
@@ -1412,7 +1402,8 @@ namespace Microsoft.Azure.Management.V2.Compute
         private static void associateLoadBalancerToIpConfiguration(ILoadBalancer loadBalancer,
                                                                    VirtualMachineScaleSetIPConfigurationInner ipConfig)
         {
-            List<IBackend> backends = null; // TODO: once Backend is available - loadBalancer.Backends.values();
+            var backends = loadBalancer.Backends().Values;
+
             string[] backendNames = new string[backends.Count];
             int i = 0;
             foreach (IBackend backend in backends)
@@ -1425,7 +1416,7 @@ namespace Microsoft.Azure.Management.V2.Compute
                     ipConfig,
                     backendNames);
 
-            List<IInboundNatPool> inboundNatPools = null; // TODO: once Backend is available - loadBalancer.InboundNatPools.values();
+            var inboundNatPools = loadBalancer.InboundNatPools().Values;
             string[] natPoolNames = new string[inboundNatPools.Count];
             i = 0;
             foreach (IInboundNatPool inboundNatPool in inboundNatPools)

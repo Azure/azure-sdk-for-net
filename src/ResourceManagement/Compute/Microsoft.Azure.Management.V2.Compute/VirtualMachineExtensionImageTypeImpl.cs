@@ -45,20 +45,22 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
 
-        public IVirtualMachinePublisher Publisher
+        public IVirtualMachinePublisher Publisher()
         {
-            get
-            {
-                return this.publisher;
-            }
+            return this.publisher;
+            //get
+            //{
+            //    return this.publisher;
+            //}
         }
 
-        public IVirtualMachineExtensionImageVersions Versions
+        public IVirtualMachineExtensionImageVersions Versions()
         {
-            get
-            {
-                return new VirtualMachineExtensionImageVersionsImpl(this.client, this);
-            }
+            return new VirtualMachineExtensionImageVersionsImpl(this.client, this);
+            //get
+            //{
+            //    return new VirtualMachineExtensionImageVersionsImpl(this.client, this);
+            //}
         }
     }
 }

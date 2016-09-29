@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             PagedList<IVirtualMachineExtensionImageVersion> versions = new ChildListFlattener<IVirtualMachineExtensionImageType, IVirtualMachineExtensionImageVersion>(types,
                 (IVirtualMachineExtensionImageType type) =>
                 {
-                    return type.Versions.List();
+                    return type.Versions().List();
                 }).Flatten();
 
             return PagedListConverter.Convert(versions, version => {
