@@ -75,7 +75,7 @@ namespace Fluent.Tests
                     .Append("\n\tRegion: ").Append(resource.Region)
                     .Append("\n\tTags: ").Append(resource.Tags)
                     .Append("\n\tAddress spaces: ").Append(resource.AddressSpaces)
-                    .Append("\n\tDNS server IPs: ").Append(resource.DnsServerIPs);
+                    .Append("\n\tDNS server IPs: ").Append(resource.DnsServerIps);
 
             // Output subnets
             foreach (ISubnet subnet in resource.Subnets().Values)
@@ -87,7 +87,7 @@ namespace Fluent.Tests
                 INetworkSecurityGroup nsg;
                 try
                 {
-                    nsg = subnet.NetworkSecurityGroup();
+                    nsg = subnet.GetNetworkSecurityGroup();
                 }
                 catch (Exception e)
                 {

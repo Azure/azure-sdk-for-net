@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.V2.Network
                 NetworkInterfaceInner,
                 Rest.Azure.Resource,
                 NetworkInterfaceImpl,
-                INetworkManager,
+                NetworkManager,
                 IWithGroup,
                 IWithPrimaryNetwork,
                 IWithCreate,

@@ -5,10 +5,7 @@ using Microsoft.Azure.Management.Network.Models;
 using Microsoft.Azure.Management.V2.Network;
 using Microsoft.Azure.Management.V2.Resource.Core;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Fluent.Tests
@@ -26,18 +23,18 @@ namespace Fluent.Tests
                 .WithRegion(Region.US_WEST)
                 .WithNewResourceGroup("rg" + this.testId)
                 .DefineRule("rule1")
-                    .AllowOutbound()
-                    .FromAnyAddress()
+                    .AllowOutbound
+                    .FromAnyAddress
                     .FromPort(80)
-                    .ToAnyAddress()
+                    .ToAnyAddress
                     .ToPort(80)
                     .WithProtocol(SecurityRuleProtocol.Tcp)
                     .Attach()
                 .DefineRule("rule2")
-                    .AllowInbound()
-                    .FromAnyAddress()
-                    .FromAnyPort()
-                    .ToAnyAddress()
+                    .AllowInbound
+                    .FromAnyAddress
+                    .FromAnyPort
+                    .ToAnyAddress
                     .ToPortRange(22, 25)
                     .WithAnyProtocol()
                     .WithPriority(200)
@@ -55,16 +52,16 @@ namespace Fluent.Tests
                 .WithTag("tag1", "value1")
                 .WithTag("tag2", "value2")
                 .DefineRule("rule3")
-                    .AllowInbound()
-                    .FromAnyAddress()
-                    .FromAnyPort()
-                    .ToAnyAddress()
-                    .ToAnyPort()
+                    .AllowInbound
+                    .FromAnyAddress
+                    .FromAnyPort
+                    .ToAnyAddress
+                    .ToAnyPort
                     .WithProtocol(SecurityRuleProtocol.Udp)
                     .Attach()
                 .WithoutRule("rule1")
                 .UpdateRule("rule2")
-                    .DenyInbound()
+                    .DenyInbound
                     .FromAddress("100.0.0.0/29")
                     .FromPort(88)
                     .WithPriority(300)
@@ -87,7 +84,7 @@ namespace Fluent.Tests
                     .Append("\n\tTags: ").Append(resource.Tags);
 
             // Output security rules
-            foreach (INetworkSecurityRule rule in resource.SecurityRules())
+            foreach (INetworkSecurityRule rule in resource.SecurityRules().Values)
             {
                 info.Append("\n\tRule: ").Append(rule.Name)
                     .Append("\n\t\tAccess: ").Append(rule.Access)
