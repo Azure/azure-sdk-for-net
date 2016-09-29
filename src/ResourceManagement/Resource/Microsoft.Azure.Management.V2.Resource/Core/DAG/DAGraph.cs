@@ -34,9 +34,9 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
 
         public void Merge(DAGraph<NodeDataT, NodeT> parent)
         {
-            parent.rootNode.AddDependency(rootNode.Key);
+            parent.rootNode.AddDependency(rootNode.Key.ToLowerInvariant());
             foreach(KeyValuePair<string, NodeT> item in this.graph) {
-                if (!parent.graph.ContainsKey(item.Key))
+                if (!parent.graph.ContainsKey(item.Key.ToLowerInvariant()))
                 {
                     parent.graph.Add(item.Key, item.Value);
                 }
@@ -80,13 +80,13 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
             dependency.SetPreparer(true);
             foreach (string dependentKey in dependency.DependentKeys)
             {
-                NodeT dependent = GetNode(dependentKey);
+                NodeT dependent = GetNode(dependentKey.ToLowerInvariant());
                 lock (dependent.LockObject)
                 {
-                    dependent.ReportCompleted(dependency.Key);
+                    dependent.ReportCompleted(dependency.Key.ToLowerInvariant());
                     if (dependent.HasAllResolved)
                     {
-                        queue.Enqueue(dependent.Key);
+                        queue.Enqueue(dependent.Key.ToLowerInvariant());
                     }
                 }
             }
@@ -101,10 +101,10 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
                     return;
                 }
 
-                string dependentKey = node.Key;
+                string dependentKey = node.Key.ToLowerInvariant();
                 foreach (string dependencyKey in node.DependencyKeys)
                 {
-                    GetNode(dependencyKey).AddDependent(dependentKey);
+                    GetNode(dependencyKey).AddDependent(dependentKey.ToLowerInvariant());
                 }
             });
         }
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
             {
                 if (!item.Value.HasDependencies)
                 {
-                    queue.Enqueue(item.Key);
+                    queue.Enqueue(item.Key.ToLowerInvariant());
                 }
             }
 
