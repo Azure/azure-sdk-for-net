@@ -73,11 +73,11 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
 
-        public bool? AutoUpgradeMinorVersionEnabled
+        public bool AutoUpgradeMinorVersionEnabled
         {
             get
             {
-                return this.Inner.AutoUpgradeMinorVersion;
+                return this.Inner.AutoUpgradeMinorVersion.Value;
             }
         }
 
