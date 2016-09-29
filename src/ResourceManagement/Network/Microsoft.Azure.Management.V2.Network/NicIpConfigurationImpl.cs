@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.V2.Network
     /// <summary>
     /// Implementation for NicIpConfiguration and its create and update interfaces.
     /// </summary>
-    public partial class NicIpConfigurationImpl  :
+    public partial class NicIpConfigurationImpl :
         ChildResource<NetworkInterfaceIPConfigurationInner, NetworkInterfaceImpl, INetworkInterface>,
         INicIpConfiguration,
         IDefinition<NetworkInterface.Definition.IWithCreate>,
@@ -33,17 +33,17 @@ namespace Microsoft.Azure.Management.V2.Network
         private string subnetToAssociate;
         private bool removePrimaryPublicIPAssociation;
 
-        protected  NicIpConfigurationImpl (
-            NetworkInterfaceIPConfigurationInner inner, 
-            NetworkInterfaceImpl parent, 
-            NetworkManager networkManager, 
+        protected NicIpConfigurationImpl(
+            NetworkInterfaceIPConfigurationInner inner,
+            NetworkInterfaceImpl parent,
+            NetworkManager networkManager,
             bool isInCreateMode) : base(inner.Name, inner, parent)
         {
             this.isInCreateMode = isInCreateMode;
             this.networkManager = networkManager;
         }
 
-        protected static NicIpConfigurationImpl PrepareNicIpConfiguration (string name, NetworkInterfaceImpl parent, NetworkManager networkManager)
+        protected static NicIpConfigurationImpl PrepareNicIpConfiguration(string name, NetworkInterfaceImpl parent, NetworkManager networkManager)
         {
             NetworkInterfaceIPConfigurationInner ipConfigurationInner = new NetworkInterfaceIPConfigurationInner();
             ipConfigurationInner.Name = name;
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.V2.Network
             }
         }
 
-        public IPublicIpAddress GetPublicIpAddress ()
+        public IPublicIpAddress GetPublicIpAddress()
         {
             string id = PublicIpAddressId;
             return (id != null) ? Parent.Manager.PublicIpAddresses.GetById(id) : null;
@@ -98,9 +98,9 @@ namespace Microsoft.Azure.Management.V2.Network
             }
         }
 
-        public INetwork GetNetwork ()
+        public INetwork GetNetwork()
         {
-            return Parent.Manager.Networks.GetById(NetworkId);
+            return (NetworkId != null) ? Parent.Manager.Networks.GetById(NetworkId) : null;
         }
 
         public string PrivateIpAddress
@@ -119,62 +119,66 @@ namespace Microsoft.Azure.Management.V2.Network
             }
         }
 
-        public NetworkInterfaceImpl Attach ()
+        public NetworkInterfaceImpl Attach()
         {
             return Parent.WithIpConfiguration(this);
         }
 
-        public NicIpConfigurationImpl WithNewNetwork (ICreatable<INetwork> creatable)
+        public NicIpConfigurationImpl WithNewNetwork(ICreatable<INetwork> creatable)
         {
             creatableVirtualNetworkKey = creatable.Key;
             Parent.AddToCreatableDependencies(creatable as ICreatable<V2.Resource.Core.IResource>);
             return this;
         }
 
-        public NicIpConfigurationImpl WithNewNetwork (string name, string addressSpaceCidr)
+        public NicIpConfigurationImpl WithNewNetwork(string name, string addressSpaceCidr)
         {
             Network.Definition.IWithGroup definitionWithGroup = Parent.Manager.Networks
                 .Define(name)
                 .WithRegion(Parent.RegionName);
-            
+
             Network.Definition.IWithCreate definitionAfterGroup;
-            if (Parent.NewGroup() != null) {
+            if (Parent.NewGroup() != null)
+            {
                 definitionAfterGroup = definitionWithGroup.WithNewResourceGroup(Parent.NewGroup());
-            } else {
+            }
+            else
+            {
                 definitionAfterGroup = definitionWithGroup.WithExistingResourceGroup(Parent.ResourceGroupName);
             }
 
             return WithNewNetwork(definitionAfterGroup.WithAddressSpace(addressSpaceCidr));
         }
 
-        public NicIpConfigurationImpl WithNewNetwork (string addressSpaceCidr)
+        public NicIpConfigurationImpl WithNewNetwork(string addressSpaceCidr)
         {
             return WithNewNetwork(ResourceNamer.RandomResourceName("vnet", 20), addressSpaceCidr);
         }
 
-        public NicIpConfigurationImpl WithExistingNetwork (INetwork network)
+        public NicIpConfigurationImpl WithExistingNetwork(INetwork network)
         {
             existingVirtualNetworkToAssociate = network;
             return this;
         }
 
-        public NicIpConfigurationImpl WithPrivateIpAddressDynamic ()
+        public NicIpConfigurationImpl WithPrivateIpAddressDynamic()
         {
             Inner.PrivateIPAllocationMethod = IPAllocationMethod.Dynamic;
             Inner.PrivateIPAddress = null;
             return this;
         }
 
-        public NicIpConfigurationImpl WithPrivateIpAddressStatic (string staticPrivateIpAddress)
+        public NicIpConfigurationImpl WithPrivateIpAddressStatic(string staticPrivateIpAddress)
         {
             Inner.PrivateIPAllocationMethod = IPAllocationMethod.Static;
             Inner.PrivateIPAddress = staticPrivateIpAddress;
             return this;
         }
 
-        public NicIpConfigurationImpl WithNewPublicIpAddress (ICreatable<IPublicIpAddress> creatable)
+        public NicIpConfigurationImpl WithNewPublicIpAddress(ICreatable<IPublicIpAddress> creatable)
         {
-            if (creatablePublicIpKey == null) {
+            if (creatablePublicIpKey == null)
+            {
                 creatablePublicIpKey = creatable.Key;
                 Parent.AddToCreatableDependencies(creatable as ICreatable<V2.Resource.Core.IResource>);
             }
@@ -182,45 +186,48 @@ namespace Microsoft.Azure.Management.V2.Network
             return this;
         }
 
-        public NicIpConfigurationImpl WithNewPublicIpAddress ()
+        public NicIpConfigurationImpl WithNewPublicIpAddress()
         {
             string name = ResourceNamer.RandomResourceName("pip", 15);
             return WithNewPublicIpAddress(PrepareCreatablePublicIp(name, name));
         }
 
-        public NicIpConfigurationImpl WithNewPublicIpAddress (string leafDnsLabel)
+        public NicIpConfigurationImpl WithNewPublicIpAddress(string leafDnsLabel)
         {
-            return WithNewPublicIpAddress(PrepareCreatablePublicIp(ResourceNamer.RandomResourceName("pip", 15), leafDnsLabel));
+            return WithNewPublicIpAddress(
+                PrepareCreatablePublicIp(ResourceNamer.RandomResourceName("pip", 15), leafDnsLabel));
         }
 
-        public NicIpConfigurationImpl WithExistingPublicIpAddress (IPublicIpAddress publicIpAddress)
+        public NicIpConfigurationImpl WithExistingPublicIpAddress(IPublicIpAddress publicIpAddress)
         {
 
             return WithExistingPublicIpAddress(publicIpAddress.Id);
         }
 
-        public NicIpConfigurationImpl WithExistingPublicIpAddress (string resourceId)
+        public NicIpConfigurationImpl WithExistingPublicIpAddress(string resourceId)
         {
             existingPublicIpAddressIdToAssociate = resourceId;
             return this;
         }
 
-        public NicIpConfigurationImpl WithoutPublicIpAddress ()
+        public NicIpConfigurationImpl WithoutPublicIpAddress()
         {
             removePrimaryPublicIPAssociation = true;
             return this;
         }
 
-        public NicIpConfigurationImpl WithSubnet (string name)
+        public NicIpConfigurationImpl WithSubnet(string name)
         {
             subnetToAssociate = name;
             return this;
         }
 
-        public NicIpConfigurationImpl WithExistingLoadBalancerBackend (ILoadBalancer loadBalancer, string backendName)
+        public NicIpConfigurationImpl WithExistingLoadBalancerBackend(ILoadBalancer loadBalancer, string backendName)
         {
-            foreach (var pool in loadBalancer.Inner.BackendAddressPools) {
-                if (pool.Name.Equals(backendName, StringComparison.OrdinalIgnoreCase)) {
+            foreach (var pool in loadBalancer.Inner.BackendAddressPools)
+            {
+                if (pool.Name.Equals(backendName, StringComparison.OrdinalIgnoreCase))
+                {
                     EnsureBackendAddressPools.Add(pool);
                     return this;
                 }
@@ -229,24 +236,27 @@ namespace Microsoft.Azure.Management.V2.Network
             return this;
         }
 
-        public NicIpConfigurationImpl WithExistingLoadBalancerInboundNatRule (ILoadBalancer loadBalancer, string inboundNatRuleName)
+        public NicIpConfigurationImpl WithExistingLoadBalancerInboundNatRule(ILoadBalancer loadBalancer, string inboundNatRuleName)
         {
-            foreach (var rule in loadBalancer.Inner.InboundNatRules) {
-                if (rule.Name.Equals(inboundNatRuleName, StringComparison.OrdinalIgnoreCase)) {
+            foreach (var rule in loadBalancer.Inner.InboundNatRules)
+            {
+                if (rule.Name.Equals(inboundNatRuleName, StringComparison.OrdinalIgnoreCase))
+                {
                     EnsureInboundNatRules.Add(rule);
                     return this;
                 }
             }
-            
+
             return this;
         }
 
-        private IList<Microsoft.Azure.Management.Network.Models.BackendAddressPoolInner> EnsureBackendAddressPools
+        private IList<BackendAddressPoolInner> EnsureBackendAddressPools
         {
             get
             {
                 IList<BackendAddressPoolInner> poolRefs = Inner.LoadBalancerBackendAddressPools;
-                if (poolRefs == null) {
+                if (poolRefs == null)
+                {
                     poolRefs = new List<BackendAddressPoolInner>();
                     Inner.LoadBalancerBackendAddressPools = poolRefs;
                 }
@@ -260,7 +270,8 @@ namespace Microsoft.Azure.Management.V2.Network
             get
             {
                 IList<InboundNatRuleInner> natRefs = Inner.LoadBalancerInboundNatRules;
-                if (natRefs == null) {
+                if (natRefs == null)
+                {
                     natRefs = new List<InboundNatRuleInner>();
                     Inner.LoadBalancerInboundNatRules = natRefs;
                 }
@@ -271,7 +282,8 @@ namespace Microsoft.Azure.Management.V2.Network
 
         protected static void EnsureConfigurations(List<INicIpConfiguration> nicIpConfigurations)
         {
-            foreach (var nicIpConfiguration in nicIpConfigurations) {
+            foreach (var nicIpConfiguration in nicIpConfigurations)
+            {
                 NicIpConfigurationImpl config = (NicIpConfigurationImpl)nicIpConfiguration;
                 config.Inner.Subnet = config.SubnetToAssociate();
                 config.Inner.PublicIPAddress = config.PublicIpToAssociate();
@@ -284,9 +296,12 @@ namespace Microsoft.Azure.Management.V2.Network
                 .WithRegion(this.Parent.RegionName);
 
             PublicIpAddress.Definition.IWithCreate definitionAfterGroup;
-            if (Parent.NewGroup() != null) {
+            if (Parent.NewGroup() != null)
+            {
                 definitionAfterGroup = definitionWithGroup.WithNewResourceGroup(Parent.NewGroup());
-            } else {
+            }
+            else
+            {
                 definitionAfterGroup = definitionWithGroup.WithExistingResourceGroup(Parent.ResourceGroupName);
             }
 
@@ -304,40 +319,40 @@ namespace Microsoft.Azure.Management.V2.Network
         /// <returns>the subnet resource</returns>
         private SubnetInner SubnetToAssociate()
         {
-                SubnetInner subnetInner = new SubnetInner();
-                if (this.isInCreateMode)
+            SubnetInner subnetInner = new SubnetInner();
+            if (this.isInCreateMode)
+            {
+                if (this.creatableVirtualNetworkKey != null)
                 {
-                    if (this.creatableVirtualNetworkKey != null)
+                    INetwork network = (INetwork)Parent.CreatedDependencyResource(this.creatableVirtualNetworkKey);
+                    subnetInner.Id = network.Inner.Subnets[0].Id;
+                    return subnetInner;
+                }
+
+                foreach (var subnet in this.existingVirtualNetworkToAssociate.Inner.Subnets)
+                {
+                    if (subnet.Name.Equals(this.subnetToAssociate, StringComparison.OrdinalIgnoreCase))
                     {
-                        INetwork network = (INetwork)Parent.CreatedDependencyResource(this.creatableVirtualNetworkKey);
-                        subnetInner.Id = network.Inner.Subnets[0].Id;
+                        subnetInner.Id = subnet.Id;
                         return subnetInner;
                     }
+                }
 
-                    foreach (var subnet in this.existingVirtualNetworkToAssociate.Inner.Subnets)
-                    {
-                        if (subnet.Name.Equals(this.subnetToAssociate, StringComparison.OrdinalIgnoreCase))
-                        {
-                            subnetInner.Id = subnet.Id;
-                            return subnetInner;
-                        }
-                    }
-
-                    throw new Exception("A subnet with name '" + subnetToAssociate + "' not found under the network '" + this.existingVirtualNetworkToAssociate.Name + "'");
+                throw new Exception("A subnet with name '" + subnetToAssociate + "' not found under the network '" + this.existingVirtualNetworkToAssociate.Name + "'");
+            }
+            else
+            {
+                if (subnetToAssociate != null)
+                {
+                    int idx = Inner.Subnet.Id.LastIndexOf('/');
+                    subnetInner.Id = Inner.Subnet.Id.Substring(0, idx) + subnetToAssociate;
                 }
                 else
                 {
-                    if (subnetToAssociate != null)
-                    {
-                        int idx = this.Inner.Subnet.Id.LastIndexOf('/');
-                        subnetInner.Id = this.Inner.Subnet.Id.Substring(0, idx) + subnetToAssociate;
-                    }
-                    else
-                    {
-                        subnetInner.Id = this.Inner.Subnet.Id;
-                    }
-                    return subnetInner;
+                    subnetInner.Id = Inner.Subnet.Id;
                 }
+                return subnetInner;
+            }
         }
 
         /// <summary>
@@ -352,24 +367,24 @@ namespace Microsoft.Azure.Management.V2.Network
         private PublicIPAddressInner PublicIpToAssociate()
         {
             string pipId = null;
-            if (this.removePrimaryPublicIPAssociation)
+            if (removePrimaryPublicIPAssociation)
             {
                 return null;
             }
-            else if (this.creatablePublicIpKey != null)
+            else if (creatablePublicIpKey != null)
             {
-                pipId = ((IPublicIpAddress)this.Parent.CreatedDependencyResource(this.creatablePublicIpKey)).Id;
+                pipId = ((IPublicIpAddress)Parent.CreatedDependencyResource(creatablePublicIpKey)).Id;
             }
-            else if (this.existingPublicIpAddressIdToAssociate != null)
+            else if (existingPublicIpAddressIdToAssociate != null)
             {
-                pipId = this.existingPublicIpAddressIdToAssociate;
+                pipId = existingPublicIpAddressIdToAssociate;
             }
 
             if (pipId != null)
             {
-                return this.networkManager.PublicIpAddresses.GetById(pipId).Inner;
+                return networkManager.PublicIpAddresses.GetById(pipId).Inner;
             }
-            else if (!this.isInCreateMode)
+            else if (!isInCreateMode)
             {
                 return Inner.PublicIPAddress;
             }
@@ -379,19 +394,19 @@ namespace Microsoft.Azure.Management.V2.Network
             }
         }
 
-        public NicIpConfigurationImpl WithPrivateIpVersion (string ipVersion)
+        public NicIpConfigurationImpl WithPrivateIpVersion(string ipVersion)
         {
             Inner.PrivateIPAddressVersion = ipVersion;
             return this;
         }
 
-        public NicIpConfigurationImpl WithoutLoadBalancerBackends ()
+        public NicIpConfigurationImpl WithoutLoadBalancerBackends()
         {
             Inner.LoadBalancerBackendAddressPools = null;
             return this;
         }
 
-        public NicIpConfigurationImpl WithoutLoadBalancerInboundNatRules ()
+        public NicIpConfigurationImpl WithoutLoadBalancerInboundNatRules()
         {
             Inner.LoadBalancerInboundNatRules = null;
             return this;
@@ -403,8 +418,10 @@ namespace Microsoft.Azure.Management.V2.Network
             Dictionary<string, ILoadBalancer> loadBalancers = new Dictionary<string, ILoadBalancer>();
             List<IInboundNatRule> rules = new List<IInboundNatRule>();
 
-            if (refs != null) {
-                foreach (var reference in refs) {
+            if (refs != null)
+            {
+                foreach (var reference in refs)
+                {
                     string loadBalancerId = ResourceUtils.ParentResourcePathFromResourceId(reference.Id);
                     ILoadBalancer loadBalancer;
                     if (!loadBalancers.TryGetValue(loadBalancerId, out loadBalancer))
@@ -427,8 +444,10 @@ namespace Microsoft.Azure.Management.V2.Network
             var loadBalancers = new Dictionary<string, ILoadBalancer>();
             var backends = new List<IBackend>();
 
-            if (backendRefs != null) {
-                foreach (BackendAddressPoolInner backendRef in backendRefs) {
+            if (backendRefs != null)
+            {
+                foreach (BackendAddressPoolInner backendRef in backendRefs)
+                {
                     string loadBalancerId = ResourceUtils.ParentResourcePathFromResourceId(backendRef.Id);
                     ILoadBalancer loadBalancer;
                     if (!loadBalancers.TryGetValue(loadBalancerId, out loadBalancer))
@@ -440,7 +459,7 @@ namespace Microsoft.Azure.Management.V2.Network
                     string backendName = ResourceUtils.NameFromResourceId(backendRef.Id);
 
                     IBackend backend;
-                    if(loadBalancer.Backends().TryGetValue(backendName, out backend))
+                    if (loadBalancer.Backends().TryGetValue(backendName, out backend))
                         backends.Add(backend);
                 }
             }
