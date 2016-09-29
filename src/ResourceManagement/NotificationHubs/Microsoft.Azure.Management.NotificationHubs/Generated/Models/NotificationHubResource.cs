@@ -25,6 +25,7 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
+        /// <param name="sku">The sku of the created namespace</param>
         /// <param name="notificationHubResourceName">The NotificationHub
         /// name.</param>
         /// <param name="registrationTtl">The RegistrationTtl of the created
@@ -43,8 +44,8 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// NotificationHub</param>
         /// <param name="baiduCredential">The BaiduCredential of the created
         /// NotificationHub</param>
-        public NotificationHubResource(string location, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string notificationHubResourceName = default(string), string registrationTtl = default(string), System.Collections.Generic.IList<SharedAccessAuthorizationRuleProperties> authorizationRules = default(System.Collections.Generic.IList<SharedAccessAuthorizationRuleProperties>), ApnsCredential apnsCredential = default(ApnsCredential), WnsCredential wnsCredential = default(WnsCredential), GcmCredential gcmCredential = default(GcmCredential), MpnsCredential mpnsCredential = default(MpnsCredential), AdmCredential admCredential = default(AdmCredential), BaiduCredential baiduCredential = default(BaiduCredential))
-            : base(location, id, name, type, tags)
+        public NotificationHubResource(string location, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), Sku sku = default(Sku), string notificationHubResourceName = default(string), string registrationTtl = default(string), System.Collections.Generic.IList<SharedAccessAuthorizationRuleProperties> authorizationRules = default(System.Collections.Generic.IList<SharedAccessAuthorizationRuleProperties>), ApnsCredential apnsCredential = default(ApnsCredential), WnsCredential wnsCredential = default(WnsCredential), GcmCredential gcmCredential = default(GcmCredential), MpnsCredential mpnsCredential = default(MpnsCredential), AdmCredential admCredential = default(AdmCredential), BaiduCredential baiduCredential = default(BaiduCredential))
+            : base(location, id, name, type, tags, sku)
         {
             NotificationHubResourceName = notificationHubResourceName;
             RegistrationTtl = registrationTtl;

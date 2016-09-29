@@ -21,13 +21,15 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
-        public Resource(string location, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>))
+        /// <param name="sku">The sku of the created namespace</param>
+        public Resource(string location, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), Sku sku = default(Sku))
         {
             Id = id;
             Name = name;
             Type = type;
             Location = location;
             Tags = tags;
+            Sku = sku;
         }
 
         /// <summary>
@@ -37,10 +39,10 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         public string Id { get; private set; }
 
         /// <summary>
-        /// Gets or sets resource name
+        /// Gets resource name
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        public string Name { get; private set; }
 
         /// <summary>
         /// Gets resource type
@@ -61,6 +63,12 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         public System.Collections.Generic.IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
+        /// Gets or sets the sku of the created namespace
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "sku")]
+        public Sku Sku { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="Microsoft.Rest.ValidationException">
@@ -71,6 +79,10 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
             if (Location == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Location");
+            }
+            if (this.Sku != null)
+            {
+                this.Sku.Validate();
             }
         }
     }

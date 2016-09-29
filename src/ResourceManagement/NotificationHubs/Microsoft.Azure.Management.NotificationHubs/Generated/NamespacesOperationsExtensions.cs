@@ -104,6 +104,52 @@ namespace Microsoft.Azure.Management.NotificationHubs
             }
 
             /// <summary>
+            /// Patches the existing namespace
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to patch a Namespace Resource.
+            /// </param>
+            public static NamespaceResource Patch(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespacePatchParameters parameters)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((INamespacesOperations)s).PatchAsync(resourceGroupName, namespaceName, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Patches the existing namespace
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to patch a Namespace Resource.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<NamespaceResource> PatchAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespacePatchParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.PatchWithHttpMessagesAsync(resourceGroupName, namespaceName, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Deletes an existing namespace. This operation also removes all associated
             /// notificationHubs under the namespace.
             /// <see href="http://msdn.microsoft.com/en-us/library/windowsazure/jj856296.aspx" />

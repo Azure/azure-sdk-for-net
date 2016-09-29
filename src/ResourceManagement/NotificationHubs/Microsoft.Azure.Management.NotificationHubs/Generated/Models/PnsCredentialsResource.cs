@@ -25,6 +25,7 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
+        /// <param name="sku">The sku of the created namespace</param>
         /// <param name="apnsCredential">The ApnsCredential of the created
         /// NotificationHub</param>
         /// <param name="wnsCredential">The WnsCredential of the created
@@ -37,8 +38,8 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// NotificationHub</param>
         /// <param name="baiduCredential">The BaiduCredential of the created
         /// NotificationHub</param>
-        public PnsCredentialsResource(string location, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), ApnsCredential apnsCredential = default(ApnsCredential), WnsCredential wnsCredential = default(WnsCredential), GcmCredential gcmCredential = default(GcmCredential), MpnsCredential mpnsCredential = default(MpnsCredential), AdmCredential admCredential = default(AdmCredential), BaiduCredential baiduCredential = default(BaiduCredential))
-            : base(location, id, name, type, tags)
+        public PnsCredentialsResource(string location, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), Sku sku = default(Sku), ApnsCredential apnsCredential = default(ApnsCredential), WnsCredential wnsCredential = default(WnsCredential), GcmCredential gcmCredential = default(GcmCredential), MpnsCredential mpnsCredential = default(MpnsCredential), AdmCredential admCredential = default(AdmCredential), BaiduCredential baiduCredential = default(BaiduCredential))
+            : base(location, id, name, type, tags, sku)
         {
             ApnsCredential = apnsCredential;
             WnsCredential = wnsCredential;

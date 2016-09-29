@@ -24,11 +24,12 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
+        /// <param name="sku">The sku of the created namespace</param>
         /// <param name="isAvailiable">True if the name is available and can
         /// be used to create new Namespace/NotificationHub. Otherwise
         /// false.</param>
-        public CheckAvailabilityResult(string location, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), bool? isAvailiable = default(bool?))
-            : base(location, id, name, type, tags)
+        public CheckAvailabilityResult(string location, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), Sku sku = default(Sku), bool? isAvailiable = default(bool?))
+            : base(location, id, name, type, tags, sku)
         {
             IsAvailiable = isAvailiable;
         }
