@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.V2.Network
         IUpdateDefinition<NetworkSecurityGroup.Update.IUpdate>,
         NetworkSecurityRule.Update.IUpdate
     {
-        protected  NetworkSecurityRuleImpl (SecurityRuleInner inner, NetworkSecurityGroupImpl parent) : base(inner.Name, inner, parent)
+        internal NetworkSecurityRuleImpl (SecurityRuleInner inner, NetworkSecurityGroupImpl parent) : base(inner.Name, inner, parent)
         {
         }
 
