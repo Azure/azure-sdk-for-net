@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDef
         /// </summary>
         /// <param name="sizeInGB">sizeInGB the disk size in GB</param>
         /// <returns>the stage representing optional additional settings for the attachable data disk</returns>
-        IWithStoreAt<ParentT> WithSizeInGB (int? sizeInGB);
+        IWithStoreAt<ParentT> WithSizeInGB (int sizeInGB);
 
     }
     /// <summary>
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDef
         /// </summary>
         /// <param name="lun">lun the logical unit number</param>
         /// <returns>the next stage of data disk definition</returns>
-        IWithAttach<ParentT> WithLun (int? lun);
+        IWithAttach<ParentT> WithLun (int lun);
 
         /// <summary>
         /// Specifies the caching type for the data disk.
