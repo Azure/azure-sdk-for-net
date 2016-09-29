@@ -16,9 +16,9 @@ namespace Microsoft.Azure.Management.V2.Compute
     /// The implementation for {@link AvailabilitySets}.
     /// </summary>
     internal partial class AvailabilitySetsImpl :
-        GroupableResources<Microsoft.Azure.Management.V2.Compute.IAvailabilitySet,
-            Microsoft.Azure.Management.V2.Compute.AvailabilitySetImpl,
-            Microsoft.Azure.Management.Compute.Models.AvailabilitySetInner,
+        GroupableResources<IAvailabilitySet,
+            AvailabilitySetImpl,
+            AvailabilitySetInner,
             IAvailabilitySetsOperations, 
             IComputeManager>,
         IAvailabilitySets
@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         internal AvailabilitySetsImpl(IAvailabilitySetsOperations client, IComputeManager computeManager) : base(client, computeManager)
         {}
 
-        public IBlank Define(string name)
+        public AvailabilitySetImpl Define(string name)
         {
             return WrapModel(name);
         }
