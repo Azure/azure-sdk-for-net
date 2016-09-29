@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Azure.Management.Fluent.Redis;
 using Microsoft.Azure.Management.Fluent.Batch;
+using Microsoft.Azure.Management.V2.Network;
 
 namespace Microsoft.Azure.Management.Samples.Common
 {
@@ -250,6 +251,31 @@ namespace Microsoft.Azure.Management.Samples.Common
         {
             Console.WriteLine("Primary Key (" + batchAccountKeys.Primary + ") Secondary key = ("
                     + batchAccountKeys.Secondary + ")");
+        }
+
+        public static void PrintNetworkSecurityGroup(INetworkSecurityGroup resource)
+        {
+            StringBuilder nsgOutput = new StringBuilder();
+            nsgOutput.Append("NSG: ").Append(resource.Id)
+                    .Append("Name: ").Append(resource.Name)
+                    .Append("\n\tResource group: ").Append(resource.ResourceGroupName)
+                    .Append("\n\tRegion: ").Append(resource.RegionName)
+                    .Append("\n\tTags: ").Append(resource.Tags);
+
+            // Output security rules
+            foreach (var rule in resource.SecurityRules())
+            {
+                nsgOutput.Append("\n\tRule: ").Append(rule.Name)
+                        .Append("\n\t\tAccess: ").Append(rule.Access)
+                        .Append("\n\t\tDirection: ").Append(rule.Direction)
+                        .Append("\n\t\tFrom address: ").Append(rule.SourceAddressPrefix)
+                        .Append("\n\t\tFrom port range: ").Append(rule.SourcePortRange)
+                        .Append("\n\t\tTo address: ").Append(rule.DestinationAddressPrefix)
+                        .Append("\n\t\tTo port: ").Append(rule.DestinationPortRange)
+                        .Append("\n\t\tProtocol: ").Append(rule.Protocol)
+                        .Append("\n\t\tPriority: ").Append(rule.Priority);
+            }
+            Console.WriteLine(nsgOutput.ToString());
         }
     }
 }
