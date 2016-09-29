@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.V2.Compute
 {
     using Management.Compute;
     using Management.Compute.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Resource.Core;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
 

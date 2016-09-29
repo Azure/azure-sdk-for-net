@@ -7,10 +7,10 @@ namespace Microsoft.Azure.Management.V2.Compute
     using Microsoft.Azure.Management.V2.Resource.Core;
     using Microsoft.Azure.Management.Compute.Models;
     /// <summary>
-    /// The implementation for {@link VirtualMachineExtensionImage}.
+    /// The implementation for VirtualMachineExtensionImage.
     /// </summary>
     internal partial class VirtualMachineExtensionImageImpl :
-        Wrapper<Microsoft.Azure.Management.Compute.Models.VirtualMachineExtensionImageInner>,
+        Wrapper<VirtualMachineExtensionImageInner>,
         IVirtualMachineExtensionImage
     {
         private IVirtualMachineExtensionImageVersion version;

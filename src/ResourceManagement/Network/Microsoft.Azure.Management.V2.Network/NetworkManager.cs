@@ -18,7 +18,6 @@ namespace Microsoft.Azure.Management.V2.Network
         private NetworkSecurityGroupsImpl networkSecurityGroups;
         private NetworksImpl networks;
 
-        //$ private NetworkSecurityGroupsImpl networkSecurityGroups;
         //$ private NetworksImpl networks;
         private LoadBalancersImpl loadBalancers;
 
@@ -182,7 +181,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// <summary>
         /// return entry point to network security group management
         /// </summary>
-        //$ INetworkSecurityGroups NetworkSecurityGroups { get; }
+        INetworkSecurityGroups NetworkSecurityGroups { get; }
 
         /// <summary>
         /// return entry point to public IP address management

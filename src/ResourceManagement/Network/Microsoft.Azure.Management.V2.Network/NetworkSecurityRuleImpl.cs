@@ -3,273 +3,220 @@
 namespace Microsoft.Azure.Management.V2.Network
 {
 
-    using Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Definition;
-    using Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update;
-    using Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.Network.Models;
-    using Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
+    using NetworkSecurityRule.Definition;
+    using NetworkSecurityRule.UpdateDefinition;
+    using Resource.Core;
+    using Management.Network.Models;
     using Resource.Core.ChildResourceActions;
-    using System;
 
     /// <summary>
-    /// Implementation for {@link NetworkSecurityRule} and its create and update interfaces.
+    /// Implementation for NetworkSecurityRule and its create and update interfaces.
     /// </summary>
     public partial class NetworkSecurityRuleImpl  :
-        ChildResource<Microsoft.Azure.Management.Network.Models.SecurityRuleInner,Microsoft.Azure.Management.V2.Network.NetworkSecurityGroupImpl,Microsoft.Azure.Management.V2.Network.INetworkSecurityGroup>,
+        ChildResource<SecurityRuleInner, NetworkSecurityGroupImpl, INetworkSecurityGroup>,
         INetworkSecurityRule,
-        IDefinition<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition.IWithCreate>,
-        IUpdateDefinition<Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update.IUpdate>,
-        Microsoft.Azure.Management.V2.Network.NetworkSecurityRule.Update.IUpdate
+        IDefinition<NetworkSecurityGroup.Definition.IWithCreate>,
+        IUpdateDefinition<NetworkSecurityGroup.Update.IUpdate>,
+        NetworkSecurityRule.Update.IUpdate
     {
-        protected  NetworkSecurityRuleImpl (SecurityRuleInner inner, NetworkSecurityGroupImpl parent) : base(inner.Name, inner, parent)
+        internal NetworkSecurityRuleImpl (SecurityRuleInner inner, NetworkSecurityGroupImpl parent) : base(inner.Name, inner, parent)
         {
-
-            //$ super(inner, parent);
-            //$ }
-
         }
 
+        #region Accessors
         override public string Name
         {
             get
             {
-            //$ return this.inner().name();
-
-
-                return null;
+                return Inner.Name;
             }
         }
+
         public string Direction
         {
             get
             {
-            //$ return this.inner().direction();
-
-
-                return null;
+                return Inner.Direction;
             }
         }
+
         public string Protocol
         {
             get
             {
-            //$ return this.inner().protocol();
-
-
-                return null;
+                return Inner.Protocol;
             }
         }
         public string Access
         {
             get
             {
-            //$ return this.inner().access();
-
-
-                return null;
+                return Inner.Access;
             }
         }
         public string SourceAddressPrefix
         {
             get
             {
-            //$ return this.inner().sourceAddressPrefix();
-
-
-                return null;
+                return Inner.SourceAddressPrefix;
             }
         }
+
         public string SourcePortRange
         {
             get
             {
-            //$ return this.inner().sourcePortRange();
-
-
-                return null;
+                return Inner.SourcePortRange;
             }
         }
+
         public string DestinationAddressPrefix
         {
             get
             {
-            //$ return this.inner().destinationAddressPrefix();
-
-
-                return null;
+                return Inner.DestinationAddressPrefix;
             }
         }
+
         public string DestinationPortRange
         {
             get
             {
-            //$ return this.inner().destinationPortRange();
-
-
-                return null;
+                return Inner.DestinationPortRange;
             }
         }
-        public int? Priority
+
+        public int Priority
         {
             get
             {
-            //$ return this.inner().priority();
-
-
-                return null;
+                return (Inner.Priority.HasValue) ? Inner.Priority.Value : 0;
             }
         }
+
+        NetworkSecurityGroup.Update.IUpdate ISettable<NetworkSecurityGroup.Update.IUpdate>.Parent()
+        {
+            return Parent;
+        }
+
+        public string Description
+        {
+            get
+            {
+                return Inner.Description;
+            }
+        }
+        #endregion
+
+        #region Public Withers
+        #region Direction and Access
         public NetworkSecurityRuleImpl AllowInbound ()
         {
-
-            //$ return this
-            //$ .withDirection(SecurityRuleDirection.INBOUND)
-            //$ .withAccess(SecurityRuleAccess.ALLOW);
-
-            return this;
+            return WithDirection(SecurityRuleDirection.Inbound)
+                .WithAccess(SecurityRuleAccess.Allow);
         }
 
         public NetworkSecurityRuleImpl AllowOutbound ()
         {
-
-            //$ return this
-            //$ .withDirection(SecurityRuleDirection.OUTBOUND)
-            //$ .withAccess(SecurityRuleAccess.ALLOW);
-
-            return this;
+            return WithDirection(SecurityRuleDirection.Outbound)
+                .WithAccess(SecurityRuleAccess.Allow);
         }
 
         public NetworkSecurityRuleImpl DenyInbound ()
         {
-
-            //$ return this
-            //$ .withDirection(SecurityRuleDirection.INBOUND)
-            //$ .withAccess(SecurityRuleAccess.DENY);
-
-            return this;
+            return WithDirection(SecurityRuleDirection.Inbound)
+                .WithAccess(SecurityRuleAccess.Deny);
         }
 
         public NetworkSecurityRuleImpl DenyOutbound ()
         {
-
-            //$ return this
-            //$ .withDirection(SecurityRuleDirection.OUTBOUND)
-            //$ .withAccess(SecurityRuleAccess.DENY);
-
-            return this;
+            return WithDirection(SecurityRuleDirection.Outbound)
+                .WithAccess(SecurityRuleAccess.Deny);
         }
+        #endregion
 
+        #region Protocol
         public NetworkSecurityRuleImpl WithProtocol (string protocol)
         {
-
-            //$ this.inner().withProtocol(protocol);
-            //$ return this;
-
+            Inner.Protocol = protocol;
             return this;
         }
 
         public NetworkSecurityRuleImpl WithAnyProtocol ()
         {
-
-            //$ return this.withProtocol(SecurityRuleProtocol.ASTERISK);
-
-            return this;
+            return WithProtocol(SecurityRuleProtocol.Asterisk);
         }
+        #endregion
 
+        #region Source Address
         public NetworkSecurityRuleImpl FromAddress (string cidr)
         {
-
-            //$ this.inner().withSourceAddressPrefix(cidr);
-            //$ return this;
-
+            Inner.SourceAddressPrefix = cidr;
             return this;
         }
 
         public NetworkSecurityRuleImpl FromAnyAddress ()
         {
-
-            //$ this.inner().withSourceAddressPrefix("*");
-            //$ return this;
-
+            Inner.SourceAddressPrefix = "*";
             return this;
         }
+        #endregion
 
+        #region Source Port
         public NetworkSecurityRuleImpl FromPort (int port)
         {
-
-            //$ this.inner().withSourcePortRange(String.valueOf(port));
-            //$ return this;
-
+            Inner.SourcePortRange = port.ToString();
             return this;
         }
 
         public NetworkSecurityRuleImpl FromAnyPort ()
         {
-
-            //$ this.inner().withSourcePortRange("*");
-            //$ return this;
-
+            Inner.SourcePortRange = "*";
             return this;
         }
 
         public NetworkSecurityRuleImpl FromPortRange (int from, int to)
         {
-
-            //$ this.inner().withSourcePortRange(String.valueOf(from) + "-" + String.valueOf(to));
-            //$ return this;
-
+            Inner.SourcePortRange = from.ToString() + "-" + to.ToString();
             return this;
         }
+        #endregion
 
+        #region Destination Address
         public NetworkSecurityRuleImpl ToAddress (string cidr)
         {
-
-            //$ this.inner().withDestinationAddressPrefix(cidr);
-            //$ return this;
-
+            Inner.DestinationAddressPrefix = cidr;
             return this;
         }
 
         public NetworkSecurityRuleImpl ToAnyAddress ()
         {
-
-            //$ this.inner().withDestinationAddressPrefix("*");
-            //$ return this;
-
+            Inner.DestinationAddressPrefix = "*";
             return this;
         }
+        #endregion
 
+        #region Destination Port
         public NetworkSecurityRuleImpl ToPort (int port)
         {
-
-            //$ this.inner().withDestinationPortRange(String.valueOf(port));
-            //$ return this;
-
+            Inner.DestinationPortRange = port.ToString();
             return this;
         }
 
         public NetworkSecurityRuleImpl ToAnyPort ()
         {
-
-            //$ this.inner().withDestinationPortRange("*");
-            //$ return this;
-
+            Inner.DestinationPortRange = "*";
             return this;
         }
 
         public NetworkSecurityRuleImpl ToPortRange (int from, int to)
         {
-
-            //$ this.inner().withDestinationPortRange(String.valueOf(from) + "-" + String.valueOf(to));
-            //$ return this;
-
+            Inner.DestinationPortRange = from.ToString() + "-" + to.ToString();
             return this;
         }
+        #endregion
 
+        #region Priority
         public NetworkSecurityRuleImpl WithPriority (int priority)
         {
 
@@ -282,7 +229,9 @@ namespace Microsoft.Azure.Management.V2.Network
 
             return this;
         }
+        #endregion
 
+        #region Description
         public NetworkSecurityRuleImpl WithDescription (string description)
         {
 
@@ -291,49 +240,28 @@ namespace Microsoft.Azure.Management.V2.Network
 
             return this;
         }
+        #endregion
+        #endregion
 
+        #region Helpers
         private NetworkSecurityRuleImpl WithDirection (string direction)
         {
-
-            //$ this.inner().withDirection(direction);
-            //$ return this;
-            //$ }
-
+            Inner.Direction = direction;
             return this;
         }
 
         private NetworkSecurityRuleImpl WithAccess (string permission)
         {
-
-            //$ this.inner().withAccess(permission);
-            //$ return this;
-            //$ }
-
+            Inner.Access = permission;
             return this;
         }
+        #endregion
 
+        #region Actions
         public NetworkSecurityGroupImpl Attach ()
         {
-
-            //$ return this.parent().withRule(this);
-
-            return null;
+            return Parent.WithRule(this);
         }
-
-        NetworkSecurityGroup.Update.IUpdate ISettable<NetworkSecurityGroup.Update.IUpdate>.Parent()
-        {
-            throw new NotImplementedException();
-        }
-
-        public string Description
-        {
-            get
-            {
-            //$ return this.inner().description();
-
-
-                return null;
-            }
-        }
+        #endregion
     }
 }

@@ -3,14 +3,7 @@
 
 namespace Microsoft.Azure.Management.V2.Compute
 {
-
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Update;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Definition;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Resource.Core;
     using System.Collections.Generic;
     using Management.Compute.Models;
     using Resource.Core.ChildResourceActions;
@@ -19,17 +12,18 @@ namespace Microsoft.Azure.Management.V2.Compute
     /// Implementation of {@link VirtualMachineScaleSetExtension}.
     /// </summary>
     internal partial class VirtualMachineScaleSetExtensionImpl :
-        ChildResource<Microsoft.Azure.Management.Compute.Models.VirtualMachineScaleSetExtensionInner,
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetImpl,
-            Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet>,
+        ChildResource<VirtualMachineScaleSetExtensionInner,
+            VirtualMachineScaleSetImpl,
+            IVirtualMachineScaleSet>,
         IVirtualMachineScaleSetExtension,
-        IDefinition<Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate>,
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.UpdateDefinition.IUpdateDefinition<Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApply>,
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Update.IUpdate
+        VirtualMachineScaleSetExtension.Definition.IDefinition<VirtualMachineScaleSet.Definition.IWithCreate>,
+        VirtualMachineScaleSetExtension.UpdateDefinition.IUpdateDefinition<Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApply>,
+        VirtualMachineScaleSetExtension.Update.IUpdate
     {
         private IDictionary<string,object> publicSettings;
         private IDictionary<string,object> protectedSettings;
-        internal VirtualMachineScaleSetExtensionImpl (VirtualMachineScaleSetExtensionInner inner, VirtualMachineScaleSetImpl parent) : base(inner.Id, inner, parent)
+        internal VirtualMachineScaleSetExtensionImpl (VirtualMachineScaleSetExtensionInner inner, VirtualMachineScaleSetImpl parent) 
+            : base(inner.Id, inner, parent)
         {
             InitializeSettings();
         }

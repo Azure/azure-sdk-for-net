@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
                 name,
                 inner,
                 InnerCollection,
-                MyManager,
+                Manager,
                 graphRbacManager);
         }
 
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
                 vaultInner.Name,
                 vaultInner,
                 InnerCollection,
-                MyManager,
+                Manager,
                 graphRbacManager);
         }
     }

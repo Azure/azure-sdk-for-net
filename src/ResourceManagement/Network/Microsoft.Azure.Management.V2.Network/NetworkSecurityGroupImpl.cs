@@ -1,19 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 namespace Microsoft.Azure.Management.V2.Network
 {
-
-    using Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Update;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Network.Models;
-    using Microsoft.Azure.Management.V2.Network.NetworkSecurityGroup.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Management.Network.Models;
+    using Resource.Core;
     using Management.Network;
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Implementation for {@link NetworkSecurityGroup} and its create and update interfaces.
+    /// Implementation for NetworkSecurityGroup
     /// </summary>
     public partial class NetworkSecurityGroupImpl :
         GroupableParentResource<INetworkSecurityGroup,
@@ -24,173 +21,171 @@ namespace Microsoft.Azure.Management.V2.Network
             NetworkSecurityGroup.Definition.IWithGroup,
             NetworkSecurityGroup.Definition.IWithCreate,
             NetworkSecurityGroup.Definition.IWithCreate,
-            IUpdate>,
+            NetworkSecurityGroup.Update.IUpdate>,
         INetworkSecurityGroup,
-        IDefinition,
-        IUpdate
+        NetworkSecurityGroup.Definition.IDefinition,
+        NetworkSecurityGroup.Update.IUpdate
     {
         private INetworkSecurityGroupsOperations innerCollection;
-        private IDictionary<string,Microsoft.Azure.Management.V2.Network.INetworkSecurityRule> rules;
-        private IDictionary<string,Microsoft.Azure.Management.V2.Network.INetworkSecurityRule> defaultRules;
+        private IDictionary<string, INetworkSecurityRule> rules;
+        private IDictionary<string, INetworkSecurityRule> defaultRules;
         internal  NetworkSecurityGroupImpl(
             string name, 
             NetworkSecurityGroupInner innerModel, 
             INetworkSecurityGroupsOperations innerCollection, 
             NetworkManager networkManager) : base(name, innerModel, networkManager)
         {
+            this.innerCollection = innerCollection;
+        }
 
-            //$ final String name,
-            //$ final NetworkSecurityGroupInner innerModel,
-            //$ final NetworkSecurityGroupsInner innerCollection,
-            //$ final NetworkManager networkManager) {
-            //$ super(name, innerModel, networkManager);
-            //$ this.innerCollection = innerCollection;
-            //$ }
+        #region Helpers
+        override protected Task<NetworkSecurityGroupInner> CreateInner()
+        {
+            return innerCollection.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
+        }
 
+        override protected void BeforeCreating()
+        {
+            // Reset and update subnets
+            Inner.SecurityRules = InnersFromWrappers<SecurityRuleInner, INetworkSecurityRule>(rules.Values);
+        }
+
+        override protected void AfterCreating()
+        {
+            // Nothing to do
         }
 
         override protected void InitializeChildrenFromInner ()
         {
+            rules = new SortedDictionary<string, INetworkSecurityRule>();
+            IList<SecurityRuleInner> inners = Inner.SecurityRules;
+            if (inners != null)
+            {
+                foreach (SecurityRuleInner inner in inners)
+                {
+                    rules[inner.Name] = new NetworkSecurityRuleImpl(inner, this);
+                }
+            }
 
-            //$ this.rules = new TreeMap<>();
-            //$ List<SecurityRuleInner> inners = this.inner().securityRules();
-            //$ if (inners != null) {
-            //$ for (SecurityRuleInner inner : inners) {
-            //$ this.rules.put(inner.name(), new NetworkSecurityRuleImpl(inner, this));
-            //$ }
-            //$ }
-            //$ 
-            //$ this.defaultRules = new TreeMap<>();
-            //$ inners = this.inner().defaultSecurityRules();
-            //$ if (inners != null) {
-            //$ for (SecurityRuleInner inner : inners) {
-            //$ this.defaultRules.put(inner.name(), new NetworkSecurityRuleImpl(inner, this));
-            //$ }
-            //$ }
-
+            defaultRules = new SortedDictionary<string, INetworkSecurityRule>();
+            inners = Inner.DefaultSecurityRules;
+            if (inners != null)
+            {
+                foreach (SecurityRuleInner inner in inners)
+                {
+                    defaultRules[inner.Name] = new NetworkSecurityRuleImpl(inner, this);
+                }
+            }
         }
 
+        internal NetworkSecurityGroupImpl WithRule(NetworkSecurityRuleImpl rule)
+        {
+            rules[rule.Name] = rule;
+            return this;
+        }
+        #endregion
+
+        #region Public Withers
         public NetworkSecurityRuleImpl UpdateRule (string name)
         {
-
-            //$ return (NetworkSecurityRuleImpl) this.rules.get(name);
-
-            return null;
+            INetworkSecurityRule rule;
+            rules.TryGetValue(name, out rule);
+            return (NetworkSecurityRuleImpl) rule;
         }
 
         public NetworkSecurityRuleImpl DefineRule (string name)
         {
+            SecurityRuleInner inner = new SecurityRuleInner()
+            {
+                Name = name,
+                Priority = 100 // Must be at least 100
+            };
 
-            //$ SecurityRuleInner inner = new SecurityRuleInner();
-            //$ inner.withName(name);
-            //$ inner.withPriority(100); // Must be at least 100
-            //$ return new NetworkSecurityRuleImpl(inner, this);
-
-            return null;
+            return new NetworkSecurityRuleImpl(inner, this);
         }
 
-        public List<Microsoft.Azure.Management.V2.Network.ISubnet> ListAssociatedSubnets()
+        public NetworkSecurityGroupImpl WithoutRule(string name)
         {
+            rules.Remove(name);
+            return this;
+        }
+        #endregion
 
-            //$ final List<SubnetInner> subnetRefs = this.inner().subnets();
-            //$ final Map<String, Network> networks = new HashMap<>();
-            //$ final List<Subnet> subnets = new ArrayList<>();
-            //$ 
-            //$ if (subnetRefs != null) {
-            //$ for (SubnetInner subnetRef : subnetRefs) {
-            //$ String networkId = ResourceUtils.parentResourcePathFromResourceId(subnetRef.id());
-            //$ Network network = networks.get(networkId);
-            //$ if (network == null) {
-            //$ network = this.myManager.networks().getById(networkId);
-            //$ networks.put(networkId, network);
-            //$ }
-            //$ 
-            //$ String subnetName = ResourceUtils.nameFromResourceId(subnetRef.id());
-            //$ subnets.add(network.subnets().get(subnetName));
-            //$ }
-            //$ }
-            //$ 
-            //$ return Collections.unmodifiableList(subnets);
+        #region Actions
+        public IList<ISubnet> ListAssociatedSubnets()
+        {
+            IList<SubnetInner> subnetRefs = this.Inner.Subnets;
+            IDictionary<string, INetwork> networks = new Dictionary<string, INetwork>();
+            IList<ISubnet> subnets = new List<ISubnet>();
 
-            return null;
+            if (subnetRefs != null)
+            {
+                foreach (SubnetInner subnetRef in subnetRefs)
+                {
+                    string networkId = ResourceUtils.ParentResourcePathFromResourceId(subnetRef.Id);
+                    INetwork network;
+                    if (!networks.TryGetValue(networkId, out network))
+                    {
+                        try
+                        {
+                            network = Manager.Networks.GetById(networkId);
+                            networks[networkId] = network;
+                        }
+                        catch
+                        {
+                            // Skip if not in existence anymore
+                        }
+                    }
+
+                    if (network != null)
+                    {
+                        string subnetName = ResourceUtils.NameFromResourceId(subnetRef.Id);
+                        ISubnet subnet;
+                        if (network.Subnets().TryGetValue(subnetName, out subnet))
+                        {
+                            subnets.Add(subnet);
+                        }
+                    }
+                }
+            }
+
+            return subnets;
         }
 
         public override INetworkSecurityGroup Refresh()
         {
-            var response = this.innerCollection.Get(this.ResourceGroupName, this.Name);
+            var response = innerCollection.Get(ResourceGroupName, Name);
             SetInner(response);
             return this;
         }
+        #endregion
 
-        public IUpdate WithoutRule (string name)
+        #region Accessors
+        public IDictionary<string, INetworkSecurityRule> SecurityRules ()
         {
-
-            //$ this.rules.remove(name);
-            //$ return this;
-
-            return null;
+            return rules;
         }
 
-        internal NetworkSecurityGroupImpl WithRule (NetworkSecurityRuleImpl rule)
+        public IDictionary<string, INetworkSecurityRule> DefaultSecurityRules ()
         {
-
-            //$ this.rules.put(rule.name(), rule);
-            //$ return this;
-            //$ }
-
-            return this;
+            return defaultRules;
         }
 
-        public IDictionary<string,Microsoft.Azure.Management.V2.Network.INetworkSecurityRule> SecurityRules ()
-        {
-
-            //$ return Collections.unmodifiableMap(this.rules);
-
-            return null;
-        }
-
-        public IDictionary<string,Microsoft.Azure.Management.V2.Network.INetworkSecurityRule> DefaultSecurityRules ()
-        {
-
-            //$ return Collections.unmodifiableMap(this.defaultRules);
-
-            return null;
-        }
-
-        public List<string> NetworkInterfaceIds
+        public IList<string> NetworkInterfaceIds
         {
             get
             {
-            //$ List<String> ids = new ArrayList<>();
-            //$ if (this.inner().networkInterfaces() != null) {
-            //$ for (NetworkInterfaceInner inner : this.inner().networkInterfaces()) {
-            //$ ids.add(inner.id());
-            //$ }
-            //$ }
-            //$ return Collections.unmodifiableList(ids);
-
-
-                return null;
+                IList<string> ids = new List<string>();
+                if (Inner.NetworkInterfaces != null)
+                {
+                    foreach (var inner in Inner.NetworkInterfaces)
+                    {
+                        ids.Add(inner.Id);
+                    }
+                }
+                return ids;
             }
         }
-        override protected void BeforeCreating ()
-        {
-
-            //$ // Reset and update subnets
-            //$ this.inner().withSecurityRules(innersFromWrappers(this.rules.values()));
-
-        }
-
-        override protected void AfterCreating ()
-        {
-        }
-
-        override protected Task<NetworkSecurityGroupInner> CreateInner()
-        {
-            //$ return this.innerCollection.createOrUpdateAsync(this.resourceGroupName(), this.name(), this.inner());
-
-
-                return null;
-        }
+        #endregion
     }
 }

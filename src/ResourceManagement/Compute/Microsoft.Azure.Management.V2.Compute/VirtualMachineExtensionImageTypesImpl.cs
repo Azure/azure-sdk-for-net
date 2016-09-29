@@ -4,16 +4,15 @@
 namespace Microsoft.Azure.Management.V2.Compute
 {
 
-    using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Management.Compute.Models;
+    using Resource.Core;
     using Management.Compute;
 
     /// <summary>
-    /// The implementation for {@link VirtualMachineExtensionImageTypes}.
+    /// The implementation for VirtualMachineExtensionImageTypes.
     /// </summary>
     internal partial class VirtualMachineExtensionImageTypesImpl  :
-        ReadableWrappers<Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtensionImageType,Microsoft.Azure.Management.V2.Compute.VirtualMachineExtensionImageTypeImpl,Microsoft.Azure.Management.Compute.Models .VirtualMachineExtensionImageInner>,
+        ReadableWrappers<IVirtualMachineExtensionImageType, VirtualMachineExtensionImageTypeImpl, VirtualMachineExtensionImageInner>,
         IVirtualMachineExtensionImageTypes
     {
         private IVirtualMachineExtensionImagesOperations client;
@@ -24,7 +23,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             this.publisher = publisher;
         }
 
-        public PagedList<Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtensionImageType> List ()
+        public PagedList<IVirtualMachineExtensionImageType> List ()
         {
             return WrapList(this.client.ListTypes(EnumNameAttribute.GetName(this.publisher.Region), this.publisher.Name));
         }

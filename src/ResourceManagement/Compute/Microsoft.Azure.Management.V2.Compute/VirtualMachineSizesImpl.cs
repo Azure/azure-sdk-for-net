@@ -4,11 +4,10 @@
 namespace Microsoft.Azure.Management.V2.Compute
 {
     using Management.Compute;
-    using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
+    using Management.Compute.Models;
+    using Resource.Core;
     /// <summary>
-    /// The implementation for {@link VirtualMachineSizes}.
+    /// The implementation for VirtualMachineSizes.
     /// </summary>
     internal partial class VirtualMachineSizesImpl :
         ReadableWrappers<IVirtualMachineSize, VirtualMachineSizeImpl, VirtualMachineSize>,

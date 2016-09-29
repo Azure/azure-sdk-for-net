@@ -4,28 +4,31 @@
 namespace Microsoft.Azure.Management.V2.Compute
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
-    using Microsoft.Azure.Management.V2.Network;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Storage;
+    using Resource.Core.CollectionActions;
+    using Network;
+    using Resource.Core;
+    using Storage;
     using Management.Compute;
-    using Microsoft.Azure.Management.Compute.Models;
+    using Management.Compute.Models;
     using System.Collections.Generic;
-    using System;
     using System.Threading;
     using System.Threading.Tasks;
     using Rest.Azure;
 
     /// <summary>
-    /// The implementation for {@link VirtualMachineScaleSets}.
+    /// The implementation for VirtualMachineScaleSets.
     /// </summary>
     internal partial class VirtualMachineScaleSetsImpl  :
-        GroupableResources<IVirtualMachineScaleSet,VirtualMachineScaleSetImpl,VirtualMachineScaleSetInner, IVirtualMachineScaleSetsOperations, ComputeManager>,
+        GroupableResources<IVirtualMachineScaleSet, VirtualMachineScaleSetImpl, VirtualMachineScaleSetInner, IVirtualMachineScaleSetsOperations, ComputeManager>,
         IVirtualMachineScaleSets
     {
         private IStorageManager storageManager;
         private INetworkManager networkManager;
-        public  VirtualMachineScaleSetsImpl (IVirtualMachineScaleSetsOperations client, ComputeManager computeManager, IStorageManager storageManager, INetworkManager networkManager) : base(client, computeManager)
+        public  VirtualMachineScaleSetsImpl (
+            IVirtualMachineScaleSetsOperations client,
+            ComputeManager computeManager,
+            IStorageManager storageManager,
+            INetworkManager networkManager) : base(client, computeManager)
         {
             this.storageManager = storageManager;
             this.networkManager = networkManager;

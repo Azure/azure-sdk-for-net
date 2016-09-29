@@ -4,33 +4,24 @@
 namespace Microsoft.Azure.Management.V2.Compute
 {
 
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.Update;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Resource.Core;
     using System.Threading;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResourceActions;
     using Management.Compute.Models;
     using Management.Compute;
     using System.Collections.ObjectModel;
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Implementation of {@link VirtualMachineExtension}.
+    /// Implementation of VirtualMachineExtension.
     /// </summary>
     internal partial class VirtualMachineExtensionImpl  :
         ExternalChildResource<IVirtualMachineExtension, VirtualMachineExtensionInner, IVirtualMachine, VirtualMachineImpl>,
         IVirtualMachineExtension,
-        IDefinition<IWithCreate>,
-        IUpdateDefinition<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>,
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.Update.IUpdate
+        VirtualMachineExtension.Definition.IDefinition<VirtualMachine.Definition.IWithCreate>,
+        VirtualMachineExtension.UpdateDefinition.IUpdateDefinition<VirtualMachine.Update.IUpdate>,
+        VirtualMachineExtension.Update.IUpdate
     {
         private IVirtualMachineExtensionsOperations client;
         private IDictionary<string, object> publicSettings;

@@ -8,9 +8,9 @@ namespace Microsoft.Azure.Management.V2.Network
     using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Azure.Management.V2.Network.PublicIpAddress.Update;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.V2.Resource;
     using Management.Network;
+    using Resource.Core;
 
     /// <summary>
     /// Implementation for {@link PublicIpAddress} and its create and update interfaces.
@@ -30,226 +30,186 @@ namespace Microsoft.Azure.Management.V2.Network
         IUpdate
     {
         private IPublicIPAddressesOperations client;
-        internal  PublicIpAddressImpl(
+        internal PublicIpAddressImpl(
             string name,
             PublicIPAddressInner innerModel,
             IPublicIPAddressesOperations client,
             NetworkManager networkManager) : base(name, innerModel, networkManager)
         {
-
-            //$ PublicIPAddressInner innerModel,
-            //$ final PublicIPAddressesInner client,
-            //$ final NetworkManager networkManager) {
-            //$ super(name, innerModel, networkManager);
-            //$ this.client = client;
-            //$ }
-
+            this.client = client;
         }
 
-        public PublicIpAddressImpl WithIdleTimeoutInMinutes (int minutes)
+        public PublicIpAddressImpl WithIdleTimeoutInMinutes(int minutes)
         {
-
-            //$ this.inner().withIdleTimeoutInMinutes(minutes);
-            //$ return this;
-
+            this.Inner.IdleTimeoutInMinutes = minutes;
             return this;
         }
 
-        public PublicIpAddressImpl WithStaticIp ()
+        public PublicIpAddressImpl WithStaticIp()
         {
 
-            //$ this.inner().withPublicIPAllocationMethod(IPAllocationMethod.STATIC);
-            //$ return this;
-
+            this.Inner.PublicIPAllocationMethod = IPAllocationMethod.Static;
             return this;
         }
 
-        public PublicIpAddressImpl WithDynamicIp ()
+        public PublicIpAddressImpl WithDynamicIp()
         {
-
-            //$ this.inner().withPublicIPAllocationMethod(IPAllocationMethod.DYNAMIC);
-            //$ return this;
-
+            this.Inner.PublicIPAllocationMethod = IPAllocationMethod.Dynamic;
             return this;
         }
 
-        public PublicIpAddressImpl WithLeafDomainLabel (string dnsName)
+        public PublicIpAddressImpl WithLeafDomainLabel(string dnsName)
         {
-
-            //$ this.inner().dnsSettings().withDomainNameLabel(dnsName.toLowerCase());
-            //$ return this;
-
+            this.Inner.DnsSettings.DomainNameLabel = dnsName.ToLower();
             return this;
         }
 
-        public PublicIpAddressImpl WithoutLeafDomainLabel ()
+        public PublicIpAddressImpl WithoutLeafDomainLabel()
         {
+            return this.WithLeafDomainLabel(null);
+        }
 
-            //$ return this.withLeafDomainLabel(null);
-
+        public PublicIpAddressImpl WithReverseFqdn(string reverseFqdn)
+        {
+            this.Inner.DnsSettings.ReverseFqdn = reverseFqdn.ToLower();
             return this;
         }
 
-        public PublicIpAddressImpl WithReverseFqdn (string reverseFqdn)
+        public PublicIpAddressImpl WithoutReverseFqdn()
         {
-
-            //$ this.inner().dnsSettings().withReverseFqdn(reverseFqdn.toLowerCase());
-            //$ return this;
-
-            return this;
-        }
-
-        public PublicIpAddressImpl WithoutReverseFqdn ()
-        {
-
-            //$ return this.withReverseFqdn(null);
-
-            return this;
+            return this.WithReverseFqdn(null);
         }
 
         public int? IdleTimeoutInMinutes
         {
             get
             {
-            //$ return this.inner().idleTimeoutInMinutes();
-
-
-                return null;
+                return this.Inner.IdleTimeoutInMinutes;
             }
         }
+
         public string IpAllocationMethod
         {
             get
             {
-            //$ return this.inner().publicIPAllocationMethod();
-
-
-                return null;
+                return this.Inner.PublicIPAllocationMethod;
             }
         }
+
         public string Version
         {
             get
             {
-            //$ return this.inner().publicIPAddressVersion();
-
-
-                return null;
+                return this.Inner.PublicIPAddressVersion;
             }
         }
+
         public string Fqdn
         {
             get
             {
-            //$ if (this.inner().dnsSettings() != null) {
-            //$ return this.inner().dnsSettings().fqdn();
-            //$ } else {
-            //$ return null;
-            //$ }
-
-
-                return null;
+                if (this.Inner.DnsSettings != null)
+                {
+                    return this.Inner.DnsSettings.Fqdn;
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
+
         public string ReverseFqdn
         {
             get
             {
-            //$ if (this.inner().dnsSettings() != null) {
-            //$ return this.inner().dnsSettings().reverseFqdn();
-            //$ } else {
-            //$ return null;
-            //$ }
-
-
-                return null;
+                if (this.Inner.DnsSettings != null)
+                {
+                    return this.Inner.DnsSettings.ReverseFqdn;
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
         public string IpAddress
         {
             get
             {
-            //$ return this.inner().ipAddress();
-
-
-                return null;
+                return this.Inner.IpAddress;
             }
         }
         public string LeafDomainLabel
         {
             get
             {
-            //$ if (this.inner().dnsSettings() == null) {
-            //$ return null;
-            //$ } else {
-            //$ return this.inner().dnsSettings().domainNameLabel();
-            //$ }
-
-
-                return null;
+                if (this.Inner.DnsSettings == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    return this.Inner.DnsSettings.DomainNameLabel;
+                }
             }
         }
-        override public async Task<IPublicIpAddress> CreateResourceAsync (
-            CancellationToken cancellationToken = default(CancellationToken))
+        override public async Task<IPublicIpAddress> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
+            PublicIPAddressDnsSettings dnsSettings = this.Inner.DnsSettings;
+            if (dnsSettings != null)
+            {
+                if (string.IsNullOrWhiteSpace(dnsSettings.DomainNameLabel)
+                   && string.IsNullOrWhiteSpace(dnsSettings.Fqdn)
+                   && string.IsNullOrWhiteSpace(dnsSettings.ReverseFqdn))
+                {
+                    this.Inner.DnsSettings = null;
+                }
+            }
 
-            //$ // Clean up empty DNS settings
-            //$ final PublicIPAddressDnsSettings dnsSettings = this.inner().dnsSettings();
-            //$ if (dnsSettings != null) {
-            //$ if ((dnsSettings.domainNameLabel() == null || dnsSettings.domainNameLabel().isEmpty())
-            //$ && (dnsSettings.fqdn() == null || dnsSettings.fqdn().isEmpty())
-            //$ && (dnsSettings.reverseFqdn() == null || dnsSettings.reverseFqdn().isEmpty())) {
-            //$ this.inner().withDnsSettings(null);
-            //$ }
-            //$ }
-            //$ 
-            //$ return this.client.createOrUpdateAsync(this.resourceGroupName(), this.name(), this.inner())
-            //$ .map(innerToFluentMap(this));
-
-            return null;
+            this.SetInner(await this.client.CreateOrUpdateAsync(this.ResourceGroupName, this.Name, this.Inner));
+            return this;
         }
 
-        private bool? EqualsResourceType (string resourceType)
+        private bool? EqualsResourceType(string resourceType)
         {
 
-            //$ IPConfigurationInner ipConfig = this.inner().ipConfiguration();
-            //$ if (ipConfig == null || resourceType == null) {
-            //$ return false;
-            //$ } else {
-            //$ final String refId = this.inner().ipConfiguration().id();
-            //$ final String resourceType2 = ResourceUtils.resourceTypeFromResourceId(refId);
-            //$ return resourceType.equalsIgnoreCase(resourceType2);
-            //$ }
-            //$ }
-
-            return false;
+            IPConfigurationInner ipConfig = this.Inner.IpConfiguration;
+            if (ipConfig == null || resourceType == null)
+            {
+                return false;
+            }
+            else
+            {
+                string refId = this.Inner.IpConfiguration.Id;
+                string resourceType2 = ResourceUtils.ResourceTypeFromResourceId(refId);
+                return resourceType.Equals(resourceType2, System.StringComparison.OrdinalIgnoreCase);
+            }
         }
 
         public bool? HasAssignedLoadBalancer
         {
             get
             {
-            //$ return equalsResourceType("frontendIPConfigurations");
-
-
-                return null;
+                return EqualsResourceType("frontendIPConfigurations");
             }
         }
 
         public IPublicFrontend GetAssignedLoadBalancerFrontend()
         {
 
-            //$ if (this.hasAssignedLoadBalancer()) {
-            //$ final String refId = this.inner().ipConfiguration().id();
-            //$ final String loadBalancerId = ResourceUtils.parentResourcePathFromResourceId(refId);
-            //$ final LoadBalancer lb = this.myManager.loadBalancers().getById(loadBalancerId);
-            //$ final String frontendName = ResourceUtils.nameFromResourceId(refId);
-            //$ return (PublicFrontend) lb.frontends().get(frontendName);
-            //$ } else {
-            //$ return null;
-            //$ }
-
-            return null;
+            if (this.HasAssignedLoadBalancer == true)
+            {
+                string refId = this.Inner.IpConfiguration.Id;
+                string loadBalancerId = ResourceUtils.ParentResourcePathFromResourceId(refId);
+                ILoadBalancer lb = this.Manager.LoadBalancers.GetById(loadBalancerId);
+                string frontendName = ResourceUtils.NameFromResourceId(refId);
+                return (IPublicFrontend)lb.Frontends()[frontendName];
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public override IPublicIpAddress Refresh()
@@ -264,27 +224,25 @@ namespace Microsoft.Azure.Management.V2.Network
         {
             get
             {
-            //$ return equalsResourceType("ipConfigurations");
+                return EqualsResourceType("ipConfigurations");
+            }
+        }
 
+        public INicIpConfiguration GetAssignedNetworkInterfaceIpConfiguration()
+        {
 
+            if (this.HasAssignedNetworkInterface == true)
+            {
+                string refId = this.Inner.IpConfiguration.Id;
+                string parentId = ResourceUtils.ParentResourcePathFromResourceId(refId);
+                INetworkInterface nic = this.Manager.NetworkInterfaces.GetById(parentId);
+                string childName = ResourceUtils.NameFromResourceId(refId);
+                return nic.IpConfigurations()[childName];
+            }
+            else
+            {
                 return null;
             }
         }
-        public INicIpConfiguration GetAssignedNetworkInterfaceIpConfiguration ()
-        {
-
-            //$ if (this.hasAssignedNetworkInterface()) {
-            //$ final String refId = this.inner().ipConfiguration().id();
-            //$ final String parentId = ResourceUtils.parentResourcePathFromResourceId(refId);
-            //$ final NetworkInterface nic = this.myManager.networkInterfaces().getById(parentId);
-            //$ final String childName = ResourceUtils.nameFromResourceId(refId);
-            //$ return nic.ipConfigurations().get(childName);
-            //$ } else {
-            //$ return null;
-            //$ }
-
-            return null;
-        }
-
     }
 }

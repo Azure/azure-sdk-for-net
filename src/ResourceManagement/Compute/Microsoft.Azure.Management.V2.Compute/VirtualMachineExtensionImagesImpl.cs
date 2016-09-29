@@ -4,12 +4,10 @@
 namespace Microsoft.Azure.Management.V2.Compute
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
-    using System;
+    using Resource.Core;
 
     /// <summary>
-    /// The implementation for {@link VirtualMachineExtensionImages}.
+    /// The implementation for VirtualMachineExtensionImages.
     /// </summary>
     internal partial class VirtualMachineExtensionImagesImpl  :
         IVirtualMachineExtensionImages
@@ -20,12 +18,12 @@ namespace Microsoft.Azure.Management.V2.Compute
             this.publishers = publishers;
         }
 
-        public PagedList<Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtensionImage> ListByRegion (Region region)
+        public PagedList<IVirtualMachineExtensionImage> ListByRegion (Region region)
         {
             return ListByRegion(EnumNameAttribute.GetName(region));
         }
 
-        public PagedList<Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtensionImage> ListByRegion (string regionName)
+        public PagedList<IVirtualMachineExtensionImage> ListByRegion (string regionName)
         {
 
             PagedList<IVirtualMachinePublisher> publishers = Publishers().ListByRegion(regionName);

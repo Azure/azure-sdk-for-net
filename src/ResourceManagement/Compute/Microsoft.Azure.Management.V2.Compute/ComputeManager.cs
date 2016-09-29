@@ -2,13 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.V2.Resource.Core;
-using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Rest.Azure;
 using Microsoft.Rest;
 using Microsoft.Azure.Management.V2.Resource;
 using Microsoft.Azure.Management.V2.Storage;

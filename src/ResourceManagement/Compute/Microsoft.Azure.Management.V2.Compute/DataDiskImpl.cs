@@ -1,33 +1,27 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 namespace Microsoft.Azure.Management.V2.Compute
 {
 
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition;
-    using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Update;
+    using Management.Compute.Models;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Storage;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update;
+    using Resource.Core;
+    using Storage;
     using Resource.Core.ChildResourceActions;
     using System;
 
     /// <summary>
-    /// The implementation for {@link DataDisk} and its create and update interfaces.
+    /// The implementation for DataDisk and its create and update interfaces.
     /// </summary>
     internal partial class DataDiskImpl  :
-        ChildResource<Microsoft.Azure.Management.Compute.Models.DataDisk,
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineImpl,
-            Microsoft.Azure.Management.V2.Compute.IVirtualMachine>,
+        ChildResource<DataDisk,
+            VirtualMachineImpl,
+            IVirtualMachine>,
         IVirtualMachineDataDisk,
-        IDefinition<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate>,
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IUpdateDefinition<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>,
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Update.IUpdate
+        VirtualMachineDataDisk.Definition.IDefinition<VirtualMachine.Definition.IWithCreate>,
+        VirtualMachineDataDisk.UpdateDefinition.IUpdateDefinition<VirtualMachine.Update.IUpdate>,
+        VirtualMachineDataDisk.Update.IUpdate
     {
         internal DataDiskImpl(DataDisk inner, VirtualMachineImpl parent) :
             base(inner.Name, inner, parent)
@@ -64,22 +58,22 @@ namespace Microsoft.Azure.Management.V2.Compute
         {
             get
             {
-                return this.Inner.Name;
+                return Inner.Name;
             }
         }
-        public int? Size
+        public int Size
         {
             get
             {
-                return this.Inner.DiskSizeGB;
+                return (Inner.DiskSizeGB.HasValue) ? Inner.DiskSizeGB.Value : 0;
             }
         }
 
-        public int? Lun
+        public int Lun
         {
             get
             {
-                return this.Inner.Lun;
+                return Inner.Lun;
             }
         }
 
@@ -87,7 +81,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         {
             get
             {
-                return this.Inner.Vhd.Uri;
+                return Inner.Vhd.Uri;
             }
         }
 
@@ -95,7 +89,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         {
             get
             {
-                return this.Inner.Caching;
+                return Inner.Caching;
             }
         }
 
@@ -103,12 +97,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         {
             get
             {
-                if (this.Inner.Image != null)
-                {
-                    return this.Inner.Image.Uri;
-
-                }
-                return null;
+                return (Inner.Image != null) ? Inner.Image.Uri : null;
             }
         }
 
@@ -116,14 +105,15 @@ namespace Microsoft.Azure.Management.V2.Compute
         {
             get
             {
-                return this.Inner.CreateOption;
+                return Inner.CreateOption;
             }
         }
+
         public DataDiskImpl From (string storageAccountName, string containerName, string vhdName)
         {
-            this.Inner.Vhd = new VirtualHardDisk();
+            Inner.Vhd = new VirtualHardDisk();
             //URL points to an existing data disk to be attached
-            this.Inner.Vhd.Uri = BlobUrl(storageAccountName, containerName, vhdName);
+            Inner.Vhd.Uri = BlobUrl(storageAccountName, containerName, vhdName);
             return this;
         }
 
@@ -132,34 +122,34 @@ namespace Microsoft.Azure.Management.V2.Compute
             // Note: Size can be specified only while attaching new blank disk.
             // Size cannot be specified while attaching an existing disk.
             // Once attached both type of data disk can be resized via VM update.
-            this.Inner.DiskSizeGB = sizeInGB;
+            Inner.DiskSizeGB = sizeInGB;
             return this;
         }
 
         public DataDiskImpl StoreAt (string storageAccountName, string containerName, string vhdName)
         {
-            this.Inner.Vhd = new VirtualHardDisk();
+            Inner.Vhd = new VirtualHardDisk();
             // URL points to where the new data disk needs to be stored
-            this.Inner.Vhd.Uri = BlobUrl(storageAccountName, containerName, vhdName);
+            Inner.Vhd.Uri = BlobUrl(storageAccountName, containerName, vhdName);
             return this;
         }
 
         public DataDiskImpl WithLun (int? lun)
         {
-            this.Inner.Lun = lun.HasValue ? lun.Value : 0;
+            Inner.Lun = (lun.HasValue) ? lun.Value : 0;
             return this;
         }
 
         public DataDiskImpl WithCaching (CachingTypes cachingType)
         {
-            this.Inner.Caching = cachingType;
+            Inner.Caching = cachingType;
             return this;
         }
 
         public VirtualMachineImpl Attach ()
         {
-            this.Parent.DataDisks().Add(this);
-            return this.Parent;
+            Parent.DataDisks().Add(this);
+            return Parent;
         }
 
         internal static void SetDataDisksDefaults(IList<IVirtualMachineDataDisk> dataDisks, string namePrefix)
@@ -257,7 +247,7 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         VirtualMachine.Update.IUpdate ISettable<VirtualMachine.Update.IUpdate>.Parent()
         {
-            return base.Parent as VirtualMachine.Update.IUpdate;
+            return Parent;
         }
     }
 }

@@ -4,13 +4,13 @@
 namespace Microsoft.Azure.Management.V2.Compute
 {
     using Management.Compute;
-    using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Management.Compute.Models;
+    using Resource.Core;
     /// <summary>
-    /// The implementation for {@link VirtualMachineExtensionImageType}.
+    /// The implementation for VirtualMachineExtensionImageType.
     /// </summary>
     internal partial class VirtualMachineExtensionImageTypeImpl  :
-        Wrapper<Microsoft.Azure.Management.Compute.Models .VirtualMachineExtensionImageInner>,
+        Wrapper<VirtualMachineExtensionImageInner>,
         IVirtualMachineExtensionImageType
     {
         private IVirtualMachineExtensionImagesOperations client;

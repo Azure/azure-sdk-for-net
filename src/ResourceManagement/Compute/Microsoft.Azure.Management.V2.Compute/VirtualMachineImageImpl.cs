@@ -9,7 +9,8 @@ namespace Microsoft.Azure.Management.V2.Compute
 {
     internal partial class VirtualMachineImageImpl : IndexableWrapper<VirtualMachineImageInner>, IVirtualMachineImage
     {
-        internal VirtualMachineImageImpl(Region location, string publisher, string offer, string sku, string version, VirtualMachineImageInner inner) : base(inner.Name, inner)
+        internal VirtualMachineImageImpl(Region location, string publisher, string offer, string sku, string version, VirtualMachineImageInner inner) 
+            : base(inner.Name, inner)
         {
             Location = location;
             ImageReference = new ImageReference

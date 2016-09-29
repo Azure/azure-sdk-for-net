@@ -4,14 +4,13 @@
 namespace Microsoft.Azure.Management.V2.Compute
 {
     using Management.Compute;
-    using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
+    using Management.Compute.Models;
+    using Resource.Core;
     /// <summary>
-    /// The implementation for {@link VirtualMachineExtensionImageVersions}.
+    /// The implementation for VirtualMachineExtensionImageVersions.
     /// </summary>
     internal partial class VirtualMachineExtensionImageVersionsImpl  :
-        ReadableWrappers<Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtensionImageVersion,Microsoft.Azure.Management.V2.Compute.VirtualMachineExtensionImageVersionImpl,Microsoft.Azure.Management.Compute.Models .VirtualMachineExtensionImageInner>,
+        ReadableWrappers<IVirtualMachineExtensionImageVersion, VirtualMachineExtensionImageVersionImpl, VirtualMachineExtensionImageInner>,
         IVirtualMachineExtensionImageVersions
     {
         private IVirtualMachineExtensionImagesOperations client;
@@ -22,16 +21,17 @@ namespace Microsoft.Azure.Management.V2.Compute
             this.type = type;
         }
 
-        public PagedList<Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtensionImageVersion> List ()
+        public PagedList<IVirtualMachineExtensionImageVersion> List ()
         {
-            return WrapList(this.client.ListVersions(this.type.RegionName,
-            this.type.Publisher().Name,
-            this.type.Name));
+            return WrapList(this.client.ListVersions(
+                type.RegionName,
+                type.Publisher().Name,
+                type.Name));
         }
 
         protected override IVirtualMachineExtensionImageVersion WrapModel (VirtualMachineExtensionImageInner inner)
         {
-            return new VirtualMachineExtensionImageVersionImpl(this.client, this.type, inner);
+            return new VirtualMachineExtensionImageVersionImpl(client, type, inner);
         }
     }
 }

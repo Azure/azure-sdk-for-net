@@ -3,7 +3,6 @@
 
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Management.V2.Compute.AvailabilitySet.Definition;
 using Microsoft.Azure.Management.V2.Resource;
 using Microsoft.Azure.Management.V2.Resource.Core;
 using System;
@@ -13,12 +12,12 @@ using System.Threading.Tasks;
 namespace Microsoft.Azure.Management.V2.Compute
 {
     /// <summary>
-    /// The implementation for {@link AvailabilitySets}.
+    /// The implementation for AvailabilitySets.
     /// </summary>
     internal partial class AvailabilitySetsImpl :
-        GroupableResources<Microsoft.Azure.Management.V2.Compute.IAvailabilitySet,
-            Microsoft.Azure.Management.V2.Compute.AvailabilitySetImpl,
-            Microsoft.Azure.Management.Compute.Models.AvailabilitySetInner,
+        GroupableResources<IAvailabilitySet,
+            AvailabilitySetImpl,
+            AvailabilitySetInner,
             IAvailabilitySetsOperations, 
             IComputeManager>,
         IAvailabilitySets
@@ -26,7 +25,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         internal AvailabilitySetsImpl(IAvailabilitySetsOperations client, IComputeManager computeManager) : base(client, computeManager)
         {}
 
-        public IBlank Define(string name)
+        public AvailabilitySetImpl Define(string name)
         {
             return WrapModel(name);
         }
