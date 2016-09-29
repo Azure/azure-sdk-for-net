@@ -37,16 +37,6 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
             return WrapList(pagedList);
         }
 
-        public void Delete(string id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            throw new NotImplementedException();
-        }
-
         public ServicePrincipalImpl Define (string appId)
         {
             return WrapModel(appId);
