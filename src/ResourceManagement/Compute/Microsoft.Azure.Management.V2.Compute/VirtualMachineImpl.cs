@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Compute
+namespace Microsoft.Azure.Management.Fluent.Compute
 {
 
     using System.Threading;
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             this.client.Redeploy(this.ResourceGroupName, this.Name);
         }
 
-        public PagedList<Microsoft.Azure.Management.V2.Compute.IVirtualMachineSize> AvailableSizes // TODO: Converter emits this as property in this Impl (but emitted correctly as method in IVirtualMachine and InterfaceImpl/VirtualMachineImpl), this should be emitted as method
+        public PagedList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineSize> AvailableSizes // TODO: Converter emits this as property in this Impl (but emitted correctly as method in IVirtualMachine and InterfaceImpl/VirtualMachineImpl), this should be emitted as method
         {
             get
             {
@@ -199,7 +199,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this;
         }
 
-        public VirtualMachineImpl WithNewPrimaryPublicIpAddress (ICreatable<Microsoft.Azure.Management.V2.Network.IPublicIpAddress> creatable)
+        public VirtualMachineImpl WithNewPrimaryPublicIpAddress (ICreatable<Microsoft.Azure.Management.Fluent.Network.IPublicIpAddress> creatable)
         {
             var nicCreatable = this.nicDefinitionWithCreate
                 .WithNewPrimaryPublicIpAddress(creatable);
@@ -233,7 +233,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this;
         }
 
-        public VirtualMachineImpl WithNewPrimaryNetworkInterface (ICreatable<Microsoft.Azure.Management.V2.Network.INetworkInterface> creatable)
+        public VirtualMachineImpl WithNewPrimaryNetworkInterface (ICreatable<Microsoft.Azure.Management.Fluent.Network.INetworkInterface> creatable)
         {
             this.creatablePrimaryNetworkInterfaceKey = creatable.Key;
             this.AddCreatableDependency(creatable as IResourceCreator<IResource>);
@@ -479,7 +479,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return WithDataDisk(DataDiskImpl.CreateFromExistingDisk(storageAccountName, containerName, vhdName, this)); ;
         }
 
-        public VirtualMachineImpl WithNewStorageAccount (ICreatable<Microsoft.Azure.Management.V2.Storage.IStorageAccount> creatable)
+        public VirtualMachineImpl WithNewStorageAccount (ICreatable<Microsoft.Azure.Management.Fluent.Storage.IStorageAccount> creatable)
         {
             // This method's effect is NOT additive.
             if (this.creatableStorageAccountKey == null)
@@ -515,7 +515,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this;
         }
 
-        public VirtualMachineImpl WithNewAvailabilitySet (ICreatable<Microsoft.Azure.Management.V2.Compute.IAvailabilitySet> creatable)
+        public VirtualMachineImpl WithNewAvailabilitySet (ICreatable<Microsoft.Azure.Management.Fluent.Compute.IAvailabilitySet> creatable)
         {
             // This method's effect is NOT additive.
             if (this.creatableAvailabilitySetKey == null)
@@ -539,7 +539,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this;
         }
 
-        public VirtualMachineImpl WithNewSecondaryNetworkInterface (ICreatable<Microsoft.Azure.Management.V2.Network.INetworkInterface> creatable)
+        public VirtualMachineImpl WithNewSecondaryNetworkInterface (ICreatable<Microsoft.Azure.Management.Fluent.Network.INetworkInterface> creatable)
         {
             this.creatableSecondaryNetworkInterfaceKeys.Add(creatable.Key);
             this.AddCreatableDependency(creatable as IResourceCreator<IResource>);
@@ -860,7 +860,7 @@ namespace Microsoft.Azure.Management.V2.Compute
                 string powerStateCode = this.GetStatusCodeFromInstanceView("PowerState");
                 if (powerStateCode != null)
                 {
-                    return (PowerState)Enum.Parse(typeof(Microsoft.Azure.Management.V2.Compute.PowerState), powerStateCode);
+                    return (PowerState)Enum.Parse(typeof(Microsoft.Azure.Management.Fluent.Compute.PowerState), powerStateCode);
                 }
 
                 return PowerState.UNKNOWN;

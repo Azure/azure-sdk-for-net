@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
 {
 
     using Microsoft.Azure.Management.Fluent.KeyVault.Vault.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
     using System.Collections.Generic;
     using Microsoft.Azure.Management.KeyVault.Models;
     using Microsoft.Azure.Management.Fluent.KeyVault.Vault.Update;
@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
     using System.Threading.Tasks;
     using System.Threading;
     using System.Linq;
-    using Microsoft.Azure.Management.V2.Resource;
+    using Microsoft.Azure.Management.Fluent.Resource;
     using Management.KeyVault;
     using Graph.RBAC;
     using System;

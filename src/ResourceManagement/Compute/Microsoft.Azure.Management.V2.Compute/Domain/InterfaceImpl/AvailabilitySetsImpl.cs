@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Compute
+namespace Microsoft.Azure.Management.Fluent.Compute
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions;
     using Microsoft.Azure.Management.Compute.Models;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.V2.Resource;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Resource;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
     using System.Threading;
     internal partial class AvailabilitySetsImpl
     {
@@ -27,9 +27,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="name">name the name of the new resource</param>
         /// <returns>the first stage of the new resource definition</returns>
-        Microsoft.Azure.Management.V2.Compute.AvailabilitySet.Definition.IBlank Microsoft.Azure.Management.V2.Resource.Core.CollectionActions.ISupportsCreating<Microsoft.Azure.Management.V2.Compute.AvailabilitySet.Definition.IBlank>.Define(string name)
+        Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Definition.IBlank Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsCreating<Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Definition.IBlank>.Define(string name)
         {
-            return this.Define(name) as Microsoft.Azure.Management.V2.Compute.AvailabilitySet.Definition.IBlank;
+            return this.Define(name) as Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Definition.IBlank;
         }
 
         /// <summary>
@@ -37,9 +37,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="resourceGroupName">resourceGroupName the name of the resource group to list the resources from</param>
         /// <returns>the list of resources</returns>
-        Microsoft.Azure.Management.V2.Resource.Core.PagedList<Microsoft.Azure.Management.V2.Compute.IAvailabilitySet> Microsoft.Azure.Management.V2.Resource.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.V2.Compute.IAvailabilitySet>.ListByGroup(string resourceGroupName)
+        Microsoft.Azure.Management.Fluent.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Compute.IAvailabilitySet> Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Fluent.Compute.IAvailabilitySet>.ListByGroup(string resourceGroupName)
         {
-            return this.ListByGroup(resourceGroupName) as Microsoft.Azure.Management.V2.Resource.Core.PagedList<Microsoft.Azure.Management.V2.Compute.IAvailabilitySet>;
+            return this.ListByGroup(resourceGroupName) as Microsoft.Azure.Management.Fluent.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Compute.IAvailabilitySet>;
         }
 
         /// <summary>
@@ -48,9 +48,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// <param name="resourceGroupName">resourceGroupName the name of the resource group the resource is in</param>
         /// <param name="name">name the name of the resource. (Note, this is not the ID)</param>
         /// <returns>an immutable representation of the resource</returns>
-        Microsoft.Azure.Management.V2.Compute.IAvailabilitySet Microsoft.Azure.Management.V2.Resource.Core.CollectionActions.ISupportsGettingByGroup<Microsoft.Azure.Management.V2.Compute.IAvailabilitySet>.GetByGroup(string resourceGroupName, string name)
+        Microsoft.Azure.Management.Fluent.Compute.IAvailabilitySet Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsGettingByGroup<Microsoft.Azure.Management.Fluent.Compute.IAvailabilitySet>.GetByGroup(string resourceGroupName, string name)
         {
-            return this.GetByGroup(resourceGroupName, name) as Microsoft.Azure.Management.V2.Compute.IAvailabilitySet;
+            return this.GetByGroup(resourceGroupName, name) as Microsoft.Azure.Management.Fluent.Compute.IAvailabilitySet;
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// <param name="name">name The name of the resource</param>
         /// <param name="cancellationToken">cancellationToken the cancellation token</param>
         /// <returns>an observable to the request</returns>
-        async Task Microsoft.Azure.Management.V2.Resource.Core.CollectionActions.ISupportsDeletingByGroup.DeleteAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        async Task Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsDeletingByGroup.DeleteAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             await this.DeleteAsync(groupName, name);
         }
@@ -69,9 +69,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// Lists all the resources of the specified type in the currently selected subscription.
         /// </summary>
         /// <returns>list of resources</returns>
-        Microsoft.Azure.Management.V2.Resource.Core.PagedList<Microsoft.Azure.Management.V2.Compute.IAvailabilitySet> Microsoft.Azure.Management.V2.Resource.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.V2.Compute.IAvailabilitySet>.List()
+        Microsoft.Azure.Management.Fluent.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Compute.IAvailabilitySet> Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Fluent.Compute.IAvailabilitySet>.List()
         {
-            return this.List() as Microsoft.Azure.Management.V2.Resource.Core.PagedList<Microsoft.Azure.Management.V2.Compute.IAvailabilitySet>;
+            return this.List() as Microsoft.Azure.Management.Fluent.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Compute.IAvailabilitySet>;
         }
 
     }

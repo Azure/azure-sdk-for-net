@@ -7,9 +7,9 @@ namespace Microsoft.Azure.Management.Fluent.Redis.RedisCache.Update
     using System.Collections.Generic;
     using Microsoft.Azure.Management.Fluent.Redis.Models;
     using Microsoft.Azure.Management.Fluent.Redis;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Resource.Core.Resource.Update;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.Resource.Update;
     /// <summary>
     /// A Redis Cache update allowing non SSL port to be enabled or disabled.
     /// </summary>

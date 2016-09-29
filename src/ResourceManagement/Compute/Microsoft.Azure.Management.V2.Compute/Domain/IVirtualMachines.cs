@@ -1,22 +1,22 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Compute
+namespace Microsoft.Azure.Management.Fluent.Compute
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions;
+    using Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition;
     /// <summary>
     /// Entry point to virtual machine management API.
     /// </summary>
     public interface IVirtualMachines :
-        ISupportsListing<Microsoft.Azure.Management.V2.Compute.IVirtualMachine>,
-        ISupportsListingByGroup<Microsoft.Azure.Management.V2.Compute.IVirtualMachine>,
-        ISupportsGettingByGroup<Microsoft.Azure.Management.V2.Compute.IVirtualMachine>,
-        ISupportsGettingById<Microsoft.Azure.Management.V2.Compute.IVirtualMachine>,
-        ISupportsCreating<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IBlank>,
+        ISupportsListing<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine>,
+        ISupportsListingByGroup<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine>,
+        ISupportsGettingByGroup<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine>,
+        ISupportsGettingById<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine>,
+        ISupportsCreating<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IBlank>,
         ISupportsDeleting,
         ISupportsDeletingByGroup,
-        ISupportsBatchCreation<Microsoft.Azure.Management.V2.Compute.IVirtualMachine>
+        ISupportsBatchCreation<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine>
     {
         /// <returns>available virtual machine sizes</returns>
         IVirtualMachineSizes Sizes();

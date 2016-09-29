@@ -1,22 +1,22 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Compute
+namespace Microsoft.Azure.Management.Fluent.Compute
 {
 
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update;
+    using Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update;
     using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Network;
+    using Microsoft.Azure.Management.Fluent.Network;
     /// <summary>
     /// An immutable client-side representation of an Azure virtual machine.
     /// </summary>
     public interface IVirtualMachine :
         IGroupableResource,
-        IRefreshable<Microsoft.Azure.Management.V2.Compute.IVirtualMachine>,
+        IRefreshable<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine>,
         IWrapper<Microsoft.Azure.Management.Compute.Models.VirtualMachineInner>,
-        IUpdatable<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>,
+        IUpdatable<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate>,
         IHasNetworkInterfaces
     {
         /// <summary>
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// List of all available virtual machine sizes this virtual machine can resized to.
         /// </summary>
         /// <returns>the virtual machine sizes</returns>
-        PagedList<Microsoft.Azure.Management.V2.Compute.IVirtualMachineSize> AvailableSizes();
+        PagedList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineSize> AvailableSizes();
 
         /// <summary>
         /// Captures the virtual machine by copying virtual hard disks of the VM and returns template as json
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         int OsDiskSize { get; }
 
         /// <returns>the list of data disks attached to this virtual machine</returns>
-        IList<Microsoft.Azure.Management.V2.Compute.IVirtualMachineDataDisk> DataDisks { get; }
+        IList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineDataDisk> DataDisks { get; }
 
         /// <summary>
         /// Gets the public IP address associated with this virtual machine's primary network interface.
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         string LicenseType { get; }
 
         /// <returns>the extensions attached to the Azure Virtual Machine</returns>
-        IDictionary<string, Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtension> Extensions { get; }
+        IDictionary<string, Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineExtension> Extensions { get; }
 
         /// <returns>the plan value</returns>
         Plan Plan { get; }

@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Network.PrivateFrontend.UpdateDefinition
+namespace Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.UpdateDefinition
 {
 
-    using Microsoft.Azure.Management.V2.Network;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResourceActions;
-    using Microsoft.Azure.Management.V2.Network.HasPrivateIpAddress.UpdateDefinition;
+    using Microsoft.Azure.Management.Fluent.Network;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.Fluent.Network.HasPrivateIpAddress.UpdateDefinition;
     /// <summary>
     /// The stage of a private frontend definition allowing to specify a subnet from the selected network.
     /// @param <ParentT> the next stage of the parent definition
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.V2.Network.PrivateFrontend.UpdateDefinition
     /// </summary>
     public interface IWithAttach<ParentT>  :
         IInUpdateAlt<ParentT>,
-        IWithPrivateIpAddress<Microsoft.Azure.Management.V2.Network.PrivateFrontend.UpdateDefinition.IWithAttach<ParentT>>
+        IWithPrivateIpAddress<Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.UpdateDefinition.IWithAttach<ParentT>>
     {
     }
     /// <summary>

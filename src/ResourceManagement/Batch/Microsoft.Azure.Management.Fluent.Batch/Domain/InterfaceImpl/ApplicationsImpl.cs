@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
 
     using Microsoft.Azure.Management.Batch.Models;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
     internal partial class ApplicationsImpl 
     {
     }

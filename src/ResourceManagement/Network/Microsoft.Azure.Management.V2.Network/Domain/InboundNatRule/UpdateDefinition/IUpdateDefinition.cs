@@ -1,19 +1,19 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Network.InboundNatRule.UpdateDefinition
+namespace Microsoft.Azure.Management.Fluent.Network.InboundNatRule.UpdateDefinition
 {
 
-    using Microsoft.Azure.Management.V2.Network.HasProtocol.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
-    using Microsoft.Azure.Management.V2.Network.HasBackendPort.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Network.HasFloatingIp.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Network.HasFrontend.UpdateDefinition;
+    using Microsoft.Azure.Management.Fluent.Network.HasProtocol.UpdateDefinition;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.Fluent.Network.HasBackendPort.UpdateDefinition;
+    using Microsoft.Azure.Management.Fluent.Network.HasFloatingIp.UpdateDefinition;
+    using Microsoft.Azure.Management.Fluent.Network.HasFrontend.UpdateDefinition;
     /// <summary>
     /// The stage of an inbound NAT rule definition allowing to specify the transport protocol.
     /// @param <ParentT> the parent load balancer type
     /// </summary>
     public interface IWithProtocol<ParentT>  :
-        Microsoft.Azure.Management.V2.Network.HasProtocol.UpdateDefinition.IWithProtocol<Microsoft.Azure.Management.V2.Network.InboundNatRule.UpdateDefinition.IWithFrontend<Microsoft.Azure.Management.V2.Network.LoadBalancer.Update.IUpdate>,string>
+        Microsoft.Azure.Management.Fluent.Network.HasProtocol.UpdateDefinition.IWithProtocol<Microsoft.Azure.Management.Fluent.Network.InboundNatRule.UpdateDefinition.IWithFrontend<Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate>,string>
     {
     }
     /// <summary>
@@ -22,8 +22,8 @@ namespace Microsoft.Azure.Management.V2.Network.InboundNatRule.UpdateDefinition
     /// </summary>
     public interface IUpdateDefinition<ParentT>  :
         IBlank<ParentT>,
-        Microsoft.Azure.Management.V2.Network.InboundNatRule.UpdateDefinition.IWithProtocol<ParentT>,
-        Microsoft.Azure.Management.V2.Network.InboundNatRule.UpdateDefinition.IWithFrontend<ParentT>,
+        Microsoft.Azure.Management.Fluent.Network.InboundNatRule.UpdateDefinition.IWithProtocol<ParentT>,
+        Microsoft.Azure.Management.Fluent.Network.InboundNatRule.UpdateDefinition.IWithFrontend<ParentT>,
         IWithFrontendPort<ParentT>,
         IWithAttach<ParentT>
     {
@@ -37,8 +37,8 @@ namespace Microsoft.Azure.Management.V2.Network.InboundNatRule.UpdateDefinition
     /// </summary>
     public interface IWithAttach<ParentT>  :
         IInUpdate<ParentT>,
-        Microsoft.Azure.Management.V2.Network.InboundNatRule.UpdateDefinition.IWithBackendPort<ParentT>,
-        Microsoft.Azure.Management.V2.Network.InboundNatRule.UpdateDefinition.IWithFloatingIp<ParentT>,
+        Microsoft.Azure.Management.Fluent.Network.InboundNatRule.UpdateDefinition.IWithBackendPort<ParentT>,
+        Microsoft.Azure.Management.Fluent.Network.InboundNatRule.UpdateDefinition.IWithFloatingIp<ParentT>,
         IWithIdleTimeout<ParentT>
     {
     }
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.V2.Network.InboundNatRule.UpdateDefinition
     /// @param <ParentT> the parent load balancer type
     /// </summary>
     public interface IWithBackendPort<ParentT>  :
-        Microsoft.Azure.Management.V2.Network.HasBackendPort.UpdateDefinition.IWithBackendPort<Microsoft.Azure.Management.V2.Network.InboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Network.LoadBalancer.Update.IUpdate>>
+        Microsoft.Azure.Management.Fluent.Network.HasBackendPort.UpdateDefinition.IWithBackendPort<Microsoft.Azure.Management.Fluent.Network.InboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate>>
     {
     }
     /// <summary>
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.V2.Network.InboundNatRule.UpdateDefinition
     /// @param <ParentT> the return type of the final {@link WithAttach#attach()}
     /// </summary>
     public interface IBlank<ParentT>  :
-        Microsoft.Azure.Management.V2.Network.InboundNatRule.UpdateDefinition.IWithProtocol<ParentT>
+        Microsoft.Azure.Management.Fluent.Network.InboundNatRule.UpdateDefinition.IWithProtocol<ParentT>
     {
     }
     /// <summary>
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.V2.Network.InboundNatRule.UpdateDefinition
     /// @param <ParentT> the parent load balancer type
     /// </summary>
     public interface IWithFloatingIp<ParentT>  :
-        Microsoft.Azure.Management.V2.Network.HasFloatingIp.UpdateDefinition.IWithFloatingIp<Microsoft.Azure.Management.V2.Network.InboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Network.LoadBalancer.Update.IUpdate>>
+        Microsoft.Azure.Management.Fluent.Network.HasFloatingIp.UpdateDefinition.IWithFloatingIp<Microsoft.Azure.Management.Fluent.Network.InboundNatRule.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate>>
     {
     }
     /// <summary>
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.V2.Network.InboundNatRule.UpdateDefinition
     /// @param <ParentT> the parent load balancer type
     /// </summary>
     public interface IWithFrontend<ParentT>  :
-        Microsoft.Azure.Management.V2.Network.HasFrontend.UpdateDefinition.IWithFrontend<Microsoft.Azure.Management.V2.Network.InboundNatRule.UpdateDefinition.IWithFrontendPort<Microsoft.Azure.Management.V2.Network.LoadBalancer.Update.IUpdate>>
+        Microsoft.Azure.Management.Fluent.Network.HasFrontend.UpdateDefinition.IWithFrontend<Microsoft.Azure.Management.Fluent.Network.InboundNatRule.UpdateDefinition.IWithFrontendPort<Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate>>
     {
     }
 }

@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.UpdateDefiniti
     using System;
     using Microsoft.Azure.Management.KeyVault.Models;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Definition;
     /// <summary>
     /// The access policy definition stage allowing the Active Directory identity to be specified.
     /// @param <ParentT> the return type of the final {@link WithAttach#attach()}

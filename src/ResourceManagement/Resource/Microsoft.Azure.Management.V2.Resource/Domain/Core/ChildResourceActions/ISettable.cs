@@ -4,7 +4,7 @@
 * license information.
 */ 
 
-namespace Microsoft.Azure.Management.V2.Resource.Core.ChildResourceActions
+namespace Microsoft.Azure.Management.Fluent.Resource.Core.ChildResourceActions
 {
 
 

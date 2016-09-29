@@ -3,8 +3,8 @@
 
 using Microsoft.Azure.Management.Samples.Common;
 using Microsoft.Azure.Management;
-using Microsoft.Azure.Management.V2.Resource.Authentication;
-using Microsoft.Azure.Management.V2.Resource.Core;
+using Microsoft.Azure.Management.Fluent.Resource.Authentication;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
 using System;
 
 namespace ManageStorageAccount

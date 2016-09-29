@@ -1,19 +1,19 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Update
+namespace Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Update
 {
 
-    using Microsoft.Azure.Management.V2.Network.HasFloatingIp.Update;
-    using Microsoft.Azure.Management.V2.Network.HasFrontend.Update;
-    using Microsoft.Azure.Management.V2.Network.HasProtocol.Update;
-    using Microsoft.Azure.Management.V2.Network.LoadBalancer.Update;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResourceActions;
-    using Microsoft.Azure.Management.V2.Network.HasBackendPort.Update;
+    using Microsoft.Azure.Management.Fluent.Network.HasFloatingIp.Update;
+    using Microsoft.Azure.Management.Fluent.Network.HasFrontend.Update;
+    using Microsoft.Azure.Management.Fluent.Network.HasProtocol.Update;
+    using Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.Fluent.Network.HasBackendPort.Update;
     /// <summary>
     /// The stage of a load balancing rule update allowing to enable the floating IP functionality.
     /// </summary>
     public interface IWithFloatingIp  :
-        Microsoft.Azure.Management.V2.Network.HasFloatingIp.Update.IWithFloatingIp<Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Update.IUpdate>
+        Microsoft.Azure.Management.Fluent.Network.HasFloatingIp.Update.IWithFloatingIp<Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Update.IUpdate>
     {
     }
     /// <summary>
@@ -26,14 +26,14 @@ namespace Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Update
         /// </summary>
         /// <param name="port">port a port number</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Update.IUpdate WithFrontendPort (int port);
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Update.IUpdate WithFrontendPort (int port);
 
     }
     /// <summary>
     /// The stage of a load balancing rule update allowing to modify the frontend reference.
     /// </summary>
     public interface IWithFrontend  :
-        Microsoft.Azure.Management.V2.Network.HasFrontend.Update.IWithFrontend<Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Update.IUpdate>
+        Microsoft.Azure.Management.Fluent.Network.HasFrontend.Update.IWithFrontend<Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Update.IUpdate>
     {
     }
     /// <summary>
@@ -46,26 +46,26 @@ namespace Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Update
         /// </summary>
         /// <param name="minutes">minutes the desired number of minutes</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Update.IUpdate WithIdleTimeoutInMinutes (int minutes);
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Update.IUpdate WithIdleTimeoutInMinutes (int minutes);
 
     }
     /// <summary>
     /// The stage of a load balancing rule update allowing to modify the transport protocol the rule applies to.
     /// </summary>
     public interface IWithProtocol  :
-        Microsoft.Azure.Management.V2.Network.HasProtocol.Update.IWithProtocol<Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Update.IUpdate,string>
+        Microsoft.Azure.Management.Fluent.Network.HasProtocol.Update.IWithProtocol<Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Update.IUpdate,string>
     {
     }
     /// <summary>
     /// The entirety of a load balancing rule update as part of a load balancer update.
     /// </summary>
     public interface IUpdate  :
-        ISettable<Microsoft.Azure.Management.V2.Network.LoadBalancer.Update.IUpdate>,
+        ISettable<Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate>,
         IWithFrontendPort,
-        Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Update.IWithFrontend,
-        Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Update.IWithProtocol,
-        Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Update.IWithBackendPort,
-        Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Update.IWithFloatingIp,
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Update.IWithFrontend,
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Update.IWithProtocol,
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Update.IWithBackendPort,
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Update.IWithFloatingIp,
         IWithIdleTimeoutInMinutes,
         IWithLoadDistribution
     {
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Update
     /// The stage of a load balancing rule update allowing to modify the backend port.
     /// </summary>
     public interface IWithBackendPort  :
-        Microsoft.Azure.Management.V2.Network.HasBackendPort.Update.IWithBackendPort<Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Update.IUpdate>
+        Microsoft.Azure.Management.Fluent.Network.HasBackendPort.Update.IWithBackendPort<Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Update.IUpdate>
     {
     }
     /// <summary>
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Update
         /// </summary>
         /// <param name="loadDistribution">loadDistribution a supported load distribution mode</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Update.IUpdate WithLoadDistribution (string loadDistribution);
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Update.IUpdate WithLoadDistribution (string loadDistribution);
 
     }
 }

@@ -1,21 +1,21 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Network
+namespace Microsoft.Azure.Management.Fluent.Network
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Network.NetworkInterface.Update;
+    using Microsoft.Azure.Management.Fluent.Network.NetworkInterface.Update;
     using Microsoft.Azure.Management.Network.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
     /// <summary>
     /// Network interface.
     /// </summary>
     public interface INetworkInterface  :
         IGroupableResource,
-        IRefreshable<Microsoft.Azure.Management.V2.Network.INetworkInterface>,
+        IRefreshable<Microsoft.Azure.Management.Fluent.Network.INetworkInterface>,
         IWrapper<Microsoft.Azure.Management.Network.Models.NetworkInterfaceInner>,
-        IUpdatable<Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate>
+        IUpdatable<Microsoft.Azure.Management.Fluent.Network.NetworkInterface.Update.IUpdate>
     {
         /// <returns><tt>true</tt> if IP forwarding is enabled in this network interface</returns>
         bool? IsIpForwardingEnabled { get; }
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.V2.Network
         string PrimaryPrivateIpAllocationMethod { get; }
 
         /// <returns>the IP configurations of this network interface, indexed by their names</returns>
-        IDictionary<string,Microsoft.Azure.Management.V2.Network.INicIpConfiguration> IpConfigurations ();
+        IDictionary<string,Microsoft.Azure.Management.Fluent.Network.INicIpConfiguration> IpConfigurations ();
 
         /// <returns>the primary IP configuration of this network interface</returns>
         INicIpConfiguration PrimaryIpConfiguration ();

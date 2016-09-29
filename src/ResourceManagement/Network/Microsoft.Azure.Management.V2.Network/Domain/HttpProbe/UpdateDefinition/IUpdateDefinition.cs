@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Network.HttpProbe.UpdateDefinition
+namespace Microsoft.Azure.Management.Fluent.Network.HttpProbe.UpdateDefinition
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Update;
     /// <summary>
     /// The stage of the HTTP probe definition allowing to specify the number of unsuccessful probes before failure is determined.
     /// @param <ParentT> the parent type

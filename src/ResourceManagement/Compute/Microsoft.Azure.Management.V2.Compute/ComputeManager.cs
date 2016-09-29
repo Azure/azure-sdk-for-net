@@ -4,13 +4,13 @@
 using System;
 using System.Linq;
 using Microsoft.Azure.Management.Compute;
-using Microsoft.Azure.Management.V2.Resource.Core;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
 using Microsoft.Rest;
-using Microsoft.Azure.Management.V2.Resource;
-using Microsoft.Azure.Management.V2.Storage;
-using Microsoft.Azure.Management.V2.Network;
+using Microsoft.Azure.Management.Fluent.Resource;
+using Microsoft.Azure.Management.Fluent.Storage;
+using Microsoft.Azure.Management.Fluent.Network;
 
-namespace Microsoft.Azure.Management.V2.Compute
+namespace Microsoft.Azure.Management.Fluent.Compute
 {
     public class ComputeManager : ManagerBase, IComputeManager
     {

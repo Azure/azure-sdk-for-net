@@ -1,18 +1,18 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Network.InboundNatPool.UpdateDefinition
+namespace Microsoft.Azure.Management.Fluent.Network.InboundNatPool.UpdateDefinition
 {
 
-    using Microsoft.Azure.Management.V2.Network.HasBackendPort.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Network.HasFrontend.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Network.HasProtocol.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.Fluent.Network.HasBackendPort.UpdateDefinition;
+    using Microsoft.Azure.Management.Fluent.Network.HasFrontend.UpdateDefinition;
+    using Microsoft.Azure.Management.Fluent.Network.HasProtocol.UpdateDefinition;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Update;
     /// <summary>
     /// The stage of an inbound NAT pool definition allowing to specify the backend port.
     /// @param <ParentT> the parent load balancer type
     /// </summary>
     public interface IWithBackendPort<ParentT>  :
-        Microsoft.Azure.Management.V2.Network.HasBackendPort.UpdateDefinition.IWithBackendPort<Microsoft.Azure.Management.V2.Network.InboundNatPool.UpdateDefinition.IWithAttach<ParentT>>
+        Microsoft.Azure.Management.Fluent.Network.HasBackendPort.UpdateDefinition.IWithBackendPort<Microsoft.Azure.Management.Fluent.Network.InboundNatPool.UpdateDefinition.IWithAttach<ParentT>>
     {
     }
     /// <summary>
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.V2.Network.InboundNatPool.UpdateDefinition
     /// @param <ParentT> the parent load balancer type
     /// </summary>
     public interface IWithFrontend<ParentT>  :
-        Microsoft.Azure.Management.V2.Network.HasFrontend.UpdateDefinition.IWithFrontend<Microsoft.Azure.Management.V2.Network.InboundNatPool.UpdateDefinition.IWithAttach<ParentT>>
+        Microsoft.Azure.Management.Fluent.Network.HasFrontend.UpdateDefinition.IWithFrontend<Microsoft.Azure.Management.Fluent.Network.InboundNatPool.UpdateDefinition.IWithAttach<ParentT>>
     {
     }
     /// <summary>
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.V2.Network.InboundNatPool.UpdateDefinition
     /// @param <ParentT> the return type of the final {@link WithAttach#attach()}
     /// </summary>
     public interface IBlank<ParentT>  :
-        Microsoft.Azure.Management.V2.Network.InboundNatPool.UpdateDefinition.IWithProtocol<ParentT>
+        Microsoft.Azure.Management.Fluent.Network.InboundNatPool.UpdateDefinition.IWithProtocol<ParentT>
     {
     }
     /// <summary>
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.V2.Network.InboundNatPool.UpdateDefinition
     /// @param <ParentT> the parent load balancer type
     /// </summary>
     public interface IWithProtocol<ParentT>  :
-        Microsoft.Azure.Management.V2.Network.HasProtocol.UpdateDefinition.IWithProtocol<Microsoft.Azure.Management.V2.Network.InboundNatPool.UpdateDefinition.IWithAttach<ParentT>,string>
+        Microsoft.Azure.Management.Fluent.Network.HasProtocol.UpdateDefinition.IWithProtocol<Microsoft.Azure.Management.Fluent.Network.InboundNatPool.UpdateDefinition.IWithAttach<ParentT>,string>
     {
     }
     /// <summary>
@@ -61,10 +61,10 @@ namespace Microsoft.Azure.Management.V2.Network.InboundNatPool.UpdateDefinition
     public interface IUpdateDefinition<ParentT>  :
         IBlank<ParentT>,
         IWithAttach<ParentT>,
-        Microsoft.Azure.Management.V2.Network.InboundNatPool.UpdateDefinition.IWithProtocol<ParentT>,
-        Microsoft.Azure.Management.V2.Network.InboundNatPool.UpdateDefinition.IWithFrontend<ParentT>,
+        Microsoft.Azure.Management.Fluent.Network.InboundNatPool.UpdateDefinition.IWithProtocol<ParentT>,
+        Microsoft.Azure.Management.Fluent.Network.InboundNatPool.UpdateDefinition.IWithFrontend<ParentT>,
         IWithFrontendPortRange<ParentT>,
-        Microsoft.Azure.Management.V2.Network.InboundNatPool.UpdateDefinition.IWithBackendPort<ParentT>
+        Microsoft.Azure.Management.Fluent.Network.InboundNatPool.UpdateDefinition.IWithBackendPort<ParentT>
     {
     }
     /// <summary>

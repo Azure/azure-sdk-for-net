@@ -4,7 +4,7 @@
 namespace Microsoft.Azure.Management.Fluent.Batch.Application.Definition
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Definition;
     /// <summary>
     /// The entirety of a application definition as a part of parent definition.
     /// 

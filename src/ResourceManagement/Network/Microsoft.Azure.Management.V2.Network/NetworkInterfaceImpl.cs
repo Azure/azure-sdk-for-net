@@ -1,15 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Network
+namespace Microsoft.Azure.Management.Fluent.Network
 {
 
-    using Microsoft.Azure.Management.V2.Network.NetworkInterface.Update;
+    using Microsoft.Azure.Management.Fluent.Network.NetworkInterface.Update;
     using Microsoft.Azure.Management.Network.Models;
-    using Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition;
+    using Microsoft.Azure.Management.Fluent.Network.NetworkInterface.Definition;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.V2.Resource;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Resource;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
     using Management.Network;
     using System.Threading.Tasks;
 
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.V2.Network
         private string nicName;
         protected ResourceNamer namer;
         private NicIpConfigurationImpl nicPrimaryIpConfiguration;
-        private IDictionary<string,Microsoft.Azure.Management.V2.Network.INicIpConfiguration> nicIpConfigurations;
+        private IDictionary<string,Microsoft.Azure.Management.Fluent.Network.INicIpConfiguration> nicIpConfigurations;
         private string creatableNetworkSecurityGroupKey;
         private INetworkSecurityGroup existingNetworkSecurityGroupToAssociate;
         private INetworkSecurityGroup networkSecurityGroup;
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.V2.Network
 
         }
 
-        public NetworkInterfaceImpl WithNewPrimaryNetwork (ICreatable<Microsoft.Azure.Management.V2.Network.INetwork> creatable)
+        public NetworkInterfaceImpl WithNewPrimaryNetwork (ICreatable<Microsoft.Azure.Management.Fluent.Network.INetwork> creatable)
         {
 
             //$ this.primaryIpConfiguration().withNewNetwork(creatable);
@@ -100,7 +100,7 @@ namespace Microsoft.Azure.Management.V2.Network
             return this;
         }
 
-        public NetworkInterfaceImpl WithNewPrimaryPublicIpAddress (ICreatable<Microsoft.Azure.Management.V2.Network.IPublicIpAddress> creatable)
+        public NetworkInterfaceImpl WithNewPrimaryPublicIpAddress (ICreatable<Microsoft.Azure.Management.Fluent.Network.IPublicIpAddress> creatable)
         {
 
             //$ this.primaryIpConfiguration().withNewPublicIpAddress(creatable);
@@ -205,7 +205,7 @@ namespace Microsoft.Azure.Management.V2.Network
             return this;
         }
 
-        public NetworkInterfaceImpl WithNewNetworkSecurityGroup (ICreatable<Microsoft.Azure.Management.V2.Network.INetworkSecurityGroup> creatable)
+        public NetworkInterfaceImpl WithNewNetworkSecurityGroup (ICreatable<Microsoft.Azure.Management.Fluent.Network.INetworkSecurityGroup> creatable)
         {
 
             //$ if (this.creatableNetworkSecurityGroupKey == null) {
@@ -428,7 +428,7 @@ namespace Microsoft.Azure.Management.V2.Network
                 return null;
             }
         }
-        public IDictionary<string,Microsoft.Azure.Management.V2.Network.INicIpConfiguration> IpConfigurations ()
+        public IDictionary<string,Microsoft.Azure.Management.Fluent.Network.INicIpConfiguration> IpConfigurations ()
         {
 
             //$ return Collections.unmodifiableMap(this.nicIpConfigurations);
@@ -574,7 +574,7 @@ namespace Microsoft.Azure.Management.V2.Network
             return null;
         }
 
-        internal ICreatable<Microsoft.Azure.Management.V2.Resource.IResourceGroup> NewGroup ()
+        internal ICreatable<Microsoft.Azure.Management.Fluent.Resource.IResourceGroup> NewGroup ()
         {
 
             //$ return this.creatableGroup;

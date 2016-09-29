@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
     using Microsoft.Azure.Management.Fluent.Graph.RBAC.User.Definition;
     using Microsoft.Azure.Management.Graph.RBAC.Models;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
     using Microsoft.Azure.Management.Fluent.Graph.RBAC.User.Update;
     using System.Threading;
     internal partial class UserImpl 

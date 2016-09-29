@@ -5,7 +5,7 @@ using Microsoft.Rest;
 using Microsoft.Rest.TransientFaultHandling;
 using System.Net.Http;
 
-namespace Microsoft.Azure.Management.V2.Resource.Core
+namespace Microsoft.Azure.Management.Fluent.Resource.Core
 {
     public class AzureConfigurable<T> : IAzureConfigurable<T>
         where T : class, IAzureConfigurable<T>

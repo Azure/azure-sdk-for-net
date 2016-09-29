@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update
+namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.V2.Compute;
-    using Microsoft.Azure.Management.V2.Resource.Core.Resource.Update;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Update;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Network;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Compute;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.Resource.Update;
+    using Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSetExtension.Update;
+    using Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSetExtension.UpdateDefinition;
+    using Microsoft.Azure.Management.Fluent.Network;
     /// <summary>
     /// The stage of a virtual machine scale set update allowing to remove the public and internal load balancer
     /// from the primary network interface configuration.
@@ -39,8 +39,8 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update
     /// (via {@link WithApply#apply()}).
     /// </summary>
     public interface IWithApply  :
-        IAppliable<Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet>,
-        IUpdateWithTags<Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IUpdate>,
+        IAppliable<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet>,
+        IUpdateWithTags<Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IUpdate>,
         IWithSku,
         IWithCapacity,
         IWithExtension,
@@ -166,14 +166,14 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update
         /// </summary>
         /// <param name="name">name the reference name for an extension</param>
         /// <returns>the first stage of the extension reference definition</returns>
-        IBlank<Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApply> DefineNewExtension (string name);
+        IBlank<Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply> DefineNewExtension (string name);
 
         /// <summary>
         /// Begins the description of an update of an existing extension assigned to the virtual machines in the scale set.
         /// </summary>
         /// <param name="name">name the reference name for the extension</param>
         /// <returns>the first stage of the extension reference update</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Update.IUpdate UpdateExtension (string name); // TODO: Converter does not emit fully qualified path to IUpdate of extension - fixing it
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSetExtension.Update.IUpdate UpdateExtension (string name); // TODO: Converter does not emit fully qualified path to IUpdate of extension - fixing it
 
         /// <summary>
         /// Removes the extension with the specified name from the virtual machines in the scale set.

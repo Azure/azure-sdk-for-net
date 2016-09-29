@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Network
+namespace Microsoft.Azure.Management.Fluent.Network
 {
     using Management.Network.Models;
     using Resource.Core.CollectionActions;
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.V2.Network
 
         }
 
-        public PagedList<Microsoft.Azure.Management.V2.Network.INetworkInterface> List ()
+        public PagedList<Microsoft.Azure.Management.Fluent.Network.INetworkInterface> List ()
         {
 
             //$ return wrapList(innerCollection.listAll());
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.V2.Network
             return null;
         }
 
-        public PagedList<Microsoft.Azure.Management.V2.Network.INetworkInterface> ListByGroup (string groupName)
+        public PagedList<Microsoft.Azure.Management.Fluent.Network.INetworkInterface> ListByGroup (string groupName)
         {
 
             //$ return wrapList(innerCollection.list(groupName));

@@ -5,14 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.Storage.Models;
-using Microsoft.Azure.Management.V2.Resource;
+using Microsoft.Azure.Management.Fluent.Resource;
 using Microsoft.Azure.Management.Storage;
-using Microsoft.Azure.Management.V2.Resource.Core;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
 using System.Threading;
-using Microsoft.Azure.Management.V2.Storage.StorageAccount.Definition;
-using Microsoft.Azure.Management.V2.Storage.StorageAccount.Update;
+using Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Definition;
+using Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Update;
 
-namespace Microsoft.Azure.Management.V2.Storage
+namespace Microsoft.Azure.Management.Fluent.Storage
 {
     internal class StorageAccountImpl :
         GroupableResource<

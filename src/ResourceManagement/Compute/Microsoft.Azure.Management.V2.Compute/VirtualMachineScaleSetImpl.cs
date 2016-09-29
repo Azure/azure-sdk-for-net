@@ -6,18 +6,18 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Management.V2.Network;
-using Microsoft.Azure.Management.V2.Resource;
-using Microsoft.Azure.Management.V2.Resource.Core;
-using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
-using Microsoft.Azure.Management.V2.Storage;
+using Microsoft.Azure.Management.Fluent.Network;
+using Microsoft.Azure.Management.Fluent.Resource;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
+using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+using Microsoft.Azure.Management.Fluent.Storage;
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Rest.Azure;
 using System.Text;
 using System.Text.RegularExpressions;
 using System;
 
-namespace Microsoft.Azure.Management.V2.Compute
+namespace Microsoft.Azure.Management.Fluent.Compute
 {
     internal partial class VirtualMachineScaleSetImpl :
         GroupableResource<IVirtualMachineScaleSet,
@@ -176,7 +176,7 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         public IDictionary<string, IBackend> ListPrimaryInternalLoadBalancerBackends()
         {
-            if ((this as Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet).GetPrimaryInternalLoadBalancer() != null)
+            if ((this as Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet).GetPrimaryInternalLoadBalancer() != null)
             {
                 return getBackendsAssociatedWithIpConfiguration(this.primaryInternalLoadBalancer,
                         primaryNicDefaultIPConfiguration());
@@ -186,7 +186,7 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         public IDictionary<string, IInboundNatPool> ListPrimaryInternalLoadBalancerInboundNatPools()
         {
-            if ((this as Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet).GetPrimaryInternalLoadBalancer() != null)
+            if ((this as Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet).GetPrimaryInternalLoadBalancer() != null)
             {
                 return getInboundNatPoolsAssociatedWithIpConfiguration(this.primaryInternalLoadBalancer,
                         primaryNicDefaultIPConfiguration());
@@ -196,7 +196,7 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         public IDictionary<string, IBackend> ListPrimaryInternetFacingLoadBalancerBackends()
         {
-            if ((this as Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet).GetPrimaryInternetFacingLoadBalancer() != null)
+            if ((this as Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet).GetPrimaryInternetFacingLoadBalancer() != null)
             {
                 return getBackendsAssociatedWithIpConfiguration(this.primaryInternetFacingLoadBalancer,
                         primaryNicDefaultIPConfiguration());
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         public IDictionary<string, IInboundNatPool> ListPrimaryInternetFacingLoadBalancerInboundNatPools()
         {
-            if ((this as Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet).GetPrimaryInternetFacingLoadBalancer() != null)
+            if ((this as Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet).GetPrimaryInternetFacingLoadBalancer() != null)
             {
                 return getInboundNatPoolsAssociatedWithIpConfiguration(this.primaryInternetFacingLoadBalancer,
                         primaryNicDefaultIPConfiguration());
@@ -218,7 +218,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         {
             get
             {
-                ILoadBalancer loadBalancer = (this as Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet).GetPrimaryInternetFacingLoadBalancer();
+                ILoadBalancer loadBalancer = (this as Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet).GetPrimaryInternetFacingLoadBalancer();
                 if (loadBalancer != null)
                 {
                     return loadBalancer.PublicIpAddressIds;
@@ -257,7 +257,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
 
-        public PagedList<Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSetSku> ListAvailableSkus()
+        public PagedList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSetSku> ListAvailableSkus()
         {
             PagedList<VirtualMachineScaleSetSku> innerPagedList = new PagedList<VirtualMachineScaleSetSku>(this.client.ListSkus(this.ResourceGroupName, this.Name), nextLink =>
             {
@@ -270,7 +270,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             });
         }
 
-        public IDictionary<string, Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSetExtension> Extensions()
+        public IDictionary<string, Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSetExtension> Extensions()
         {
             return this.extensions;
         }
@@ -781,7 +781,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         public VirtualMachineScaleSetImpl WithNewStorageAccount(ICreatable<IStorageAccount> creatable)
         {
             this.creatableStorageAccountKeys.Add(creatable.Key);
-            this.AddCreatableDependency(creatable as IResourceCreator<Microsoft.Azure.Management.V2.Resource.Core.IResource>);
+            this.AddCreatableDependency(creatable as IResourceCreator<Microsoft.Azure.Management.Fluent.Resource.Core.IResource>);
             return this;
         }
 
@@ -896,8 +896,8 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         private void setOSDiskAndOSProfileDefaults()
         {
-            Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet self = this
-                as Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet;
+            Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet self = this
+                as Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet;
             if (this.IsInUpdateMode)
             {
                 return;

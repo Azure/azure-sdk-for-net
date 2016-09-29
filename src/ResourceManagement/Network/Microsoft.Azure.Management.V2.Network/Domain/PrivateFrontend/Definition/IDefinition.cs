@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Network.PrivateFrontend.Definition
+namespace Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.Definition
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResourceActions;
-    using Microsoft.Azure.Management.V2.Network.HasPrivateIpAddress.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core.HasSubnet.Definition;
-    using Microsoft.Azure.Management.V2.Network;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.Fluent.Network.HasPrivateIpAddress.Definition;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.HasSubnet.Definition;
+    using Microsoft.Azure.Management.Fluent.Network;
     /// <summary>
     /// The final stage of a private frontend definition.
     /// <p>
@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.V2.Network.PrivateFrontend.Definition
     /// </summary>
     public interface IWithAttach<ParentT>  :
         IInDefinitionAlt<ParentT>,
-        IWithPrivateIpAddress<Microsoft.Azure.Management.V2.Network.PrivateFrontend.Definition.IWithAttach<ParentT>>
+        IWithPrivateIpAddress<Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.Definition.IWithAttach<ParentT>>
     {
     }
     /// <summary>
@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.V2.Network.PrivateFrontend.Definition
     /// @param <ParentT> the return type of the final {@link WithAttach#attach()}
     /// </summary>
     public interface IBlank<ParentT>  :
-        Microsoft.Azure.Management.V2.Network.PrivateFrontend.Definition.IWithSubnet<ParentT>
+        Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.Definition.IWithSubnet<ParentT>
     {
     }
     /// <summary>
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.V2.Network.PrivateFrontend.Definition
     public interface IDefinition<ParentT>  :
         IBlank<ParentT>,
         IWithAttach<ParentT>,
-        Microsoft.Azure.Management.V2.Network.PrivateFrontend.Definition.IWithSubnet<ParentT>
+        Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.Definition.IWithSubnet<ParentT>
     {
     }
     /// <summary>
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.V2.Network.PrivateFrontend.Definition
     /// @param <ParentT> the next stage of the parent definition
     /// </summary>
     public interface IWithSubnet<ParentT>  :
-        Microsoft.Azure.Management.V2.Resource.Core.HasSubnet.Definition.IWithSubnet<Microsoft.Azure.Management.V2.Network.PrivateFrontend.Definition.IWithAttach<ParentT>>
+        Microsoft.Azure.Management.Fluent.Resource.Core.HasSubnet.Definition.IWithSubnet<Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.Definition.IWithAttach<ParentT>>
     {
         /// <summary>
         /// Assigns the specified subnet to this private frontend of an internal load balancer.

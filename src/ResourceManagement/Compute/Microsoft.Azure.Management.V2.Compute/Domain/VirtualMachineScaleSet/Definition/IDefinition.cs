@@ -1,16 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition
+namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition
 {
 
     using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.V2.Storage;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition;
-    using Microsoft.Azure.Management.V2.Network;
-    using Microsoft.Azure.Management.V2.Resource.Core.Resource.Definition;
-    using Microsoft.Azure.Management.V2.Compute;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Definition;
+    using Microsoft.Azure.Management.Fluent.Storage;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.GroupableResource.Definition;
+    using Microsoft.Azure.Management.Fluent.Network;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.Resource.Definition;
+    using Microsoft.Azure.Management.Fluent.Compute;
+    using Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSetExtension.Definition;
     /// <summary>
     /// The stage of a Windows virtual machine scale set definition which contains all the minimum required
     /// inputs for the resource to be created (via {@link WithCreate#create()}, but also allows for any other
@@ -79,7 +79,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definitio
         /// </summary>
         /// <param name="creatable">creatable the storage account definition in a creatable stage</param>
         /// <returns>the next stage in the definition</returns>
-        IWithCreate WithNewStorageAccount (ICreatable<Microsoft.Azure.Management.V2.Storage.IStorageAccount> creatable);
+        IWithCreate WithNewStorageAccount (ICreatable<Microsoft.Azure.Management.Fluent.Storage.IStorageAccount> creatable);
 
         /// <summary>
         /// Specifies an existing {@link StorageAccount} for the OS and data disk VHDs of
@@ -107,8 +107,8 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definitio
     /// The entirety of the load balancer definition.
     /// </summary>
     public interface IDefinition  :
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IBlank,
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithGroup,
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IBlank,
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithGroup,
         IWithSku,
         IWithNetworkSubnet,
         IWithPrimaryInternetFacingLoadBalancer,
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definitio
     /// The stage of a virtual machine scale set definition allowing to specify the resource group.
     /// </summary>
     public interface IWithGroup  :
-        Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithSku>
+        Microsoft.Azure.Management.Fluent.Resource.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithSku>
     {
     }
     /// <summary>
@@ -249,7 +249,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definitio
     /// to be specified.
     /// </summary>
     public interface IWithCreate  :
-        ICreatable<Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet>,
+        ICreatable<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet>,
         IWithPassword,
         IWithOsDiskSettings,
         IWithComputerNamePrefix,
@@ -258,7 +258,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definitio
         IWithOverProvision,
         IWithStorageAccount,
         IWithExtension,
-        IDefinitionWithTags<Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate>
+        IDefinitionWithTags<Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithCreate>
     {
     }
     /// <summary>
@@ -294,7 +294,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definitio
     /// The first stage of a virtual machine scale set definition.
     /// </summary>
     public interface IBlank  :
-        IDefinitionWithRegion<Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithGroup>
+        IDefinitionWithRegion<Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithGroup>
     {
     }
     /// <summary>
@@ -353,7 +353,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definitio
         /// </summary>
         /// <param name="name">name the reference name for the extension</param>
         /// <returns>the first stage of the extension reference definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Definition.IBlank<Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate> DefineNewExtension (string name);
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSetExtension.Definition.IBlank<Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithCreate> DefineNewExtension (string name);
 
     }
     /// <summary>

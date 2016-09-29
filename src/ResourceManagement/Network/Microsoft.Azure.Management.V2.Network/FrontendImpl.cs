@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Network
+namespace Microsoft.Azure.Management.Fluent.Network
 {
     using System.Collections.Generic;
     using Resource.Core.ChildResourceActions;
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.V2.Network
             }
         }
 
-        public IDictionary<string,Microsoft.Azure.Management.V2.Network.ILoadBalancingRule> LoadBalancingRules ()
+        public IDictionary<string,Microsoft.Azure.Management.Fluent.Network.ILoadBalancingRule> LoadBalancingRules ()
         {
             IDictionary<string, ILoadBalancingRule> rules = new SortedDictionary<string, ILoadBalancingRule>();
             if(Inner.LoadBalancingRules != null)

@@ -7,7 +7,7 @@
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
     <ProjectGuid>a9b44e1b-c26f-44ab-b13f-f22742371135</ProjectGuid>
-    <RootNamespace>Microsoft.Azure.Management.V2.Storage</RootNamespace>
+    <RootNamespace>Microsoft.Azure.Management.Fluent.Storage</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>
   </PropertyGroup>

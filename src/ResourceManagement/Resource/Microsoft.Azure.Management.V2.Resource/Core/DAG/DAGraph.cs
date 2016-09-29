@@ -4,7 +4,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 
-namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
+namespace Microsoft.Azure.Management.Fluent.Resource.Core.DAG
 {
     public class DAGraph<NodeDataT, NodeT> : Graph<NodeDataT, NodeT> where NodeT : DAGNode<NodeDataT> 
     {

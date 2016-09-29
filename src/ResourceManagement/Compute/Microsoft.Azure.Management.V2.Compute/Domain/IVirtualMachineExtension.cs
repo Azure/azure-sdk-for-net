@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Compute
+namespace Microsoft.Azure.Management.Fluent.Compute
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
     using Microsoft.Azure.Management.Compute.Models;
     using System.Collections.Generic;
     /// <summary>
@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     /// An extension associated with a virtual machine will be created from a {@link VirtualMachineExtensionImage }.
     /// </summary>
     public interface IVirtualMachineExtension  :
-        IExternalChildResource<Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtension,Microsoft.Azure.Management.V2.Compute.IVirtualMachine>,
+        IExternalChildResource<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineExtension,Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine>,
         IWrapper<Microsoft.Azure.Management.Compute.Models.VirtualMachineExtensionInner>
     {
         /// <returns>the publisher name of the virtual machine extension image this extension is created from</returns>

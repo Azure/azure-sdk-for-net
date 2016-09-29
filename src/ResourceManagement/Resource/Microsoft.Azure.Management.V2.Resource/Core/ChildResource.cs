@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Microsoft.Azure.Management.V2.Resource.Core
+namespace Microsoft.Azure.Management.Fluent.Resource.Core
 {
     /// <summary>
     /// Child resource abstract implementation.

@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Microsoft.Azure.Management.V2.Network
+namespace Microsoft.Azure.Management.Fluent.Network
 {
     using Management.Network.Models;
     using System.Collections.Generic;
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.V2.Network
         Network.Update.IUpdate
     {
         private IVirtualNetworksOperations innerCollection;
-        private IDictionary<string,Microsoft.Azure.Management.V2.Network.ISubnet> subnets;
+        private IDictionary<string,Microsoft.Azure.Management.Fluent.Network.ISubnet> subnets;
         internal NetworkImpl(
             string name, 
             VirtualNetworkInner innerModel, 
@@ -165,7 +165,7 @@ namespace Microsoft.Azure.Management.V2.Network
                 return null;
             }
         }
-        public IDictionary<string,Microsoft.Azure.Management.V2.Network.ISubnet> Subnets ()
+        public IDictionary<string,Microsoft.Azure.Management.Fluent.Network.ISubnet> Subnets ()
         {
 
             //$ return Collections.unmodifiableMap(this.subnets);

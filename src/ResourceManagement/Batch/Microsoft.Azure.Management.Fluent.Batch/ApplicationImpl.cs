@@ -8,11 +8,11 @@ namespace Microsoft.Azure.Management.Fluent.Batch
     using Microsoft.Azure.Management.Fluent.Batch.Application.Definition;
     using Microsoft.Azure.Management.Fluent.Batch.Application.UpdateDefinition;
     using Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    using V2.Resource.Core.ChildResourceActions;
+    using Fluent.Resource.Core.ChildResourceActions;
 
     /// <summary>
     /// Implementation for BatchAccount Application and its parent interfaces.

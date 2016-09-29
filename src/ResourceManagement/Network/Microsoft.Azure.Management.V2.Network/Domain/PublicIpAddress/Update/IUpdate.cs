@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Network.PublicIpAddress.Update
+namespace Microsoft.Azure.Management.Fluent.Network.PublicIpAddress.Update
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core.Resource.Update;
-    using Microsoft.Azure.Management.V2.Network;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.Resource.Update;
+    using Microsoft.Azure.Management.Fluent.Network;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
     /// <summary>
     /// A public IP address update allowing to change the IP allocation method (static or dynamic).
     /// </summary>
@@ -89,12 +89,12 @@ namespace Microsoft.Azure.Management.V2.Network.PublicIpAddress.Update
     /// Use {@link Update#apply()} to apply the changes to the resource in Azure.
     /// </summary>
     public interface IUpdate  :
-        IAppliable<Microsoft.Azure.Management.V2.Network.IPublicIpAddress>,
+        IAppliable<Microsoft.Azure.Management.Fluent.Network.IPublicIpAddress>,
         IWithIpAddress,
         IWithLeafDomainLabel,
         IWithReverseFQDN,
         IWithIdleTimout,
-        IUpdateWithTags<Microsoft.Azure.Management.V2.Network.PublicIpAddress.Update.IUpdate>
+        IUpdateWithTags<Microsoft.Azure.Management.Fluent.Network.PublicIpAddress.Update.IUpdate>
     {
     }
 }

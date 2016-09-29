@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Compute
+namespace Microsoft.Azure.Management.Fluent.Compute
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions;
     /// <summary>
     /// Entry point to virtual machine sku images.
     /// </summary>
     public interface IVirtualMachineImagesInSku :
-        ISupportsListing<Microsoft.Azure.Management.V2.Compute.IVirtualMachineImage>
+        ISupportsListing<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineImage>
     {
     }
 }
