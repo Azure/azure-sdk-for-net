@@ -4,11 +4,8 @@ namespace Microsoft.Azure.Management.V2.Network
 {
 
     using Management.Network.Models;
-    using InboundNatRule.UpdateDefinition;
     using Resource.Core;
-    using InboundNatRule.Definition;
     using Resource.Core.ChildResourceActions;
-    using System;
     using Rest.Azure;
 
     /// <summary>
@@ -17,8 +14,8 @@ namespace Microsoft.Azure.Management.V2.Network
     public partial class InboundNatRuleImpl  :
         ChildResource<InboundNatRuleInner, LoadBalancerImpl, ILoadBalancer>,
         IInboundNatRule,
-        IDefinition<LoadBalancer.Definition.IWithCreateAndInboundNatRule>,
-        IUpdateDefinition<LoadBalancer.Update.IUpdate>,
+        InboundNatRule.Definition.IDefinition<LoadBalancer.Definition.IWithCreateAndInboundNatRule>,
+        InboundNatRule.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
         InboundNatRule.Update.IUpdate
     {
         internal InboundNatRuleImpl (InboundNatRuleInner inner, LoadBalancerImpl parent) 

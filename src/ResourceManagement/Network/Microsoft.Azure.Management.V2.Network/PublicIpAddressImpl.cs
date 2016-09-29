@@ -2,18 +2,15 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.V2.Network
 {
-
-    using Microsoft.Azure.Management.V2.Network.PublicIpAddress.Definition;
-    using Microsoft.Azure.Management.Network.Models;
+    using Management.Network.Models;
     using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.V2.Network.PublicIpAddress.Update;
-    using Microsoft.Azure.Management.V2.Resource;
+    using Resource;
     using Management.Network;
     using Resource.Core;
 
     /// <summary>
-    /// Implementation for {@link PublicIpAddress} and its create and update interfaces.
+    /// Implementation for PublicIpAddress.
     /// </summary>
     public partial class PublicIpAddressImpl :
         GroupableResource<IPublicIpAddress,
@@ -24,10 +21,10 @@ namespace Microsoft.Azure.Management.V2.Network
             PublicIpAddress.Definition.IWithGroup,
             PublicIpAddress.Definition.IWithCreate,
             PublicIpAddress.Definition.IWithCreate,
-            IUpdate>,
+            PublicIpAddress.Update.IUpdate>,
         IPublicIpAddress,
-        IDefinition,
-        IUpdate
+        PublicIpAddress.Definition.IDefinition,
+        PublicIpAddress.Update.IUpdate
     {
         private IPublicIPAddressesOperations client;
         internal PublicIpAddressImpl(

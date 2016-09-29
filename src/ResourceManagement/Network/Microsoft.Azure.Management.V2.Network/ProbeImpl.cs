@@ -6,11 +6,10 @@ namespace Microsoft.Azure.Management.V2.Network
     using Management.Network.Models;
     using System.Collections.Generic;
     using Resource.Core.ChildResourceActions;
-    using System;
     using Rest.Azure;
 
     public partial class ProbeImpl  :
-        ChildResource<ProbeInner, Microsoft.Azure.Management.V2.Network.LoadBalancerImpl, ILoadBalancer>,
+        ChildResource<ProbeInner, LoadBalancerImpl, ILoadBalancer>,
         ITcpProbe,
         TcpProbe.Definition.IDefinition<LoadBalancer.Definition.IWithProbeOrLoadBalancingRule>,
         TcpProbe.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,

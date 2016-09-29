@@ -2,16 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.V2.Network
 {
-
-    using Microsoft.Azure.Management.V2.Network.Network.Definition;
-    using Microsoft.Azure.Management.Network.Models;
-    using Microsoft.Azure.Management.V2.Network.Subnet.Definition;
-    using Microsoft.Azure.Management.V2.Network.Subnet.Update;
-    using Microsoft.Azure.Management.V2.Network.Network.Update;
-    using Microsoft.Azure.Management.V2.Network.Subnet.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
+    using Management.Network.Models;
+    using Resource.Core;
     using Resource.Core.ChildResourceActions;
     using System;
 
@@ -19,18 +11,14 @@ namespace Microsoft.Azure.Management.V2.Network
     /// Implementation for Subnet and its create and update interfaces.
     /// </summary>
     public partial class SubnetImpl  :
-        ChildResource<Microsoft.Azure.Management.Network.Models.SubnetInner,Microsoft.Azure.Management.V2.Network.NetworkImpl,Microsoft.Azure.Management.V2.Network.INetwork>,
+        ChildResource<SubnetInner, NetworkImpl, INetwork>,
         ISubnet,
-        IDefinition<Microsoft.Azure.Management.V2.Network.Network.Definition.IWithCreateAndSubnet>,
-        IUpdateDefinition<Microsoft.Azure.Management.V2.Network.Network.Update.IUpdate>,
-        Microsoft.Azure.Management.V2.Network.Subnet.Update.IUpdate
+        Subnet.Definition.IDefinition<Network.Definition.IWithCreateAndSubnet>,
+        Subnet.UpdateDefinition.IUpdateDefinition<Network.Update.IUpdate>,
+        Subnet.Update.IUpdate
     {
         protected  SubnetImpl (SubnetInner inner, NetworkImpl parent) : base(inner.Name, inner, parent)
         {
-
-            //$ super(inner, parent);
-            //$ }
-
         }
 
         public string AddressPrefix

@@ -3,10 +3,10 @@
 
 namespace Microsoft.Azure.Management.V2.Network
 {
-    using Microsoft.Azure.Management.Network;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Management.Network;
+    using Resource.Core;
     using Resource;
-    using Microsoft.Rest;
+    using Rest;
     using System;
     using System.Linq;
 

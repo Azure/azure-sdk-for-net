@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 namespace Microsoft.Azure.Management.V2.Network
 {
-
     using Resource.Core;
     using System.Threading.Tasks;
     using System.Threading;
@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.V2.Network
     using Management.Network;
 
     /// <summary>
-    /// Implementation for ILoadBalancers.
+    /// Implementation for LoadBalancers.
     /// </summary>
     public partial class LoadBalancersImpl  :
         GroupableResources<
@@ -85,7 +85,7 @@ namespace Microsoft.Azure.Management.V2.Network
             return DeleteAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
         }
 
-        void ISupportsDeletingByGroup.Delete(string groupName, string name)
+        public void Delete(string groupName, string name)
         {
             DeleteAsync(groupName, name).Wait();
         }

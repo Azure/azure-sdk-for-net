@@ -2,11 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.V2.Network
 {
-
-    using Microsoft.Azure.Management.Network.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
-    using Microsoft.Azure.Management.V2.Resource;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Management.Network.Models;
+    using Resource.Core.CollectionActions;
+    using Resource.Core;
     using System.Threading;
     using System.Threading.Tasks;
     using Management.Network;
@@ -17,10 +15,10 @@ namespace Microsoft.Azure.Management.V2.Network
     /// </summary>
     public partial class NetworkInterfacesImpl  :
         GroupableResources<
-            Microsoft.Azure.Management.V2.Network.INetworkInterface,
-            Microsoft.Azure.Management.V2.Network.NetworkInterfaceImpl,
-            Microsoft.Azure.Management.Network.Models.NetworkInterfaceInner,
-            Management.Network.INetworkInterfacesOperations,
+            INetworkInterface,
+            NetworkInterfaceImpl,
+            NetworkInterfaceInner,
+            INetworkInterfacesOperations,
             NetworkManager>,
         INetworkInterfaces
     {

@@ -1,22 +1,19 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 namespace Microsoft.Azure.Management.V2.Network
 {
-
-    using LoadBalancingRule.UpdateDefinition;
     using Management.Network.Models;
     using Resource.Core;
-    using LoadBalancingRule.Definition;
     using Resource.Core.ChildResourceActions;
-    using System;
     using Rest.Azure;
 
     public partial class LoadBalancingRuleImpl  :
-        ChildResource<Microsoft.Azure.Management.Network.Models.LoadBalancingRuleInner,Microsoft.Azure.Management.V2.Network.LoadBalancerImpl,Microsoft.Azure.Management.V2.Network.ILoadBalancer>,
+        ChildResource<LoadBalancingRuleInner, LoadBalancerImpl, ILoadBalancer>,
         ILoadBalancingRule,
-        IDefinition<Microsoft.Azure.Management.V2.Network.LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate>,
-        IUpdateDefinition<Microsoft.Azure.Management.V2.Network.LoadBalancer.Update.IUpdate>,
-        Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Update.IUpdate
+        LoadBalancingRule.Definition.IDefinition<LoadBalancer.Definition.IWithLoadBalancingRuleOrCreate>,
+        LoadBalancingRule.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
+        LoadBalancingRule.Update.IUpdate
     {
         internal  LoadBalancingRuleImpl (LoadBalancingRuleInner inner, LoadBalancerImpl parent) : base(inner.Name, inner, parent)
         {
