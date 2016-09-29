@@ -15,7 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ManageVirtualMachinesInParallel2
+namespace ManageVirtualMachinesInParallelWithNetwork
 {
     public class Program
     {
@@ -26,8 +26,8 @@ namespace ManageVirtualMachinesInParallel2
          * Create m Linux virtual machines in the frontend
          * Create m Windows virtual machines in the backend.
          */
-        readonly static int frontendVmCount = 5;
-        readonly static int backendVmCount = 5;
+        readonly static int frontendVmCount = 10;
+        readonly static int backendVmCount = 10;
         readonly static string rgName = ResourceNamer.RandomResourceName("rgCOMV", 24);
         readonly static string frontEndNSGName = ResourceNamer.RandomResourceName("fensg", 24);
         readonly static string backEndNSGName = ResourceNamer.RandomResourceName("bensg", 24);
