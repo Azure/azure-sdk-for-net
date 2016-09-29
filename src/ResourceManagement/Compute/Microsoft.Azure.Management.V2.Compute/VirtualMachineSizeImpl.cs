@@ -4,9 +4,9 @@
 namespace Microsoft.Azure.Management.V2.Compute
 {
 
-    using Microsoft.Azure.Management.Compute.Models;
+    using Management.Compute.Models;
     /// <summary>
-    /// The implementation for {@link VirtualMachineSize}.
+    /// The implementation for VirtualMachineSize.
     /// </summary>
     internal partial class VirtualMachineSizeImpl  :
         IVirtualMachineSize

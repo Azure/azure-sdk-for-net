@@ -1,18 +1,14 @@
-﻿using System.Collections.Generic;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information. 
+
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition;
-using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update;
-using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Definition;
-using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Update;
 using Microsoft.Azure.Management.V2.Network;
 using Microsoft.Azure.Management.V2.Resource;
 using Microsoft.Azure.Management.V2.Resource.Core;
-using Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition;
-using Microsoft.Azure.Management.V2.Resource.Core.Resource.Definition;
-using Microsoft.Azure.Management.V2.Resource.Core.Resource.Update;
 using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
 using Microsoft.Azure.Management.V2.Storage;
 using Microsoft.Azure.Management.Compute;
@@ -32,10 +28,10 @@ namespace Microsoft.Azure.Management.V2.Compute
             VirtualMachineScaleSet.Definition.IWithGroup,
             VirtualMachineScaleSet.Definition.IWithSku,
             VirtualMachineScaleSet.Definition.IWithCreate,
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IUpdate>,
+            VirtualMachineScaleSet.Update.IUpdate>,
         IVirtualMachineScaleSet,
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IDefinition,
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IUpdate
+        VirtualMachineScaleSet.Definition.IDefinition,
+        VirtualMachineScaleSet.Update.IUpdate
     {
         // Clients
         private IVirtualMachineScaleSetsOperations client;
@@ -1555,7 +1551,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return merged;
         }
 
-        IWithPrimaryLoadBalancer IUpdatable<IWithPrimaryLoadBalancer>.Update()
+        VirtualMachineScaleSet.Update.IWithPrimaryLoadBalancer IUpdatable<VirtualMachineScaleSet.Update.IWithPrimaryLoadBalancer>.Update()
         {
             return this;
         }

@@ -4,40 +4,35 @@ namespace Microsoft.Azure.Management.V2.Compute
 {
 
     using System.Threading;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Resource.Core.ResourceActions;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition;
-    using Microsoft.Azure.Management.V2.Network;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update;
-    using Microsoft.Azure.Management.V2.Storage;
-    using Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition;
-    using Microsoft.Azure.Management.Network.Models;
-    using Microsoft.Azure.Management.Storage.Models;
+    using Management.Compute.Models;
+    using Network;
+    using Resource.Core;
+    using Storage;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.V2.Resource;
+    using Resource;
     using Newtonsoft.Json;
     using System.Text.RegularExpressions;
     using Management.Compute;
     using System;
 
     /// <summary>
-    /// The implementation for {@link VirtualMachine} and its create and update interfaces.
+    /// The implementation for VirtualMachine and its create and update interfaces.
     /// </summary>
     internal partial class VirtualMachineImpl  :
-        GroupableResource<Microsoft.Azure.Management.V2.Compute.IVirtualMachine,
-            Microsoft.Azure.Management.Compute.Models.VirtualMachineInner,
+        GroupableResource<IVirtualMachine,
+            VirtualMachineInner,
             Rest.Azure.Resource,
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineImpl,
+            VirtualMachineImpl,
             IComputeManager,
             VirtualMachine.Definition.IWithGroup,
             VirtualMachine.Definition.IWithNetwork,
             VirtualMachine.Definition.IWithCreate,
-            IUpdate>,
+            VirtualMachine.Update.IUpdate>,
         IVirtualMachine,
         VirtualMachine.Definition.IDefinition,
-        IUpdate
+        VirtualMachine.Update.IUpdate
     {
         private readonly IVirtualMachinesOperations client;
         private readonly IStorageManager storageManager;
@@ -57,8 +52,8 @@ namespace Microsoft.Azure.Management.V2.Compute
         private VirtualMachineInstanceView virtualMachineInstanceView;
         private bool isMarketplaceLinuxImage;
         private IList<IVirtualMachineDataDisk> dataDisks;
-        private IWithPrimaryPrivateIp nicDefinitionWithPrivateIp;
-        private IWithPrimaryNetworkSubnet nicDefinitionWithSubnet;
+        private Network.NetworkInterface.Definition.IWithPrimaryPrivateIp nicDefinitionWithPrivateIp;
+        private Network.NetworkInterface.Definition.IWithPrimaryNetworkSubnet nicDefinitionWithSubnet;
         private Network.NetworkInterface.Definition.IWithCreate nicDefinitionWithCreate;
         private VirtualMachineExtensionsImpl virtualMachineExtensions;
 
@@ -156,7 +151,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// .
         /// Setters
         /// </summary>
-        public VirtualMachineImpl WithNewPrimaryNetwork (ICreatable<Microsoft.Azure.Management.V2.Network.INetwork> creatable)
+        public VirtualMachineImpl WithNewPrimaryNetwork (ICreatable<INetwork> creatable)
         {
             this.nicDefinitionWithPrivateIp = this.PreparePrimaryNetworkInterface(this.namer.RandomName("nic", 20))
                 .WithNewPrimaryNetwork(creatable);
@@ -1162,7 +1157,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return "{storage-base-url}" + containerName + "/" + blobName;
         }
 
-        private IWithPrimaryPublicIpAddress PrepareNetworkInterface(string name)
+        private Network.NetworkInterface.Definition.IWithPrimaryPublicIpAddress PrepareNetworkInterface(string name)
         {
             Network.NetworkInterface.Definition.IWithGroup definitionWithGroup = this.networkManager.NetworkInterfaces
                 .Define(name)
@@ -1197,7 +1192,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
 
-        private IWithPrimaryNetwork PreparePrimaryNetworkInterface(string name)
+        private Network.NetworkInterface.Definition.IWithPrimaryNetwork PreparePrimaryNetworkInterface(string name)
         {
             Network.NetworkInterface.Definition.IWithGroup definitionWithGroup = this.networkManager.NetworkInterfaces
             .Define(name)

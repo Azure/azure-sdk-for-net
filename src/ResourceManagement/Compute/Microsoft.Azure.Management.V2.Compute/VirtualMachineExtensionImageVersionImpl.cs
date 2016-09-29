@@ -5,17 +5,20 @@ namespace Microsoft.Azure.Management.V2.Compute
 {
     using Management.Compute;
     using Management.Compute.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Resource.Core;
     /// <summary>
-    /// The implementation for {@link VirtualMachineExtensionImageVersion}.
+    /// The implementation for VirtualMachineExtensionImageVersion.
     /// </summary>
     internal partial class VirtualMachineExtensionImageVersionImpl  :
-        Wrapper<Microsoft.Azure.Management.Compute.Models.VirtualMachineExtensionImageInner>,
+        Wrapper<VirtualMachineExtensionImageInner>,
         IVirtualMachineExtensionImageVersion
     {
         private IVirtualMachineExtensionImagesOperations client;
         private IVirtualMachineExtensionImageType type;
-        internal  VirtualMachineExtensionImageVersionImpl (IVirtualMachineExtensionImagesOperations client, IVirtualMachineExtensionImageType extensionImageType, VirtualMachineExtensionImageInner inner) : base(inner)
+        internal  VirtualMachineExtensionImageVersionImpl (
+            IVirtualMachineExtensionImagesOperations client, 
+            IVirtualMachineExtensionImageType extensionImageType, 
+            VirtualMachineExtensionImageInner inner) : base(inner)
         {
             this.client = client;
             this.type = extensionImageType;

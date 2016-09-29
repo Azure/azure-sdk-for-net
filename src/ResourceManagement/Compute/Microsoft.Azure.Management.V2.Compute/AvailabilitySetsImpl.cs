@@ -3,7 +3,6 @@
 
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Management.V2.Compute.AvailabilitySet.Definition;
 using Microsoft.Azure.Management.V2.Resource;
 using Microsoft.Azure.Management.V2.Resource.Core;
 using System;
@@ -13,7 +12,7 @@ using System.Threading.Tasks;
 namespace Microsoft.Azure.Management.V2.Compute
 {
     /// <summary>
-    /// The implementation for {@link AvailabilitySets}.
+    /// The implementation for AvailabilitySets.
     /// </summary>
     internal partial class AvailabilitySetsImpl :
         GroupableResources<IAvailabilitySet,

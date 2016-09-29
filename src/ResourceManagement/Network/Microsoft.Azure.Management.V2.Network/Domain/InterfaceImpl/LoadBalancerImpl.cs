@@ -203,7 +203,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// <param name="name">name the name for the inbound NAT rule</param>
         /// <returns>the first stage of the new inbound NAT rule definition</returns>
         Microsoft.Azure.Management.V2.Network.InboundNatRule.UpdateDefinition.IBlank<Microsoft.Azure.Management.V2.Network.LoadBalancer.Update.IUpdate> Microsoft.Azure.Management.V2.Network.LoadBalancer.Update.IWithInboundNatRule.DefineInboundNatRule (string name) { 
-            return this.DefineInboundNatRule( name) as Microsoft.Azure.Management.V2.Network.InboundNatRule.UpdateDefinition.IBlank<Microsoft.Azure.Management.V2.Network.LoadBalancer.Update.IUpdate>;
+            return DefineInboundNatRule( name) as Microsoft.Azure.Management.V2.Network.InboundNatRule.UpdateDefinition.IBlank<Microsoft.Azure.Management.V2.Network.LoadBalancer.Update.IUpdate>;
         }
 
         /// <summary>
@@ -212,7 +212,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// <param name="name">name the name of the inbound NAT rule to update</param>
         /// <returns>the first stage of the inbound NAT rule update</returns>
         Microsoft.Azure.Management.V2.Network.InboundNatRule.Update.IUpdate Microsoft.Azure.Management.V2.Network.LoadBalancer.Update.IWithInboundNatRule.UpdateInboundNatRule (string name) { 
-            return this.UpdateInboundNatRule( name) as Microsoft.Azure.Management.V2.Network.InboundNatRule.Update.IUpdate;
+            return UpdateInboundNatRule( name) as Microsoft.Azure.Management.V2.Network.InboundNatRule.Update.IUpdate;
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// <param name="name">name the name of an existing inbound NAT rule on this load balancer</param>
         /// <returns>the next stage of the update</returns>
         Microsoft.Azure.Management.V2.Network.LoadBalancer.Update.IUpdate Microsoft.Azure.Management.V2.Network.LoadBalancer.Update.IWithInboundNatRule.WithoutInboundNatRule (string name) { 
-            return this.WithoutInboundNatRule( name) as Microsoft.Azure.Management.V2.Network.LoadBalancer.Update.IUpdate;
+            return WithoutInboundNatRule( name) as Microsoft.Azure.Management.V2.Network.LoadBalancer.Update.IUpdate;
         }
 
         /// <summary>
@@ -241,7 +241,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// <param name="vms">vms existing virtual machines</param>
         /// <returns>the next stage of the update</returns>
         Microsoft.Azure.Management.V2.Network.LoadBalancer.Definition.IWithBackendOrProbe Microsoft.Azure.Management.V2.Network.LoadBalancer.Definition.IWithVirtualMachine<Microsoft.Azure.Management.V2.Network.LoadBalancer.Definition.IWithBackendOrProbe>.WithExistingVirtualMachines (params IHasNetworkInterfaces[] vms) { 
-            return this.WithExistingVirtualMachines( vms) as Microsoft.Azure.Management.V2.Network.LoadBalancer.Definition.IWithBackendOrProbe;
+            return WithExistingVirtualMachines( vms) as Microsoft.Azure.Management.V2.Network.LoadBalancer.Definition.IWithBackendOrProbe;
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// <param name="name">name the name for the frontend</param>
         /// <returns>the first stage of the new frontend definition</returns>
         Microsoft.Azure.Management.V2.Network.PublicFrontend.Definition.IBlank<Microsoft.Azure.Management.V2.Network.LoadBalancer.Definition.IWithPublicFrontendOrBackend> Microsoft.Azure.Management.V2.Network.LoadBalancer.Definition.IWithPublicFrontend.DefinePublicFrontend (string name) { 
-            return this.DefinePublicFrontend( name) as Microsoft.Azure.Management.V2.Network.PublicFrontend.Definition.IBlank<Microsoft.Azure.Management.V2.Network.LoadBalancer.Definition.IWithPublicFrontendOrBackend>;
+            return DefinePublicFrontend( name) as Microsoft.Azure.Management.V2.Network.PublicFrontend.Definition.IBlank<Microsoft.Azure.Management.V2.Network.LoadBalancer.Definition.IWithPublicFrontendOrBackend>;
         }
 
         /// <summary>
@@ -261,7 +261,7 @@ namespace Microsoft.Azure.Management.V2.Network
         /// <param name="name">name the name of the frontend to update</param>
         /// <returns>the first stage of the frontend update</returns>
         Microsoft.Azure.Management.V2.Network.PublicFrontend.Update.IUpdate Microsoft.Azure.Management.V2.Network.LoadBalancer.Update.IWithInternetFrontend.UpdateInternetFrontend (string name) { 
-            return this.UpdateInternetFrontend( name) as Microsoft.Azure.Management.V2.Network.PublicFrontend.Update.IUpdate;
+            return UpdateInternetFrontend( name) as Microsoft.Azure.Management.V2.Network.PublicFrontend.Update.IUpdate;
         }
 
         /// <summary>

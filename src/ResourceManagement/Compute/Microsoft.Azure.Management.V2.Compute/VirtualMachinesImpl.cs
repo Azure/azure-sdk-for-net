@@ -4,24 +4,22 @@
 namespace Microsoft.Azure.Management.V2.Compute
 {
     using Management.Compute;
-    using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
+    using Management.Compute.Models;
+    using Resource.Core;
+    using Resource.Core.CollectionActions;
     using Network;
     using Storage;
-    using System;
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
     /// <summary>
-    /// The implementation for {@link VirtualMachines}.
+    /// The implementation for VirtualMachines.
     /// </summary>
     internal partial class VirtualMachinesImpl :
-        GroupableResources<Microsoft.Azure.Management.V2.Compute.IVirtualMachine,
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineImpl,
-            Microsoft.Azure.Management.Compute.Models.VirtualMachineInner,
+        GroupableResources<IVirtualMachine,
+            VirtualMachineImpl,
+            VirtualMachineInner,
             IVirtualMachinesOperations, 
             IComputeManager>,
         IVirtualMachines
@@ -74,7 +72,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             await this.InnerCollection.DeleteAsync(groupName, name, cancellationToken);
         }
 
-        public IBlank Define(string name)
+        public VirtualMachineImpl Define(string name)
         {
             return WrapModel(name);
         }
