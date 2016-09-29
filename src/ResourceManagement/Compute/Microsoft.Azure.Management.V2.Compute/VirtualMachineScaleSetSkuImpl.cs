@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         IVirtualMachineScaleSetSku
     {
         // TODO: Report bug -> autorest generator is not appending 'Inner' to type Microsoft.Azure.Management.Compute.Models.VirtualMachineScaleSetSku
-        private VirtualMachineScaleSetSkuImpl (VirtualMachineScaleSetSku inner) : base(inner)
+        internal VirtualMachineScaleSetSkuImpl (VirtualMachineScaleSetSku inner) : base(inner)
         {
         }
 

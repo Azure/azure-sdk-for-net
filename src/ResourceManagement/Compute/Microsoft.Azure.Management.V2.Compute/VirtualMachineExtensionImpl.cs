@@ -12,6 +12,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     using Management.Compute;
     using System.Collections.ObjectModel;
     using Newtonsoft.Json;
+    using Resource.Core.ChildResourceActions;
 
     /// <summary>
     /// Implementation of VirtualMachineExtension.
