@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// <returns>an observable to the request</returns>
         async Task Microsoft.Azure.Management.V2.Resource.Core.CollectionActions.ISupportsDeletingByGroup.DeleteAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return await this.DeleteAsync(groupName, name) as Task;
+            await this.DeleteAsync(groupName, name, cancellationToken);
         }
 
         /// <summary>
