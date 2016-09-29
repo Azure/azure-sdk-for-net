@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
         }
 
         /// <returns>true if automatic updates are allowed, otherwise false</returns>
-        bool? Microsoft.Azure.Management.Fluent.Batch.IApplication.UpdatesAllowed
+        bool Microsoft.Azure.Management.Fluent.Batch.IApplication.UpdatesAllowed
         {
             get
             {
@@ -88,8 +88,12 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             }
         }
         /// <returns>the list of application packages</returns>
-        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Fluent.Batch.IApplicationPackage> Microsoft.Azure.Management.Fluent.Batch.IApplication.ApplicationPackages () {
-            return this.ApplicationPackages() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Fluent.Batch.IApplicationPackage>;
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Fluent.Batch.IApplicationPackage> Microsoft.Azure.Management.Fluent.Batch.IApplication.ApplicationPackages
+        {
+            get
+            {
+                return this.ApplicationPackages as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Fluent.Batch.IApplicationPackage>;
+            }
         }
 
         /// <returns>the display name for application</returns>

@@ -157,14 +157,14 @@ namespace Microsoft.Azure.Management.Samples.Common
         {
             StringBuilder applicationsOutput = new StringBuilder().Append("\n\tapplications: ");
 
-            if (batchAccount.Applications().Count > 0)
+            if (batchAccount.Applications.Count > 0)
             {
-                foreach (var applicationEntry in batchAccount.Applications())
+                foreach (var applicationEntry in batchAccount.Applications)
                 {
                     var application = applicationEntry.Value;
                     StringBuilder applicationPackages = new StringBuilder().Append("\n\t\t\tapplicationPackages : ");
 
-                    foreach (var applicationPackageEntry in application.ApplicationPackages())
+                    foreach (var applicationPackageEntry in application.ApplicationPackages)
                     {
                         var applicationPackage = applicationPackageEntry.Value;
                         StringBuilder singleApplicationPackage = new StringBuilder().Append("\n\t\t\t\tapplicationPackage : " + applicationPackage.Name);
