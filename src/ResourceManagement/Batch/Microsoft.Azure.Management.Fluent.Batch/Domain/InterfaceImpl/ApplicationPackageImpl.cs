@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
     internal partial class ApplicationPackageImpl 
     {
         /// <returns>the sate of the application package</returns>
-        Microsoft.Azure.Management.Batch.Models.PackageState? Microsoft.Azure.Management.Fluent.Batch.IApplicationPackage.State
+        Microsoft.Azure.Management.Batch.Models.PackageState Microsoft.Azure.Management.Fluent.Batch.IApplicationPackage.State
         {
             get
             {
@@ -28,27 +28,27 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             }
         }
         /// <returns>the date when last time this application package was activate.</returns>
-        System.DateTime? Microsoft.Azure.Management.Fluent.Batch.IApplicationPackage.LastActivationTime
+        System.DateTime Microsoft.Azure.Management.Fluent.Batch.IApplicationPackage.LastActivationTime
         {
             get
             {
-                return this.LastActivationTime as System.DateTime?;
+                return this.LastActivationTime;
             }
         }
         /// <summary>
         /// Activates the application package.
         /// </summary>
         /// <param name="format">format format of the uploaded package supported values zip, tar</param>
-        void Microsoft.Azure.Management.Fluent.Batch.IApplicationPackage.Activate (string format) {
+        void Microsoft.Azure.Management.Fluent.Batch.IApplicationPackage.Activate (string format) { 
             this.Activate( format);
         }
 
         /// <returns>the expiry of the storage url for application package</returns>
-        System.DateTime? Microsoft.Azure.Management.Fluent.Batch.IApplicationPackage.StorageUrlExpiry
+        System.DateTime Microsoft.Azure.Management.Fluent.Batch.IApplicationPackage.StorageUrlExpiry
         {
             get
             {
-                return this.StorageUrlExpiry as System.DateTime?;
+                return this.StorageUrlExpiry;
             }
         }
         /// <returns>the format of application package</returns>
