@@ -17,8 +17,6 @@ namespace Microsoft.Azure.Management.V2.Network
         private NetworkInterfacesImpl networkInterfaces;
         private NetworkSecurityGroupsImpl networkSecurityGroups;
         private NetworksImpl networks;
-
-        //$ private NetworksImpl networks;
         private LoadBalancersImpl loadBalancers;
 
         private NetworkManager(RestClient restClient, string subscriptionId) : base(restClient, subscriptionId)
