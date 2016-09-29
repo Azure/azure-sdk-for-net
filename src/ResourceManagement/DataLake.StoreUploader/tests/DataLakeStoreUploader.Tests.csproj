@@ -15,7 +15,7 @@
   </PropertyGroup>
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\Microsoft.Azure.Management.DataLake.StoreUploader\Microsoft.Azure.Management.DataLake.StoreUploader.csproj">
+    <ProjectReference Include="..\src\Microsoft.Azure.Management.DataLake.StoreUploader.csproj">
       <Project>{ad47b1e5-3400-4acd-8403-c29b42ed9112}</Project>
       <Name>DataLakeUploader</Name>
     </ProjectReference>
