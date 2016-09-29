@@ -27,192 +27,178 @@ namespace Microsoft.Azure.Management.V2.Network
         Network.Update.IUpdate
     {
         private IVirtualNetworksOperations innerCollection;
-        private IDictionary<string,Microsoft.Azure.Management.V2.Network.ISubnet> subnets;
+        private IDictionary<string, ISubnet> subnets;
         internal NetworkImpl(
             string name, 
             VirtualNetworkInner innerModel, 
             IVirtualNetworksOperations innerCollection, 
             NetworkManager networkManager) : base(name, innerModel, networkManager)
         {
-
-            //$ final VirtualNetworkInner innerModel,
-            //$ final VirtualNetworksInner innerCollection,
-            //$ final NetworkManager networkManager) {
-            //$ super(name, innerModel, networkManager);
-            //$ this.innerCollection = innerCollection;
-            //$ }
-
+            this.innerCollection = innerCollection;
         }
 
         override protected void InitializeChildrenFromInner ()
         {
-
-            //$ this.subnets = new TreeMap<>();
-            //$ List<SubnetInner> inners = this.inner().subnets();
-            //$ if (inners != null) {
-            //$ for (SubnetInner inner : inners) {
-            //$ SubnetImpl subnet = new SubnetImpl(inner, this);
-            //$ this.subnets.put(inner.name(), subnet);
-            //$ }
-            //$ }
-
+            subnets = new SortedDictionary<string, ISubnet>();
+            IList<SubnetInner> inners = Inner.Subnets;
+            if (inners != null)
+            {
+                foreach (var inner in inners)
+                {
+                    SubnetImpl subnet = new SubnetImpl(inner, this);
+                    subnets[inner.Name] = subnet;
+                }
+            }
         }
 
         public override INetwork Refresh()
         {
-            var response = this.innerCollection.Get(this.ResourceGroupName, this.Name);
+            var response = innerCollection.Get(ResourceGroupName, Name);
             SetInner(response);
             return this;
         }
 
         internal NetworkImpl WithSubnet (SubnetImpl subnet)
         {
-
-            //$ this.subnets.put(subnet.name(), subnet);
-            //$ return this;
-            //$ }
-
+            if (subnet != null)
+            {
+                subnets[subnet.Name] = subnet;
+            }
             return this;
         }
 
-        internal NetworkManager Manager
-        {
-            get
-            {
-            //$ return super.myManager;
-            //$ }
-
-
-                return null;
-            }
-        }
         public NetworkImpl WithDnsServer (string ipAddress)
         {
+            if (Inner.DhcpOptions == null)
+                Inner.DhcpOptions = new DhcpOptions();
 
-            //$ this.inner().dhcpOptions().dnsServers().add(ipAddress);
-            //$ return this;
+            if (Inner.DhcpOptions.DnsServers == null)
+                Inner.DhcpOptions.DnsServers = new List<string>();
 
+            Inner.DhcpOptions.DnsServers.Add(ipAddress);
             return this;
         }
 
         public NetworkImpl WithSubnet (string name, string cidr)
         {
-
-            //$ return this.defineSubnet(name)
-            //$ .withAddressPrefix(cidr)
-            //$ .attach();
-
-            return this;
+            return DefineSubnet(name)
+                .WithAddressPrefix(cidr)
+                .Attach();
         }
 
         public NetworkImpl WithSubnets (IDictionary<string,string> nameCidrPairs)
         {
-
-            //$ this.subnets.clear();
-            //$ for (Entry<String, String> pair : nameCidrPairs.entrySet()) {
-            //$ this.withSubnet(pair.getKey(), pair.getValue());
-            //$ }
-            //$ return this;
-
+            subnets.Clear();
+            foreach (var pair in nameCidrPairs)
+            {
+                WithSubnet(pair.Key, pair.Value);
+            }
             return this;
         }
 
         public NetworkImpl WithoutSubnet (string name)
         {
-
-            //$ this.subnets.remove(name);
-            //$ return this;
-
+            subnets.Remove(name);
             return this;
         }
 
         public NetworkImpl WithAddressSpace (string cidr)
         {
+            if (Inner.AddressSpace == null)
+                Inner.AddressSpace = new AddressSpace();
 
-            //$ this.inner().addressSpace().addressPrefixes().add(cidr);
-            //$ return this;
+            if (Inner.AddressSpace.AddressPrefixes == null)
+                Inner.AddressSpace.AddressPrefixes = new List<string>();
 
+            Inner.AddressSpace.AddressPrefixes.Add(cidr);
             return this;
         }
 
         public SubnetImpl DefineSubnet (string name)
         {
-
-            //$ SubnetInner inner = new SubnetInner()
-            //$ .withName(name);
-            //$ return new SubnetImpl(inner, this);
-
-            return null;
+            SubnetInner inner = new SubnetInner(name: name);
+            return new SubnetImpl(inner, this);
         }
 
-        public List<string> AddressSpaces
+        public IList<string> AddressSpaces
         {
             get
             {
-            //$ return Collections.unmodifiableList(this.inner().addressSpace().addressPrefixes());
-
-
-                return null;
+                if (Inner.AddressSpace == null)
+                {
+                    return new List<string>();
+                }
+                else if(Inner.AddressSpace.AddressPrefixes == null)
+                {
+                    return new List<string>();
+                }
+                else
+                {
+                    return Inner.AddressSpace.AddressPrefixes;
+                }
             }
         }
-        public List<string> DnsServerIPs
+
+        public IList<string> DnsServerIps
         {
             get
             {
-            //$ return Collections.unmodifiableList(this.inner().dhcpOptions().dnsServers());
-
-
-                return null;
+                if (Inner.DhcpOptions == null)
+                {
+                    return new List<string>();
+                }
+                else if (Inner.DhcpOptions.DnsServers == null)
+                {
+                    return new List<string>();
+                }
+                else
+                {
+                    return Inner.DhcpOptions.DnsServers;
+                }
             }
         }
-        public IDictionary<string,Microsoft.Azure.Management.V2.Network.ISubnet> Subnets ()
+
+        public IDictionary<string, ISubnet> Subnets ()
         {
-
-            //$ return Collections.unmodifiableMap(this.subnets);
-
-            return null;
+            return subnets;
         }
 
         override protected void BeforeCreating ()
         {
+            // Ensure address spaces
+            if (AddressSpaces.Count == 0)
+            {
+                WithAddressSpace("10.0.0.0/16"); // Default address space
+            }
 
-            //$ // Ensure address spaces
-            //$ if (this.addressSpaces().size() == 0) {
-            //$ this.withAddressSpace("10.0.0.0/16");
-            //$ }
-            //$ 
-            //$ if (isInCreateMode()) {
-            //$ // Create a subnet as needed, covering the entire first address space
-            //$ if (this.subnets.size() == 0) {
-            //$ this.withSubnet("subnet1", this.addressSpaces().get(0));
-            //$ }
-            //$ }
-            //$ 
-            //$ // Reset and update subnets
-            //$ this.inner().withSubnets(innersFromWrappers(this.subnets.values()));
-
+            if (IsInCreateMode)
+            {
+                // Create a subnet as needed, covering the entire first address space
+                if (subnets.Count == 0)
+                {
+                    WithSubnet("subnet1", AddressSpaces[0]);
+                }
+            }
+            
+            // Reset and update subnets
+            Inner.Subnets = InnersFromWrappers<SubnetInner, ISubnet>(subnets.Values);
         }
 
         override protected void AfterCreating ()
         {
-
-            //$ initializeChildrenFromInner();
-
+            InitializeChildrenFromInner();
         }
 
         public SubnetImpl UpdateSubnet (string name)
         {
-
-            //$ return (SubnetImpl) this.subnets.get(name);
-
-            return null;
+            ISubnet subnet;
+            subnets.TryGetValue(name, out subnet);
+            return (SubnetImpl) subnet;
         }
 
         override protected Task<VirtualNetworkInner> CreateInner()
         {
-            //$ return this.innerCollection.createOrUpdateAsync(this.resourceGroupName(), this.name(), this.inner());
-
-                return null;
+            return innerCollection.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.V2.Network
         Subnet.UpdateDefinition.IUpdateDefinition<Network.Update.IUpdate>,
         Subnet.Update.IUpdate
     {
-        protected  SubnetImpl (SubnetInner inner, NetworkImpl parent) : base(inner.Name, inner, parent)
+        internal SubnetImpl (SubnetInner inner, NetworkImpl parent) : base(inner.Name, inner, parent)
         {
         }
 

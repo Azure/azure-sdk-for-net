@@ -140,11 +140,11 @@ namespace Microsoft.Azure.Management.V2.Network
             }
         }
         /// <returns>list of DNS server IP addresses associated with this virtual network</returns>
-        System.Collections.Generic.List<string> Microsoft.Azure.Management.V2.Network.INetwork.DnsServerIPs
+        System.Collections.Generic.List<string> Microsoft.Azure.Management.V2.Network.INetwork.DnsServerIps
         {
             get
             {
-                return this.DnsServerIPs as System.Collections.Generic.List<string>;
+                return this.DnsServerIps as System.Collections.Generic.List<string>;
             }
         }
         /// <returns>subnets of this virtual network as a map indexed by subnet name</returns>
