@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
             InitializeKeyPermissions();
             foreach (var permission in permissions)
             {
-                Inner.Permissions.Keys.Add(permissions.ToString());
+                Inner.Permissions.Keys.Add(permission.ToString());
             }
             return this;
         }
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
             InitializeSecretPermissions();
             foreach (var permission in permissions)
             {
-                Inner.Permissions.Secrets.Add(permissions.ToString());
+                Inner.Permissions.Secrets.Add(permission.ToString());
             }
             return this;
         }
