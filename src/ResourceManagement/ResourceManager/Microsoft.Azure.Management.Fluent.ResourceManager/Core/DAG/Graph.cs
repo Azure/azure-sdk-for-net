@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
         {
             foreach (KeyValuePair<string, NodeT> item in graph)
             {
-                if (!visited.Contains(item.Key))
+                if (!visited.Contains(item.Key.ToLowerInvariant()))
                 {
                     Dfs(visitor, item.Value);
                 }
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
         private void Dfs(Action<NodeT> visitor, NodeT node)
         {
             visitor(node);
-            visited.Add(node.Key);
+            visited.Add(node.Key.ToLowerInvariant());
             foreach (string childKey in node.Children)
             {
                 var lowerCaseChildKey = childKey.ToLowerInvariant();
