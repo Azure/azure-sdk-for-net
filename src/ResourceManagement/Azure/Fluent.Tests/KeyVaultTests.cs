@@ -43,32 +43,32 @@ namespace Fluent.Tests
 
                 Assert.NotNull(vault1);
                 Assert.Equal(vaultName1, vault1.Name);
-                Assert.Equal(0, vault1.AccessPolicies().Count);
+                Assert.Equal(0, vault1.AccessPolicies.Count);
 
                 vault1 = vault1.Update()
                         .DefineAccessPolicy()
                             .ForServicePrincipal(AzureCredentials.FromFile(@"C:\my.azureauth").ClientId)
                             .AllowKeyAllPermissions()
-                            .AllowSecretPermission(SecretPermissions.Get)
-                            .AllowSecretPermission(SecretPermissions.List)
+                            .AllowSecretPermissions(SecretPermissions.Get)
+                            .AllowSecretPermissions(SecretPermissions.List)
                             .Attach()
                         .Apply();
 
                 Assert.NotNull(vault1);
-                Assert.Equal(1, vault1.AccessPolicies().Count);
-                Assert.Equal(KeyPermissions.All.ToString(), vault1.AccessPolicies()[0].Permissions.Keys[0]);
-                Assert.Equal(2, vault1.AccessPolicies()[0].Permissions.Secrets.Count);
+                Assert.Equal(1, vault1.AccessPolicies.Count);
+                Assert.Equal(KeyPermissions.All.ToString(), vault1.AccessPolicies[0].Permissions.Keys[0]);
+                Assert.Equal(2, vault1.AccessPolicies[0].Permissions.Secrets.Count);
 
                 vault1 = vault1.Update()
                         .WithDeploymentEnabled()
                         .WithTemplateDeploymentEnabled()
-                        .UpdateAccessPolicy(vault1.AccessPolicies().First().ObjectId)
+                        .UpdateAccessPolicy(vault1.AccessPolicies.First().ObjectId)
                             .AllowSecretAllPermissions()
                             .Parent()
                         .Apply();
 
-                Assert.Equal(1, vault1.AccessPolicies().Count);
-                Assert.Equal(3, vault1.AccessPolicies()[0].Permissions.Secrets.Count);
+                Assert.Equal(1, vault1.AccessPolicies.Count);
+                Assert.Equal(3, vault1.AccessPolicies[0].Permissions.Secrets.Count);
 
                 IVault vault2 = manager.Vaults
                         .Define(vaultName2)
@@ -76,15 +76,15 @@ namespace Fluent.Tests
                         .WithExistingResourceGroup(rgName)
                         .DefineAccessPolicy()
                             .ForServicePrincipal(AzureCredentials.FromFile(@"C:\my.azureauth").ClientId)
-                            .AllowKeyPermission(KeyPermissions.Get)
-                            .AllowKeyPermission(KeyPermissions.List)
-                            .AllowKeyPermission(KeyPermissions.Decrypt)
-                            .AllowSecretPermission(SecretPermissions.Get)
+                            .AllowKeyPermissions(KeyPermissions.Get)
+                            .AllowKeyPermissions(KeyPermissions.List)
+                            .AllowKeyPermissions(KeyPermissions.Decrypt)
+                            .AllowSecretPermissions(SecretPermissions.Get)
                             .Attach()
                         .Create();
 
-                Assert.Equal(1, vault2.AccessPolicies().Count);
-                Assert.Equal(3, vault2.AccessPolicies()[0].Permissions.Keys.Count);
+                Assert.Equal(1, vault2.AccessPolicies.Count);
+                Assert.Equal(3, vault2.AccessPolicies[0].Permissions.Keys.Count);
 
                 var vaults = manager.Vaults.ListByGroup(rgName);
                 Assert.Equal(2, vaults.Count);
