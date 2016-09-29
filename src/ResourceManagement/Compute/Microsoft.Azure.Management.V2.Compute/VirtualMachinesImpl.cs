@@ -19,11 +19,11 @@ namespace Microsoft.Azure.Management.V2.Compute
     /// The implementation for {@link VirtualMachines}.
     /// </summary>
     internal partial class VirtualMachinesImpl :
-        GroupableResources<IVirtualMachine,
-            VirtualMachineImpl,
-            VirtualMachineInner,
-            IVirtualMachinesOperations,
-            ComputeManager>,
+        GroupableResources<Microsoft.Azure.Management.V2.Compute.IVirtualMachine,
+            Microsoft.Azure.Management.V2.Compute.VirtualMachineImpl,
+            Microsoft.Azure.Management.Compute.Models.VirtualMachineInner,
+            IVirtualMachinesOperations, 
+            IComputeManager>,
         IVirtualMachines
     {
         private readonly IStorageManager storageManager;
@@ -67,6 +67,11 @@ namespace Microsoft.Azure.Management.V2.Compute
         public void Delete(string groupName, string name)
         {
             DeleteAsync(groupName, name).Wait();
+        }
+
+        public async Task DeleteAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await this.InnerCollection.DeleteAsync(groupName, name, cancellationToken);
         }
 
         public IBlank Define(string name)
@@ -156,11 +161,6 @@ namespace Microsoft.Azure.Management.V2.Compute
         public Task DeleteAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
             return ((ISupportsDeletingByGroup)this).DeleteAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id), cancellationToken);
-        }
-
-        public async Task DeleteAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            await this.InnerCollection.DeleteAsync(groupName, name, cancellationToken);
         }
 
         public async override Task<IVirtualMachine> GetByGroupAsync(string groupName, string name)

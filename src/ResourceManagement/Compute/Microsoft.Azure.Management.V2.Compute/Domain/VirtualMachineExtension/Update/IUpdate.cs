@@ -1,12 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
 namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.Update
 {
 
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResourceActions;
     using System.Collections.Generic;
+    using Microsoft.Azure.Management.V2.Resource.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update;
     /// <summary>
     /// The stage of the virtual machine extension update allowing to enable or disable auto upgrade of the
     /// extension when when a new minor version of virtual machine extension image gets published.
@@ -27,14 +26,40 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.Update
 
     }
     /// <summary>
-    /// The entirety of virtual machine extension update as a part of parent virtual machine update.
+    /// The stage of the virtual machine extension update allowing to add or update public and private settings.
     /// </summary>
-    public interface IUpdate  :
-        ISettable<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>,
-        IWithAutoUpgradeMinorVersion,
-        IWithSettings,
-        IWithTags
+    public interface IWithSettings 
     {
+        /// <summary>
+        /// Specifies a public settings entry.
+        /// </summary>
+        /// <param name="key">key the key of a public settings entry</param>
+        /// <param name="value">value the value of the public settings entry</param>
+        /// <returns>the next stage of the update</returns>
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.Update.IUpdate WithPublicSetting (string key, object value);
+
+        /// <summary>
+        /// Specifies a private settings entry.
+        /// </summary>
+        /// <param name="key">key the key of a private settings entry</param>
+        /// <param name="value">value the value of the private settings entry</param>
+        /// <returns>the next stage of the update</returns>
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.Update.IUpdate WithProtectedSetting (string key, object value);
+
+        /// <summary>
+        /// Specifies public settings.
+        /// </summary>
+        /// <param name="settings">settings the public settings</param>
+        /// <returns>the next stage of the update</returns>
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.Update.IUpdate WithPublicSettings (IDictionary<string,object> settings);
+
+        /// <summary>
+        /// Specifies private settings.
+        /// </summary>
+        /// <param name="settings">settings the private settings</param>
+        /// <returns>the next stage of the update</returns>
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.Update.IUpdate WithProtectedSettings (IDictionary<string,object> settings);
+
     }
     /// <summary>
     /// The stage of the virtual machine extension update allowing to add or update tags.
@@ -65,39 +90,13 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.Update
 
     }
     /// <summary>
-    /// The stage of the virtual machine extension update allowing to add or update public and private settings.
+    /// The entirety of virtual machine extension update as a part of parent virtual machine update.
     /// </summary>
-    public interface IWithSettings 
+    public interface IUpdate  :
+        ISettable<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>,
+        IWithAutoUpgradeMinorVersion,
+        IWithSettings,
+        IWithTags
     {
-        /// <summary>
-        /// Specifies a public settings entry.
-        /// </summary>
-        /// <param name="key">key the key of a public settings entry</param>
-        /// <param name="value">value the value of the public settings entry</param>
-        /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.Update.IUpdate WithPublicSetting (string key, object value);
-
-        /// <summary>
-        /// Specifies a private settings entry.
-        /// </summary>
-        /// <param name="key">key the key of a private settings entry</param>
-        /// <param name="value">value the value of the private settings entry</param>
-        /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.Update.IUpdate WithProtectedSetting (string key, object value);
-
-        /// <summary>
-        /// Specifies public settings.
-        /// </summary>
-        /// <param name="settings">settings the public settings</param>
-        /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.Update.IUpdate WithPublicSettings (IDictionary<string, object> settings);
-
-        /// <summary>
-        /// Specifies private settings.
-        /// </summary>
-        /// <param name="settings">settings the private settings</param>
-        /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.Update.IUpdate WithProtectedSettings (IDictionary<string, object> settings);
-
     }
 }

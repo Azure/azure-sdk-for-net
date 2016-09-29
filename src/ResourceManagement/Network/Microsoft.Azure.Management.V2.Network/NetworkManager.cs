@@ -15,6 +15,9 @@ namespace Microsoft.Azure.Management.V2.Network
         private NetworkManagementClient networkManagementClient;
         private PublicIpAddressesImpl publicIpAddresses;
         private NetworkInterfacesImpl networkInterfaces;
+        private NetworkSecurityGroupsImpl networkSecurityGroups;
+        private NetworksImpl networks;
+
         //$ private NetworkSecurityGroupsImpl networkSecurityGroups;
         //$ private NetworksImpl networks;
         private LoadBalancersImpl loadBalancers;
@@ -91,7 +94,6 @@ namespace Microsoft.Azure.Management.V2.Network
         /// <summary>
         /// return entry point to virtual network management
         /// </summary>
-        /*$
         public INetworks Networks
         {
             get
@@ -121,7 +123,6 @@ namespace Microsoft.Azure.Management.V2.Network
             }
         }
 
-            */
         /// <summary>
         /// return entry point to public IP address management
         /// </summary>
@@ -173,11 +174,10 @@ namespace Microsoft.Azure.Management.V2.Network
 
     public interface INetworkManager : IManagerBase
     {
-        
         /// <summary>
         /// return entry point to virtual network management
         /// </summary>
-        //$ INetworks Networks { get; }
+        INetworks Networks { get; }
 
         /// <summary>
         /// return entry point to network security group management
