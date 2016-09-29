@@ -69,6 +69,7 @@
     <LibraryFxTargetList Include="$(FxTargetList)" />
     <AutoRestLibraryFxTargetList Include="portable;net45" />
     <ClientRuntimeProjects Include="$(LibrarySourceFolder)\ClientRuntime\**\*.xproj" />
+    <ClientRuntimeTests Include="$(LibrarySourceFolder)\ClientRuntime\*.Tests\*.xproj" />
   </ItemGroup>
   
   <PropertyGroup>
@@ -174,11 +175,13 @@
     <Exec Command="$(LibraryNugetPackageFolder)\xunit.runner.console.2.0.0\tools\xunit.console.x86.exe &quot;%(TestDlls.Identity)&quot; -html &quot;$(MSBuildProjectDirectory)\TestResults\%(TestDlls.Filename).html&quot;"
       Condition=" '@(TestDlls)' != '' "  
       ContinueOnError="false"/>
-
+    
     <!--Based on https://github.com/xunit/xunit/issues/653, only xml is supported -->
     <Exec Command="dotnet test -xml &quot;$(MSBuildProjectDirectory)\TestResults\%(NetCore_AutoRestLibraries.Filename).xml&quot;" 
           WorkingDirectory="%(NetCore_AutoRestLibraries.Test)"
           Condition=" @(NetCore_AutoRestLibraries) != '' and '%(NetCore_AutoRestLibraries.Test)' != '' "/>
+    <Exec Command="dotnet test -xml &quot;$(MSBuildProjectDirectory)\TestResults\%(ClientRuntimeTests.Filename).xml&quot;" 
+          WorkingDirectory="%(ClientRuntimeTests.RootDir)\%(ClientRuntimeTests.Directory)"/>
   </Target>
   
   <PropertyGroup>
