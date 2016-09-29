@@ -10,9 +10,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Azure.Management.Fluent.Redis;
+using Microsoft.Azure.Management.Fluent.Batch;
 using Microsoft.Azure.Management.V2.Network;
 
-namespace Micosoft.Azure.Management.Samples.Common
+namespace Microsoft.Azure.Management.Samples.Common
 {
     public static class Utilities
     {
@@ -135,7 +136,7 @@ namespace Micosoft.Azure.Management.Samples.Common
             Console.WriteLine($"{storageAccount.Name} created @ {storageAccount.CreationTime}");
         }
 
-        public static string createRandomName(String namePrefix)
+        public static string CreateRandomName(String namePrefix)
         {
             var root = Guid.NewGuid().ToString().Replace("-", "");
             return $"{namePrefix}{root.ToLower().Substring(0, 3)}{(DateTime.UtcNow.Millisecond % 10000000L)}";
@@ -203,10 +204,59 @@ namespace Micosoft.Azure.Management.Samples.Common
             Console.WriteLine(redisKeys.ToString());
         }
 
+        public static void PrintBatchAccount(IBatchAccount batchAccount)
+        {
+            StringBuilder applicationsOutput = new StringBuilder().Append("\n\tapplications: ");
+
+            if (batchAccount.Applications().Count > 0)
+            {
+                foreach (var applicationEntry in batchAccount.Applications())
+                {
+                    var application = applicationEntry.Value;
+                    StringBuilder applicationPackages = new StringBuilder().Append("\n\t\t\tapplicationPackages : ");
+
+                    foreach (var applicationPackageEntry in application.ApplicationPackages())
+                    {
+                        var applicationPackage = applicationPackageEntry.Value;
+                        StringBuilder singleApplicationPackage = new StringBuilder().Append("\n\t\t\t\tapplicationPackage : " + applicationPackage.Name);
+                        singleApplicationPackage.Append("\n\t\t\t\tapplicationPackageState : " + applicationPackage.State);
+
+                        applicationPackages.Append(singleApplicationPackage);
+                        singleApplicationPackage.Append("\n");
+                    }
+
+                    StringBuilder singleApplication = new StringBuilder().Append("\n\t\tapplication: " + application.Name);
+                    singleApplication.Append("\n\t\tdisplayName: " + application.DisplayName);
+                    singleApplication.Append("\n\t\tdefaultVersion: " + application.DefaultVersion);
+                    singleApplication.Append(applicationPackages);
+                    applicationsOutput.Append(singleApplication);
+                    applicationsOutput.Append("\n");
+                }
+            }
+
+            Console.WriteLine(new StringBuilder().Append("BatchAccount: ").Append(batchAccount.Id)
+                    .Append("Name: ").Append(batchAccount.Name)
+                    .Append("\n\tResource group: ").Append(batchAccount.ResourceGroupName)
+                    .Append("\n\tRegion: ").Append(batchAccount.Region)
+                    .Append("\n\tTags: ").Append(batchAccount.Tags)
+                    .Append("\n\tAccountEndpoint: ").Append(batchAccount.AccountEndpoint)
+                    .Append("\n\tPoolQuota: ").Append(batchAccount.PoolQuota)
+                    .Append("\n\tActiveJobAndJobScheduleQuota: ").Append(batchAccount.ActiveJobAndJobScheduleQuota)
+                    .Append("\n\tStorageAccount: ").Append(batchAccount.AutoStorage == null ? "No storage account attached" : batchAccount.AutoStorage.StorageAccountId)
+                    .Append(applicationsOutput)
+                    .ToString());
+        }
+
+        public static void PrintBatchAccountKey(BatchAccountKeys batchAccountKeys)
+        {
+            Console.WriteLine("Primary Key (" + batchAccountKeys.Primary + ") Secondary key = ("
+                    + batchAccountKeys.Secondary + ")");
+        }
+
         public static void PrintNetworkSecurityGroup(INetworkSecurityGroup resource)
         {
-            StringBuilder info = new StringBuilder();
-            info.Append("NSG: ").Append(resource.Id)
+            StringBuilder nsgOutput = new StringBuilder();
+            nsgOutput.Append("NSG: ").Append(resource.Id)
                     .Append("Name: ").Append(resource.Name)
                     .Append("\n\tResource group: ").Append(resource.ResourceGroupName)
                     .Append("\n\tRegion: ").Append(resource.RegionName)
@@ -215,7 +265,7 @@ namespace Micosoft.Azure.Management.Samples.Common
             // Output security rules
             foreach (var rule in resource.SecurityRules())
             {
-                info.Append("\n\tRule: ").Append(rule.Name)
+                nsgOutput.Append("\n\tRule: ").Append(rule.Name)
                         .Append("\n\t\tAccess: ").Append(rule.Access)
                         .Append("\n\t\tDirection: ").Append(rule.Direction)
                         .Append("\n\t\tFrom address: ").Append(rule.SourceAddressPrefix)
@@ -225,7 +275,7 @@ namespace Micosoft.Azure.Management.Samples.Common
                         .Append("\n\t\tProtocol: ").Append(rule.Protocol)
                         .Append("\n\t\tPriority: ").Append(rule.Priority);
             }
-            Console.WriteLine(info.ToString());
+            Console.WriteLine(nsgOutput.ToString());
         }
     }
 }

@@ -28,18 +28,21 @@ namespace Microsoft.Azure.Management.Fluent.Batch
         private IStorageManager storageManager;
         private IApplicationOperations applicationsClient;
         private IApplicationPackageOperations applicationPackagesClient;
+        private ILocationOperations locationClient;
 
         internal BatchAccountsImpl(
                 IBatchAccountOperations batchAccountOperations,
                 BatchManager manager,
                 IApplicationOperations applicationsClient,
                 IApplicationPackageOperations applicationPackagesClient,
+                ILocationOperations locationClient,
                 IStorageManager storageManager)
             : base(batchAccountOperations, manager)
         {
             this.storageManager = storageManager;
             this.applicationsClient = applicationsClient;
             this.applicationPackagesClient = applicationPackagesClient;
+            this.locationClient = locationClient;
         }
 
         public void Delete(string id)
@@ -124,6 +127,11 @@ namespace Microsoft.Azure.Management.Fluent.Batch
         {
             var batchAccount = await InnerCollection.GetAsync(resourceGroupName, name);
             return WrapModel(batchAccount);
+        }
+
+        public int GetBatchAccountQuotaByLocation(Region region)
+        {
+            return locationClient.GetQuotas(EnumNameAttribute.GetName(region)).AccountQuota.GetValueOrDefault();
         }
     }
 }

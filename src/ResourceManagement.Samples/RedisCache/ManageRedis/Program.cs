@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information. 
 
-using Micosoft.Azure.Management.Samples.Common;
+using Microsoft.Azure.Management.Samples.Common;
 using Microsoft.Azure.Management;
 using Microsoft.Azure.Management.Fluent.Redis.Models;
 using Microsoft.Azure.Management.V2.Resource.Authentication;
@@ -31,10 +31,10 @@ namespace ManageRedis
          */
         public static void Main(string[] args)
         {
-            var redisCacheName1 = Utilities.createRandomName("rc1");
-            var redisCacheName2 = Utilities.createRandomName("rc2");
-            var redisCacheName3 = Utilities.createRandomName("rc3");
-            var rgName = Utilities.createRandomName("rgRCMC");
+            var redisCacheName1 = Utilities.CreateRandomName("rc1");
+            var redisCacheName2 = Utilities.CreateRandomName("rc2");
+            var redisCacheName3 = Utilities.CreateRandomName("rc3");
+            var rgName = Utilities.CreateRandomName("rgRCMC");
 
             try
             {

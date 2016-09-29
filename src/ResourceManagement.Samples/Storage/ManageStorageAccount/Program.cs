@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information. 
 
-using Micosoft.Azure.Management.Samples.Common;
+using Microsoft.Azure.Management.Samples.Common;
 using Microsoft.Azure.Management;
 using Microsoft.Azure.Management.V2.Resource.Authentication;
 using Microsoft.Azure.Management.V2.Resource.Core;
@@ -20,9 +20,9 @@ namespace ManageStorageAccount
          *  - Delete a storage account.
          */
 
-        readonly static string rgName = Utilities.createRandomName("rgSTMS");
-        readonly static string storageAccountName = Utilities.createRandomName("sa");
-        readonly static string storageAccountName2 = Utilities.createRandomName("sa2");
+        readonly static string rgName = Utilities.CreateRandomName("rgSTMS");
+        readonly static string storageAccountName = Utilities.CreateRandomName("sa");
+        readonly static string storageAccountName2 = Utilities.CreateRandomName("sa2");
 
         public static void Main(string[] args)
         {
@@ -34,7 +34,7 @@ namespace ManageStorageAccount
 
                 var azure = Azure
                     .Configure()
-                    .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                    .withLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
                     .Authenticate(credentials)
                     .WithSubscription(credentials.DefaultSubscriptionId);
 

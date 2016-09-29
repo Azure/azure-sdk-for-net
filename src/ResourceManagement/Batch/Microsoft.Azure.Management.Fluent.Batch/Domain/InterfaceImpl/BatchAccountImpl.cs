@@ -59,6 +59,11 @@ namespace Microsoft.Azure.Management.Fluent.Batch
                 return this.PoolQuota;
             }
         }
+        /// <returns>the access keys for this batch account</returns>
+        Microsoft.Azure.Management.Fluent.Batch.BatchAccountKeys Microsoft.Azure.Management.Fluent.Batch.IBatchAccount.GetKeys () { 
+            return this.GetKeys() as Microsoft.Azure.Management.Fluent.Batch.BatchAccountKeys;
+        }
+
         /// <returns>the core quota for this BatchAccount account</returns>
         int? Microsoft.Azure.Management.Fluent.Batch.IBatchAccount.CoreQuota
         {
@@ -101,16 +106,6 @@ namespace Microsoft.Azure.Management.Fluent.Batch
                 return this.ActiveJobAndJobScheduleQuota;
             }
         }
-        /// <returns>the access keys for this batch account</returns>
-        Microsoft.Azure.Management.Fluent.Batch.BatchAccountKeys Microsoft.Azure.Management.Fluent.Batch.IBatchAccount.Keys () {
-            return this.Keys() as Microsoft.Azure.Management.Fluent.Batch.BatchAccountKeys;
-        }
-
-        /// <returns>the access keys for this batch account</returns>
-        Microsoft.Azure.Management.Fluent.Batch.BatchAccountKeys Microsoft.Azure.Management.Fluent.Batch.IBatchAccount.RefreshKeys () {
-            return this.RefreshKeys() as Microsoft.Azure.Management.Fluent.Batch.BatchAccountKeys;
-        }
-
         /// <summary>
         /// Synchronize the storage account keys for batch account.
         /// </summary>
