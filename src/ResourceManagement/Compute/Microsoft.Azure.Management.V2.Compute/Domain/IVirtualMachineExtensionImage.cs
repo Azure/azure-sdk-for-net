@@ -3,8 +3,8 @@
 namespace Microsoft.Azure.Management.V2.Compute
 {
 
-    using Microsoft.Azure.Management.Compute.Models;
     using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.Compute.Models;
     /// <summary>
     /// An immutable client-side representation of an Azure virtual machine extension image.
     /// <p>

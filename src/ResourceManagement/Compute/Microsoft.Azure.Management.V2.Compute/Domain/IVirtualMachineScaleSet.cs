@@ -3,12 +3,12 @@
 namespace Microsoft.Azure.Management.V2.Compute
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.Compute.Models;
     using Microsoft.Azure.Management.V2.Network;
-    using Microsoft.Azure.Management.V2.Resource.Core;
     using System.Collections.Generic;
+    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.Compute.Models;
     using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update;
+    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     /// <summary>
     /// An immutable client-side representation of an Azure virtual machine scale set.
     /// </summary>
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         /// <returns>the list of IDs of the public IP addresses associated with the primary Internet-facing load balancer</returns>
         /// <returns>of the scale set</returns>
-        List<string> PrimaryPublicIpAddressIds { get; } // converter set return type as List but it should be IList
+        List<string> PrimaryPublicIpAddressIds { get; }
 
         /// <returns>the URL to storage containers that store the VHDs of the virtual machines in the scale set</returns>
         List<string> VhdContainers { get; }

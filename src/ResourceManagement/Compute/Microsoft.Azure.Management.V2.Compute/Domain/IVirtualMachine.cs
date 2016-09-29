@@ -3,12 +3,12 @@
 namespace Microsoft.Azure.Management.V2.Compute
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core;
     using Microsoft.Azure.Management.Compute.Models;
-    using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Network;
     using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.V2.Resource.Core;
+    using System.Collections.Generic;
     using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update;
+    using Microsoft.Azure.Management.V2.Network;
     /// <summary>
     /// An immutable client-side representation of an Azure virtual machine.
     /// </summary>

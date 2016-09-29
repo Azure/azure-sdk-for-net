@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             await this.InnerCollection.DeleteAsync(groupName, name, cancellationToken);
         }
 
-        public IBlank Define(string name)
+        public VirtualMachineImpl Define(string name)
         {
             return WrapModel(name);
         }

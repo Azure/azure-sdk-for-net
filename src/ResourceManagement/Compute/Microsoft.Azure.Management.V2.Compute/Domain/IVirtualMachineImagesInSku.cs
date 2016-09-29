@@ -1,6 +1,5 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
-
+// Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.V2.Compute
 {
 
@@ -8,8 +7,8 @@ namespace Microsoft.Azure.Management.V2.Compute
     /// <summary>
     /// Entry point to virtual machine sku images.
     /// </summary>
-    public interface IVirtualMachineImagesInSku  :
-        ISupportsListing<IVirtualMachineImage>
+    public interface IVirtualMachineImagesInSku :
+        ISupportsListing<Microsoft.Azure.Management.V2.Compute.IVirtualMachineImage>
     {
     }
 }
