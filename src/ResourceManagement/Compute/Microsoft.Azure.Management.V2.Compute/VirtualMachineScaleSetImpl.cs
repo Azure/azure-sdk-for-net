@@ -44,8 +44,6 @@ namespace Microsoft.Azure.Management.V2.Compute
         // used to generate unique name for any dependency resources
         private ResourceNamer namer;
         private bool isMarketplaceLinuxImage = false;
-        // reference to an existing network that needs to be used in virtual machine's primary network interface
-        private INetwork existingPrimaryNetworkToAssociate;
         // name of an existing subnet in the primary network to use
         private string existingPrimaryNetworkSubnetNameToAssociate;
         // unique key of a creatable storage accounts to be used for virtual machines child resources that
@@ -294,10 +292,9 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this.WithSku(sku.SkuType());
         }
 
-        public VirtualMachineScaleSetImpl WithExistingPrimaryNetworkSubnet(INetwork network, string subnet)
+        public VirtualMachineScaleSetImpl WithExistingPrimaryNetworkSubnet(INetwork network, string subnetName)
         {
-            this.existingPrimaryNetworkToAssociate = network;
-            // TODO Subnet
+            this.existingPrimaryNetworkSubnetNameToAssociate = mergePath(network.Id, "subnets", subnetName);
             return this;
         }
 
@@ -363,20 +360,17 @@ namespace Microsoft.Azure.Management.V2.Compute
                 throw new ArgumentException("Parameter loadBalancer must be an internal load balancer");
             }
             string lbNetworkId = null;
-            /**
-             * TODO Uncomment when FrontEnds are exposed in load blaancer.
-            foreach (IFrontend frontEnd in loadBalancer.Frontends.values())
+            foreach (IFrontend frontEnd in loadBalancer.Frontends().Values)
             {
                 if (frontEnd.Inner.Subnet.Id != null)
                 {
                     lbNetworkId = ResourceUtils.ParentResourcePathFromResourceId(frontEnd.Inner.Subnet.Id);
                 }
             }
-            **/
 
             if (this.IsInCreateMode)
             {
-                string vmNICNetworkId = this.existingPrimaryNetworkToAssociate.Id;
+                string vmNICNetworkId = ResourceUtils.ParentResourcePathFromResourceId(this.existingPrimaryNetworkSubnetNameToAssociate);
                 // Azure has a really wired BUG that - it throws exception when vnet of VMSS and LB are not same
                 // (code: NetworkInterfaceAndInternalLoadBalancerMustUseSameVnet) but at the same time Azure update
                 // the VMSS's network section to refer this invalid internal LB. This makes VMSS un-usable and portal
@@ -1055,13 +1049,9 @@ namespace Microsoft.Azure.Management.V2.Compute
             VirtualMachineScaleSetIPConfigurationInner ipConfig = this.primaryNicDefaultIPConfiguration();
             ipConfig.Subnet = new ApiEntityReference
             {
-                Id = this.existingPrimaryNetworkToAssociate.Id
-                    + "/"
-                    + "subnets"
-                    + "/"
-                    + existingPrimaryNetworkSubnetNameToAssociate
+                    Id = this.existingPrimaryNetworkSubnetNameToAssociate
             };
-            this.existingPrimaryNetworkToAssociate = null;
+            this.existingPrimaryNetworkSubnetNameToAssociate = null;
         }
 
         private void setPrimaryIpConfigurationBackendsAndInboundNatPools()
@@ -1374,7 +1364,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         {
             string loadBalancerId = loadBalancer.Id;
             IDictionary<string, IBackend> attachedBackends = new Dictionary<string, IBackend>();
-            IDictionary<string, IBackend> lbBackends = null; // TODO: once Backends is available - loadBalancer.Backends;
+            IDictionary<string, IBackend> lbBackends = loadBalancer.Backends();
             foreach (IBackend lbBackend in lbBackends.Values)
             {
                 string backendId = mergePath(loadBalancerId, "backendAddressPools", lbBackend.Name);
@@ -1394,7 +1384,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         {
             String loadBalancerId = loadBalancer.Id;
             IDictionary<string, IInboundNatPool> attachedInboundNatPools = new Dictionary<string, IInboundNatPool>();
-            IDictionary<string, IInboundNatPool> lbInboundNatPools = null; // TODO: once InboundNatPools is available - loadBalancer.InboundNatPools;
+            IDictionary<string, IInboundNatPool> lbInboundNatPools = loadBalancer.InboundNatPools();
             foreach (IInboundNatPool lbInboundNatPool in lbInboundNatPools.Values)
             {
                 String inboundNatPoolId = mergePath(loadBalancerId, "inboundNatPools", lbInboundNatPool.Name);
@@ -1412,7 +1402,8 @@ namespace Microsoft.Azure.Management.V2.Compute
         private static void associateLoadBalancerToIpConfiguration(ILoadBalancer loadBalancer,
                                                                    VirtualMachineScaleSetIPConfigurationInner ipConfig)
         {
-            List<IBackend> backends = null; // TODO: once Backend is available - loadBalancer.Backends.values();
+            var backends = loadBalancer.Backends().Values;
+
             string[] backendNames = new string[backends.Count];
             int i = 0;
             foreach (IBackend backend in backends)
@@ -1425,7 +1416,7 @@ namespace Microsoft.Azure.Management.V2.Compute
                     ipConfig,
                     backendNames);
 
-            List<IInboundNatPool> inboundNatPools = null; // TODO: once Backend is available - loadBalancer.InboundNatPools.values();
+            var inboundNatPools = loadBalancer.InboundNatPools().Values;
             string[] natPoolNames = new string[inboundNatPools.Count];
             i = 0;
             foreach (IInboundNatPool inboundNatPool in inboundNatPools)
