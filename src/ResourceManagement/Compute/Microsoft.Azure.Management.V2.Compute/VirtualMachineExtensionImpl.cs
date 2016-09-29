@@ -232,7 +232,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return base.Parent.WithExtension(this);
         }
 
-        public VirtualMachineExtensionImpl Refresh()
+        public IVirtualMachineExtension Refresh()
         {
             string name;
             if (this.IsReference.Value) {
@@ -345,6 +345,10 @@ namespace Microsoft.Azure.Management.V2.Compute
             {
                 this.protectedSettings = this.Inner.ProtectedSettings as IDictionary<string, object>;
             }
+        }
+        VirtualMachine.Update.IUpdate ISettable<VirtualMachine.Update.IUpdate>.Parent()
+        {
+            return this.Parent;
         }
     }
 }

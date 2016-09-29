@@ -783,12 +783,9 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
 
-        public IDictionary<string, IVirtualMachineExtension> Extensions
+        public IDictionary<string, IVirtualMachineExtension> Extensions()
         {
-            get
-            {
-                return this.virtualMachineExtensions.AsMap();
-            }
+            return this.virtualMachineExtensions.AsMap();
         }
 
         public Plan Plan

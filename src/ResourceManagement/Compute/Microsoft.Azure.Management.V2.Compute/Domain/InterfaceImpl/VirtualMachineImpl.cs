@@ -3,20 +3,20 @@
 namespace Microsoft.Azure.Management.V2.Compute
 {
 
-    using System.Threading;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
-    using System.Collections.Generic;
-    using Microsoft.Azure.Management.Compute.Models;
     using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition;
     using Microsoft.Azure.Management.V2.Network;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update;
-    using Microsoft.Azure.Management.V2.Storage;
+    using System.Collections.Generic;
+    using Microsoft.Azure.Management.Compute.Models;
     using Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition;
+    using Microsoft.Azure.Management.V2.Storage;
+    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.V2.Resource;
     using Microsoft.Azure.Management.Network.Models;
     using Microsoft.Azure.Management.Storage.Models;
+    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update;
+    using Microsoft.Azure.Management.V2.Resource.Core;
+    using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.V2.Resource;
     internal partial class VirtualMachineImpl
     {
         /// <summary>
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// <returns>the extensions attached to the Azure Virtual Machine</returns>
         System.Collections.Generic.IDictionary<string, Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtension> Microsoft.Azure.Management.V2.Compute.IVirtualMachine.Extensions()
         {
-            return this.Extensions as System.Collections.Generic.IDictionary<string, Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtension>;
+            return this.Extensions() as System.Collections.Generic.IDictionary<string, Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtension>;
         }
 
         /// <summary>
@@ -179,12 +179,6 @@ namespace Microsoft.Azure.Management.V2.Compute
                 return this.Plan as Microsoft.Azure.Management.Compute.Models.Plan;
             }
         }
-        /// <returns>the resource ID of the public IP address associated with this virtual machine's primary network interface</returns>
-        string Microsoft.Azure.Management.V2.Compute.IVirtualMachine.GetPrimaryPublicIpAddressId()
-        {
-            return this.GetPrimaryPublicIpAddressId() as string;
-        }
-
         /// <returns>the virtual machine unique id.</returns>
         string Microsoft.Azure.Management.V2.Compute.IVirtualMachine.VmId
         {
@@ -228,7 +222,6 @@ namespace Microsoft.Azure.Management.V2.Compute
                 return this.Size as Microsoft.Azure.Management.Compute.Models.VirtualMachineSizeTypes;
             }
         }
-
         /// <summary>
         /// Power off (stop) the virtual machine.
         /// <p>
@@ -247,7 +240,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// <returns>the refreshed instance view</returns>
         Microsoft.Azure.Management.Compute.Models.VirtualMachineInstanceView Microsoft.Azure.Management.V2.Compute.IVirtualMachine.RefreshInstanceView()
         {
-            return this.RefreshInstanceView() as Microsoft.Azure.Management.Compute.Models.VirtualMachineInstanceView;
+            return this.RefreshInstanceView as Microsoft.Azure.Management.Compute.Models.VirtualMachineInstanceView;
         }
 
         /// <returns>the provisioningState value</returns>
@@ -267,7 +260,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
         /// <returns>the power state of the virtual machine</returns>
-        PowerState? Microsoft.Azure.Management.V2.Compute.IVirtualMachine.PowerState
+        Microsoft.Azure.Management.V2.Compute.PowerState? Microsoft.Azure.Management.V2.Compute.IVirtualMachine.PowerState
         {
             get
             {
@@ -405,6 +398,12 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this.DataDisks() as System.Collections.Generic.List<Microsoft.Azure.Management.V2.Compute.IVirtualMachineDataDisk>;
         }
 
+        /// <returns>the resource ID of the public IP address associated with this virtual machine's primary network interface</returns>
+        string Microsoft.Azure.Management.V2.Compute.IVirtualMachine.GetPrimaryPublicIpAddressId()
+        {
+            return this.GetPrimaryPublicIpAddressId() as string;
+        }
+
         /// <summary>
         /// Associate an existing network interface with the virtual machine.
         /// Note this method's effect is additive, i.e. each time it is used, the new secondary
@@ -494,14 +493,6 @@ namespace Microsoft.Azure.Management.V2.Compute
                 return this.PrimaryNetworkInterfaceId as string;
             }
         }
-        /// <returns>the list of resource IDs of the network interfaces associated with this resource</returns>
-        System.Collections.Generic.List<string> Microsoft.Azure.Management.V2.Network.IHasNetworkInterfaces.NetworkInterfaceIds
-        {
-            get
-            {
-                return this.NetworkInterfaceIds as System.Collections.Generic.List<string>;
-            }
-        }
         /// <summary>
         /// Gets the primary network interface.
         /// <p>
@@ -513,6 +504,14 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this.GetPrimaryNetworkInterface() as Microsoft.Azure.Management.V2.Network.INetworkInterface;
         }
 
+        /// <returns>the list of resource IDs of the network interfaces associated with this resource</returns>
+        System.Collections.Generic.List<string> Microsoft.Azure.Management.V2.Network.IHasNetworkInterfaces.NetworkInterfaceIds
+        {
+            get
+            {
+                return this.NetworkInterfaceIds as System.Collections.Generic.List<string>;
+            }
+        }
         /// <summary>
         /// Specifies that no public IP needs to be associated with virtual machine.
         /// </summary>

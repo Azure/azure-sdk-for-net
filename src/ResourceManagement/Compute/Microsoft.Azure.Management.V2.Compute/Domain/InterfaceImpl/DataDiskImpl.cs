@@ -3,17 +3,17 @@
 namespace Microsoft.Azure.Management.V2.Compute
 {
 
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition;
-    using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition;
+    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update;
     using Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Update;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Storage;
     using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update;
+    using Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition;
+    using Microsoft.Azure.Management.Compute.Models;
+    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition;
+    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition;
+    using Microsoft.Azure.Management.V2.Storage;
+    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
     internal partial class DataDiskImpl
     {
         /// <summary>
