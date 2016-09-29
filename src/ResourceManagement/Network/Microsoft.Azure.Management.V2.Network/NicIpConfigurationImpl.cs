@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.V2.Network
         private string subnetToAssociate;
         private bool removePrimaryPublicIPAssociation;
 
-        protected NicIpConfigurationImpl(
+        internal NicIpConfigurationImpl(
             NetworkInterfaceIPConfigurationInner inner,
             NetworkInterfaceImpl parent,
             NetworkManager networkManager,
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.V2.Network
             this.networkManager = networkManager;
         }
 
-        protected static NicIpConfigurationImpl PrepareNicIpConfiguration(string name, NetworkInterfaceImpl parent, NetworkManager networkManager)
+        internal static NicIpConfigurationImpl PrepareNicIpConfiguration(string name, NetworkInterfaceImpl parent, NetworkManager networkManager)
         {
             NetworkInterfaceIPConfigurationInner ipConfigurationInner = new NetworkInterfaceIPConfigurationInner();
             ipConfigurationInner.Name = name;
@@ -280,7 +280,7 @@ namespace Microsoft.Azure.Management.V2.Network
             }
         }
 
-        protected static void EnsureConfigurations(List<INicIpConfiguration> nicIpConfigurations)
+        internal static void EnsureConfigurations(List<INicIpConfiguration> nicIpConfigurations)
         {
             foreach (var nicIpConfiguration in nicIpConfigurations)
             {
