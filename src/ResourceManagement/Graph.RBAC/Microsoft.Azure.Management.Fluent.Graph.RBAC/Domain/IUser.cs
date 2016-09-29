@@ -1,16 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
 namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core;
     using Microsoft.Azure.Management.Graph.RBAC.Models;
+    using Microsoft.Azure.Management.V2.Resource.Core;
     /// <summary>
     /// An immutable client-side representation of an Azure AD user.
     /// </summary>
     public interface IUser  :
-        IWrapper<UserInner>
+        IWrapper<Microsoft.Azure.Management.Graph.RBAC.Models.UserInner>
     {
         /// <returns>Gets or sets object Id.</returns>
         string ObjectId { get; }

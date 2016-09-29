@@ -1,19 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
 namespace Microsoft.Azure.Management.Fluent.Graph.RBAC.ServicePrincipal.Definition
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.Fluent.Graph.RBAC;
-    /// <summary>
-    /// Container interface for all the definitions that need to be implemented.
-    /// </summary>
-    public interface IDefinition  :
-        IBlank,
-        IWithCreate
-    {
-    }
+    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     /// <summary>
     /// The first stage of the service principal definition.
     /// </summary>
@@ -40,8 +31,16 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC.ServicePrincipal.Definiti
     /// specify.
     /// </summary>
     public interface IWithCreate  :
-        ICreatable<IServicePrincipal>,
+        ICreatable<Microsoft.Azure.Management.Fluent.Graph.RBAC.IServicePrincipal>,
         IWithAccountEnabled
+    {
+    }
+    /// <summary>
+    /// Container interface for all the definitions that need to be implemented.
+    /// </summary>
+    public interface IDefinition  :
+        IBlank,
+        IWithCreate
     {
     }
 }
