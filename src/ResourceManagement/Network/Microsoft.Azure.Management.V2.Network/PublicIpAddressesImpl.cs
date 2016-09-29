@@ -4,17 +4,15 @@ namespace Microsoft.Azure.Management.V2.Network
 {
 
     using Management.Network.Models;
-    using Resource.Core.CollectionActions;
     using System.Threading;
     using Resource.Core;
     using System.Threading.Tasks;
     using Management.Network;
-    using System;
 
     /// <summary>
     /// Implementation for PublicIpAddresses.
     /// </summary>
-    public partial class PublicIpAddressesImpl  :
+    public partial class PublicIpAddressesImpl :
         GroupableResources<
             IPublicIpAddress,
             PublicIpAddressImpl,
@@ -23,89 +21,79 @@ namespace Microsoft.Azure.Management.V2.Network
             NetworkManager>,
         IPublicIpAddresses
     {
-        internal PublicIpAddressesImpl(NetworkManagementClient client, NetworkManager networkManager) 
+        internal PublicIpAddressesImpl(NetworkManagementClient client, NetworkManager networkManager)
             : base(client.PublicIPAddresses, networkManager)
         {
         }
 
-        public PagedList<IPublicIpAddress> List ()
+        override protected PublicIpAddressImpl WrapModel(string name)
         {
+            PublicIPAddressInner inner = new PublicIPAddressInner();
 
-            //$ return wrapList(this.innerCollection.listAll());
+            if (null == inner.DnsSettings)
+            {
+                inner.DnsSettings = new PublicIPAddressDnsSettings();
+            }
 
-            return null;
-        }
-
-        public PagedList<IPublicIpAddress> ListByGroup (string groupName)
-        {
-
-            //$ return wrapList(this.innerCollection.list(groupName));
-
-            return null;
-        }
-
-        public PublicIpAddressImpl Define (string name)
-        {
-
-            //$ return wrapModel(name);
-
-            return null;
-        }
-
-        override protected PublicIpAddressImpl WrapModel (string name)
-        {
-
-            //$ PublicIPAddressInner inner = new PublicIPAddressInner();
-            //$ 
-            //$ if (null == inner.dnsSettings()) {
-            //$ inner.withDnsSettings(new PublicIPAddressDnsSettings());
-            //$ }
-            //$ 
-            //$ return new PublicIpAddressImpl(
-            //$ name,
-            //$ inner,
-            //$ this.innerCollection,
-            //$ this.myManager);
-
-            return null;
+            return new PublicIpAddressImpl(name, inner, InnerCollection, Manager);
         }
 
         //$TODO: shoudl return PublicIpAddressImpl
-        override protected IPublicIpAddress WrapModel (PublicIPAddressInner inner)
+        override protected IPublicIpAddress WrapModel(PublicIPAddressInner inner)
         {
+            return new PublicIpAddressImpl(inner.Id, inner, InnerCollection, Manager);
+        }
 
-            //$ return new PublicIpAddressImpl(
-            //$ inner.id(),
-            //$ inner,
-            //$ this.innerCollection,
-            //$ this.myManager);
+        public PagedList<IPublicIpAddress> List()
+        {
+            var pagedList = new PagedList<PublicIPAddressInner>(InnerCollection.ListAll(), (string nextPageLink) =>
+            {
+                return InnerCollection.ListAllNext(nextPageLink);
+            });
 
-            return null;
+            return WrapList(pagedList);
+        }
+
+        public PagedList<IPublicIpAddress> ListByGroup(string groupName)
+        {
+            var pagedList = new PagedList<PublicIPAddressInner>(InnerCollection.List(groupName), (string nextPageLink) =>
+            {
+                return InnerCollection.ListNext(nextPageLink);
+            });
+
+            return WrapList(pagedList);
+        }
+
+
+        public PublicIpAddressImpl Define(string name)
+        {
+            return WrapModel(name);
         }
 
         Task DeleteAsync(string groupName, string name)
         {
-            throw new NotImplementedException();
-        }
-
-        void ISupportsDeleting.Delete(string id)
-        {
-            throw new NotImplementedException();
+            return InnerCollection.DeleteAsync(groupName, name);
         }
 
         public override async Task<IPublicIpAddress> GetByGroupAsync(string groupName, string name)
         {
-            return this as IPublicIpAddress;
+            var data = await InnerCollection.GetAsync(groupName, name);
+            return WrapModel(data);
         }
 
-        Task ISupportsDeleting.DeleteAsync(string id, CancellationToken cancellationToken)
+        public void Delete(string id)
         {
-            throw new NotImplementedException();
+            DeleteAsync(id).Wait();
         }
 
-        void ISupportsDeletingByGroup.Delete(string groupName, string name)
+        public Task DeleteAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            return DeleteAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
+        }
+
+        public void Delete(string groupName, string name)
+        {
+            DeleteAsync(groupName, name).Wait();
         }
     }
 }
