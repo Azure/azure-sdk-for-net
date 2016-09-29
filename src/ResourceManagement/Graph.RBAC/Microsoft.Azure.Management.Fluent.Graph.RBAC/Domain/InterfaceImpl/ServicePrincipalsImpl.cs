@@ -13,14 +13,6 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
     internal partial class ServicePrincipalsImpl 
     {
         /// <summary>
-        /// Deletes a resource from Azure, identifying it by its resource ID.
-        /// </summary>
-        /// <param name="id">id the resource ID of the resource to delete</param>
-        void Microsoft.Azure.Management.V2.Resource.Core.CollectionActions.ISupportsDeleting.Delete (string id) {
-            this.Delete( id);
-        }
-
-        /// <summary>
         /// Begins a definition for a new resource.
         /// <p>
         /// This is the beginning of the builder pattern used to create top level resources

@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
         }
         /// <returns>whether Azure Resource Manager is permitted to</returns>
         /// <returns>retrieve secrets from the key vault.</returns>
-        bool? Microsoft.Azure.Management.Fluent.KeyVault.IVault.EnabledForTemplateDeployment
+        bool Microsoft.Azure.Management.Fluent.KeyVault.IVault.EnabledForTemplateDeployment
         {
             get
             {
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
         }
         /// <returns>whether Azure Disk Encryption is permitted to</returns>
         /// <returns>retrieve secrets from the vault and unwrap keys.</returns>
-        bool? Microsoft.Azure.Management.Fluent.KeyVault.IVault.EnabledForDiskEncryption
+        bool Microsoft.Azure.Management.Fluent.KeyVault.IVault.EnabledForDiskEncryption
         {
             get
             {
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
         }
         /// <returns>whether Azure Virtual Machines are permitted to</returns>
         /// <returns>retrieve certificates stored as secrets from the key vault.</returns>
-        bool? Microsoft.Azure.Management.Fluent.KeyVault.IVault.EnabledForDeployment
+        bool Microsoft.Azure.Management.Fluent.KeyVault.IVault.EnabledForDeployment
         {
             get
             {
@@ -78,8 +78,11 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
         /// <returns>an array of 0 to 16 identities that have access to the key vault. All</returns>
         /// <returns>identities in the array must use the same tenant ID as the key vault's</returns>
         /// <returns>tenant ID.</returns>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Fluent.KeyVault.IAccessPolicy> Microsoft.Azure.Management.Fluent.KeyVault.IVault.AccessPolicies () {
-            return this.AccessPolicies() as System.Collections.Generic.IList<Microsoft.Azure.Management.Fluent.KeyVault.IAccessPolicy>;
+        System.Collections.Generic.IList<Microsoft.Azure.Management.Fluent.KeyVault.IAccessPolicy> Microsoft.Azure.Management.Fluent.KeyVault.IVault.AccessPolicies {
+            get
+            {
+                return this.AccessPolicies as System.Collections.Generic.IList<Microsoft.Azure.Management.Fluent.KeyVault.IAccessPolicy>;
+            }
         }
 
         /// <summary>
