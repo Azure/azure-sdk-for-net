@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.V2.Compute
                 cancellationToken);
         }
 
-        Task ISupportsDeletingByGroup.DeleteAsync(string groupName, string name, CancellationToken cancellationToken)
+        public Task DeleteAsync(string groupName, string name, CancellationToken cancellationToken)
         {
             return this.InnerCollection.DeleteAsync(groupName,
                 name,

@@ -3,16 +3,16 @@
 namespace Microsoft.Azure.Management.V2.Compute
 {
 
-    using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Definition;
     using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Definition;
     using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update;
+    using Microsoft.Azure.Management.V2.Resource.Core;
     using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Update;
+    using System.Collections.Generic;
     using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition;
     using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
     internal partial class VirtualMachineScaleSetExtensionImpl
     {
         /// <summary>
