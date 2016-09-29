@@ -2,18 +2,18 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.V2.Network
 {
+
     using Management.Network.Models;
-    using Resource.Core.CollectionActions;
     using Resource.Core;
     using System.Threading;
     using System.Threading.Tasks;
     using Management.Network;
-    using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Implementation for NetworkInterfaces.
     /// </summary>
-    public partial class NetworkInterfacesImpl  :
+    public partial class NetworkInterfacesImpl :
         GroupableResources<
             INetworkInterface,
             NetworkInterfaceImpl,
@@ -22,90 +22,75 @@ namespace Microsoft.Azure.Management.V2.Network
             NetworkManager>,
         INetworkInterfaces
     {
-        internal  NetworkInterfacesImpl(NetworkManagementClient client, NetworkManager networkManager)
+        internal NetworkInterfacesImpl(NetworkManagementClient client, NetworkManager networkManager)
             : base(client.NetworkInterfaces, networkManager)
         {
-
-            //$ final NetworkInterfacesInner client,
-            //$ final NetworkManager networkManager) {
-            //$ super(client, networkManager);
-            //$ }
-
         }
 
-        public PagedList<Microsoft.Azure.Management.V2.Network.INetworkInterface> List ()
+        override protected NetworkInterfaceImpl WrapModel(string name)
         {
-
-            //$ return wrapList(innerCollection.listAll());
-
-            return null;
+            NetworkInterfaceInner inner = new NetworkInterfaceInner();
+            inner.IpConfigurations = new List<NetworkInterfaceIPConfigurationInner>();
+            inner.DnsSettings = new NetworkInterfaceDnsSettings();
+            return new NetworkInterfaceImpl(name, inner, InnerCollection, Manager);
         }
 
-        public PagedList<Microsoft.Azure.Management.V2.Network.INetworkInterface> ListByGroup (string groupName)
+        //$TODO: this should return NetworkInterfaceImpl
+        override protected INetworkInterface WrapModel(NetworkInterfaceInner inner)
         {
-
-            //$ return wrapList(innerCollection.list(groupName));
-
-            return null;
+            return new NetworkInterfaceImpl(inner.Name, inner, InnerCollection, Manager);
         }
 
-        public NetworkInterfaceImpl Define (string name)
+        public PagedList<INetworkInterface> List()
         {
+            var pagedList = new PagedList<NetworkInterfaceInner>(InnerCollection.ListAll(), (string nextPageLink) =>
+            {
+                return InnerCollection.ListAllNext(nextPageLink);
+            });
 
-            //$ return wrapModel(name);
+            return WrapList(pagedList);
+        }
 
-            return null;
+        public PagedList<INetworkInterface> ListByGroup(string groupName)
+        {
+            var pagedList = new PagedList<NetworkInterfaceInner>(InnerCollection.List(groupName), (string nextPageLink) =>
+            {
+                return InnerCollection.ListNext(nextPageLink);
+            });
+
+            return WrapList(pagedList);
+        }
+
+
+        public NetworkInterfaceImpl Define(string name)
+        {
+            return WrapModel(name);
         }
 
         Task DeleteAsync(string groupName, string name)
         {
-            throw new NotImplementedException();
+            return InnerCollection.DeleteAsync(groupName, name);
         }
 
         public override async Task<INetworkInterface> GetByGroupAsync(string groupName, string name)
         {
-            return this as INetworkInterface;
+            var data = await InnerCollection.GetAsync(groupName, name);
+            return WrapModel(data);
         }
 
-        override protected NetworkInterfaceImpl WrapModel (string name)
+        public void Delete(string id)
         {
-
-            //$ NetworkInterfaceInner inner = new NetworkInterfaceInner();
-            //$ inner.withIpConfigurations(new ArrayList<NetworkInterfaceIPConfigurationInner>());
-            //$ inner.withDnsSettings(new NetworkInterfaceDnsSettings());
-            //$ return new NetworkInterfaceImpl(name,
-            //$ inner,
-            //$ this.innerCollection,
-            //$ super.myManager);
-
-            return null;
+            DeleteAsync(id).Wait();
         }
 
-        //$TODO: this should return NetworkInterfaceImpl
-        override protected INetworkInterface WrapModel (NetworkInterfaceInner inner)
+        public Task DeleteAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
-
-            //$ return new NetworkInterfaceImpl(inner.name(),
-            //$ inner,
-            //$ this.innerCollection,
-            //$ super.myManager);
-
-            return null;
+            return DeleteAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
         }
 
-        void ISupportsDeleting.Delete(string id)
+        public void Delete(string groupName, string name)
         {
-            throw new NotImplementedException();
-        }
-
-        Task ISupportsDeleting.DeleteAsync(string id, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        void ISupportsDeletingByGroup.Delete(string groupName, string name)
-        {
-            throw new NotImplementedException();
+            DeleteAsync(groupName, name).Wait();
         }
     }
 }
