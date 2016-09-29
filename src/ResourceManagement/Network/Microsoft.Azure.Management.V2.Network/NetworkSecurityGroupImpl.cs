@@ -1,18 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 namespace Microsoft.Azure.Management.V2.Network
 {
-
-    using NetworkSecurityGroup.Update;
     using System.Collections.Generic;
     using Management.Network.Models;
-    using NetworkSecurityGroup.Definition;
     using Resource.Core;
     using Management.Network;
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Implementation for NetworkSecurityGroup and its create and update interfaces.
+    /// Implementation for NetworkSecurityGroup
     /// </summary>
     public partial class NetworkSecurityGroupImpl :
         GroupableParentResource<INetworkSecurityGroup,
@@ -20,13 +18,13 @@ namespace Microsoft.Azure.Management.V2.Network
             Rest.Azure.Resource,
             NetworkSecurityGroupImpl,
             INetworkManager,
-            IWithGroup,
-            IWithCreate,
-            IWithCreate,
-            IUpdate>,
+            NetworkSecurityGroup.Definition.IWithGroup,
+            NetworkSecurityGroup.Definition.IWithCreate,
+            NetworkSecurityGroup.Definition.IWithCreate,
+            NetworkSecurityGroup.Update.IUpdate>,
         INetworkSecurityGroup,
-        IDefinition,
-        IUpdate
+        NetworkSecurityGroup.Definition.IDefinition,
+        NetworkSecurityGroup.Update.IUpdate
     {
         private INetworkSecurityGroupsOperations innerCollection;
         private IDictionary<string, INetworkSecurityRule> rules;
@@ -106,7 +104,7 @@ namespace Microsoft.Azure.Management.V2.Network
             return new NetworkSecurityRuleImpl(inner, this);
         }
 
-        public IUpdate WithoutRule(string name)
+        public NetworkSecurityGroupImpl WithoutRule(string name)
         {
             rules.Remove(name);
             return this;

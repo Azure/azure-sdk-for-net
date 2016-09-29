@@ -1,25 +1,22 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 namespace Microsoft.Azure.Management.V2.Network
 {
-
-    using Microsoft.Azure.Management.Network.Models;
+    using Management.Network.Models;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
-    using Microsoft.Azure.Management.V2.Resource;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Resource.Core;
     using System.Threading;
     using Management.Network;
-    using System;
 
     /// <summary>
     /// Implementation for NetworkSecurityGroups.
     /// </summary>
     public partial class NetworkSecurityGroupsImpl  :
         GroupableResources<
-            Microsoft.Azure.Management.V2.Network.INetworkSecurityGroup,
-            Microsoft.Azure.Management.V2.Network.NetworkSecurityGroupImpl,
-            Microsoft.Azure.Management.Network.Models.NetworkSecurityGroupInner,
+            INetworkSecurityGroup,
+            NetworkSecurityGroupImpl,
+            NetworkSecurityGroupInner,
             INetworkSecurityGroupsOperations,
             NetworkManager>,
         INetworkSecurityGroups
@@ -28,98 +25,69 @@ namespace Microsoft.Azure.Management.V2.Network
             INetworkSecurityGroupsOperations innerCollection, 
             NetworkManager networkManager) : base(innerCollection, networkManager)
         {
-
-            //$ final NetworkSecurityGroupsInner innerCollection,
-            //$ final NetworkManager networkManager) {
-            //$ super(innerCollection, networkManager);
-            //$ }
-
         }
 
-        public PagedList<Microsoft.Azure.Management.V2.Network.INetworkSecurityGroup> List ()
+        public PagedList<INetworkSecurityGroup> List ()
         {
+            var pagedList = new PagedList<NetworkSecurityGroupInner>(InnerCollection.ListAll(), (string nextPageLink) =>
+            {
+                return InnerCollection.ListAllNext(nextPageLink);
+            });
 
-            //$ return wrapList(this.innerCollection.listAll());
-
-            return null;
+            return WrapList(pagedList);
         }
 
-        public PagedList<Microsoft.Azure.Management.V2.Network.INetworkSecurityGroup> ListByGroup (string groupName)
+        public PagedList<INetworkSecurityGroup> ListByGroup (string groupName)
         {
+            var pagedList = new PagedList<NetworkSecurityGroupInner>(InnerCollection.List(groupName), (string nextPageLink) =>
+            {
+                return InnerCollection.ListNext(nextPageLink);
+            });
 
-            //$ return wrapList(this.innerCollection.list(groupName));
-
-            return null;
+            return WrapList(pagedList);
         }
 
         public NetworkSecurityGroupImpl Define (string name)
         {
-
-            //$ return wrapModel(name);
-
-            return null;
+            return WrapModel(name);
         }
 
         Task DeleteAsync(string groupName, string name)
         {
-            throw new NotImplementedException();
+            return InnerCollection.DeleteAsync(groupName, name);
         }
 
         public override async Task<INetworkSecurityGroup> GetByGroupAsync(string groupName, string name)
         {
-            return this as INetworkSecurityGroup;
+            var data = await InnerCollection.GetAsync(groupName, name);
+            return WrapModel(data);
         }
-
 
         override protected NetworkSecurityGroupImpl WrapModel (string name)
         {
-
-            //$ NetworkSecurityGroupInner inner = new NetworkSecurityGroupInner();
-            //$ 
-            //$ // Initialize rules
-            //$ if (inner.securityRules() == null) {
-            //$ inner.withSecurityRules(new ArrayList<SecurityRuleInner>());
-            //$ }
-            //$ 
-            //$ if (inner.defaultSecurityRules() == null) {
-            //$ inner.withDefaultSecurityRules(new ArrayList<SecurityRuleInner>());
-            //$ }
-            //$ 
-            //$ return new NetworkSecurityGroupImpl(
-            //$ name,
-            //$ inner,
-            //$ this.innerCollection,
-            //$ super.myManager);
-
-            return null;
+            NetworkSecurityGroupInner inner = new NetworkSecurityGroupInner();
+            return new NetworkSecurityGroupImpl(name, inner, InnerCollection, Manager);
         }
 
         //$TODO: return NetworkSecurityGroupImpl
         override protected INetworkSecurityGroup WrapModel (NetworkSecurityGroupInner inner)
         {
-
-            //$ return new NetworkSecurityGroupImpl(
-            //$ inner.name(),
-            //$ inner,
-            //$ this.innerCollection,
-            //$ this.myManager);
-
-            return null;
+            return new NetworkSecurityGroupImpl(inner.Name, inner, InnerCollection, Manager);
         }
 
-        void ISupportsDeleting.Delete(string id)
+        public void Delete(string id)
         {
-            throw new NotImplementedException();
+            DeleteAsync(id).Wait();
         }
 
-        Task ISupportsDeleting.DeleteAsync(string id, CancellationToken cancellationToken)
+        public Task DeleteAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            return DeleteAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
         }
 
-        void ISupportsDeletingByGroup.Delete(string groupName, string name)
+        public void Delete(string groupName, string name)
         {
-            throw new NotImplementedException();
+            DeleteAsync(groupName, name).Wait();
         }
     }
 }
