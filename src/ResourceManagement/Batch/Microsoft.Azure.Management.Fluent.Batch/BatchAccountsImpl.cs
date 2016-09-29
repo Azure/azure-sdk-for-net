@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
                 name,
                 inner,
                 InnerCollection,
-                MyManager,
+                Manager,
                 applicationsClient,
                 applicationPackagesClient,
                 storageManager);
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
                 inner.Name,
                 inner,
                 InnerCollection,
-                MyManager,
+                Manager,
                 applicationsClient,
                 applicationPackagesClient,
                 storageManager);
