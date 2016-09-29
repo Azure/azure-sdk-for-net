@@ -123,11 +123,6 @@ namespace Microsoft.Azure.Management.V2.Network
             return null;
         }
 
-        Task<PagedList<INetwork>> ISupportsListingByGroup<INetwork>.ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
         void ISupportsDeleting.Delete(string id)
         {
             throw new NotImplementedException();

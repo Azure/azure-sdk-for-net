@@ -15,13 +15,18 @@ using Microsoft.Azure.Management.V2.Storage.StorageAccount.Update;
 namespace Microsoft.Azure.Management.V2.Storage
 {
     internal class StorageAccountImpl :
-        GroupableResource<IStorageAccount, StorageAccountInner, Rest.Azure.Resource, StorageAccountImpl, IStorageManager,
-            StorageAccount.Definition.IWithGroup,
-            StorageAccount.Definition.IWithCreate,
-            StorageAccount.Definition.IWithCreate,
-            StorageAccount.Update.IUpdate>,
+        GroupableResource<
+            IStorageAccount,
+            StorageAccountInner,
+            Rest.Azure.Resource,
+            StorageAccountImpl,
+            IStorageManager,
+            IWithGroup,
+            IWithCreate,
+            IWithCreate,
+            IUpdate>,
         IStorageAccount,
-        StorageAccount.Definition.IDefinition,
+        IDefinition,
         StorageAccount.Update.IUpdate
     {
         private string name;
@@ -318,7 +323,7 @@ namespace Microsoft.Azure.Management.V2.Storage
 
         public override async Task<IStorageAccount> ApplyAsync(CancellationToken cancellationToken = default(CancellationToken), bool multiThreaded = true)
         {
-            // overriding the base.ApplyAsync here since the parameter for update is different from the  one for create.
+            // overriding the base.ApplyAsync here since the parameter for update is different from the one for create.
             var response = await client.UpdateAsync(ResourceGroupName, this.name, updateParameters, cancellationToken);
             SetInner(response);
             return this;

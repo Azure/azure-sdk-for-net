@@ -1,64 +1,64 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
-
+// Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.V2.Compute
 {
 
-    using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update;
     using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.Compute.Models;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.V2.Network;
+    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update;
     /// <summary>
     /// An immutable client-side representation of an Azure virtual machine.
     /// </summary>
-    public interface IVirtualMachine  :
+    public interface IVirtualMachine :
         IGroupableResource,
-        IRefreshable<IVirtualMachine>,
-        IWrapper<VirtualMachineInner>,
-        IUpdatable<IUpdate>,
-        ISupportsNetworkInterfaces
+        IRefreshable<Microsoft.Azure.Management.V2.Compute.IVirtualMachine>,
+        IWrapper<Microsoft.Azure.Management.Compute.Models.VirtualMachineInner>,
+        IUpdatable<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>,
+        IHasNetworkInterfaces
     {
         /// <summary>
         /// Shuts down the Virtual Machine and releases the compute resources.
         /// <p>
         /// You are not billed for the compute resources that this Virtual Machine uses
         /// </summary>
-        void Deallocate ();
+        void Deallocate();
 
         /// <summary>
         /// Generalize the Virtual Machine.
         /// </summary>
-        void Generalize ();
+        void Generalize();
 
         /// <summary>
         /// Power off (stop) the virtual machine.
         /// <p>
         /// You will be billed for the compute resources that this Virtual Machine uses.
         /// </summary>
-        void PowerOff ();
+        void PowerOff();
 
         /// <summary>
         /// Restart the virtual machine.
+        /// =
         /// </summary>
-        void Restart ();
+        void Restart();
 
         /// <summary>
         /// Start the virtual machine.
         /// </summary>
-        void Start ();
+        void Start();
 
         /// <summary>
         /// Redeploy the virtual machine.
         /// </summary>
-        void Redeploy ();
+        void Redeploy();
 
         /// <summary>
         /// List of all available virtual machine sizes this virtual machine can resized to.
         /// </summary>
         /// <returns>the virtual machine sizes</returns>
-        PagedList<IVirtualMachineSize> AvailableSizes ();
+        PagedList<Microsoft.Azure.Management.V2.Compute.IVirtualMachineSize> AvailableSizes();
 
         /// <summary>
         /// Captures the virtual machine by copying virtual hard disks of the VM and returns template as json
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// <param name="containerName">containerName destination container name to store the captured Vhd</param>
         /// <param name="overwriteVhd">overwriteVhd whether to overwrites destination vhd if it exists</param>
         /// <returns>the template as json string</returns>
-        string Capture (string containerName, bool overwriteVhd);
+        string Capture(string containerName, bool overwriteVhd);
 
         /// <summary>
         /// Refreshes the virtual machine instance view to sync with Azure.
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         string ComputerName { get; }
 
         /// <returns>the virtual machine size</returns>
-        string Size { get; }
+        VirtualMachineSizeTypes Size { get; }
 
         /// <returns>the operating system of this virtual machine</returns>
         OperatingSystemTypes? OsType { get; }
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         int? OsDiskSize { get; }
 
         /// <returns>the list of data disks attached to this virtual machine</returns>
-        IList<IVirtualMachineDataDisk> DataDisks ();
+        List<Microsoft.Azure.Management.V2.Compute.IVirtualMachineDataDisk> DataDisks();
 
         /// <summary>
         /// Gets the public IP address associated with this virtual machine's primary network interface.
@@ -104,7 +104,10 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// note that this method makes a rest API call to fetch the resource.
         /// </summary>
         /// <returns>the public IP of the primary network interface</returns>
-        IPublicIpAddress PrimaryPublicIpAddress ();
+        IPublicIpAddress GetPrimaryPublicIpAddress();
+
+        /// <returns>the resource ID of the public IP address associated with this virtual machine's primary network interface</returns>
+        string GetPrimaryPublicIpAddressId();
 
         /// <summary>
         /// Returns id to the availability set this virtual machine associated with.
@@ -122,7 +125,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         string LicenseType { get; }
 
         /// <returns>the extensions attached to the Azure Virtual Machine</returns>
-        IDictionary<string, IVirtualMachineExtension> Extensions { get; }
+        IDictionary<string, Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtension> Extensions();
 
         /// <returns>the plan value</returns>
         Plan Plan { get; }
