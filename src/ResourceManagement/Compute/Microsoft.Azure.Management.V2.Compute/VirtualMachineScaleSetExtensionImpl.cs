@@ -18,12 +18,14 @@ namespace Microsoft.Azure.Management.V2.Compute
     /// <summary>
     /// Implementation of {@link VirtualMachineScaleSetExtension}.
     /// </summary>
-    internal partial class VirtualMachineScaleSetExtensionImpl  :
-        ChildResource<VirtualMachineScaleSetExtensionInner, VirtualMachineScaleSetImpl, IVirtualMachineScaleSet>,
+    internal partial class VirtualMachineScaleSetExtensionImpl :
+        ChildResource<Microsoft.Azure.Management.Compute.Models.VirtualMachineScaleSetExtensionInner,
+            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetImpl,
+            Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet>,
         IVirtualMachineScaleSetExtension,
-        IDefinition<IWithCreate>,
-        IUpdateDefinition<IWithApplicable>,
-        VirtualMachineScaleSetExtension.Update.IUpdate
+        IDefinition<Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate>,
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.UpdateDefinition.IUpdateDefinition<Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApply>,
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Update.IUpdate
     {
         private IDictionary<string,object> publicSettings;
         private IDictionary<string,object> protectedSettings;
@@ -88,13 +90,13 @@ namespace Microsoft.Azure.Management.V2.Compute
                 return this.Inner.ProvisioningState;
             }
         }
-        public VirtualMachineScaleSetExtensionImpl WithAutoUpgradeMinorVersionEnabled ()
+        public VirtualMachineScaleSetExtensionImpl WithMinorVersionAutoUpgrade ()
         {
             this.Inner.AutoUpgradeMinorVersion = true;
             return this;
         }
 
-        public VirtualMachineScaleSetExtensionImpl WithAutoUpgradeMinorVersionDisabled ()
+        public VirtualMachineScaleSetExtensionImpl WithoutMinorVersionAutoUpgrade ()
         {
             this.Inner.AutoUpgradeMinorVersion = false;
             return this;

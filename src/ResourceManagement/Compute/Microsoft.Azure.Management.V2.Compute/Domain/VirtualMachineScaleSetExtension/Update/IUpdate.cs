@@ -1,14 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
-
+// Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Update
 {
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResourceActions;
-    using System.Collections.Generic;
 
+    using System.Collections.Generic;
+    using Microsoft.Azure.Management.V2.Resource.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update;
     /// <summary>
-    /// The stage of the virtual machine scale set extension update allowing to add or update public and private settings.
+    /// The stage of a virtual machine scale set extension update allowing to add or update public and private settings.
     /// </summary>
     public interface IWithSettings 
     {
@@ -44,25 +43,6 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.
 
     }
     /// <summary>
-    /// The stage of the virtual machine scale set extension update allowing to enable or disable auto upgrade of the
-    /// extension when when a new minor version of virtual machine scale set extension image gets published.
-    /// </summary>
-    public interface IWithAutoUpgradeMinorVersion 
-    {
-        /// <summary>
-        /// enables auto upgrade of the extension.
-        /// </summary>
-        /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Update.IUpdate WithAutoUpgradeMinorVersionEnabled ();
-
-        /// <summary>
-        /// enables auto upgrade of the extension.
-        /// </summary>
-        /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Update.IUpdate WithAutoUpgradeMinorVersionDisabled ();
-
-    }
-    /// <summary>
     /// The entirety of virtual machine scale set extension update as a part of parent virtual machine scale set update.
     /// </summary>
     public interface IUpdate  :
@@ -70,5 +50,24 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.
         IWithAutoUpgradeMinorVersion,
         IWithSettings
     {
+    }
+    /// <summary>
+    /// The stage of a virtual machine scale set extension update allowing to enable or disable auto upgrade of the
+    /// extension when when a new minor version of virtual machine scale set extension image gets published.
+    /// </summary>
+    public interface IWithAutoUpgradeMinorVersion 
+    {
+        /// <summary>
+        /// Enables auto-upgrading of the extension with minor versions.
+        /// </summary>
+        /// <returns>the next stage of the update</returns>
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Update.IUpdate WithMinorVersionAutoUpgrade ();
+
+        /// <summary>
+        /// Disables auto upgrading of the extension with minor versions.
+        /// </summary>
+        /// <returns>the next stage of the update</returns>
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Update.IUpdate WithoutMinorVersionAutoUpgrade ();
+
     }
 }
