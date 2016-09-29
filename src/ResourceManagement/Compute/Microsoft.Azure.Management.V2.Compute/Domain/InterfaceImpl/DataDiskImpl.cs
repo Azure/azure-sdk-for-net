@@ -3,18 +3,18 @@
 namespace Microsoft.Azure.Management.V2.Compute
 {
 
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Update;
-    using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition;
     using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition;
     using Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition;
+    using System.Collections.Generic;
+    using Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Update;
+    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update;
+    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
     using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition;
     using Microsoft.Azure.Management.V2.Storage;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
-    internal partial class DataDiskImpl
+    internal partial class DataDiskImpl 
     {
         /// <summary>
         /// Specifies an existing VHD that needs to be attached to the virtual machine as data disk.
@@ -23,9 +23,8 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// <param name="containerName">containerName the name of the container holding the VHD file</param>
         /// <param name="vhdName">vhdName the name for the VHD file</param>
         /// <returns>the stage representing optional additional settings for the attachable data disk</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate> Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IAttachExistingDataDisk<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>.From(string storageAccountName, string containerName, string vhdName)
-        {
-            return this.From(storageAccountName, containerName, vhdName) as Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>;
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate> Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IAttachExistingDataDisk<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>.From (string storageAccountName, string containerName, string vhdName) { 
+            return this.From( storageAccountName,  containerName,  vhdName) as Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>;
         }
 
         /// <summary>
@@ -35,39 +34,8 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// <param name="containerName">containerName the name of the container holding the VHD file</param>
         /// <param name="vhdName">vhdName the name for the VHD file</param>
         /// <returns>the stage representing optional additional settings for the attachable data disk</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate> Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition.IAttachExistingDataDisk<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate>.From(string storageAccountName, string containerName, string vhdName)
-        {
-            return this.From(storageAccountName, containerName, vhdName) as Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate>;
-        }
-
-        /// <summary>
-        /// Specifies the new size in GB for data disk.
-        /// </summary>
-        /// <param name="sizeInGB">sizeInGB the disk size in GB</param>
-        /// <returns>the next stage of data disk update</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Update.IUpdate Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Update.IUpdate.WithSizeInGB(int? sizeInGB)
-        {
-            return this.WithSizeInGB(sizeInGB) as Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Update.IUpdate;
-        }
-
-        /// <summary>
-        /// Specifies the new logical unit number for the data disk.
-        /// </summary>
-        /// <param name="lun">lun the logical unit number</param>
-        /// <returns>the next stage of data disk update</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Update.IUpdate Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Update.IUpdate.WithLun(int? lun)
-        {
-            return this.WithLun(lun) as Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Update.IUpdate;
-        }
-
-        /// <summary>
-        /// Specifies the new caching type for the data disk.
-        /// </summary>
-        /// <param name="cachingType">cachingType the disk caching type. Possible values include: 'None', 'ReadOnly', 'ReadWrite'</param>
-        /// <returns>the next stage of data disk update</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Update.IUpdate Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Update.IUpdate.WithCaching(CachingTypes cachingType)
-        {
-            return this.WithCaching(cachingType) as Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Update.IUpdate;
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate> Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition.IAttachExistingDataDisk<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate>.From (string storageAccountName, string containerName, string vhdName) { 
+            return this.From( storageAccountName,  containerName,  vhdName) as Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate>;
         }
 
         /// <returns>uri to the virtual hard disk backing this data disk</returns>
@@ -79,7 +47,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
         /// <returns>the logical unit number assigned to this data disk</returns>
-        int? Microsoft.Azure.Management.V2.Compute.IVirtualMachineDataDisk.Lun
+        int Microsoft.Azure.Management.V2.Compute.IVirtualMachineDataDisk.Lun
         {
             get
             {
@@ -87,7 +55,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
         /// <returns>the creation method used while creating this disk</returns>
-        Microsoft.Azure.Management.Compute.Models.DiskCreateOptionTypes? Microsoft.Azure.Management.V2.Compute.IVirtualMachineDataDisk.CreationMethod
+        Microsoft.Azure.Management.Compute.Models.DiskCreateOptionTypes Microsoft.Azure.Management.V2.Compute.IVirtualMachineDataDisk.CreationMethod
         {
             get
             {
@@ -100,7 +68,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// possible values are: 'None', 'ReadOnly', 'ReadWrite'
         /// </summary>
         /// <returns>the caching type</returns>
-        Microsoft.Azure.Management.Compute.Models.CachingTypes? Microsoft.Azure.Management.V2.Compute.IVirtualMachineDataDisk.CachingType
+        Microsoft.Azure.Management.Compute.Models.CachingTypes Microsoft.Azure.Management.V2.Compute.IVirtualMachineDataDisk.CachingType
         {
             get
             {
@@ -108,7 +76,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
         /// <returns>the size of this data disk in GB</returns>
-        int? Microsoft.Azure.Management.V2.Compute.IVirtualMachineDataDisk.Size
+        int Microsoft.Azure.Management.V2.Compute.IVirtualMachineDataDisk.Size
         {
             get
             {
@@ -129,6 +97,15 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
         /// <summary>
+        /// Specifies the new caching type for the data disk.
+        /// </summary>
+        /// <param name="cachingType">cachingType the disk caching type. Possible values include: 'None', 'ReadOnly', 'ReadWrite'</param>
+        /// <returns>the next stage of data disk update</returns>
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Update.IUpdate Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Update.IWithDiskCaching.WithCaching (CachingTypes cachingType) { 
+            return this.WithCaching( cachingType) as Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Update.IUpdate;
+        }
+
+        /// <summary>
         /// Attaches the child definition to the parent resource update.
         /// </summary>
         /// <returns>the next stage of the parent definition</returns>
@@ -136,15 +113,13 @@ namespace Microsoft.Azure.Management.V2.Compute
         {
             return this.Attach() as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate;
         }
-
         /// <summary>
         /// Specifies the initial disk size in GB for new blank data disk.
         /// </summary>
         /// <param name="sizeInGB">sizeInGB the disk size in GB</param>
         /// <returns>the stage representing optional additional settings for the attachable data disk</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithStoreAt<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate> Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IAttachNewDataDisk<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>.WithSizeInGB(int? sizeInGB)
-        {
-            return this.WithSizeInGB(sizeInGB) as Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithStoreAt<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>;
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithStoreAt<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate> Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IAttachNewDataDisk<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>.WithSizeInGB (int sizeInGB) { 
+            return this.WithSizeInGB( sizeInGB) as Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithStoreAt<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>;
         }
 
         /// <summary>
@@ -152,9 +127,8 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="sizeInGB">sizeInGB the disk size in GB</param>
         /// <returns>the stage representing optional additional settings for the attachable data disk</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition.IWithStoreAt<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate> Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition.IAttachNewDataDisk<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate>.WithSizeInGB(int? sizeInGB)
-        {
-            return this.WithSizeInGB(sizeInGB) as Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition.IWithStoreAt<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate>;
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition.IWithStoreAt<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate> Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition.IAttachNewDataDisk<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate>.WithSizeInGB (int sizeInGB) { 
+            return this.WithSizeInGB( sizeInGB) as Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition.IWithStoreAt<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -165,15 +139,31 @@ namespace Microsoft.Azure.Management.V2.Compute
         {
             return this.Attach() as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate;
         }
+        /// <summary>
+        /// Specifies the new size in GB for data disk.
+        /// </summary>
+        /// <param name="sizeInGB">sizeInGB the disk size in GB</param>
+        /// <returns>the next stage of data disk update</returns>
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Update.IUpdate Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Update.IWithDiskSize.WithSizeInGB (int sizeInGB) { 
+            return this.WithSizeInGB( sizeInGB) as Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Update.IUpdate;
+        }
+
+        /// <summary>
+        /// Specifies the new logical unit number for the data disk.
+        /// </summary>
+        /// <param name="lun">lun the logical unit number</param>
+        /// <returns>the next stage of data disk update</returns>
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Update.IUpdate Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Update.IWithDiskLun.WithLun (int lun) { 
+            return this.WithLun( lun) as Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Update.IUpdate;
+        }
 
         /// <summary>
         /// Specifies the logical unit number for the data disk.
         /// </summary>
         /// <param name="lun">lun the logical unit number</param>
         /// <returns>the next stage of data disk definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate> Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>.WithLun(int? lun)
-        {
-            return this.WithLun(lun) as Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>;
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate> Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>.WithLun (int lun) { 
+            return this.WithLun( lun) as Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>;
         }
 
         /// <summary>
@@ -181,9 +171,8 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="cachingType">cachingType the disk caching type. Possible values include: 'None', 'ReadOnly', 'ReadWrite'</param>
         /// <returns>the next stage of data disk definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate> Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>.WithCaching(CachingTypes cachingType)
-        {
-            return this.WithCaching(cachingType) as Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>;
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate> Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>.WithCaching (CachingTypes cachingType) { 
+            return this.WithCaching( cachingType) as Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>;
         }
 
         /// <summary>
@@ -191,9 +180,8 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="lun">lun the logical unit number</param>
         /// <returns>the next stage of data disk definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate> Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate>.WithLun(int? lun)
-        {
-            return this.WithLun(lun) as Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate>;
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate> Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate>.WithLun (int lun) { 
+            return this.WithLun( lun) as Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -201,9 +189,8 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="cachingType">cachingType the disk caching type. Possible values include: 'None', 'ReadOnly', 'ReadWrite'</param>
         /// <returns>the next stage of data disk definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate> Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate>.WithCaching(CachingTypes cachingType)
-        {
-            return this.WithCaching(cachingType) as Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate>;
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate> Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate>.WithCaching (CachingTypes cachingType) { 
+            return this.WithCaching( cachingType) as Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -213,9 +200,8 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// <param name="containerName">containerName the name of the container to hold the new VHD file</param>
         /// <param name="vhdName">vhdName the name for the new VHD file</param>
         /// <returns>the stage representing optional additional configurations for the data disk</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate> Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithStoreAt<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>.StoreAt(string storageAccountName, string containerName, string vhdName)
-        {
-            return this.StoreAt(storageAccountName, containerName, vhdName) as Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>;
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate> Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithStoreAt<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>.StoreAt (string storageAccountName, string containerName, string vhdName) { 
+            return this.StoreAt( storageAccountName,  containerName,  vhdName) as Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>;
         }
 
         /// <summary>
@@ -225,9 +211,8 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// <param name="containerName">containerName the name of the container to hold the new VHD file</param>
         /// <param name="vhdName">vhdName the name for the new VHD file</param>
         /// <returns>the stage representing optional additional configurations for the data disk</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate> Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition.IWithStoreAt<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate>.StoreAt(string storageAccountName, string containerName, string vhdName)
-        {
-            return this.StoreAt(storageAccountName, containerName, vhdName) as Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate>;
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate> Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition.IWithStoreAt<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate>.StoreAt (string storageAccountName, string containerName, string vhdName) { 
+            return this.StoreAt( storageAccountName,  containerName,  vhdName) as Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate>;
         }
 
         /// <returns>the name of this child object</returns>

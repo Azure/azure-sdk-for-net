@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.V2.Network
         string PrimaryNetworkInterfaceId { get; }
 
         /// <returns>the list of resource IDs of the network interfaces associated with this resource</returns>
-        List<string> NetworkInterfaceIds { get; }
+        IList<string> NetworkInterfaceIds { get; }
 
     }
 }

@@ -3,20 +3,20 @@
 namespace Microsoft.Azure.Management.V2.Compute
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core;
     using Microsoft.Azure.Management.Compute.Models;
+    using Microsoft.Azure.Management.V2.Resource.Core;
     /// <summary>
     /// A data disk of a virtual machine.
     /// </summary>
-    public interface IVirtualMachineDataDisk :
+    public interface IVirtualMachineDataDisk  :
         IWrapper<Microsoft.Azure.Management.Compute.Models.DataDisk>,
         IChildResource<Microsoft.Azure.Management.V2.Compute.IVirtualMachine>
     {
         /// <returns>the size of this data disk in GB</returns>
-        int? Size { get; }
+        int Size { get; }
 
         /// <returns>the logical unit number assigned to this data disk</returns>
-        int? Lun { get; }
+        int Lun { get; }
 
         /// <returns>uri to the virtual hard disk backing this data disk</returns>
         string VhdUri { get; }
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// possible values are: 'None', 'ReadOnly', 'ReadWrite'
         /// </summary>
         /// <returns>the caching type</returns>
-        CachingTypes? CachingType { get; }
+        CachingTypes CachingType { get; }
 
         /// <summary>
         /// Uri to the source virtual hard disk user image from which this disk was created.
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         string SourceImageUri { get; }
 
         /// <returns>the creation method used while creating this disk</returns>
-        DiskCreateOptionTypes? CreationMethod { get; }
+        DiskCreateOptionTypes CreationMethod { get; }
 
     }
 }

@@ -4,8 +4,8 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.Update
 {
 
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResourceActions;
     using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update;
+    using Microsoft.Azure.Management.V2.Resource.Core.ChildResourceActions;
     /// <summary>
     /// The stage of the virtual machine extension update allowing to enable or disable auto upgrade of the
     /// extension when when a new minor version of virtual machine extension image gets published.

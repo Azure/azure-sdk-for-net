@@ -85,11 +85,11 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
 
-        public CachingTypes? CachingType
+        public CachingTypes CachingType
         {
             get
             {
-                return Inner.Caching;
+                return Inner.Caching.Value;
             }
         }
 
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
 
-        public DiskCreateOptionTypes? CreationMethod
+        public DiskCreateOptionTypes CreationMethod
         {
             get
             {
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         public VirtualMachineImpl Attach ()
         {
-            Parent.DataDisks().Add(this);
+            Parent.WithDataDisk(this);
             return Parent;
         }
 

@@ -5,13 +5,13 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update
 
     using Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition;
     using Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Update;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.UpdateDefinition;
     using Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.Update;
+    using Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.UpdateDefinition;
     using Microsoft.Azure.Management.V2.Network;
     using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.V2.Compute;
     using Microsoft.Azure.Management.V2.Resource.Core.Resource.Update;
     using Microsoft.Azure.Management.Compute.Models;
+    using Microsoft.Azure.Management.V2.Compute;
     /// <summary>
     /// The stage of the virtual machine definition allowing to specify data disk configuration.
     /// </summary>
@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update
         /// </summary>
         /// <param name="sizeInGB">sizeInGB the disk size in GB</param>
         /// <returns>the stage representing creatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate WithNewDataDisk (int? sizeInGB);
+        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate WithNewDataDisk (int sizeInGB);
 
         /// <summary>
         /// Specifies an existing VHD that needs to be attached to the virtual machine as data disk.
@@ -33,14 +33,12 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update
         /// <returns>the stage representing creatable VM definition</returns>
         Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate WithExistingDataDisk (string storageAccountName, string containerName, string vhdName);
 
-        /**
-         * TODO: Below two method's return type needs to be fully qualified, convertor is not generating so.
         /// <summary>
         /// Specifies a new blank data disk to be attached to the virtual machine along with it's configuration.
         /// </summary>
         /// <param name="name">name the name for the data disk</param>
         /// <returns>the stage representing configuration for the data disk</returns>
-        IAttachNewDataDisk<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate> DefineNewDataDisk(string name);
+        IAttachNewDataDisk<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate> DefineNewDataDisk (string name);
 
         /// <summary>
         /// Specifies an existing VHD that needs to be attached to the virtual machine as data disk along with
@@ -48,23 +46,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update
         /// </summary>
         /// <param name="name">name the name for the data disk</param>
         /// <returns>the stage representing configuration for the data disk</returns>
-        IAttachExistingDataDisk<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate> DefineExistingDataDisk(string name);
-        **/
-
-        /// <summary>
-        /// Specifies a new blank data disk to be attached to the virtual machine along with it's configuration.
-        /// </summary>
-        /// <param name="name">name the name for the data disk</param>
-        /// <returns>the stage representing configuration for the data disk</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IAttachNewDataDisk<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate> DefineNewDataDisk (string name);
-
-        /// <summary>
-        /// Specifies an existing VHD that needs to be attached to the virtual machine as data disk along with
-        /// it's configuration.
-        /// </summary>
-        /// <param name="name">name the name for the data disk</param>
-        /// <returns>the stage representing configuration for the data disk</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IAttachExistingDataDisk<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate> DefineExistingDataDisk (string name);
+        IAttachExistingDataDisk<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate> DefineExistingDataDisk (string name);
 
         /// <summary>
         /// Begins the description of an update of an existing data disk of this virtual machine.
@@ -93,16 +75,6 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update
     /// </summary>
     public interface IWithExtension 
     {
-        /**
-         * Below method's return type needs to be fully qualified, convertor is not generating so.
-        /// <summary>
-        /// Specifies definition of an extension to be attached to the virtual machine.
-        /// </summary>
-        /// <param name="name">name the reference name for the extension</param>
-        /// <returns>the stage representing configuration for the extension</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.UpdateDefinition.IBlank<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate> DefineNewExtension(string name);
-        **/
-
         /// <summary>
         /// Specifies definition of an extension to be attached to the virtual machine.
         /// </summary>
@@ -183,7 +155,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update
         /// </summary>
         /// <param name="size">size the VHD size.</param>
         /// <returns>the stage representing updatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate WithOsDiskSizeInGb (int? size);
+        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate WithOsDiskSizeInGb (int size);
 
         /// <summary>
         /// Specifies the new size for the virtual machine.

@@ -120,13 +120,16 @@ namespace Microsoft.Azure.Management.V2.Compute
             this.client.Redeploy(this.ResourceGroupName, this.Name);
         }
 
-        public PagedList<Microsoft.Azure.Management.V2.Compute.IVirtualMachineSize> AvailableSizes ()
+        public PagedList<Microsoft.Azure.Management.V2.Compute.IVirtualMachineSize> AvailableSizes // TODO: Converter emits this as property in this Impl (but emitted correctly as method in IVirtualMachine and InterfaceImpl/VirtualMachineImpl), this should be emitted as method
         {
-            return PagedListConverter.Convert<VirtualMachineSize, IVirtualMachineSize>(this.client.ListAvailableSizes(this.ResourceGroupName,
-                this.Name), innerSize =>
-                {
-                    return new VirtualMachineSizeImpl(innerSize);
-                });
+            get
+            {
+                return PagedListConverter.Convert<VirtualMachineSize, IVirtualMachineSize>(this.client.ListAvailableSizes(this.ResourceGroupName,
+                    this.Name), innerSize =>
+                    {
+                        return new VirtualMachineSizeImpl(innerSize);
+                    });
+            }
         }
 
         public string Capture (string containerName, bool overwriteVhd)
@@ -139,12 +142,15 @@ namespace Microsoft.Azure.Management.V2.Compute
             return JsonConvert.SerializeObject(captureResult.Output);
         }
 
-        public VirtualMachineInstanceView RefreshInstanceView() // TODO: Converter emit this as property in Impl (but method as in IVirtualMachine), this should be emitted as method
+        public VirtualMachineInstanceView RefreshInstanceView // TODO: Converter emits this as property in this Impl (but emitted correctly as method in IVirtualMachine and InterfaceImpl/VirtualMachineImpl), this should be emitted as method
         {
-            this.virtualMachineInstanceView = this.client.Get(this.ResourceGroupName,
-                this.Name,
-                InstanceViewTypes.InstanceView).InstanceView;
-            return this.virtualMachineInstanceView;
+            get
+            {
+                this.virtualMachineInstanceView = this.client.Get(this.ResourceGroupName,
+                    this.Name,
+                    InstanceViewTypes.InstanceView).InstanceView;
+                return this.virtualMachineInstanceView;
+            }
         }
 
         /// <summary>
@@ -363,16 +369,22 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this;
         }
 
-        public VirtualMachineImpl DisableVmAgent ()
+        public VirtualMachineImpl DisableVmAgent
         {
-            this.Inner.OsProfile.WindowsConfiguration.ProvisionVMAgent = false;
-            return this;
+            get
+            {
+                this.Inner.OsProfile.WindowsConfiguration.ProvisionVMAgent = false;
+                return this;
+            }
         }
 
-        public VirtualMachineImpl DisableAutoUpdate ()
+        public VirtualMachineImpl DisableAutoUpdate
         {
-            this.Inner.OsProfile.WindowsConfiguration.EnableAutomaticUpdates = false;
-            return this;
+            get
+            {
+                this.Inner.OsProfile.WindowsConfiguration.EnableAutomaticUpdates = false;
+                return this;
+            }
         }
 
         public VirtualMachineImpl WithTimeZone (string timeZone)
@@ -435,7 +447,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return this;
         }
 
-        public VirtualMachineImpl WithOsDiskSizeInGb (int? size)
+        public VirtualMachineImpl WithOsDiskSizeInGb (int size)
         {
             this.Inner.StorageProfile.OsDisk.DiskSizeGB = size;
             return this;
@@ -639,11 +651,11 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
 
-        public OperatingSystemTypes? OsType
+        public OperatingSystemTypes OsType
         {
             get
             {
-                return Inner.StorageProfile.OsDisk.OsType;
+                return Inner.StorageProfile.OsDisk.OsType.Value;
             }
         }
         public string OsDiskVhdUri
@@ -653,15 +665,15 @@ namespace Microsoft.Azure.Management.V2.Compute
                 return Inner.StorageProfile.OsDisk.Vhd.Uri;
             }
         }
-        public CachingTypes? OsDiskCachingType
+        public CachingTypes OsDiskCachingType
         {
             get
             {
-                return Inner.StorageProfile.OsDisk.Caching;
+                return Inner.StorageProfile.OsDisk.Caching.Value;
             }
         }
 
-        public int? OsDiskSize
+        public int OsDiskSize
         {
             get
             {
@@ -672,14 +684,16 @@ namespace Microsoft.Azure.Management.V2.Compute
                     return 0;
                 }
 
-                return Inner.StorageProfile.OsDisk.DiskSizeGB;
+                return Inner.StorageProfile.OsDisk.DiskSizeGB.Value;
             }
         }
 
-        public IList<IVirtualMachineDataDisk> DataDisks()
+        public IList<IVirtualMachineDataDisk> DataDisks
         {
-
-            return this.dataDisks;
+            get
+            {
+                return this.dataDisks;
+            }
         }
 
         public INetworkInterface GetPrimaryNetworkInterface ()
@@ -778,9 +792,12 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
 
-        public IDictionary<string, IVirtualMachineExtension> Extensions()
+        public IDictionary<string, IVirtualMachineExtension> Extensions
         {
-            return this.virtualMachineExtensions.AsMap();
+            get
+            {
+                return this.virtualMachineExtensions.AsMap();
+            }
         }
 
         public Plan Plan
@@ -829,14 +846,14 @@ namespace Microsoft.Azure.Management.V2.Compute
             {
                 if (this.virtualMachineInstanceView == null)
                 {
-                    this.RefreshInstanceView();
+                    this.virtualMachineInstanceView = this.RefreshInstanceView;
                 }
 
                 return this.virtualMachineInstanceView;
             }
         }
 
-        public PowerState? PowerState
+        public PowerState PowerState
         {
             get
             {
@@ -846,7 +863,7 @@ namespace Microsoft.Azure.Management.V2.Compute
                     return (PowerState)Enum.Parse(typeof(Microsoft.Azure.Management.V2.Compute.PowerState), powerStateCode);
                 }
 
-                return null;
+                return PowerState.UNKNOWN;
             }
         }
         public override async Task<IVirtualMachine> CreateResourceAsync (CancellationToken cancellationToken = default(CancellationToken))
