@@ -173,7 +173,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update
         /// </summary>
         /// <param name="name">name the reference name for the extension</param>
         /// <returns>the first stage of the extension reference update</returns>
-        IUpdate UpdateExtension (string name);
+        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Update.IUpdate UpdateExtension (string name); // TODO: Converter does not emit fully qualified path to IUpdate of extension - fixing it
 
         /// <summary>
         /// Removes the extension with the specified name from the virtual machines in the scale set.
