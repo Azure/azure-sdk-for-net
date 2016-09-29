@@ -2,12 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.V2.Network
 {
-    using InboundNatPool.Definition;
     using Management.Network.Models;
-    using InboundNatPool.UpdateDefinition;
     using Resource.Core;
     using Resource.Core.ChildResourceActions;
-    using System;
     using Rest.Azure;
 
     /// <summary>
@@ -16,8 +13,8 @@ namespace Microsoft.Azure.Management.V2.Network
     public partial class InboundNatPoolImpl  :
         ChildResource<InboundNatPoolInner, LoadBalancerImpl, ILoadBalancer>,
         IInboundNatPool,
-        IDefinition<LoadBalancer.Definition.IWithCreateAndInboundNatPool>,
-        IUpdateDefinition<LoadBalancer.Update.IUpdate>,
+        InboundNatPool.Definition.IDefinition<LoadBalancer.Definition.IWithCreateAndInboundNatPool>,
+        InboundNatPool.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
         InboundNatPool.Update.IUpdate
     {
         internal InboundNatPoolImpl (InboundNatPoolInner inner, LoadBalancerImpl parent) 

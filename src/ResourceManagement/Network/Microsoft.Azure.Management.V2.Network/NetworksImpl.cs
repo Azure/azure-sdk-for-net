@@ -1,14 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 namespace Microsoft.Azure.Management.V2.Network
 {
-
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
-    using Microsoft.Azure.Management.Network.Models;
+    using Resource.Core;
+    using Resource.Core.CollectionActions;
+    using Management.Network.Models;
     using System.Threading.Tasks;
     using System.Threading;
-    using Microsoft.Azure.Management.V2.Resource;
     using Management.Network;
     using System;
 
@@ -17,9 +16,9 @@ namespace Microsoft.Azure.Management.V2.Network
     /// </summary>
     public partial class NetworksImpl  :
         GroupableResources<
-            Microsoft.Azure.Management.V2.Network.INetwork,
-            Microsoft.Azure.Management.V2.Network.NetworkImpl,
-            Microsoft.Azure.Management.Network.Models.VirtualNetworkInner,
+            INetwork,
+            NetworkImpl,
+            VirtualNetworkInner,
             IVirtualNetworksOperations,
             NetworkManager>,
         INetworks
@@ -35,7 +34,7 @@ namespace Microsoft.Azure.Management.V2.Network
 
         }
 
-        public PagedList<Microsoft.Azure.Management.V2.Network.INetwork> List ()
+        public PagedList<INetwork> List ()
         {
 
             //$ return wrapList(this.innerCollection.listAll());
@@ -43,7 +42,7 @@ namespace Microsoft.Azure.Management.V2.Network
             return null;
         }
 
-        public PagedList<Microsoft.Azure.Management.V2.Network.INetwork> ListByGroup (string groupName)
+        public PagedList<INetwork> ListByGroup (string groupName)
         {
 
             //$ return wrapList(this.innerCollection.list(groupName));

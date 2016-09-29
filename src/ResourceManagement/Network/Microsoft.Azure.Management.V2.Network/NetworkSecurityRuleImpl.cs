@@ -1,10 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 namespace Microsoft.Azure.Management.V2.Network
 {
-
-    using NetworkSecurityRule.Definition;
-    using NetworkSecurityRule.UpdateDefinition;
     using Resource.Core;
     using Management.Network.Models;
     using Resource.Core.ChildResourceActions;
@@ -15,8 +13,8 @@ namespace Microsoft.Azure.Management.V2.Network
     public partial class NetworkSecurityRuleImpl  :
         ChildResource<SecurityRuleInner, NetworkSecurityGroupImpl, INetworkSecurityGroup>,
         INetworkSecurityRule,
-        IDefinition<NetworkSecurityGroup.Definition.IWithCreate>,
-        IUpdateDefinition<NetworkSecurityGroup.Update.IUpdate>,
+        NetworkSecurityRule.Definition.IDefinition<NetworkSecurityGroup.Definition.IWithCreate>,
+        NetworkSecurityRule.UpdateDefinition.IUpdateDefinition<NetworkSecurityGroup.Update.IUpdate>,
         NetworkSecurityRule.Update.IUpdate
     {
         internal NetworkSecurityRuleImpl (SecurityRuleInner inner, NetworkSecurityGroupImpl parent) : base(inner.Name, inner, parent)

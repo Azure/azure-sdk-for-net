@@ -1,19 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 namespace Microsoft.Azure.Management.V2.Network
 {
-
-    using Microsoft.Azure.Management.Network.Models;
+    using Management.Network.Models;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Network.Network.Definition;
-    using Microsoft.Azure.Management.V2.Network.Network.Update;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Resource.Core;
     using Management.Network;
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Implementation for {@link Network} and its create and update interfaces.
+    /// Implementation for Network
     /// </summary>
     public partial class NetworkImpl :
         GroupableParentResource<INetwork,
@@ -26,8 +23,8 @@ namespace Microsoft.Azure.Management.V2.Network
             Network.Definition.IWithCreate,
             Network.Update.IUpdate>,
         INetwork,
-        IDefinition,
-        IUpdate
+        Network.Definition.IDefinition,
+        Network.Update.IUpdate
     {
         private IVirtualNetworksOperations innerCollection;
         private IDictionary<string,Microsoft.Azure.Management.V2.Network.ISubnet> subnets;

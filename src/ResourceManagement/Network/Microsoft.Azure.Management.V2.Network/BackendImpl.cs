@@ -3,21 +3,18 @@
 namespace Microsoft.Azure.Management.V2.Network
 {
     using System.Collections.Generic;
-    using LoadBalancer.Definition;
     using Management.Network.Models;
     using Resource.Core;
-    using Backend.UpdateDefinition;
-    using Backend.Definition;
     using Resource.Core.ChildResourceActions;
 
     /// <summary>
-    /// Implementation for {@link Backend}.
+    /// Implementation for Backend.
     /// </summary>
     public partial class BackendImpl  :
         ChildResource<BackendAddressPoolInner, LoadBalancerImpl, ILoadBalancer>,
         IBackend,
-        IDefinition<IWithBackendOrProbe>,
-        IUpdateDefinition<LoadBalancer.Update.IUpdate>,
+        Backend.Definition.IDefinition<LoadBalancer.Definition.IWithBackendOrProbe>,
+        Backend.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
         Backend.Update.IUpdate
     {
         internal BackendImpl (BackendAddressPoolInner inner, LoadBalancerImpl parent) : base(inner.Name, inner, parent)

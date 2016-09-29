@@ -1,19 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
+
 namespace Microsoft.Azure.Management.V2.Network
 {
-
     using System.Collections.Generic;
     using Management.Network.Models;
-    using LoadBalancer.Definition;
     using LoadBalancer.Update;
     using Resource.Core.ResourceActions;
     using Resource.Core;
     using Management.Network;
     using System.Threading.Tasks;
     using System.Text;
-    using Rest.Azure;
-    using System;
 
     /// <summary>
     /// Implementation of the LoadBalancer interface.
@@ -24,12 +21,12 @@ namespace Microsoft.Azure.Management.V2.Network
             Rest.Azure.Resource,
             LoadBalancerImpl,
             INetworkManager,
-            IWithGroup,
-            IWithFrontend,
-            IWithCreate,
+            LoadBalancer.Definition.IWithGroup,
+            LoadBalancer.Definition.IWithFrontend,
+            LoadBalancer.Definition.IWithCreate,
             IUpdate>,
         ILoadBalancer,
-        IDefinition,
+        LoadBalancer.Definition.IDefinition,
         IUpdate
     {
         static string DEFAULT = "default";
