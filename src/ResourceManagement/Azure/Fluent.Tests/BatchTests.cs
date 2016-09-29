@@ -80,17 +80,17 @@ namespace Fluent.Tests
                         .WithAllowUpdates(updatesAllowed)
                         .Attach()
                         .Apply();
-                Assert.True(batchAccount.Applications().ContainsKey(applicationId));
+                Assert.True(batchAccount.Applications.ContainsKey(applicationId));
 
                 // Refresh to fetch batch account and application again.
                 batchAccount.Refresh();
-                Assert.True(batchAccount.Applications().ContainsKey(applicationId));
+                Assert.True(batchAccount.Applications.ContainsKey(applicationId));
 
-                var application = batchAccount.Applications()[applicationId];
+                var application = batchAccount.Applications[applicationId];
                 Assert.Equal(application.DisplayName, applicationDisplayName);
                 Assert.Equal(application.UpdatesAllowed, updatesAllowed);
-                Assert.Equal(1, application.ApplicationPackages().Count);
-                var applicationPackage = application.ApplicationPackages()[applicationPackageName];
+                Assert.Equal(1, application.ApplicationPackages.Count);
+                var applicationPackage = application.ApplicationPackages[applicationPackageName];
                 Assert.Equal(applicationPackage.Name, applicationPackageName);
 
                 // Delete application package directly.
@@ -101,7 +101,7 @@ namespace Fluent.Tests
                         .Apply();
 
                 batchAccount.Refresh();
-                Assert.False(batchAccount.Applications().ContainsKey(applicationId));
+                Assert.False(batchAccount.Applications.ContainsKey(applicationId));
 
                 var applicationPackage1Name = "applicationPackage1";
                 var applicationPackage2Name = "applicationPackage2";
@@ -113,9 +113,9 @@ namespace Fluent.Tests
                         .WithAllowUpdates(updatesAllowed)
                         .Attach()
                         .Apply();
-                Assert.True(batchAccount.Applications().ContainsKey(applicationId));
+                Assert.True(batchAccount.Applications.ContainsKey(applicationId));
                 application.Refresh();
-                Assert.Equal(2, application.ApplicationPackages().Count);
+                Assert.Equal(2, application.ApplicationPackages.Count);
 
                 var newApplicationDisplayName = "newApplicationDisplayName";
                 batchAccount
@@ -125,16 +125,16 @@ namespace Fluent.Tests
                         .WithDisplayName(newApplicationDisplayName)
                         .Parent()
                         .Apply();
-                application = batchAccount.Applications()[applicationId];
+                application = batchAccount.Applications[applicationId];
                 Assert.Equal(application.DisplayName, newApplicationDisplayName);
 
                 batchAccount.Refresh();
-                application = batchAccount.Applications()[applicationId];
+                application = batchAccount.Applications[applicationId];
 
                 Assert.Equal(application.DisplayName, newApplicationDisplayName);
-                Assert.Equal(1, application.ApplicationPackages().Count);
+                Assert.Equal(1, application.ApplicationPackages.Count);
 
-                applicationPackage = application.ApplicationPackages()[applicationPackage1Name];
+                applicationPackage = application.ApplicationPackages[applicationPackage1Name];
 
                 Assert.NotNull(applicationPackage);
                 Assert.NotNull(applicationPackage.Id);
@@ -205,8 +205,8 @@ namespace Fluent.Tests
                 batchAccount = batchManager.BatchAccounts.GetByGroup(rgName, batchAccountName);
                 Assert.NotNull(batchAccount);
 
-                Assert.True(batchAccount.Applications().ContainsKey(applicationId));
-                var application = batchAccount.Applications()[applicationId];
+                Assert.True(batchAccount.Applications.ContainsKey(applicationId));
+                var application = batchAccount.Applications[applicationId];
 
                 Assert.NotNull(application);
                 Assert.Equal(application.DisplayName, applicationDisplayName);

@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
         string Name { get; }
 
         /// <returns>the sate of the application package</returns>
-        PackageState? State { get; }
+        Microsoft.Azure.Management.Batch.Models.PackageState State { get; }
 
         /// <returns>the format of application package</returns>
         string Format { get; }
@@ -27,10 +27,10 @@ namespace Microsoft.Azure.Management.Fluent.Batch
         string StorageUrl { get; }
 
         /// <returns>the expiry of the storage url for application package</returns>
-        DateTime? StorageUrlExpiry { get; }
+        System.DateTime StorageUrlExpiry { get; }
 
         /// <returns>the date when last time this application package was activate.</returns>
-        DateTime? LastActivationTime { get; }
+        System.DateTime LastActivationTime { get; }
 
         /// <summary>
         /// Activates the application package.
