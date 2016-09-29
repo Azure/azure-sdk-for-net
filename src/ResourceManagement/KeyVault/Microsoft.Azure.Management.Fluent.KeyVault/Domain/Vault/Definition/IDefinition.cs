@@ -1,28 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
 namespace Microsoft.Azure.Management.Fluent.KeyVault.Vault.Definition
 {
 
     using Microsoft.Azure.Management.KeyVault.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core.Resource.Definition;
-    using Microsoft.Azure.Management.Fluent.KeyVault;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Definition;
-    /// <summary>
-    /// A key vault definition allowing the sku to be set.
-    /// </summary>
-    public interface IWithSku 
-    {
-        /// <summary>
-        /// Specifies the sku of the key vault.
-        /// </summary>
-        /// <param name="skuName">skuName the sku</param>
-        /// <returns>the next stage of key vault definition</returns>
-        IWithCreate WithSku (SkuName skuName);
-
-    }
+    using Microsoft.Azure.Management.Fluent.KeyVault;
+    using Microsoft.Azure.Management.V2.Resource.Core.Resource.Definition;
+    using Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition;
+    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     /// <summary>
     /// A key vault definition allowing various configurations to be set.
     /// </summary>
@@ -66,31 +52,17 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault.Vault.Definition
 
     }
     /// <summary>
-    /// A key vault definition allowing resource group to be set.
+    /// A key vault definition allowing the sku to be set.
     /// </summary>
-    public interface IWithGroup  :
-        Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition.IWithGroup<IWithAccessPolicy>
+    public interface IWithSku 
     {
-    }
-    /// <summary>
-    /// The first stage of the key vault definition.
-    /// </summary>
-    public interface IBlank  :
-        IDefinitionWithRegion<Microsoft.Azure.Management.Fluent.KeyVault.Vault.Definition.IWithGroup>
-    {
-    }
-    /// <summary>
-    /// A key vault definition with sufficient inputs to create a new
-    /// storage account in the cloud, but exposing additional optional inputs to
-    /// specify.
-    /// </summary>
-    public interface IWithCreate  :
-        ICreatable<IVault>,
-        IDefinitionWithTags<IWithCreate>,
-        IWithSku,
-        IWithConfigurations,
-        IWithAccessPolicy
-    {
+        /// <summary>
+        /// Specifies the sku of the key vault.
+        /// </summary>
+        /// <param name="skuName">skuName the sku</param>
+        /// <returns>the next stage of key vault definition</returns>
+        IWithCreate WithSku (SkuName skuName);
+
     }
     /// <summary>
     /// Container interface for all the definitions that need to be implemented.
@@ -124,7 +96,34 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault.Vault.Definition
         /// Begins the definition of a new access policy to be added to this key vault.
         /// </summary>
         /// <returns>the first stage of the access policy definition</returns>
-        Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Definition.IBlank<IWithCreate> DefineAccessPolicy ();
+        Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Definition.IBlank<Microsoft.Azure.Management.Fluent.KeyVault.Vault.Definition.IWithCreate> DefineAccessPolicy ();
 
+    }
+    /// <summary>
+    /// The first stage of the key vault definition.
+    /// </summary>
+    public interface IBlank  :
+        IDefinitionWithRegion<Microsoft.Azure.Management.Fluent.KeyVault.Vault.Definition.IWithGroup>
+    {
+    }
+    /// <summary>
+    /// A key vault definition allowing resource group to be set.
+    /// </summary>
+    public interface IWithGroup  :
+        Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.Fluent.KeyVault.Vault.Definition.IWithAccessPolicy>
+    {
+    }
+    /// <summary>
+    /// A key vault definition with sufficient inputs to create a new
+    /// storage account in the cloud, but exposing additional optional inputs to
+    /// specify.
+    /// </summary>
+    public interface IWithCreate  :
+        ICreatable<Microsoft.Azure.Management.Fluent.KeyVault.IVault>,
+        IDefinitionWithTags<Microsoft.Azure.Management.Fluent.KeyVault.Vault.Definition.IWithCreate>,
+        IWithSku,
+        IWithConfigurations,
+        IWithAccessPolicy
+    {
     }
 }

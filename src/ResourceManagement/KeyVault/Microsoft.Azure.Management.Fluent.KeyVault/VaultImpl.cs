@@ -91,9 +91,12 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
                 return Inner.Properties.Sku;
             }
         }
-        public IList<IAccessPolicy> AccessPolicies ()
+        public IList<IAccessPolicy> AccessPolicies
         {
-            return accessPolicies.Select(ap => (IAccessPolicy)ap).ToList();
+            get
+            {
+                return accessPolicies.Select(ap => (IAccessPolicy)ap).ToList();
+            }
         }
 
         public bool EnabledForDeployment

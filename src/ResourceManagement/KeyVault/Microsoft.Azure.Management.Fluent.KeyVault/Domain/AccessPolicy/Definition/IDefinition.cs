@@ -1,79 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
 namespace Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Definition
 {
 
+    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
     using Microsoft.Azure.Management.KeyVault.Models;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
     using Microsoft.Azure.Management.Fluent.Graph.RBAC;
     using System;
-    /// <summary>
-    /// The entirety of an access policy definition.
-    /// @param <ParentT> the return type of the final {@link Attachable#attach()}
-    /// </summary>
-    public interface IDefinition<ParentT>  :
-        IBlank<ParentT>,
-        IWithAttach<ParentT>
-    {
-    }
-    /// <summary>
-    /// The first stage of an access policy definition.
-    /// 
-    /// @param <ParentT> the return type of the final {@link WithAttach#attach()}
-    /// </summary>
-    public interface IBlank<ParentT>  :
-        IWithIdentity<ParentT>
-    {
-    }
-    /// <summary>
-    /// The access policy definition stage allowing permissions to be added.
-    /// @param <ParentT> the return type of the final {@link WithAttach#attach()}
-    /// </summary>
-    public interface IWithPermissions<ParentT> 
-    {
-        /// <summary>
-        /// Allow all permissions for the AD identity to access keys.
-        /// </summary>
-        /// <returns>the next stage of access policy definition</returns>
-        IWithAttach<ParentT> AllowKeyAllPermissions();
-
-        /// <summary>
-        /// Allow a list of permissions for the AD identity to access keys.
-        /// </summary>
-        /// <param name="permissions">permissions the list of permissions allowed</param>
-        /// <returns>the next stage of access policy definition</returns>
-        IWithAttach<ParentT> AllowKeyPermission (KeyPermissions permission);
-
-        /// <summary>
-        /// Allow a list of permissions for the AD identity to access keys.
-        /// </summary>
-        /// <param name="permissions">permissions the list of permissions allowed</param>
-        /// <returns>the next stage of access policy definition</returns>
-        IWithAttach<ParentT> AllowKeyPermissions (IList<KeyPermissions> permissions);
-
-        /// <summary>
-        /// Allow all permissions for the AD identity to access secrets.
-        /// </summary>
-        /// <returns>the next stage of access policy definition</returns>
-        IWithAttach<ParentT> AllowSecretAllPermissions();
-
-        /// <summary>
-        /// Allow a list of permissions for the AD identity to access secrets.
-        /// </summary>
-        /// <param name="permissions">permissions the list of permissions allowed</param>
-        /// <returns>the next stage of access policy definition</returns>
-        IWithAttach<ParentT> AllowSecretPermission (SecretPermissions permission);
-
-        /// <summary>
-        /// Allow a list of permissions for the AD identity to access secrets.
-        /// </summary>
-        /// <param name="permissions">permissions the list of permissions allowed</param>
-        /// <returns>the next stage of access policy definition</returns>
-        IWithAttach<ParentT> AllowSecretPermissions (IList<SecretPermissions> permissions);
-
-    }
     /// <summary>
     /// The final stage of the access policy definition.
     /// <p>
@@ -86,6 +20,71 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Definition
         IInUpdate<ParentT>,
         IWithPermissions<ParentT>
     {
+    }
+    /// <summary>
+    /// The first stage of an access policy definition.
+    /// 
+    /// @param <ParentT> the return type of the final {@link WithAttach#attach()}
+    /// </summary>
+    public interface IBlank<ParentT>  :
+        IWithIdentity<ParentT>
+    {
+    }
+    /// <summary>
+    /// The entirety of an access policy definition.
+    /// @param <ParentT> the return type of the final {@link Attachable#attach()}
+    /// </summary>
+    public interface IDefinition<ParentT>  :
+        IBlank<ParentT>,
+        IWithAttach<ParentT>
+    {
+    }
+    /// <summary>
+    /// The access policy definition stage allowing permissions to be added.
+    /// @param <ParentT> the return type of the final {@link WithAttach#attach()}
+    /// </summary>
+    public interface IWithPermissions<ParentT> 
+    {
+        /// <summary>
+        /// Allow all permissions for the AD identity to access keys.
+        /// </summary>
+        /// <returns>the next stage of access policy definition</returns>
+        IWithAttach<ParentT> AllowKeyAllPermissions ();
+
+        /// <summary>
+        /// Allow a list of permissions for the AD identity to access keys.
+        /// </summary>
+        /// <param name="permissions">permissions the list of permissions allowed</param>
+        /// <returns>the next stage of access policy definition</returns>
+        IWithAttach<ParentT> AllowKeyPermissions (params KeyPermissions[] permissions);
+
+        /// <summary>
+        /// Allow a list of permissions for the AD identity to access keys.
+        /// </summary>
+        /// <param name="permissions">permissions the list of permissions allowed</param>
+        /// <returns>the next stage of access policy definition</returns>
+        IWithAttach<ParentT> AllowKeyPermissions (IList<Microsoft.Azure.Management.KeyVault.Models.KeyPermissions> permissions);
+
+        /// <summary>
+        /// Allow all permissions for the AD identity to access secrets.
+        /// </summary>
+        /// <returns>the next stage of access policy definition</returns>
+        IWithAttach<ParentT> AllowSecretAllPermissions ();
+
+        /// <summary>
+        /// Allow a list of permissions for the AD identity to access secrets.
+        /// </summary>
+        /// <param name="permissions">permissions the list of permissions allowed</param>
+        /// <returns>the next stage of access policy definition</returns>
+        IWithAttach<ParentT> AllowSecretPermissions (params SecretPermissions[] permissions);
+
+        /// <summary>
+        /// Allow a list of permissions for the AD identity to access secrets.
+        /// </summary>
+        /// <param name="permissions">permissions the list of permissions allowed</param>
+        /// <returns>the next stage of access policy definition</returns>
+        IWithAttach<ParentT> AllowSecretPermissions (IList<Microsoft.Azure.Management.KeyVault.Models.SecretPermissions> permissions);
+
     }
     /// <summary>
     /// The access policy definition stage allowing the Active Directory identity to be specified.

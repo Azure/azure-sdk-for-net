@@ -1,21 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
 namespace Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Update
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResourceActions;
-    using Microsoft.Azure.Management.Fluent.KeyVault.Vault.Update;
     using Microsoft.Azure.Management.KeyVault.Models;
     using System.Collections.Generic;
-    /// <summary>
-    /// The entirety of an access policy update as part of a key vault update.
-    /// </summary>
-    public interface IUpdate  :
-        IWithPermissions,
-        ISettable<Microsoft.Azure.Management.Fluent.KeyVault.Vault.Update.IUpdate>
-    {
-    }
+    using Microsoft.Azure.Management.V2.Resource.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.Fluent.KeyVault.Vault.Update;
     /// <summary>
     /// The access policy update stage allowing permissions to be added or removed.
     /// </summary>
@@ -32,14 +23,14 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Update
         /// </summary>
         /// <param name="permissions">permissions the list of permissions allowed</param>
         /// <returns>the next stage of access policy update</returns>
-        Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Update.IUpdate AllowKeyPermission (KeyPermissions permission);
+        Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Update.IUpdate AllowKeyPermissions (params KeyPermissions[] permissions);
 
         /// <summary>
         /// Allow a list of permissions for the AD identity to access keys.
         /// </summary>
         /// <param name="permissions">permissions the list of permissions allowed</param>
         /// <returns>the next stage of access policy update</returns>
-        Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Update.IUpdate AllowKeyPermissions (IList<KeyPermissions> permissions);
+        Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Update.IUpdate AllowKeyPermissions (IList<Microsoft.Azure.Management.KeyVault.Models.KeyPermissions> permissions);
 
         /// <summary>
         /// Revoke all permissions for the AD identity to access keys.
@@ -52,14 +43,14 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Update
         /// </summary>
         /// <param name="permissions">permissions the list of permissions to revoke</param>
         /// <returns>the next stage of access policy update</returns>
-        Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Update.IUpdate DisallowKeyPermission (KeyPermissions permission);
+        Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Update.IUpdate DisallowKeyPermissions (params KeyPermissions[] permissions);
 
         /// <summary>
         /// Revoke a list of permissions for the AD identity to access keys.
         /// </summary>
         /// <param name="permissions">permissions the list of permissions to revoke</param>
         /// <returns>the next stage of access policy update</returns>
-        Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Update.IUpdate DisallowKeyPermissions (IList<KeyPermissions> permissions);
+        Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Update.IUpdate DisallowKeyPermissions (IList<Microsoft.Azure.Management.KeyVault.Models.KeyPermissions> permissions);
 
         /// <summary>
         /// Allow all permissions for the AD identity to access secrets.
@@ -72,14 +63,14 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Update
         /// </summary>
         /// <param name="permissions">permissions the list of permissions allowed</param>
         /// <returns>the next stage of access policy definition</returns>
-        Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Update.IUpdate AllowSecretPermission (SecretPermissions permission);
+        Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Update.IUpdate AllowSecretPermissions (params SecretPermissions[] permissions);
 
         /// <summary>
         /// Allow a list of permissions for the AD identity to access secrets.
         /// </summary>
         /// <param name="permissions">permissions the list of permissions allowed</param>
         /// <returns>the next stage of access policy definition</returns>
-        Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Update.IUpdate AllowSecretPermissions (IList<SecretPermissions> permissions);
+        Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Update.IUpdate AllowSecretPermissions (IList<Microsoft.Azure.Management.KeyVault.Models.SecretPermissions> permissions);
 
         /// <summary>
         /// Revoke all permissions for the AD identity to access secrets.
@@ -92,14 +83,22 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Update
         /// </summary>
         /// <param name="permissions">permissions the list of permissions to revoke</param>
         /// <returns>the next stage of access policy update</returns>
-        Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Update.IUpdate DisallowSecretPermission (SecretPermissions permission);
+        Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Update.IUpdate DisallowSecretPermissions (params SecretPermissions[] permissions);
 
         /// <summary>
         /// Revoke a list of permissions for the AD identity to access secrets.
         /// </summary>
         /// <param name="permissions">permissions the list of permissions to revoke</param>
         /// <returns>the next stage of access policy update</returns>
-        Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Update.IUpdate DisallowSecretPermissions (IList<SecretPermissions> permissions);
+        Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Update.IUpdate DisallowSecretPermissions (IList<Microsoft.Azure.Management.KeyVault.Models.SecretPermissions> permissions);
 
+    }
+    /// <summary>
+    /// The entirety of an access policy update as part of a key vault update.
+    /// </summary>
+    public interface IUpdate  :
+        IWithPermissions,
+        ISettable<Microsoft.Azure.Management.Fluent.KeyVault.Vault.Update.IUpdate>
+    {
     }
 }
