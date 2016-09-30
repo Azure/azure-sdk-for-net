@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineExtensionImageType Type { get; }
 
         /// <returns>virtual machine extension image this version represents</returns>
-        Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineExtensionImage getImage();
+        Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineExtensionImage GetImage();
 
     }
 }

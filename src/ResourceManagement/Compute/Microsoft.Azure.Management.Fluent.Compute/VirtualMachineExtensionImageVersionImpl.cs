@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             }
         }
 
-        public IVirtualMachineExtensionImage getImage ()
+        public IVirtualMachineExtensionImage GetImage ()
         {
             VirtualMachineExtensionImageInner inner = this.client.Get(this.RegionName,
                 this.Type.Publisher.Name,

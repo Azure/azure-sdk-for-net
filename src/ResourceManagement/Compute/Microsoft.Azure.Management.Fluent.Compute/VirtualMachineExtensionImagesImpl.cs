@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
                 }).Flatten();
 
             return PagedListConverter.Convert(versions, version => {
-                return version.getImage();
+                return version.GetImage();
             });
         }
 

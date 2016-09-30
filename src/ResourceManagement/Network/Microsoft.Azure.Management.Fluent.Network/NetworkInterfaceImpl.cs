@@ -396,9 +396,9 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return this;
         }
 
-        internal void AddToCreatableDependencies(ICreatable<Fluent.Resource.Core.IResource> creatableResource)
+        internal void AddToCreatableDependencies(IResourceCreator<Fluent.Resource.Core.IResource> creatableResource)
         {
-            AddCreatableDependency(creatableResource as IResourceCreator<Fluent.Resource.Core.IResource>);
+            AddCreatableDependency(creatableResource);
         }
 
         internal Fluent.Resource.Core.IResource CreatedDependencyResource(string key)
