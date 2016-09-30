@@ -3,14 +3,14 @@
 namespace Microsoft.Azure.Management.Fluent.Compute
 {
 
-    using Microsoft.Azure.Management.Compute.Models;
     using Microsoft.Azure.Management.Fluent.Resource.Core;
     using System.Collections.Generic;
+    using Microsoft.Azure.Management.Compute.Models;
     /// <summary>
     /// An immutable client-side representation of an extension associated with virtual machines in a scale set.
     /// An extension associated with a virtual machine scale set will be created from a {@link VirtualMachineExtensionImage }.
     /// </summary>
-    public interface IVirtualMachineScaleSetExtension :
+    public interface IVirtualMachineScaleSetExtension  :
         IWrapper<Microsoft.Azure.Management.Compute.Models.VirtualMachineScaleSetExtensionInner>,
         IChildResource<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet>
     {
@@ -25,10 +25,10 @@ namespace Microsoft.Azure.Management.Fluent.Compute
 
         /// <returns>true if this extension is configured to upgrade automatically when a new minor version of</returns>
         /// <returns>the extension image that this extension based on is published</returns>
-        bool? AutoUpgradeMinorVersionEnabled { get; }
+        bool AutoUpgradeMinorVersionEnabled { get; }
 
         /// <returns>the public settings of the virtual machine scale set extension as key value pairs</returns>
-        IDictionary<string, object> PublicSettings { get; }
+        System.Collections.Generic.IDictionary<string,object> PublicSettings { get; }
 
         /// <returns>the public settings of the virtual machine extension as a JSON string</returns>
         string PublicSettingsAsJsonString { get; }

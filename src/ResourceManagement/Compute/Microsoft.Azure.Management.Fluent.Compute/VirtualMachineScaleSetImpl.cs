@@ -292,7 +292,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
 
         public VirtualMachineScaleSetImpl WithSku(IVirtualMachineScaleSetSku sku)
         {
-            return this.WithSku(sku.SkuType());
+            return this.WithSku(sku.SkuType);
         }
 
         public VirtualMachineScaleSetImpl WithExistingPrimaryNetworkSubnet(INetwork network, string subnetName)
