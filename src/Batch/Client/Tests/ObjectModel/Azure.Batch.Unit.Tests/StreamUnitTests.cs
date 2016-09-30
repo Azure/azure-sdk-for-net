@@ -29,7 +29,7 @@
 
     public class StreamUnitTests
     {
-        private const long StreamLengthInBytes = 2L * 1024 * 1024 * 1024; //~2GB
+        public const long StreamLengthInBytes = 2L * 1024 * 1024 * 1024; //~2GB
 
         [Fact]
         [Trait(TestTraits.Duration.TraitName, TestTraits.Duration.Values.ShortDuration)]
