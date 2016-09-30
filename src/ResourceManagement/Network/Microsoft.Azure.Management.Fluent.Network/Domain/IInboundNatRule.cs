@@ -23,10 +23,10 @@ namespace Microsoft.Azure.Management.Fluent.Network
         string BackendNetworkInterfaceId { get; }
 
         /// <returns>the frontend port number associated with this NAT rule</returns>
-        int? FrontendPort { get; }
+        int FrontendPort { get; }
 
         /// <returns>the number of minutes before an idle connection is closed</returns>
-        int? IdleTimeoutInMinutes { get; }
+        int IdleTimeoutInMinutes { get; }
 
     }
 }

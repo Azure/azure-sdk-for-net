@@ -24,55 +24,37 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return Inner.Name;
         }
 
-        public string Protocol
+        internal string Protocol()
         {
-            get
-            {
-                return Inner.Protocol;
-            }
+            return Inner.Protocol;
         }
 
-        public bool FloatingIpEnabled
+        internal bool FloatingIpEnabled()
         {
-            get
-            {
-                return (Inner.EnableFloatingIP.HasValue) ? Inner.EnableFloatingIP.Value : false;
-            }
+            return (Inner.EnableFloatingIP.HasValue) ? Inner.EnableFloatingIP.Value : false;
         }
 
-        public int IdleTimeoutInMinutes
+        internal int IdleTimeoutInMinutes()
         {
-            get
-            {
-                return (Inner.IdleTimeoutInMinutes.HasValue) ? Inner.IdleTimeoutInMinutes.Value : 0;
-            }
+            return (Inner.IdleTimeoutInMinutes.HasValue) ? Inner.IdleTimeoutInMinutes.Value : 0;
         }
 
-        public int FrontendPort
+        internal int FrontendPort()
         {
-            get
-            {
-                return Inner.FrontendPort;
-            }
+            return Inner.FrontendPort;
         }
 
-        public int BackendPort
+        internal int BackendPort()
         {
-            get
-            {
-                return (Inner.BackendPort.HasValue) ? Inner.BackendPort.Value : 0;
-            }
+            return (Inner.BackendPort.HasValue) ? Inner.BackendPort.Value : 0;
         }
 
-        public string LoadDistribution
+        internal string LoadDistribution()
         {
-            get
-            {
-                return Inner.LoadDistribution;
-            }
+            return Inner.LoadDistribution;
         }
 
-        public IFrontend Frontend ()
+        internal IFrontend Frontend ()
         {
             var frontendRef = Inner.FrontendIPConfiguration;
             if (frontendRef == null)
@@ -88,7 +70,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             }
         }
 
-        public IBackend Backend ()
+        internal IBackend Backend ()
         {
             var backendRef = Inner.BackendAddressPool;
             if (backendRef == null)
@@ -104,7 +86,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             }
         }
 
-        public IProbe Probe()
+        internal IProbe Probe()
         {
             var probeRef = Inner.Probe;
             if (probeRef == null)
@@ -123,35 +105,35 @@ namespace Microsoft.Azure.Management.Fluent.Network
             }
         }
 
-        public LoadBalancingRuleImpl WithIdleTimeoutInMinutes (int minutes)
+        internal LoadBalancingRuleImpl WithIdleTimeoutInMinutes (int minutes)
         {
             Inner.IdleTimeoutInMinutes = minutes;
             return this;
         }
 
-        public LoadBalancingRuleImpl WithFloatingIp (bool enable)
+        internal LoadBalancingRuleImpl WithFloatingIp (bool enable)
         {
             Inner.EnableFloatingIP = enable;
             return this;
         }
 
-        public LoadBalancingRuleImpl WithFloatingIpEnabled ()
+        internal LoadBalancingRuleImpl WithFloatingIpEnabled ()
         {
             return WithFloatingIp(true);
         }
 
-        public LoadBalancingRuleImpl WithFloatingIpDisabled ()
+        internal LoadBalancingRuleImpl WithFloatingIpDisabled ()
         {
             return WithFloatingIp(false);
         }
 
-        public LoadBalancingRuleImpl WithProtocol (string protocol)
+        internal LoadBalancingRuleImpl WithProtocol (string protocol)
         {
             Inner.Protocol = protocol;
             return this;
         }
 
-        public LoadBalancingRuleImpl WithFrontendPort (int port)
+        internal LoadBalancingRuleImpl WithFrontendPort (int port)
         {
             Inner.FrontendPort = port;
 
@@ -161,43 +143,43 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return this;
         }
 
-        public LoadBalancingRuleImpl WithBackendPort (int port)
+        internal LoadBalancingRuleImpl WithBackendPort (int port)
         {
             Inner.BackendPort = port;
             return this;
         }
 
-        public LoadBalancingRuleImpl WithLoadDistribution (string loadDistribution)
+        internal LoadBalancingRuleImpl WithLoadDistribution (string loadDistribution)
         {
             Inner.LoadDistribution = loadDistribution;
             return this;
         }
 
-        public LoadBalancingRuleImpl WithFrontend (string frontendName)
+        internal LoadBalancingRuleImpl WithFrontend (string frontendName)
         {
-            string id = Parent.FutureResourceId + "/frontendIPConfigurations/" + frontendName;
+            string id = Parent.FutureResourceId() + "/frontendIPConfigurations/" + frontendName;
             var frontendRef = new SubResource(id);
             Inner.FrontendIPConfiguration = frontendRef;
             return this;
         }
 
-        public LoadBalancingRuleImpl WithBackend (string backendName)
+        internal LoadBalancingRuleImpl WithBackend (string backendName)
         {
-            string id = Parent.FutureResourceId + "/backendAddressPools/" + backendName;
+            string id = Parent.FutureResourceId() + "/backendAddressPools/" + backendName;
             var backendRef = new SubResource(id);
             Inner.BackendAddressPool = backendRef;
             return this;
         }
 
-        public LoadBalancingRuleImpl WithProbe (string name)
+        internal LoadBalancingRuleImpl WithProbe (string name)
         {
-            string id = Parent.FutureResourceId + "/probes/" + name;
+            string id = Parent.FutureResourceId() + "/probes/" + name;
             var probeRef = new SubResource(id);
             Inner.Probe = probeRef;
             return this;
         }
 
-        public LoadBalancerImpl Attach ()
+        internal LoadBalancerImpl Attach ()
         {
             return Parent.WithLoadBalancingRule(this);
         }

@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.HttpProbe.Update
     /// </summary>
     public interface IWithRequestPath 
     {
-        Microsoft.Azure.Management.Fluent.Network.HttpProbe.Update.IUpdate WithRequestPath (string requestPath);
+        Microsoft.Azure.Management.Fluent.Network.HttpProbe.Update.IUpdate WithRequestPath(string requestPath);
 
     }
     /// <summary>
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.HttpProbe.Update
         /// </summary>
         /// <param name="port">port a port number</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Fluent.Network.HttpProbe.Update.IUpdate WithPort (int port);
+        Microsoft.Azure.Management.Fluent.Network.HttpProbe.Update.IUpdate WithPort(int port);
 
     }
     /// <summary>
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.HttpProbe.Update
         /// </summary>
         /// <param name="probes">probes number of probes</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Fluent.Network.HttpProbe.Update.IUpdate WithNumberOfProbes (int probes);
+        Microsoft.Azure.Management.Fluent.Network.HttpProbe.Update.IUpdate WithNumberOfProbes(int probes);
 
     }
     /// <summary>
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.HttpProbe.Update
         /// </summary>
         /// <param name="seconds">seconds number of seconds</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Fluent.Network.HttpProbe.Update.IUpdate WithIntervalInSeconds (int seconds);
+        Microsoft.Azure.Management.Fluent.Network.HttpProbe.Update.IUpdate WithIntervalInSeconds(int seconds);
 
     }
 }

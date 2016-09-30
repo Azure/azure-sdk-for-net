@@ -130,11 +130,11 @@ namespace Fluent.Tests
                     .Append("\n\tMAC Address:").Append(resource.MacAddress)
                     .Append("\n\tPrivate IP:").Append(resource.PrimaryPrivateIp)
                     .Append("\n\tPrivate allocation method:").Append(resource.PrimaryPrivateIpAllocationMethod)
-                    .Append("\n\tSubnet Name:").Append(resource.PrimaryIpConfiguration().SubnetName)
+                    .Append("\n\tSubnet Name:").Append(resource.PrimaryIpConfiguration.SubnetName)
                     .Append("\n\tIP configurations: ");
 
             // Output IP configs
-            foreach (INicIpConfiguration ipConfig in resource.IpConfigurations().Values)
+            foreach (INicIpConfiguration ipConfig in resource.IpConfigurations.Values)
             {
                 info.Append("\n\t\tName: ").Append(ipConfig.Name)
                     .Append("\n\t\tPrivate IP: ").Append(ipConfig.PrivateIpAddress)

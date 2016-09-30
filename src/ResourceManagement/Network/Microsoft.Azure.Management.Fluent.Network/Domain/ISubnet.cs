@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
         /// <returns>the network security group associated with this subnet</returns>
         /// <returns><p></returns>
         /// <returns>Note that this method will result in a call to Azure each time it is invoked.</returns>
-        INetworkSecurityGroup GetNetworkSecurityGroup ();
+        Microsoft.Azure.Management.Fluent.Network.INetworkSecurityGroup GetNetworkSecurityGroup();
 
     }
 }

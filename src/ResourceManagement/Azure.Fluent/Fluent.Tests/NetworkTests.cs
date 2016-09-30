@@ -78,7 +78,7 @@ namespace Fluent.Tests
                     .Append("\n\tDNS server IPs: ").Append(resource.DnsServerIps);
 
             // Output subnets
-            foreach (ISubnet subnet in resource.Subnets().Values)
+            foreach (ISubnet subnet in resource.Subnets.Values)
             {
                 info.Append("\n\tSubnet: ").Append(subnet.Name)
                     .Append("\n\t\tAddress prefix: ").Append(subnet.AddressPrefix)

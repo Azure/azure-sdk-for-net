@@ -703,12 +703,12 @@ namespace Microsoft.Azure.Management.Fluent.Compute
 
         public IPublicIpAddress GetPrimaryPublicIpAddress ()
         {
-            return this.GetPrimaryNetworkInterface().PrimaryIpConfiguration().GetPublicIpAddress();
+            return this.GetPrimaryNetworkInterface().PrimaryIpConfiguration.GetPublicIpAddress();
         }
 
         public string GetPrimaryPublicIpAddressId()
         {
-            return this.GetPrimaryNetworkInterface().PrimaryIpConfiguration().PublicIpAddressId;
+            return this.GetPrimaryNetworkInterface().PrimaryIpConfiguration.PublicIpAddressId;
         }
 
         public List<string> NetworkInterfaceIds

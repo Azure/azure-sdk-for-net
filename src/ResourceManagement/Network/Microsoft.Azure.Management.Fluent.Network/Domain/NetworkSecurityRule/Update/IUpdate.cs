@@ -14,25 +14,25 @@ namespace Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update
         /// Allows inbound traffic.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate AllowInbound { get; }
+        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate AllowInbound();
 
         /// <summary>
         /// Allows outbound traffic.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate AllowOutbound { get; }
+        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate AllowOutbound();
 
         /// <summary>
         /// Blocks inbound traffic.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate DenyInbound { get; }
+        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate DenyInbound();
 
         /// <summary>
         /// Blocks outbound traffic.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate DenyOutbound { get; }
+        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate DenyOutbound();
 
     }
     /// <summary>
@@ -45,13 +45,13 @@ namespace Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update
         /// </summary>
         /// <param name="cidr">cidr an IP address prefix expressed in the CIDR notation</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate FromAddress (string cidr);
+        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate FromAddress(string cidr);
 
         /// <summary>
         /// Specifies that the rule applies to any traffic source address.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate FromAnyAddress { get; }
+        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate FromAnyAddress();
 
     }
     /// <summary>
@@ -73,14 +73,14 @@ namespace Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update
         /// </summary>
         /// <param name="priority">priority the priority number in the range 100 to 4096</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate WithPriority (int priority);
+        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate WithPriority(int priority);
 
         /// <summary>
         /// Specifies a description for this security rule.
         /// </summary>
         /// <param name="description">description a text description to associate with this security rule</param>
         /// <returns>the next stage</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate WithDescription (string description);
+        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate WithDescription(string description);
 
     }
     /// <summary>
@@ -93,13 +93,13 @@ namespace Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update
         /// </summary>
         /// <param name="protocol">protocol one of the supported protocols</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate WithProtocol (string protocol);
+        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate WithProtocol(string protocol);
 
         /// <summary>
         /// Makes this rule apply to any supported protocol.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate WithAnyProtocol ();
+        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate WithAnyProtocol();
 
     }
     /// <summary>
@@ -112,13 +112,13 @@ namespace Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update
         /// </summary>
         /// <param name="port">port the source port number</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate FromPort (int port);
+        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate FromPort(int port);
 
         /// <summary>
         /// Makes this rule apply to any source port.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate FromAnyPort { get; }
+        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate FromAnyPort();
 
         /// <summary>
         /// Specifies the source port range to which this rule applies.
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update
         /// <param name="from">from the starting port number</param>
         /// <param name="to">to the ending port number</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate FromPortRange (int from, int to);
+        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate FromPortRange(int from, int to);
 
     }
     /// <summary>
@@ -139,13 +139,13 @@ namespace Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update
         /// </summary>
         /// <param name="cidr">cidr an IP address range expressed in the CIDR notation</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate ToAddress (string cidr);
+        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate ToAddress(string cidr);
 
         /// <summary>
         /// Makes the rule apply to any traffic destination address.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate ToAnyAddress { get; }
+        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate ToAnyAddress();
 
     }
     /// <summary>
@@ -158,13 +158,13 @@ namespace Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update
         /// </summary>
         /// <param name="port">port the destination port number</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate ToPort (int port);
+        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate ToPort(int port);
 
         /// <summary>
         /// Makes this rule apply to any destination port.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate ToAnyPort { get; }
+        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate ToAnyPort();
 
         /// <summary>
         /// Specifies the destination port range to which this rule applies.
@@ -172,7 +172,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update
         /// <param name="from">from the starting port number</param>
         /// <param name="to">to the ending port number</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate ToPortRange (int from, int to);
+        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate ToPortRange(int from, int to);
 
     }
 }

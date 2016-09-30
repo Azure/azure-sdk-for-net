@@ -3,12 +3,12 @@
 namespace Microsoft.Azure.Management.Fluent.Network
 {
 
-    using Microsoft.Azure.Management.Network.Models;
+    using System.Threading;
     using System.Threading.Tasks;
     using Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions;
+    using Microsoft.Azure.Management.Network.Models;
     using Microsoft.Azure.Management.Fluent.Resource;
     using Microsoft.Azure.Management.Fluent.Resource.Core;
-    using System.Threading;
     public partial class NetworkSecurityGroupsImpl 
     {
         /// <summary>
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
         /// </summary>
         /// <param name="name">name the name of the new resource</param>
         /// <returns>the first stage of the new resource definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityGroup.Definition.IBlank Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsCreating<Microsoft.Azure.Management.Fluent.Network.NetworkSecurityGroup.Definition.IBlank>.Define (string name) { 
+        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityGroup.Definition.IBlank Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsCreating<Microsoft.Azure.Management.Fluent.Network.NetworkSecurityGroup.Definition.IBlank>.Define(string name) { 
             return this.Define( name) as Microsoft.Azure.Management.Fluent.Network.NetworkSecurityGroup.Definition.IBlank;
         }
 
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
         /// </summary>
         /// <param name="resourceGroupName">resourceGroupName the name of the resource group to list the resources from</param>
         /// <returns>the list of resources</returns>
-        Microsoft.Azure.Management.Fluent.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Network.INetworkSecurityGroup> Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Fluent.Network.INetworkSecurityGroup>.ListByGroup (string resourceGroupName) { 
+        Microsoft.Azure.Management.Fluent.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Network.INetworkSecurityGroup> Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Fluent.Network.INetworkSecurityGroup>.ListByGroup(string resourceGroupName) { 
             return this.ListByGroup( resourceGroupName) as Microsoft.Azure.Management.Fluent.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Network.INetworkSecurityGroup>;
         }
 
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
         /// <param name="resourceGroupName">resourceGroupName the name of the resource group the resource is in</param>
         /// <param name="name">name the name of the resource. (Note, this is not the ID)</param>
         /// <returns>an immutable representation of the resource</returns>
-        Microsoft.Azure.Management.Fluent.Network.INetworkSecurityGroup Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsGettingByGroup<Microsoft.Azure.Management.Fluent.Network.INetworkSecurityGroup>.GetByGroup (string resourceGroupName, string name) { 
+        Microsoft.Azure.Management.Fluent.Network.INetworkSecurityGroup Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsGettingByGroup<Microsoft.Azure.Management.Fluent.Network.INetworkSecurityGroup>.GetByGroup(string resourceGroupName, string name) { 
             return this.GetByGroup( resourceGroupName,  name) as Microsoft.Azure.Management.Fluent.Network.INetworkSecurityGroup;
         }
 
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
         /// <param name="name">name The name of the resource</param>
         /// <param name="cancellationToken">cancellationToken the cancellation token</param>
         /// <returns>an observable to the request</returns>
-        async Task Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsDeletingByGroup.DeleteAsync (string groupName, string name, CancellationToken cancellationToken = default(CancellationToken)) { 
+        async Task Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsDeletingByGroup.DeleteAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken)) { 
             await this.DeleteAsync( groupName,  name);
         }
 
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
         /// Lists all the resources of the specified type in the currently selected subscription.
         /// </summary>
         /// <returns>list of resources</returns>
-        Microsoft.Azure.Management.Fluent.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Network.INetworkSecurityGroup> Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Fluent.Network.INetworkSecurityGroup>.List () { 
+        Microsoft.Azure.Management.Fluent.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Network.INetworkSecurityGroup> Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Fluent.Network.INetworkSecurityGroup>.List() { 
             return this.List() as Microsoft.Azure.Management.Fluent.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Network.INetworkSecurityGroup>;
         }
 

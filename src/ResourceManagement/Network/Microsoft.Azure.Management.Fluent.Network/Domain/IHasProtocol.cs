@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
     public interface IHasProtocol<ProtocolT> 
     {
         /// <returns>the protocol</returns>
-        ProtocolT Protocol ();
+        ProtocolT Protocol { get; }
 
     }
 }

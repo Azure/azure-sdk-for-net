@@ -86,14 +86,14 @@ namespace Microsoft.Azure.Management.Fluent.Network
         #endregion
 
         #region Public Withers
-        public NetworkSecurityRuleImpl UpdateRule (string name)
+        internal NetworkSecurityRuleImpl UpdateRule (string name)
         {
             INetworkSecurityRule rule;
             rules.TryGetValue(name, out rule);
             return (NetworkSecurityRuleImpl) rule;
         }
 
-        public NetworkSecurityRuleImpl DefineRule (string name)
+        internal NetworkSecurityRuleImpl DefineRule (string name)
         {
             SecurityRuleInner inner = new SecurityRuleInner()
             {
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return new NetworkSecurityRuleImpl(inner, this);
         }
 
-        public NetworkSecurityGroupImpl WithoutRule(string name)
+        internal NetworkSecurityGroupImpl WithoutRule(string name)
         {
             rules.Remove(name);
             return this;
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
         #endregion
 
         #region Actions
-        public IList<ISubnet> ListAssociatedSubnets()
+        internal IList<ISubnet> ListAssociatedSubnets()
         {
             IList<SubnetInner> subnetRefs = this.Inner.Subnets;
             IDictionary<string, INetwork> networks = new Dictionary<string, INetwork>();
@@ -141,7 +141,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
                     {
                         string subnetName = ResourceUtils.NameFromResourceId(subnetRef.Id);
                         ISubnet subnet;
-                        if (network.Subnets().TryGetValue(subnetName, out subnet))
+                        if (network.Subnets.TryGetValue(subnetName, out subnet))
                         {
                             subnets.Add(subnet);
                         }
@@ -161,30 +161,25 @@ namespace Microsoft.Azure.Management.Fluent.Network
         #endregion
 
         #region Accessors
-        public IDictionary<string, INetworkSecurityRule> SecurityRules ()
+        internal IDictionary<string, INetworkSecurityRule> SecurityRules ()
         {
             return rules;
         }
 
-        public IDictionary<string, INetworkSecurityRule> DefaultSecurityRules ()
+        internal IDictionary<string, INetworkSecurityRule> DefaultSecurityRules ()
         {
             return defaultRules;
         }
 
-        public IList<string> NetworkInterfaceIds
+        internal IList<string> NetworkInterfaceIds()
         {
-            get
+            IList<string> ids = new List<string>();
+            if (Inner.NetworkInterfaces != null)
             {
-                IList<string> ids = new List<string>();
-                if (Inner.NetworkInterfaces != null)
-                {
-                    foreach (var inner in Inner.NetworkInterfaces)
-                    {
-                        ids.Add(inner.Id);
-                    }
-                }
-                return ids;
+                foreach (var inner in Inner.NetworkInterfaces)
+                    ids.Add(inner.Id);
             }
+            return ids;
         }
         #endregion
     }

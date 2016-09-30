@@ -3,8 +3,8 @@
 namespace Microsoft.Azure.Management.Fluent.Network
 {
 
-    using Microsoft.Azure.Management.Network.Models;
     using Microsoft.Azure.Management.Fluent.Resource.Core;
+    using Microsoft.Azure.Management.Network.Models;
     /// <summary>
     /// An immutable client-side representation of a load balancing probe.
     /// </summary>
@@ -15,13 +15,13 @@ namespace Microsoft.Azure.Management.Fluent.Network
         IHasProtocol<string>
     {
         /// <returns>the port number the probe is monitoring</returns>
-        int? Port { get; }
+        int Port { get; }
 
         /// <returns>number of seconds between probes</returns>
-        int? IntervalInSeconds { get; }
+        int IntervalInSeconds { get; }
 
         /// <returns>number of failed probes before the node is determined to be unhealthy</returns>
-        int? NumberOfProbes { get; }
+        int NumberOfProbes { get; }
 
     }
 }

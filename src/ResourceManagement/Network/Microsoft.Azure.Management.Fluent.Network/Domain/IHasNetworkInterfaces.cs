@@ -15,13 +15,13 @@ namespace Microsoft.Azure.Management.Fluent.Network
         /// Note that this method can result in a call to the cloud to fetch the network interface information.
         /// </summary>
         /// <returns>the primary network interface associated with this resource</returns>
-        INetworkInterface GetPrimaryNetworkInterface ();
+        Microsoft.Azure.Management.Fluent.Network.INetworkInterface GetPrimaryNetworkInterface();
 
         /// <returns>the resource id of the primary network interface associated with this resource</returns>
         string PrimaryNetworkInterfaceId { get; }
 
         /// <returns>the list of resource IDs of the network interfaces associated with this resource</returns>
-        IList<string> NetworkInterfaceIds { get; }
+        System.Collections.Generic.IList<string> NetworkInterfaceIds { get; }
 
     }
 }

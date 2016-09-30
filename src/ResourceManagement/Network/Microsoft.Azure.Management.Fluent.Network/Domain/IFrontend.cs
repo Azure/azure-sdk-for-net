@@ -18,10 +18,10 @@ namespace Microsoft.Azure.Management.Fluent.Network
         bool IsPublic { get; }
 
         /// <returns>the inbound NAT pools on this load balancer that use this frontend, indexed by their names</returns>
-        IDictionary<string,Microsoft.Azure.Management.Fluent.Network.IInboundNatPool> InboundNatPools ();
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Fluent.Network.IInboundNatPool> InboundNatPools { get; }
 
         /// <returns>the inbound NAT rules on this load balancer that use this frontend, indexed by their names</returns>
-        IDictionary<string,Microsoft.Azure.Management.Fluent.Network.IInboundNatRule> InboundNatRules ();
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Fluent.Network.IInboundNatRule> InboundNatRules { get; }
 
     }
 }

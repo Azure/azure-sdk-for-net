@@ -363,7 +363,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
                 throw new ArgumentException("Parameter loadBalancer must be an internal load balancer");
             }
             string lbNetworkId = null;
-            foreach (IFrontend frontEnd in loadBalancer.Frontends().Values)
+            foreach (IFrontend frontEnd in loadBalancer.Frontends.Values)
             {
                 if (frontEnd.Inner.Subnet.Id != null)
                 {
@@ -1367,7 +1367,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         {
             string loadBalancerId = loadBalancer.Id;
             IDictionary<string, IBackend> attachedBackends = new Dictionary<string, IBackend>();
-            IDictionary<string, IBackend> lbBackends = loadBalancer.Backends();
+            IDictionary<string, IBackend> lbBackends = loadBalancer.Backends;
             foreach (IBackend lbBackend in lbBackends.Values)
             {
                 string backendId = mergePath(loadBalancerId, "backendAddressPools", lbBackend.Name);
@@ -1387,7 +1387,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         {
             String loadBalancerId = loadBalancer.Id;
             IDictionary<string, IInboundNatPool> attachedInboundNatPools = new Dictionary<string, IInboundNatPool>();
-            IDictionary<string, IInboundNatPool> lbInboundNatPools = loadBalancer.InboundNatPools();
+            IDictionary<string, IInboundNatPool> lbInboundNatPools = loadBalancer.InboundNatPools;
             foreach (IInboundNatPool lbInboundNatPool in lbInboundNatPools.Values)
             {
                 String inboundNatPoolId = mergePath(loadBalancerId, "inboundNatPools", lbInboundNatPool.Name);
@@ -1405,7 +1405,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         private static void associateLoadBalancerToIpConfiguration(ILoadBalancer loadBalancer,
                                                                    VirtualMachineScaleSetIPConfigurationInner ipConfig)
         {
-            var backends = loadBalancer.Backends().Values;
+            var backends = loadBalancer.Backends.Values;
 
             string[] backendNames = new string[backends.Count];
             int i = 0;
@@ -1419,7 +1419,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
                     ipConfig,
                     backendNames);
 
-            var inboundNatPools = loadBalancer.InboundNatPools().Values;
+            var inboundNatPools = loadBalancer.InboundNatPools.Values;
             string[] natPoolNames = new string[inboundNatPools.Count];
             i = 0;
             foreach (IInboundNatPool inboundNatPool in inboundNatPools)

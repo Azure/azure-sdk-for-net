@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
     public interface IHasFrontend 
     {
         /// <returns>the associated frontend</returns>
-        IFrontend Frontend ();
+        Microsoft.Azure.Management.Fluent.Network.IFrontend Frontend { get; }
 
     }
 }
