@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
     /// <summary>
     /// Represents a application collection associated with a Batch Account.
     /// </summary>
-    internal partial class ApplicationsImpl :
+    public partial class ApplicationsImpl :
         ExternalChildResources<
             ApplicationImpl,
             IApplication,

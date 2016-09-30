@@ -1,16 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
 namespace Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Definition
 {
 
     using Microsoft.Azure.Management.Fluent.Resource.Core.GroupableResource.Definition;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.Resource.Definition;
     using Microsoft.Azure.Management.Fluent.Batch;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.Fluent.Batch.Application.Definition;
     using Microsoft.Azure.Management.Fluent.Storage;
-    using Fluent.Resource.Core.Resource.Definition;
-
     /// <summary>
     /// A batch account definition allowing resource group to be set.
     /// </summary>
@@ -74,7 +72,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Definition
         /// </summary>
         /// <param name="applicationId">applicationId id of the application to create</param>
         /// <returns>next stage to create the Batch account.</returns>
-        Microsoft.Azure.Management.Fluent.Batch.Application.Definition.IBlank<Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Definition.IWithApplicationAndStorage> DefineNewApplication (string applicationId);
+        Microsoft.Azure.Management.Fluent.Batch.Application.Definition.IBlank<Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Definition.IWithApplicationAndStorage> DefineNewApplication(string applicationId);
 
     }
     /// <summary>
@@ -87,21 +85,21 @@ namespace Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Definition
         /// </summary>
         /// <param name="storageAccount">storageAccount existing storage account to be used</param>
         /// <returns>the stage representing creatable batch account definition</returns>
-        IWithCreate WithExistingStorageAccount (IStorageAccount storageAccount);
+        Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Definition.IWithCreate WithExistingStorageAccount(IStorageAccount storageAccount);
 
         /// <summary>
         /// Specifies that a storage account to be attached with the batch account.
         /// </summary>
         /// <param name="storageAccountCreatable">storageAccountCreatable storage account to be created along with and used in batch</param>
         /// <returns>the stage representing creatable batch account definition</returns>
-        IWithCreate WithNewStorageAccount (ICreatable<Microsoft.Azure.Management.Fluent.Storage.IStorageAccount> storageAccountCreatable);
+        Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Definition.IWithCreate WithNewStorageAccount(ICreatable<Microsoft.Azure.Management.Fluent.Storage.IStorageAccount> storageAccountCreatable);
 
         /// <summary>
         /// Specifies that an existing storage account to be attached with the batch account.
         /// </summary>
         /// <param name="storageAccountName">storageAccountName name of new storage account to be created and used in batch account</param>
         /// <returns>the stage representing creatable batch account definition</returns>
-        IWithCreate WithNewStorageAccount (string storageAccountName);
+        Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Definition.IWithCreate WithNewStorageAccount(string storageAccountName);
 
     }
 }
