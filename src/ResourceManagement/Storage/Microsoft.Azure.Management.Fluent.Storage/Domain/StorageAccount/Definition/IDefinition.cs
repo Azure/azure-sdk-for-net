@@ -3,11 +3,11 @@
 namespace Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Definition
 {
 
-    using Microsoft.Azure.Management.Storage.Models;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.GroupableResource.Definition;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.Resource.Definition;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.Fluent.Storage;
+    using Management.Storage.Models;
+    using Resource.Core.GroupableResource.Definition;
+    using Resource.Core.Resource.Definition;
+    using Resource.Core.ResourceActions;
+    using Storage;
     /// <summary>
     /// A storage account definition specifying a custom domain to associate with the account.
     /// </summary>
@@ -18,14 +18,14 @@ namespace Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Definition
         /// </summary>
         /// <param name="customDomain">customDomain the user domain assigned to the storage account</param>
         /// <returns>the next stage of storage account definition</returns>
-        Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Definition.IWithCreate WithCustomDomain(CustomDomain customDomain);
+        IWithCreate WithCustomDomain(CustomDomain customDomain);
 
         /// <summary>
         /// Specifies the user domain assigned to the storage account.
         /// </summary>
         /// <param name="name">name the custom domain name, which is the CNAME source</param>
         /// <returns>the next stage of storage account definition</returns>
-        Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Definition.IWithCreate WithCustomDomain(string name);
+        IWithCreate WithCustomDomain(string name);
 
         /// <summary>
         /// Specifies the user domain assigned to the storage account.
@@ -33,21 +33,21 @@ namespace Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Definition
         /// <param name="name">name the custom domain name, which is the CNAME source</param>
         /// <param name="useSubDomain">useSubDomain whether indirect CName validation is enabled</param>
         /// <returns>the next stage of storage account definition</returns>
-        Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Definition.IWithCreate WithCustomDomain(string name, bool useSubDomain);
+        IWithCreate WithCustomDomain(string name, bool useSubDomain);
 
     }
     /// <summary>
     /// A storage account definition allowing resource group to be set.
     /// </summary>
     public interface IWithGroup  :
-        Microsoft.Azure.Management.Fluent.Resource.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Definition.IWithCreate>
+        IWithGroup<IWithCreate>
     {
     }
     /// <summary>
     /// The first stage of the storage account definition.
     /// </summary>
     public interface IBlank  :
-        IDefinitionWithRegion<Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Definition.IWithGroup>
+        IDefinitionWithRegion<IWithGroup>
     {
     }
     /// <summary>
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Definition
         /// tier is defaulted to be "Hot".
         /// </summary>
         /// <returns>the next stage of storage account definition</returns>
-        Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Definition.IWithCreateAndAccessTier WithBlobStorageAccountKind();
+        IWithCreateAndAccessTier WithBlobStorageAccountKind();
 
     }
     /// <summary>
@@ -69,13 +69,13 @@ namespace Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Definition
     /// specify.
     /// </summary>
     public interface IWithCreate  :
-        ICreatable<Microsoft.Azure.Management.Fluent.Storage.IStorageAccount>,
+        ICreatable<IStorageAccount>,
         IWithSku,
         IWithBlobStorageAccountKind,
         IWithGeneralPurposeAccountKind,
         IWithEncryption,
         IWithCustomDomain,
-        IDefinitionWithTags<Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Definition.IWithCreate>
+        IDefinitionWithTags<IWithCreate>
     {
     }
     /// <summary>
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Definition
         /// </summary>
         /// <param name="skuName">skuName the sku</param>
         /// <returns>the next stage of storage account definition</returns>
-        Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Definition.IWithCreate WithSku(SkuName skuName);
+        IWithCreate WithSku(SkuName skuName);
 
     }
     /// <summary>
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Definition
         /// </summary>
         /// <param name="accessTier">accessTier the access tier value</param>
         /// <returns>the next stage of storage account definition</returns>
-        Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Definition.IWithCreate WithAccessTier(AccessTier accessTier);
+        IWithCreate WithAccessTier(AccessTier accessTier);
 
     }
     /// <summary>
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Definition
         /// </summary>
         /// <param name="encryption">encryption the encryption setting</param>
         /// <returns>the nest stage of storage account definition</returns>
-        Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Definition.IWithCreate WithEncryption(Encryption encryption);
+        IWithCreate WithEncryption(Encryption encryption);
 
     }
     /// <summary>
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Definition
     /// </summary>
     public interface IDefinition  :
         IBlank,
-        Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Definition.IWithGroup,
+        IWithGroup,
         IWithCreate,
         IWithCreateAndAccessTier
     {
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Definition
         /// general purposes.
         /// </summary>
         /// <returns>the next stage of storage account definition</returns>
-        Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Definition.IWithCreate WithGeneralPurposeAccountKind();
+        IWithCreate WithGeneralPurposeAccountKind();
 
     }
 }

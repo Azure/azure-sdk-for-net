@@ -3,27 +3,26 @@
 namespace Microsoft.Azure.Management.Fluent.Storage
 {
 
-    using Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions;
-    using Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Definition;
+    using Resource.Core.CollectionActions;
     /// <summary>
     /// Entry point for storage accounts management API.
     /// </summary>
     public interface IStorageAccounts  :
-        ISupportsListing<Microsoft.Azure.Management.Fluent.Storage.IStorageAccount>,
-        ISupportsCreating<Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Definition.IBlank>,
+        ISupportsListing<IStorageAccount>,
+        ISupportsCreating<StorageAccount.Definition.IBlank>,
         ISupportsDeleting,
-        ISupportsListingByGroup<Microsoft.Azure.Management.Fluent.Storage.IStorageAccount>,
-        ISupportsGettingByGroup<Microsoft.Azure.Management.Fluent.Storage.IStorageAccount>,
-        ISupportsGettingById<Microsoft.Azure.Management.Fluent.Storage.IStorageAccount>,
+        ISupportsListingByGroup<IStorageAccount>,
+        ISupportsGettingByGroup<IStorageAccount>,
+        ISupportsGettingById<IStorageAccount>,
         ISupportsDeletingByGroup,
-        ISupportsBatchCreation<Microsoft.Azure.Management.Fluent.Storage.IStorageAccount>
+        ISupportsBatchCreation<IStorageAccount>
     {
         /// <summary>
         /// Checks that account name is valid and is not in use.
         /// </summary>
         /// <param name="name">name the account name to check</param>
         /// <returns>whether the name is available and other info if not</returns>
-        Microsoft.Azure.Management.Fluent.Storage.CheckNameAvailabilityResult CheckNameAvailability(string name);
+        CheckNameAvailabilityResult CheckNameAvailability(string name);
 
     }
 }
