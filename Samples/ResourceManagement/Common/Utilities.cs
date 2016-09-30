@@ -1,17 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Azure.Management.Storage.Models;
+using Microsoft.Azure.Management.Fluent.Batch;
 using Microsoft.Azure.Management.Fluent.Compute;
+using Microsoft.Azure.Management.Fluent.KeyVault;
+using Microsoft.Azure.Management.Fluent.Network;
 using Microsoft.Azure.Management.Fluent.Storage;
+using Microsoft.Azure.Management.Storage.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.Azure.Management.Fluent.Batch;
-using Microsoft.Azure.Management.Fluent.Network;
-using Microsoft.Azure.Management.Fluent.KeyVault;
 
 namespace Microsoft.Azure.Management.Samples.Common
 {
@@ -246,6 +244,5 @@ namespace Microsoft.Azure.Management.Samples.Common
 
             Console.WriteLine(info.ToString());
         }
-
     }
 }

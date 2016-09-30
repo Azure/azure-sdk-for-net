@@ -1,40 +1,41 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Samples.Common;
 using Microsoft.Azure.Management;
 using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Management.Network.Models;
 using Microsoft.Azure.Management.Fluent.Compute;
 using Microsoft.Azure.Management.Fluent.Network;
 using Microsoft.Azure.Management.Fluent.Resource;
 using Microsoft.Azure.Management.Fluent.Resource.Authentication;
 using Microsoft.Azure.Management.Fluent.Resource.Core;
 using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+using Microsoft.Azure.Management.Network.Models;
+using Microsoft.Azure.Management.Samples.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace ManageVirtualMachinesInParallelWithNetwork
 {
+    /**
+     * Create a virtual network with two Subnets – frontend and backend
+     * Frontend allows HTTP in and denies Internet out
+     * Backend denies Internet in and Internet out
+     * Create m Linux virtual machines in the frontend
+     * Create m Windows virtual machines in the backend.
+     */
+
     public class Program
     {
-        /**
-         * Create a virtual network with two Subnets – frontend and backend
-         * Frontend allows HTTP in and denies Internet out
-         * Backend denies Internet in and Internet out
-         * Create m Linux virtual machines in the frontend
-         * Create m Windows virtual machines in the backend.
-         */
-        readonly static int frontendVmCount = 10;
-        readonly static int backendVmCount = 10;
-        readonly static string rgName = ResourceNamer.RandomResourceName("rgCOMV", 24);
-        readonly static string frontEndNSGName = ResourceNamer.RandomResourceName("fensg", 24);
-        readonly static string backEndNSGName = ResourceNamer.RandomResourceName("bensg", 24);
-        readonly static string networkName = ResourceNamer.RandomResourceName("vnetCOMV", 24);
-        readonly static string storageAccountName = ResourceNamer.RandomResourceName("stgCOMV", 20);
-        readonly static string userName = "tirekicker";
-        readonly static string password = "12NewPA$$w0rd!";
+        private static readonly int frontendVmCount = 10;
+        private static readonly int backendVmCount = 10;
+        private static readonly string rgName = ResourceNamer.RandomResourceName("rgNEPP", 24);
+        private static readonly string frontEndNSGName = ResourceNamer.RandomResourceName("fensg", 24);
+        private static readonly string backEndNSGName = ResourceNamer.RandomResourceName("bensg", 24);
+        private static readonly string networkName = ResourceNamer.RandomResourceName("vnetCOMV", 24);
+        private static readonly string storageAccountName = ResourceNamer.RandomResourceName("stgCOMV", 20);
+        private static readonly string userName = "tirekicker";
+        private static readonly string password = "12NewPA$$w0rd!";
 
         public static void Main(string[] args)
         {

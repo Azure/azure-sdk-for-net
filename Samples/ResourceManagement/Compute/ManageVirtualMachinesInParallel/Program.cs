@@ -1,5 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management;
 using Microsoft.Azure.Management.Compute.Models;
@@ -13,18 +13,19 @@ using System.Collections.Generic;
 
 namespace ManageVirtualMachinesInParallel
 {
+    /**
+     * Azure Compute sample for managing virtual machines -
+     *  - Create N virtual machines in parallel
+     */
+
     public class Program
     {
-        /**
-         * Azure Compute sample for managing virtual machines -
-         *  - Create N virtual machines in parallel
-         */
-        readonly static int vmCount = 2;
-        readonly static string rgName = ResourceNamer.RandomResourceName("rgCOMV", 24);
-        readonly static string networkName = ResourceNamer.RandomResourceName("vnetCOMV", 24);
-        readonly static string storageAccountName = ResourceNamer.RandomResourceName("stgCOMV", 20);
-        readonly static string userName = "tirekicker";
-        readonly static string password = "12NewPA$$w0rd!";
+        private static readonly int vmCount = 2;
+        private static readonly string rgName = ResourceNamer.RandomResourceName("rgCOPP", 24);
+        private static readonly string networkName = ResourceNamer.RandomResourceName("vnetCOMV", 24);
+        private static readonly string storageAccountName = ResourceNamer.RandomResourceName("stgCOMV", 20);
+        private static readonly string userName = "tirekicker";
+        private static readonly string password = "12NewPA$$w0rd!";
 
         public static void Main(string[] args)
         {
