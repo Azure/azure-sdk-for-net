@@ -3,9 +3,8 @@
 namespace Microsoft.Azure.Management.Fluent.Storage
 {
 
-    using Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Definition;
     using Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions;
-    using Microsoft.Azure.Management.Storage.Models;
+    using Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Definition;
     /// <summary>
     /// Entry point for storage accounts management API.
     /// </summary>
@@ -24,7 +23,7 @@ namespace Microsoft.Azure.Management.Fluent.Storage
         /// </summary>
         /// <param name="name">name the account name to check</param>
         /// <returns>whether the name is available and other info if not</returns>
-        CheckNameAvailabilityResult CheckNameAvailability (string name);
+        Microsoft.Azure.Management.Fluent.Storage.CheckNameAvailabilityResult CheckNameAvailability(string name);
 
     }
 }

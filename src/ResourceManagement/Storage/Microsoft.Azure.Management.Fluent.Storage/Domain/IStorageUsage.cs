@@ -3,8 +3,8 @@
 namespace Microsoft.Azure.Management.Fluent.Storage
 {
 
-    using Microsoft.Azure.Management.Fluent.Resource.Core;
     using Microsoft.Azure.Management.Storage.Models;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
     /// <summary>
     /// An immutable client-side representation of an Azure storage resource usage info object.
     /// </summary>
@@ -13,17 +13,17 @@ namespace Microsoft.Azure.Management.Fluent.Storage
     {
         /// <returns>the unit of measurement. Possible values include: 'Count',</returns>
         /// <returns>'Bytes', 'Seconds', 'Percent', 'CountsPerSecond', 'BytesPerSecond'.</returns>
-        UsageUnit? Unit { get; }
+        Microsoft.Azure.Management.Storage.Models.UsageUnit Unit { get; }
 
         /// <returns>the current count of the allocated resources in the subscription</returns>
-        int? CurrentValue { get; }
+        int CurrentValue { get; }
 
         /// <returns>the maximum count of the resources that can be allocated in the</returns>
         /// <returns>subscription</returns>
-        int? Limit { get; }
+        int Limit { get; }
 
         /// <returns>the name of the type of usage</returns>
-        UsageName Name { get; }
+        Microsoft.Azure.Management.Storage.Models.UsageName Name { get; }
 
     }
 }

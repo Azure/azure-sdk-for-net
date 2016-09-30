@@ -4,9 +4,9 @@ namespace Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Update
 {
 
     using Microsoft.Azure.Management.Storage.Models;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.Resource.Update;
     using Microsoft.Azure.Management.Fluent.Storage;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.Resource.Update;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
     /// <summary>
     /// A storage account update stage allowing to change the parameters.
     /// </summary>
@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Update
         /// </summary>
         /// <param name="skuName">skuName the sku</param>
         /// <returns>the next stage of storage account update</returns>
-        IUpdate WithSku (SkuName skuName);
+        Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Update.IUpdate WithSku(SkuName skuName);
 
     }
     /// <summary>
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Update
         /// </summary>
         /// <param name="encryption">encryption the encryption setting</param>
         /// <returns>the nest stage of storage account update</returns>
-        IUpdate WithEncryption (Encryption encryption);
+        Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Update.IUpdate WithEncryption(Encryption encryption);
 
     }
     /// <summary>
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Update
         /// </summary>
         /// <param name="accessTier">accessTier the access tier value</param>
         /// <returns>the next stage of storage account update</returns>
-        IUpdate WithAccessTier (AccessTier accessTier);
+        Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Update.IUpdate WithAccessTier(AccessTier accessTier);
 
     }
     /// <summary>
@@ -75,14 +75,14 @@ namespace Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Update
         /// </summary>
         /// <param name="customDomain">customDomain the user domain assigned to the storage account</param>
         /// <returns>the next stage of storage account update</returns>
-        IUpdate WithCustomDomain (CustomDomain customDomain);
+        Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Update.IUpdate WithCustomDomain(CustomDomain customDomain);
 
         /// <summary>
         /// Specifies the user domain assigned to the storage account.
         /// </summary>
         /// <param name="name">name the custom domain name, which is the CNAME source</param>
         /// <returns>the next stage of storage account update</returns>
-        IUpdate WithCustomDomain (string name);
+        Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Update.IUpdate WithCustomDomain(string name);
 
         /// <summary>
         /// Specifies the user domain assigned to the storage account.
@@ -90,13 +90,13 @@ namespace Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Update
         /// <param name="name">name the custom domain name, which is the CNAME source</param>
         /// <param name="useSubDomain">useSubDomain whether indirect CName validation is enabled</param>
         /// <returns>the next stage of storage account update</returns>
-        IUpdate WithCustomDomain (string name, bool useSubDomain);
+        Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Update.IUpdate WithCustomDomain(string name, bool useSubDomain);
 
         /// <summary>
         /// Clears the existing user domain assigned to the storage account.
         /// </summary>
         /// <returns>the next stage of storage account update</returns>
-        IUpdate WithoutCustomDomain ();
+        Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Update.IUpdate WithoutCustomDomain();
 
     }
 }

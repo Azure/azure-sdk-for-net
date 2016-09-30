@@ -11,19 +11,23 @@ namespace Microsoft.Azure.Management.Fluent.Storage
         internal UsageImpl(UsageInner innerObject) : base(innerObject)
         {}
 
-        public int? CurrentValue
+        public int CurrentValue
         {
             get
             {
-                return Inner.CurrentValue;
+                return Inner.CurrentValue.HasValue ? 
+                    Inner.CurrentValue.Value :
+                    default(int);
             }
         }
 
-        public int? Limit
+        public int Limit
         {
             get
             {
-                return Inner.Limit;
+                return Inner.Limit.HasValue ? 
+                    Inner.Limit.Value :
+                    default(int);
             }
         }
 
@@ -35,11 +39,13 @@ namespace Microsoft.Azure.Management.Fluent.Storage
             }
         }
 
-        public UsageUnit? Unit
+        public UsageUnit Unit
         {
             get
             {
-                return Inner.Unit;
+                return Inner.Unit.HasValue ? 
+                    Inner.Unit.Value : 
+                    default(UsageUnit);
             }
         }
     }

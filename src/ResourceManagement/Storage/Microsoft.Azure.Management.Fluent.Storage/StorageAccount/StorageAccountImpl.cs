@@ -50,11 +50,13 @@ namespace Microsoft.Azure.Management.Fluent.Storage
 
         #region Getters
 
-        public AccessTier? AccessTier
+        public AccessTier AccessTier
         {
             get
             {
-                return Inner.AccessTier;
+                return Inner.AccessTier.HasValue ? 
+                    Inner.AccessTier.Value :
+                    default(AccessTier);
             }
         }
 
@@ -66,11 +68,13 @@ namespace Microsoft.Azure.Management.Fluent.Storage
             }
         }
 
-        public DateTime? CreationTime
+        public DateTime CreationTime
         {
             get
             {
-                return Inner.CreationTime;
+                return Inner.CreationTime.HasValue ? 
+                    Inner.CreationTime.Value :
+                    default(DateTime);
             }
         }
 
@@ -98,27 +102,33 @@ namespace Microsoft.Azure.Management.Fluent.Storage
             }
         }
 
-        public Kind? Kind
+        public Kind Kind
         {
             get
             {
-                return Inner.Kind;
+                return Inner.Kind.HasValue ? 
+                    Inner.Kind.Value :
+                    default(Kind);
             }
         }
 
-        public DateTime? LastGeoFailoverTime
+        public DateTime LastGeoFailoverTime
         {
             get
             {
-                return Inner.LastGeoFailoverTime;
+                return Inner.LastGeoFailoverTime.HasValue ? 
+                    Inner.LastGeoFailoverTime.Value : 
+                    default(DateTime);
             }
         }
 
-        public ProvisioningState? ProvisioningState
+        public ProvisioningState ProvisioningState
         {
             get
             {
-                return Inner.ProvisioningState;
+                return Inner.ProvisioningState.HasValue ? 
+                    Inner.ProvisioningState.Value : 
+                    default(ProvisioningState);
             }
         }
 
