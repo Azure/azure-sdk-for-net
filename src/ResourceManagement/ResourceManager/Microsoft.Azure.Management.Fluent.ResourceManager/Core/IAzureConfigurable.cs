@@ -8,9 +8,9 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
 {
     public interface IAzureConfigurable<T> where T : IAzureConfigurable<T>
     {
-        T withUserAgent(string product, string version);
-        T withRetryPolicy(RetryPolicy retryPolicy);
-        T withDelegatingHandler(DelegatingHandler delegatingHandler);
-        T withLogLevel(HttpLoggingDelegatingHandler.Level level);
+        T WithUserAgent(string product, string version);
+        T WithRetryPolicy(RetryPolicy retryPolicy);
+        T WithDelegatingHandler(DelegatingHandler delegatingHandler);
+        T WithLogLevel(HttpLoggingDelegatingHandler.Level level);
     }
 }

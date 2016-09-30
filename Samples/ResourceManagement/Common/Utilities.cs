@@ -211,7 +211,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                     .Append("\n\tTags: ").Append(resource.Tags);
 
             // Output security rules
-            foreach (var rule in resource.SecurityRules().Values)
+            foreach (var rule in resource.SecurityRules.Values)
             {
                 nsgOutput.Append("\n\tRule: ").Append(rule.Name)
                         .Append("\n\t\tAccess: ").Append(rule.Access)

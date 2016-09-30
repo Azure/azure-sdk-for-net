@@ -1,6 +1,5 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
 namespace Microsoft.Azure.Management.Fluent.Batch.Application.UpdateDefinition
 {
 
@@ -30,14 +29,14 @@ namespace Microsoft.Azure.Management.Fluent.Batch.Application.UpdateDefinition
         /// </summary>
         /// <param name="allowUpdates">allowUpdates true to allow the automatic updates of application, otherwise false</param>
         /// <returns>parent batch account update definition.</returns>
-        IWithAttach<ParentT> WithAllowUpdates (bool allowUpdates);
+        Microsoft.Azure.Management.Fluent.Batch.Application.UpdateDefinition.IWithAttach<ParentT> WithAllowUpdates(bool allowUpdates);
 
         /// <summary>
         /// Specifies the display name for the application.
         /// </summary>
         /// <param name="displayName">displayName display name for the application.</param>
         /// <returns>parent batch account update definition.</returns>
-        IWithAttach<ParentT> WithDisplayName (string displayName);
+        Microsoft.Azure.Management.Fluent.Batch.Application.UpdateDefinition.IWithAttach<ParentT> WithDisplayName(string displayName);
 
     }
     /// <summary>
@@ -61,7 +60,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch.Application.UpdateDefinition
         /// </summary>
         /// <param name="version">version the version of the application</param>
         /// <returns>next stage to create the application.</returns>
-        IWithAttach<ParentT> DefineNewApplicationPackage (string version);
+        Microsoft.Azure.Management.Fluent.Batch.Application.UpdateDefinition.IWithAttach<ParentT> DefineNewApplicationPackage(string version);
 
     }
 }
