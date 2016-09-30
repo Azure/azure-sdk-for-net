@@ -3,15 +3,15 @@
 namespace Microsoft.Azure.Management.Fluent.Compute
 {
 
-    using Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions;
-    using Microsoft.Azure.Management.Compute.Models;
     using Microsoft.Azure.Management.Storage.Models;
-    using System.Threading;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions;
     using System.Threading.Tasks;
+    using Microsoft.Azure.Management.Compute.Models;
     using Microsoft.Azure.Management.Network.Models;
     using Microsoft.Azure.Management.Fluent.Resource.Core;
     using Microsoft.Azure.Management.Fluent.Resource;
-    internal partial class VirtualMachineScaleSetsImpl
+    using System.Threading;
+    internal partial class VirtualMachineScaleSetsImpl 
     {
         /// <summary>
         /// Begins a definition for a new resource.
@@ -29,9 +29,8 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// </summary>
         /// <param name="name">name the name of the new resource</param>
         /// <returns>the first stage of the new resource definition</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IBlank Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsCreating<Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IBlank>.Define(string name)
-        {
-            return this.Define(name) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IBlank;
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IBlank Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsCreating<Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IBlank>.Define(string name) { 
+            return this.Define( name) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IBlank;
         }
 
         /// <summary>
@@ -39,9 +38,8 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// </summary>
         /// <param name="resourceGroupName">resourceGroupName the name of the resource group to list the resources from</param>
         /// <returns>the list of resources</returns>
-        Microsoft.Azure.Management.Fluent.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet> Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet>.ListByGroup(string resourceGroupName)
-        {
-            return this.ListByGroup(resourceGroupName) as Microsoft.Azure.Management.Fluent.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet>;
+        Microsoft.Azure.Management.Fluent.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet> Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet>.ListByGroup(string resourceGroupName) { 
+            return this.ListByGroup( resourceGroupName) as Microsoft.Azure.Management.Fluent.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet>;
         }
 
         /// <summary>
@@ -50,9 +48,8 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// <param name="resourceGroupName">resourceGroupName the name of the resource group the resource is in</param>
         /// <param name="name">name the name of the resource. (Note, this is not the ID)</param>
         /// <returns>an immutable representation of the resource</returns>
-        Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsGettingByGroup<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet>.GetByGroup(string resourceGroupName, string name)
-        {
-            return this.GetByGroup(resourceGroupName, name) as Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet;
+        Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsGettingByGroup<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet>.GetByGroup(string resourceGroupName, string name) { 
+            return this.GetByGroup( resourceGroupName,  name) as Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet;
         }
 
         /// <summary>
@@ -60,9 +57,8 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// </summary>
         /// <param name="groupName">groupName the name of the resource group the virtual machine scale set is in</param>
         /// <param name="name">name the name of the virtual machine scale set</param>
-        void Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSets.Reimage(string groupName, string name)
-        {
-            this.Reimage(groupName, name);
+        void Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSets.Reimage(string groupName, string name) { 
+            this.Reimage( groupName,  name);
         }
 
         /// <summary>
@@ -70,9 +66,8 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// </summary>
         /// <param name="groupName">groupName the name of the resource group the virtual machine scale set is in</param>
         /// <param name="name">name the name of the virtual machine scale set</param>
-        void Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSets.Start(string groupName, string name)
-        {
-            this.Start(groupName, name);
+        void Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSets.Start(string groupName, string name) { 
+            this.Start( groupName,  name);
         }
 
         /// <summary>
@@ -80,9 +75,8 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// </summary>
         /// <param name="groupName">groupName the name of the resource group the virtual machine scale set is in</param>
         /// <param name="name">name the name of the virtual machine scale set</param>
-        void Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSets.PowerOff(string groupName, string name)
-        {
-            this.PowerOff(groupName, name);
+        void Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSets.PowerOff(string groupName, string name) { 
+            this.PowerOff( groupName,  name);
         }
 
         /// <summary>
@@ -90,9 +84,8 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// </summary>
         /// <param name="groupName">groupName the name of the resource group the virtual machine scale set is in</param>
         /// <param name="name">name the name of the virtual machine scale set</param>
-        void Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSets.Deallocate(string groupName, string name)
-        {
-            this.Deallocate(groupName, name);
+        void Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSets.Deallocate(string groupName, string name) { 
+            this.Deallocate( groupName,  name);
         }
 
         /// <summary>
@@ -100,9 +93,8 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// </summary>
         /// <param name="groupName">groupName the name of the resource group the virtual machine scale set is in</param>
         /// <param name="name">name the name of the virtual machine scale set</param>
-        void Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSets.Restart(string groupName, string name)
-        {
-            this.Restart(groupName, name);
+        void Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSets.Restart(string groupName, string name) { 
+            this.Restart( groupName,  name);
         }
 
         /// <summary>
@@ -112,17 +104,15 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// <param name="name">name The name of the resource</param>
         /// <param name="cancellationToken">cancellationToken the cancellation token</param>
         /// <returns>an observable to the request</returns>
-        async Task Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsDeletingByGroup.DeleteAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            await this.DeleteAsync(groupName, name, cancellationToken);
+        async Task Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsDeletingByGroup.DeleteAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken)) { 
+            await this.DeleteAsync( groupName,  name);
         }
 
         /// <summary>
         /// Lists all the resources of the specified type in the currently selected subscription.
         /// </summary>
         /// <returns>list of resources</returns>
-        Microsoft.Azure.Management.Fluent.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet> Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet>.List()
-        {
+        Microsoft.Azure.Management.Fluent.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet> Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet>.List() { 
             return this.List() as Microsoft.Azure.Management.Fluent.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet>;
         }
 

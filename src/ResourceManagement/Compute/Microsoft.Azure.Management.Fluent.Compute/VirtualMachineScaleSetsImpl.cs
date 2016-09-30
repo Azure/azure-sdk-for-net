@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
                 cancellationToken);
         }
 
-        public Task DeleteAsync(string groupName, string name, CancellationToken cancellationToken)
+        public Task DeleteAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
         {
             return this.InnerCollection.DeleteAsync(groupName,
                 name,

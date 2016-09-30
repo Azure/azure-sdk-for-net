@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             VirtualMachineScaleSet.Definition.IWithGroup,
             VirtualMachineScaleSet.Definition.IWithSku,
             VirtualMachineScaleSet.Definition.IWithCreate,
-            VirtualMachineScaleSet.Update.IUpdate>,
+            VirtualMachineScaleSet.Update.IWithApply>,
         IVirtualMachineScaleSet,
         VirtualMachineScaleSet.Definition.IDefinition,
         VirtualMachineScaleSet.Update.IUpdate
@@ -86,60 +86,40 @@ namespace Microsoft.Azure.Management.Fluent.Compute
 
         #region Getters
 
-        public int? Capacity
+        public int Capacity()
         {
-            get
-            {
-                return (int?)this.Inner.Sku.Capacity;
-            }
+            return (int)this.Inner.Sku.Capacity.Value;
         }
 
-        public string ComputerNamePrefix
+        public string ComputerNamePrefix()
         {
-            get
-            {
-                return this.Inner.VirtualMachineProfile.OsProfile.ComputerNamePrefix;
-            }
+            return this.Inner.VirtualMachineProfile.OsProfile.ComputerNamePrefix;
         }
 
-        public VirtualMachineScaleSetNetworkProfile NetworkProfile
+        public VirtualMachineScaleSetNetworkProfile NetworkProfile()
         {
-            get
-            {
-                return this.Inner.VirtualMachineProfile.NetworkProfile;
-            }
+            return this.Inner.VirtualMachineProfile.NetworkProfile;
         }
 
-        public CachingTypes? OsDiskCachingType
+        public CachingTypes OsDiskCachingType()
         {
-            get
-            {
-                return this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.Caching;
-            }
+            return this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.Caching.Value;
         }
 
-        public string OsDiskName
+        public string OsDiskName()
         {
-            get
-            {
-                return this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.Name;
-            }
+            return this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.Name;
+
         }
 
-        public OperatingSystemTypes? OsType
+        public OperatingSystemTypes OsType()
         {
-            get
-            {
-                return this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.OsType;
-            }
+            return this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.OsType.Value;
         }
 
-        public bool? OverProvisionEnabled
+        public bool OverProvisionEnabled()
         {
-            get
-            {
-                return this.Inner.OverProvision;
-            }
+            return this.Inner.OverProvision.Value;
         }
 
 
@@ -214,47 +194,35 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             return new Dictionary<string, IInboundNatPool>();
         }
 
-        public IList<string> PrimaryPublicIpAddressIds
+        public IList<string> PrimaryPublicIpAddressIds()
         {
-            get
+            ILoadBalancer loadBalancer = (this as Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet).GetPrimaryInternetFacingLoadBalancer();
+            if (loadBalancer != null)
             {
-                ILoadBalancer loadBalancer = (this as Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet).GetPrimaryInternetFacingLoadBalancer();
-                if (loadBalancer != null)
-                {
-                    return loadBalancer.PublicIpAddressIds;
-                }
-                return new List<string>();
+                return loadBalancer.PublicIpAddressIds;
             }
+            return new List<string>();
         }
 
-        public VirtualMachineScaleSetStorageProfile StorageProfile
+        public VirtualMachineScaleSetStorageProfile StorageProfile()
         {
-            get
-            {
-                return this.Inner.VirtualMachineProfile.StorageProfile;
-            }
+            return this.Inner.VirtualMachineProfile.StorageProfile;
         }
 
-        public UpgradeMode? UpgradeModel
+        public UpgradeMode UpgradeModel()
         {
-            get
-            {
-                return this.Inner.UpgradePolicy.Mode;
-            }
+            return this.Inner.UpgradePolicy.Mode.Value;
         }
 
-        public IList<string> VhdContainers
+        public IList<string> VhdContainers()
         {
-            get
+            if (this.Inner.VirtualMachineProfile.StorageProfile != null
+                && this.Inner.VirtualMachineProfile.StorageProfile.OsDisk != null
+                && this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.VhdContainers != null)
             {
-                if (this.Inner.VirtualMachineProfile.StorageProfile != null
-                    && this.Inner.VirtualMachineProfile.StorageProfile.OsDisk != null
-                    && this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.VhdContainers != null)
-                {
-                    return this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.VhdContainers;
-                }
-                return new List<string>();
+                return this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.VhdContainers;
             }
+            return new List<string>();
         }
 
         public PagedList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSetSku> ListAvailableSkus()
