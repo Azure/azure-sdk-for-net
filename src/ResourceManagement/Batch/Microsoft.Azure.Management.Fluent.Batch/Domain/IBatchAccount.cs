@@ -1,14 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
 namespace Microsoft.Azure.Management.Fluent.Batch
 {
 
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Update;
     using Microsoft.Azure.Management.Batch.Models;
-    using Microsoft.Azure.Management.Fluent.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Update;
     using System.Collections.Generic;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
     /// <summary>
     /// An immutable client-side representation of an Azure batch account.
     /// </summary>
@@ -39,19 +38,19 @@ namespace Microsoft.Azure.Management.Fluent.Batch
         int ActiveJobAndJobScheduleQuota { get; }
 
         /// <returns>the access keys for this batch account</returns>
-        Microsoft.Azure.Management.Fluent.Batch.BatchAccountKeys GetKeys ();
+        Microsoft.Azure.Management.Fluent.Batch.BatchAccountKeys GetKeys();
 
         /// <summary>
         /// Regenerates the access keys for batch account.
         /// </summary>
         /// <param name="keyType">keyType either primary or secondary key to be regenerated</param>
         /// <returns>the access keys for this batch account</returns>
-        Microsoft.Azure.Management.Fluent.Batch.BatchAccountKeys RegenerateKeys (AccountKeyType keyType);
+        Microsoft.Azure.Management.Fluent.Batch.BatchAccountKeys RegenerateKeys(AccountKeyType keyType);
 
         /// <summary>
         /// Synchronize the storage account keys for batch account.
         /// </summary>
-        void SynchronizeAutoStorageKeys ();
+        void SynchronizeAutoStorageKeys();
 
         /// <returns>the application in this batch account.</returns>
         System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Fluent.Batch.IApplication> Applications { get; }

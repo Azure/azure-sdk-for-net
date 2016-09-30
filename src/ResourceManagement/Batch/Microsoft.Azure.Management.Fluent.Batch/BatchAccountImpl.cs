@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
     /// <summary>
     /// Implementation for BatchAccount and its parent interfaces.
     /// </summary>
-    internal partial class BatchAccountImpl :
+    public partial class BatchAccountImpl :
         GroupableResource<
             IBatchAccount,
             BatchAccountInner,
@@ -88,52 +88,34 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             return this;
         }
 
-        public Management.Batch.Models.ProvisioningState ProvisioningState
+        public Management.Batch.Models.ProvisioningState ProvisioningState()
         {
-            get
-            {
-                return Inner.ProvisioningState.GetValueOrDefault();
-            }
+            return Inner.ProvisioningState.GetValueOrDefault();
         }
 
-        public string AccountEndpoint
+        public string AccountEndpoint()
         {
-            get
-            {
-                return Inner.AccountEndpoint;
-            }
+            return Inner.AccountEndpoint;
         }
 
-        public AutoStorageProperties AutoStorage
+        public AutoStorageProperties AutoStorage()
         {
-            get
-            {
-                return Inner.AutoStorage;
-            }
+            return Inner.AutoStorage;
         }
 
-        public int CoreQuota
+        public int CoreQuota()
         {
-            get
-            {
-                return Inner.CoreQuota;
-            }
+            return Inner.CoreQuota;
         }
 
-        public int PoolQuota
+        public int PoolQuota()
         {
-            get
-            {
-                return Inner.PoolQuota;
-            }
+            return Inner.PoolQuota;
         }
 
-        public int ActiveJobAndJobScheduleQuota
+        public int ActiveJobAndJobScheduleQuota()
         {
-            get
-            {
-                return Inner.ActiveJobAndJobScheduleQuota;
-            }
+            return Inner.ActiveJobAndJobScheduleQuota;
         }
 
         public BatchAccountKeys GetKeys()
@@ -153,12 +135,9 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             innerCollection.SynchronizeAutoStorageKeys(ResourceGroupName, Name);
         }
 
-        public IDictionary<string, IApplication> Applications
+        public IDictionary<string, IApplication> Applications()
         {
-            get
-            {
-                return applicationsImpl.AsMap();
-            }
+            return applicationsImpl.AsMap();
         }
 
         public BatchAccountImpl WithExistingStorageAccount(IStorageAccount storageAccount)

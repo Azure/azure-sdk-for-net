@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
     /// <summary>
     /// Implementation for BatchAccount Application Package and its parent interfaces.
     /// </summary>
-    internal partial class ApplicationPackageImpl :
+    public partial class ApplicationPackageImpl :
         ExternalChildResource<
             Microsoft.Azure.Management.Fluent.Batch.IApplicationPackage,
             Microsoft.Azure.Management.Batch.Models.ApplicationPackageInner,
@@ -36,12 +36,9 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             return new ApplicationPackageImpl(name, parent, inner, client);
         }
 
-        public PackageState State
+        public PackageState State()
         {
-            get
-            {
                 return Inner.State.GetValueOrDefault();
-            }
         }
 
         public string Id
@@ -54,7 +51,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
 
         public override string Name()
         {
-            return Inner.Version;
+            return Name();
         }
 
         public override async Task<IApplicationPackage> CreateAsync(CancellationToken cancellationToken = default(CancellationToken))
@@ -72,44 +69,32 @@ namespace Microsoft.Azure.Management.Fluent.Batch
 
         public void Delete()
         {
-            client.Delete(Parent.Parent.ResourceGroupName, Parent.Parent.Name, Parent.Name(), Name());
+            client.Delete(Parent.Parent.ResourceGroupName, Parent.Parent.Name,Parent.Name(), Name());
         }
 
         public override async Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await client.DeleteAsync(Parent.Parent.ResourceGroupName, Parent.Parent.Name, Parent.Name(), Name(), cancellationToken);
+            await client.DeleteAsync(Parent.Parent.ResourceGroupName, Parent.Parent.Name,Parent.Name(), Name(), cancellationToken);
         }
 
-        public string Format
+        public string Format()
         {
-            get
-            {
-                return Inner.Format;
-            }
+            return Inner.Format;
         }
 
-        public string StorageUrl
+        public string StorageUrl()
         {
-            get
-            {
-                return Inner.StorageUrl;
-            }
+            return Inner.StorageUrl;
         }
 
-        public DateTime StorageUrlExpiry
+        public DateTime StorageUrlExpiry()
         {
-            get
-            {
-                return Inner.StorageUrlExpiry.GetValueOrDefault();
-            }
+            return Inner.StorageUrlExpiry.GetValueOrDefault();
         }
 
-        public DateTime LastActivationTime
+        public DateTime LastActivationTime()
         {
-            get
-            {
-                return Inner.LastActivationTime.GetValueOrDefault();
-            }
+            return Inner.LastActivationTime.GetValueOrDefault();
         }
 
         IApplication IChildResource<IApplication>.Parent
