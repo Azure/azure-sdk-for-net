@@ -85,6 +85,28 @@
       <Exec Command="dotnet build --configuration $(Configuration)" WorkingDirectory="%(ClientRuntimeProjects.RootDir)\%(ClientRuntimeProjects.Directory)"/>
   </Target>
 
+  <Target Name="DisableSN" > 
+      <!-- Check for admin privs -->
+      <Exec Command="net session" IgnoreExitCode="true" StandardErrorImportance="Low">
+        <Output PropertyName="isadmin" TaskParameter="ExitCode" />
+      </Exec>
+  
+      <!-- Disable strong name checking -->  
+      <Exec Command='"C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools\sn.exe" -Vr *' Condition="$(isadmin) == 0"/>
+      <Exec Command='"C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools\x64\sn.exe" -Vr *' Condition="$(isadmin) == 0"/>
+    </Target>
+    
+    <Target Name="EnableSN" > 
+      <!-- Check for admin privs -->
+      <Exec Command="net session" IgnoreExitCode="true" StandardErrorImportance="Low">
+        <Output PropertyName="isadmin" TaskParameter="ExitCode" />
+      </Exec>
+  
+      <!-- Enable strong name checking -->  
+      <Exec Command='"C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools\sn.exe" -Vx *' Condition="$(isadmin) == 0"/>
+      <Exec Command='"C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools\x64\sn.exe" -Vx *' Condition="$(isadmin) == 0"/>
+  </Target>
+
   <!--
   CI build related
   -->
@@ -124,6 +146,7 @@
       <_ExtraPropertyList>CodeSign=$(CodeSign)</_ExtraPropertyList>
       <_TemporaryNetCoreFeeds>-s https://api.nuget.org/v3/index.json -s https://dotnet.myget.org/F/cli-deps/api/v3/index.json</_TemporaryNetCoreFeeds>
     </PropertyGroup>
+    <CallTarget Targets="DisableSN" Condition=" '$(OS)' == 'Windows_NT'"/> 
     <CallTarget Targets="BuildServerPreparation" Condition=" '$(CodeSign)' == 'true' " />
 
     <MSBuild Projects="@(NonAutoRestLibraries)"
@@ -180,7 +203,6 @@
     <!--<Exec Command="dotnet test -xml &quot;$(MSBuildProjectDirectory)\TestResults\%(NetCore_AutoRestLibraries.Filename).xml&quot;" 
           WorkingDirectory="%(NetCore_AutoRestLibraries.Test)"
           Condition=" @(NetCore_AutoRestLibraries) != '' and '%(NetCore_AutoRestLibraries.Test)' != '' "/>-->
-    <Message Text="running dotnet test -xml &quot;$(MSBuildProjectDirectory)\TestResults\%(ClientRuntimeTests.Filename).xml&quot; from %(ClientRuntimeTests.RootDir)\%(ClientRuntimeTests.Directory)" Importance="High"/>
     <Exec Command="dotnet test -xml &quot;$(MSBuildProjectDirectory)\TestResults\%(ClientRuntimeTests.Filename).xml&quot;" 
           WorkingDirectory="%(ClientRuntimeTests.RootDir)\%(ClientRuntimeTests.Directory)"/>
   </Target>
