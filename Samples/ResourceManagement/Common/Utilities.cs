@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Azure.Management.Fluent.Batch;
 using Microsoft.Azure.Management.Fluent.Network;
+using Microsoft.Azure.Management.Fluent.KeyVault;
 
 namespace Microsoft.Azure.Management.Samples.Common
 {
@@ -226,5 +227,25 @@ namespace Microsoft.Azure.Management.Samples.Common
             }
             Console.WriteLine(nsgOutput.ToString());
         }
+
+        public static void PrintVault(IVault vault)
+        {
+            var info = new StringBuilder().Append("Key Vault: ").Append(vault.Id)
+                .Append("Name: ").Append(vault.Name)
+                .Append("\n\tResource group: ").Append(vault.ResourceGroupName)
+                .Append("\n\tRegion: ").Append(vault.Region)
+                .Append("\n\tSku: ").Append(vault.Sku.Name).Append(" - ").Append(Microsoft.Azure.Management.KeyVault.Models.Sku.Family)
+                .Append("\n\tVault URI: ").Append(vault.VaultUri)
+                .Append("\n\tAccess policies: ");
+            foreach (var accessPolicy in vault.AccessPolicies)
+            {
+                info.Append("\n\t\tIdentity:").Append(accessPolicy.ObjectId)
+                        .Append("\n\t\tKey permissions: ").Append(string.Join(", ", accessPolicy.Permissions.Keys))
+                        .Append("\n\t\tSecret permissions: ").Append(string.Join(", ", accessPolicy.Permissions.Secrets));
+            }
+
+            Console.WriteLine(info.ToString());
+        }
+
     }
 }
