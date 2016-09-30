@@ -27,66 +27,44 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return Inner.Name;
         }
 
-        public string Direction
+        internal string Direction()
         {
-            get
-            {
-                return Inner.Direction;
-            }
+            return Inner.Direction;
         }
 
-        public string Protocol
+        internal string Protocol()
         {
-            get
-            {
-                return Inner.Protocol;
-            }
-        }
-        public string Access
-        {
-            get
-            {
-                return Inner.Access;
-            }
-        }
-        public string SourceAddressPrefix
-        {
-            get
-            {
-                return Inner.SourceAddressPrefix;
-            }
+            return Inner.Protocol;
         }
 
-        public string SourcePortRange
+        internal string Access()
         {
-            get
-            {
-                return Inner.SourcePortRange;
-            }
+            return Inner.Access;
         }
 
-        public string DestinationAddressPrefix
+        internal string SourceAddressPrefix()
         {
-            get
-            {
-                return Inner.DestinationAddressPrefix;
-            }
+            return Inner.SourceAddressPrefix;
         }
 
-        public string DestinationPortRange
+        internal string SourcePortRange()
         {
-            get
-            {
-                return Inner.DestinationPortRange;
-            }
+            return Inner.SourcePortRange;
         }
 
-        public int Priority
+        internal string DestinationAddressPrefix()
         {
-            get
-            {
-                return (Inner.Priority.HasValue) ? Inner.Priority.Value : 0;
-            }
+            return Inner.DestinationAddressPrefix;
+        }
+
+        internal string DestinationPortRange()
+        {
+            return Inner.DestinationPortRange;
+        }
+
+        internal int Priority()
+        {
+            return (Inner.Priority.HasValue) ? Inner.Priority.Value : 0;
         }
 
         NetworkSecurityGroup.Update.IUpdate ISettable<NetworkSecurityGroup.Update.IUpdate>.Parent()
@@ -94,36 +72,33 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return Parent;
         }
 
-        public string Description
+        internal string Description()
         {
-            get
-            {
-                return Inner.Description;
-            }
+            return Inner.Description;
         }
         #endregion
 
         #region Public Withers
         #region Direction and Access
-        public NetworkSecurityRuleImpl AllowInbound ()
+        internal NetworkSecurityRuleImpl AllowInbound ()
         {
             return WithDirection(SecurityRuleDirection.Inbound)
                 .WithAccess(SecurityRuleAccess.Allow);
         }
 
-        public NetworkSecurityRuleImpl AllowOutbound ()
+        internal NetworkSecurityRuleImpl AllowOutbound ()
         {
             return WithDirection(SecurityRuleDirection.Outbound)
                 .WithAccess(SecurityRuleAccess.Allow);
         }
 
-        public NetworkSecurityRuleImpl DenyInbound ()
+        internal NetworkSecurityRuleImpl DenyInbound ()
         {
             return WithDirection(SecurityRuleDirection.Inbound)
                 .WithAccess(SecurityRuleAccess.Deny);
         }
 
-        public NetworkSecurityRuleImpl DenyOutbound ()
+        internal NetworkSecurityRuleImpl DenyOutbound ()
         {
             return WithDirection(SecurityRuleDirection.Outbound)
                 .WithAccess(SecurityRuleAccess.Deny);
@@ -131,26 +106,26 @@ namespace Microsoft.Azure.Management.Fluent.Network
         #endregion
 
         #region Protocol
-        public NetworkSecurityRuleImpl WithProtocol (string protocol)
+        internal NetworkSecurityRuleImpl WithProtocol (string protocol)
         {
             Inner.Protocol = protocol;
             return this;
         }
 
-        public NetworkSecurityRuleImpl WithAnyProtocol ()
+        internal NetworkSecurityRuleImpl WithAnyProtocol ()
         {
             return WithProtocol(SecurityRuleProtocol.Asterisk);
         }
         #endregion
 
         #region Source Address
-        public NetworkSecurityRuleImpl FromAddress (string cidr)
+        internal NetworkSecurityRuleImpl FromAddress (string cidr)
         {
             Inner.SourceAddressPrefix = cidr;
             return this;
         }
 
-        public NetworkSecurityRuleImpl FromAnyAddress ()
+        internal NetworkSecurityRuleImpl FromAnyAddress ()
         {
             Inner.SourceAddressPrefix = "*";
             return this;
@@ -158,19 +133,19 @@ namespace Microsoft.Azure.Management.Fluent.Network
         #endregion
 
         #region Source Port
-        public NetworkSecurityRuleImpl FromPort (int port)
+        internal NetworkSecurityRuleImpl FromPort (int port)
         {
             Inner.SourcePortRange = port.ToString();
             return this;
         }
 
-        public NetworkSecurityRuleImpl FromAnyPort ()
+        internal NetworkSecurityRuleImpl FromAnyPort ()
         {
             Inner.SourcePortRange = "*";
             return this;
         }
 
-        public NetworkSecurityRuleImpl FromPortRange (int from, int to)
+        internal NetworkSecurityRuleImpl FromPortRange (int from, int to)
         {
             Inner.SourcePortRange = from.ToString() + "-" + to.ToString();
             return this;
@@ -178,13 +153,13 @@ namespace Microsoft.Azure.Management.Fluent.Network
         #endregion
 
         #region Destination Address
-        public NetworkSecurityRuleImpl ToAddress (string cidr)
+        internal NetworkSecurityRuleImpl ToAddress (string cidr)
         {
             Inner.DestinationAddressPrefix = cidr;
             return this;
         }
 
-        public NetworkSecurityRuleImpl ToAnyAddress ()
+        internal NetworkSecurityRuleImpl ToAnyAddress ()
         {
             Inner.DestinationAddressPrefix = "*";
             return this;
@@ -192,19 +167,19 @@ namespace Microsoft.Azure.Management.Fluent.Network
         #endregion
 
         #region Destination Port
-        public NetworkSecurityRuleImpl ToPort (int port)
+        internal NetworkSecurityRuleImpl ToPort (int port)
         {
             Inner.DestinationPortRange = port.ToString();
             return this;
         }
 
-        public NetworkSecurityRuleImpl ToAnyPort ()
+        internal NetworkSecurityRuleImpl ToAnyPort ()
         {
             Inner.DestinationPortRange = "*";
             return this;
         }
 
-        public NetworkSecurityRuleImpl ToPortRange (int from, int to)
+        internal NetworkSecurityRuleImpl ToPortRange (int from, int to)
         {
             Inner.DestinationPortRange = from.ToString() + "-" + to.ToString();
             return this;
@@ -212,27 +187,17 @@ namespace Microsoft.Azure.Management.Fluent.Network
         #endregion
 
         #region Priority
-        public NetworkSecurityRuleImpl WithPriority (int priority)
+        internal NetworkSecurityRuleImpl WithPriority (int priority)
         {
-
-            //$ if (priority < 100 || priority > 4096) {
-            //$ throw new IllegalArgumentException("The priority number of a network security rule must be between 100 and 4096.");
-            //$ }
-            //$ 
-            //$ this.inner().withPriority(priority);
-            //$ return this;
-
+            Inner.Priority = priority;
             return this;
         }
         #endregion
 
         #region Description
-        public NetworkSecurityRuleImpl WithDescription (string description)
+        internal NetworkSecurityRuleImpl WithDescription (string description)
         {
-
-            //$ this.inner().withDescription(description);
-            //$ return this;
-
+            Inner.Description = description;
             return this;
         }
         #endregion
@@ -253,7 +218,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
         #endregion
 
         #region Actions
-        public NetworkSecurityGroupImpl Attach ()
+        internal NetworkSecurityGroupImpl Attach ()
         {
             return Parent.WithRule(this);
         }

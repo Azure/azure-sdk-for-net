@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.TcpProbe.UpdateDefinition
         /// </summary>
         /// <param name="port">port a port number</param>
         /// <returns>the next stage of the definition</returns>
-        IWithAttach<ParentT> WithPort (int port);
+        Microsoft.Azure.Management.Fluent.Network.TcpProbe.UpdateDefinition.IWithAttach<ParentT> WithPort(int port);
 
     }
     /// <summary>
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.TcpProbe.UpdateDefinition
         /// </summary>
         /// <param name="probes">probes number of probes</param>
         /// <returns>the next stage of the definition</returns>
-        IWithAttach<ParentT> WithNumberOfProbes (int probes);
+        Microsoft.Azure.Management.Fluent.Network.TcpProbe.UpdateDefinition.IWithAttach<ParentT> WithNumberOfProbes(int probes);
 
     }
     /// <summary>
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.TcpProbe.UpdateDefinition
         /// </summary>
         /// <param name="seconds">seconds number of seconds</param>
         /// <returns>the next stage of the definition</returns>
-        IWithAttach<ParentT> WithIntervalInSeconds (int seconds);
+        Microsoft.Azure.Management.Fluent.Network.TcpProbe.UpdateDefinition.IWithAttach<ParentT> WithIntervalInSeconds(int seconds);
 
     }
 }

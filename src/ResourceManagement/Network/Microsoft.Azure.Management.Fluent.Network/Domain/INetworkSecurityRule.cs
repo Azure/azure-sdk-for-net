@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
 
         /// <returns>the priority number of this rule based on which this rule will be applied relative to the priority numbers of any other rules specified</returns>
         /// <returns>for this network security group</returns>
-        int? Priority { get; }
+        int Priority { get; }
 
     }
 }

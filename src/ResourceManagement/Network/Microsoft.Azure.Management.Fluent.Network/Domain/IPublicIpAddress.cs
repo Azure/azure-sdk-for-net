@@ -3,10 +3,10 @@
 namespace Microsoft.Azure.Management.Fluent.Network
 {
 
+    using Microsoft.Azure.Management.Fluent.Network.PublicIpAddress.Update;
     using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.Fluent.Resource.Core;
     using Microsoft.Azure.Management.Network.Models;
-    using Microsoft.Azure.Management.Fluent.Network.PublicIpAddress.Update;
     /// <summary>
     /// Public IP address.
     /// </summary>
@@ -35,19 +35,19 @@ namespace Microsoft.Azure.Management.Fluent.Network
         string IpAllocationMethod { get; }
 
         /// <returns>the idle connection timeout setting (in minutes)</returns>
-        int? IdleTimeoutInMinutes { get; }
+        int IdleTimeoutInMinutes { get; }
 
         /// <returns>the load balancer public frontend that this public IP address is assigned to</returns>
-        IPublicFrontend GetAssignedLoadBalancerFrontend ();
+        Microsoft.Azure.Management.Fluent.Network.IPublicFrontend GetAssignedLoadBalancerFrontend();
 
         /// <returns>true if this public IP address is assigned to a load balancer</returns>
-        bool? HasAssignedLoadBalancer { get; }
+        bool HasAssignedLoadBalancer { get; }
 
         /// <returns>the network interface IP configuration that this public IP address is assigned to</returns>
-        INicIpConfiguration GetAssignedNetworkInterfaceIpConfiguration ();
+        Microsoft.Azure.Management.Fluent.Network.INicIpConfiguration GetAssignedNetworkInterfaceIpConfiguration();
 
         /// <returns>true if this public IP address is assigned to a network interface</returns>
-        bool? HasAssignedNetworkInterface { get; }
+        bool HasAssignedNetworkInterface { get; }
 
     }
 }

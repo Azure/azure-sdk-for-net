@@ -14,14 +14,14 @@ namespace Microsoft.Azure.Management.Fluent.Network.HasPrivateIpAddress.Update
         /// Enables dynamic private IP address allocation within the associated subnet.
         /// </summary>
         /// <returns>the next stage of the update</returns>
-        ReturnT WithPrivateIpAddressDynamic ();
+        ReturnT WithPrivateIpAddressDynamic();
 
         /// <summary>
         /// Assigns the specified static private IP address within the associated subnet.
         /// </summary>
         /// <param name="ipAddress">ipAddress a static IP address within the associated private IP range</param>
         /// <returns>the next stage of the update</returns>
-        ReturnT WithPrivateIpAddressStatic (string ipAddress);
+        ReturnT WithPrivateIpAddressStatic(string ipAddress);
 
     }
 }

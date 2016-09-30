@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return new PublicIpAddressImpl(inner.Id, inner, InnerCollection, Manager);
         }
 
-        public PagedList<IPublicIpAddress> List()
+        internal PagedList<IPublicIpAddress> List()
         {
             var pagedList = new PagedList<PublicIPAddressInner>(InnerCollection.ListAll(), (string nextPageLink) =>
             {
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return WrapList(pagedList);
         }
 
-        public PagedList<IPublicIpAddress> ListByGroup(string groupName)
+        internal PagedList<IPublicIpAddress> ListByGroup(string groupName)
         {
             var pagedList = new PagedList<PublicIPAddressInner>(InnerCollection.List(groupName), (string nextPageLink) =>
             {
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
         }
 
 
-        public PublicIpAddressImpl Define(string name)
+        internal PublicIpAddressImpl Define(string name)
         {
             return WrapModel(name);
         }

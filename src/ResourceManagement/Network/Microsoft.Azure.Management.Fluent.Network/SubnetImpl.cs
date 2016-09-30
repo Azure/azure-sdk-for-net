@@ -5,8 +5,6 @@ namespace Microsoft.Azure.Management.Fluent.Network
     using Management.Network.Models;
     using Resource.Core;
     using Resource.Core.ChildResourceActions;
-    using Rest.Azure;
-    using System;
 
     /// <summary>
     /// Implementation for Subnet and its create and update interfaces.
@@ -22,12 +20,9 @@ namespace Microsoft.Azure.Management.Fluent.Network
         {
         }
 
-        public string AddressPrefix
+        internal string AddressPrefix()
         {
-            get
-            {
-                return Inner.AddressPrefix;
-            }
+            return Inner.AddressPrefix;
         }
 
         override public string Name()
@@ -35,31 +30,31 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return Inner.Name;
         }
 
-        public INetworkSecurityGroup GetNetworkSecurityGroup ()
+        internal INetworkSecurityGroup GetNetworkSecurityGroup ()
         {
             var nsgResource = Inner.NetworkSecurityGroup;
             return (nsgResource != null) ? Parent.Manager.NetworkSecurityGroups.GetById(nsgResource.Id) : null;
         }
 
-        public SubnetImpl WithExistingNetworkSecurityGroup (string resourceId)
+        internal SubnetImpl WithExistingNetworkSecurityGroup (string resourceId)
         {
             NetworkSecurityGroupInner reference = new NetworkSecurityGroupInner(id: resourceId);
             Inner.NetworkSecurityGroup = reference;
             return this;
         }
 
-        public SubnetImpl WithAddressPrefix (string cidr)
+        internal SubnetImpl WithAddressPrefix (string cidr)
         {
             Inner.AddressPrefix = cidr;
             return this;
         }
 
-        public NetworkImpl Attach ()
+        internal NetworkImpl Attach ()
         {
             return Parent.WithSubnet(this);
         }
 
-        public SubnetImpl WithExistingNetworkSecurityGroup (INetworkSecurityGroup nsg)
+        internal SubnetImpl WithExistingNetworkSecurityGroup (INetworkSecurityGroup nsg)
         {
             return WithExistingNetworkSecurityGroup(nsg.Id);
         }

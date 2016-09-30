@@ -2,28 +2,26 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Fluent.Storage
 {
-
-    using Microsoft.Azure.Management.Fluent.Resource.Core;
-    using Microsoft.Azure.Management.Storage.Models;
+    using Resource.Core;
     /// <summary>
     /// An immutable client-side representation of an Azure storage resource usage info object.
     /// </summary>
     public interface IStorageUsage  :
-        IWrapper<Microsoft.Azure.Management.Storage.Models.UsageInner>
+        IWrapper<Management.Storage.Models.UsageInner>
     {
         /// <returns>the unit of measurement. Possible values include: 'Count',</returns>
         /// <returns>'Bytes', 'Seconds', 'Percent', 'CountsPerSecond', 'BytesPerSecond'.</returns>
-        UsageUnit? Unit { get; }
+        Management.Storage.Models.UsageUnit Unit { get; }
 
         /// <returns>the current count of the allocated resources in the subscription</returns>
-        int? CurrentValue { get; }
+        int CurrentValue { get; }
 
         /// <returns>the maximum count of the resources that can be allocated in the</returns>
         /// <returns>subscription</returns>
-        int? Limit { get; }
+        int Limit { get; }
 
         /// <returns>the name of the type of usage</returns>
-        UsageName Name { get; }
+        Management.Storage.Models.UsageName Name { get; }
 
     }
 }

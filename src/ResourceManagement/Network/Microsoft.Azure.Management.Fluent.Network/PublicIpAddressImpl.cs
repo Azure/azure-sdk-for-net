@@ -36,121 +36,82 @@ namespace Microsoft.Azure.Management.Fluent.Network
             this.client = client;
         }
 
-        public PublicIpAddressImpl WithIdleTimeoutInMinutes(int minutes)
+        internal PublicIpAddressImpl WithIdleTimeoutInMinutes(int minutes)
         {
             this.Inner.IdleTimeoutInMinutes = minutes;
             return this;
         }
 
-        public PublicIpAddressImpl WithStaticIp()
+        internal PublicIpAddressImpl WithStaticIp()
         {
 
             this.Inner.PublicIPAllocationMethod = IPAllocationMethod.Static;
             return this;
         }
 
-        public PublicIpAddressImpl WithDynamicIp()
+        internal PublicIpAddressImpl WithDynamicIp()
         {
             this.Inner.PublicIPAllocationMethod = IPAllocationMethod.Dynamic;
             return this;
         }
 
-        public PublicIpAddressImpl WithLeafDomainLabel(string dnsName)
+        internal PublicIpAddressImpl WithLeafDomainLabel(string dnsName)
         {
             this.Inner.DnsSettings.DomainNameLabel = dnsName.ToLower();
             return this;
         }
 
-        public PublicIpAddressImpl WithoutLeafDomainLabel()
+        internal PublicIpAddressImpl WithoutLeafDomainLabel()
         {
             return this.WithLeafDomainLabel(null);
         }
 
-        public PublicIpAddressImpl WithReverseFqdn(string reverseFqdn)
+        internal PublicIpAddressImpl WithReverseFqdn(string reverseFqdn)
         {
             this.Inner.DnsSettings.ReverseFqdn = reverseFqdn.ToLower();
             return this;
         }
 
-        public PublicIpAddressImpl WithoutReverseFqdn()
+        internal PublicIpAddressImpl WithoutReverseFqdn()
         {
-            return this.WithReverseFqdn(null);
+            return WithReverseFqdn(null);
         }
 
-        public int? IdleTimeoutInMinutes
+        internal int IdleTimeoutInMinutes()
         {
-            get
-            {
-                return this.Inner.IdleTimeoutInMinutes;
-            }
+            return (Inner.IdleTimeoutInMinutes.HasValue) ? Inner.IdleTimeoutInMinutes.Value : 0;
         }
 
-        public string IpAllocationMethod
+        internal string IpAllocationMethod()
         {
-            get
-            {
-                return this.Inner.PublicIPAllocationMethod;
-            }
+            return Inner.PublicIPAllocationMethod;
         }
 
-        public string Version
+        internal string Version()
         {
-            get
-            {
-                return this.Inner.PublicIPAddressVersion;
-            }
+            return Inner.PublicIPAddressVersion;
         }
 
-        public string Fqdn
+        internal string Fqdn()
         {
-            get
-            {
-                if (this.Inner.DnsSettings != null)
-                {
-                    return this.Inner.DnsSettings.Fqdn;
-                }
-                else
-                {
-                    return null;
-                }
-            }
+            return (Inner.DnsSettings != null) ? Inner.DnsSettings.Fqdn : null;
         }
 
-        public string ReverseFqdn
+        internal string ReverseFqdn()
         {
-            get
-            {
-                if (this.Inner.DnsSettings != null)
-                {
-                    return this.Inner.DnsSettings.ReverseFqdn;
-                }
-                else
-                {
-                    return null;
-                }
-            }
+            return (Inner.DnsSettings != null) ? Inner.DnsSettings.ReverseFqdn : null;
         }
-        public string IpAddress
+
+        internal string IpAddress()
         {
-            get
-            {
-                return this.Inner.IpAddress;
-            }
+            return Inner.IpAddress;
         }
-        public string LeafDomainLabel
+
+        internal string LeafDomainLabel()
         {
-            get
-            {
-                if (this.Inner.DnsSettings == null)
-                {
-                    return null;
-                }
-                else
-                {
-                    return this.Inner.DnsSettings.DomainNameLabel;
-                }
-            }
+            return (Inner.DnsSettings != null) ? Inner.DnsSettings.DomainNameLabel : null;
         }
+
         override public async Task<IPublicIpAddress> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             PublicIPAddressDnsSettings dnsSettings = this.Inner.DnsSettings;
@@ -164,11 +125,11 @@ namespace Microsoft.Azure.Management.Fluent.Network
                 }
             }
 
-            this.SetInner(await this.client.CreateOrUpdateAsync(this.ResourceGroupName, this.Name, this.Inner));
+            SetInner(await this.client.CreateOrUpdateAsync(this.ResourceGroupName, this.Name, this.Inner));
             return this;
         }
 
-        private bool? EqualsResourceType(string resourceType)
+        private bool EqualsResourceType(string resourceType)
         {
 
             IPConfigurationInner ipConfig = this.Inner.IpConfiguration;
@@ -184,24 +145,21 @@ namespace Microsoft.Azure.Management.Fluent.Network
             }
         }
 
-        public bool? HasAssignedLoadBalancer
+        internal bool HasAssignedLoadBalancer()
         {
-            get
-            {
-                return EqualsResourceType("frontendIPConfigurations");
-            }
+            return EqualsResourceType("frontendIPConfigurations");
         }
 
-        public IPublicFrontend GetAssignedLoadBalancerFrontend()
+        internal IPublicFrontend GetAssignedLoadBalancerFrontend()
         {
 
-            if (this.HasAssignedLoadBalancer == true)
+            if (this.HasAssignedLoadBalancer() == true)
             {
                 string refId = this.Inner.IpConfiguration.Id;
                 string loadBalancerId = ResourceUtils.ParentResourcePathFromResourceId(refId);
                 ILoadBalancer lb = this.Manager.LoadBalancers.GetById(loadBalancerId);
                 string frontendName = ResourceUtils.NameFromResourceId(refId);
-                return (IPublicFrontend)lb.Frontends()[frontendName];
+                return (IPublicFrontend)lb.Frontends[frontendName];
             }
             else
             {
@@ -217,24 +175,21 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return this;
         }
 
-        public bool? HasAssignedNetworkInterface
+        internal bool HasAssignedNetworkInterface()
         {
-            get
-            {
-                return EqualsResourceType("ipConfigurations");
-            }
+            return EqualsResourceType("ipConfigurations");
         }
 
-        public INicIpConfiguration GetAssignedNetworkInterfaceIpConfiguration()
+        internal INicIpConfiguration GetAssignedNetworkInterfaceIpConfiguration()
         {
 
-            if (this.HasAssignedNetworkInterface == true)
+            if (HasAssignedNetworkInterface())
             {
-                string refId = this.Inner.IpConfiguration.Id;
+                string refId = Inner.IpConfiguration.Id;
                 string parentId = ResourceUtils.ParentResourcePathFromResourceId(refId);
                 INetworkInterface nic = this.Manager.NetworkInterfaces.GetById(parentId);
                 string childName = ResourceUtils.NameFromResourceId(refId);
-                return nic.IpConfigurations()[childName];
+                return nic.IpConfigurations[childName];
             }
             else
             {

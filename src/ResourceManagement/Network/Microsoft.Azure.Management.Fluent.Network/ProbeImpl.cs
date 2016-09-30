@@ -23,28 +23,19 @@ namespace Microsoft.Azure.Management.Fluent.Network
         {
         }
 
-        public int IntervalInSeconds
+        internal int IntervalInSeconds()
         {
-            get
-            {
-                return (Inner.IntervalInSeconds.HasValue) ? Inner.IntervalInSeconds.Value : 0;
-            }
+            return (Inner.IntervalInSeconds.HasValue) ? Inner.IntervalInSeconds.Value : 0;
         }
 
-        public int Port
+        internal int Port()
         {
-            get
-            {
-                return Inner.Port;
-            }
+            return Inner.Port;
         }
 
-        public int NumberOfProbes
+        internal int NumberOfProbes()
         {
-            get
-            {
-                return (Inner.NumberOfProbes.HasValue) ? Inner.NumberOfProbes.Value : 0;
-            }
+            return (Inner.NumberOfProbes.HasValue) ? Inner.NumberOfProbes.Value : 0;
         }
 
         override public string Name()
@@ -52,22 +43,17 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return Inner.Name;
         }
 
-        public string Protocol
+        internal string Protocol()
         {
-            get
-            {
-                return Inner.Protocol;
-            }
+            return Inner.Protocol;
         }
 
-        public string RequestPath
+        internal string RequestPath()
         {
-            get
-            {
-                return Inner.RequestPath;
-            }
+            return Inner.RequestPath;
         }
-        public IDictionary<string, ILoadBalancingRule> LoadBalancingRules ()
+
+        internal IDictionary<string, ILoadBalancingRule> LoadBalancingRules ()
         {
             IDictionary<string, ILoadBalancingRule> rules = new SortedDictionary<string, ILoadBalancingRule>();
             if (Inner.LoadBalancingRules != null)
@@ -85,31 +71,31 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return rules;
         }
 
-        public ProbeImpl WithPort (int port)
+        internal ProbeImpl WithPort (int port)
         {
             Inner.Port = port;
             return this;
         }
 
-        public ProbeImpl WithRequestPath (string requestPath)
+        internal ProbeImpl WithRequestPath (string requestPath)
         {
             Inner.RequestPath = requestPath;
             return this;
         }
 
-        public ProbeImpl WithIntervalInSeconds (int seconds)
+        internal ProbeImpl WithIntervalInSeconds (int seconds)
         {
             Inner.IntervalInSeconds = seconds;
             return this;
         }
 
-        public ProbeImpl WithNumberOfProbes (int probes)
+        internal ProbeImpl WithNumberOfProbes (int probes)
         {
             Inner.NumberOfProbes = probes;
             return this;
         }
 
-        public LoadBalancerImpl Attach ()
+        internal LoadBalancerImpl Attach ()
         {
             return Parent.WithProbe(this);
         }

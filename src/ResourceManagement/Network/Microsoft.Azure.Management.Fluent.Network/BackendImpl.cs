@@ -21,27 +21,26 @@ namespace Microsoft.Azure.Management.Fluent.Network
         {
         }
 
-        public IDictionary<string,string> BackendNicIpConfigurationNames
+        internal IDictionary<string, string> BackendNicIpConfigurationNames()
         {
-            get
+            // This assumes a NIC can only have one IP config associated with the backend of an LB,
+            // which is correct at the time of this implementation and seems unlikely to ever change
+            IDictionary<string, string> ipConfigNames = new SortedDictionary<string, string>();
+            if (this.Inner.BackendIPConfigurations != null)
             {
-                // This assumes a NIC can only have one IP config associated with the backend of an LB,
-                // which is correct at the time of this implementation and seems unlikely to ever change
-                IDictionary<string, string> ipConfigNames = new SortedDictionary<string, string>();
-                if (this.Inner.BackendIPConfigurations != null)
+                foreach (var inner in Inner.BackendIPConfigurations)
                 {
-                    foreach (var inner in Inner.BackendIPConfigurations)
-                    {
-                        string nicId = ResourceUtils.ParentResourcePathFromResourceId(inner.Id);
-                        string ipConfigName = ResourceUtils.NameFromResourceId(inner.Id);
-                        ipConfigNames[nicId] = ipConfigName;
-                    }
+                    string nicId = ResourceUtils.ParentResourcePathFromResourceId(inner.Id);
+                    string ipConfigName = ResourceUtils.NameFromResourceId(inner.Id);
+                    ipConfigNames[nicId] = ipConfigName;
                 }
-
-                return ipConfigNames;
             }
+
+            return ipConfigNames;
+
         }
-        public IDictionary<string, ILoadBalancingRule> LoadBalancingRules ()
+
+        internal IDictionary<string, ILoadBalancingRule> LoadBalancingRules ()
         {
             IDictionary<string, ILoadBalancingRule> rules = new SortedDictionary<string, ILoadBalancingRule>();
             if (this.Inner.LoadBalancingRules != null)
@@ -50,8 +49,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
                 {
                     string name = ResourceUtils.NameFromResourceId(inner.Id);
                     ILoadBalancingRule rule;
-                    this.Parent.LoadBalancingRules().TryGetValue(name, out rule);
-                    if (rule != null)
+                    if (Parent.LoadBalancingRules().TryGetValue(name, out rule))
                     {
                         rules[name] = rule;
                     }
@@ -66,22 +64,18 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return this.Inner.Name;
         }
 
-        public ISet<string> GetVirtualMachineIds ()
+        internal ISet<string> GetVirtualMachineIds ()
         {
             ISet<string> vmIds = new HashSet<string>();
-            IDictionary<string, string> nicConfigs = this.BackendNicIpConfigurationNames;
+            IDictionary<string, string> nicConfigs = BackendNicIpConfigurationNames();
             if (nicConfigs != null)
             {
                 foreach (string nicId in nicConfigs.Keys)
                 {
                     try
                     {
-                        var nic = this.Parent.Manager.NetworkInterfaces.GetById(nicId);
-                        if (nic == null || nic.VirtualMachineId == null)
-                        {
-                            continue;
-                        }
-                        else
+                        var nic = Parent.Manager.NetworkInterfaces.GetById(nicId);
+                        if (nic != null && nic.VirtualMachineId != null)
                         {
                             vmIds.Add(nic.VirtualMachineId);
                         }
@@ -94,7 +88,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return vmIds;
         }
 
-        public LoadBalancerImpl Attach ()
+        internal LoadBalancerImpl Attach ()
         {
             return Parent.WithBackend(this);
         }

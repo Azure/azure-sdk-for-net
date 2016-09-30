@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.TcpProbe.Update
         /// </summary>
         /// <param name="seconds">seconds number of seconds</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Fluent.Network.TcpProbe.Update.IUpdate WithIntervalInSeconds (int seconds);
+        Microsoft.Azure.Management.Fluent.Network.TcpProbe.Update.IUpdate WithIntervalInSeconds(int seconds);
 
     }
     /// <summary>
@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.TcpProbe.Update
         /// </summary>
         /// <param name="port">port a port number</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Fluent.Network.TcpProbe.Update.IUpdate WithPort (int port);
+        Microsoft.Azure.Management.Fluent.Network.TcpProbe.Update.IUpdate WithPort(int port);
 
     }
     /// <summary>
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.TcpProbe.Update
         /// </summary>
         /// <param name="probes">probes number of probes</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Fluent.Network.TcpProbe.Update.IUpdate WithNumberOfProbes (int probes);
+        Microsoft.Azure.Management.Fluent.Network.TcpProbe.Update.IUpdate WithNumberOfProbes(int probes);
 
     }
     /// <summary>

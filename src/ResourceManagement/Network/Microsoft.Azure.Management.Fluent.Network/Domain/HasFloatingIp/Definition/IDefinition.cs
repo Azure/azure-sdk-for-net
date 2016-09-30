@@ -14,20 +14,20 @@ namespace Microsoft.Azure.Management.Fluent.Network.HasFloatingIp.Definition
         /// Enables floating IP support.
         /// </summary>
         /// <returns>the next stage of the definition</returns>
-        ReturnT WithFloatingIpEnabled ();
+        ReturnT WithFloatingIpEnabled();
 
         /// <summary>
         /// Disables floating IP support.
         /// </summary>
         /// <returns>the next stage of the definition</returns>
-        ReturnT WithFloatingIpDisabled ();
+        ReturnT WithFloatingIpDisabled();
 
         /// <summary>
         /// Sets the floating IP enablement.
         /// </summary>
         /// <param name="enabled">enabled true if floating IP should be enabled</param>
         /// <returns>the next stage of the definition</returns>
-        ReturnT WithFloatingIp (bool enabled);
+        ReturnT WithFloatingIp(bool enabled);
 
     }
 }

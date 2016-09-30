@@ -4,8 +4,8 @@ namespace Microsoft.Azure.Management.Fluent.Network.NetworkSecurityGroup.Definit
 {
 
     using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.Resource.Definition;
     using Microsoft.Azure.Management.Fluent.Network;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.Resource.Definition;
     using Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Definition;
     using Microsoft.Azure.Management.Fluent.Resource.Core.GroupableResource.Definition;
     /// <summary>
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.NetworkSecurityGroup.Definit
         /// </summary>
         /// <param name="name">name the name for the new security rule</param>
         /// <returns>the first stage of the security rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Definition.IBlank<Microsoft.Azure.Management.Fluent.Network.NetworkSecurityGroup.Definition.IWithCreate> DefineRule (string name);
+        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Definition.IBlank<Microsoft.Azure.Management.Fluent.Network.NetworkSecurityGroup.Definition.IWithCreate> DefineRule(string name);
 
     }
     /// <summary>
