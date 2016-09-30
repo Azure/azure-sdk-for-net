@@ -1,5 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management;
 using Microsoft.Azure.Management.Fluent.Resource;
@@ -7,12 +7,13 @@ using Microsoft.Azure.Management.Fluent.Resource.Authentication;
 using Microsoft.Azure.Management.Fluent.Resource.Core;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DeployUsingARMTemplate
 {
+    /**
+     * Azure Resource sample for deploying resources using an ARM template.
+     */
+
     public class Program
     {
         public static void Main(string[] args)
@@ -30,7 +31,7 @@ namespace DeployUsingARMTemplate
 
                     var azure = Azure
                         .Configure()
-                        .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                        .withLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
                         .Authenticate(credentials)
                         .WithSubscription(credentials.DefaultSubscriptionId);
 

@@ -1,16 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Azure.Management.Storage.Models;
+using Microsoft.Azure.Management.Fluent.Batch;
 using Microsoft.Azure.Management.Fluent.Compute;
+using Microsoft.Azure.Management.Fluent.KeyVault;
+using Microsoft.Azure.Management.Fluent.Network;
 using Microsoft.Azure.Management.Fluent.Storage;
+using Microsoft.Azure.Management.Storage.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.Azure.Management.Fluent.Batch;
-using Microsoft.Azure.Management.Fluent.Network;
 
 namespace Microsoft.Azure.Management.Samples.Common
 {
@@ -225,6 +224,25 @@ namespace Microsoft.Azure.Management.Samples.Common
                         .Append("\n\t\tPriority: ").Append(rule.Priority);
             }
             Console.WriteLine(nsgOutput.ToString());
+        }
+
+        public static void PrintVault(IVault vault)
+        {
+            var info = new StringBuilder().Append("Key Vault: ").Append(vault.Id)
+                .Append("Name: ").Append(vault.Name)
+                .Append("\n\tResource group: ").Append(vault.ResourceGroupName)
+                .Append("\n\tRegion: ").Append(vault.Region)
+                .Append("\n\tSku: ").Append(vault.Sku.Name).Append(" - ").Append(Microsoft.Azure.Management.KeyVault.Models.Sku.Family)
+                .Append("\n\tVault URI: ").Append(vault.VaultUri)
+                .Append("\n\tAccess policies: ");
+            foreach (var accessPolicy in vault.AccessPolicies)
+            {
+                info.Append("\n\t\tIdentity:").Append(accessPolicy.ObjectId)
+                        .Append("\n\t\tKey permissions: ").Append(string.Join(", ", accessPolicy.Permissions.Keys))
+                        .Append("\n\t\tSecret permissions: ").Append(string.Join(", ", accessPolicy.Permissions.Secrets));
+            }
+
+            Console.WriteLine(info.ToString());
         }
     }
 }

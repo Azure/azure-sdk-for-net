@@ -230,6 +230,7 @@ namespace Microsoft.Azure.Management
             {
                 this.restClient = restClient;
                 resourceManagerAuthenticated = ResourceManager2.Authenticate(this.restClient);
+                this.tenantId = tenantId;
             }
 
             public void SetDefaultSubscription(string subscriptionId)
