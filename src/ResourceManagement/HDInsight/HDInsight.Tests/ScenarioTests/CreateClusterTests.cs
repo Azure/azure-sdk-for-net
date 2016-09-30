@@ -389,7 +389,7 @@ namespace HDInsight.Tests
             }
         }
 
-        /*[Fact]
+        [Fact]
         public void TestCreateLinuxSparkClusterWithComponentVersion()
         {
             var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
@@ -417,6 +417,6 @@ namespace HDInsight.Tests
                 Assert.Equal(result.StatusCode, HttpStatusCode.OK);
                 Assert.Equal(result.State, AsyncOperationState.Succeeded);
             }
-        }*/
+        }
     }
 }
