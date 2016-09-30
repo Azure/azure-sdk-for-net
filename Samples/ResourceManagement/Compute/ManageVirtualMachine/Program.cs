@@ -49,7 +49,7 @@ namespace ManageVirtualMachine
 
                 var azure = Azure
                     .Configure()
-                    .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                    .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                     .Authenticate(credentials)
                     .WithSubscription(credentials.DefaultSubscriptionId);
 
@@ -168,7 +168,7 @@ namespace ManageVirtualMachine
                     Console.WriteLine("Powered OFF VM: " + windowsVM.Id + "; state = " + windowsVM.PowerState);
 
                     // Get the network where Windows VM is hosted
-                    var network = windowsVM.GetPrimaryNetworkInterface().PrimaryIpConfiguration().GetNetwork();
+                    var network = windowsVM.GetPrimaryNetworkInterface().PrimaryIpConfiguration.GetNetwork();
 
                     //=============================================================
                     // Create a Linux VM in the same virtual network

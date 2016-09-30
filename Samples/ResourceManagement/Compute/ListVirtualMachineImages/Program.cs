@@ -28,7 +28,7 @@ namespace ListVirtualMachineImages
 
                 var azure = Azure
                     .Configure()
-                    .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                    .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                     .Authenticate(credentials)
                     .WithSubscription(credentials.DefaultSubscriptionId);
 
@@ -40,7 +40,7 @@ namespace ListVirtualMachineImages
 
                 var publishers = azure
                         .VirtualMachineImages
-                        .Publishers()
+                        .Publishers
                         .ListByRegion(Region.US_EAST);
 
                 Console.WriteLine("US East data center: printing list of \n"
@@ -63,11 +63,11 @@ namespace ListVirtualMachineImages
                         Console.WriteLine("=======================================================");
                         Console.WriteLine("Printing entries as publisher/offer/sku/image/version");
 
-                        foreach (var offer in publisher.Offers().List())
+                        foreach (var offer in publisher.Offers.List())
                         {
-                            foreach (var sku in offer.Skus().List())
+                            foreach (var sku in offer.Skus.List())
                             {
-                                foreach (var image in sku.Images().List())
+                                foreach (var image in sku.Images.List())
                                 {
                                     Console.WriteLine($"Image - {publisher.Name}/{offer.Name}/{sku.Name}/{image.Version}");
                                 }

@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
     /// <summary>
     /// Represents a applicationPackage collection associated with a application.
     /// </summary>
-    internal partial class ApplicationPackagesImpl :
+    public partial class ApplicationPackagesImpl :
         ExternalChildResources<Microsoft.Azure.Management.Fluent.Batch.ApplicationPackageImpl,
             Microsoft.Azure.Management.Fluent.Batch.IApplicationPackage,
             Microsoft.Azure.Management.Batch.Models.ApplicationPackageInner,

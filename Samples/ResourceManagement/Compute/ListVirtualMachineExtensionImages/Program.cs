@@ -39,7 +39,7 @@ namespace ListVirtualMachineExtensionImages
 
                 var publishers = azure
                         .VirtualMachineImages
-                        .Publishers()
+                        .Publishers
                         .ListByRegion(Region.US_EAST);
 
                 Console.WriteLine("US East data center: printing list of \n"
@@ -61,11 +61,11 @@ namespace ListVirtualMachineExtensionImages
                         Console.WriteLine("=======================================================");
                         Console.WriteLine("Printing entries as publisher/type/version");
 
-                        foreach (var imageType in publisher.ExtensionTypes().List())
+                        foreach (var imageType in publisher.ExtensionTypes.List())
                         {
-                            foreach (var version in imageType.Versions().List())
+                            foreach (var version in imageType.Versions.List())
                             {
-                                var image = version.Image();
+                                var image = version.getImage();
                                 Console.WriteLine($"Image - {publisher.Name}/{image.TypeName}/{image.VersionName}");
                             }
                         }
