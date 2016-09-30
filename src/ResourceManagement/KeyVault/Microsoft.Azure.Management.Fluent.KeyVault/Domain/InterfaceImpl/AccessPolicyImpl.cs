@@ -8,18 +8,18 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
     using Microsoft.Azure.Management.Fluent.KeyVault.Vault.Update;
     using Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.UpdateDefinition;
     using Microsoft.Azure.Management.KeyVault.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
     using System.Collections.Generic;
     using Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Update;
     using System;
     using Microsoft.Azure.Management.Fluent.KeyVault.Vault.Definition;
     internal partial class AccessPolicyImpl 
     {
         /// <returns>the name of the child resource</returns>
-        string Microsoft.Azure.Management.V2.Resource.Core.IChildResource<IVault>.Name
+        string Microsoft.Azure.Management.Fluent.Resource.Core.IChildResource<IVault>.Name
         {
             get
             {
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
         /// Attaches the child definition to the parent resource update.
         /// </summary>
         /// <returns>the next stage of the parent definition</returns>
-        Microsoft.Azure.Management.Fluent.KeyVault.Vault.Definition.IWithCreate Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update.IInUpdate<Microsoft.Azure.Management.Fluent.KeyVault.Vault.Definition.IWithCreate>.Attach () {
+        Microsoft.Azure.Management.Fluent.KeyVault.Vault.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Update.IInUpdate<Microsoft.Azure.Management.Fluent.KeyVault.Vault.Definition.IWithCreate>.Attach () {
             return this.Attach() as Microsoft.Azure.Management.Fluent.KeyVault.Vault.Definition.IWithCreate;
         }
 
@@ -284,7 +284,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
         /// Attaches the child definition to the parent resource definiton.
         /// </summary>
         /// <returns>the next stage of the parent definition</returns>
-        Microsoft.Azure.Management.Fluent.KeyVault.Vault.Update.IUpdate Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition.IInDefinition<Microsoft.Azure.Management.Fluent.KeyVault.Vault.Update.IUpdate>.Attach () {
+        Microsoft.Azure.Management.Fluent.KeyVault.Vault.Update.IUpdate Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Definition.IInDefinition<Microsoft.Azure.Management.Fluent.KeyVault.Vault.Update.IUpdate>.Attach () {
             return this.Attach() as Microsoft.Azure.Management.Fluent.KeyVault.Vault.Update.IUpdate;
         }
 

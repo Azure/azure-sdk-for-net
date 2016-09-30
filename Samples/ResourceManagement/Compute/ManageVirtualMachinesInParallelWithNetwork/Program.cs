@@ -5,12 +5,12 @@ using Microsoft.Azure.Management.Samples.Common;
 using Microsoft.Azure.Management;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Network.Models;
-using Microsoft.Azure.Management.V2.Compute;
-using Microsoft.Azure.Management.V2.Network;
-using Microsoft.Azure.Management.V2.Resource;
-using Microsoft.Azure.Management.V2.Resource.Authentication;
-using Microsoft.Azure.Management.V2.Resource.Core;
-using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+using Microsoft.Azure.Management.Fluent.Compute;
+using Microsoft.Azure.Management.Fluent.Network;
+using Microsoft.Azure.Management.Fluent.Resource;
+using Microsoft.Azure.Management.Fluent.Resource.Authentication;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
+using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,20 +72,20 @@ namespace ManageVirtualMachinesInParallelWithNetwork
                             .WithRegion(Region.US_EAST)
                             .WithExistingResourceGroup(resourceGroup)
                             .DefineRule("ALLOW-SSH")
-                                .AllowInbound()
-                                .FromAnyAddress()
-                                .FromAnyPort()
-                                .ToAnyAddress()
+                                .AllowInbound
+                                .FromAnyAddress
+                                .FromAnyPort
+                                .ToAnyAddress
                                 .ToPort(22)
                                 .WithProtocol(SecurityRuleProtocol.Tcp)
                                 .WithPriority(100)
                                 .WithDescription("Allow SSH")
                             .Attach()
                             .DefineRule("ALLOW-HTTP")
-                                .AllowInbound()
-                                .FromAnyAddress()
-                                .FromAnyPort()
-                                .ToAnyAddress()
+                                .AllowInbound
+                                .FromAnyAddress
+                                .FromAnyPort
+                                .ToAnyAddress
                                 .ToPort(80)
                                 .WithProtocol(SecurityRuleProtocol.Tcp)
                                 .WithPriority(101)
@@ -103,21 +103,21 @@ namespace ManageVirtualMachinesInParallelWithNetwork
                                 .WithRegion(Region.US_EAST)
                                 .WithExistingResourceGroup(resourceGroup)
                                 .DefineRule("ALLOW-SQL")
-                                .AllowInbound()
+                                .AllowInbound
                                 .FromAddress("172.16.1.0/24")
-                                .FromAnyPort()
-                                .ToAnyAddress()
+                                .FromAnyPort
+                                .ToAnyAddress
                                 .ToPort(1433)
                                 .WithProtocol(SecurityRuleProtocol.Tcp)
                                 .WithPriority(100)
                                 .WithDescription("Allow SQL")
                             .Attach()
                             .DefineRule("DENY-WEB")
-                                .DenyOutbound()
-                                .FromAnyAddress()
-                                .FromAnyPort()
-                                .ToAnyAddress()
-                                .ToAnyPort()
+                                .DenyOutbound
+                                .FromAnyAddress
+                                .FromAnyPort
+                                .ToAnyAddress
+                                .ToAnyPort
                                 .WithAnyProtocol()
                                 .WithDescription("Deny Web")
                                 .WithPriority(200)

@@ -3,18 +3,18 @@
 
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;
-using Microsoft.Azure.Management.V2.Resource.Core;
-using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
-using Microsoft.Azure.Management.V2.Resource.Deployment.Update;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
+using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+using Microsoft.Azure.Management.Fluent.Resource.Deployment.Update;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.V2.Resource.Deployment.Definition;
+using Microsoft.Azure.Management.Fluent.Resource.Deployment.Definition;
 using Newtonsoft.Json;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.V2.Resource
+namespace Microsoft.Azure.Management.Fluent.Resource
 {
     internal class DeploymentImpl :
         CreatableUpdatable<IDeployment, DeploymentExtendedInner, DeploymentImpl, IDeployment, Deployment.Update.IUpdate>,

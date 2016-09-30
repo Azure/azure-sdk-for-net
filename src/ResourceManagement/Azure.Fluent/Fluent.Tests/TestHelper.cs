@@ -3,11 +3,11 @@
 
 using Microsoft.Azure.Management;
 using Microsoft.Azure.Management.Fluent.Batch;
-using Microsoft.Azure.Management.V2.Compute;
-using Microsoft.Azure.Management.V2.Network;
-using Microsoft.Azure.Management.V2.Resource;
-using Microsoft.Azure.Management.V2.Resource.Authentication;
-using Microsoft.Azure.Management.V2.Resource.Core;
+using Microsoft.Azure.Management.Fluent.Compute;
+using Microsoft.Azure.Management.Fluent.Network;
+using Microsoft.Azure.Management.Fluent.Resource;
+using Microsoft.Azure.Management.Fluent.Resource.Authentication;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
 
 namespace Fluent.Tests
 {
@@ -18,9 +18,9 @@ namespace Fluent.Tests
         public static IAzure CreateRollupClient()
         {
             AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
-            return Azure.Configure()
-            .Authenticate(credentials)
-            .WithSubscription(credentials.DefaultSubscriptionId);
+            return Microsoft.Azure.Management.Azure.Configure()
+                .Authenticate(credentials)
+                .WithSubscription(credentials.DefaultSubscriptionId);
         }
 
         public static INetworkManager CreateNetworkManager()

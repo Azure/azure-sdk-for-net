@@ -6,12 +6,12 @@ namespace Microsoft.Azure.Management.Fluent.Batch
     using Management.Batch;
     using Microsoft.Azure.Management.Batch.Models;
     using Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
     using Storage;
     using System;
     using System.Threading;
     using System.Threading.Tasks;
-    using V2.Storage;
+    using Fluent.Storage;
 
     /// <summary>
     /// Implementation for BatchAccounts and its parent interfaces.
@@ -63,7 +63,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
                 name,
                 inner,
                 InnerCollection,
-                MyManager,
+                Manager,
                 applicationsClient,
                 applicationPackagesClient,
                 storageManager);
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
                 inner.Name,
                 inner,
                 InnerCollection,
-                MyManager,
+                Manager,
                 applicationsClient,
                 applicationPackagesClient,
                 storageManager);

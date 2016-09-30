@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC.ServicePrincipal.Definiti
 {
 
     using Microsoft.Azure.Management.Fluent.Graph.RBAC;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
     /// <summary>
     /// The first stage of the service principal definition.
     /// </summary>

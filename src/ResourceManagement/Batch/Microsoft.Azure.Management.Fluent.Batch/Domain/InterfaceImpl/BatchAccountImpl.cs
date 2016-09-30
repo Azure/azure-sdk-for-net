@@ -4,14 +4,14 @@
 namespace Microsoft.Azure.Management.Fluent.Batch
 {
 
-    using Microsoft.Azure.Management.V2.Resource;
+    using Microsoft.Azure.Management.Fluent.Resource;
     using Microsoft.Azure.Management.Batch.Models;
     using Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Update;
     using Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Definition;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.V2.Storage;
+    using Microsoft.Azure.Management.Fluent.Storage;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.Storage.Models;
     using System.Threading;
     internal partial class BatchAccountImpl 
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
         /// </summary>
         /// <param name="storageAccountCreatable">storageAccountCreatable storage account to be created along with and used in batch</param>
         /// <returns>the stage representing updatable batch account definition</returns>
-        Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Update.IUpdate Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Update.IWithStorageAccount.WithNewStorageAccount (ICreatable<Microsoft.Azure.Management.V2.Storage.IStorageAccount> storageAccountCreatable) {
+        Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Update.IUpdate Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Update.IWithStorageAccount.WithNewStorageAccount (ICreatable<Microsoft.Azure.Management.Fluent.Storage.IStorageAccount> storageAccountCreatable) {
             return this.WithNewStorageAccount( storageAccountCreatable) as Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Update.IUpdate;
         }
 
@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
         /// Refreshes the resource to sync with Azure.
         /// </summary>
         /// <returns>the refreshed resource</returns>
-        Microsoft.Azure.Management.Fluent.Batch.IBatchAccount Microsoft.Azure.Management.V2.Resource.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Fluent.Batch.IBatchAccount>.Refresh () {
+        Microsoft.Azure.Management.Fluent.Batch.IBatchAccount Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Fluent.Batch.IBatchAccount>.Refresh () {
             return this.Refresh() as Microsoft.Azure.Management.Fluent.Batch.IBatchAccount;
         }
 
@@ -153,7 +153,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
         /// </summary>
         /// <param name="storageAccountCreatable">storageAccountCreatable storage account to be created along with and used in batch</param>
         /// <returns>the stage representing creatable batch account definition</returns>
-        Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Definition.IWithStorage.WithNewStorageAccount (ICreatable<Microsoft.Azure.Management.V2.Storage.IStorageAccount> storageAccountCreatable) {
+        Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Definition.IWithStorage.WithNewStorageAccount (ICreatable<Microsoft.Azure.Management.Fluent.Storage.IStorageAccount> storageAccountCreatable) {
             return this.WithNewStorageAccount( storageAccountCreatable) as Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Definition.IWithCreate;
         }
 

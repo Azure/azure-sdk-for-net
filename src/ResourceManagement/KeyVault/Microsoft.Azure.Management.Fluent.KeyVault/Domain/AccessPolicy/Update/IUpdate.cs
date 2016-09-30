@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Update
 
     using Microsoft.Azure.Management.KeyVault.Models;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResourceActions;
     using Microsoft.Azure.Management.Fluent.KeyVault.Vault.Update;
     /// <summary>
     /// The access policy update stage allowing permissions to be added or removed.

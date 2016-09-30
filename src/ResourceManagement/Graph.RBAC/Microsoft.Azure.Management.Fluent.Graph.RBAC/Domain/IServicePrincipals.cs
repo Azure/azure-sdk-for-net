@@ -4,9 +4,9 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
 {
 
     using Microsoft.Rest;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions;
     using System.Threading;
     using Microsoft.Azure.Management.Fluent.Graph.RBAC.ServicePrincipal.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
     using System.Threading.Tasks;
     /// <summary>
     /// Entry point to service principal management API.

@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information. 
 
-namespace Microsoft.Azure.Management.V2.Resource.Deployment.Update
+namespace Microsoft.Azure.Management.Fluent.Resource.Deployment.Update
 {
 
     using Microsoft.Azure.Management.ResourceManager.Models;
-    using Microsoft.Azure.Management.V2.Resource;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Resource;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
 
     /// <summary>
     /// Grouping of all the deployment updates stages.

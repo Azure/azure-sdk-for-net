@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information. 
 
-namespace Microsoft.Azure.Management.V2.Resource.ResourceGroup.Update
+namespace Microsoft.Azure.Management.Fluent.Resource.ResourceGroup.Update
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.V2.Resource;
-    using Microsoft.Azure.Management.V2.Resource.Core.Resource.Update;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Resource;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.Resource.Update;
 
     /// <summary>
     /// The template for a resource group update operation, containing all the settings that can be modified.

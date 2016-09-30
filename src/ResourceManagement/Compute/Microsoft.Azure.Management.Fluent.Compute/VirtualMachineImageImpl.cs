@@ -2,14 +2,15 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Management.V2.Resource.Core;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
 using System.Collections.Generic;
 
-namespace Microsoft.Azure.Management.V2.Compute
+namespace Microsoft.Azure.Management.Fluent.Compute
 {
     internal partial class VirtualMachineImageImpl : IndexableWrapper<VirtualMachineImageInner>, IVirtualMachineImage
     {
-        internal VirtualMachineImageImpl(Region location, string publisher, string offer, string sku, string version, VirtualMachineImageInner inner) : base(inner.Name, inner)
+        internal VirtualMachineImageImpl(Region location, string publisher, string offer, string sku, string version, VirtualMachineImageInner inner) 
+            : base(inner.Name, inner)
         {
             Location = location;
             ImageReference = new ImageReference
@@ -21,11 +22,11 @@ namespace Microsoft.Azure.Management.V2.Compute
             };
         }
 
-        public IList<DataDiskImage> DataDiskImages
+        public List<DataDiskImage> DataDiskImages
         {
             get
             {
-                return Inner.DataDiskImages;
+                return Inner.DataDiskImages as List<DataDiskImage>;
             }
         }
 

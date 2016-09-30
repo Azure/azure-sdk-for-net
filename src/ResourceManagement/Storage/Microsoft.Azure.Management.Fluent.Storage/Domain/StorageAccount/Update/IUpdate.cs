@@ -1,14 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
-
-namespace Microsoft.Azure.Management.V2.Storage.StorageAccount.Update
+// Licensed under the MIT License. See License.txt in the project root for license information.
+namespace Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Update
 {
 
-    using Microsoft.Azure.Management.V2.Storage;
-    using Microsoft.Azure.Management.V2.Resource.Core.Resource.Update;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
-    using Management.Storage.Models;
-
+    using Microsoft.Azure.Management.Storage.Models;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.Resource.Update;
+    using Microsoft.Azure.Management.Fluent.Storage;
     /// <summary>
     /// A storage account update stage allowing to change the parameters.
     /// </summary>
@@ -27,12 +25,12 @@ namespace Microsoft.Azure.Management.V2.Storage.StorageAccount.Update
     /// The template for a storage account update operation, containing all the settings that can be modified.
     /// </summary>
     public interface IUpdate  :
-        IAppliable<IStorageAccount>,
+        IAppliable<Microsoft.Azure.Management.Fluent.Storage.IStorageAccount>,
         IWithSku,
         IWithCustomDomain,
         IWithEncryption,
         IWithAccessTier,
-        IUpdateWithTags<IUpdate>
+        IUpdateWithTags<Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Update.IUpdate>
     {
     }
     /// <summary>

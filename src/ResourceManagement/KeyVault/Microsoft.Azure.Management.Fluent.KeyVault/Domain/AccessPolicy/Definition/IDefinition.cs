@@ -3,11 +3,11 @@
 namespace Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Definition
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Update;
     using Microsoft.Azure.Management.KeyVault.Models;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Fluent.Graph.RBAC;
     using System;
+    using Microsoft.Azure.Management.Fluent.Graph.RBAC;
     /// <summary>
     /// The final stage of the access policy definition.
     /// <p>

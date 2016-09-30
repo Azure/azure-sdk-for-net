@@ -7,7 +7,7 @@
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
     <ProjectGuid>08bacf2f-33c9-498d-81dc-377291356f39</ProjectGuid>
-    <RootNamespace>Microsoft.Azure.Management.V2.Batch</RootNamespace>
+    <RootNamespace>Microsoft.Azure.Management.Fluent.Batch</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>
   </PropertyGroup>

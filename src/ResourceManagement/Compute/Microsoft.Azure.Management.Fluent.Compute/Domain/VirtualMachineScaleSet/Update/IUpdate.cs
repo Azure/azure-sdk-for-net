@@ -1,99 +1,46 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
-
-namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update
+// Licensed under the MIT License. See License.txt in the project root for license information.
+namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update
 {
 
-    using Microsoft.Azure.Management.V2.Network;
-    using Microsoft.Azure.Management.V2.Compute;
-    using Microsoft.Azure.Management.V2.Resource.Core.Resource.Update;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Update;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Compute;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.Resource.Update;
+    using Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSetExtension.Update;
+    using Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSetExtension.UpdateDefinition;
+    using Microsoft.Azure.Management.Fluent.Network;
     /// <summary>
-    /// The stage of the virtual machine scale set update allowing to associate inbound NAT pool of the internet
-    /// facing load balancer selected in the previous state {@link WithPrimaryLoadBalancer} with the
-    /// primary network interface of the scale set virtual machines.
+    /// The stage of a virtual machine scale set update allowing to remove the public and internal load balancer
+    /// from the primary network interface configuration.
     /// </summary>
-    public interface IWithPrimaryInternetFacingLoadBalancerNatPool  :
-        IWithPrimaryInternalLoadBalancer
+    public interface IWithoutPrimaryLoadBalancer 
     {
         /// <summary>
-        /// Associate internet facing load balancer inbound NAT pools with the the primary network interface of the
-        /// scale set virtual machines.
-        /// </summary>
-        /// <param name="natPoolNames">natPoolNames the inbound NAT pool names</param>
-        /// <returns>the next stage of the virtual machine scale set update</returns>
-        IWithPrimaryInternalLoadBalancer WithPrimaryInternetFacingLoadBalancerInboundNatPools (params string[] natPoolNames);
-
-    }
-    /// <summary>
-    /// The stage of the virtual machine scale set update allowing to specify load balancers for the primary
-    /// network interface of the scale set virtual machines.
-    /// </summary>
-    public interface IWithPrimaryLoadBalancer  :
-        IWithPrimaryInternalLoadBalancer
-    {
-        /// <summary>
-        /// Specifies load balancer to tbe used as the internet facing load balancer for the virtual machines in the
-        /// scale set.
+        /// Removes the association between the Internet-facing load balancer and the primary network interface configuration.
         /// <p>
-        /// This will replace the current internet facing load balancer associated with the virtual machines in the
-        /// scale set (if any).
-        /// By default all the backend and inbound NAT pool of the load balancer will be associated with the primary
-        /// network interface of the scale set virtual machines unless subset of them is selected in the next stages
-        /// {@link WithPrimaryInternetFacingLoadBalancerBackendOrNatPool}.
-        /// </p>
+        /// This removes the association between primary network interface configuration and all the backends and
+        /// inbound NAT pools in the load balancer.
         /// </summary>
-        /// <param name="loadBalancer">loadBalancer the primary internet facing load balancer</param>
-        /// <returns>the next stage of the virtual machine scale set update allowing to choose backends or inbound</returns>
-        /// <returns>nat pool from the load balancer.</returns>
-        IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool WithPrimaryInternetFacingLoadBalancer (ILoadBalancer loadBalancer);
-
-    }
-    /// <summary>
-    /// The stage of the virtual machine scale set update allowing to associate backend pool and/or inbound NAT pool
-    /// of the internet facing load balancer selected in the previous state {@link WithPrimaryLoadBalancer}
-    /// with the primary network interface of the scale set virtual machines.
-    /// </summary>
-    public interface IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool  :
-        IWithPrimaryInternetFacingLoadBalancerNatPool
-    {
-        /// <summary>
-        /// Associate internet facing load balancer backends with the primary network interface of the scale set virtual machines.
-        /// </summary>
-        /// <param name="backendNames">backendNames the backend names</param>
-        /// <returns>the next stage of the virtual machine scale set update allowing to choose inbound nat pool from</returns>
-        /// <returns>the load balancer.</returns>
-        IWithPrimaryInternetFacingLoadBalancerNatPool WithPrimaryInternetFacingLoadBalancerBackends (params string[] backendNames);
-
-    }
-    /// <summary>
-    /// The stage of the virtual machine scale set update allowing to change Sku for the virtual machines in the scale set.
-    /// </summary>
-    public interface IWithSku 
-    {
-        /// <summary>
-        /// Specifies sku for the virtual machines in the scale set.
-        /// </summary>
-        /// <param name="skuType">skuType the sku type</param>
-        /// <returns>the next stage of the virtual machine scale set update</returns>
-        IWithApplicable WithSku (VirtualMachineScaleSetSkuTypes skuType);
+        /// <returns>the next stage of the update</returns>
+        IWithApply WithoutPrimaryInternetFacingLoadBalancer ();
 
         /// <summary>
-        /// Specifies sku for the virtual machines in the scale set.
+        /// Removes the association between the internal load balancer and the primary network interface configuration.
+        /// <p>
+        /// This removes the association between primary network interface configuration and all the backends and
+        /// inbound NAT pools in the load balancer.
         /// </summary>
-        /// <param name="sku">sku a sku from the list of available sizes for the virtual machines in this scale set</param>
-        /// <returns>the next stage of the virtual machine scale set update</returns>
-        IWithApplicable WithSku (IVirtualMachineScaleSetSku sku);
+        /// <returns>the next stage of the update</returns>
+        IWithApply WithoutPrimaryInternalLoadBalancer ();
 
     }
     /// <summary>
     /// The stage of a virtual machine scale set update containing inputs for the resource to be updated
-    /// (via {@link WithApplicable#apply()}).
+    /// (via {@link WithApply#apply()}).
     /// </summary>
-    public interface IWithApplicable  :
-        IAppliable<IVirtualMachineScaleSet>,
-        IUpdateWithTags<IWithApplicable>,
+    public interface IWithApply  :
+        IAppliable<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet>,
+        IUpdateWithTags<Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IUpdate>,
         IWithSku,
         IWithCapacity,
         IWithExtension,
@@ -103,88 +50,110 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update
     {
     }
     /// <summary>
-    /// The stage of the virtual machine scale set update allowing to associate backend pool and/or inbound NAT pool
-    /// of the internal load balancer selected in the previous state {@link WithPrimaryInternalLoadBalancer}
-    /// with the primary network interface of the scale set virtual machines.
+    /// The stage of a virtual machine scale set definition allowing to specify the number of
+    /// virtual machines in the scale set.
+    /// </summary>
+    public interface IWithCapacity 
+    {
+        /// <summary>
+        /// Specifies the new number of virtual machines in the scale set.
+        /// </summary>
+        /// <param name="capacity">capacity the virtual machine capacity of the scale set</param>
+        /// <returns>the next stage of the update</returns>
+        IWithApply WithCapacity (int capacity);
+
+    }
+    /// <summary>
+    /// The stage of a virtual machine scale set update allowing to associate backend pools and/or inbound NAT pools
+    /// of the selected internal load balancer with the primary network interface of the scale set virtual machines.
     /// </summary>
     public interface IWithPrimaryInternalLoadBalancerBackendOrNatPool  :
         IWithPrimaryInternalLoadBalancerNatPool
     {
         /// <summary>
-        /// Associate internal load balancer backends with the primary network interface of the scale set virtual machines.
+        /// Associates the specified internal load balancer backends with the primary network interface of the
+        /// virtual machines in the scale set.
         /// </summary>
-        /// <param name="backendNames">backendNames the backend names</param>
-        /// <returns>the next stage of the virtual machine scale set update allowing to choose inbound nat pool from</returns>
-        /// <returns>the load balancer.</returns>
+        /// <param name="backendNames">backendNames the names of existing backends on the selected load balancer</param>
+        /// <returns>the next stage of the update</returns>
         IWithPrimaryInternalLoadBalancerNatPool WithPrimaryInternalLoadBalancerBackends (params string[] backendNames);
 
     }
     /// <summary>
-    /// The stage of the virtual machine scale set update allowing to specify an internal load balancer for
-    /// the primary network interface of the scale set virtual machines.
+    /// The stage of a virtual machine scale set update allowing to remove the association between the primary network
+    /// interface configuration and a backend of a load balancer.
     /// </summary>
-    public interface IWithPrimaryInternalLoadBalancer  :
-        IWithApplicable
+    public interface IWithoutPrimaryLoadBalancerBackend 
     {
         /// <summary>
-        /// Specifies load balancer to tbe used as the internal load balancer for the virtual machines in the
-        /// scale set.
-        /// <p>
-        /// This will replace the current internal load balancer associated with the virtual machines in the
-        /// scale set (if any).
-        /// By default all the backend and inbound NAT pool of the load balancer will be associated with the primary
-        /// network interface of the scale set virtual machines unless subset of them is selected in the next stages
-        /// {@link WithPrimaryInternalLoadBalancerBackendOrNatPool}.
-        /// </p>
+        /// Removes the associations between the primary network interface configuration and the specfied backends
+        /// of the Internet-facing load balancer.
         /// </summary>
-        /// <param name="loadBalancer">loadBalancer the primary internet facing load balancer</param>
-        /// <returns>the next stage of the virtual machine scale set update allowing to choose backends or inbound</returns>
-        /// <returns>nat pool from the load balancer.</returns>
-        IWithPrimaryInternalLoadBalancerBackendOrNatPool WithPrimaryInternalLoadBalancer (ILoadBalancer loadBalancer);
+        /// <param name="backendNames">backendNames existing backend names</param>
+        /// <returns>the next stage of the update</returns>
+        IWithApply WithoutPrimaryInternetFacingLoadBalancerBackends (params string[] backendNames);
+
+        /// <summary>
+        /// Removes the associations between the primary network interface configuration and the specified backends
+        /// of the internal load balancer.
+        /// </summary>
+        /// <param name="backendNames">backendNames existing backend names</param>
+        /// <returns>the next stage of the update</returns>
+        IWithApply WithoutPrimaryInternalLoadBalancerBackends (params string[] backendNames);
 
     }
     /// <summary>
-    /// The stage of the virtual machine scale set update allowing to associate inbound NAT pool of the internal
-    /// load balancer selected in the previous state {@link WithPrimaryInternalLoadBalancer} with the primary network
-    /// interface of the scale set virtual machines.
+    /// The stage of a virtual machine scale set update allowing to associate inbound NAT pools of the selected internal
+    /// load balancer with the primary network interface of the virtual machines in the scale set.
     /// </summary>
     public interface IWithPrimaryInternalLoadBalancerNatPool  :
-        IWithApplicable
+        IWithApply
     {
         /// <summary>
-        /// Associate internet facing load balancer inbound NAT pools with the the primary network interface of the
-        /// scale set virtual machines.
+        /// Associates the specified internal load balancer inbound NAT pools with the the primary network interface of
+        /// the virtual machines in the scale set.
         /// </summary>
-        /// <param name="natPoolNames">natPoolNames the inbound NAT pool names</param>
-        /// <returns>the next stage of the virtual machine scale set update</returns>
-        IWithApplicable WithPrimaryInternalLoadBalancerInboundNatPools (params string[] natPoolNames);
+        /// <param name="natPoolNames">natPoolNames the names of existing inbound NAT pools in the selected load balancer</param>
+        /// <returns>the next stage of the update</returns>
+        IWithApply WithPrimaryInternalLoadBalancerInboundNatPools (params string[] natPoolNames);
 
     }
     /// <summary>
-    /// Stage of the virtual machine scale set update allowing to remove public and internal load balancer
-    /// from the primary network interface configuration.
+    /// The stage of a virtual machine scale set update allowing to associate a backend pool and/or inbound NAT pool
+    /// of the selected Internet-facing load balancer with the primary network interface of the virtual machines in
+    /// the scale set.
     /// </summary>
-    public interface IWithoutPrimaryLoadBalancer 
+    public interface IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool  :
+        IWithPrimaryInternetFacingLoadBalancerNatPool
     {
         /// <summary>
-        /// Remove the internet facing load balancer associated to the primary network interface configuration.
-        /// <p>
-        /// This removes the association between primary network interface configuration and all backend and
-        /// inbound NAT pools in the load balancer.
-        /// </p>
+        /// Associates the specified Internet-facing load balancer backends with the primary network interface of the
+        /// virtual machines in the scale set.
         /// </summary>
-        /// <returns>the next stage of the virtual machine scale set update</returns>
-        IWithApplicable WithoutPrimaryInternetFacingLoadBalancer ();
+        /// <param name="backendNames">backendNames the backend names</param>
+        /// <returns>the next stage of the update</returns>
+        IWithPrimaryInternetFacingLoadBalancerNatPool WithPrimaryInternetFacingLoadBalancerBackends (params string[] backendNames);
+
+    }
+    /// <summary>
+    /// The stage of a virtual machine scale set update allowing to change the SKU for the virtual machines
+    /// in the scale set.
+    /// </summary>
+    public interface IWithSku 
+    {
+        /// <summary>
+        /// Specifies the SKU for the virtual machines in the scale set.
+        /// </summary>
+        /// <param name="skuType">skuType the SKU type</param>
+        /// <returns>the next stage of the update</returns>
+        IWithApply WithSku (VirtualMachineScaleSetSkuTypes skuType);
 
         /// <summary>
-        /// Remove the internal load balancer associated to the primary network interface configuration.
-        /// <p>
-        /// This removes the association between primary network interface configuration and all backend and
-        /// inbound NAT pools in the load balancer.
-        /// </p>
+        /// Specifies the SKU for the virtual machines in the scale set.
         /// </summary>
-        /// <returns>the next stage of the virtual machine scale set update</returns>
-        IWithApplicable WithoutPrimaryInternalLoadBalancer ();
+        /// <param name="sku">sku a SKU from the list of available sizes for the virtual machines in this scale set</param>
+        /// <returns>the next stage of the update</returns>
+        IWithApply WithSku (IVirtualMachineScaleSetSku sku);
 
     }
     /// <summary>
@@ -193,47 +162,107 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update
     public interface IWithExtension 
     {
         /// <summary>
-        /// Specifies definition of an extension to be attached to the virtual machines in the scale set.
+        /// Begins the definition of an extension reference to be attached to the virtual machines in the scale set.
         /// </summary>
-        /// <param name="name">name the reference name for the extension</param>
-        /// <returns>the stage representing configuration for the extension</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Update.IBlank<IWithApplicable> DefineNewExtension (string name);
+        /// <param name="name">name the reference name for an extension</param>
+        /// <returns>the first stage of the extension reference definition</returns>
+        IBlank<Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply> DefineNewExtension (string name);
 
         /// <summary>
         /// Begins the description of an update of an existing extension assigned to the virtual machines in the scale set.
         /// </summary>
         /// <param name="name">name the reference name for the extension</param>
-        /// <returns>the stage representing updatable extension definition</returns>
-        IUpdate UpdateExtension (string name);
+        /// <returns>the first stage of the extension reference update</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSetExtension.Update.IUpdate UpdateExtension (string name); // TODO: Converter does not emit fully qualified path to IUpdate of extension - fixing it
 
         /// <summary>
-        /// Detaches an extension with the given name from the virtual machines in the scale set.
+        /// Removes the extension with the specified name from the virtual machines in the scale set.
         /// </summary>
-        /// <param name="name">name the reference name for the extension to be removed/uninstalled</param>
-        /// <returns>the stage representing updatable VM scale set definition</returns>
-        IWithApplicable WithoutExtension (string name);
+        /// <param name="name">name the reference name of the extension to be removed/uninstalled</param>
+        /// <returns>the next stage of the update</returns>
+        IWithApply WithoutExtension (string name);
 
     }
     /// <summary>
-    /// Stage of the virtual machine scale set update allowing to remove association between the primary network interface
-    /// configuration and backend of the load balancer.
+    /// The stage of a virtual machine scale set update allowing to specify load balancers for the primary
+    /// network interface of the scale set virtual machines.
     /// </summary>
-    public interface IWithoutPrimaryLoadBalancerBackend 
+    public interface IWithPrimaryLoadBalancer  :
+        IWithPrimaryInternalLoadBalancer
     {
         /// <summary>
-        /// Removes association between the primary network interface configuration and backend of the internet facing
-        /// load balancer.
+        /// Specifies the load balancer to be used as the Internet-facing load balancer for the virtual machines in the
+        /// scale set.
+        /// <p>
+        /// This will replace the current internet-facing load balancer associated with the virtual machines in the
+        /// scale set (if any).
+        /// By default all the backend and inbound NAT pool of the load balancer will be associated with the primary
+        /// network interface of the virtual machines unless a subset of them is selected in the next stages
         /// </summary>
-        /// <param name="backendNames">backendNames the existing backend names to remove</param>
-        /// <returns>the next stage of the virtual machine scale set update</returns>
-        IWithApplicable WithoutPrimaryInternetFacingLoadBalancerBackends (params string[] backendNames);
+        /// <param name="loadBalancer">loadBalancer the primary Internet-facing load balancer</param>
+        /// <returns>the next stage of the update</returns>
+        IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool WithPrimaryInternetFacingLoadBalancer (ILoadBalancer loadBalancer);
+
+    }
+    /// <summary>
+    /// A stage of the virtual machine scale set update allowing to remove the associations between the primary network
+    /// interface configuration and the specified inbound NAT pools of the load balancer.
+    /// </summary>
+    public interface IWithoutPrimaryLoadBalancerNatPool 
+    {
+        /// <summary>
+        /// Removes the associations between the primary network interface configuration and the specified inbound NAT pools
+        /// of an Internet-facing load balancer.
+        /// </summary>
+        /// <param name="natPoolNames">natPoolNames the names of existing inbound NAT pools</param>
+        /// <returns>the next stage of the update</returns>
+        IWithApply WithoutPrimaryInternetFacingLoadBalancerNatPools (params string[] natPoolNames);
 
         /// <summary>
-        /// Removes association between the primary network interface configuration and backend of the internal load balancer.
+        /// Removes the associations between the primary network interface configuration and the specified inbound NAT pools
+        /// of the internal load balancer.
         /// </summary>
-        /// <param name="backendNames">backendNames the existing backend names to remove</param>
-        /// <returns>the next stage of the virtual machine scale set update</returns>
-        IWithApplicable WithoutPrimaryInternalLoadBalancerBackends (params string[] backendNames);
+        /// <param name="natPoolNames">natPoolNames the names of existing inbound NAT pools</param>
+        /// <returns>the next stage of the update</returns>
+        IWithApply WithoutPrimaryInternalLoadBalancerNatPools (params string[] natPoolNames);
+
+    }
+    /// <summary>
+    /// The stage of a virtual machine scale set update allowing to specify an internal load balancer for
+    /// the primary network interface of the scale set virtual machines.
+    /// </summary>
+    public interface IWithPrimaryInternalLoadBalancer  :
+        IWithApply
+    {
+        /// <summary>
+        /// Specifies the load balancer to be used as the internal load balancer for the virtual machines in the
+        /// scale set.
+        /// <p>
+        /// This will replace the current internal load balancer associated with the virtual machines in the
+        /// scale set (if any).
+        /// By default all the backends and inbound NAT pools of the load balancer will be associated with the primary
+        /// network interface of the virtual machines in the scale set unless subset of them is selected in the next stages.
+        /// </p>
+        /// </summary>
+        /// <param name="loadBalancer">loadBalancer the primary Internet-facing load balancer</param>
+        /// <returns>the next stage of the update</returns>
+        IWithPrimaryInternalLoadBalancerBackendOrNatPool WithPrimaryInternalLoadBalancer (ILoadBalancer loadBalancer);
+
+    }
+    /// <summary>
+    /// The stage of a virtual machine scale set update allowing to associate an inbound NAT pool of the selected
+    /// Internet-facing load balancer with the primary network interface of the virtual machines in the scale set.
+    /// </summary>
+    public interface IWithPrimaryInternetFacingLoadBalancerNatPool  :
+        IWithPrimaryInternalLoadBalancer
+    {
+        /// <summary>
+        /// Associates inbound NAT pools of the selected Internet-facing load balancer with the primary network interface
+        /// of the virtual machines in the scale set.
+        /// </summary>
+        /// <param name="natPoolNames">natPoolNames the names of existing inbound NAT pools on the selected load balancer</param>
+        /// <returns>the next stage of the update</returns>
+        IWithPrimaryInternalLoadBalancer WithPrimaryInternetFacingLoadBalancerInboundNatPools (params string[] natPoolNames);
 
     }
     /// <summary>
@@ -244,42 +273,5 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update
         IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool,
         IWithPrimaryInternalLoadBalancerBackendOrNatPool
     {
-    }
-    /// <summary>
-    /// Stage of the virtual machine scale set update allowing to remove association between the primary network interface
-    /// configuration and inbound NAT pool of the load balancer.
-    /// </summary>
-    public interface IWithoutPrimaryLoadBalancerNatPool 
-    {
-        /// <summary>
-        /// Removes association between the primary network interface configuration and inbound NAT pool of the
-        /// internet facing load balancer.
-        /// </summary>
-        /// <param name="natPoolNames">natPoolNames the name of an existing inbound NAT pools to remove</param>
-        /// <returns>the next stage of the virtual machine scale set update</returns>
-        IWithApplicable WithoutPrimaryInternetFacingLoadBalancerNatPools (params string[] natPoolNames);
-
-        /// <summary>
-        /// Removes association between the primary network interface configuration and inbound NAT pool of the
-        /// internal load balancer.
-        /// </summary>
-        /// <param name="natPoolNames">natPoolNames the name of an existing inbound NAT pools to remove</param>
-        /// <returns>the next stage of the virtual machine scale set update</returns>
-        IWithApplicable WithoutPrimaryInternalLoadBalancerNatPools (params string[] natPoolNames);
-
-    }
-    /// <summary>
-    /// The stage of the virtual machine scale set definition allowing to specify number of
-    /// virtual machines in the scale set.
-    /// </summary>
-    public interface IWithCapacity 
-    {
-        /// <summary>
-        /// Specifies the new number of virtual machines in the scale set.
-        /// </summary>
-        /// <param name="capacity">capacity the virtual machine capacity</param>
-        /// <returns>the next stage of the virtual machine scale set update</returns>
-        IWithApplicable WithCapacity (int capacity);
-
     }
 }

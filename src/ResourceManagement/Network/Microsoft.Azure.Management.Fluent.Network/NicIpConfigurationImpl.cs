@@ -1,120 +1,124 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Microsoft.Azure.Management.V2.Network
+namespace Microsoft.Azure.Management.Fluent.Network
 {
-
-    using NicIpConfiguration.Update;
-    using NicIpConfiguration.Definition;
-    using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
+    using Management.Network.Models;
     using NicIpConfiguration.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.Network.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using NetworkInterface.Update;
-    using Microsoft.Azure;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
-    using NetworkInterface.Definition;
-    using Microsoft.Rest.Azure;
+    using System.Collections.Generic;
+    using Resource.Core;
+    using NicIpConfiguration.Definition;
+    using Resource.Core.ResourceActions;
     using Resource.Core.ChildResourceActions;
     using System;
+    using Rest.Azure;
+    using Resource;
 
     /// <summary>
-    /// Implementation for {@link NicIpConfiguration} and its create and update interfaces.
+    /// Implementation for NicIpConfiguration and its create and update interfaces.
     /// </summary>
     public partial class NicIpConfigurationImpl :
         ChildResource<NetworkInterfaceIPConfigurationInner, NetworkInterfaceImpl, INetworkInterface>,
         INicIpConfiguration,
-        NicIpConfiguration.Definition.IDefinition<NetworkInterface.Definition.IWithCreate>,
-        NicIpConfiguration.UpdateDefinition.IUpdateDefinition<NetworkInterface.Update.IUpdate>,
+        IDefinition<NetworkInterface.Definition.IWithCreate>,
+        IUpdateDefinition<NetworkInterface.Update.IUpdate>,
         NicIpConfiguration.Update.IUpdate
     {
-        private INetworkManager NetworkManager;
+        private NetworkManager networkManager;
         private bool isInCreateMode;
         private string creatableVirtualNetworkKey;
         private string creatablePublicIpKey;
         private INetwork existingVirtualNetworkToAssociate;
-        private IPublicIpAddress existingPublicIpAddressToAssociate;
+        private string existingPublicIpAddressIdToAssociate;
         private string subnetToAssociate;
         private bool removePrimaryPublicIPAssociation;
-        private ILoadBalancer loadBalancerToAssociate;
 
-        internal NicIpConfigurationImpl(NetworkInterfaceIPConfigurationInner inner, NetworkInterfaceImpl parent, INetworkManager NetworkManager, bool isInCreateModel) :
-            base(inner.Id, inner, parent)
+        internal NicIpConfigurationImpl(
+            NetworkInterfaceIPConfigurationInner inner,
+            NetworkInterfaceImpl parent,
+            NetworkManager networkManager,
+            bool isInCreateMode) : base(inner.Name, inner, parent)
         {
-            this.isInCreateMode = isInCreateModel;
-            this.NetworkManager = NetworkManager;
+            this.isInCreateMode = isInCreateMode;
+            this.networkManager = networkManager;
         }
 
-        internal static NicIpConfigurationImpl PrepareNicIpConfiguration(string name, NetworkInterfaceImpl parent, INetworkManager NetworkManager)
+        internal static NicIpConfigurationImpl PrepareNicIpConfiguration(string name, NetworkInterfaceImpl parent, NetworkManager networkManager)
         {
             NetworkInterfaceIPConfigurationInner ipConfigurationInner = new NetworkInterfaceIPConfigurationInner();
             ipConfigurationInner.Name = name;
-            return new NicIpConfigurationImpl(ipConfigurationInner,
-                parent,
-                NetworkManager,
-                true);
+            return new NicIpConfigurationImpl(ipConfigurationInner, parent, networkManager, true);
         }
 
-        public override string Name
+        override public string Name
         {
             get
             {
                 return Inner.Name;
             }
         }
+
+        public string PrivateIpAddressVersion
+        {
+            get
+            {
+                return Inner.PrivateIPAddressVersion;
+            }
+        }
+
         public string PublicIpAddressId
         {
             get
             {
-                if (this.Inner.PublicIPAddress == null)
-                {
-                    return null;
-                }
-                return this.Inner.PublicIPAddress.Id;
+                return (Inner.PublicIPAddress != null) ? Inner.PublicIPAddress.Id : null;
             }
         }
-        public IPublicIpAddress PublicIpAddress()
+
+        public IPublicIpAddress GetPublicIpAddress()
         {
-            string id = this.Inner.PublicIPAddress.Id;
-            if (id == null)
-            {
-                return null;
-            }
-
-            return this.NetworkManager.PublicIpAddresses.GetByGroup(
-                ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
+            string id = PublicIpAddressId;
+            return (id != null) ? Parent.Manager.PublicIpAddresses.GetById(id) : null;
         }
 
-        public string SubnetId
+        public string SubnetName
         {
             get
             {
-                return this.Inner.Subnet.Id;
+                SubResource subnetRef = Inner.Subnet;
+                return (subnetRef != null) ? ResourceUtils.NameFromResourceId(subnetRef.Id) : null;
             }
         }
-        public INetwork Network()
-        {
-            string id = this.SubnetId;
-            return this.NetworkManager.Networks.GetByGroup(ResourceUtils.GroupFromResourceId(id),
-                ResourceUtils.ExtractFromResourceId(id, "virtualNetworks"));
-        }
 
-        public string PrivateIp
+        public string NetworkId
         {
             get
             {
-                return this.Inner.PrivateIPAddress;
+                SubResource subnetRef = Inner.Subnet;
+                return (subnetRef != null) ? ResourceUtils.ParentResourcePathFromResourceId(subnetRef.Id) : null;
             }
         }
+
+        public INetwork GetNetwork()
+        {
+            return (NetworkId != null) ? Parent.Manager.Networks.GetById(NetworkId) : null;
+        }
+
+        public string PrivateIpAddress
+        {
+            get
+            {
+                return Inner.PrivateIPAddress;
+            }
+        }
+
         public string PrivateIpAllocationMethod
         {
             get
             {
-                return this.Inner.PrivateIPAllocationMethod;
+                return Inner.PrivateIPAllocationMethod;
             }
         }
+
         public NetworkInterfaceImpl Attach()
         {
             return Parent.WithIpConfiguration(this);
@@ -122,26 +126,25 @@ namespace Microsoft.Azure.Management.V2.Network
 
         public NicIpConfigurationImpl WithNewNetwork(ICreatable<INetwork> creatable)
         {
-            this.creatableVirtualNetworkKey = creatable.Key;
-            this.Parent.AddToCreatableDependencies(creatable);
+            creatableVirtualNetworkKey = creatable.Key;
+            Parent.AddToCreatableDependencies(creatable as ICreatable<Fluent.Resource.Core.IResource>);
             return this;
         }
 
         public NicIpConfigurationImpl WithNewNetwork(string name, string addressSpaceCidr)
         {
-
-            var definitionWithGroup = this.NetworkManager.Networks
+            Network.Definition.IWithGroup definitionWithGroup = Parent.Manager.Networks
                 .Define(name)
-                .WithRegion(this.Parent.RegionName);
+                .WithRegion(Parent.RegionName);
 
-            V2.Network.Network.Definition.IWithCreate definitionAfterGroup;
-            if (this.Parent.NewGroup() != null)
+            Network.Definition.IWithCreate definitionAfterGroup;
+            if (Parent.NewGroup() != null)
             {
-                definitionAfterGroup = definitionWithGroup.WithNewResourceGroup(this.Parent.NewGroup());
+                definitionAfterGroup = definitionWithGroup.WithNewResourceGroup(Parent.NewGroup());
             }
             else
             {
-                definitionAfterGroup = definitionWithGroup.WithExistingResourceGroup(this.Parent.ResourceGroupName);
+                definitionAfterGroup = definitionWithGroup.WithExistingResourceGroup(Parent.ResourceGroupName);
             }
 
             return WithNewNetwork(definitionAfterGroup.WithAddressSpace(addressSpaceCidr));
@@ -149,81 +152,97 @@ namespace Microsoft.Azure.Management.V2.Network
 
         public NicIpConfigurationImpl WithNewNetwork(string addressSpaceCidr)
         {
-            return WithNewNetwork(this.Parent.Namer.RandomName("vnet", 20), addressSpaceCidr);
+            return WithNewNetwork(ResourceNamer.RandomResourceName("vnet", 20), addressSpaceCidr);
         }
 
         public NicIpConfigurationImpl WithExistingNetwork(INetwork network)
         {
-            this.existingVirtualNetworkToAssociate = network;
+            existingVirtualNetworkToAssociate = network;
             return this;
         }
 
         public NicIpConfigurationImpl WithPrivateIpAddressDynamic()
         {
-            this.Inner.PrivateIPAllocationMethod = IPAllocationMethod.Dynamic;
-            this.Inner.PrivateIPAddress = null;
+            Inner.PrivateIPAllocationMethod = IPAllocationMethod.Dynamic;
+            Inner.PrivateIPAddress = null;
             return this;
         }
 
         public NicIpConfigurationImpl WithPrivateIpAddressStatic(string staticPrivateIpAddress)
         {
-            this.Inner.PrivateIPAllocationMethod = IPAllocationMethod.Static;
-            this.Inner.PrivateIPAddress = staticPrivateIpAddress;
+            Inner.PrivateIPAllocationMethod = IPAllocationMethod.Static;
+            Inner.PrivateIPAddress = staticPrivateIpAddress;
             return this;
         }
 
         public NicIpConfigurationImpl WithNewPublicIpAddress(ICreatable<IPublicIpAddress> creatable)
         {
-            if (this.creatablePublicIpKey == null)
+            if (creatablePublicIpKey == null)
             {
-                this.creatablePublicIpKey = creatable.Key;
-                this.Parent.AddToCreatableDependencies(creatable);
+                creatablePublicIpKey = creatable.Key;
+                Parent.AddToCreatableDependencies(creatable as ICreatable<Fluent.Resource.Core.IResource>);
             }
+
             return this;
         }
 
         public NicIpConfigurationImpl WithNewPublicIpAddress()
         {
-            string name = this.Parent.Namer.RandomName("pip", 15);
+            string name = ResourceNamer.RandomResourceName("pip", 15);
             return WithNewPublicIpAddress(PrepareCreatablePublicIp(name, name));
         }
 
         public NicIpConfigurationImpl WithNewPublicIpAddress(string leafDnsLabel)
         {
-            return WithNewPublicIpAddress(PrepareCreatablePublicIp(this.Parent.Namer.RandomName("pip", 15), leafDnsLabel));
+            return WithNewPublicIpAddress(
+                PrepareCreatablePublicIp(ResourceNamer.RandomResourceName("pip", 15), leafDnsLabel));
         }
 
         public NicIpConfigurationImpl WithExistingPublicIpAddress(IPublicIpAddress publicIpAddress)
         {
-            this.existingPublicIpAddressToAssociate = publicIpAddress;
+
+            return WithExistingPublicIpAddress(publicIpAddress.Id);
+        }
+
+        public NicIpConfigurationImpl WithExistingPublicIpAddress(string resourceId)
+        {
+            existingPublicIpAddressIdToAssociate = resourceId;
             return this;
         }
 
         public NicIpConfigurationImpl WithoutPublicIpAddress()
         {
-            this.removePrimaryPublicIPAssociation = true;
+            removePrimaryPublicIPAssociation = true;
             return this;
         }
 
         public NicIpConfigurationImpl WithSubnet(string name)
         {
-            this.subnetToAssociate = name;
+            subnetToAssociate = name;
             return this;
         }
 
-        public NicIpConfigurationImpl WithExistingLoadBalancer(ILoadBalancer loadBalancer)
+        public NicIpConfigurationImpl WithExistingLoadBalancerBackend(ILoadBalancer loadBalancer, string backendName)
         {
-            this.loadBalancerToAssociate = loadBalancer;
-            return this;
-        }
-
-        public NicIpConfigurationImpl WithBackendAddressPool(string name)
-        {
-            foreach (BackendAddressPoolInner pool in this.loadBalancerToAssociate.Inner.BackendAddressPools)
+            foreach (var pool in loadBalancer.Inner.BackendAddressPools)
             {
-                if (pool.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
+                if (pool.Name.Equals(backendName, StringComparison.OrdinalIgnoreCase))
                 {
                     EnsureBackendAddressPools.Add(pool);
+                    return this;
+                }
+            }
+
+            return this;
+        }
+
+        public NicIpConfigurationImpl WithExistingLoadBalancerInboundNatRule(ILoadBalancer loadBalancer, string inboundNatRuleName)
+        {
+            foreach (var rule in loadBalancer.Inner.InboundNatRules)
+            {
+                if (rule.Name.Equals(inboundNatRuleName, StringComparison.OrdinalIgnoreCase))
+                {
+                    EnsureInboundNatRules.Add(rule);
                     return this;
                 }
             }
@@ -235,102 +254,104 @@ namespace Microsoft.Azure.Management.V2.Network
         {
             get
             {
-                IList<BackendAddressPoolInner> poolRefs = this.Inner.LoadBalancerBackendAddressPools;
+                IList<BackendAddressPoolInner> poolRefs = Inner.LoadBalancerBackendAddressPools;
                 if (poolRefs == null)
                 {
                     poolRefs = new List<BackendAddressPoolInner>();
-                    this.Inner.LoadBalancerBackendAddressPools = poolRefs;
+                    Inner.LoadBalancerBackendAddressPools = poolRefs;
                 }
 
                 return poolRefs;
             }
         }
-        internal static void EnsureConfigurations(IList<INicIpConfiguration> nicIpConfigurations)
+
+        private IList<InboundNatRuleInner> EnsureInboundNatRules
         {
-            foreach (INicIpConfiguration nicIpConfiguration in nicIpConfigurations)
+            get
+            {
+                IList<InboundNatRuleInner> natRefs = Inner.LoadBalancerInboundNatRules;
+                if (natRefs == null)
+                {
+                    natRefs = new List<InboundNatRuleInner>();
+                    Inner.LoadBalancerInboundNatRules = natRefs;
+                }
+
+                return natRefs;
+            }
+        }
+
+        internal static void EnsureConfigurations(List<INicIpConfiguration> nicIpConfigurations)
+        {
+            foreach (var nicIpConfiguration in nicIpConfigurations)
             {
                 NicIpConfigurationImpl config = (NicIpConfigurationImpl)nicIpConfiguration;
-                config.Inner.Subnet = config.SubnetToAssociate;
-                config.Inner.PublicIPAddress = config.PublicIpToAssociate;
+                config.Inner.Subnet = config.SubnetToAssociate();
+                config.Inner.PublicIPAddress = config.PublicIpToAssociate();
             }
         }
 
         private ICreatable<IPublicIpAddress> PrepareCreatablePublicIp(string name, string leafDnsLabel)
         {
-
-            var definitionWithGroup = this.NetworkManager.PublicIpAddresses
-                .Define(name)
+            PublicIpAddress.Definition.IWithGroup definitionWithGroup = this.networkManager.PublicIpAddresses.Define(name)
                 .WithRegion(this.Parent.RegionName);
 
             PublicIpAddress.Definition.IWithCreate definitionAfterGroup;
-            if (this.Parent.NewGroup() != null)
+            if (Parent.NewGroup() != null)
             {
-                definitionAfterGroup = definitionWithGroup.WithNewResourceGroup(this.Parent.NewGroup());
+                definitionAfterGroup = definitionWithGroup.WithNewResourceGroup(Parent.NewGroup());
             }
             else
             {
-                definitionAfterGroup = definitionWithGroup.WithExistingResourceGroup(this.Parent.ResourceGroupName);
+                definitionAfterGroup = definitionWithGroup.WithExistingResourceGroup(Parent.ResourceGroupName);
             }
 
             return definitionAfterGroup.WithLeafDomainLabel(leafDnsLabel);
         }
 
-        NetworkInterface.Update.IUpdate ISettable<NetworkInterface.Update.IUpdate>.Parent()
-        {
-            return base.Parent;
-        }
-
         /// <summary>
         /// Gets the subnet to associate with the IP configuration.
         /// <p>
-        /// this method will never return null as subnet is required for a IP configuration, in case of
+        /// This method will never return null as subnet is required for a IP configuration, in case of
         /// update mode if user didn't choose to change the subnet then existing subnet will be returned.
         /// Updating the nic subnet has a restriction, the new subnet must reside in the same virtual network
         /// as the current one.
         /// </summary>
         /// <returns>the subnet resource</returns>
-        private SubnetInner SubnetToAssociate
+        private SubnetInner SubnetToAssociate()
         {
-            get
+            SubnetInner subnetInner = new SubnetInner();
+            if (this.isInCreateMode)
             {
-                SubnetInner subnetInner = new SubnetInner();
-                if (this.isInCreateMode)
+                if (this.creatableVirtualNetworkKey != null)
                 {
-                    if (this.creatableVirtualNetworkKey != null)
+                    INetwork network = (INetwork)Parent.CreatedDependencyResource(this.creatableVirtualNetworkKey);
+                    subnetInner.Id = network.Inner.Subnets[0].Id;
+                    return subnetInner;
+                }
+
+                foreach (var subnet in this.existingVirtualNetworkToAssociate.Inner.Subnets)
+                {
+                    if (subnet.Name.Equals(this.subnetToAssociate, StringComparison.OrdinalIgnoreCase))
                     {
-                        INetwork network = (INetwork)this.Parent.CreatedDependencyResource(this.creatableVirtualNetworkKey);
-                        subnetInner.Id = network.Inner.Subnets[0].Id;
+                        subnetInner.Id = subnet.Id;
                         return subnetInner;
                     }
+                }
 
-                    foreach (SubnetInner subnet in this.existingVirtualNetworkToAssociate.Inner.Subnets)
-                    {
-                        if (subnet.Name.Equals(this.subnetToAssociate, StringComparison.OrdinalIgnoreCase))
-                        {
-                            subnetInner.Id = subnet.Id;
-                            return subnetInner;
-                        }
-                    }
-
-                    throw new Exception(string.Format("A subnet with name '{0}' not found under the network '{0}'",
-                        this.subnetToAssociate,
-                        this.existingVirtualNetworkToAssociate.Name));
-
+                throw new Exception("A subnet with name '" + subnetToAssociate + "' not found under the network '" + this.existingVirtualNetworkToAssociate.Name + "'");
+            }
+            else
+            {
+                if (subnetToAssociate != null)
+                {
+                    int idx = Inner.Subnet.Id.LastIndexOf('/');
+                    subnetInner.Id = Inner.Subnet.Id.Substring(0, idx) + subnetToAssociate;
                 }
                 else
                 {
-                    if (subnetToAssociate != null)
-                    {
-                        int idx = this.Inner.Subnet.Id.LastIndexOf('/');
-                        subnetInner.Id = this.Inner.Subnet.Id.Substring(0, idx) + subnetToAssociate;
-                    }
-                    else
-                    {
-                        subnetInner.Id = this.Inner.Subnet.Id;
-                    }
-
-                    return subnetInner;
+                    subnetInner.Id = Inner.Subnet.Id;
                 }
+                return subnetInner;
             }
         }
 
@@ -343,44 +364,112 @@ namespace Microsoft.Azure.Management.V2.Network
         /// not specified then existing associated (if any) public IP will be returned.
         /// </summary>
         /// <returns>public ip SubResource</returns>
-        private PublicIPAddressInner PublicIpToAssociate
+        private PublicIPAddressInner PublicIpToAssociate()
         {
-            get
+            string pipId = null;
+            if (removePrimaryPublicIPAssociation)
             {
-                if (this.removePrimaryPublicIPAssociation)
-                {
-                    return null;
-                }
-
-                PublicIPAddressInner publicIPAddressInner = null;
-                if (this.creatablePublicIpKey != null)
-                {
-                    IPublicIpAddress publicIpAddress = (IPublicIpAddress)this.Parent
-                        .CreatedDependencyResource(this.creatablePublicIpKey);
-                    publicIPAddressInner = publicIpAddress.Inner;
-                }
-
-                if (this.existingPublicIpAddressToAssociate != null)
-                {
-                    publicIPAddressInner = this.existingPublicIpAddressToAssociate.Inner;
-                }
-
-                if (publicIPAddressInner != null)
-                {
-                    //TODO: validate that this is correct
-                    return publicIPAddressInner;
-                    //SubResource subResource = new SubResource();
-                    //subResource.withId(publicIPAddressInner.id());
-                    //return subResource;
-                }
-
-                if (!this.isInCreateMode)
-                {
-                    return this.Inner.PublicIPAddress;
-                }
-
                 return null;
             }
+            else if (creatablePublicIpKey != null)
+            {
+                pipId = ((IPublicIpAddress)Parent.CreatedDependencyResource(creatablePublicIpKey)).Id;
+            }
+            else if (existingPublicIpAddressIdToAssociate != null)
+            {
+                pipId = existingPublicIpAddressIdToAssociate;
+            }
+
+            if (pipId != null)
+            {
+                return networkManager.PublicIpAddresses.GetById(pipId).Inner;
+            }
+            else if (!isInCreateMode)
+            {
+                return Inner.PublicIPAddress;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public NicIpConfigurationImpl WithPrivateIpVersion(string ipVersion)
+        {
+            Inner.PrivateIPAddressVersion = ipVersion;
+            return this;
+        }
+
+        public NicIpConfigurationImpl WithoutLoadBalancerBackends()
+        {
+            Inner.LoadBalancerBackendAddressPools = null;
+            return this;
+        }
+
+        public NicIpConfigurationImpl WithoutLoadBalancerInboundNatRules()
+        {
+            Inner.LoadBalancerInboundNatRules = null;
+            return this;
+        }
+
+        public IList<IInboundNatRule> ListAssociatedLoadBalancerInboundNatRules()
+        {
+            IList<InboundNatRuleInner> refs = Inner.LoadBalancerInboundNatRules;
+            Dictionary<string, ILoadBalancer> loadBalancers = new Dictionary<string, ILoadBalancer>();
+            List<IInboundNatRule> rules = new List<IInboundNatRule>();
+
+            if (refs != null)
+            {
+                foreach (var reference in refs)
+                {
+                    string loadBalancerId = ResourceUtils.ParentResourcePathFromResourceId(reference.Id);
+                    ILoadBalancer loadBalancer;
+                    if (!loadBalancers.TryGetValue(loadBalancerId, out loadBalancer))
+                    {
+                        loadBalancer = Parent.Manager.LoadBalancers.GetById(loadBalancerId);
+                        loadBalancers[loadBalancerId] = loadBalancer;
+                    }
+
+                    string ruleName = ResourceUtils.NameFromResourceId(reference.Id);
+                    rules.Add(loadBalancer.InboundNatRules()[ruleName]);
+                }
+            }
+
+            return rules;
+        }
+
+        public IList<IBackend> ListAssociatedLoadBalancerBackends()
+        {
+            var backendRefs = Inner.LoadBalancerBackendAddressPools;
+            var loadBalancers = new Dictionary<string, ILoadBalancer>();
+            var backends = new List<IBackend>();
+
+            if (backendRefs != null)
+            {
+                foreach (BackendAddressPoolInner backendRef in backendRefs)
+                {
+                    string loadBalancerId = ResourceUtils.ParentResourcePathFromResourceId(backendRef.Id);
+                    ILoadBalancer loadBalancer;
+                    if (!loadBalancers.TryGetValue(loadBalancerId, out loadBalancer))
+                    {
+                        loadBalancer = Parent.Manager.LoadBalancers.GetById(loadBalancerId);
+                        loadBalancers[loadBalancerId] = loadBalancer;
+                    }
+
+                    string backendName = ResourceUtils.NameFromResourceId(backendRef.Id);
+
+                    IBackend backend;
+                    if (loadBalancer.Backends().TryGetValue(backendName, out backend))
+                        backends.Add(backend);
+                }
+            }
+
+            return backends;
+        }
+
+        NetworkInterface.Update.IUpdate ISettable<NetworkInterface.Update.IUpdate>.Parent()
+        {
+            return Parent;
         }
     }
 }

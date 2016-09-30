@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Management.V2.Compute;
-using Microsoft.Azure.Management.V2.Resource;
+using Microsoft.Azure.Management.Fluent.Compute;
+using Microsoft.Azure.Management.Fluent.Resource;
 using System;
 using System.Linq;
 using Xunit;

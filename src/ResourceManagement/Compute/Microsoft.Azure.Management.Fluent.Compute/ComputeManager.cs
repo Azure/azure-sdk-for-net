@@ -2,19 +2,15 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Azure.Management.Compute;
-using Microsoft.Azure.Management.V2.Resource.Core;
-using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Rest.Azure;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
 using Microsoft.Rest;
-using Microsoft.Azure.Management.V2.Resource;
-using Microsoft.Azure.Management.V2.Storage;
-using Microsoft.Azure.Management.V2.Network;
+using Microsoft.Azure.Management.Fluent.Resource;
+using Microsoft.Azure.Management.Fluent.Storage;
+using Microsoft.Azure.Management.Fluent.Network;
 
-namespace Microsoft.Azure.Management.V2.Compute
+namespace Microsoft.Azure.Management.Fluent.Compute
 {
     public class ComputeManager : ManagerBase, IComputeManager
     {

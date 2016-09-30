@@ -5,8 +5,8 @@ namespace Microsoft.Azure.Management.Fluent.Redis
 {
 
     using Microsoft.Azure.Management.Fluent.Redis.RedisCache.Update;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.Fluent.Redis.Models;
     using System.Collections.Generic;
     /// <summary>

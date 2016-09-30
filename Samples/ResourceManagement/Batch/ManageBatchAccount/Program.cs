@@ -5,8 +5,8 @@ using Microsoft.Azure.Management.Samples.Common;
 using Microsoft.Azure.Management;
 using Microsoft.Azure.Management.Batch.Models;
 using Microsoft.Azure.Management.Fluent.Batch;
-using Microsoft.Azure.Management.V2.Resource.Authentication;
-using Microsoft.Azure.Management.V2.Resource.Core;
+using Microsoft.Azure.Management.Fluent.Resource.Authentication;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
 using System;
 using System.Linq;
 
@@ -118,7 +118,7 @@ namespace ManageBatchAccount
                     // ============================================================
                     // Regenerate the keys for storage account
                     var storageAccount = azure.StorageAccounts.GetByGroup(rgName, storageAccountName);
-                    var storageAccountKeys = storageAccount.Keys;
+                    var storageAccountKeys = storageAccount.GetKeys();
 
                     Utilities.PrintStorageAccountKeys(storageAccountKeys);
 
@@ -194,9 +194,9 @@ namespace ManageBatchAccount
 
                     Console.WriteLine("Deleting a batch account - " + batchAccount.Name);
 
-                    foreach (var applicationEntry in batchAccount.Applications())
+                    foreach (var applicationEntry in batchAccount.Applications)
                     {
-                        foreach (var applicationPackageEntry in applicationEntry.Value.ApplicationPackages())
+                        foreach (var applicationPackageEntry in applicationEntry.Value.ApplicationPackages)
                         {
                             Console.WriteLine("Deleting a application package - " + applicationPackageEntry.Key);
                             applicationPackageEntry.Value.Delete();

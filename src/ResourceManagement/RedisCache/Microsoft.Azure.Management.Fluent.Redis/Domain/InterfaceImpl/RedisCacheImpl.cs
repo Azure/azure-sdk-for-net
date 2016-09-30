@@ -7,8 +7,8 @@ namespace Microsoft.Azure.Management.Fluent.Redis
     using System.Threading;
     using Microsoft.Azure.Management.Fluent.Redis.RedisCache.Definition;
     using Microsoft.Azure.Management.Fluent.Redis.RedisCache.Update;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
     using Microsoft.Azure.Management.Fluent.Redis.Models;
     using System.Threading.Tasks;
     internal partial class RedisCacheImpl 
@@ -329,7 +329,7 @@ namespace Microsoft.Azure.Management.Fluent.Redis
         /// process in Azure is {@link Appliable#apply()}.
         /// </summary>
         /// <returns>the stage of new resource update</returns>
-        Microsoft.Azure.Management.Fluent.Redis.RedisCache.Update.IUpdate Microsoft.Azure.Management.V2.Resource.Core.ResourceActions.IUpdatable<Microsoft.Azure.Management.Fluent.Redis.RedisCache.Update.IUpdate>.Update () {
+        Microsoft.Azure.Management.Fluent.Redis.RedisCache.Update.IUpdate Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions.IUpdatable<Microsoft.Azure.Management.Fluent.Redis.RedisCache.Update.IUpdate>.Update () {
             return this.Update() as Microsoft.Azure.Management.Fluent.Redis.RedisCache.Update.IUpdate;
         }
 
@@ -545,7 +545,7 @@ namespace Microsoft.Azure.Management.Fluent.Redis
         /// Refreshes the resource to sync with Azure.
         /// </summary>
         /// <returns>the refreshed resource</returns>
-        Microsoft.Azure.Management.Fluent.Redis.IRedisCache Microsoft.Azure.Management.V2.Resource.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Fluent.Redis.IRedisCache>.Refresh () {
+        Microsoft.Azure.Management.Fluent.Redis.IRedisCache Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Fluent.Redis.IRedisCache>.Refresh () {
             return this.Refresh() as Microsoft.Azure.Management.Fluent.Redis.IRedisCache;
         }
     }

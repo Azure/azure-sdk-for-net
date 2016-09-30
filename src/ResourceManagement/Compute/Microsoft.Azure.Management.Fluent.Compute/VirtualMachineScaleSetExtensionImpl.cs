@@ -1,16 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information. 
 
-namespace Microsoft.Azure.Management.V2.Compute
+namespace Microsoft.Azure.Management.Fluent.Compute
 {
-
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Update;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Definition;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Resource.Core;
     using System.Collections.Generic;
     using Management.Compute.Models;
     using Resource.Core.ChildResourceActions;
@@ -18,16 +11,19 @@ namespace Microsoft.Azure.Management.V2.Compute
     /// <summary>
     /// Implementation of {@link VirtualMachineScaleSetExtension}.
     /// </summary>
-    internal partial class VirtualMachineScaleSetExtensionImpl  :
-        ChildResource<VirtualMachineScaleSetExtensionInner, VirtualMachineScaleSetImpl, IVirtualMachineScaleSet>,
+    internal partial class VirtualMachineScaleSetExtensionImpl :
+        ChildResource<VirtualMachineScaleSetExtensionInner,
+            VirtualMachineScaleSetImpl,
+            IVirtualMachineScaleSet>,
         IVirtualMachineScaleSetExtension,
-        IDefinition<IWithCreate>,
-        IUpdateDefinition<IWithApplicable>,
+        VirtualMachineScaleSetExtension.Definition.IDefinition<VirtualMachineScaleSet.Definition.IWithCreate>,
+        VirtualMachineScaleSetExtension.UpdateDefinition.IUpdateDefinition<Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply>,
         VirtualMachineScaleSetExtension.Update.IUpdate
     {
         private IDictionary<string,object> publicSettings;
         private IDictionary<string,object> protectedSettings;
-        internal  VirtualMachineScaleSetExtensionImpl (VirtualMachineScaleSetExtensionInner inner, VirtualMachineScaleSetImpl parent) : base(inner.Id, inner, parent)
+        internal VirtualMachineScaleSetExtensionImpl (VirtualMachineScaleSetExtensionInner inner, VirtualMachineScaleSetImpl parent) 
+            : base(inner.Id, inner, parent)
         {
             InitializeSettings();
         }
@@ -88,13 +84,13 @@ namespace Microsoft.Azure.Management.V2.Compute
                 return this.Inner.ProvisioningState;
             }
         }
-        public VirtualMachineScaleSetExtensionImpl WithAutoUpgradeMinorVersionEnabled ()
+        public VirtualMachineScaleSetExtensionImpl WithMinorVersionAutoUpgrade ()
         {
             this.Inner.AutoUpgradeMinorVersion = true;
             return this;
         }
 
-        public VirtualMachineScaleSetExtensionImpl WithAutoUpgradeMinorVersionDisabled ()
+        public VirtualMachineScaleSetExtensionImpl WithoutMinorVersionAutoUpgrade ()
         {
             this.Inner.AutoUpgradeMinorVersion = false;
             return this;

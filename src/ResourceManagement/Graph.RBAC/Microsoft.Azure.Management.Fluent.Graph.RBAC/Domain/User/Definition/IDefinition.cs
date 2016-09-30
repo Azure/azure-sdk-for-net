@@ -3,8 +3,8 @@
 namespace Microsoft.Azure.Management.Fluent.Graph.RBAC.User.Definition
 {
 
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.Fluent.Graph.RBAC;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
     /// <summary>
     /// The stage of a user definition allowing password to be set.
     /// </summary>

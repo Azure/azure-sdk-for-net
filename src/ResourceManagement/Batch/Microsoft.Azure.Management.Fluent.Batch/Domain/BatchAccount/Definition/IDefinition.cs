@@ -4,18 +4,18 @@
 namespace Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Definition
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.GroupableResource.Definition;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.Fluent.Batch;
     using Microsoft.Azure.Management.Fluent.Batch.Application.Definition;
-    using Microsoft.Azure.Management.V2.Storage;
-    using V2.Resource.Core.Resource.Definition;
+    using Microsoft.Azure.Management.Fluent.Storage;
+    using Fluent.Resource.Core.Resource.Definition;
 
     /// <summary>
     /// A batch account definition allowing resource group to be set.
     /// </summary>
     public interface IWithGroup  :
-        Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Definition.IWithCreateAndApplication>
+        Microsoft.Azure.Management.Fluent.Resource.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Definition.IWithCreateAndApplication>
     {
     }
     /// <summary>
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Definition
         /// </summary>
         /// <param name="storageAccountCreatable">storageAccountCreatable storage account to be created along with and used in batch</param>
         /// <returns>the stage representing creatable batch account definition</returns>
-        IWithCreate WithNewStorageAccount (ICreatable<Microsoft.Azure.Management.V2.Storage.IStorageAccount> storageAccountCreatable);
+        IWithCreate WithNewStorageAccount (ICreatable<Microsoft.Azure.Management.Fluent.Storage.IStorageAccount> storageAccountCreatable);
 
         /// <summary>
         /// Specifies that an existing storage account to be attached with the batch account.

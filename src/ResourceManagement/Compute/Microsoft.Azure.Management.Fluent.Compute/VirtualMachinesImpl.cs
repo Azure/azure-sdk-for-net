@@ -1,29 +1,27 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Microsoft.Azure.Management.V2.Compute
+namespace Microsoft.Azure.Management.Fluent.Compute
 {
     using Management.Compute;
-    using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
+    using Management.Compute.Models;
+    using Resource.Core;
+    using Resource.Core.CollectionActions;
     using Network;
     using Storage;
-    using System;
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
     /// <summary>
-    /// The implementation for {@link VirtualMachines}.
+    /// The implementation for VirtualMachines.
     /// </summary>
     internal partial class VirtualMachinesImpl :
         GroupableResources<IVirtualMachine,
             VirtualMachineImpl,
             VirtualMachineInner,
-            IVirtualMachinesOperations,
-            ComputeManager>,
+            IVirtualMachinesOperations, 
+            IComputeManager>,
         IVirtualMachines
     {
         private readonly IStorageManager storageManager;
@@ -69,7 +67,12 @@ namespace Microsoft.Azure.Management.V2.Compute
             DeleteAsync(groupName, name).Wait();
         }
 
-        public IBlank Define(string name)
+        public async Task DeleteAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            await this.InnerCollection.DeleteAsync(groupName, name, cancellationToken);
+        }
+
+        public VirtualMachineImpl Define(string name)
         {
             return WrapModel(name);
         }
@@ -137,7 +140,7 @@ namespace Microsoft.Azure.Management.V2.Compute
                 inner,
                 this.InnerCollection,
                 this.virtualMachineExtensionsClient,
-                base.MyManager,
+                base.Manager,
                 this.storageManager,
                 this.networkManager);
         }
@@ -148,7 +151,7 @@ namespace Microsoft.Azure.Management.V2.Compute
                 virtualMachineInner,
                 this.InnerCollection,
                 this.virtualMachineExtensionsClient,
-                base.MyManager,
+                base.Manager,
                 this.storageManager,
                 this.networkManager);
         }
@@ -156,16 +159,6 @@ namespace Microsoft.Azure.Management.V2.Compute
         public Task DeleteAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
             return ((ISupportsDeletingByGroup)this).DeleteAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id), cancellationToken);
-        }
-
-        public async Task DeleteAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            await this.InnerCollection.DeleteAsync(groupName, name, cancellationToken);
-        }
-
-        public async Task<PagedList<IVirtualMachine>> ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken)
-        {
-            throw new NotSupportedException();
         }
 
         public async override Task<IVirtualMachine> GetByGroupAsync(string groupName, string name)

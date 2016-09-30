@@ -5,14 +5,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.V2.Resource.Core;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest;
-using Microsoft.Azure.Management.V2.Resource;
+using Microsoft.Azure.Management.Fluent.Resource;
 using Microsoft.Azure.Management.Graph.RBAC;
 using Microsoft.Azure.Management.KeyVault;
 using Microsoft.Azure.Management.Fluent.Graph.RBAC;
-using Microsoft.Azure.Management.V2.Resource.Authentication;
+using Microsoft.Azure.Management.Fluent.Resource.Authentication;
 
 namespace Microsoft.Azure.Management.Fluent.KeyVault
 {

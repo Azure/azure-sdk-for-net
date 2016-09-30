@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
     using System.Threading;
     using System.Threading.Tasks;
     using System;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
     internal partial class ApplicationPackageImpl 
     {
         /// <returns>the sate of the application package</returns>

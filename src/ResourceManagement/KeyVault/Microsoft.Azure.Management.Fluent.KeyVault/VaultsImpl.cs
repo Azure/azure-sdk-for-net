@@ -4,11 +4,11 @@
 namespace Microsoft.Azure.Management.Fluent.KeyVault
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
     using Microsoft.Azure.Management.KeyVault.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions;
     using Microsoft.Azure.Management.Graph.RBAC.Models;
-    using Microsoft.Azure.Management.V2.Resource;
+    using Microsoft.Azure.Management.Fluent.Resource;
     using Management.KeyVault;
     using Graph.RBAC;
     using System;
@@ -96,7 +96,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
                 name,
                 inner,
                 InnerCollection,
-                MyManager,
+                Manager,
                 graphRbacManager);
         }
 
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
                 vaultInner.Name,
                 vaultInner,
                 InnerCollection,
-                MyManager,
+                Manager,
                 graphRbacManager);
         }
     }

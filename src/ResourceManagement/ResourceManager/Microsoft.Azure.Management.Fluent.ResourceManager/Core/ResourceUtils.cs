@@ -3,7 +3,7 @@
 
 using System.Linq;
 
-namespace Microsoft.Azure.Management.V2.Resource.Core
+namespace Microsoft.Azure.Management.Fluent.Resource.Core
 {
     public static class ResourceUtils
     {

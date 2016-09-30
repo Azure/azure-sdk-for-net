@@ -1,1949 +1,868 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition;
-using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update;
-using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Definition;
-using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Update;
-using Microsoft.Azure.Management.V2.Network;
-using Microsoft.Azure.Management.V2.Resource;
-using Microsoft.Azure.Management.V2.Resource.Core;
-using Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition;
-using Microsoft.Azure.Management.V2.Resource.Core.Resource.Definition;
-using Microsoft.Azure.Management.V2.Resource.Core.Resource.Update;
-using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
-using Microsoft.Azure.Management.V2.Storage;
-using Microsoft.Azure.Management.Compute;
-using Microsoft.Rest.Azure;
-using System.Text;
-using System.Text.RegularExpressions;
-
-namespace Microsoft.Azure.Management.V2.Compute
+namespace Microsoft.Azure.Management.Fluent.Compute
 {
-    internal partial class VirtualMachineScaleSetImpl :
-        GroupableResource<IVirtualMachineScaleSet,
-            VirtualMachineScaleSetInner,
-            Rest.Azure.Resource,
-            VirtualMachineScaleSetImpl,
-            IComputeManager,
-            VirtualMachineScaleSet.Definition.IWithGroup,
-            VirtualMachineScaleSet.Definition.IWithSku,
-            VirtualMachineScaleSet.Definition.IWithCreate,
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable>,
-        IVirtualMachineScaleSet,
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IDefinition,
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IUpdate
-    {
-        // Clients
-        private IVirtualMachineScaleSetsOperations client;
-        private IStorageManager storageManager;
-        private INetworkManager networkManager;
-        // used to generate unique name for any dependency resources
-        private ResourceNamer namer;
-        private bool isMarketplaceLinuxImage = false;
-        // reference to an existing network that needs to be used in virtual machine's primary network interface
-        private INetwork existingPrimaryNetworkToAssociate;
-        // name of an existing subnet in the primary network to use
-        private string existingPrimaryNetworkSubnetNameToAssociate;
-        // unique key of a creatable storage accounts to be used for virtual machines child resources that
-        // requires storage [OS disk]
-        private List<string> creatableStorageAccountKeys = new List<string>();
-        // reference to an existing storage account to be used for virtual machines child resources that
-        // requires storage [OS disk]
-        private List<IStorageAccount> existingStorageAccountsToAssociate = new List<IStorageAccount>();
-        // Name of the container in the storage account to use to store the disks
-        private string vhdContainerName;
-        // the child resource extensions
-        private IDictionary<string, IVirtualMachineScaleSetExtension> extensions;
-        // reference to the primary and internal internet facing load balancer
-        private ILoadBalancer primaryInternetFacingLoadBalancer;
-        private ILoadBalancer primaryInternalLoadBalancer;
-        // Load balancer specific variables used during update
-        private bool removePrimaryInternetFacingLoadBalancerOnUpdate;
-        private bool removePrimaryInternalLoadBalancerOnUpdate;
-        private ILoadBalancer primaryInternetFacingLoadBalancerToAttachOnUpdate;
-        private ILoadBalancer primaryInternalLoadBalancerToAttachOnUpdate;
-        private List<string> primaryInternetFacingLBBackendsToRemoveOnUpdate = new List<string>();
-        private List<string> primaryInternetFacingLBInboundNatPoolsToRemoveOnUpdate = new List<string>();
-        private List<string> primaryInternalLBBackendsToRemoveOnUpdate = new List<string>();
-        private List<string> primaryInternalLBInboundNatPoolsToRemoveOnUpdate = new List<string>();
-        private List<string> primaryInternetFacingLBBackendsToAddOnUpdate = new List<string>();
-        private List<string> primaryInternetFacingLBInboundNatPoolsToAddOnUpdate = new List<string>();
-        private List<string> primaryInternalLBBackendsToAddOnUpdate = new List<string>();
-        private List<string> primaryInternalLBInboundNatPoolsToAddOnUpdate = new List<string>();
-        // cached primary virtual network
-        private INetwork primaryVirtualNetwork;
 
-        internal VirtualMachineScaleSetImpl(string name,
-                    VirtualMachineScaleSetInner innerModel,
-                    IVirtualMachineScaleSetsOperations client,
-                    ComputeManager computeManager,
-                    IStorageManager storageManager,
-                    INetworkManager networkManager) : base(name, innerModel, computeManager)
-        {
-            this.client = client;
-            this.storageManager = storageManager;
-            this.networkManager = networkManager;
-            this.namer = new ResourceNamer(this.Name);
-            //TODO this.skuConverter = new PagedListConverter<VirtualMachineScaleSetSkuInner, VirtualMachineScaleSetSku>()
-        }
-
-        #region Getters
-
-        int? Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.Capacity
-        {
-            get
-            {
-                return (int?) this.Inner.Sku.Capacity;
-            }
-        }
-
-        string Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.ComputerNamePrefix
-        {
-            get
-            {
-                return this.Inner.VirtualMachineProfile.OsProfile.ComputerNamePrefix;
-            }
-        }
-
-        VirtualMachineScaleSetNetworkProfile Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.NetworkProfile
-        {
-            get
-            {
-                return this.Inner.VirtualMachineProfile.NetworkProfile;
-            }
-        }
-
-        CachingTypes? Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.OsDiskCachingType
-        {
-            get
-            {
-                return this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.Caching;
-            }
-        }
-
-        string Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.OsDiskName
-        {
-            get
-            {
-                return this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.Name;
-            }
-        }
-
-        OperatingSystemTypes? Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.OsType
-        {
-            get
-            {
-                return this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.OsType;
-            }
-        }
-
-        bool? Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.OverProvisionEnabled
-        {
-            get
-            {
-                return this.Inner.OverProvision;
-            }
-        }
-
-
-        ILoadBalancer Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.PrimaryInternalLoadBalancer()
-        {
-            if (this.primaryInternalLoadBalancer == null)
-            {
-                loadCurrentPrimaryLoadBalancersIfAvailable();
-            }
-            return this.primaryInternalLoadBalancer;
-        }
-
-        ILoadBalancer Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.PrimaryInternetFacingLoadBalancer()
-        {
-            if (this.primaryInternetFacingLoadBalancer == null)
-            {
-                loadCurrentPrimaryLoadBalancersIfAvailable();
-            }
-            return this.primaryInternetFacingLoadBalancer;
-        }
-
-        INetwork Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.PrimaryNetwork()
-        {
-            if (this.primaryVirtualNetwork == null)
-            {
-                string subnetId = primaryNicDefaultIPConfiguration().Subnet.Id;
-                string virtualNetworkId = ResourceUtils.ParentResourcePathFromResourceId(subnetId);
-                this.primaryVirtualNetwork = this.networkManager
-                        .Networks
-                        .GetById(virtualNetworkId);
-            }
-            return this.primaryVirtualNetwork;
-        }
-
-        IDictionary<string, IBackend> Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.PrimaryInternalLoadBalancerBackEnds
-        {
-            get
-            {
-                if ((this as Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet).PrimaryInternalLoadBalancer() != null)
-                {
-                    return getBackendsAssociatedWithIpConfiguration(this.primaryInternalLoadBalancer,
-                            primaryNicDefaultIPConfiguration());
-                }
-                return new Dictionary<string, IBackend>();
-            }
-        }
-
-        IDictionary<string, IInboundNatPool> Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.PrimaryInternalLoadBalancerInboundNatPools
-        {
-            get
-            {
-                if ((this as Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet).PrimaryInternalLoadBalancer() != null)
-                {
-                    return getInboundNatPoolsAssociatedWithIpConfiguration(this.primaryInternalLoadBalancer,
-                            primaryNicDefaultIPConfiguration());
-                }
-                return new Dictionary<string, IInboundNatPool>();
-            }
-        }
-
-        IDictionary<string, IBackend> Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.PrimaryInternetFacingLoadBalancerBackEnds
-        {
-            get
-            {
-                if ((this as Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet).PrimaryInternetFacingLoadBalancer() != null)
-                {
-                    return getBackendsAssociatedWithIpConfiguration(this.primaryInternetFacingLoadBalancer,
-                            primaryNicDefaultIPConfiguration());
-                }
-                return new Dictionary<string, IBackend>();
-            }
-        }
-
-        IDictionary<string, IInboundNatPool> Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.PrimaryInternetFacingLoadBalancerInboundNatPools
-        {
-            get
-            {
-                if ((this as Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet).PrimaryInternetFacingLoadBalancer() != null)
-                {
-                    return getInboundNatPoolsAssociatedWithIpConfiguration(this.primaryInternetFacingLoadBalancer,
-                            primaryNicDefaultIPConfiguration());
-                }
-                return new Dictionary<string, IInboundNatPool>();
-            }
-        }
-
-        IList<string> Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.PrimaryPublicIpAddressIds
-        {
-            get
-            {
-                ILoadBalancer loadBalancer = (this as Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet).PrimaryInternetFacingLoadBalancer();
-                if (loadBalancer != null)
-                {
-                    return loadBalancer.PublicIpAddressIds;
-                }
-                return new List<string>();
-            }
-        }
-
-        VirtualMachineScaleSetStorageProfile Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.StorageProfile
-        {
-            get
-            {
-                return this.Inner.VirtualMachineProfile.StorageProfile;
-            }
-        }
-
-        UpgradeMode? Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.UpgradeModel
-        {
-            get
-            {
-                return this.Inner.UpgradePolicy.Mode;
-            }
-        }
-
-        IList<string> Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.VhdContainers
-        {
-            get
-            {
-                if (this.Inner.VirtualMachineProfile.StorageProfile != null
-                    && this.Inner.VirtualMachineProfile.StorageProfile.OsDisk != null
-                    && this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.VhdContainers != null)
-                {
-                    return this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.VhdContainers;
-                }
-                return new List<string>();
-            }
-        }
-
-        PagedList<Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSetSku> Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.AvailableSkus()
-        {
-            throw new NotImplementedException();
-        }
-
-        IDictionary<string, Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSetExtension> Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.Extensions()
-        {
-            return this.extensions;
-        }
-
-        VirtualMachineScaleSetSkuTypes Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.Sku()
-        {
-            return new VirtualMachineScaleSetSkuTypes(this.Inner.Sku);
-        }
-
-        #endregion
-
-        #region Withers
-
-        public VirtualMachineScaleSetImpl WithSku(VirtualMachineScaleSetSkuTypes skuType)
-        {
-            this.Inner.Sku = skuType.Sku;
-            return this;
-        }
-
-        public VirtualMachineScaleSetImpl WithSku(IVirtualMachineScaleSetSku sku)
-        {
-            return this.WithSku(sku.SkuType());
-        }
-
-        public VirtualMachineScaleSetImpl WithExistingPrimaryNetwork(INetwork network)
-        {
-            this.existingPrimaryNetworkToAssociate = network;
-            return this;
-        }
-
-        public VirtualMachineScaleSetImpl WithSubnet(String name)
-        {
-            this.existingPrimaryNetworkSubnetNameToAssociate = name;
-            return this;
-        }
-
-        public VirtualMachineScaleSetImpl WithPrimaryInternetFacingLoadBalancer(ILoadBalancer loadBalancer)
-        {
-            if (loadBalancer.PublicIpAddressIds.Count == 0)
-            {
-                throw new ArgumentException("Parameter loadBalancer must be an internet facing load balancer");
-            }
-
-            if (this.IsInCreateMode)
-            {
-                this.primaryInternetFacingLoadBalancer = loadBalancer;
-                associateLoadBalancerToIpConfiguration(this.primaryInternetFacingLoadBalancer,
-                        this.primaryNicDefaultIPConfiguration());
-            }
-            else
-            {
-                this.primaryInternetFacingLoadBalancerToAttachOnUpdate = loadBalancer;
-            }
-            return this;
-        }
-
-        public VirtualMachineScaleSetImpl WithPrimaryInternetFacingLoadBalancerBackends(params string[] backendNames)
-        {
-            if (this.IsInCreateMode)
-            {
-                VirtualMachineScaleSetIPConfigurationInner defaultPrimaryIpConfig = this.primaryNicDefaultIPConfiguration();
-                removeAllBackendAssociationFromIpConfiguration(this.primaryInternetFacingLoadBalancer, defaultPrimaryIpConfig);
-                associateBackEndsToIpConfiguration(this.primaryInternetFacingLoadBalancer.Id,
-                        defaultPrimaryIpConfig,
-                        backendNames);
-            }
-            else
-            {
-                addToList(this.primaryInternetFacingLBBackendsToAddOnUpdate, backendNames);
-            }
-            return this;
-        }
-
-        public VirtualMachineScaleSetImpl WithPrimaryInternetFacingLoadBalancerInboundNatPools(params string[] natPoolNames)
-        {
-            if (this.IsInCreateMode)
-            {
-                VirtualMachineScaleSetIPConfigurationInner defaultPrimaryIpConfig = this.primaryNicDefaultIPConfiguration();
-                removeAllInboundNatPoolAssociationFromIpConfiguration(this.primaryInternetFacingLoadBalancer,
-                        defaultPrimaryIpConfig);
-                associateInboundNATPoolsToIpConfiguration(this.primaryInternetFacingLoadBalancer.Id,
-                        defaultPrimaryIpConfig,
-                        natPoolNames);
-            }
-            else
-            {
-                addToList(this.primaryInternetFacingLBInboundNatPoolsToAddOnUpdate, natPoolNames);
-            }
-            return this;
-        }
-
-        public VirtualMachineScaleSetImpl WithPrimaryInternalLoadBalancer(ILoadBalancer loadBalancer)
-        {
-            if (loadBalancer.PublicIpAddressIds.Count != 0)
-            {
-                throw new ArgumentException("Parameter loadBalancer must be an internal load balancer");
-            }
-            string lbNetworkId = null;
-            /**
-             * TODO Uncomment when FrontEnds are exposed in load blaancer.
-            foreach (IFrontend frontEnd in loadBalancer.Frontends.values())
-            {
-                if (frontEnd.Inner.Subnet.Id != null)
-                {
-                    lbNetworkId = ResourceUtils.ParentResourcePathFromResourceId(frontEnd.Inner.Subnet.Id);
-                }
-            }
-            **/
-
-            if (this.IsInCreateMode)
-            {
-                string vmNICNetworkId = this.existingPrimaryNetworkToAssociate.Id;
-                // Azure has a really wired BUG that - it throws exception when vnet of VMSS and LB are not same
-                // (code: NetworkInterfaceAndInternalLoadBalancerMustUseSameVnet) but at the same time Azure update
-                // the VMSS's network section to refer this invalid internal LB. This makes VMSS un-usable and portal
-                // will show a error above VMSS profile page.
-                //
-                if (!vmNICNetworkId.Equals(lbNetworkId, StringComparison.OrdinalIgnoreCase))
-                {
-                    throw new ArgumentException("Virtual network associated with scale set virtual machines"
-                            + " and internal load balancer must be same. "
-                            + "'" + vmNICNetworkId + "'"
-                            + "'" + lbNetworkId);
-                }
-
-                this.primaryInternalLoadBalancer = loadBalancer;
-                associateLoadBalancerToIpConfiguration(this.primaryInternalLoadBalancer,
-                        this.primaryNicDefaultIPConfiguration());
-            }
-            else
-            {
-                string vmNicVnetId = ResourceUtils.ParentResourcePathFromResourceId(primaryNicDefaultIPConfiguration()
-                        .Subnet
-                        .Id);
-                if (!vmNicVnetId.Equals(lbNetworkId, StringComparison.OrdinalIgnoreCase))
-                {
-                    throw new ArgumentException("Virtual network associated with scale set virtual machines"
-                            + " and internal load balancer must be same. "
-                            + "'" + vmNicVnetId + "'"
-                            + "'" + lbNetworkId);
-                }
-                this.primaryInternalLoadBalancerToAttachOnUpdate = loadBalancer;
-            }
-            return this;
-        }
-
-        public VirtualMachineScaleSetImpl WithPrimaryInternalLoadBalancerBackends(params string [] backendNames)
-        {
-            if (this.IsInCreateMode)
-            {
-                VirtualMachineScaleSetIPConfigurationInner defaultPrimaryIpConfig = primaryNicDefaultIPConfiguration();
-                removeAllBackendAssociationFromIpConfiguration(this.primaryInternalLoadBalancer,
-                        defaultPrimaryIpConfig);
-                associateBackEndsToIpConfiguration(this.primaryInternalLoadBalancer.Id,
-                        defaultPrimaryIpConfig,
-                        backendNames);
-            }
-            else
-            {
-                addToList(this.primaryInternalLBBackendsToAddOnUpdate, backendNames);
-            }
-            return this;
-        }
-
-        public VirtualMachineScaleSetImpl WithPrimaryInternalLoadBalancerInboundNatPools(params string [] natPoolNames)
-        {
-            if (this.IsInCreateMode)
-            {
-                VirtualMachineScaleSetIPConfigurationInner defaultPrimaryIpConfig = this.primaryNicDefaultIPConfiguration();
-                removeAllInboundNatPoolAssociationFromIpConfiguration(this.primaryInternalLoadBalancer,
-                        defaultPrimaryIpConfig);
-                associateInboundNATPoolsToIpConfiguration(this.primaryInternalLoadBalancer.Id,
-                        defaultPrimaryIpConfig,
-                        natPoolNames);
-            }
-            else
-            {
-                addToList(this.primaryInternalLBInboundNatPoolsToAddOnUpdate, natPoolNames);
-            }
-            return this;
-        }
-
-        public VirtualMachineScaleSetImpl WithoutPrimaryInternalLoadBalancer()
-        {
-            if (this.IsInUpdateMode)
-            {
-                this.removePrimaryInternalLoadBalancerOnUpdate = true;
-            }
-            return this;
-        }
-
-        public VirtualMachineScaleSetImpl WithoutPrimaryInternetFacingLoadBalancer()
-        {
-            if (this.IsInUpdateMode)
-            {
-                this.removePrimaryInternetFacingLoadBalancerOnUpdate = true;
-            }
-            return this;
-        }
-
-        public VirtualMachineScaleSetImpl WithoutPrimaryInternetFacingLoadBalancerBackends(params string[] backendNames)
-        {
-            addToList(this.primaryInternetFacingLBBackendsToRemoveOnUpdate, backendNames);
-            return this;
-        }
-
-        public VirtualMachineScaleSetImpl WithoutPrimaryInternalLoadBalancerBackends(params string[] backendNames)
-        {
-            addToList(this.primaryInternalLBBackendsToRemoveOnUpdate, backendNames);
-            return this;
-        }
-
-        public VirtualMachineScaleSetImpl WithoutPrimaryInternetFacingLoadBalancerNatPools(params string[] natPoolNames)
-        {
-            addToList(this.primaryInternalLBInboundNatPoolsToRemoveOnUpdate, natPoolNames);
-            return this;
-        }
-
-        public VirtualMachineScaleSetImpl WithoutPrimaryInternalLoadBalancerNatPools(params string[] natPoolNames)
-        {
-            addToList(this.primaryInternetFacingLBInboundNatPoolsToRemoveOnUpdate, natPoolNames);
-            return this;
-        }
-
-        public VirtualMachineScaleSetImpl WithPopularWindowsImage(KnownWindowsVirtualMachineImage knownImage)
-        {
-            return WithSpecificWindowsImageVersion(knownImage.ImageReference());
-        }
-
-        public VirtualMachineScaleSetImpl WithLatestWindowsImage(string publisher, string offer, string sku)
-        {
-            ImageReference imageReference = new ImageReference
-            {
-                Publisher = publisher,
-                Offer = offer,
-                Sku = sku,
-                Version = "latest"
-            };
-            return WithSpecificWindowsImageVersion(imageReference);
-        }
-
-        public VirtualMachineScaleSetImpl WithSpecificWindowsImageVersion(ImageReference imageReference)
-        {
-            this.Inner
-                    .VirtualMachineProfile
-                    .StorageProfile.OsDisk.CreateOption = DiskCreateOptionTypes.FromImage;
-            this.Inner
-                    .VirtualMachineProfile
-                    .StorageProfile.ImageReference = imageReference;
-            this.Inner
-                    .VirtualMachineProfile
-                    .OsProfile.WindowsConfiguration = new WindowsConfiguration();
-            // sets defaults for "Stored(Custom)Image" or "VM(Platform)Image"
-            this.Inner
-                    .VirtualMachineProfile
-                    .OsProfile.WindowsConfiguration.ProvisionVMAgent = true;
-            this.Inner
-                    .VirtualMachineProfile
-                    .OsProfile.WindowsConfiguration.EnableAutomaticUpdates = true;
-            return this;
-        }
-
-        public VirtualMachineScaleSetImpl WithStoredWindowsImage(string imageUrl)
-        {
-            VirtualHardDisk userImageVhd = new VirtualHardDisk();
-            userImageVhd.Uri = imageUrl;
-            this.Inner
-                    .VirtualMachineProfile
-                    .StorageProfile.OsDisk.CreateOption = DiskCreateOptionTypes.FromImage;
-            this.Inner
-                    .VirtualMachineProfile
-                    .StorageProfile.OsDisk.Image = userImageVhd;
-            // For platform image osType will be null, azure will pick it from the image metadata.
-            this.Inner
-                    .VirtualMachineProfile
-                    .StorageProfile.OsDisk.OsType = OperatingSystemTypes.Windows;
-            this.Inner
-                    .VirtualMachineProfile
-                    .OsProfile.WindowsConfiguration = new WindowsConfiguration();
-            // sets defaults for "Stored(Custom)Image" or "VM(Platform)Image"
-            this.Inner
-                    .VirtualMachineProfile
-                    .OsProfile.WindowsConfiguration.ProvisionVMAgent = true;
-            this.Inner
-                    .VirtualMachineProfile
-                    .OsProfile.WindowsConfiguration.EnableAutomaticUpdates = true;
-            return this;
-        }
-
-        public VirtualMachineScaleSetImpl WithPopularLinuxImage(KnownLinuxVirtualMachineImage knownImage)
-        {
-            return WithSpecificLinuxImageVersion(knownImage.ImageReference());
-        }
-
-        public VirtualMachineScaleSetImpl WithLatestLinuxImage(string publisher, string offer, string sku)
-        {
-            ImageReference imageReference = new ImageReference
-            {
-                Publisher = publisher,
-                Offer = offer,
-                Sku = sku,
-                Version = "latest"
-            };
-            return WithSpecificLinuxImageVersion(imageReference);
-        }
-
-        public VirtualMachineScaleSetImpl WithSpecificLinuxImageVersion(ImageReference imageReference)
-        {
-            this.Inner
-                    .VirtualMachineProfile
-                    .StorageProfile.OsDisk.CreateOption = DiskCreateOptionTypes.FromImage;
-            this.Inner
-                    .VirtualMachineProfile
-                    .StorageProfile.ImageReference = imageReference;
-            this.Inner
-                    .VirtualMachineProfile
-                    .OsProfile.LinuxConfiguration = new LinuxConfiguration();
-            this.isMarketplaceLinuxImage = true;
-            return this;
-        }
-
-        public VirtualMachineScaleSetImpl WithStoredLinuxImage(String imageUrl)
-        {
-            VirtualHardDisk userImageVhd = new VirtualHardDisk();
-            userImageVhd.Uri = imageUrl;
-            this.Inner
-                    .VirtualMachineProfile
-                    .StorageProfile.OsDisk.CreateOption = DiskCreateOptionTypes.FromImage;
-            this.Inner
-                    .VirtualMachineProfile
-                    .StorageProfile.OsDisk.Image = userImageVhd;
-            // For platform image osType will be null, azure will pick it from the image metadata.
-            this.Inner
-                    .VirtualMachineProfile
-                    .StorageProfile.OsDisk.OsType = OperatingSystemTypes.Linux;
-            this.Inner
-                    .VirtualMachineProfile
-                    .OsProfile.LinuxConfiguration = new LinuxConfiguration();
-            return this;
-        }
-
-        public VirtualMachineScaleSetImpl WithAdminUserName(String adminUserName)
-        {
-            this.Inner
-                    .VirtualMachineProfile
-                    .OsProfile
-                    .AdminUsername = adminUserName;
-            return this;
-        }
-
-        public VirtualMachineScaleSetImpl WithRootUserName(String rootUserName)
-        {
-            return this.WithAdminUserName(rootUserName);
-        }
-
-        public VirtualMachineScaleSetImpl WithPassword(string password)
-        {
-            this.Inner
-                    .VirtualMachineProfile
-                    .OsProfile
-                    .AdminPassword = password;
-            return this;
-        }
-
-        public VirtualMachineScaleSetImpl WithSsh(string publicKeyData)
-        {
-            VirtualMachineScaleSetOSProfile osProfile = this.Inner
-                    .VirtualMachineProfile
-                    .OsProfile;
-            if (osProfile.LinuxConfiguration.Ssh == null)
-            {
-                SshConfiguration sshConfiguration = new SshConfiguration();
-                sshConfiguration.PublicKeys = new List<SshPublicKey>();
-                osProfile.LinuxConfiguration.Ssh = sshConfiguration;
-            }
-            SshPublicKey sshPublicKey = new SshPublicKey();
-            sshPublicKey.KeyData = publicKeyData ;
-            sshPublicKey.Path = "/home/" + osProfile.AdminUsername + "/.ssh/authorized_keys";
-            osProfile.LinuxConfiguration.Ssh.PublicKeys.Add(sshPublicKey);
-            return this;
-        }
-
-        public VirtualMachineScaleSetImpl DisableVmAgent()
-        {
-            this.Inner
-                    .VirtualMachineProfile
-                    .OsProfile.WindowsConfiguration.ProvisionVMAgent = false;
-            return this;
-        }
-
-        public VirtualMachineScaleSetImpl DisableAutoUpdate()
-        {
-            this.Inner
-                    .VirtualMachineProfile
-                    .OsProfile.WindowsConfiguration.EnableAutomaticUpdates = false;
-            return this;
-        }
-
-        public VirtualMachineScaleSetImpl WithTimeZone(string timeZone)
-        {
-            this.Inner
-                    .VirtualMachineProfile
-                    .OsProfile.WindowsConfiguration.TimeZone = timeZone;
-            return this;
-        }
-
-        public VirtualMachineScaleSetImpl WithWinRm(WinRMListener listener)
-        {
-            if (this.Inner.VirtualMachineProfile.OsProfile.WindowsConfiguration.WinRM == null)
-            {
-                WinRMConfiguration winRMConfiguration = new WinRMConfiguration();
-                this.Inner
-                        .VirtualMachineProfile
-                        .OsProfile.WindowsConfiguration.WinRM = winRMConfiguration;
-            }
-            this.Inner
-                    .VirtualMachineProfile
-                    .OsProfile
-                    .WindowsConfiguration
-                    .WinRM
-                    .Listeners
-                    .Add(listener);
-            return this;
-        }
-
-        public VirtualMachineScaleSetImpl WithOsDiskCaching(CachingTypes cachingType)
-        {
-            this.Inner
-                    .VirtualMachineProfile
-                    .StorageProfile.OsDisk.Caching = cachingType;
-            return this;
-        }
-
-        public VirtualMachineScaleSetImpl WithOsDiskName(string name)
-        {
-            this.Inner
-                    .VirtualMachineProfile
-                    .StorageProfile.OsDisk.Name = name;
-            return this;
-        }
-
-        public VirtualMachineScaleSetImpl WithComputerNamePrefix(string namePrefix)
-        {
-            this.Inner
-                    .VirtualMachineProfile
-                    .OsProfile
-                    .ComputerNamePrefix = namePrefix;
-            return this;
-        }
-
-        public VirtualMachineScaleSetImpl WithUpgradeMode(UpgradeMode upgradeMode)
-        {
-            this.Inner
-                    .UpgradePolicy
-                    .Mode = upgradeMode;
-            return this;
-        }
-
-        public VirtualMachineScaleSetImpl WithOverProvision(bool enabled)
-        {
-            this.Inner
-                    .OverProvision = enabled;
-            return this;
-        }
-
-        public VirtualMachineScaleSetImpl WithOverProvisionEnabled()
-        {
-            return this.WithOverProvision(true);
-        }
-
-        public VirtualMachineScaleSetImpl WithOverProvisionDisabled()
-        {
-            return this.WithOverProvision(false);
-        }
-
-        public VirtualMachineScaleSetImpl WithCapacity(int capacity)
-        {
-            this.Inner
-                    .Sku.Capacity = capacity;
-            return this;
-        }
-
-        public VirtualMachineScaleSetImpl WithNewStorageAccount(String name)
-        {
-            Storage.StorageAccount.Definition.IWithGroup definitionWithGroup = this.storageManager
-                    .StorageAccounts
-                    .Define(name)
-                    .WithRegion(this.RegionName);
-            ICreatable<IStorageAccount> definitionAfterGroup;
-            if (this.newGroup != null)
-            {
-                definitionAfterGroup = definitionWithGroup.WithNewResourceGroup(this.newGroup);
-            }
-            else
-            {
-                definitionAfterGroup = definitionWithGroup.WithExistingResourceGroup(this.ResourceGroupName);
-            }
-            return WithNewStorageAccount(definitionAfterGroup);
-        }
-
-        public VirtualMachineScaleSetImpl WithNewStorageAccount(ICreatable<IStorageAccount> creatable)
-        {
-            this.creatableStorageAccountKeys.Add(creatable.Key);
-            this.AddCreatableDependency(creatable as IResourceCreator<Microsoft.Azure.Management.V2.Resource.Core.IResource>);
-            return this;
-        }
-
-        public VirtualMachineScaleSetImpl WithExistingStorageAccount(IStorageAccount storageAccount)
-        {
-            this.existingStorageAccountsToAssociate.Add(storageAccount);
-            return this;
-        }
-
-        // Commenting this and using methods in the another partial class due to compiler error TODO: investiagte
-        //public VirtualMachineScaleSetExtensionImpl DefineNewExtension(string name)
-        //{
-        //    return new VirtualMachineScaleSetExtensionImpl(new VirtualMachineScaleSetExtensionInner { Name = name }, this);
-        //}
-
-        internal VirtualMachineScaleSetImpl WithExtension(VirtualMachineScaleSetExtensionImpl extension)
-        {
-            this.extensions.Add(extension.Name, extension);
-            return this;
-        }
-
-        public VirtualMachineScaleSetExtensionImpl UpdateExtension(string name)
-        {
-            IVirtualMachineScaleSetExtension value = null;
-            if (!this.extensions.TryGetValue(name, out value))
-            {
-                throw new ArgumentException("Extension with name '" + name + "' not found");
-            }
-            return (VirtualMachineScaleSetExtensionImpl)value;
-        }
-
-        public VirtualMachineScaleSetImpl WithoutExtension(String name)
-        {
-            if (this.extensions.ContainsKey(name))
-            {
-                this.extensions.Remove(name);
-            }
-            return this;
-        }
-
-        #endregion
-
-        #region Actions
-        public override IVirtualMachineScaleSet Refresh()
-        {
-            var response = client.Get(this.ResourceGroupName,
-                this.Name);
-            SetInner(response);
-            return this;
-        }
-
-        void Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.Deallocate()
-        {
-            this.client.Deallocate(this.ResourceGroupName, this.Name);
-        }
-
-        void Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.PowerOff()
-        {
-            this.client.PowerOff(this.ResourceGroupName, this.Name);
-        }
-
-        void Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.Reimage()
-        {
-            this.client.Reimage(this.ResourceGroupName, this.Name);
-        }
-
-        void Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.Restart()
-        {
-            this.client.Restart(this.ResourceGroupName, this.Name);
-        }
-
-        void Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet.Start()
-        {
-            this.client.Start(this.ResourceGroupName, this.Name);
-        }
-
-        #endregion
-
-        public override async Task<IVirtualMachineScaleSet> CreateResourceAsync(CancellationToken cancellationToken)
-        {
-            if (this.extensions.Count > 0)
-            {
-                this.Inner.VirtualMachineProfile
-                    .ExtensionProfile = new VirtualMachineScaleSetExtensionProfile
-                    {
-                        Extensions = new List<VirtualMachineScaleSetExtensionInner>()
-                    };
-                foreach (IVirtualMachineScaleSetExtension extension in this.extensions.Values)
-                {
-                    this.Inner.VirtualMachineProfile
-                        .ExtensionProfile
-                        .Extensions.Add(extension.Inner);
-                }
-            }
-
-            this.setOSDiskAndOSProfileDefaults();
-            this.setPrimaryIpConfigurationBackendsAndInboundNatPools();
-            await handleOSDiskContainersAsync();
-            await client.CreateOrUpdateAsync(this.ResourceGroupName, this.Name, this.Inner);
-            this.clearCachedProperties();
-            return this;
-        }
-
-        #region Helpers
-
-        private bool IsInUpdateMode
-        {
-            get
-            {
-                return !this.IsInCreateMode;
-            }
-        }
-
-        private void setOSDiskAndOSProfileDefaults()
-        {
-            Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet self = this 
-                as Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet;
-            if (this.IsInUpdateMode)
-            {
-                return;
-            }
-
-            if (this.Inner.Sku.Capacity == null)
-            {
-                this.WithCapacity(2);
-            }
-
-            if (this.Inner.UpgradePolicy == null
-                    || this.Inner.UpgradePolicy.Mode == null)
-            {
-                this.Inner.UpgradePolicy = new UpgradePolicy
-                {
-                    Mode = UpgradeMode.Automatic
-                };
-            }
-
-            VirtualMachineScaleSetOSProfile osProfile = this.Inner
-                    .VirtualMachineProfile
-                    .OsProfile;
-            // linux image: Custom or marketplace linux image
-            if (self.OsType == OperatingSystemTypes.Linux || this.isMarketplaceLinuxImage)
-            {
-                if (osProfile.LinuxConfiguration == null)
-                {
-                    osProfile.LinuxConfiguration = new LinuxConfiguration();
-                }
-                osProfile
-                    .LinuxConfiguration
-                    .DisablePasswordAuthentication = osProfile.AdminPassword == null;
-            }
-
-            if (self.OsDiskCachingType == null)
-            {
-                this.WithOsDiskCaching(CachingTypes.ReadWrite);
-            }
-
-            if (self.OsDiskName == null)
-            {
-                this.WithOsDiskName(this.Name + "-os-disk");
-            }
-
-            if (self.ComputerNamePrefix == null)
-            {
-                // VM name cannot contain only numeric values and cannot exceed 15 chars
-                if ((new Regex(@"^\d+$")).IsMatch(self.Name))
-                {
-                    this.WithComputerNamePrefix(ResourceNamer.RandomResourceName("vmss-vm", 12));
-                }
-                else if (self.Name.Length <= 12)
-                {
-                    this.WithComputerNamePrefix(this.Name + "-vm");
-                }
-                else
-                {
-                    this.WithComputerNamePrefix(ResourceNamer.RandomResourceName("vmss-vm", 12));
-                }
-            }
-        }
-
-        private bool isCustomImage(VirtualMachineScaleSetStorageProfile storageProfile)
-        {
-            return storageProfile.OsDisk.Image != null
-                    && storageProfile.OsDisk.Image.Uri != null;
-        }
-
-        private async Task handleOSDiskContainersAsync()
-        {
-            VirtualMachineScaleSetStorageProfile storageProfile = this.Inner
-                    .VirtualMachineProfile
-                    .StorageProfile;
-            if (isCustomImage(storageProfile))
-            {
-                // There is a restriction currently that virtual machine's disk cannot be stored in multiple storage accounts
-                // if scale set is based on custom image. Remove this check once azure start supporting it.
-                storageProfile.OsDisk
-                        .VhdContainers
-                        .Clear();
-                await Task.Yield();
-                return;
-            }
-
-            if (this.IsInCreateMode
-                && this.creatableStorageAccountKeys.Count == 0
-                && this.existingStorageAccountsToAssociate.Count == 0)
-            {
-                IStorageAccount storageAccount = await this.storageManager.StorageAccounts
-                        .Define(this.namer.RandomName("stg", 24))
-                        .WithRegion(this.RegionName)
-                        .WithExistingResourceGroup(this.ResourceGroupName)
-                        .CreateAsync();
-                String containerName = vhdContainerName;
-                if (containerName == null)
-                {
-                    containerName = "vhds";
-                }
-                storageProfile.OsDisk
-                        .VhdContainers
-                        .Add(mergePath(storageAccount.EndPoints.Primary.Blob, containerName));
-                vhdContainerName = null;
-                creatableStorageAccountKeys.Clear();
-                existingStorageAccountsToAssociate.Clear();
-                return;
-            }
-            else
-            {
-                string containerName = this.vhdContainerName;
-                if (containerName == null)
-                {
-                    foreach (string containerUrl in storageProfile.OsDisk.VhdContainers)
-                    {
-                        containerName = containerUrl.Substring(containerUrl.LastIndexOf("/") + 1);
-                        break;
-                    }
-                }
-
-                if (containerName == null)
-                {
-                    containerName = "vhds";
-                }
-
-                foreach (string storageAccountKey in this.creatableStorageAccountKeys)
-                {
-                    IStorageAccount storageAccount = (IStorageAccount)CreatedResource(storageAccountKey);
-                    storageProfile.OsDisk
-                            .VhdContainers
-                            .Add(mergePath(storageAccount.EndPoints.Primary.Blob, containerName));
-                }
-
-                foreach (IStorageAccount storageAccount in this.existingStorageAccountsToAssociate)
-                {
-                    storageProfile.OsDisk
-                            .VhdContainers
-                            .Add(mergePath(storageAccount.EndPoints.Primary.Blob, containerName));
-                }
-
-                this.vhdContainerName = null;
-                this.creatableStorageAccountKeys.Clear();
-                this.existingStorageAccountsToAssociate.Clear();
-            }
-        }
-
-        private void setPrimaryIpConfigurationSubnet()
-        {
-            if (this.IsInUpdateMode)
-            {
-                return;
-            }
-
-            VirtualMachineScaleSetIPConfigurationInner ipConfig = this.primaryNicDefaultIPConfiguration();
-            ipConfig.Subnet = new ApiEntityReference
-            {
-                Id = this.existingPrimaryNetworkToAssociate.Id
-                    + "/"
-                    + "subnets"
-                    + "/"
-                    + existingPrimaryNetworkSubnetNameToAssociate
-            };
-            this.existingPrimaryNetworkToAssociate = null;
-        }
-
-        private void setPrimaryIpConfigurationBackendsAndInboundNatPools()
-        {
-            if (this.IsInCreateMode)
-            {
-                return;
-            }
-
-            this.loadCurrentPrimaryLoadBalancersIfAvailable();
-
-            VirtualMachineScaleSetIPConfigurationInner primaryIpConfig = primaryNicDefaultIPConfiguration();
-            if (this.primaryInternetFacingLoadBalancer != null)
-            {
-                removeBackendsFromIpConfiguration(this.primaryInternetFacingLoadBalancer.Id,
-                        primaryIpConfig,
-                        this.primaryInternetFacingLBBackendsToRemoveOnUpdate.ToArray());
-
-                associateBackEndsToIpConfiguration(primaryInternetFacingLoadBalancer.Id,
-                        primaryIpConfig,
-                        this.primaryInternetFacingLBBackendsToAddOnUpdate.ToArray());
-
-                removeInboundNatPoolsFromIpConfiguration(this.primaryInternetFacingLoadBalancer.Id,
-                        primaryIpConfig,
-                        this.primaryInternetFacingLBInboundNatPoolsToRemoveOnUpdate.ToArray());
-
-                associateInboundNATPoolsToIpConfiguration(primaryInternetFacingLoadBalancer.Id,
-                        primaryIpConfig,
-                        this.primaryInternetFacingLBInboundNatPoolsToAddOnUpdate.ToArray());
-            }
-
-            if (this.primaryInternalLoadBalancer != null)
-            {
-                removeBackendsFromIpConfiguration(this.primaryInternalLoadBalancer.Id,
-                        primaryIpConfig,
-                        this.primaryInternalLBBackendsToRemoveOnUpdate.ToArray());
-
-                associateBackEndsToIpConfiguration(primaryInternalLoadBalancer.Id,
-                        primaryIpConfig,
-                        this.primaryInternalLBBackendsToAddOnUpdate.ToArray());
-
-                removeInboundNatPoolsFromIpConfiguration(this.primaryInternalLoadBalancer.Id,
-                        primaryIpConfig,
-                        this.primaryInternalLBInboundNatPoolsToRemoveOnUpdate.ToArray());
-
-                associateInboundNATPoolsToIpConfiguration(primaryInternalLoadBalancer.Id,
-                        primaryIpConfig,
-                        this.primaryInternalLBInboundNatPoolsToAddOnUpdate.ToArray());
-            }
-
-            if (this.removePrimaryInternetFacingLoadBalancerOnUpdate)
-            {
-                if (this.primaryInternetFacingLoadBalancer != null)
-                {
-                    removeLoadBalancerAssociationFromIpConfiguration(this.primaryInternetFacingLoadBalancer, primaryIpConfig);
-                }
-            }
-
-            if (this.removePrimaryInternalLoadBalancerOnUpdate)
-            {
-                if (this.primaryInternalLoadBalancer != null)
-                {
-                    removeLoadBalancerAssociationFromIpConfiguration(this.primaryInternalLoadBalancer, primaryIpConfig);
-                }
-            }
-
-            if (this.primaryInternetFacingLoadBalancerToAttachOnUpdate != null)
-            {
-                if (this.primaryInternetFacingLoadBalancer != null)
-                {
-                    removeLoadBalancerAssociationFromIpConfiguration(this.primaryInternetFacingLoadBalancer, primaryIpConfig);
-                }
-                associateLoadBalancerToIpConfiguration(this.primaryInternetFacingLoadBalancerToAttachOnUpdate, primaryIpConfig);
-                if (this.primaryInternetFacingLBBackendsToAddOnUpdate.Count > 0)
-                {
-                    removeAllBackendAssociationFromIpConfiguration(this.primaryInternetFacingLoadBalancerToAttachOnUpdate, primaryIpConfig);
-                    associateBackEndsToIpConfiguration(this.primaryInternetFacingLoadBalancerToAttachOnUpdate.Id,
-                            primaryIpConfig,
-                            this.primaryInternetFacingLBBackendsToAddOnUpdate.ToArray());
-                }
-                if (this.primaryInternetFacingLBInboundNatPoolsToAddOnUpdate.Count > 0)
-                {
-                    removeAllInboundNatPoolAssociationFromIpConfiguration(this.primaryInternetFacingLoadBalancerToAttachOnUpdate, primaryIpConfig);
-                    associateInboundNATPoolsToIpConfiguration(this.primaryInternetFacingLoadBalancerToAttachOnUpdate.Id,
-                            primaryIpConfig,
-                            this.primaryInternetFacingLBInboundNatPoolsToAddOnUpdate.ToArray());
-                }
-            }
-
-            if (this.primaryInternalLoadBalancerToAttachOnUpdate != null)
-            {
-                if (this.primaryInternalLoadBalancer != null)
-                {
-                    removeLoadBalancerAssociationFromIpConfiguration(this.primaryInternalLoadBalancer, primaryIpConfig);
-                }
-                associateLoadBalancerToIpConfiguration(this.primaryInternalLoadBalancerToAttachOnUpdate, primaryIpConfig);
-                if (this.primaryInternalLBBackendsToAddOnUpdate.Count > 0)
-                {
-                    removeAllBackendAssociationFromIpConfiguration(this.primaryInternalLoadBalancerToAttachOnUpdate, primaryIpConfig);
-                    associateBackEndsToIpConfiguration(this.primaryInternalLoadBalancerToAttachOnUpdate.Id,
-                            primaryIpConfig,
-                            this.primaryInternalLBBackendsToAddOnUpdate.ToArray());
-                }
-
-                if (this.primaryInternalLBInboundNatPoolsToAddOnUpdate.Count > 0)
-                {
-                    removeAllInboundNatPoolAssociationFromIpConfiguration(this.primaryInternalLoadBalancerToAttachOnUpdate, primaryIpConfig);
-                    associateInboundNATPoolsToIpConfiguration(this.primaryInternalLoadBalancerToAttachOnUpdate.Id,
-                            primaryIpConfig,
-                            this.primaryInternalLBInboundNatPoolsToAddOnUpdate.ToArray());
-                }
-            }
-
-            this.removePrimaryInternetFacingLoadBalancerOnUpdate = false;
-            this.removePrimaryInternalLoadBalancerOnUpdate = false;
-            this.primaryInternetFacingLoadBalancerToAttachOnUpdate = null;
-            this.primaryInternalLoadBalancerToAttachOnUpdate = null;
-            this.primaryInternetFacingLBBackendsToRemoveOnUpdate.Clear();
-            this.primaryInternetFacingLBInboundNatPoolsToRemoveOnUpdate.Clear();
-            this.primaryInternalLBBackendsToRemoveOnUpdate.Clear();
-            this.primaryInternalLBInboundNatPoolsToRemoveOnUpdate.Clear();
-            this.primaryInternetFacingLBBackendsToAddOnUpdate.Clear();
-            this.primaryInternetFacingLBInboundNatPoolsToAddOnUpdate.Clear();
-            this.primaryInternalLBBackendsToAddOnUpdate.Clear();
-            this.primaryInternalLBInboundNatPoolsToAddOnUpdate.Clear();
-        }
-
-        private void clearCachedProperties()
-        {
-            this.primaryInternetFacingLoadBalancer = null;
-            this.primaryInternalLoadBalancer = null;
-            this.primaryVirtualNetwork = null;
-        }
-
-        private void loadCurrentPrimaryLoadBalancersIfAvailable()
-        {
-            if (this.primaryInternetFacingLoadBalancer != null && this.primaryInternalLoadBalancer != null) {
-                return;
-            }
-
-            string firstLoadBalancerId = null;
-            VirtualMachineScaleSetIPConfigurationInner ipConfig = primaryNicDefaultIPConfiguration();
-            if (ipConfig.LoadBalancerBackendAddressPools.Count > 0) {
-                firstLoadBalancerId = ResourceUtils
-                        .ParentResourcePathFromResourceId(ipConfig.LoadBalancerBackendAddressPools.ElementAt(0).Id);
-            }
-
-            if (firstLoadBalancerId == null && ipConfig.LoadBalancerInboundNatPools.Count > 0) {
-                firstLoadBalancerId = ResourceUtils
-                        .ParentResourcePathFromResourceId(ipConfig.LoadBalancerInboundNatPools.ElementAt(0).Id);
-            }
-
-            if (firstLoadBalancerId == null) {
-                return;
-            }
-
-            ILoadBalancer loadBalancer1 = this.networkManager
-                .LoadBalancers
-                .GetById(firstLoadBalancerId);
-            if (loadBalancer1.PublicIpAddressIds != null && loadBalancer1.PublicIpAddressIds.Count > 0) {
-                this.primaryInternetFacingLoadBalancer = loadBalancer1;
-            } else {
-                this.primaryInternalLoadBalancer = loadBalancer1;
-            }
-
-            string secondLoadBalancerId = null;
-            foreach (SubResource subResource in ipConfig.LoadBalancerBackendAddressPools) {
-                if (!subResource.Id.ToLower().StartsWith(firstLoadBalancerId.ToLower()))
-                {
-                    secondLoadBalancerId = ResourceUtils
-                            .ParentResourcePathFromResourceId(subResource.Id);
-                    break;
-                }
-            }
-
-            if (secondLoadBalancerId == null) {
-                foreach (SubResource subResource in ipConfig.LoadBalancerInboundNatPools)
-                {
-                    if (!subResource.Id.ToLower().StartsWith(firstLoadBalancerId.ToLower()))
-                    {
-                        secondLoadBalancerId = ResourceUtils
-                                .ParentResourcePathFromResourceId(subResource.Id);
-                        break;
-                    }
-                }
-            }
-
-            if (secondLoadBalancerId == null) {
-                return;
-            }
-
-            ILoadBalancer loadBalancer2 = this.networkManager
-            .LoadBalancers
-            .GetById(secondLoadBalancerId);
-            if (loadBalancer2.PublicIpAddressIds != null && loadBalancer2.PublicIpAddressIds.Count > 0) {
-                this.primaryInternetFacingLoadBalancer = loadBalancer2;
-            } else {
-                this.primaryInternalLoadBalancer = loadBalancer2;
-            }
-        }
-
-        private VirtualMachineScaleSetIPConfigurationInner primaryNicDefaultIPConfiguration()
-        {
-            IList<VirtualMachineScaleSetNetworkConfigurationInner> nicConfigurations = this.Inner
-                    .VirtualMachineProfile
-                    .NetworkProfile
-                    .NetworkInterfaceConfigurations;
-
-            foreach (VirtualMachineScaleSetNetworkConfigurationInner nicConfiguration in nicConfigurations)
-            {
-                if (nicConfiguration.Primary.HasValue && nicConfiguration.Primary == true)
-                {
-                    if (nicConfiguration.IpConfigurations.Count > 0)
-                    {
-                        VirtualMachineScaleSetIPConfigurationInner ipConfig = nicConfiguration.IpConfigurations.ElementAt(0);
-                        if (ipConfig.LoadBalancerBackendAddressPools == null)
-                        {
-                            ipConfig.LoadBalancerBackendAddressPools = new List<SubResource>();
-                        }
-                        if (ipConfig.LoadBalancerInboundNatPools == null)
-                        {
-                            ipConfig.LoadBalancerInboundNatPools = new List<SubResource>();
-                        }
-                        return ipConfig;
-                    }
-                }
-            }
-            throw new Exception("Could not find the primary nic configuration or an IP configuration in it");
-        }
-
-        private static void associateBackEndsToIpConfiguration(String loadBalancerId,
-                                                        VirtualMachineScaleSetIPConfigurationInner ipConfig,
-                                                        params string[] backendNames)
-        {
-            List<SubResource> backendSubResourcesToAssociate = new List<SubResource>();
-            foreach (string backendName in backendNames)
-            {
-                String backendPoolId = mergePath(loadBalancerId, "backendAddressPools", backendName);
-                bool found = false;
-                foreach (SubResource subResource in ipConfig.LoadBalancerBackendAddressPools)
-                {
-                    if (subResource.Id.Equals(backendPoolId, StringComparison.OrdinalIgnoreCase))
-                    {
-                        found = true;
-                        break;
-                    }
-                }
-                if (!found)
-                {
-                    backendSubResourcesToAssociate.Add(new SubResource {
-                        Id = backendPoolId
-                    });
-                }
-            }
-
-            foreach (SubResource backendSubResource in backendSubResourcesToAssociate)
-            {
-                ipConfig.LoadBalancerBackendAddressPools.Add(backendSubResource);
-            }
-        }
-
-        private static void associateInboundNATPoolsToIpConfiguration(String loadBalancerId,
-                                                        VirtualMachineScaleSetIPConfigurationInner ipConfig,
-                                                        params string[] inboundNatPools)
-        {
-            List<SubResource> inboundNatPoolSubResourcesToAssociate = new List<SubResource>();
-            foreach (string inboundNatPool in inboundNatPools)
-            {
-                string inboundNatPoolId = mergePath(loadBalancerId, "inboundNatPools", inboundNatPool);
-                bool found = false;
-                foreach (SubResource subResource in ipConfig.LoadBalancerInboundNatPools)
-                {
-                    if (subResource.Id.Equals(inboundNatPoolId, StringComparison.OrdinalIgnoreCase))
-                    {
-                        found = true;
-                        break;
-                    }
-                }
-                if (!found)
-                {
-                    inboundNatPoolSubResourcesToAssociate.Add(new SubResource
-                    {
-                        Id = inboundNatPoolId
-                    });
-                }
-            }
-
-            foreach (SubResource backendSubResource in inboundNatPoolSubResourcesToAssociate)
-            {
-                ipConfig.LoadBalancerInboundNatPools.Add(backendSubResource);
-            }
-        }
-
-        private static IDictionary<string, IBackend> getBackendsAssociatedWithIpConfiguration(ILoadBalancer loadBalancer,
-                                                                                     VirtualMachineScaleSetIPConfigurationInner ipConfig)
-        {
-            string loadBalancerId = loadBalancer.Id;
-            IDictionary<string, IBackend> attachedBackends = new Dictionary<string, IBackend>();
-            IDictionary<string, IBackend> lbBackends = null; // TODO: once Backends is available - loadBalancer.Backends;
-            foreach (IBackend lbBackend in lbBackends.Values)
-            {
-                string backendId = mergePath(loadBalancerId, "backendAddressPools", lbBackend.Name);
-                foreach (SubResource subResource in ipConfig.LoadBalancerBackendAddressPools)
-                {
-                    if (subResource.Id.Equals(backendId, StringComparison.OrdinalIgnoreCase))
-                    {
-                        attachedBackends.Add(lbBackend.Name, lbBackend);
-                    }
-                }
-            }
-            return attachedBackends;
-        }
-
-        private static IDictionary<string, IInboundNatPool> getInboundNatPoolsAssociatedWithIpConfiguration(ILoadBalancer loadBalancer,
-                                                                                                   VirtualMachineScaleSetIPConfigurationInner ipConfig)
-        {
-            String loadBalancerId = loadBalancer.Id;
-            IDictionary<string, IInboundNatPool> attachedInboundNatPools = new Dictionary<string, IInboundNatPool>();
-            IDictionary<string, IInboundNatPool> lbInboundNatPools = null; // TODO: once InboundNatPools is available - loadBalancer.InboundNatPools;
-            foreach (IInboundNatPool lbInboundNatPool in lbInboundNatPools.Values)
-            {
-                String inboundNatPoolId = mergePath(loadBalancerId, "inboundNatPools", lbInboundNatPool.Name);
-                foreach (SubResource subResource in ipConfig.LoadBalancerInboundNatPools)
-                {
-                    if (subResource.Id.Equals(inboundNatPoolId, StringComparison.OrdinalIgnoreCase))
-                    {
-                        attachedInboundNatPools.Add(lbInboundNatPool.Name, lbInboundNatPool);
-                    }
-                }
-            }
-            return attachedInboundNatPools;
-        }
-
-        private static void associateLoadBalancerToIpConfiguration(ILoadBalancer loadBalancer,
-                                                                   VirtualMachineScaleSetIPConfigurationInner ipConfig)
-        {
-            List<IBackend> backends = null; // TODO: once Backend is available - loadBalancer.Backends.values();
-            string[] backendNames = new string[backends.Count];
-            int i = 0;
-            foreach (IBackend backend in backends)
-            {
-                backendNames[i] = backend.Name;
-                i++;
-            }
-
-            associateBackEndsToIpConfiguration(loadBalancer.Id,
-                    ipConfig,
-                    backendNames);
-
-            List<IInboundNatPool> inboundNatPools = null; // TODO: once Backend is available - loadBalancer.InboundNatPools.values();
-            string[] natPoolNames = new string[inboundNatPools.Count];
-            i = 0;
-            foreach (IInboundNatPool inboundNatPool in inboundNatPools)
-            {
-                natPoolNames[i] = inboundNatPool.Name;
-                i++;
-            }
-
-            associateInboundNATPoolsToIpConfiguration(loadBalancer.Id,
-                    ipConfig,
-                    natPoolNames);
-        }
-
-        private static void removeLoadBalancerAssociationFromIpConfiguration(ILoadBalancer loadBalancer,
-                                                                             VirtualMachineScaleSetIPConfigurationInner ipConfig)
-        {
-            removeAllBackendAssociationFromIpConfiguration(loadBalancer, ipConfig);
-            removeAllInboundNatPoolAssociationFromIpConfiguration(loadBalancer, ipConfig);
-        }
-
-        private static void removeAllBackendAssociationFromIpConfiguration(ILoadBalancer loadBalancer,
-                                                                           VirtualMachineScaleSetIPConfigurationInner ipConfig)
-        {
-            List<SubResource> toRemove = new List<SubResource>();
-            foreach (SubResource subResource in ipConfig.LoadBalancerBackendAddressPools)
-            {
-                if (subResource.Id.ToLower().StartsWith(loadBalancer.Id.ToLower() + "/"))
-                {
-                    toRemove.Add(subResource);
-                }
-            }
-
-            foreach (SubResource subResource in toRemove)
-            {
-                ipConfig.LoadBalancerBackendAddressPools.Remove(subResource);
-            }
-        }
-
-        private static void removeAllInboundNatPoolAssociationFromIpConfiguration(ILoadBalancer loadBalancer,
-                                                                                  VirtualMachineScaleSetIPConfigurationInner ipConfig)
-        {
-            List<SubResource> toRemove = new List<SubResource>();
-            foreach (SubResource subResource in ipConfig.LoadBalancerInboundNatPools)
-            {
-                if (subResource.Id.ToLower().StartsWith(loadBalancer.Id.ToLower() + "/"))
-                {
-                    toRemove.Add(subResource);
-                }
-            }
-
-            foreach (SubResource subResource in toRemove)
-            {
-                ipConfig.LoadBalancerInboundNatPools.Remove(subResource);
-            }
-        }
-
-        private static void removeBackendsFromIpConfiguration(string loadBalancerId,
-                                                       VirtualMachineScaleSetIPConfigurationInner ipConfig,
-                                                       params string[] backendNames)
-        {
-            List<SubResource> toRemove = new List<SubResource>();
-            foreach (string backendName in backendNames)
-            {
-                string backendPoolId = mergePath(loadBalancerId, "backendAddressPools", backendName);
-                foreach (SubResource subResource in ipConfig.LoadBalancerBackendAddressPools)
-                {
-                    if (subResource.Id.Equals(backendPoolId, StringComparison.OrdinalIgnoreCase))
-                    {
-                        toRemove.Add(subResource);
-                        break;
-                    }
-                }
-            }
-
-            foreach (SubResource subResource in toRemove)
-            {
-                ipConfig.LoadBalancerBackendAddressPools.Remove(subResource);
-            }
-        }
-
-        private static void removeInboundNatPoolsFromIpConfiguration(String loadBalancerId,
-                                                              VirtualMachineScaleSetIPConfigurationInner ipConfig,
-                                                              params string[] inboundNatPoolNames)
-        {
-            List<SubResource> toRemove = new List<SubResource>();
-            foreach (string natPoolName in inboundNatPoolNames)
-            {
-                string inboundNatPoolId = mergePath(loadBalancerId, "inboundNatPools", natPoolName);
-                foreach (SubResource subResource in ipConfig.LoadBalancerInboundNatPools)
-                {
-                    if (subResource.Id.Equals(inboundNatPoolId, StringComparison.OrdinalIgnoreCase))
-                    {
-                        toRemove.Add(subResource);
-                        break;
-                    }
-                }
-            }
-
-            foreach (SubResource subResource in toRemove)
-            {
-                ipConfig.LoadBalancerInboundNatPools.Remove(subResource);
-            }
-        }
-
-        private static void addToList<T>(List<T> list, params T[] items)
-        {
-            foreach (T item in items)
-            {
-                list.Add(item);
-            }
-        }
-
-        private static string mergePath(params string[] segments)
-        {
-            StringBuilder builder = new StringBuilder();
-            foreach (string segment in segments)
-            {
-                string tmp = segment;
-                while (tmp.Length > 1 && tmp.EndsWith("/"))
-                {
-                    tmp = tmp.Substring(0, tmp.Length - 1);
-                }
-
-                if (tmp.Length > 0)
-                {
-                    builder.Append(tmp);
-                    builder.Append("/");
-                }
-            }
-
-            string merged = builder.ToString();
-            if (merged.EndsWith("/"))
-            {
-                merged = merged.Substring(0, merged.Length - 1);
-            }
-            return merged;
-        }
-
-        IWithPrimaryLoadBalancer IUpdatable<IWithPrimaryLoadBalancer>.Update()
-        {
-            return this;
-        }
-
-        #endregion
-    }
-
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
+    using Microsoft.Azure.Management.Compute.Models;
+    using System.Threading.Tasks;
+    using Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition;
+    using Microsoft.Azure.Management.Fluent.Network;
+    using System.Collections.Generic;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update;
+    using Microsoft.Azure.Management.Fluent.Storage;
+    using Microsoft.Azure.Management.Storage.Models;
+    using System.Threading;
+    using Microsoft.Azure.Management.Network.Models;
     internal partial class VirtualMachineScaleSetImpl
     {
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate.DisableAutoUpdate()
+        /// <summary>
+        /// Specifies the name prefix to use for auto-generating the names for the virtual machines in the scale set.
+        /// </summary>
+        /// <param name="namePrefix">namePrefix the prefix for the auto-generated names of the virtual machines in the scale set</param>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithComputerNamePrefix.WithComputerNamePrefix(string namePrefix)
         {
-            return this.DisableAutoUpdate() as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate;
+            return this.WithComputerNamePrefix(namePrefix) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithCreate;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate.DisableVmAgent()
+        /// <summary>
+        /// Removes the associations between the primary network interface configuration and the specified inbound NAT pools
+        /// of an Internet-facing load balancer.
+        /// </summary>
+        /// <param name="natPoolNames">natPoolNames the names of existing inbound NAT pools</param>
+        /// <returns>the next stage of the update</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerNatPool.WithoutPrimaryInternetFacingLoadBalancerNatPools(params string[] natPoolNames)
         {
-            return null;
+            return this.WithoutPrimaryInternetFacingLoadBalancerNatPools(natPoolNames) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Definition.IBlank<Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate> 
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithExtension.DefineNewExtension(string name)
+        /// <summary>
+        /// Removes the associations between the primary network interface configuration and the specified inbound NAT pools
+        /// of the internal load balancer.
+        /// </summary>
+        /// <param name="natPoolNames">natPoolNames the names of existing inbound NAT pools</param>
+        /// <returns>the next stage of the update</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerNatPool.WithoutPrimaryInternalLoadBalancerNatPools(params string[] natPoolNames)
         {
-            // return this.DefineNewExtension(name) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Definition.IBlank<Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate>;
-            return new VirtualMachineScaleSetExtensionImpl(new VirtualMachineScaleSetExtensionInner { Name = name }, this) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Definition.IBlank<Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate>;
+            return this.WithoutPrimaryInternalLoadBalancerNatPools(natPoolNames) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithAdminUserName.WithAdminUserName(string adminUserName)
+        /// <summary>
+        /// Associates the specified internal load balancer inbound NAT pools with the the primary network interface of
+        /// the virtual machines in the scale set.
+        /// </summary>
+        /// <param name="natPoolNames">natPoolNames the names of existing inbound NAT pools in the selected load balancer</param>
+        /// <returns>the next stage of the update</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerNatPool.WithPrimaryInternalLoadBalancerInboundNatPools(params string[] natPoolNames)
         {
-            return this.WithAdminUserName(adminUserName) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate;
+            return this.WithPrimaryInternalLoadBalancerInboundNatPools(natPoolNames) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCapacity.WithCapacity(int capacity)
+        /// <summary>
+        /// Refreshes the resource to sync with Azure.
+        /// </summary>
+        /// <returns>the refreshed resource</returns>
+        Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet>.Refresh()
         {
-            return this.WithCapacity(capacity) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate;
+            return this.Refresh() as Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithComputerNamePrefix.WithComputerNamePrefix(string namePrefix)
+        /// <summary>
+        /// Specifies the root user name for the Linux virtual machines in the scale set.
+        /// </summary>
+        /// <param name="rootUserName">rootUserName a Linux root user name, following the required naming convention for Linux user names</param>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithLinuxCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithRootUserName.WithRootUserName(string rootUserName)
         {
-            return this.WithComputerNamePrefix(namePrefix) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate;
+            return this.WithRootUserName(rootUserName) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithLinuxCreate;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithSubnet
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithNetwork.WithExistingPrimaryNetwork(INetwork network)
+        /// <summary>
+        /// Removes the associations between the primary network interface configuration and the specfied backends
+        /// of the Internet-facing load balancer.
+        /// </summary>
+        /// <param name="backendNames">backendNames existing backend names</param>
+        /// <returns>the next stage of the update</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerBackend.WithoutPrimaryInternetFacingLoadBalancerBackends(params string[] backendNames)
         {
-            return this.WithExistingPrimaryNetwork(network) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithSubnet;
+            return this.WithoutPrimaryInternetFacingLoadBalancerBackends(backendNames) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithSku
-            Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition.IWithExistingResourceGroup<Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithSku>.WithExistingResourceGroup(IResourceGroup group)
+        /// <summary>
+        /// Removes the associations between the primary network interface configuration and the specified backends
+        /// of the internal load balancer.
+        /// </summary>
+        /// <param name="backendNames">backendNames existing backend names</param>
+        /// <returns>the next stage of the update</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerBackend.WithoutPrimaryInternalLoadBalancerBackends(params string[] backendNames)
         {
-            return this.WithExistingResourceGroup(group) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithSku;
+            return this.WithoutPrimaryInternalLoadBalancerBackends(backendNames) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithSku
-            Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition.IWithExistingResourceGroup<Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithSku>.WithExistingResourceGroup(string groupName)
+        /// <summary>
+        /// Associates inbound NAT pools of the selected Internet-facing load balancer with the primary network interface
+        /// of the virtual machines in the scale set.
+        /// </summary>
+        /// <param name="natPoolNames">natPoolNames the names of existing inbound NAT pools on the selected load balancer</param>
+        /// <returns>the next stage of the update</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancer Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerNatPool.WithPrimaryInternetFacingLoadBalancerInboundNatPools(params string[] natPoolNames)
         {
-            return this.WithExistingResourceGroup(groupName) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithSku;
+            return this.WithPrimaryInternetFacingLoadBalancerInboundNatPools(natPoolNames) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancer;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithStorageAccount.WithExistingStorageAccount(IStorageAccount storageAccount)
+        /// <summary>
+        /// Associates the specified inbound NAT pools of the selected internal load balancer with the primary network
+        /// interface of the virtual machines in the scale set.
+        /// </summary>
+        /// <param name="natPoolNames">natPoolNames inbound NAT pools names existing on the selected load balancer</param>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternalLoadBalancer Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancerNatPool.WithPrimaryInternetFacingLoadBalancerInboundNatPools(params string[] natPoolNames)
         {
-            return this.WithExistingStorageAccount(storageAccount) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate;
+            return this.WithPrimaryInternetFacingLoadBalancerInboundNatPools(natPoolNames) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternalLoadBalancer;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithRootUserName
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithOS.WithLatestLinuxImage(string publisher, string offer, string sku)
+        /// <summary>
+        /// Specifies the SSH public key.
+        /// <p>
+        /// Each call to this method adds the given public key to the list of VM's public keys.
+        /// </summary>
+        /// <param name="publicKey">publicKey an SSH public key in the PEM format.</param>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithLinuxCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithLinuxCreate.WithSsh(string publicKey)
         {
-            return this.WithLatestLinuxImage(publisher, offer, sku) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithRootUserName;
+            return this.WithSsh(publicKey) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithLinuxCreate;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithAdminUserName
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithOS.WithLatestWindowsImage(string publisher, string offer, string sku)
+        /// <summary>
+        /// Specifies the password for the virtual machines in the scale set.
+        /// </summary>
+        /// <param name="password">password a password following the requirements for Azure virtual machine passwords</param>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithPassword.WithPassword(string password)
         {
-            return this.WithLatestWindowsImage(publisher, offer, sku) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithAdminUserName;
+            return this.WithPassword(password) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithCreate;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithSku
-            Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition.IWithNewResourceGroup<Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithSku>.WithNewResourceGroup()
+        /// <summary>
+        /// Specifies the administrator user name for the Windows virtual machines in the scale set.
+        /// </summary>
+        /// <param name="adminUserName">adminUserName a Windows administrator user name, following the required naming convention for Windows user names</param>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithAdminUserName.WithAdminUserName(string adminUserName)
         {
-            return this.WithNewResourceGroup() as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithSku;
+            return this.WithAdminUserName(adminUserName) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithSku
-            Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition.IWithNewResourceGroup<VirtualMachineScaleSet.Definition.IWithSku>.WithNewResourceGroup(ICreatable<IResourceGroup> groupDefinition)
+        /// <summary>
+        /// Associates the specified internal load balancer backends with the primary network interface of the
+        /// virtual machines in the scale set.
+        /// </summary>
+        /// <param name="backendNames">backendNames the names of existing backends on the selected load balancer</param>
+        /// <returns>the next stage of the update</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerNatPool Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerBackendOrNatPool.WithPrimaryInternalLoadBalancerBackends(params string[] backendNames)
         {
-            return this.WithNewResourceGroup(groupDefinition) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithSku;
+            return this.WithPrimaryInternalLoadBalancerBackends(backendNames) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerNatPool;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithSku
-            Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition.IWithNewResourceGroup<Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithSku>.WithNewResourceGroup(string name)
+        /// <summary>
+        /// Specifies a new storage account for the OS and data disk VHDs of the virtual machines
+        /// in the scale set.
+        /// </summary>
+        /// <param name="name">name the name of the storage account</param>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithStorageAccount.WithNewStorageAccount(string name)
         {
-            return this.WithNewResourceGroup(name) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithSku;
+            return this.WithNewStorageAccount(name) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithCreate;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithStorageAccount.WithNewStorageAccount(ICreatable<IStorageAccount> creatable)
+        /// <summary>
+        /// Specifies a new storage account for the OS and data disk VHDs of the virtual machines
+        /// in the scale set.
+        /// </summary>
+        /// <param name="creatable">creatable the storage account definition in a creatable stage</param>
+        /// <returns>the next stage in the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithStorageAccount.WithNewStorageAccount(ICreatable<Microsoft.Azure.Management.Fluent.Storage.IStorageAccount> creatable)
         {
-            return this.WithNewStorageAccount(creatable) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate;
+            return this.WithNewStorageAccount(creatable) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithCreate;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithStorageAccount.WithNewStorageAccount(string name)
+        /// <summary>
+        /// Specifies an existing {@link StorageAccount} for the OS and data disk VHDs of
+        /// the virtual machines in the scale set.
+        /// </summary>
+        /// <param name="storageAccount">storageAccount an existing storage account</param>
+        /// <returns>the next stage in the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithStorageAccount.WithExistingStorageAccount(IStorageAccount storageAccount)
         {
-            return this.WithNewStorageAccount(name) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate;
+            return this.WithExistingStorageAccount(storageAccount) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithCreate;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithOsDiskSettings.WithOsDiskCaching(CachingTypes cachingType)
+        /// <summary>
+        /// Removes the extension with the specified name from the virtual machines in the scale set.
+        /// </summary>
+        /// <param name="name">name the reference name of the extension to be removed/uninstalled</param>
+        /// <returns>the next stage of the update</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithExtension.WithoutExtension(string name)
         {
-            return this.WithOsDiskCaching(cachingType) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate;
+            return this.WithoutExtension(name) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithOsDiskSettings.WithOsDiskName(string name)
+        /// <summary>
+        /// Begins the description of an update of an existing extension assigned to the virtual machines in the scale set.
+        /// </summary>
+        /// <param name="name">name the reference name for the extension</param>
+        /// <returns>the first stage of the extension reference update</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSetExtension.Update.IUpdate Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithExtension.UpdateExtension(string name)
         {
-            return this.WithOsDiskName(name) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate;
+            return this.UpdateExtension(name) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSetExtension.Update.IUpdate;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithOS
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternalLoadBalancer.WithoutPrimaryInternalLoadBalancer()
+        /// <summary>
+        /// Begins the definition of an extension reference to be attached to the virtual machines in the scale set.
+        /// </summary>
+        /// <param name="name">name the reference name for an extension</param>
+        /// <returns>the first stage of the extension reference definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSetExtension.UpdateDefinition.IBlank<Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply> Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithExtension.DefineNewExtension(string name)
         {
-            return WithoutPrimaryInternalLoadBalancer() as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithOS;
+            return this.DefineNewExtension(name) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSetExtension.UpdateDefinition.IBlank<Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply>;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternalLoadBalancer
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancer.WithoutPrimaryInternetFacingLoadBalancer()
+        /// <summary>
+        /// Begins the definition of an extension reference to be attached to the virtual machines in the scale set.
+        /// </summary>
+        /// <param name="name">name the reference name for the extension</param>
+        /// <returns>the first stage of the extension reference definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSetExtension.Definition.IBlank<Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithCreate> Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithExtension.DefineNewExtension(string name)
         {
-            return this.WithoutPrimaryInternetFacingLoadBalancer() as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternalLoadBalancer;
+            return this.DefineNewExtension(name) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSetExtension.Definition.IBlank<Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithCreate>;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithOverProvision.WithOverProvision(bool enabled)
+        /// <summary>
+        /// Specifies the load balancer to be used as the Internet-facing load balancer for the virtual machines in the
+        /// scale set.
+        /// <p>
+        /// This will replace the current internet-facing load balancer associated with the virtual machines in the
+        /// scale set (if any).
+        /// By default all the backend and inbound NAT pool of the load balancer will be associated with the primary
+        /// network interface of the virtual machines unless a subset of them is selected in the next stages
+        /// </summary>
+        /// <param name="loadBalancer">loadBalancer the primary Internet-facing load balancer</param>
+        /// <returns>the next stage of the update</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithPrimaryLoadBalancer.WithPrimaryInternetFacingLoadBalancer(ILoadBalancer loadBalancer)
         {
-            return this.WithOverProvision(enabled) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate;
+            return this.WithPrimaryInternetFacingLoadBalancer(loadBalancer) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithOverProvision.WithOverProvisionDisabled()
+        /// <summary>
+        /// Associates the specified Internet-facing load balancer backends with the primary network interface of the
+        /// virtual machines in the scale set.
+        /// </summary>
+        /// <param name="backendNames">backendNames the backend names</param>
+        /// <returns>the next stage of the update</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerNatPool Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool.WithPrimaryInternetFacingLoadBalancerBackends(params string[] backendNames)
         {
-            return this.WithOverProvisionDisabled() as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate;
+            return this.WithPrimaryInternetFacingLoadBalancerBackends(backendNames) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerNatPool;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithOverProvision.WithOverProvisionEnabled()
+        /// <summary>
+        /// Associates the specified backends of the selected load balancer with the primary network interface of the
+        /// virtual machines in the scale set.
+        /// </summary>
+        /// <param name="backendNames">backendNames the names of existing backends in the selected load balancer</param>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancerNatPool Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool.WithPrimaryInternetFacingLoadBalancerBackends(params string[] backendNames)
         {
-            return this.WithOverProvisionEnabled() as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate;
+            return this.WithPrimaryInternetFacingLoadBalancerBackends(backendNames) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancerNatPool;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithPassword.WithPassword(string password)
+        /// <summary>
+        /// Associate an existing virtual network subnet with the primary network interface of the virtual machines
+        /// in the scale set.
+        /// </summary>
+        /// <param name="network">network an existing virtual network</param>
+        /// <param name="subnetName">subnetName the subnet name</param>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancer Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithNetworkSubnet.WithExistingPrimaryNetworkSubnet(INetwork network, string subnetName)
         {
-            return this.WithPassword(password) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate;
+            return this.WithExistingPrimaryNetworkSubnet(network, subnetName) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancer;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithRootUserName
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithOS.WithPopularLinuxImage(KnownLinuxVirtualMachineImage knownImage)
+        /// <summary>
+        /// Associates the specified backends of the selected load balancer with the primary network interface of the
+        /// virtual machines in the scale set.
+        /// </summary>
+        /// <param name="backendNames">backendNames names of existing backends in the selected load balancer</param>
+        /// <returns>the next stage of the virtual machine scale set definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithInternalInternalLoadBalancerNatPool Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithInternalLoadBalancerBackendOrNatPool.WithPrimaryInternalLoadBalancerBackends(params string[] backendNames)
         {
-            return this.WithPopularLinuxImage(knownImage) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithRootUserName;
+            return this.WithPrimaryInternalLoadBalancerBackends(backendNames) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithInternalInternalLoadBalancerNatPool;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithAdminUserName
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithOS.WithPopularWindowsImage(KnownWindowsVirtualMachineImage knownImage)
+        /// <summary>
+        /// Specifies that the latest version of a marketplace Linux image should be used.
+        /// </summary>
+        /// <param name="publisher">publisher the publisher of the image</param>
+        /// <param name="offer">offer the offer of the image</param>
+        /// <param name="sku">sku the SKU of the image</param>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithRootUserName Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithOS.WithLatestLinuxImage(string publisher, string offer, string sku)
         {
-            return this.WithPopularWindowsImage(knownImage) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithAdminUserName;
+            return this.WithLatestLinuxImage(publisher, offer, sku) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithRootUserName;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithInternalLoadBalancerBackendOrNatPool
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternalLoadBalancer.WithPrimaryInternalLoadBalancer(ILoadBalancer loadBalancer)
+        /// <summary>
+        /// Specifies the user (custom) Linux image used as the virtual machine's operating system.
+        /// </summary>
+        /// <param name="imageUrl">imageUrl the url the the VHD</param>
+        /// <returns>the next stage of the virtual machine scale set definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithRootUserName Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithOS.WithStoredLinuxImage(string imageUrl)
         {
-            return this.WithPrimaryInternalLoadBalancer(loadBalancer) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithInternalLoadBalancerBackendOrNatPool;
+            return this.WithStoredLinuxImage(imageUrl) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithRootUserName;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithInternalInternalLoadBalancerNatPool
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithInternalLoadBalancerBackendOrNatPool.WithPrimaryInternalLoadBalancerBackends(params string[] backendNames)
+        /// <summary>
+        /// Specifies the specific version of a market-place Linux image that should be used.
+        /// </summary>
+        /// <param name="imageReference">imageReference describes the publisher, offer, SKU and version of the market-place image</param>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithRootUserName Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithOS.WithSpecificLinuxImageVersion(ImageReference imageReference)
         {
-            return this.WithPrimaryInternalLoadBalancerBackends(backendNames) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithInternalInternalLoadBalancerNatPool;
+            return this.WithSpecificLinuxImageVersion(imageReference) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithRootUserName;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithOS
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithInternalInternalLoadBalancerNatPool.WithPrimaryInternalLoadBalancerInboundNatPools(params string[] natPoolNames)
+        /// <summary>
+        /// Specifies that the latest version of the specified marketplace Windows image should be used.
+        /// </summary>
+        /// <param name="publisher">publisher specifies the publisher of the image</param>
+        /// <param name="offer">offer specifies the offer of the image</param>
+        /// <param name="sku">sku specifies the SKU of the image</param>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithAdminUserName Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithOS.WithLatestWindowsImage(string publisher, string offer, string sku)
         {
-            return this.WithPrimaryInternalLoadBalancerInboundNatPools(natPoolNames) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithOS;
+            return this.WithLatestWindowsImage(publisher, offer, sku) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithAdminUserName;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancer.WithPrimaryInternetFacingLoadBalancer(ILoadBalancer loadBalancer)
+        /// <summary>
+        /// Specifies a known marketplace Windows image used as the operating system for the virtual machines in the scale set.
+        /// </summary>
+        /// <param name="knownImage">knownImage a known market-place image</param>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithAdminUserName Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithOS.WithPopularWindowsImage(KnownWindowsVirtualMachineImage knownImage)
         {
-            return this.WithPrimaryInternetFacingLoadBalancer(loadBalancer) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool;
+            return this.WithPopularWindowsImage(knownImage) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithAdminUserName;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancerNatPool
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool.WithPrimaryInternetFacingLoadBalancerBackends(params string[] backendNames)
+        /// <summary>
+        /// Specifies a known marketplace Linux image used as the virtual machine's operating system.
+        /// </summary>
+        /// <param name="knownImage">knownImage a known market-place image</param>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithRootUserName Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithOS.WithPopularLinuxImage(KnownLinuxVirtualMachineImage knownImage)
         {
-            return this.WithPrimaryInternetFacingLoadBalancerBackends(backendNames) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancerNatPool;
+            return this.WithPopularLinuxImage(knownImage) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithRootUserName;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternalLoadBalancer
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancerNatPool.WithPrimaryInternetFacingLoadBalancerInboundNatPools(params string[] natPoolNames)
+        /// <summary>
+        /// Specifies the specific version of a marketplace Windows image needs to be used.
+        /// </summary>
+        /// <param name="imageReference">imageReference describes publisher, offer, SKU and version of the marketplace image</param>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithAdminUserName Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithOS.WithSpecificWindowsImageVersion(ImageReference imageReference)
         {
-            return this.WithPrimaryInternetFacingLoadBalancerInboundNatPools(natPoolNames) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternalLoadBalancer;
+            return this.WithSpecificWindowsImageVersion(imageReference) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithAdminUserName;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithLinuxCreate
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithRootUserName.WithRootUserName(string rootUserName)
+        /// <summary>
+        /// Specifies the user (custom) Windows image to be used as the operating system for the virtual machines in the
+        /// scale set.
+        /// </summary>
+        /// <param name="imageUrl">imageUrl the URL of the VHD</param>
+        /// <returns>the next stage of the virtual machine scale set definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithAdminUserName Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithOS.WithStoredWindowsImage(string imageUrl)
         {
-            return this.WithRootUserName(rootUserName) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithLinuxCreate;
+            return this.WithStoredWindowsImage(imageUrl) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithAdminUserName;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithNetwork
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithSku.WithSku(IVirtualMachineScaleSetSku sku)
+        /// <summary>
+        /// Specifies the virtual machine scale set upgrade policy mode.
+        /// </summary>
+        /// <param name="upgradeMode">upgradeMode an upgrade policy mode</param>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithUpgradePolicy.WithUpgradeMode(UpgradeMode upgradeMode)
         {
-            return this.WithSku(sku) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithNetwork;
+            return this.WithUpgradeMode(upgradeMode) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithCreate;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithNetwork
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithSku.WithSku(VirtualMachineScaleSetSkuTypes skuType)
+        /// <summary>
+        /// Specifies the SKU for the virtual machines in the scale set.
+        /// </summary>
+        /// <param name="skuType">skuType the SKU type</param>
+        /// <returns>the next stage of the update</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithSku.WithSku(VirtualMachineScaleSetSkuTypes skuType)
         {
-            return this.WithSku(skuType) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithNetwork;
+            return this.WithSku(skuType) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithRootUserName
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithOS.WithSpecificLinuxImageVersion(ImageReference imageReference)
+        /// <summary>
+        /// Specifies the SKU for the virtual machines in the scale set.
+        /// </summary>
+        /// <param name="sku">sku a SKU from the list of available sizes for the virtual machines in this scale set</param>
+        /// <returns>the next stage of the update</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithSku.WithSku(IVirtualMachineScaleSetSku sku)
         {
-            return this.WithSpecificLinuxImageVersion(imageReference) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithRootUserName;
+            return this.WithSku(sku) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithAdminUserName
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithOS.WithSpecificWindowsImageVersion(ImageReference imageReference)
+        /// <summary>
+        /// Specifies the SKU for the virtual machines in the scale set.
+        /// </summary>
+        /// <param name="skuType">skuType the SKU type</param>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithNetworkSubnet Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithSku.WithSku(VirtualMachineScaleSetSkuTypes skuType)
         {
-            return this.WithSpecificWindowsImageVersion(imageReference) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithAdminUserName;
+            return this.WithSku(skuType) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithNetworkSubnet;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithLinuxCreate
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithLinuxCreate.WithSsh(string publicKey)
+        /// <summary>
+        /// Specifies the SKU for the virtual machines in the scale set.
+        /// </summary>
+        /// <param name="sku">sku a SKU from the list of available sizes for the virtual machines in this scale set</param>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithNetworkSubnet Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithSku.WithSku(IVirtualMachineScaleSetSku sku)
         {
-            return this.WithSsh(publicKey) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithLinuxCreate;
+            return this.WithSku(sku) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithNetworkSubnet;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithRootUserName
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithOS.WithStoredLinuxImage(string imageUrl)
+        /// <summary>
+        /// Enables automatic updates.
+        /// </summary>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate.WithAutoUpdate()
         {
-            return this.WithStoredLinuxImage(imageUrl) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithRootUserName;
+            return this.WithAutoUpdate() as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithAdminUserName
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithOS.WithStoredWindowsImage(string imageUrl)
+        /// <summary>
+        /// Disables the VM agent.
+        /// </summary>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate.WithoutVmAgent()
         {
-            return this.WithStoredWindowsImage(imageUrl) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithAdminUserName;
+            return this.WithoutVmAgent() as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancer
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithSubnet.WithSubnet(string name)
+        /// <summary>
+        /// Specifies the WinRM listener.
+        /// <p>
+        /// Each call to this method adds the given listener to the list of VM's WinRM listeners.
+        /// </summary>
+        /// <param name="listener">listener a WinRm listener</param>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate.WithWinRm(WinRMListener listener)
         {
-            return this.WithSubnet(name) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancer;
+            return this.WithWinRm(listener) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate.WithTimeZone(string timeZone)
+        /// <summary>
+        /// Disables automatic updates.
+        /// </summary>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate.WithoutAutoUpdate()
         {
-            return this.WithTimeZone(timeZone) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate;
+            return this.WithoutAutoUpdate() as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithUpgradePolicy.WithUpgradeMode(UpgradeMode upgradeMode)
+        /// <summary>
+        /// Specifies the time zone for the virtual machines to use.
+        /// </summary>
+        /// <param name="timeZone">timeZone a time zone</param>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate.WithTimeZone(string timeZone)
         {
-            return this.WithUpgradeMode(upgradeMode) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithCreate;
+            return this.WithTimeZone(timeZone) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate.WithWinRm(WinRMListener listener)
+        /// <summary>
+        /// Enables the VM agent.
+        /// </summary>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate.WithVmAgent()
         {
-            return this.WithWinRm(listener) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate;
+            return this.WithVmAgent() as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithWindowsCreate;
         }
 
-        // Update Withers
-
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Update.IBlank<Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable>
-    Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithExtension.DefineNewExtension(string name)
+        /// <summary>
+        /// Specifies the new number of virtual machines in the scale set.
+        /// </summary>
+        /// <param name="capacity">capacity the virtual machine capacity of the scale set</param>
+        /// <returns>the next stage of the update</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithCapacity.WithCapacity(int capacity)
         {
-            return new VirtualMachineScaleSetExtensionImpl(new VirtualMachineScaleSetExtensionInner { Name = name }, this) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Update.IBlank<Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable>;
+            return this.WithCapacity(capacity) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IUpdate
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithExtension.UpdateExtension(string name)
+        /// <summary>
+        /// Specifies the maximum number of virtual machines in the scale set.
+        /// </summary>
+        /// <param name="capacity">capacity the virtual machine capacity</param>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithCapacity.WithCapacity(int capacity)
         {
-            return this.UpdateExtension(name) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IUpdate;
+            return this.WithCapacity(capacity) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithCreate;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithCapacity.WithCapacity(int capacity)
+        /// <returns>the extensions attached to the virtual machines in the scale set</returns>
+        System.Collections.Generic.IDictionary<string, Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSetExtension> Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet.Extensions()
         {
-            return this.WithCapacity(capacity) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable;
+            return this.Extensions() as System.Collections.Generic.IDictionary<string, Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSetExtension>;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithExtension.WithoutExtension(string name)
+        /// <returns>the internet-facing load balancer associated with the primary network interface of</returns>
+        /// <returns>the virtual machines in the scale set.</returns>
+        Microsoft.Azure.Management.Fluent.Network.ILoadBalancer Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet.GetPrimaryInternetFacingLoadBalancer()
         {
-            return this.WithoutExtension(name) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable;
+            return this.GetPrimaryInternetFacingLoadBalancer() as Microsoft.Azure.Management.Fluent.Network.ILoadBalancer;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancer.WithoutPrimaryInternalLoadBalancer()
+        /// <returns>the name of the OS disk of virtual machines in the scale set</returns>
+        string Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet.OsDiskName
         {
-            return this.WithoutPrimaryInternalLoadBalancer() as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable;
+            get
+            {
+                return this.OsDiskName as string;
+            }
+        }
+        /// <returns>the virtual network associated with the primary network interfaces of the virtual machines</returns>
+        /// <returns>in the scale set.</returns>
+        /// <returns><p></returns>
+        /// <returns>A primary internal load balancer associated with the primary network interfaces of the scale set</returns>
+        /// <returns>virtual machine will be also belong to this network</returns>
+        /// <returns></p></returns>
+        Microsoft.Azure.Management.Fluent.Network.INetwork Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet.GetPrimaryNetwork()
+        {
+            return this.GetPrimaryNetwork() as Microsoft.Azure.Management.Fluent.Network.INetwork;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerBackend.WithoutPrimaryInternalLoadBalancerBackends(params string[] backendNames)
+        /// <summary>
+        /// Re-images (updates the version of the installed operating system) the virtual machines in the scale set.
+        /// </summary>
+        void Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet.Reimage()
         {
-            return this.WithoutPrimaryInternalLoadBalancerBackends(backendNames) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable;
+            this.Reimage();
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerNatPool.WithoutPrimaryInternalLoadBalancerNatPools(params string[] natPoolNames)
+        /// <returns>the operating system disk caching type</returns>
+        Microsoft.Azure.Management.Compute.Models.CachingTypes? Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet.OsDiskCachingType
         {
-            return this.WithoutPrimaryInternalLoadBalancerNatPools(natPoolNames) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable;
+            get
+            {
+                return this.OsDiskCachingType;
+            }
+        }
+        /// <returns>the URL to storage containers that store the VHDs of the virtual machines in the scale set</returns>
+        System.Collections.Generic.List<string> Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet.VhdContainers
+        {
+            get
+            {
+                return this.VhdContainers as System.Collections.Generic.List<string>;
+            }
+        }
+        /// <summary>
+        /// Starts the virtual machines in the scale set.
+        /// </summary>
+        void Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet.Start()
+        {
+            this.Start();
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancer.WithoutPrimaryInternetFacingLoadBalancer()
+        /// <returns> available SKUs for the virtual machine scale set, including the minimum and maximum virtual machine instances</returns>
+        /// <returns>allowed for a particular SKU</returns>
+        Microsoft.Azure.Management.Fluent.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSetSku> Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet.ListAvailableSkus()
         {
-            return this.WithoutPrimaryInternetFacingLoadBalancer() as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable;
+            return this.ListAvailableSkus() as Microsoft.Azure.Management.Fluent.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSetSku>;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerBackend.WithoutPrimaryInternetFacingLoadBalancerBackends(params string[] backendNames)
+        /// <returns>the operating system of the virtual machines in the scale set</returns>
+        Microsoft.Azure.Management.Compute.Models.OperatingSystemTypes? Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet.OsType
         {
-            return this.WithoutPrimaryInternetFacingLoadBalancerBackends(backendNames) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable;
+            get
+            {
+                return this.OsType;
+            }
+        }
+        /// <summary>
+        /// Shuts down the virtual machines in the scale set and releases its compute resources.
+        /// </summary>
+        void Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet.Deallocate()
+        {
+            this.Deallocate();
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancerNatPool.WithoutPrimaryInternetFacingLoadBalancerNatPools(params string[] natPoolNames)
+        /// <returns>the internet-facing load balancer's backends associated with the primary network interface</returns>
+        /// <returns>of the virtual machines in the scale set</returns>
+        System.Collections.Generic.IDictionary<string, Microsoft.Azure.Management.Fluent.Network.IBackend> Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet.ListPrimaryInternetFacingLoadBalancerBackends()
         {
-            return this.WithoutPrimaryInternetFacingLoadBalancerNatPools(natPoolNames) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable;
+            return this.ListPrimaryInternetFacingLoadBalancerBackends() as System.Collections.Generic.IDictionary<string, Microsoft.Azure.Management.Fluent.Network.IBackend>;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerBackendOrNatPool
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancer.WithPrimaryInternalLoadBalancer(ILoadBalancer loadBalancer)
+        /// <returns>the internal load balancer associated with the primary network interface of</returns>
+        /// <returns>the virtual machines in the scale set</returns>
+        Microsoft.Azure.Management.Fluent.Network.ILoadBalancer Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet.GetPrimaryInternalLoadBalancer()
         {
-            return this.WithPrimaryInternalLoadBalancer(loadBalancer) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerBackendOrNatPool;
+            return this.GetPrimaryInternalLoadBalancer() as Microsoft.Azure.Management.Fluent.Network.ILoadBalancer;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerNatPool
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerBackendOrNatPool.WithPrimaryInternalLoadBalancerBackends(params string[] backendNames)
+        /// <returns>true if over provision is enabled for the virtual machines, false otherwise</returns>
+        bool? Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet.OverProvisionEnabled
         {
-            return this.WithPrimaryInternalLoadBalancerBackends(backendNames) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerNatPool;
+            get
+            {
+                return this.OverProvisionEnabled;
+            }
+        }
+        /// <summary>
+        /// Powers off (stops) the virtual machines in the scale set.
+        /// </summary>
+        void Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet.PowerOff()
+        {
+            this.PowerOff();
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerNatPool.WithPrimaryInternalLoadBalancerInboundNatPools(params string[] natPoolNames)
+        /// <returns>the internal load balancer's backends associated with the primary network interface</returns>
+        /// <returns>of the virtual machines in the scale set</returns>
+        System.Collections.Generic.IDictionary<string, Microsoft.Azure.Management.Fluent.Network.IBackend> Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet.ListPrimaryInternalLoadBalancerBackends()
         {
-            return this.WithPrimaryInternalLoadBalancerInboundNatPools(natPoolNames) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable;
+            return this.ListPrimaryInternalLoadBalancerBackends() as System.Collections.Generic.IDictionary<string, Microsoft.Azure.Management.Fluent.Network.IBackend>;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryLoadBalancer.WithPrimaryInternetFacingLoadBalancer(ILoadBalancer loadBalancer)
+        /// <returns>the SKU of the virtual machines in the scale set</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSetSkuTypes Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet.Sku()
         {
-            return this.WithPrimaryInternetFacingLoadBalancer(loadBalancer) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool;
+            return this.Sku() as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSetSkuTypes;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerNatPool
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool.WithPrimaryInternetFacingLoadBalancerBackends(params string[] backendNames)
+        /// <returns>the upgradeModel</returns>
+        Microsoft.Azure.Management.Compute.Models.UpgradeMode? Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet.UpgradeModel
         {
-            return this.WithPrimaryInternetFacingLoadBalancerBackends(backendNames) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerNatPool;
+            get
+            {
+                return this.UpgradeModel;
+            }
+        }
+        /// <summary>
+        /// Restarts the virtual machines in the scale set.
+        /// </summary>
+        void Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet.Restart()
+        {
+            this.Restart();
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancer
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerNatPool.WithPrimaryInternetFacingLoadBalancerInboundNatPools(params string[] natPoolNames)
+        /// <returns>the name prefix of the virtual machines in the scale set</returns>
+        string Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet.ComputerNamePrefix
         {
-            return this.WithPrimaryInternetFacingLoadBalancerInboundNatPools(natPoolNames) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancer;
+            get
+            {
+                return this.ComputerNamePrefix as string;
+            }
+        }
+        /// <returns>the storage profile</returns>
+        Microsoft.Azure.Management.Compute.Models.VirtualMachineScaleSetStorageProfile Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet.StorageProfile
+        {
+            get
+            {
+                return this.StorageProfile as Microsoft.Azure.Management.Compute.Models.VirtualMachineScaleSetStorageProfile;
+            }
+        }
+        /// <returns>the list of IDs of the public IP addresses associated with the primary Internet-facing load balancer</returns>
+        /// <returns>of the scale set</returns>
+        System.Collections.Generic.List<string> Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet.PrimaryPublicIpAddressIds
+        {
+            get
+            {
+                return this.PrimaryPublicIpAddressIds as System.Collections.Generic.List<string>;
+            }
+        }
+        /// <returns>the inbound NAT pools of the internal load balancer associated with the primary network interface</returns>
+        /// <returns>of the virtual machines in the scale set, if any.</returns>
+        System.Collections.Generic.IDictionary<string, Microsoft.Azure.Management.Fluent.Network.IInboundNatPool> Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet.ListPrimaryInternalLoadBalancerInboundNatPools()
+        {
+            return this.ListPrimaryInternalLoadBalancerInboundNatPools() as System.Collections.Generic.IDictionary<string, Microsoft.Azure.Management.Fluent.Network.IInboundNatPool>;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithSku.WithSku(IVirtualMachineScaleSetSku sku)
+        /// <returns>the network profile</returns>
+        Microsoft.Azure.Management.Compute.Models.VirtualMachineScaleSetNetworkProfile Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet.NetworkProfile
         {
-            return this.WithSku(sku) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable;
+            get
+            {
+                return this.NetworkProfile as Microsoft.Azure.Management.Compute.Models.VirtualMachineScaleSetNetworkProfile;
+            }
+        }
+        /// <returns>the number of virtual machine instances in the scale set</returns>
+        int? Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet.Capacity
+        {
+            get
+            {
+                return this.Capacity;
+            }
+        }
+        /// <returns>the internet-facing load balancer's inbound NAT pool associated with the primary network interface</returns>
+        /// <returns>of the virtual machines in the scale set</returns>
+        System.Collections.Generic.IDictionary<string, Microsoft.Azure.Management.Fluent.Network.IInboundNatPool> Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet.ListPrimaryInternetFacingLoadBalancerInboundNatPools()
+        {
+            return this.ListPrimaryInternetFacingLoadBalancerInboundNatPools() as System.Collections.Generic.IDictionary<string, Microsoft.Azure.Management.Fluent.Network.IInboundNatPool>;
         }
 
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable
-            Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithSku.WithSku(VirtualMachineScaleSetSkuTypes skuType)
+        /// <summary>
+        /// Associate internal load balancer inbound NAT pools with the the primary network interface of the
+        /// scale set virtual machine.
+        /// </summary>
+        /// <param name="natPoolNames">natPoolNames inbound NAT pool names</param>
+        /// <returns>the next stage of the virtual machine scale set definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithOS Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithInternalInternalLoadBalancerNatPool.WithPrimaryInternalLoadBalancerInboundNatPools(params string[] natPoolNames)
         {
-            return this.WithSku(skuType) as Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApplicable;
+            return this.WithPrimaryInternalLoadBalancerInboundNatPools(natPoolNames) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithOS;
         }
+
+        /// <summary>
+        /// Specifies the load balancer to be used as the internal load balancer for the virtual machines in the
+        /// scale set.
+        /// <p>
+        /// This will replace the current internal load balancer associated with the virtual machines in the
+        /// scale set (if any).
+        /// By default all the backends and inbound NAT pools of the load balancer will be associated with the primary
+        /// network interface of the virtual machines in the scale set unless subset of them is selected in the next stages.
+        /// </p>
+        /// </summary>
+        /// <param name="loadBalancer">loadBalancer the primary Internet-facing load balancer</param>
+        /// <returns>the next stage of the update</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerBackendOrNatPool Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancer.WithPrimaryInternalLoadBalancer(ILoadBalancer loadBalancer)
+        {
+            return this.WithPrimaryInternalLoadBalancer(loadBalancer) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerBackendOrNatPool;
+        }
+
+        /// <summary>
+        /// Specifies that no internal load balancer should be associated with the primary network interfaces of the
+        /// virtual machines in the scale set.
+        /// </summary>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithOS Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternalLoadBalancer.WithoutPrimaryInternalLoadBalancer()
+        {
+            return this.WithoutPrimaryInternalLoadBalancer() as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithOS;
+        }
+
+        /// <summary>
+        /// Specifies the internal load balancer whose backends and/or NAT pools can be assigned to the primary network
+        /// interface of the virtual machines in the scale set.
+        /// <p>
+        /// By default all the backends and inbound NAT pools of the load balancer will be associated with the primary
+        /// network interface of the virtual machines in the scale set, unless subset of them is selected in the next stages.
+        /// <p>
+        /// </summary>
+        /// <param name="loadBalancer">loadBalancer an existing internal load balancer</param>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithInternalLoadBalancerBackendOrNatPool Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternalLoadBalancer.WithPrimaryInternalLoadBalancer(ILoadBalancer loadBalancer)
+        {
+            return this.WithPrimaryInternalLoadBalancer(loadBalancer) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithInternalLoadBalancerBackendOrNatPool;
+        }
+
+        /// <summary>
+        /// Specifies the name for the OS disk.
+        /// </summary>
+        /// <param name="name">name the OS disk name</param>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithOsDiskSettings.WithOsDiskName(string name)
+        {
+            return this.WithOsDiskName(name) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithCreate;
+        }
+
+        /// <summary>
+        /// Specifies the caching type for the operating system disk.
+        /// </summary>
+        /// <param name="cachingType">cachingType the caching type</param>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithOsDiskSettings.WithOsDiskCaching(CachingTypes cachingType)
+        {
+            return this.WithOsDiskCaching(cachingType) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithCreate;
+        }
+
+        /// <summary>
+        /// Specifies that no public load balancer should be associated with the virtual machine scale set.
+        /// </summary>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternalLoadBalancer Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancer.WithoutPrimaryInternetFacingLoadBalancer()
+        {
+            return this.WithoutPrimaryInternetFacingLoadBalancer() as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternalLoadBalancer;
+        }
+
+        /// <summary>
+        /// Specifies an Internet-facing load balancer whose backends and/or NAT pools can be assigned to the primary
+        /// network interfaces of the virtual machines in the scale set.
+        /// <p>
+        /// By default, all the backends and inbound NAT pools of the load balancer will be associated with the primary
+        /// network interface of the scale set virtual machines.
+        /// <p>
+        /// </summary>
+        /// <param name="loadBalancer">loadBalancer an existing Internet-facing load balancer</param>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancer.WithPrimaryInternetFacingLoadBalancer(ILoadBalancer loadBalancer)
+        {
+            return this.WithPrimaryInternetFacingLoadBalancer(loadBalancer) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool;
+        }
+
+        /// <summary>
+        /// Disables over-provisioning of virtual machines.
+        /// </summary>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithOverProvision.WithoutOverProvisioning()
+        {
+            return this.WithoutOverProvisioning() as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithCreate;
+        }
+
+        /// <summary>
+        /// Enables or disables over-provisioning of virtual machines in the scale set.
+        /// </summary>
+        /// <param name="enabled">enabled true if enabling over-0provisioning of virtual machines in the</param>
+        /// <param name="scale">scale set, otherwise false</param>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithOverProvision.WithOverProvision(bool enabled)
+        {
+            return this.WithOverProvision(enabled) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithCreate;
+        }
+
+        /// <summary>
+        /// Enables over-provisioning of virtual machines.
+        /// </summary>
+        /// <returns>the next stage of the definition</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithOverProvision.WithOverProvisioning()
+        {
+            return this.WithOverProvisioning() as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IWithCreate;
+        }
+
+        /// <summary>
+        /// Removes the association between the Internet-facing load balancer and the primary network interface configuration.
+        /// <p>
+        /// This removes the association between primary network interface configuration and all the backends and
+        /// inbound NAT pools in the load balancer.
+        /// </summary>
+        /// <returns>the next stage of the update</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancer.WithoutPrimaryInternetFacingLoadBalancer()
+        {
+            return this.WithoutPrimaryInternetFacingLoadBalancer() as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply;
+        }
+
+        /// <summary>
+        /// Removes the association between the internal load balancer and the primary network interface configuration.
+        /// <p>
+        /// This removes the association between primary network interface configuration and all the backends and
+        /// inbound NAT pools in the load balancer.
+        /// </summary>
+        /// <returns>the next stage of the update</returns>
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithoutPrimaryLoadBalancer.WithoutPrimaryInternalLoadBalancer()
+        {
+            return this.WithoutPrimaryInternalLoadBalancer() as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply;
+        }
+
     }
 }

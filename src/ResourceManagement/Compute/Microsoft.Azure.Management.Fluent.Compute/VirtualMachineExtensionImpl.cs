@@ -1,36 +1,28 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Microsoft.Azure.Management.V2.Compute
+namespace Microsoft.Azure.Management.Fluent.Compute
 {
 
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.Update;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Resource.Core;
     using System.Threading;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResourceActions;
     using Management.Compute.Models;
     using Management.Compute;
     using System.Collections.ObjectModel;
     using Newtonsoft.Json;
+    using Resource.Core.ChildResourceActions;
 
     /// <summary>
-    /// Implementation of {@link VirtualMachineExtension}.
+    /// Implementation of VirtualMachineExtension.
     /// </summary>
     internal partial class VirtualMachineExtensionImpl  :
         ExternalChildResource<IVirtualMachineExtension, VirtualMachineExtensionInner, IVirtualMachine, VirtualMachineImpl>,
         IVirtualMachineExtension,
-        IDefinition<IWithCreate>,
-        IUpdateDefinition<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>,
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.Update.IUpdate
+        VirtualMachineExtension.Definition.IDefinition<VirtualMachine.Definition.IWithCreate>,
+        VirtualMachineExtension.UpdateDefinition.IUpdateDefinition<VirtualMachine.Update.IUpdate>,
+        VirtualMachineExtension.Update.IUpdate
     {
         private IVirtualMachineExtensionsOperations client;
         private IDictionary<string, object> publicSettings;
@@ -81,11 +73,11 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
 
-        public bool? AutoUpgradeMinorVersionEnabled
+        public bool AutoUpgradeMinorVersionEnabled
         {
             get
             {
-                return this.Inner.AutoUpgradeMinorVersion;
+                return this.Inner.AutoUpgradeMinorVersion.Value;
             }
         }
 
@@ -232,7 +224,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return base.Parent.WithExtension(this);
         }
 
-        public VirtualMachineExtensionImpl Refresh()
+        public IVirtualMachineExtension Refresh()
         {
             string name;
             if (this.IsReference.Value) {
@@ -345,6 +337,10 @@ namespace Microsoft.Azure.Management.V2.Compute
             {
                 this.protectedSettings = this.Inner.ProtectedSettings as IDictionary<string, object>;
             }
+        }
+        VirtualMachine.Update.IUpdate ISettable<VirtualMachine.Update.IUpdate>.Parent()
+        {
+            return this.Parent;
         }
     }
 }

@@ -4,7 +4,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Microsoft.Azure.Management.V2.Resource.Core.DAG
+namespace Microsoft.Azure.Management.Fluent.Resource.Core.DAG
 {
     public class Graph<NodeDataT, NodeT> where NodeT : Node<NodeDataT>
     {
