@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
     /// <summary>
     /// Implementation for BatchAccount Application and its parent interfaces.
     /// </summary>
-    internal partial class ApplicationImpl :
+    public partial class ApplicationImpl :
         ExternalChildResource<Microsoft.Azure.Management.Fluent.Batch.IApplication,
             Microsoft.Azure.Management.Batch.Models.ApplicationInner,
             Microsoft.Azure.Management.Fluent.Batch.IBatchAccount,
@@ -49,36 +49,24 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             }
         }
 
-        public string DisplayName
+        public string DisplayName()
         {
-            get
-            {
-                return Inner.DisplayName;
-            }
+            return Inner.DisplayName;
         }
 
-        public IDictionary<string, Microsoft.Azure.Management.Fluent.Batch.IApplicationPackage> ApplicationPackages
+        public IDictionary<string, Microsoft.Azure.Management.Fluent.Batch.IApplicationPackage> ApplicationPackages()
         {
-            get
-            {
-                return applicationPackages.AsMap();
-            }
+            return applicationPackages.AsMap();
         }
 
-        public bool UpdatesAllowed
+        public bool UpdatesAllowed()
         {
-            get
-            {
-                return Inner.AllowUpdates.GetValueOrDefault();
-            }
+            return Inner.AllowUpdates.GetValueOrDefault();
         }
 
-        public string DefaultVersion
+        public string DefaultVersion()
         {
-            get
-            {
-                return Inner.DefaultVersion;
-            }
+            return Inner.DefaultVersion;
         }
 
         public override async Task<IApplication> CreateAsync(CancellationToken cancellationToken = default(CancellationToken))
