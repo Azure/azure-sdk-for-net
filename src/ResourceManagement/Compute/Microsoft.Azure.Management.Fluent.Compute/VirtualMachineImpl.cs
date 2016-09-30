@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             this.client.Redeploy(this.ResourceGroupName, this.Name);
         }
 
-        public PagedList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineSize> AvailableSizes() // TODO: Converter emits this as property in this Impl (but emitted correctly as method in IVirtualMachine and InterfaceImpl/VirtualMachineImpl), this should be emitted as method
+        public PagedList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineSize> AvailableSizes() 
         {
             return PagedListConverter.Convert<VirtualMachineSize, IVirtualMachineSize>(this.client.ListAvailableSizes(this.ResourceGroupName,
                 this.Name), innerSize =>
