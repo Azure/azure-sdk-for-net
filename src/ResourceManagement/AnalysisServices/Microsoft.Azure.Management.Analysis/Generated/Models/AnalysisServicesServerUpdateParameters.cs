@@ -14,22 +14,22 @@ namespace Microsoft.Azure.Management.Analysis.Models
     /// Provision request specification
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class AnalysisServicesResourceUpdateParameters
+    public partial class AnalysisServicesServerUpdateParameters
     {
         /// <summary>
         /// Initializes a new instance of the
-        /// AnalysisServicesResourceUpdateParameters class.
+        /// AnalysisServicesServerUpdateParameters class.
         /// </summary>
-        public AnalysisServicesResourceUpdateParameters() { }
+        public AnalysisServicesServerUpdateParameters() { }
 
         /// <summary>
         /// Initializes a new instance of the
-        /// AnalysisServicesResourceUpdateParameters class.
+        /// AnalysisServicesServerUpdateParameters class.
         /// </summary>
         /// <param name="sku">Sku of the Analysis Services resource</param>
         /// <param name="tags">Key value pairs of additional properties that
         /// can ebe specified</param>
-        public AnalysisServicesResourceUpdateParameters(ResourceSku sku = default(ResourceSku), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), ServerAdministrators asAdministrators = default(ServerAdministrators))
+        public AnalysisServicesServerUpdateParameters(ResourceSku sku = default(ResourceSku), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), ServerAdministrators asAdministrators = default(ServerAdministrators))
         {
             Sku = sku;
             Tags = tags;

@@ -15,9 +15,9 @@ namespace Microsoft.Azure.Management.Analysis
     /// <summary>
     /// The Azure Analysis Services Web API provides a RESTful set of web
     /// services that enables users to create, retrieve, update, and delete
-    /// servers
+    /// Analysis Services servers
     /// </summary>
-    public partial interface IAnalysisServicesClient : System.IDisposable
+    public partial interface IAnalysisServicesManagementClient : System.IDisposable
     {
         /// <summary>
         /// The base URI of the service.

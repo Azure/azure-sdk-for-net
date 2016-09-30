@@ -118,9 +118,9 @@ namespace AnalysisServices.Tests.Helpers
             }
         }
 
-        public static AnalysisServicesResource GetDefaultAnalysisServicesResource()
+        public static AnalysisServicesServer GetDefaultAnalysisServicesResource()
         {
-            AnalysisServicesResource defaultServer = new AnalysisServicesResource
+            AnalysisServicesServer defaultServer = new AnalysisServicesServer
             {
                 Location = DefaultLocation,
                 Tags = DefaultTags,
@@ -131,10 +131,10 @@ namespace AnalysisServices.Tests.Helpers
             return defaultServer;
         }
 
-        public static AnalysisServicesClient GetAnalysisServicesClient(RecordedDelegatingHandler handler)
+        public static AnalysisServicesManagementClient GetAnalysisServicesClient(RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = false;
-            var client = new AnalysisServicesClient(new TokenCredentials("xyz"), handler);
+            var client = new AnalysisServicesManagementClient(new TokenCredentials("xyz"), handler);
             client.SubscriptionId = "00000000-0000-0000-0000-000000000000";
             if (HttpMockServer.Mode != HttpRecorderMode.Record)
             {
@@ -143,19 +143,19 @@ namespace AnalysisServices.Tests.Helpers
             return client;
         }
 
-        public static AnalysisServicesClient GetAnalysisServicesClient(MockContext context, RecordedDelegatingHandler handler)
+        public static AnalysisServicesManagementClient GetAnalysisServicesClient(MockContext context, RecordedDelegatingHandler handler)
         {
-            AnalysisServicesClient analysisServicesClient;
+            AnalysisServicesManagementClient analysisServicesClient;
             if (IsTestTenant)
             {
-                analysisServicesClient = new AnalysisServicesClient(new TokenCredentials("xyz"), GetHandler());
+                analysisServicesClient = new AnalysisServicesManagementClient(new TokenCredentials("xyz"), GetHandler());
                 analysisServicesClient.SubscriptionId = testSubscription;
                 analysisServicesClient.BaseUri = testUri;
             }
             else
             {
                 handler.IsPassThrough = true;
-                analysisServicesClient = context.GetServiceClient<AnalysisServicesClient>(handlers: handler);
+                analysisServicesClient = context.GetServiceClient<AnalysisServicesManagementClient>(handlers: handler);
             }
 
             return analysisServicesClient;

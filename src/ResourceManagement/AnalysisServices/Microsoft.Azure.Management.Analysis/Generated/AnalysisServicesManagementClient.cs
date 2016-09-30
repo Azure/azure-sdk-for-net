@@ -16,9 +16,9 @@ namespace Microsoft.Azure.Management.Analysis
     /// <summary>
     /// The Azure Analysis Services Web API provides a RESTful set of web
     /// services that enables users to create, retrieve, update, and delete
-    /// servers
+    /// Analysis Services servers
     /// </summary>
-    public partial class AnalysisServicesClient : Microsoft.Rest.ServiceClient<AnalysisServicesClient>, IAnalysisServicesClient, IAzureClient
+    public partial class AnalysisServicesManagementClient : Microsoft.Rest.ServiceClient<AnalysisServicesManagementClient>, IAnalysisServicesManagementClient, IAzureClient
     {
         /// <summary>
         /// The base URI of the service.
@@ -74,18 +74,18 @@ namespace Microsoft.Azure.Management.Analysis
         public virtual IServersOperations Servers { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the AnalysisServicesClient class.
+        /// Initializes a new instance of the AnalysisServicesManagementClient class.
         /// </summary>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected AnalysisServicesClient(params System.Net.Http.DelegatingHandler[] handlers) : base(handlers)
+        protected AnalysisServicesManagementClient(params System.Net.Http.DelegatingHandler[] handlers) : base(handlers)
         {
             this.Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AnalysisServicesClient class.
+        /// Initializes a new instance of the AnalysisServicesManagementClient class.
         /// </summary>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -93,13 +93,13 @@ namespace Microsoft.Azure.Management.Analysis
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected AnalysisServicesClient(System.Net.Http.HttpClientHandler rootHandler, params System.Net.Http.DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        protected AnalysisServicesManagementClient(System.Net.Http.HttpClientHandler rootHandler, params System.Net.Http.DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             this.Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AnalysisServicesClient class.
+        /// Initializes a new instance of the AnalysisServicesManagementClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.Management.Analysis
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        protected AnalysisServicesClient(System.Uri baseUri, params System.Net.Http.DelegatingHandler[] handlers) : this(handlers)
+        protected AnalysisServicesManagementClient(System.Uri baseUri, params System.Net.Http.DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.Analysis
         }
 
         /// <summary>
-        /// Initializes a new instance of the AnalysisServicesClient class.
+        /// Initializes a new instance of the AnalysisServicesManagementClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -134,7 +134,7 @@ namespace Microsoft.Azure.Management.Analysis
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        protected AnalysisServicesClient(System.Uri baseUri, System.Net.Http.HttpClientHandler rootHandler, params System.Net.Http.DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        protected AnalysisServicesManagementClient(System.Uri baseUri, System.Net.Http.HttpClientHandler rootHandler, params System.Net.Http.DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -144,7 +144,7 @@ namespace Microsoft.Azure.Management.Analysis
         }
 
         /// <summary>
-        /// Initializes a new instance of the AnalysisServicesClient class.
+        /// Initializes a new instance of the AnalysisServicesManagementClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Credentials needed for the client to connect to Azure.
@@ -155,7 +155,7 @@ namespace Microsoft.Azure.Management.Analysis
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public AnalysisServicesClient(Microsoft.Rest.ServiceClientCredentials credentials, params System.Net.Http.DelegatingHandler[] handlers) : this(handlers)
+        public AnalysisServicesManagementClient(Microsoft.Rest.ServiceClientCredentials credentials, params System.Net.Http.DelegatingHandler[] handlers) : this(handlers)
         {
             if (credentials == null)
             {
@@ -169,7 +169,7 @@ namespace Microsoft.Azure.Management.Analysis
         }
 
         /// <summary>
-        /// Initializes a new instance of the AnalysisServicesClient class.
+        /// Initializes a new instance of the AnalysisServicesManagementClient class.
         /// </summary>
         /// <param name='credentials'>
         /// Required. Credentials needed for the client to connect to Azure.
@@ -183,7 +183,7 @@ namespace Microsoft.Azure.Management.Analysis
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public AnalysisServicesClient(Microsoft.Rest.ServiceClientCredentials credentials, System.Net.Http.HttpClientHandler rootHandler, params System.Net.Http.DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public AnalysisServicesManagementClient(Microsoft.Rest.ServiceClientCredentials credentials, System.Net.Http.HttpClientHandler rootHandler, params System.Net.Http.DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (credentials == null)
             {
@@ -197,7 +197,7 @@ namespace Microsoft.Azure.Management.Analysis
         }
 
         /// <summary>
-        /// Initializes a new instance of the AnalysisServicesClient class.
+        /// Initializes a new instance of the AnalysisServicesManagementClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -211,7 +211,7 @@ namespace Microsoft.Azure.Management.Analysis
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public AnalysisServicesClient(System.Uri baseUri, Microsoft.Rest.ServiceClientCredentials credentials, params System.Net.Http.DelegatingHandler[] handlers) : this(handlers)
+        public AnalysisServicesManagementClient(System.Uri baseUri, Microsoft.Rest.ServiceClientCredentials credentials, params System.Net.Http.DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -230,7 +230,7 @@ namespace Microsoft.Azure.Management.Analysis
         }
 
         /// <summary>
-        /// Initializes a new instance of the AnalysisServicesClient class.
+        /// Initializes a new instance of the AnalysisServicesManagementClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -247,7 +247,7 @@ namespace Microsoft.Azure.Management.Analysis
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public AnalysisServicesClient(System.Uri baseUri, Microsoft.Rest.ServiceClientCredentials credentials, System.Net.Http.HttpClientHandler rootHandler, params System.Net.Http.DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public AnalysisServicesManagementClient(System.Uri baseUri, Microsoft.Rest.ServiceClientCredentials credentials, System.Net.Http.HttpClientHandler rootHandler, params System.Net.Http.DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {

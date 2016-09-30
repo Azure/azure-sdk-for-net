@@ -14,15 +14,15 @@ namespace Microsoft.Azure.Management.Analysis.Models
     /// Represents an instance of Analysis Services resource
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class AnalysisServicesResource : Resource
+    public partial class AnalysisServicesServer : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the AnalysisServicesResource class.
+        /// Initializes a new instance of the AnalysisServicesServer class.
         /// </summary>
-        public AnalysisServicesResource() { }
+        public AnalysisServicesServer() { }
 
         /// <summary>
-        /// Initializes a new instance of the AnalysisServicesResource class.
+        /// Initializes a new instance of the AnalysisServicesServer class.
         /// </summary>
         /// <param name="location">Location of the Analysis Services
         /// resource</param>
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Analysis.Models
         /// Analysis Services resource</param>
         /// <param name="serverFullName">Full name of the Analysis Services
         /// resource</param>
-        public AnalysisServicesResource(string location, ResourceSku sku, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), ServerAdministrators asAdministrators = default(ServerAdministrators), string provisioningState = default(string), string serverFullName = default(string))
+        public AnalysisServicesServer(string location, ResourceSku sku, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), ServerAdministrators asAdministrators = default(ServerAdministrators), string provisioningState = default(string), string serverFullName = default(string))
             : base(location, sku, id, name, type, tags)
         {
             AsAdministrators = asAdministrators;

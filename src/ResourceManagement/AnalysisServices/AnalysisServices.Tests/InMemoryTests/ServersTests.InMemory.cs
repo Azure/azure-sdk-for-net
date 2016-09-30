@@ -55,13 +55,13 @@ namespace AnalysisServices.Tests.InMemoryTests
 
             var handler = new RecordedDelegatingHandler(new HttpResponseMessage[] { acceptedResponse, okResponse });
 
-            AnalysisServicesClient client = AnalysisServicesTestUtilities.GetAnalysisServicesClient(handler);
-            AnalysisServicesResource analysisServicesResource = AnalysisServicesTestUtilities.GetDefaultAnalysisServicesResource();
+            AnalysisServicesManagementClient client = AnalysisServicesTestUtilities.GetAnalysisServicesClient(handler);
+            AnalysisServicesServer analysisServicesResource = AnalysisServicesTestUtilities.GetDefaultAnalysisServicesResource();
 
             var result = Task.Factory.StartNew(() => client.Servers.CreateAsync(
-                analysisServicesResource,
                 AnalysisServicesTestUtilities.DefaultServerName,
-                AnalysisServicesTestUtilities.DefaultResourceGroup
+                AnalysisServicesTestUtilities.DefaultResourceGroup,
+                analysisServicesResource
                 )).Unwrap().GetAwaiter().GetResult();
 
             // Validate headers - User-Agent for certs, Authorization for tokens
@@ -93,13 +93,13 @@ namespace AnalysisServices.Tests.InMemoryTests
 
             var handler = new RecordedDelegatingHandler(new HttpResponseMessage[] { acceptedResponse, okResponse });
 
-            AnalysisServicesClient client = AnalysisServicesTestUtilities.GetAnalysisServicesClient(handler);
-            AnalysisServicesResource analysisServicesResource = AnalysisServicesTestUtilities.GetDefaultAnalysisServicesResource();
+            AnalysisServicesManagementClient client = AnalysisServicesTestUtilities.GetAnalysisServicesClient(handler);
+            AnalysisServicesServer analysisServicesResource = AnalysisServicesTestUtilities.GetDefaultAnalysisServicesResource();
 
             var result = client.Servers.Create(
-                analysisServicesResource,
                 AnalysisServicesTestUtilities.DefaultServerName,
-                AnalysisServicesTestUtilities.DefaultResourceGroup
+                AnalysisServicesTestUtilities.DefaultResourceGroup,
+                analysisServicesResource
                 );
 
             // Validate headers - User-Agent for certs, Authorization for tokens
@@ -117,16 +117,16 @@ namespace AnalysisServices.Tests.InMemoryTests
         public void ServerCreateThrowsExceptions()
         {
             var handler = new RecordedDelegatingHandler();
-            AnalysisServicesClient client = AnalysisServicesTestUtilities.GetAnalysisServicesClient(handler);
+            AnalysisServicesManagementClient client = AnalysisServicesTestUtilities.GetAnalysisServicesClient(handler);
 
-            Assert.Throws<ValidationException>(() => client.Servers.Create(new AnalysisServicesResource(), null, "bar"));
-            Assert.Throws<ValidationException>(() => client.Servers.Create(new AnalysisServicesResource(), "foo", null));
-            Assert.Throws<ValidationException>(() => client.Servers.Create(null, "foo", "bar"));
-            Assert.Throws<ValidationException>(() => client.Servers.Create(new AnalysisServicesResource(), "invalid+", "account"));
-            Assert.Throws<ValidationException>(() => client.Servers.Create(new AnalysisServicesResource(), "rg", "invalid%"));
-            Assert.Throws<ValidationException>(() => client.Servers.Create(new AnalysisServicesResource(), "rg", "/invalid"));
-            Assert.Throws<ValidationException>(() => client.Servers.Create(new AnalysisServicesResource(), "rg", "s"));
-            Assert.Throws<ValidationException>(() => client.Servers.Create(new AnalysisServicesResource(), "rg", "account_name_that_is_too_long"));
+            Assert.Throws<ValidationException>(() => client.Servers.Create(null, "bar", new AnalysisServicesServer()));
+            Assert.Throws<ValidationException>(() => client.Servers.Create("foo", null, new AnalysisServicesServer()));
+            Assert.Throws<ValidationException>(() => client.Servers.Create("foo", "bar", null));
+            Assert.Throws<ValidationException>(() => client.Servers.Create("invalid+", "account", new AnalysisServicesServer()));
+            Assert.Throws<ValidationException>(() => client.Servers.Create("rg", "invalid%", new AnalysisServicesServer()));
+            Assert.Throws<ValidationException>(() => client.Servers.Create("rg", "/invalid", new AnalysisServicesServer()));
+            Assert.Throws<ValidationException>(() => client.Servers.Create("rg", "s", new AnalysisServicesServer()));
+            Assert.Throws<ValidationException>(() => client.Servers.Create("rg", "account_name_that_is_too_long", new AnalysisServicesServer()));
         }
 
         [Fact]
@@ -139,8 +139,8 @@ namespace AnalysisServices.Tests.InMemoryTests
 
             var handler = new RecordedDelegatingHandler(new HttpResponseMessage[] { okResponse });
 
-            AnalysisServicesClient client = AnalysisServicesTestUtilities.GetAnalysisServicesClient(handler);
-            AnalysisServicesResourceUpdateParameters updateParameters = new AnalysisServicesResourceUpdateParameters()
+            AnalysisServicesManagementClient client = AnalysisServicesTestUtilities.GetAnalysisServicesClient(handler);
+            AnalysisServicesServerUpdateParameters updateParameters = new AnalysisServicesServerUpdateParameters()
             {
                 Sku = AnalysisServicesTestUtilities.DefaultSku,
                 Tags = AnalysisServicesTestUtilities.DefaultTags,
@@ -149,8 +149,8 @@ namespace AnalysisServices.Tests.InMemoryTests
 
             var result = client.Servers.Update(
                 AnalysisServicesTestUtilities.DefaultServerName,
-                updateParameters,
-                AnalysisServicesTestUtilities.DefaultResourceGroup
+                AnalysisServicesTestUtilities.DefaultResourceGroup,
+                updateParameters
                 );
 
             // Validate headers - User-Agent for certs, Authorization for tokens
@@ -168,15 +168,15 @@ namespace AnalysisServices.Tests.InMemoryTests
         public void ServerUpdateThrowsExceptions()
         {
             var handler = new RecordedDelegatingHandler();
-            AnalysisServicesClient client = AnalysisServicesTestUtilities.GetAnalysisServicesClient(handler);
+            AnalysisServicesManagementClient client = AnalysisServicesTestUtilities.GetAnalysisServicesClient(handler);
 
-            Assert.Throws<ValidationException>(() => client.Servers.Update(null, new AnalysisServicesResourceUpdateParameters(), "bar"));
-            Assert.Throws<ValidationException>(() => client.Servers.Update("foo", new AnalysisServicesResourceUpdateParameters(), null));
-            Assert.Throws<ValidationException>(() => client.Servers.Update("foo", null, "bar"));
-            Assert.Throws<ValidationException>(() => client.Servers.Update("invalid%", new AnalysisServicesResourceUpdateParameters(), "rg"));
-            Assert.Throws<ValidationException>(() => client.Servers.Update("/invalid", new AnalysisServicesResourceUpdateParameters(), "rg"));
-            Assert.Throws<ValidationException>(() => client.Servers.Update("s", new AnalysisServicesResourceUpdateParameters(), "rg"));
-            Assert.Throws<ValidationException>(() => client.Servers.Update("server_name_that_is_too_long", new AnalysisServicesResourceUpdateParameters(), "rg"));
+            Assert.Throws<ValidationException>(() => client.Servers.Update(null, "bar", new AnalysisServicesServerUpdateParameters()));
+            Assert.Throws<ValidationException>(() => client.Servers.Update("foo",  null, new AnalysisServicesServerUpdateParameters()));
+            Assert.Throws<ValidationException>(() => client.Servers.Update("foo", "bar", null));
+            Assert.Throws<ValidationException>(() => client.Servers.Update("invalid%",  "rg", new AnalysisServicesServerUpdateParameters()));
+            Assert.Throws<ValidationException>(() => client.Servers.Update("/invalid",  "rg", new AnalysisServicesServerUpdateParameters()));
+            Assert.Throws<ValidationException>(() => client.Servers.Update("s",  "rg", new AnalysisServicesServerUpdateParameters()));
+            Assert.Throws<ValidationException>(() => client.Servers.Update("server_name_that_is_too_long",  "rg", new AnalysisServicesServerUpdateParameters()));
         }
 
         [Fact]
@@ -189,7 +189,7 @@ namespace AnalysisServices.Tests.InMemoryTests
 
             var handler = new RecordedDelegatingHandler(new HttpResponseMessage[] { okResponse });
 
-            AnalysisServicesClient client = AnalysisServicesTestUtilities.GetAnalysisServicesClient(handler);
+            AnalysisServicesManagementClient client = AnalysisServicesTestUtilities.GetAnalysisServicesClient(handler);
             client.Servers.Delete("server", "resGroup");
 
             // Validate headers
@@ -206,7 +206,7 @@ namespace AnalysisServices.Tests.InMemoryTests
 
             var handler = new RecordedDelegatingHandler(new HttpResponseMessage[] { notFoundResponse });
 
-            AnalysisServicesClient client = AnalysisServicesTestUtilities.GetAnalysisServicesClient(handler);
+            AnalysisServicesManagementClient client = AnalysisServicesTestUtilities.GetAnalysisServicesClient(handler);
 
             var result = Assert.Throws<CloudException>(() => Task.Factory.StartNew(() =>
                 client.Servers.DeleteWithHttpMessagesAsync(
@@ -230,7 +230,7 @@ namespace AnalysisServices.Tests.InMemoryTests
 
             var handler = new RecordedDelegatingHandler(noContentResponse);
 
-            AnalysisServicesClient client = AnalysisServicesTestUtilities.GetAnalysisServicesClient(handler);
+            AnalysisServicesManagementClient client = AnalysisServicesTestUtilities.GetAnalysisServicesClient(handler);
             client.Servers.Delete("server", "resGroup");
 
             // Validate headers
@@ -241,7 +241,7 @@ namespace AnalysisServices.Tests.InMemoryTests
         public void ServerDeleteThrowsExceptions()
         {
             var handler = new RecordedDelegatingHandler();
-            AnalysisServicesClient client = AnalysisServicesTestUtilities.GetAnalysisServicesClient(handler);
+            AnalysisServicesManagementClient client = AnalysisServicesTestUtilities.GetAnalysisServicesClient(handler);
 
             Assert.Throws<ValidationException>(() => client.Servers.Delete("foo", null));
             Assert.Throws<ValidationException>(() => client.Servers.Delete(null, "bar"));
@@ -260,7 +260,7 @@ namespace AnalysisServices.Tests.InMemoryTests
 
             response.Headers.Add("x-ms-request-id", "1");
             var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
-            AnalysisServicesClient client = AnalysisServicesTestUtilities.GetAnalysisServicesClient(handler);
+            AnalysisServicesManagementClient client = AnalysisServicesTestUtilities.GetAnalysisServicesClient(handler);
 
             var result = client.Servers.GetDetails(AnalysisServicesTestUtilities.DefaultServerName, AnalysisServicesTestUtilities.DefaultResourceGroup);
 
@@ -286,7 +286,7 @@ namespace AnalysisServices.Tests.InMemoryTests
         public void ServerGetDetailsThrowsExceptions()
         {
             var handler = new RecordedDelegatingHandler();
-            AnalysisServicesClient client = AnalysisServicesTestUtilities.GetAnalysisServicesClient(handler);
+            AnalysisServicesManagementClient client = AnalysisServicesTestUtilities.GetAnalysisServicesClient(handler);
 
             Assert.Throws<ValidationException>(() => client.Servers.GetDetails("foo", null));
             Assert.Throws<ValidationException>(() => client.Servers.GetDetails(null, "bar"));
@@ -358,7 +358,7 @@ namespace AnalysisServices.Tests.InMemoryTests
 
             // all accounts under sub and empty next link
             var handler = new RecordedDelegatingHandler(serverDetailsResponse) { StatusCodeToReturn = HttpStatusCode.OK };
-            AnalysisServicesClient client = AnalysisServicesTestUtilities.GetAnalysisServicesClient(handler);
+            AnalysisServicesManagementClient client = AnalysisServicesTestUtilities.GetAnalysisServicesClient(handler);
 
             var result = client.Servers.List();
 
@@ -447,7 +447,7 @@ namespace AnalysisServices.Tests.InMemoryTests
 
             // all accounts under sub and empty next link
             var handler = new RecordedDelegatingHandler(serverDetailsResponse) { StatusCodeToReturn = HttpStatusCode.OK };
-            AnalysisServicesClient client = AnalysisServicesTestUtilities.GetAnalysisServicesClient(handler);
+            AnalysisServicesManagementClient client = AnalysisServicesTestUtilities.GetAnalysisServicesClient(handler);
 
             var result = client.Servers.ListByResourceGroup(AnalysisServicesTestUtilities.DefaultResourceGroup);
 
@@ -473,34 +473,7 @@ namespace AnalysisServices.Tests.InMemoryTests
             Assert.True(server2.Tags.ContainsKey("Key1"));
         }
 
-
-        //[Fact]
-        //public void ServersCreateTest()
-        //{
-        //    var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-        //    var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-
-        //    using (MockContext context = MockContext.Start(this.GetType().FullName))
-        //    {
-        //        // Create clients
-        //        var analysisServicesClient = AnalysisServicesTestUtilities.GetAnalysisServicesClient(context, handler1);
-        //        var resourcesClient = AnalysisServicesTestUtilities.GetResourceManagementClient(context, handler2);
-
-        //        // Create resource group
-        //        var resourceGroupName = AnalysisServicesTestUtilities.CreateResourceGroup(resourcesClient);
-
-        //        // Create a standard AS instance
-        //        string serveName = TestUtilities.GenerateName("AAS");
-        //        AnalysisServicesResource analysisServicesResource = AnalysisServicesTestUtilities.CreateAnalysisServicesInstance(analysisServicesClient, resourceGroupName);
-
-        //        VerifyServerCreationSuccess(analysisServicesResource);
-
-        //        // Delete resource group
-        //        AnalysisServicesTestUtilities.DeleteResourceGroup(resourcesClient, resourceGroupName);
-        //    }
-        //}
-
-        private static void VerifyServersEqual(AnalysisServicesResource createdResource, AnalysisServicesResource referenceResource)
+        private static void VerifyServersEqual(AnalysisServicesServer createdResource, AnalysisServicesServer referenceResource)
         {
             Assert.Equal(createdResource.Tags, referenceResource.Tags);
             Assert.Equal(createdResource.Sku, referenceResource.Sku);
@@ -513,13 +486,13 @@ namespace AnalysisServices.Tests.InMemoryTests
             Assert.Equal(createdResource.AsAdministrators, referenceResource.AsAdministrators);
         }
 
-        private static void VerifyServerCreationSuccess(AnalysisServicesResource createdResource)
+        private static void VerifyServerCreationSuccess(AnalysisServicesServer createdResource)
         {
-            AnalysisServicesResource defaultResource = AnalysisServicesTestUtilities.GetDefaultAnalysisServicesResource();
+            AnalysisServicesServer defaultResource = AnalysisServicesTestUtilities.GetDefaultAnalysisServicesResource();
             VerifyServersEqual(createdResource, defaultResource);
         }
 
-        private static void VerifyServerUpdated(AnalysisServicesResource updatedResource, Dictionary<string, string> newTags, ServerAdministrators serverAdministrators)
+        private static void VerifyServerUpdated(AnalysisServicesServer updatedResource, Dictionary<string, string> newTags, ServerAdministrators serverAdministrators)
         {
         }
     }

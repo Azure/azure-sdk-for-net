@@ -23,16 +23,16 @@ namespace Microsoft.Azure.Management.Analysis
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='analysisServerName'>
+            /// <param name='serverName'>
             /// Name of the Analysis Services server
             /// </param>
             /// <param name='resourceGroupName'>
             /// Name of the Azure Resource group which a given Analysis Services server is
             /// part of.
             /// </param>
-            public static AnalysisServicesResource GetDetails(this IServersOperations operations, string analysisServerName, string resourceGroupName)
+            public static AnalysisServicesServer GetDetails(this IServersOperations operations, string serverName, string resourceGroupName)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IServersOperations)s).GetDetailsAsync(analysisServerName, resourceGroupName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IServersOperations)s).GetDetailsAsync(serverName, resourceGroupName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Analysis
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='analysisServerName'>
+            /// <param name='serverName'>
             /// Name of the Analysis Services server
             /// </param>
             /// <param name='resourceGroupName'>
@@ -51,9 +51,9 @@ namespace Microsoft.Azure.Management.Analysis
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<AnalysisServicesResource> GetDetailsAsync(this IServersOperations operations, string analysisServerName, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<AnalysisServicesServer> GetDetailsAsync(this IServersOperations operations, string serverName, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.GetDetailsWithHttpMessagesAsync(analysisServerName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetDetailsWithHttpMessagesAsync(serverName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -66,19 +66,19 @@ namespace Microsoft.Azure.Management.Analysis
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='serverParameters'>
-            /// Request body for provisioning
-            /// </param>
-            /// <param name='analysisServerName'>
+            /// <param name='serverName'>
             /// Name of the Analysis Services server
             /// </param>
             /// <param name='resourceGroupName'>
             /// Name of the Azure Resource group which a given Analysis Services server is
             /// part of.
             /// </param>
-            public static AnalysisServicesResource Create(this IServersOperations operations, AnalysisServicesResource serverParameters, string analysisServerName, string resourceGroupName)
+            /// <param name='serverParameters'>
+            /// Request body for provisioning
+            /// </param>
+            public static AnalysisServicesServer Create(this IServersOperations operations, string serverName, string resourceGroupName, AnalysisServicesServer serverParameters)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IServersOperations)s).CreateAsync(serverParameters, analysisServerName, resourceGroupName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IServersOperations)s).CreateAsync(serverName, resourceGroupName, serverParameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -88,22 +88,22 @@ namespace Microsoft.Azure.Management.Analysis
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='serverParameters'>
-            /// Request body for provisioning
-            /// </param>
-            /// <param name='analysisServerName'>
+            /// <param name='serverName'>
             /// Name of the Analysis Services server
             /// </param>
             /// <param name='resourceGroupName'>
             /// Name of the Azure Resource group which a given Analysis Services server is
             /// part of.
             /// </param>
+            /// <param name='serverParameters'>
+            /// Request body for provisioning
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<AnalysisServicesResource> CreateAsync(this IServersOperations operations, AnalysisServicesResource serverParameters, string analysisServerName, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<AnalysisServicesServer> CreateAsync(this IServersOperations operations, string serverName, string resourceGroupName, AnalysisServicesServer serverParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(serverParameters, analysisServerName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(serverName, resourceGroupName, serverParameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -116,19 +116,19 @@ namespace Microsoft.Azure.Management.Analysis
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='serverParameters'>
-            /// Request body for provisioning
-            /// </param>
-            /// <param name='analysisServerName'>
+            /// <param name='serverName'>
             /// Name of the Analysis Services server
             /// </param>
             /// <param name='resourceGroupName'>
             /// Name of the Azure Resource group which a given Analysis Services server is
             /// part of.
             /// </param>
-            public static AnalysisServicesResource BeginCreate(this IServersOperations operations, AnalysisServicesResource serverParameters, string analysisServerName, string resourceGroupName)
+            /// <param name='serverParameters'>
+            /// Request body for provisioning
+            /// </param>
+            public static AnalysisServicesServer BeginCreate(this IServersOperations operations, string serverName, string resourceGroupName, AnalysisServicesServer serverParameters)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IServersOperations)s).BeginCreateAsync(serverParameters, analysisServerName, resourceGroupName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IServersOperations)s).BeginCreateAsync(serverName, resourceGroupName, serverParameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -138,22 +138,22 @@ namespace Microsoft.Azure.Management.Analysis
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='serverName'>
+            /// Name of the Analysis Services server
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the Azure Resource group which a given Analysis Services server is
+            /// part of.
+            /// </param>
             /// <param name='serverParameters'>
             /// Request body for provisioning
             /// </param>
-            /// <param name='analysisServerName'>
-            /// Name of the Analysis Services server
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Azure Resource group which a given Analysis Services server is
-            /// part of.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<AnalysisServicesResource> BeginCreateAsync(this IServersOperations operations, AnalysisServicesResource serverParameters, string analysisServerName, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<AnalysisServicesServer> BeginCreateAsync(this IServersOperations operations, string serverName, string resourceGroupName, AnalysisServicesServer serverParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(serverParameters, analysisServerName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(serverName, resourceGroupName, serverParameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -165,16 +165,16 @@ namespace Microsoft.Azure.Management.Analysis
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='analysisServerName'>
+            /// <param name='serverName'>
             /// Name of the Analysis Services server
             /// </param>
             /// <param name='resourceGroupName'>
             /// Name of the Azure Resource group which a given Analysis Services server is
             /// part of.
             /// </param>
-            public static void Delete(this IServersOperations operations, string analysisServerName, string resourceGroupName)
+            public static void Delete(this IServersOperations operations, string serverName, string resourceGroupName)
             {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IServersOperations)s).DeleteAsync(analysisServerName, resourceGroupName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IServersOperations)s).DeleteAsync(serverName, resourceGroupName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -183,7 +183,7 @@ namespace Microsoft.Azure.Management.Analysis
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='analysisServerName'>
+            /// <param name='serverName'>
             /// Name of the Analysis Services server
             /// </param>
             /// <param name='resourceGroupName'>
@@ -193,9 +193,9 @@ namespace Microsoft.Azure.Management.Analysis
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task DeleteAsync(this IServersOperations operations, string analysisServerName, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task DeleteAsync(this IServersOperations operations, string serverName, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                await operations.DeleteWithHttpMessagesAsync(analysisServerName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteWithHttpMessagesAsync(serverName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -204,16 +204,16 @@ namespace Microsoft.Azure.Management.Analysis
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='analysisServerName'>
+            /// <param name='serverName'>
             /// Name of the Analysis Services server
             /// </param>
             /// <param name='resourceGroupName'>
             /// Name of the Azure Resource group which a given Analysis Services server is
             /// part of.
             /// </param>
-            public static void BeginDelete(this IServersOperations operations, string analysisServerName, string resourceGroupName)
+            public static void BeginDelete(this IServersOperations operations, string serverName, string resourceGroupName)
             {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IServersOperations)s).BeginDeleteAsync(analysisServerName, resourceGroupName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IServersOperations)s).BeginDeleteAsync(serverName, resourceGroupName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -222,7 +222,7 @@ namespace Microsoft.Azure.Management.Analysis
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='analysisServerName'>
+            /// <param name='serverName'>
             /// Name of the Analysis Services server
             /// </param>
             /// <param name='resourceGroupName'>
@@ -232,9 +232,9 @@ namespace Microsoft.Azure.Management.Analysis
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task BeginDeleteAsync(this IServersOperations operations, string analysisServerName, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task BeginDeleteAsync(this IServersOperations operations, string serverName, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                await operations.BeginDeleteWithHttpMessagesAsync(analysisServerName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
+                await operations.BeginDeleteWithHttpMessagesAsync(serverName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -243,19 +243,19 @@ namespace Microsoft.Azure.Management.Analysis
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='analysisServerName'>
+            /// <param name='serverName'>
             /// Name of the Analysis Services server
-            /// </param>
-            /// <param name='updateServerParameters'>
-            /// Request object for updating the server
             /// </param>
             /// <param name='resourceGroupName'>
             /// Name of the Azure Resource group which a given Analysis Services server is
             /// part of.
             /// </param>
-            public static AnalysisServicesResource Update(this IServersOperations operations, string analysisServerName, AnalysisServicesResourceUpdateParameters updateServerParameters, string resourceGroupName)
+            /// <param name='serverUpdateParameters'>
+            /// Request object for updating the server
+            /// </param>
+            public static AnalysisServicesServer Update(this IServersOperations operations, string serverName, string resourceGroupName, AnalysisServicesServerUpdateParameters serverUpdateParameters)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IServersOperations)s).UpdateAsync(analysisServerName, updateServerParameters, resourceGroupName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IServersOperations)s).UpdateAsync(serverName, resourceGroupName, serverUpdateParameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -264,22 +264,22 @@ namespace Microsoft.Azure.Management.Analysis
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='analysisServerName'>
+            /// <param name='serverName'>
             /// Name of the Analysis Services server
-            /// </param>
-            /// <param name='updateServerParameters'>
-            /// Request object for updating the server
             /// </param>
             /// <param name='resourceGroupName'>
             /// Name of the Azure Resource group which a given Analysis Services server is
             /// part of.
             /// </param>
+            /// <param name='serverUpdateParameters'>
+            /// Request object for updating the server
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<AnalysisServicesResource> UpdateAsync(this IServersOperations operations, string analysisServerName, AnalysisServicesResourceUpdateParameters updateServerParameters, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<AnalysisServicesServer> UpdateAsync(this IServersOperations operations, string serverName, string resourceGroupName, AnalysisServicesServerUpdateParameters serverUpdateParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(analysisServerName, updateServerParameters, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(serverName, resourceGroupName, serverUpdateParameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -291,19 +291,19 @@ namespace Microsoft.Azure.Management.Analysis
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='analysisServerName'>
+            /// <param name='serverName'>
             /// Name of the Analysis Services server
-            /// </param>
-            /// <param name='updateServerParameters'>
-            /// Request object for updating the server
             /// </param>
             /// <param name='resourceGroupName'>
             /// Name of the Azure Resource group which a given Analysis Services server is
             /// part of.
             /// </param>
-            public static AnalysisServicesResource BeginUpdate(this IServersOperations operations, string analysisServerName, AnalysisServicesResourceUpdateParameters updateServerParameters, string resourceGroupName)
+            /// <param name='serverUpdateParameters'>
+            /// Request object for updating the server
+            /// </param>
+            public static AnalysisServicesServer BeginUpdate(this IServersOperations operations, string serverName, string resourceGroupName, AnalysisServicesServerUpdateParameters serverUpdateParameters)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IServersOperations)s).BeginUpdateAsync(analysisServerName, updateServerParameters, resourceGroupName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IServersOperations)s).BeginUpdateAsync(serverName, resourceGroupName, serverUpdateParameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -312,22 +312,22 @@ namespace Microsoft.Azure.Management.Analysis
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='analysisServerName'>
+            /// <param name='serverName'>
             /// Name of the Analysis Services server
-            /// </param>
-            /// <param name='updateServerParameters'>
-            /// Request object for updating the server
             /// </param>
             /// <param name='resourceGroupName'>
             /// Name of the Azure Resource group which a given Analysis Services server is
             /// part of.
             /// </param>
+            /// <param name='serverUpdateParameters'>
+            /// Request object for updating the server
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<AnalysisServicesResource> BeginUpdateAsync(this IServersOperations operations, string analysisServerName, AnalysisServicesResourceUpdateParameters updateServerParameters, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<AnalysisServicesServer> BeginUpdateAsync(this IServersOperations operations, string serverName, string resourceGroupName, AnalysisServicesServerUpdateParameters serverUpdateParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(analysisServerName, updateServerParameters, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(serverName, resourceGroupName, serverUpdateParameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -343,7 +343,7 @@ namespace Microsoft.Azure.Management.Analysis
             /// Name of the Azure Resource group which a given Analysis Services server is
             /// part of.
             /// </param>
-            public static System.Collections.Generic.IEnumerable<AnalysisServicesResource> ListByResourceGroup(this IServersOperations operations, string resourceGroupName)
+            public static System.Collections.Generic.IEnumerable<AnalysisServicesServer> ListByResourceGroup(this IServersOperations operations, string resourceGroupName)
             {
                 return System.Threading.Tasks.Task.Factory.StartNew(s => ((IServersOperations)s).ListByResourceGroupAsync(resourceGroupName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -361,7 +361,7 @@ namespace Microsoft.Azure.Management.Analysis
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<System.Collections.Generic.IEnumerable<AnalysisServicesResource>> ListByResourceGroupAsync(this IServersOperations operations, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async Task<System.Collections.Generic.IEnumerable<AnalysisServicesServer>> ListByResourceGroupAsync(this IServersOperations operations, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -375,7 +375,7 @@ namespace Microsoft.Azure.Management.Analysis
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static System.Collections.Generic.IEnumerable<AnalysisServicesResource> List(this IServersOperations operations)
+            public static System.Collections.Generic.IEnumerable<AnalysisServicesServer> List(this IServersOperations operations)
             {
                 return System.Threading.Tasks.Task.Factory.StartNew(s => ((IServersOperations)s).ListAsync(), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -389,7 +389,7 @@ namespace Microsoft.Azure.Management.Analysis
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<System.Collections.Generic.IEnumerable<AnalysisServicesResource>> ListAsync(this IServersOperations operations, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async Task<System.Collections.Generic.IEnumerable<AnalysisServicesServer>> ListAsync(this IServersOperations operations, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
