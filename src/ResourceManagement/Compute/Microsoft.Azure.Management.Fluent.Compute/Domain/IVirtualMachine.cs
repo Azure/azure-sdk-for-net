@@ -3,16 +3,16 @@
 namespace Microsoft.Azure.Management.Fluent.Compute
 {
 
-    using Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update;
     using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.Fluent.Resource.Core;
     using System.Collections.Generic;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.Fluent.Network;
+    using Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update;
     /// <summary>
     /// An immutable client-side representation of an Azure virtual machine.
     /// </summary>
-    public interface IVirtualMachine :
+    public interface IVirtualMachine  :
         IGroupableResource,
         IRefreshable<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine>,
         IWrapper<Microsoft.Azure.Management.Compute.Models.VirtualMachineInner>,
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// List of all available virtual machine sizes this virtual machine can resized to.
         /// </summary>
         /// <returns>the virtual machine sizes</returns>
-        PagedList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineSize> AvailableSizes();
+        Microsoft.Azure.Management.Fluent.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineSize> AvailableSizes();
 
         /// <summary>
         /// Captures the virtual machine by copying virtual hard disks of the VM and returns template as json
@@ -75,28 +75,28 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// this will caches the instance view which can be later retrieved using {@link VirtualMachine#instanceView()}.
         /// </summary>
         /// <returns>the refreshed instance view</returns>
-        VirtualMachineInstanceView RefreshInstanceView();
+        Microsoft.Azure.Management.Compute.Models.VirtualMachineInstanceView RefreshInstanceView();
 
         /// <returns>name of this virtual machine</returns>
         string ComputerName { get; }
 
         /// <returns>the virtual machine size</returns>
-        VirtualMachineSizeTypes Size { get; }
+        Microsoft.Azure.Management.Compute.Models.VirtualMachineSizeTypes Size { get; }
 
         /// <returns>the operating system of this virtual machine</returns>
-        OperatingSystemTypes OsType { get; }
+        Microsoft.Azure.Management.Compute.Models.OperatingSystemTypes OsType { get; }
 
         /// <returns>the uri to the vhd file backing this virtual machine's operating system disk</returns>
         string OsDiskVhdUri { get; }
 
         /// <returns>the operating system disk caching type, valid values are 'None', 'ReadOnly', 'ReadWrite'</returns>
-        CachingTypes OsDiskCachingType { get; }
+        Microsoft.Azure.Management.Compute.Models.CachingTypes OsDiskCachingType { get; }
 
         /// <returns>the size of the operating system disk in GB</returns>
         int OsDiskSize { get; }
 
         /// <returns>the list of data disks attached to this virtual machine</returns>
-        IList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineDataDisk> DataDisks { get; }
+        System.Collections.Generic.IList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineDataDisk> DataDisks { get; }
 
         /// <summary>
         /// Gets the public IP address associated with this virtual machine's primary network interface.
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// note that this method makes a rest API call to fetch the resource.
         /// </summary>
         /// <returns>the public IP of the primary network interface</returns>
-        IPublicIpAddress GetPrimaryPublicIpAddress();
+        Microsoft.Azure.Management.Fluent.Network.IPublicIpAddress GetPrimaryPublicIpAddress();
 
         /// <returns>the resource ID of the public IP address associated with this virtual machine's primary network interface</returns>
         string GetPrimaryPublicIpAddressId();
@@ -125,10 +125,10 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         string LicenseType { get; }
 
         /// <returns>the extensions attached to the Azure Virtual Machine</returns>
-        IDictionary<string, Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineExtension> Extensions { get; }
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineExtension> Extensions { get; }
 
         /// <returns>the plan value</returns>
-        Plan Plan { get; }
+        Microsoft.Azure.Management.Compute.Models.Plan Plan { get; }
 
         /// <summary>
         /// Returns the storage profile of an Azure virtual machine.
@@ -138,13 +138,13 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// disk is stored, details of the data disk attached to the virtual machine.
         /// </summary>
         /// <returns>the storageProfile value</returns>
-        StorageProfile StorageProfile { get; }
+        Microsoft.Azure.Management.Compute.Models.StorageProfile StorageProfile { get; }
 
         /// <summary>
         /// Gets the operating system profile of an Azure virtual machine.
         /// </summary>
         /// <returns>the osProfile value</returns>
-        OSProfile OsProfile { get; }
+        Microsoft.Azure.Management.Compute.Models.OSProfile OsProfile { get; }
 
         /// <summary>
         /// Returns the diagnostics profile of an Azure virtual machine.
@@ -153,13 +153,13 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// virtual machine from boot failures.
         /// </summary>
         /// <returns>the diagnosticsProfile value</returns>
-        DiagnosticsProfile DiagnosticsProfile { get; }
+        Microsoft.Azure.Management.Compute.Models.DiagnosticsProfile DiagnosticsProfile { get; }
 
         /// <returns>the virtual machine unique id.</returns>
         string VmId { get; }
 
         /// <returns>the power state of the virtual machine</returns>
-        PowerState PowerState { get; }
+        Microsoft.Azure.Management.Fluent.Compute.PowerState PowerState { get; }
 
         /// <summary>
         /// Get the virtual machine instance view.
@@ -167,7 +167,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// this method returns the cached instance view, to refresh the cache call {@link VirtualMachine#refreshInstanceView()}.
         /// </summary>
         /// <returns>the virtual machine instance view</returns>
-        VirtualMachineInstanceView InstanceView { get; }
+        Microsoft.Azure.Management.Compute.Models.VirtualMachineInstanceView InstanceView { get; }
 
     }
 }

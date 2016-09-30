@@ -22,11 +22,11 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             };
         }
 
-        public List<DataDiskImage> DataDiskImages
+        public IList<DataDiskImage> DataDiskImages
         {
             get
             {
-                return Inner.DataDiskImages as List<DataDiskImage>;
+                return Inner.DataDiskImages;
             }
         }
 
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             private set;
         }
 
-        public Region? Location
+        public Region Location
         {
             get;
             private set;

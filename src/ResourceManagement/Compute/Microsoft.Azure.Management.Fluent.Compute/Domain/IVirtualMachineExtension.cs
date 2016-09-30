@@ -3,9 +3,9 @@
 namespace Microsoft.Azure.Management.Fluent.Compute
 {
 
-    using Microsoft.Azure.Management.Fluent.Resource.Core;
-    using Microsoft.Azure.Management.Compute.Models;
     using System.Collections.Generic;
+    using Microsoft.Azure.Management.Compute.Models;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
     /// <summary>
     /// An immutable client-side representation of an Azure virtual machine extension.
     /// An extension associated with a virtual machine will be created from a {@link VirtualMachineExtensionImage }.
@@ -28,16 +28,16 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         bool AutoUpgradeMinorVersionEnabled { get; }
 
         /// <returns>the public settings of the virtual machine extension as key value pairs</returns>
-        IDictionary<string,object> PublicSettings { get; }
+        System.Collections.Generic.IDictionary<string,object> PublicSettings { get; }
 
         /// <returns>the public settings of the virtual machine extension as a json string</returns>
         string PublicSettingsAsJsonString { get; }
 
         /// <returns>the instance view of this virtual machine extension</returns>
-        VirtualMachineExtensionInstanceView InstanceView { get; }
+        Microsoft.Azure.Management.Compute.Models.VirtualMachineExtensionInstanceView InstanceView { get; }
 
         /// <returns>the tags for this virtual machine extension</returns>
-        IDictionary<string,string> Tags { get; }
+        System.Collections.Generic.IDictionary<string,string> Tags { get; }
 
         /// <returns>the provisioning state of this virtual machine extension</returns>
         string ProvisioningState { get; }

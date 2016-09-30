@@ -27,19 +27,25 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             get; private set;
         }
 
-        public Region? Region
+        public Region Region
         {
             get; private set;
         }
 
-        public IVirtualMachineOffers Offers()
+        public IVirtualMachineOffers Offers
         {
-            return offers;
+            get
+            {
+                return offers;
+            }
         }
 
-        public IVirtualMachineExtensionImageTypes ExtensionTypes()
+        public IVirtualMachineExtensionImageTypes ExtensionTypes
         {
-            return extensionTypes;
+            get
+            {
+                return extensionTypes;
+            }
         }
     }
 }

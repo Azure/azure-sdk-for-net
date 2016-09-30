@@ -4,15 +4,15 @@ namespace Microsoft.Azure.Management.Fluent.Compute
 {
 
     using Microsoft.Azure.Management.Fluent.Network;
+    using Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update;
+    using Microsoft.Azure.Management.Compute.Models;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
     using System.Collections.Generic;
     using Microsoft.Azure.Management.Fluent.Resource.Core;
-    using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
     /// <summary>
     /// An immutable client-side representation of an Azure virtual machine scale set.
     /// </summary>
-    public interface IVirtualMachineScaleSet :
+    public interface IVirtualMachineScaleSet  :
         IGroupableResource,
         IRefreshable<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet>,
         IWrapper<Microsoft.Azure.Management.Compute.Models.VirtualMachineScaleSetInner>,
@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
     {
         /// <returns> available SKUs for the virtual machine scale set, including the minimum and maximum virtual machine instances</returns>
         /// <returns>allowed for a particular SKU</returns>
-        PagedList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSetSku> ListAvailableSkus();
+        Microsoft.Azure.Management.Fluent.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSetSku> ListAvailableSkus();
 
         /// <summary>
         /// Shuts down the virtual machines in the scale set and releases its compute resources.
@@ -51,25 +51,25 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         string ComputerNamePrefix { get; }
 
         /// <returns>the operating system of the virtual machines in the scale set</returns>
-        OperatingSystemTypes? OsType { get; }
+        Microsoft.Azure.Management.Compute.Models.OperatingSystemTypes OsType { get; }
 
         /// <returns>the operating system disk caching type</returns>
-        CachingTypes? OsDiskCachingType { get; }
+        Microsoft.Azure.Management.Compute.Models.CachingTypes OsDiskCachingType { get; }
 
         /// <returns>the name of the OS disk of virtual machines in the scale set</returns>
         string OsDiskName { get; }
 
         /// <returns>the upgradeModel</returns>
-        UpgradeMode? UpgradeModel { get; }
+        Microsoft.Azure.Management.Compute.Models.UpgradeMode UpgradeModel { get; }
 
         /// <returns>true if over provision is enabled for the virtual machines, false otherwise</returns>
-        bool? OverProvisionEnabled { get; }
+        bool OverProvisionEnabled { get; }
 
         /// <returns>the SKU of the virtual machines in the scale set</returns>
-        VirtualMachineScaleSetSkuTypes Sku();
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSetSkuTypes Sku { get; }
 
         /// <returns>the number of virtual machine instances in the scale set</returns>
-        int? Capacity { get; }
+        int Capacity { get; }
 
         /// <returns>the virtual network associated with the primary network interfaces of the virtual machines</returns>
         /// <returns>in the scale set.</returns>
@@ -77,47 +77,47 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// <returns>A primary internal load balancer associated with the primary network interfaces of the scale set</returns>
         /// <returns>virtual machine will be also belong to this network</returns>
         /// <returns></p></returns>
-        INetwork GetPrimaryNetwork();
+        Microsoft.Azure.Management.Fluent.Network.INetwork GetPrimaryNetwork();
 
         /// <returns>the internet-facing load balancer associated with the primary network interface of</returns>
         /// <returns>the virtual machines in the scale set.</returns>
-        ILoadBalancer GetPrimaryInternetFacingLoadBalancer();
+        Microsoft.Azure.Management.Fluent.Network.ILoadBalancer GetPrimaryInternetFacingLoadBalancer();
 
         /// <returns>the internet-facing load balancer's backends associated with the primary network interface</returns>
         /// <returns>of the virtual machines in the scale set</returns>
-        IDictionary<string, Microsoft.Azure.Management.Fluent.Network.IBackend> ListPrimaryInternetFacingLoadBalancerBackends();
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Fluent.Network.IBackend> ListPrimaryInternetFacingLoadBalancerBackends();
 
         /// <returns>the internet-facing load balancer's inbound NAT pool associated with the primary network interface</returns>
         /// <returns>of the virtual machines in the scale set</returns>
-        IDictionary<string, Microsoft.Azure.Management.Fluent.Network.IInboundNatPool> ListPrimaryInternetFacingLoadBalancerInboundNatPools();
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Fluent.Network.IInboundNatPool> ListPrimaryInternetFacingLoadBalancerInboundNatPools();
 
         /// <returns>the internal load balancer associated with the primary network interface of</returns>
         /// <returns>the virtual machines in the scale set</returns>
-        ILoadBalancer GetPrimaryInternalLoadBalancer();
+        Microsoft.Azure.Management.Fluent.Network.ILoadBalancer GetPrimaryInternalLoadBalancer();
 
         /// <returns>the internal load balancer's backends associated with the primary network interface</returns>
         /// <returns>of the virtual machines in the scale set</returns>
-        IDictionary<string, Microsoft.Azure.Management.Fluent.Network.IBackend> ListPrimaryInternalLoadBalancerBackends();
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Fluent.Network.IBackend> ListPrimaryInternalLoadBalancerBackends();
 
         /// <returns>the inbound NAT pools of the internal load balancer associated with the primary network interface</returns>
         /// <returns>of the virtual machines in the scale set, if any.</returns>
-        IDictionary<string, Microsoft.Azure.Management.Fluent.Network.IInboundNatPool> ListPrimaryInternalLoadBalancerInboundNatPools();
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Fluent.Network.IInboundNatPool> ListPrimaryInternalLoadBalancerInboundNatPools();
 
         /// <returns>the list of IDs of the public IP addresses associated with the primary Internet-facing load balancer</returns>
         /// <returns>of the scale set</returns>
-        List<string> PrimaryPublicIpAddressIds { get; }
+        System.Collections.Generic.IList<string> PrimaryPublicIpAddressIds { get; }
 
         /// <returns>the URL to storage containers that store the VHDs of the virtual machines in the scale set</returns>
-        List<string> VhdContainers { get; }
+        System.Collections.Generic.IList<string> VhdContainers { get; }
 
         /// <returns>the storage profile</returns>
-        VirtualMachineScaleSetStorageProfile StorageProfile { get; }
+        Microsoft.Azure.Management.Compute.Models.VirtualMachineScaleSetStorageProfile StorageProfile { get; }
 
         /// <returns>the network profile</returns>
-        VirtualMachineScaleSetNetworkProfile NetworkProfile { get; }
+        Microsoft.Azure.Management.Compute.Models.VirtualMachineScaleSetNetworkProfile NetworkProfile { get; }
 
         /// <returns>the extensions attached to the virtual machines in the scale set</returns>
-        IDictionary<string, Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSetExtension> Extensions();
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSetExtension> Extensions { get; }
 
     }
 }

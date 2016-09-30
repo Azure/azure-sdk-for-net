@@ -36,41 +36,29 @@ namespace Microsoft.Azure.Management.Fluent.Compute
 
         #region Getters
 
-        public int FaultDomainCount
+        public int FaultDomainCount()
         {
-            get
-            {
-                return (Inner.PlatformFaultDomainCount.HasValue) ? Inner.PlatformFaultDomainCount.Value : 0;
-            }
+            return (Inner.PlatformFaultDomainCount.HasValue) ? Inner.PlatformFaultDomainCount.Value : 0;
         }
 
-        public IList<InstanceViewStatus> Statuses
+        public IList<InstanceViewStatus> Statuses()
         {
-            get
-            {
-                return Inner.Statuses;
-            }
+            return Inner.Statuses;
         }
 
-        public int UpdateDomainCount
+        public int UpdateDomainCount()
         {
-            get
-            {
-                return (Inner.PlatformUpdateDomainCount.HasValue) ? Inner.PlatformUpdateDomainCount.Value : 0;
-            }
+            return (Inner.PlatformUpdateDomainCount.HasValue) ? Inner.PlatformUpdateDomainCount.Value : 0;
         }
 
-        public IList<string> VirtualMachineIds
+        public IList<string> VirtualMachineIds()
         {
-            get
+            if (idOfVMsInSet == null)
             {
-                if (idOfVMsInSet == null)
-                {
-                    idOfVMsInSet = (from subresource in Inner.VirtualMachines
-                                    select subresource.Id).ToList();
-                }
-                return idOfVMsInSet;
+                idOfVMsInSet = (from subresource in Inner.VirtualMachines
+                                select subresource.Id).ToList();
             }
+            return idOfVMsInSet;
         }
 
         #endregion

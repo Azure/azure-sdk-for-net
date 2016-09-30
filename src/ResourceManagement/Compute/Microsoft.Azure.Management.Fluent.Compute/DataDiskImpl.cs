@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
     /// <summary>
     /// The implementation for DataDisk and its create and update interfaces.
     /// </summary>
-    internal partial class DataDiskImpl  :
+    internal partial class DataDiskImpl :
         ChildResource<DataDisk,
             VirtualMachineImpl,
             IVirtualMachine>,
@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         {
         }
 
-        internal static DataDiskImpl PrepareDataDisk (string name, DiskCreateOptionTypes createOption, VirtualMachineImpl parent)
+        internal static DataDiskImpl PrepareDataDisk(string name, DiskCreateOptionTypes createOption, VirtualMachineImpl parent)
         {
             DataDisk dataDiskInner = new DataDisk();
             dataDiskInner.Lun = -1;
@@ -38,17 +38,18 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             return new DataDiskImpl(dataDiskInner, parent);
         }
 
-        internal static DataDiskImpl CreateNewDataDisk (int sizeInGB, VirtualMachineImpl parent)
+        internal static DataDiskImpl CreateNewDataDisk(int sizeInGB, VirtualMachineImpl parent)
         {
             DataDiskImpl dataDiskImpl = PrepareDataDisk(null, DiskCreateOptionTypes.Empty, parent);
             dataDiskImpl.Inner.DiskSizeGB = sizeInGB;
             return dataDiskImpl;
         }
 
-        internal static DataDiskImpl CreateFromExistingDisk (string storageAccountName, string containerName, string vhdName, VirtualMachineImpl parent)
+        internal static DataDiskImpl CreateFromExistingDisk(string storageAccountName, string containerName, string vhdName, VirtualMachineImpl parent)
         {
             DataDiskImpl dataDiskImpl = PrepareDataDisk(null, DiskCreateOptionTypes.Attach, parent);
-            VirtualHardDisk diskVhd = new VirtualHardDisk();
+            VirtualHardDisk diskVhd =
+                new VirtualHardDisk();
             diskVhd.Uri = BlobUrl(storageAccountName, containerName, vhdName);
             dataDiskImpl.Inner.Vhd = diskVhd;
             return dataDiskImpl;
@@ -59,52 +60,34 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             return Inner.Name;
         }
 
-        public int Size
+        public int Size()
         {
-            get
-            {
-                return (Inner.DiskSizeGB.HasValue) ? Inner.DiskSizeGB.Value : 0;
-            }
+            return (Inner.DiskSizeGB.HasValue) ? Inner.DiskSizeGB.Value : 0;
         }
 
-        public int Lun
+        public int Lun()
         {
-            get
-            {
-                return Inner.Lun;
-            }
+            return Inner.Lun;
         }
 
-        public string VhdUri
+        public string VhdUri()
         {
-            get
-            {
-                return Inner.Vhd.Uri;
-            }
+            return Inner.Vhd.Uri;
         }
 
-        public CachingTypes CachingType
+        public CachingTypes CachingType()
         {
-            get
-            {
-                return Inner.Caching.Value;
-            }
+            return Inner.Caching.Value;
         }
 
-        public string SourceImageUri
+        public string SourceImageUri()
         {
-            get
-            {
-                return (Inner.Image != null) ? Inner.Image.Uri : null;
-            }
+            return (Inner.Image != null) ? Inner.Image.Uri : null;
         }
 
-        public DiskCreateOptionTypes CreationMethod
+        public DiskCreateOptionTypes CreationMethod()
         {
-            get
-            {
-                return Inner.CreateOption;
-            }
+            return Inner.CreateOption;
         }
 
         public DataDiskImpl From (string storageAccountName, string containerName, string vhdName)

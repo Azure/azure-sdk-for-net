@@ -11,6 +11,8 @@ namespace Microsoft.Azure.Management.Fluent.Compute
 {
     public enum ComputeRoles
     {
+        UNKNOWN,
+
         [EnumName("PaaS")]
         PAAS,
 
