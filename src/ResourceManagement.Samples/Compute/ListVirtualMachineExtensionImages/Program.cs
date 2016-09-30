@@ -2,8 +2,8 @@
 // Licensed under the MIT License. See License.txt in the project root for license information. 
 
 using Microsoft.Azure.Management;
-using Microsoft.Azure.Management.V2.Resource.Authentication;
-using Microsoft.Azure.Management.V2.Resource.Core;
+using Microsoft.Azure.Management.Fluent.Resource.Authentication;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -63,7 +63,7 @@ namespace ListVirtualMachineExtensionImages
 
                         foreach (var imageType in publisher.ExtensionTypes().List())
                         {
-                            foreach (var version in imageType.Versions.List())
+                            foreach (var version in imageType.Versions().List())
                             {
                                 var image = version.Image();
                                 Console.WriteLine($"Image - {publisher.Name}/{image.TypeName}/{image.VersionName}");

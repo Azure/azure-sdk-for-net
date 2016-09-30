@@ -7,8 +7,8 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
     using Microsoft.Rest;
     using Microsoft.Azure.Management.Graph.RBAC.Models;
     using System.Threading;
-    using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
     using System.Threading.Tasks;
     internal partial class UsersImpl 
     {
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
         /// </summary>
         /// <param name="name">name the name of the new resource</param>
         /// <returns>the first stage of the new resource definition</returns>
-        Microsoft.Azure.Management.Fluent.Graph.RBAC.User.Definition.IBlank Microsoft.Azure.Management.V2.Resource.Core.CollectionActions.ISupportsCreating<Microsoft.Azure.Management.Fluent.Graph.RBAC.User.Definition.IBlank>.Define (string name) {
+        Microsoft.Azure.Management.Fluent.Graph.RBAC.User.Definition.IBlank Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsCreating<Microsoft.Azure.Management.Fluent.Graph.RBAC.User.Definition.IBlank>.Define (string name) {
             return this.Define( name) as Microsoft.Azure.Management.Fluent.Graph.RBAC.User.Definition.IBlank;
         }
 
@@ -64,8 +64,8 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
         /// Lists all the resources of the specified type in the currently selected subscription.
         /// </summary>
         /// <returns>list of resources</returns>
-        Microsoft.Azure.Management.V2.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Graph.RBAC.IUser> Microsoft.Azure.Management.V2.Resource.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Fluent.Graph.RBAC.IUser>.List () {
-            return this.List() as Microsoft.Azure.Management.V2.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Graph.RBAC.IUser>;
+        Microsoft.Azure.Management.Fluent.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Graph.RBAC.IUser> Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Fluent.Graph.RBAC.IUser>.List () {
+            return this.List() as Microsoft.Azure.Management.Fluent.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Graph.RBAC.IUser>;
         }
 
     }

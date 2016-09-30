@@ -3,9 +3,9 @@
 namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
 {
 
-    using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
     using Microsoft.Azure.Management.Graph.RBAC.Models;
+    using System.Collections.Generic;
     /// <summary>
     /// An immutable client-side representation of an Azure AD service principal.
     /// </summary>

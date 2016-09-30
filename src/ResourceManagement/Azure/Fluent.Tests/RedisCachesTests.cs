@@ -3,9 +3,9 @@
 
 using Microsoft.Azure.Management.Fluent.Redis;
 using Microsoft.Azure.Management.Fluent.Redis.Models;
-using Microsoft.Azure.Management.V2.Resource;
-using Microsoft.Azure.Management.V2.Resource.Authentication;
-using Microsoft.Azure.Management.V2.Resource.Core;
+using Microsoft.Azure.Management.Fluent.Resource;
+using Microsoft.Azure.Management.Fluent.Resource.Authentication;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
 using Microsoft.Rest.Azure;
 using System.Linq;
 using System;

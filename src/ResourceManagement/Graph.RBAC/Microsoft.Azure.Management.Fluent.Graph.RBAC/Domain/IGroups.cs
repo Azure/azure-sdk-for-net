@@ -3,7 +3,7 @@
 namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions;
     using Microsoft.Azure.Management.Fluent.Graph.RBAC.ActiveDirectoryGroup.Definition;
     using System.Collections.Generic;
     /// <summary>

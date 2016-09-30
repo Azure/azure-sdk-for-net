@@ -1,15 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
-
-namespace Microsoft.Azure.Management.V2.Storage.StorageAccount.Definition
+// Licensed under the MIT License. See License.txt in the project root for license information.
+namespace Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Definition
 {
 
-    using Microsoft.Azure.Management.V2.Storage;
-    using Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core.Resource.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
-    using Management.Storage.Models;
-
+    using Microsoft.Azure.Management.Storage.Models;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.GroupableResource.Definition;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.Resource.Definition;
+    using Microsoft.Azure.Management.Fluent.Storage;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
     /// <summary>
     /// A storage account definition specifying a custom domain to associate with the account.
     /// </summary>
@@ -42,14 +40,14 @@ namespace Microsoft.Azure.Management.V2.Storage.StorageAccount.Definition
     /// A storage account definition allowing resource group to be set.
     /// </summary>
     public interface IWithGroup  :
-        Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition.IWithGroup<IWithCreate>
+        Microsoft.Azure.Management.Fluent.Resource.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Definition.IWithCreate>
     {
     }
     /// <summary>
     /// The first stage of the storage account definition.
     /// </summary>
     public interface IBlank  :
-        IDefinitionWithRegion<Microsoft.Azure.Management.V2.Storage.StorageAccount.Definition.IWithGroup>
+        IDefinitionWithRegion<Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Definition.IWithGroup>
     {
     }
     /// <summary>
@@ -71,13 +69,13 @@ namespace Microsoft.Azure.Management.V2.Storage.StorageAccount.Definition
     /// specify.
     /// </summary>
     public interface IWithCreate  :
-        ICreatable<IStorageAccount>,
+        ICreatable<Microsoft.Azure.Management.Fluent.Storage.IStorageAccount>,
         IWithSku,
         IWithBlobStorageAccountKind,
         IWithGeneralPurposeAccountKind,
         IWithEncryption,
         IWithCustomDomain,
-        IDefinitionWithTags<IWithCreate>
+        IDefinitionWithTags<Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Definition.IWithCreate>
     {
     }
     /// <summary>
@@ -131,7 +129,7 @@ namespace Microsoft.Azure.Management.V2.Storage.StorageAccount.Definition
     /// </summary>
     public interface IDefinition  :
         IBlank,
-        Microsoft.Azure.Management.V2.Storage.StorageAccount.Definition.IWithGroup,
+        Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Definition.IWithGroup,
         IWithCreate,
         IWithCreateAndAccessTier
     {

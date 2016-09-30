@@ -1,16 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Storage.Models;
-using Microsoft.Azure.Management.V2.Resource;
-using Microsoft.Azure.Management.V2.Resource.Authentication;
-using Microsoft.Azure.Management.V2.Resource.Core;
-using Microsoft.Azure.Management.V2.Storage;
-using System;
-using System.Collections.Generic;
+using Microsoft.Azure.Management.Fluent.Resource;
+using Microsoft.Azure.Management.Fluent.Resource.Authentication;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
+using Microsoft.Azure.Management.Fluent.Storage;
 using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Fluent.Tests
@@ -50,10 +46,10 @@ namespace Fluent.Tests
                 Assert.NotNull(storageAccount);
 
                 // Get keys 
-                Assert.True(storageAccount.Keys.Count() > 0);
+                Assert.True(storageAccount.GetKeys().Count() > 0);
 
                 // Regen Key
-                StorageAccountKey oldKey = storageAccount.Keys.FirstOrDefault();
+                StorageAccountKey oldKey = storageAccount.GetKeys().FirstOrDefault();
                 var updatedKeys = storageAccount.RegenerateKey(oldKey.KeyName);
                 Assert.True(updatedKeys.Count() > 0);
                 var updatedKey = updatedKeys.FirstOrDefault((StorageAccountKey key) => { return string.Equals(key.KeyName, oldKey.KeyName); });

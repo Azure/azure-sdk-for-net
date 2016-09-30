@@ -8,15 +8,15 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
     using Microsoft.Azure.Management.Fluent.KeyVault.Vault.Update;
     using Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.UpdateDefinition;
     using Microsoft.Azure.Management.KeyVault.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
     using System.Collections.Generic;
     using Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Definition;
     using Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Update;
     using System;
     using Microsoft.Azure.Management.Fluent.KeyVault.Vault.Definition;
-    using V2.Resource.Core.ChildResourceActions;
+    using Fluent.Resource.Core.ChildResourceActions;
 
     /// <summary>
     /// Implementation for AccessPolicy and its parent interfaces.

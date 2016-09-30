@@ -1,31 +1,34 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information. 
 
-namespace Microsoft.Azure.Management.V2.Compute
+namespace Microsoft.Azure.Management.Fluent.Compute
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
-    using Microsoft.Azure.Management.V2.Network;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Storage;
+    using Resource.Core.CollectionActions;
+    using Network;
+    using Resource.Core;
+    using Storage;
     using Management.Compute;
-    using Microsoft.Azure.Management.Compute.Models;
+    using Management.Compute.Models;
     using System.Collections.Generic;
-    using System;
     using System.Threading;
     using System.Threading.Tasks;
     using Rest.Azure;
 
     /// <summary>
-    /// The implementation for {@link VirtualMachineScaleSets}.
+    /// The implementation for VirtualMachineScaleSets.
     /// </summary>
     internal partial class VirtualMachineScaleSetsImpl  :
-        GroupableResources<IVirtualMachineScaleSet,VirtualMachineScaleSetImpl,VirtualMachineScaleSetInner, IVirtualMachineScaleSetsOperations, ComputeManager>,
+        GroupableResources<IVirtualMachineScaleSet, VirtualMachineScaleSetImpl, VirtualMachineScaleSetInner, IVirtualMachineScaleSetsOperations, ComputeManager>,
         IVirtualMachineScaleSets
     {
         private IStorageManager storageManager;
         private INetworkManager networkManager;
-        public  VirtualMachineScaleSetsImpl (IVirtualMachineScaleSetsOperations client, ComputeManager computeManager, IStorageManager storageManager, INetworkManager networkManager) : base(client, computeManager)
+        public  VirtualMachineScaleSetsImpl (
+            IVirtualMachineScaleSetsOperations client,
+            ComputeManager computeManager,
+            IStorageManager storageManager,
+            INetworkManager networkManager) : base(client, computeManager)
         {
             this.storageManager = storageManager;
             this.networkManager = networkManager;
@@ -51,11 +54,6 @@ namespace Microsoft.Azure.Management.V2.Compute
             return WrapList(pagedList);
         }
 
-        Task<PagedList<IVirtualMachineScaleSet>> ISupportsListingByGroup<IVirtualMachineScaleSet>.ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken)
-        {
-            throw new NotSupportedException();
-        }
-
         public void Delete (string id)
         {
             this.Delete(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
@@ -73,7 +71,7 @@ namespace Microsoft.Azure.Management.V2.Compute
                 cancellationToken);
         }
 
-        Task ISupportsDeletingByGroup.DeleteAsync(string groupName, string name, CancellationToken cancellationToken)
+        public Task DeleteAsync(string groupName, string name, CancellationToken cancellationToken)
         {
             return this.InnerCollection.DeleteAsync(groupName,
                 name,
@@ -159,7 +157,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return new VirtualMachineScaleSetImpl(name,
                 inner,
                 this.InnerCollection,
-                this.MyManager,
+                this.Manager,
                 this.storageManager,
                 this.networkManager);
         }
@@ -169,7 +167,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             return new VirtualMachineScaleSetImpl(inner.Name,
                 inner,
                 this.InnerCollection,
-                this.MyManager,
+                this.Manager,
                 this.storageManager,
                 this.networkManager);
         }

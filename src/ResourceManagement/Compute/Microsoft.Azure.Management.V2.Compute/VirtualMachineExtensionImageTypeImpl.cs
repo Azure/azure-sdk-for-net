@@ -1,16 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information
 
-namespace Microsoft.Azure.Management.V2.Compute
+namespace Microsoft.Azure.Management.Fluent.Compute
 {
     using Management.Compute;
-    using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Management.Compute.Models;
+    using Resource.Core;
     /// <summary>
-    /// The implementation for {@link VirtualMachineExtensionImageType}.
+    /// The implementation for VirtualMachineExtensionImageType.
     /// </summary>
     internal partial class VirtualMachineExtensionImageTypeImpl  :
-        Wrapper<Microsoft.Azure.Management.Compute.Models .VirtualMachineExtensionImageInner>,
+        Wrapper<VirtualMachineExtensionImageInner>,
         IVirtualMachineExtensionImageType
     {
         private IVirtualMachineExtensionImagesOperations client;
@@ -45,20 +45,22 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
 
-        public IVirtualMachinePublisher Publisher
+        public IVirtualMachinePublisher Publisher()
         {
-            get
-            {
-                return this.publisher;
-            }
+            return this.publisher;
+            //get
+            //{
+            //    return this.publisher;
+            //}
         }
 
-        public IVirtualMachineExtensionImageVersions Versions
+        public IVirtualMachineExtensionImageVersions Versions()
         {
-            get
-            {
-                return new VirtualMachineExtensionImageVersionsImpl(this.client, this);
-            }
+            return new VirtualMachineExtensionImageVersionsImpl(this.client, this);
+            //get
+            //{
+            //    return new VirtualMachineExtensionImageVersionsImpl(this.client, this);
+            //}
         }
     }
 }

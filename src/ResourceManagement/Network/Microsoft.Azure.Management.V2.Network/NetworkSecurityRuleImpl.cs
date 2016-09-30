@@ -1,39 +1,32 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Microsoft.Azure.Management.V2.Network
+namespace Microsoft.Azure.Management.Fluent.Network
 {
-
-    using NetworkSecurityRule.Update;
-    using NetworkSecurityRule.Definition;
-    using Microsoft.Azure.Management.Network.Models;
-    using NetworkSecurityRule.UpdateDefinition;
-    using NetworkSecurityGroup.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using NetworkSecurityGroup.Update;
+    using Resource.Core;
+    using Management.Network.Models;
     using Resource.Core.ChildResourceActions;
-    using System;
 
     /// <summary>
-    /// Implementation for {@link NetworkSecurityRule} and its create and update interfaces.
+    /// Implementation for NetworkSecurityRule and its create and update interfaces.
     /// </summary>
     public partial class NetworkSecurityRuleImpl  :
         ChildResource<SecurityRuleInner, NetworkSecurityGroupImpl, INetworkSecurityGroup>,
         INetworkSecurityRule,
-        IDefinition<IWithCreate>,
-        IUpdateDefinition<NetworkSecurityGroup.Update.IUpdate>,
+        NetworkSecurityRule.Definition.IDefinition<NetworkSecurityGroup.Definition.IWithCreate>,
+        NetworkSecurityRule.UpdateDefinition.IUpdateDefinition<NetworkSecurityGroup.Update.IUpdate>,
         NetworkSecurityRule.Update.IUpdate
     {
-        internal  NetworkSecurityRuleImpl (SecurityRuleInner inner, NetworkSecurityGroupImpl parent) :
-            base(inner.Id, inner, parent)
+        internal NetworkSecurityRuleImpl (SecurityRuleInner inner, NetworkSecurityGroupImpl parent) : base(inner.Name, inner, parent)
         {
         }
 
-        public override string Name
+        #region Accessors
+        override public string Name
         {
             get
             {
-                return this.Inner.Name;
+                return Inner.Name;
             }
         }
 
@@ -41,35 +34,37 @@ namespace Microsoft.Azure.Management.V2.Network
         {
             get
             {
-                return this.Inner.Direction;
+                return Inner.Direction;
             }
         }
+
         public string Protocol
         {
             get
             {
-                return this.Inner.Protocol;
+                return Inner.Protocol;
             }
         }
         public string Access
         {
             get
             {
-                return this.Inner.Access;
+                return Inner.Access;
             }
         }
         public string SourceAddressPrefix
         {
             get
             {
-                return this.Inner.SourceAddressPrefix;
+                return Inner.SourceAddressPrefix;
             }
         }
+
         public string SourcePortRange
         {
             get
             {
-                return this.Inner.SourcePortRange;
+                return Inner.SourcePortRange;
             }
         }
 
@@ -77,168 +72,194 @@ namespace Microsoft.Azure.Management.V2.Network
         {
             get
             {
-                return this.Inner.DestinationAddressPrefix;
+                return Inner.DestinationAddressPrefix;
             }
         }
+
         public string DestinationPortRange
         {
             get
             {
-                return this.Inner.DestinationPortRange;
+                return Inner.DestinationPortRange;
             }
         }
-        public int? Priority
+
+        public int Priority
         {
             get
             {
-                return this.Inner.Priority;
+                return (Inner.Priority.HasValue) ? Inner.Priority.Value : 0;
             }
-        }
-        public NetworkSecurityRuleImpl AllowInbound ()
-        {
-            return this
-                .WithDirection(SecurityRuleDirection.Inbound)
-                .WithAccess(SecurityRuleAccess.Allow);
-        }
-
-        public NetworkSecurityRuleImpl AllowOutbound ()
-        {
-            return this
-                .WithDirection(SecurityRuleDirection.Outbound)
-                .WithAccess(SecurityRuleAccess.Allow);
-        }
-
-        public NetworkSecurityRuleImpl DenyInbound ()
-        {
-            return this
-                .WithDirection(SecurityRuleDirection.Inbound)
-                .WithAccess(SecurityRuleAccess.Deny);
-        }
-
-        public NetworkSecurityRuleImpl DenyOutbound ()
-        {
-            return this
-                .WithDirection(SecurityRuleDirection.Outbound)
-                .WithAccess(SecurityRuleAccess.Deny);
-        }
-
-        public NetworkSecurityRuleImpl WithProtocol (string protocol)
-        {
-            this.Inner.Protocol = protocol;
-            return this;
-        }
-
-        public NetworkSecurityRuleImpl WithAnyProtocol ()
-        {
-            return this.WithProtocol(SecurityRuleProtocol.Asterisk);
-        }
-
-        public NetworkSecurityRuleImpl FromAddress (string cidr)
-        {
-            this.Inner.SourceAddressPrefix = cidr;
-            return this;
-        }
-
-        public NetworkSecurityRuleImpl FromAnyAddress ()
-        {
-            this.Inner.SourceAddressPrefix = "*";
-            return this;
-        }
-
-        public NetworkSecurityRuleImpl FromPort (int port)
-        {
-            this.Inner.SourcePortRange = port.ToString();
-            return this;
-        }
-
-        public NetworkSecurityRuleImpl FromAnyPort ()
-        {
-            this.Inner.SourcePortRange = "*";
-            return this;
-        }
-
-        public NetworkSecurityRuleImpl FromPortRange (int from, int to)
-        {
-            this.Inner.SourcePortRange = from + "-" + to;
-            return this;
-        }
-
-        public NetworkSecurityRuleImpl ToAddress (string cidr)
-        {
-            this.Inner.DestinationAddressPrefix = cidr;
-            return this;
-        }
-
-        public NetworkSecurityRuleImpl ToAnyAddress ()
-        {
-            this.Inner.DestinationAddressPrefix = "*";
-            return this;
-        }
-
-        public NetworkSecurityRuleImpl ToPort (int port)
-        {
-            this.Inner.DestinationPortRange = port.ToString();
-            return this;
-        }
-
-        public NetworkSecurityRuleImpl ToAnyPort ()
-        {
-            this.Inner.DestinationPortRange = "*";
-            return this;
-        }
-
-        public NetworkSecurityRuleImpl ToPortRange (int from, int to)
-        {
-            this.Inner.DestinationPortRange = from + "-" + to;
-            return this;
-        }
-
-        public NetworkSecurityRuleImpl WithPriority (int priority)
-        {
-            if (priority < 100 || priority > 4096)
-            {
-                throw new System.ArgumentOutOfRangeException("The priority number of a network security rule must be between 100 and 4096.");
-            }
-
-            this.Inner.Priority = priority;
-            return this;
-        }
-
-        public NetworkSecurityRuleImpl WithDescription (string description)
-        {
-            this.Inner.Description = description;
-            return this;
-        }
-
-        private NetworkSecurityRuleImpl WithDirection (string direction)
-        {
-            this.Inner.Direction = direction;
-            return this;
-        }
-
-        private NetworkSecurityRuleImpl WithAccess (string permission)
-        {
-            this.Inner.Access = permission;
-            return this;
-        }
-
-        public NetworkSecurityGroupImpl Attach ()
-        {
-            this.Parent.Inner.SecurityRules.Add(this.Inner);
-            return this.Parent;
         }
 
         NetworkSecurityGroup.Update.IUpdate ISettable<NetworkSecurityGroup.Update.IUpdate>.Parent()
         {
-            return base.Parent;
+            return Parent;
         }
 
         public string Description
         {
             get
             {
-                return this.Inner.Description;
+                return Inner.Description;
             }
         }
+        #endregion
+
+        #region Public Withers
+        #region Direction and Access
+        public NetworkSecurityRuleImpl AllowInbound ()
+        {
+            return WithDirection(SecurityRuleDirection.Inbound)
+                .WithAccess(SecurityRuleAccess.Allow);
+        }
+
+        public NetworkSecurityRuleImpl AllowOutbound ()
+        {
+            return WithDirection(SecurityRuleDirection.Outbound)
+                .WithAccess(SecurityRuleAccess.Allow);
+        }
+
+        public NetworkSecurityRuleImpl DenyInbound ()
+        {
+            return WithDirection(SecurityRuleDirection.Inbound)
+                .WithAccess(SecurityRuleAccess.Deny);
+        }
+
+        public NetworkSecurityRuleImpl DenyOutbound ()
+        {
+            return WithDirection(SecurityRuleDirection.Outbound)
+                .WithAccess(SecurityRuleAccess.Deny);
+        }
+        #endregion
+
+        #region Protocol
+        public NetworkSecurityRuleImpl WithProtocol (string protocol)
+        {
+            Inner.Protocol = protocol;
+            return this;
+        }
+
+        public NetworkSecurityRuleImpl WithAnyProtocol ()
+        {
+            return WithProtocol(SecurityRuleProtocol.Asterisk);
+        }
+        #endregion
+
+        #region Source Address
+        public NetworkSecurityRuleImpl FromAddress (string cidr)
+        {
+            Inner.SourceAddressPrefix = cidr;
+            return this;
+        }
+
+        public NetworkSecurityRuleImpl FromAnyAddress ()
+        {
+            Inner.SourceAddressPrefix = "*";
+            return this;
+        }
+        #endregion
+
+        #region Source Port
+        public NetworkSecurityRuleImpl FromPort (int port)
+        {
+            Inner.SourcePortRange = port.ToString();
+            return this;
+        }
+
+        public NetworkSecurityRuleImpl FromAnyPort ()
+        {
+            Inner.SourcePortRange = "*";
+            return this;
+        }
+
+        public NetworkSecurityRuleImpl FromPortRange (int from, int to)
+        {
+            Inner.SourcePortRange = from.ToString() + "-" + to.ToString();
+            return this;
+        }
+        #endregion
+
+        #region Destination Address
+        public NetworkSecurityRuleImpl ToAddress (string cidr)
+        {
+            Inner.DestinationAddressPrefix = cidr;
+            return this;
+        }
+
+        public NetworkSecurityRuleImpl ToAnyAddress ()
+        {
+            Inner.DestinationAddressPrefix = "*";
+            return this;
+        }
+        #endregion
+
+        #region Destination Port
+        public NetworkSecurityRuleImpl ToPort (int port)
+        {
+            Inner.DestinationPortRange = port.ToString();
+            return this;
+        }
+
+        public NetworkSecurityRuleImpl ToAnyPort ()
+        {
+            Inner.DestinationPortRange = "*";
+            return this;
+        }
+
+        public NetworkSecurityRuleImpl ToPortRange (int from, int to)
+        {
+            Inner.DestinationPortRange = from.ToString() + "-" + to.ToString();
+            return this;
+        }
+        #endregion
+
+        #region Priority
+        public NetworkSecurityRuleImpl WithPriority (int priority)
+        {
+
+            //$ if (priority < 100 || priority > 4096) {
+            //$ throw new IllegalArgumentException("The priority number of a network security rule must be between 100 and 4096.");
+            //$ }
+            //$ 
+            //$ this.inner().withPriority(priority);
+            //$ return this;
+
+            return this;
+        }
+        #endregion
+
+        #region Description
+        public NetworkSecurityRuleImpl WithDescription (string description)
+        {
+
+            //$ this.inner().withDescription(description);
+            //$ return this;
+
+            return this;
+        }
+        #endregion
+        #endregion
+
+        #region Helpers
+        private NetworkSecurityRuleImpl WithDirection (string direction)
+        {
+            Inner.Direction = direction;
+            return this;
+        }
+
+        private NetworkSecurityRuleImpl WithAccess (string permission)
+        {
+            Inner.Access = permission;
+            return this;
+        }
+        #endregion
+
+        #region Actions
+        public NetworkSecurityGroupImpl Attach ()
+        {
+            return Parent.WithRule(this);
+        }
+        #endregion
     }
 }

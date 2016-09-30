@@ -3,16 +3,13 @@
 
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Management.V2.Resource;
-using System;
+using Microsoft.Azure.Management.Fluent.Resource;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
-using Microsoft.Azure.Management.V2.Compute.AvailabilitySet.Definition;
-using Microsoft.Rest.Azure;
 
-namespace Microsoft.Azure.Management.V2.Compute
+namespace Microsoft.Azure.Management.Fluent.Compute
 {
     internal partial class AvailabilitySetImpl : GroupableResource<IAvailabilitySet,
         AvailabilitySetInner,
@@ -39,11 +36,11 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         #region Getters
 
-        public int? FaultDomainCount
+        public int FaultDomainCount
         {
             get
             {
-                return Inner.PlatformFaultDomainCount;
+                return (Inner.PlatformFaultDomainCount.HasValue) ? Inner.PlatformFaultDomainCount.Value : 0;
             }
         }
 
@@ -55,11 +52,11 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
 
-        public int? UpdateDomainCount
+        public int UpdateDomainCount
         {
             get
             {
-                return Inner.PlatformUpdateDomainCount;
+                return (Inner.PlatformUpdateDomainCount.HasValue) ? Inner.PlatformUpdateDomainCount.Value : 0;
             }
         }
 
@@ -102,13 +99,13 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         #region Definition Setters
 
-        public IWithCreate WithFaultDomainCount(int faultDomainCount)
+        public AvailabilitySetImpl WithFaultDomainCount(int faultDomainCount)
         {
             Inner.PlatformFaultDomainCount = faultDomainCount;
             return this;
         }
 
-        public IWithCreate WithUpdateDomainCount(int updateDomainCount)
+        public AvailabilitySetImpl WithUpdateDomainCount(int updateDomainCount)
         {
             Inner.PlatformUpdateDomainCount = updateDomainCount;
             return this;

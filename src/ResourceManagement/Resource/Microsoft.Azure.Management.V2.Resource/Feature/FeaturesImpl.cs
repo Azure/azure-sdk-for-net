@@ -3,10 +3,10 @@
 
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;
-using Microsoft.Azure.Management.V2.Resource.Core;
-using Microsoft.Azure.Management.V2.Resource.Feature;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
+using Microsoft.Azure.Management.Fluent.Resource.Feature;
 
-namespace Microsoft.Azure.Management.V2.Resource
+namespace Microsoft.Azure.Management.Fluent.Resource
 {
     internal class FeaturesImpl : IFeatures
     {

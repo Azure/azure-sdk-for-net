@@ -1,14 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Microsoft.Azure.Management.V2.Compute
+namespace Microsoft.Azure.Management.Fluent.Compute
 {
     using Management.Compute;
-    using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
+    using Management.Compute.Models;
+    using Resource.Core;
     /// <summary>
-    /// The implementation for {@link VirtualMachineSizes}.
+    /// The implementation for VirtualMachineSizes.
     /// </summary>
     internal partial class VirtualMachineSizesImpl :
         ReadableWrappers<IVirtualMachineSize, VirtualMachineSizeImpl, VirtualMachineSize>,

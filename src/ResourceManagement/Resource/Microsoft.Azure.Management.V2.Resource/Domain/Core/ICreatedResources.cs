@@ -3,7 +3,7 @@
 
 using System.Collections.Generic;
 
-namespace Microsoft.Azure.Management.V2.Resource.Core
+namespace Microsoft.Azure.Management.Fluent.Resource.Core
 {
     /// <summary>
     /// Represents result of batch of create operations.

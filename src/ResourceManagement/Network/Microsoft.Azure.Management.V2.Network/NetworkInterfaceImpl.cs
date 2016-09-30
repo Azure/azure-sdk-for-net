@@ -1,116 +1,137 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
-namespace Microsoft.Azure.Management.V2.Network
+namespace Microsoft.Azure.Management.Fluent.Network
 {
 
-    using Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition;
+    using NetworkInterface.Update;
+    using Management.Network.Models;
+    using NetworkInterface.Definition;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Network.NetworkInterface.Update;
-    using System.Threading;
-    using Microsoft.Azure.Management.Network.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Rest;
-    using Microsoft.Azure.Management.V2.Resource;
-    using System.Threading.Tasks;
+    using Resource.Core.ResourceActions;
+    using Resource;
+    using Resource.Core;
     using Management.Network;
-    using System;
-    using System.Collections.ObjectModel;
+    using System.Threading.Tasks;
 
     /// <summary>
-    /// Implementation for {@link NetworkInterface} and its create and update interfaces.
+    /// Implementation for NetworkInterface and its create and update interfaces.
     /// </summary>
     public partial class NetworkInterfaceImpl :
-        GroupableResource<INetworkInterface,
-            NetworkInterfaceInner,
-            Rest.Azure.Resource,
-            NetworkInterfaceImpl,
-            INetworkManager,
-            NetworkInterface.Definition.IWithGroup,
-            NetworkInterface.Definition.IWithPrimaryNetwork,
-            NetworkInterface.Definition.IWithCreate,
-            NetworkInterface.Update.IUpdate>,
-        INetworkInterface,
-        IDefinition,
-         NetworkInterface.Update.IUpdate
+        GroupableParentResource<INetworkInterface,
+                NetworkInterfaceInner,
+                Rest.Azure.Resource,
+                NetworkInterfaceImpl,
+                NetworkManager,
+                IWithGroup,
+                IWithPrimaryNetwork,
+                IWithCreate,
+                IUpdate>,
+            INetworkInterface,
+            IDefinition,
+            IUpdate
+
     {
-        private INetworkInterfacesOperations client;
+        private INetworkInterfacesOperations innerCollection;
         private string nicName;
+        protected ResourceNamer namer;
         private NicIpConfigurationImpl nicPrimaryIpConfiguration;
-        private IList<INicIpConfiguration> nicIpConfigurations;
+        private IDictionary<string, INicIpConfiguration> nicIpConfigurations;
         private string creatableNetworkSecurityGroupKey;
         private INetworkSecurityGroup existingNetworkSecurityGroupToAssociate;
-        private IPublicIpAddress primaryPublicIp;
-        private INetwork primaryNetwork;
         private INetworkSecurityGroup networkSecurityGroup;
-        private ResourceNamer namer;
 
-        internal NetworkInterfaceImpl(string name, NetworkInterfaceInner innerModel, INetworkInterfacesOperations client, NetworkManager networkManager) :
-             base(name, innerModel, networkManager)
+        internal NetworkInterfaceImpl(
+            string name,
+            NetworkInterfaceInner innerModel,
+            INetworkInterfacesOperations client,
+            NetworkManager networkManager) : base(name, innerModel, networkManager)
         {
-
-            this.client = client;
+            this.innerCollection = client;
             this.nicName = name;
             this.namer = new ResourceNamer(this.nicName);
-            this.InitializeNicIpConfigurations();
-        }
-
-        public ResourceNamer Namer
-        {
-            get
-            {
-                return this.namer;
-            }
-        }
-
-        public override INetworkInterface Refresh()
-        {
-            var response = client.Get(ResourceGroupName, nicName);
-            SetInner(response);
-            return this;
+            InitializeChildrenFromInner();
         }
 
         public NetworkInterfaceImpl WithNewPrimaryNetwork(ICreatable<INetwork> creatable)
         {
-            this.PrimaryIpConfiguration().WithNewNetwork(creatable);
+            PrimaryIpConfiguration().WithNewNetwork(creatable);
             return this;
         }
 
         public NetworkInterfaceImpl WithNewPrimaryNetwork(string name, string addressSpaceCidr)
         {
-            this.PrimaryIpConfiguration().WithNewNetwork(name, addressSpaceCidr);
+            PrimaryIpConfiguration().WithNewNetwork(name, addressSpaceCidr);
+            return this;
+        }
+
+        public override INetworkInterface Refresh()
+        {
+            var response = this.innerCollection.Get(ResourceGroupName, nicName);
+            SetInner(response);
             return this;
         }
 
         public NetworkInterfaceImpl WithNewPrimaryNetwork(string addressSpaceCidr)
         {
-            this.PrimaryIpConfiguration().WithNewNetwork(addressSpaceCidr);
+            PrimaryIpConfiguration().WithNewNetwork(addressSpaceCidr);
             return this;
         }
 
         public NetworkInterfaceImpl WithExistingPrimaryNetwork(INetwork network)
         {
-            this.PrimaryIpConfiguration().WithExistingNetwork(network);
+            PrimaryIpConfiguration().WithExistingNetwork(network);
             return this;
         }
 
         public NetworkInterfaceImpl WithNewPrimaryPublicIpAddress(ICreatable<IPublicIpAddress> creatable)
         {
-
-            this.PrimaryIpConfiguration().WithNewPublicIpAddress(creatable);
+            PrimaryIpConfiguration().WithNewPublicIpAddress(creatable);
             return this;
         }
 
         public NetworkInterfaceImpl WithNewPrimaryPublicIpAddress()
         {
-            this.PrimaryIpConfiguration().WithNewPublicIpAddress();
+            PrimaryIpConfiguration().WithNewPublicIpAddress();
             return this;
         }
 
         public NetworkInterfaceImpl WithNewPrimaryPublicIpAddress(string leafDnsLabel)
         {
-            this.PrimaryIpConfiguration().WithNewPublicIpAddress(leafDnsLabel);
+            PrimaryIpConfiguration().WithNewPublicIpAddress(leafDnsLabel);
+            return this;
+        }
+
+        public NetworkInterfaceImpl WithExistingLoadBalancerBackend(ILoadBalancer loadBalancer, string backendName)
+        {
+            PrimaryIpConfiguration().WithExistingLoadBalancerBackend(loadBalancer, backendName);
+            return this;
+        }
+
+        public NetworkInterfaceImpl WithExistingLoadBalancerInboundNatRule(ILoadBalancer loadBalancer, string inboundNatRuleName)
+        {
+            PrimaryIpConfiguration().WithExistingLoadBalancerInboundNatRule(loadBalancer, inboundNatRuleName);
+            return this;
+        }
+
+        public IUpdate WithoutLoadBalancerBackends()
+        {
+            foreach (var ipConfig in IpConfigurations().Values)
+            {
+                UpdateIpConfiguration(ipConfig.Name)
+                   .WithoutLoadBalancerBackends();
+            }
+
+            return null;
+        }
+
+        public IUpdate WithoutLoadBalancerInboundNatRules()
+        {
+            foreach (var ipConfig in IpConfigurations().Values)
+            {
+                UpdateIpConfiguration(ipConfig.Name)
+                    .WithoutLoadBalancerInboundNatRules();
+            }
+
             return this;
         }
 
@@ -143,7 +164,7 @@ namespace Microsoft.Azure.Management.V2.Network
             if (this.creatableNetworkSecurityGroupKey == null)
             {
                 this.creatableNetworkSecurityGroupKey = creatable.Key;
-                this.AddCreatableDependency(creatable as IResourceCreator<IResource>);
+                this.AddCreatableDependency(creatable as IResourceCreator<Fluent.Resource.Core.IResource>);
             }
 
             return this;
@@ -151,7 +172,6 @@ namespace Microsoft.Azure.Management.V2.Network
 
         public NetworkInterfaceImpl WithExistingNetworkSecurityGroup(INetworkSecurityGroup networkSecurityGroup)
         {
-
             this.existingNetworkSecurityGroupToAssociate = networkSecurityGroup;
             return this;
         }
@@ -162,217 +182,198 @@ namespace Microsoft.Azure.Management.V2.Network
             return this;
         }
 
-        public NicIpConfiguration.UpdateDefinition.IBlank<NetworkInterface.Update.IUpdate> DefineSecondaryIpConfiguration(string name)
+        public NicIpConfigurationImpl DefineSecondaryIpConfiguration(string name)
         {
             return PrepareNewNicIpConfiguration(name);
         }
 
-        public NicIpConfiguration.Update.IUpdate UpdateIpConfiguration(string name)
+        public NicIpConfigurationImpl UpdateIpConfiguration(string name)
         {
-
-            foreach (INicIpConfiguration nicIpConfiguration in this.nicIpConfigurations)
-            {
-                if (name.Equals(nicIpConfiguration.Name, StringComparison.OrdinalIgnoreCase))
-                {
-                    return (NicIpConfigurationImpl)nicIpConfiguration;
-                }
-            }
-
-            throw new Exception("IP configuration '" + name + "' not found");
+            return (NicIpConfigurationImpl)this.nicIpConfigurations[name];
         }
 
         public NetworkInterfaceImpl WithIpForwarding()
         {
-            this.Inner.EnableIPForwarding = true;
+            Inner.EnableIPForwarding = true;
+            return this;
+        }
 
+        public NetworkInterfaceImpl WithoutIpConfiguration(string name)
+        {
+            nicIpConfigurations.Remove(name);
             return this;
         }
 
         public NetworkInterfaceImpl WithoutIpForwarding()
         {
-            this.Inner.EnableIPForwarding = false;
+            Inner.EnableIPForwarding = false;
             return this;
         }
 
         public NetworkInterfaceImpl WithDnsServer(string ipAddress)
         {
-            this.DnsServerIps.Add(ipAddress);
+            DnsServerIps.Add(ipAddress);
             return this;
         }
 
         public NetworkInterfaceImpl WithoutDnsServer(string ipAddress)
         {
-            this.DnsServerIps.Remove(ipAddress);
+            DnsServerIps.Remove(ipAddress);
             return this;
         }
 
         public NetworkInterfaceImpl WithAzureDnsServer()
         {
-            this.DnsServerIps.Clear();
+            DnsServerIps.Clear();
             return this;
         }
 
         public NetworkInterfaceImpl WithSubnet(string name)
         {
-            this.PrimaryIpConfiguration().WithSubnet(name);
+            PrimaryIpConfiguration().WithSubnet(name);
             return this;
         }
 
         public NetworkInterfaceImpl WithInternalDnsNameLabel(string dnsNameLabel)
         {
-            this.Inner.DnsSettings.InternalDnsNameLabel = dnsNameLabel;
+            Inner.DnsSettings.InternalDnsNameLabel = dnsNameLabel;
             return this;
         }
 
-        public bool? IsIpForwardingEnabled
+        public string VirtualMachineId
         {
             get
             {
-                return this.Inner.EnableIPForwarding;
+                return (Inner.VirtualMachine != null) ? Inner.VirtualMachine.Id : null;
             }
         }
+
+        public bool IsIpForwardingEnabled
+        {
+            get
+            {
+                return (Inner.EnableIPForwarding.HasValue) ? Inner.EnableIPForwarding.Value : false;
+            }
+        }
+
         public string MacAddress
         {
             get
             {
-                return this.Inner.MacAddress;
+                return Inner.MacAddress;
             }
         }
+
         public string InternalDnsNameLabel
         {
             get
             {
-                return this.Inner.DnsSettings.InternalDnsNameLabel;
+                return (Inner.DnsSettings != null) ? Inner.DnsSettings.InternalDnsNameLabel : null;
             }
         }
+
+        public string InternalDomainNameSuffix
+        {
+            get
+            {
+                return (Inner.DnsSettings != null) ? Inner.DnsSettings.InternalDomainNameSuffix : null;
+            }
+        }
+
+        public IList<string> AppliedDnsServers
+        {
+            get
+            {
+                List<string> dnsServers = new List<string>();
+                if (Inner.DnsSettings == null)
+                    return dnsServers;
+                else if (Inner.DnsSettings.AppliedDnsServers == null)
+                    return dnsServers;
+                else
+                    return Inner.DnsSettings.AppliedDnsServers;
+            }
+        }
+
         public string InternalFqdn
         {
             get
             {
-                return this.Inner.DnsSettings.InternalFqdn;
+                return (Inner.DnsSettings != null) ? Inner.DnsSettings.InternalFqdn : null;
             }
         }
+
         public IList<string> DnsServers
         {
             get
             {
                 return this.DnsServerIps;
-
-
-                return null;
             }
-        }
-        public IPublicIpAddress PrimaryPublicIpAddress()
-        {
-
-            if (this.primaryPublicIp == null)
-            {
-                this.primaryPublicIp = this.PrimaryIpConfiguration().PublicIpAddress();
-            }
-            return primaryPublicIp;
-        }
-
-        public string PrimarySubnetId
-        {
-            get
-            {
-                return this.PrimaryIpConfiguration().SubnetId;
-            }
-        }
-        public INetwork PrimaryNetwork()
-        {
-            if (this.primaryNetwork == null)
-            {
-                this.primaryNetwork = this.PrimaryIpConfiguration().Network();
-            }
-            return this.primaryNetwork;
         }
 
         public string PrimaryPrivateIp
         {
             get
             {
-                return this.PrimaryIpConfiguration().PrivateIp;
+                return PrimaryIpConfiguration().PrivateIpAddress;
             }
         }
-
         public string PrimaryPrivateIpAllocationMethod
         {
             get
             {
-                return this.PrimaryIpConfiguration().PrivateIpAllocationMethod;
+                return PrimaryIpConfiguration().PrivateIpAllocationMethod;
             }
         }
-        public IList<INicIpConfiguration> IpConfigurations()
+
+        public IDictionary<string, INicIpConfiguration> IpConfigurations()
         {
-            return new ReadOnlyCollection<INicIpConfiguration>(this.nicIpConfigurations);
+            return nicIpConfigurations;
         }
 
         public string NetworkSecurityGroupId
         {
             get
             {
-                if (this.Inner.NetworkSecurityGroup != null)
-                {
-                    return this.Inner.NetworkSecurityGroup.Id;
-                }
-
-                return null;
+                return (Inner.NetworkSecurityGroup != null) ? Inner.NetworkSecurityGroup.Id : null;
             }
         }
-        public INetworkSecurityGroup NetworkSecurityGroup()
+
+        public INetworkSecurityGroup GetNetworkSecurityGroup()
         {
-
-            if (this.networkSecurityGroup == null && this.NetworkSecurityGroup().Id != null)
+            if (networkSecurityGroup == null && NetworkSecurityGroupId != null)
             {
-                String id = this.NetworkSecurityGroup().Id;
-                    this.networkSecurityGroup = base.MyManager
-                        .NetworkSecurityGroups
-                        .GetByGroup(ResourceUtils.GroupFromResourceId(id),
-                            ResourceUtils.NameFromResourceId(id));
+                string id = NetworkSecurityGroupId;
+                networkSecurityGroup = base.Manager
+                    .NetworkSecurityGroups
+                    .GetByGroup(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
             }
-
-            return this.networkSecurityGroup;
+            return networkSecurityGroup;
         }
 
         /// <returns>the primary IP configuration of the network interface</returns>
         public NicIpConfigurationImpl PrimaryIpConfiguration()
         {
-
-            if (this.nicPrimaryIpConfiguration != null)
+            if (nicPrimaryIpConfiguration != null)
             {
-                return this.nicPrimaryIpConfiguration;
+                return nicPrimaryIpConfiguration;
             }
 
-            if (this.IsInCreateMode)
+            if (IsInCreateMode)
             {
-                this.nicPrimaryIpConfiguration = PrepareNewNicIpConfiguration("primary-nic-config");
-                WithIpConfiguration(this.nicPrimaryIpConfiguration);
+                nicPrimaryIpConfiguration = PrepareNewNicIpConfiguration("primary");
+                WithIpConfiguration(nicPrimaryIpConfiguration);
             }
             else
             {
-                // Currently Azure supports only one IP configuration and that is the primary
+                // TODO: Currently Azure supports only one IP configuration and that is the primary
                 // hence we pick the first one here.
                 // when Azure support multiple IP configurations then there will be a flag in
                 // the IPConfiguration or a property in the network interface to identify the
                 // primary so below logic will be changed.
-                this.nicPrimaryIpConfiguration = (NicIpConfigurationImpl)this.nicIpConfigurations[0];
+                nicPrimaryIpConfiguration = (NicIpConfigurationImpl)new List<INicIpConfiguration>(
+                    nicIpConfigurations.Values)[0];
             }
-
-            return this.nicPrimaryIpConfiguration;
-        }
-        
-        public async override Task<INetworkInterface> CreateResourceAsync(CancellationToken cancellationToken)
-        {
-
-            NetworkInterfaceImpl self = this;
-            NicIpConfigurationImpl.EnsureConfigurations(this.nicIpConfigurations);
-            var data= await this.client.CreateOrUpdateAsync(this.ResourceGroupName, this.nicName, this.Inner);
-            this.SetInner(data);
-            this.ClearCachedRelatedResources();
-            this.InitializeNicIpConfigurations();
-
-            return this;
+            return nicPrimaryIpConfiguration;
         }
 
         /// <returns>the list of DNS server IPs from the DNS settings</returns>
@@ -380,82 +381,102 @@ namespace Microsoft.Azure.Management.V2.Network
         {
             get
             {
-                if (this.Inner.DnsSettings.DnsServers == null)
-                {
-                    this.Inner.DnsSettings.DnsServers = new List<string>();
-                }
-
-                return this.Inner.DnsSettings.DnsServers;
+                List<string> dnsServers = new List<string>();
+                if (Inner.DnsSettings == null)
+                    return dnsServers;
+                else if (Inner.DnsSettings.DnsServers == null)
+                    return dnsServers;
+                else
+                    return Inner.DnsSettings.DnsServers;
             }
         }
-        /// <summary>
-        /// Initializes the list of {@link NicIpConfiguration} that wraps {@link NetworkInterfaceInner#IpConfigurations()}.
-        /// </summary>
-        private void InitializeNicIpConfigurations()
+
+        override protected void InitializeChildrenFromInner()
         {
-            if (this.Inner.IpConfigurations == null)
+            nicIpConfigurations = new Dictionary<string, INicIpConfiguration>();
+            IList<NetworkInterfaceIPConfigurationInner> inners = Inner.IpConfigurations;
+            if (inners != null)
             {
-                this.Inner.IpConfigurations = new List<NetworkInterfaceIPConfigurationInner>();
-            }
-
-            this.nicIpConfigurations = new List<INicIpConfiguration>();
-            foreach (NetworkInterfaceIPConfigurationInner ipConfig in this.Inner.IpConfigurations)
-            {
-                NicIpConfigurationImpl nicIpConfiguration = new NicIpConfigurationImpl(ipConfig,
-                    this,
-                    base.MyManager,
-                    false);
-                this.nicIpConfigurations.Add(nicIpConfiguration);
+                foreach (NetworkInterfaceIPConfigurationInner inner in inners)
+                {
+                    NicIpConfigurationImpl nicIpConfiguration = new NicIpConfigurationImpl(inner, this, Manager, false);
+                    nicIpConfigurations.Add(nicIpConfiguration.Name, nicIpConfiguration);
+                }
             }
         }
 
         /// <summary>
-        /// Gets a new IP configuration child resource {@link NicIpConfiguration} wrapping {@link NetworkInterfaceIPConfiguration}.
+        /// Gets a new IP configuration child resource NicIpConfiguration wrapping NetworkInterfaceIPConfigurationInner.
         /// </summary>
         /// <param name="name">name the name for the new ip configuration</param>
-        /// <returns>{@link NicIpConfiguration}</returns>
+        /// <returns>NicIpConfiguration</returns>
         private NicIpConfigurationImpl PrepareNewNicIpConfiguration(string name)
         {
-
-            NicIpConfigurationImpl nicIpConfiguration = NicIpConfigurationImpl.PrepareNicIpConfiguration(
-                name,
-                this,
-                base.MyManager);
+            NicIpConfigurationImpl nicIpConfiguration = NicIpConfigurationImpl.PrepareNicIpConfiguration(name, this, Manager);
             return nicIpConfiguration;
         }
 
         private void ClearCachedRelatedResources()
         {
-            this.primaryPublicIp = null;
-            this.primaryNetwork = null;
-            this.networkSecurityGroup = null;
-            this.nicPrimaryIpConfiguration = null;
+            networkSecurityGroup = null;
+            nicPrimaryIpConfiguration = null;
         }
 
         internal NetworkInterfaceImpl WithIpConfiguration(NicIpConfigurationImpl nicIpConfiguration)
         {
-            this.nicIpConfigurations.Add(nicIpConfiguration);
-            this.Inner.IpConfigurations.Add(nicIpConfiguration.Inner);
+            nicIpConfigurations.Add(nicIpConfiguration.Name, nicIpConfiguration);
             return this;
         }
 
-        internal void AddToCreatableDependencies<T>(ICreatable<T> creatableResource) where T : IResource
+        internal void AddToCreatableDependencies(ICreatable<Fluent.Resource.Core.IResource> creatableResource)
         {
-
-            base.AddCreatableDependency(creatableResource as IResourceCreator<IResource>);
-
+            AddCreatableDependency(creatableResource as IResourceCreator<Fluent.Resource.Core.IResource>);
         }
 
-        internal IResource CreatedDependencyResource(string key)
+        internal Fluent.Resource.Core.IResource CreatedDependencyResource(string key)
         {
-
-            return base.CreatedResource(key);
+            return CreatedResource(key);
         }
 
         internal ICreatable<IResourceGroup> NewGroup()
         {
-            return this.newGroup;
+            return newGroup;
         }
 
+        override protected Task<NetworkInterfaceInner> CreateInner()
+        {
+            return innerCollection.CreateOrUpdateAsync(ResourceGroupName, Name, Inner);
+        }
+
+        override protected void AfterCreating()
+        {
+            ClearCachedRelatedResources();
+        }
+
+        override protected void BeforeCreating()
+        {
+            INetworkSecurityGroup networkSecurityGroup = null;
+            if (creatableNetworkSecurityGroupKey != null)
+            {
+                networkSecurityGroup = (INetworkSecurityGroup)this.CreatedResource(creatableNetworkSecurityGroupKey);
+            }
+            else if (existingNetworkSecurityGroupToAssociate != null)
+            {
+                networkSecurityGroup = existingNetworkSecurityGroupToAssociate;
+            }
+
+            // Associate an NSG if needed
+            if (networkSecurityGroup != null)
+            {
+                Inner.NetworkSecurityGroup =
+                    Manager.NetworkSecurityGroups.GetById(networkSecurityGroup.Id).Inner;
+            }
+
+            NicIpConfigurationImpl.EnsureConfigurations(new List<INicIpConfiguration>(nicIpConfigurations.Values));
+
+            // Reset and update IP configs
+            Inner.IpConfigurations =
+                InnersFromWrappers<NetworkInterfaceIPConfigurationInner, INicIpConfiguration>(nicIpConfigurations.Values);
+        }
     }
 }

@@ -3,8 +3,8 @@
 namespace Microsoft.Azure.Management.Fluent.KeyVault
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core;
     using Microsoft.Azure.Management.KeyVault.Models;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
     /// <summary>
     /// An immutable client-side representation of a key vault access policy.
     /// </summary>

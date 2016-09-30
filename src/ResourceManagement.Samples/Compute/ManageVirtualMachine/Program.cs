@@ -4,10 +4,10 @@
 using Microsoft.Azure.Management.Samples.Common;
 using Microsoft.Azure.Management;
 using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Management.V2.Compute;
-using Microsoft.Azure.Management.V2.Resource;
-using Microsoft.Azure.Management.V2.Resource.Authentication;
-using Microsoft.Azure.Management.V2.Resource.Core;
+using Microsoft.Azure.Management.Fluent.Compute;
+using Microsoft.Azure.Management.Fluent.Resource;
+using Microsoft.Azure.Management.Fluent.Resource.Authentication;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -114,7 +114,7 @@ namespace ManageVirtualMachine
 
                     Console.WriteLine("De-allocated VM: " + windowsVM.Id);
 
-                    var dataDisk = windowsVM.DataDisks().First();
+                    var dataDisk = windowsVM.DataDisks.First();
 
                     windowsVM.Update()
                                 .UpdateDataDisk(dataDisk.Name)
@@ -125,7 +125,7 @@ namespace ManageVirtualMachine
                     //=============================================================
                     // Update - Expand the OS drive size by 10 GB
 
-                    var osDiskSizeInGb = windowsVM.OsDiskSize.GetValueOrDefault();
+                    int osDiskSizeInGb = windowsVM.OsDiskSize;
                     if (osDiskSizeInGb == 0)
                     {
                         // Server is not returning the OS Disk size, possible bug in server
@@ -168,7 +168,7 @@ namespace ManageVirtualMachine
                     Console.WriteLine("Powered OFF VM: " + windowsVM.Id + "; state = " + windowsVM.PowerState);
 
                     // Get the network where Windows VM is hosted
-                    var network = windowsVM.PrimaryNetworkInterface().PrimaryNetwork();
+                    var network = windowsVM.GetPrimaryNetworkInterface().PrimaryIpConfiguration().GetNetwork();
 
                     //=============================================================
                     // Create a Linux VM in the same virtual network

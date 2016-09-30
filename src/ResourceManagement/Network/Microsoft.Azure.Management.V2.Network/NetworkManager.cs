@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Microsoft.Azure.Management.V2.Network
+namespace Microsoft.Azure.Management.Fluent.Network
 {
-    using Microsoft.Azure.Management.Network;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Management.Network;
+    using Resource.Core;
     using Resource;
-    using Microsoft.Rest;
+    using Rest;
     using System;
     using System.Linq;
 
@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.V2.Network
         private NetworkInterfacesImpl networkInterfaces;
         private NetworkSecurityGroupsImpl networkSecurityGroups;
         private NetworksImpl networks;
+        private LoadBalancersImpl loadBalancers;
 
         private NetworkManager(RestClient restClient, string subscriptionId) : base(restClient, subscriptionId)
         {
@@ -128,13 +129,12 @@ namespace Microsoft.Azure.Management.V2.Network
             {
                 if (publicIpAddresses == null)
                 {
-                    publicIpAddresses = new PublicIpAddressesImpl(networkManagementClient.PublicIPAddresses, this);
+                    publicIpAddresses = new PublicIpAddressesImpl(networkManagementClient, this);
                 }
 
                 return publicIpAddresses;
             }
         }
-
 
         /// <summary>
         /// return entry point to network interface management
@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Management.V2.Network
             {
                 if (networkInterfaces == null)
                 {
-                    networkInterfaces = new NetworkInterfacesImpl(networkManagementClient.NetworkInterfaces, this);
+                    networkInterfaces = new NetworkInterfacesImpl(networkManagementClient, this);
                 }
 
                 return networkInterfaces;
@@ -155,7 +155,18 @@ namespace Microsoft.Azure.Management.V2.Network
         /// <summary>
         /// return entry point to load balancer management
         /// </summary>
-        public ILoadBalancers LoadBalancers { get { return null; } }
+        public ILoadBalancers LoadBalancers
+        {
+            get
+            {
+                if (loadBalancers == null)
+                {
+                    loadBalancers = new LoadBalancersImpl(networkManagementClient, this);
+                }
+
+                return loadBalancers;
+            }
+        }
     }
 
     public interface INetworkManager : IManagerBase

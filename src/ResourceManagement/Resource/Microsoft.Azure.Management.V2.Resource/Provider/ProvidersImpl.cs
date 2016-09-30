@@ -3,11 +3,11 @@
 
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;
-using Microsoft.Azure.Management.V2.Resource.Core;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.Management.V2.Resource
+namespace Microsoft.Azure.Management.Fluent.Resource
 {
     internal class ProvidersImpl : IProviders
     {

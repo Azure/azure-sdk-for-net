@@ -4,7 +4,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Microsoft.Azure.Management.V2.Resource.Core
+namespace Microsoft.Azure.Management.Fluent.Resource.Core
 {
     /// <summary>
     /// Implementation of <see cref="ICreatedResources{ResourceT}"> interface.

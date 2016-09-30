@@ -8,8 +8,8 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
     using Microsoft.Azure.Management.Graph.RBAC.Models;
     using System.Collections.Generic;
     using Microsoft.Azure.Management.Fluent.Graph.RBAC.ServicePrincipal.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
     using System.Threading.Tasks;
     using Microsoft.Azure.Management.Fluent.Graph.RBAC.ServicePrincipal.Update;
     using System.Threading;

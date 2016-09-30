@@ -1,19 +1,18 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
-
-namespace Microsoft.Azure.Management.V2.Network
+// Licensed under the MIT License. See License.txt in the project root for license information.
+namespace Microsoft.Azure.Management.Fluent.Network
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
     using Microsoft.Azure.Management.Network.Models;
     /// <summary>
     /// A network security rule in a network security group.
     /// </summary>
     public interface INetworkSecurityRule  :
         IWrapper<Microsoft.Azure.Management.Network.Models.SecurityRuleInner>,
-        IChildResource<INetworkSecurityGroup>
+        IChildResource<Microsoft.Azure.Management.Fluent.Network.INetworkSecurityGroup>
     {
-        /// <returns>the network traffic direction the rule applies to</returns>
+        /// <returns>the direction of the network traffic that the network security rule applies to.</returns>
         string Direction { get; }
 
         /// <returns>the network protocol the rule applies to</returns>

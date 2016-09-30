@@ -3,14 +3,14 @@
 
 using Microsoft.Azure.Management.ResourceManager;
 using Microsoft.Azure.Management.ResourceManager.Models;
-using Microsoft.Azure.Management.V2.Resource.Core;
-using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
+using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.Management.V2.Resource
+namespace Microsoft.Azure.Management.Fluent.Resource
 {
     internal class DeploymentOperationImpl :
         IndexableRefreshableWrapper<IDeploymentOperation, DeploymentOperationInner>,

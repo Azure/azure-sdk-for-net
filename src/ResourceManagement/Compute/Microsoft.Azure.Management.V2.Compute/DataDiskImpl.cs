@@ -1,39 +1,34 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Microsoft.Azure.Management.V2.Compute
+namespace Microsoft.Azure.Management.Fluent.Compute
 {
 
+    using Management.Compute.Models;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Update;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.V2.Storage;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update;
+    using Resource.Core;
+    using Storage;
     using Resource.Core.ChildResourceActions;
     using System;
 
-
     /// <summary>
-    /// The implementation for {@link DataDisk} and its create and update interfaces.
+    /// The implementation for DataDisk and its create and update interfaces.
     /// </summary>
-    internal partial class DataDiskImpl :
-        ChildResource<DataDisk, VirtualMachineImpl, IVirtualMachine>,
+    internal partial class DataDiskImpl  :
+        ChildResource<DataDisk,
+            VirtualMachineImpl,
+            IVirtualMachine>,
         IVirtualMachineDataDisk,
-        IDefinition<IWithCreate>,
-        IUpdateDefinition<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>,
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Update.IUpdate
+        VirtualMachineDataDisk.Definition.IDefinition<VirtualMachine.Definition.IWithCreate>,
+        VirtualMachineDataDisk.UpdateDefinition.IUpdateDefinition<VirtualMachine.Update.IUpdate>,
+        VirtualMachineDataDisk.Update.IUpdate
     {
         internal DataDiskImpl(DataDisk inner, VirtualMachineImpl parent) :
             base(inner.Name, inner, parent)
         {
         }
 
-        internal static DataDiskImpl PrepareDataDisk(string name, DiskCreateOptionTypes createOption, VirtualMachineImpl parent)
+        internal static DataDiskImpl PrepareDataDisk (string name, DiskCreateOptionTypes createOption, VirtualMachineImpl parent)
         {
             DataDisk dataDiskInner = new DataDisk();
             dataDiskInner.Lun = -1;
@@ -43,15 +38,14 @@ namespace Microsoft.Azure.Management.V2.Compute
             return new DataDiskImpl(dataDiskInner, parent);
         }
 
-        internal static DataDiskImpl CreateNewDataDisk(int sizeInGB, VirtualMachineImpl parent)
+        internal static DataDiskImpl CreateNewDataDisk (int sizeInGB, VirtualMachineImpl parent)
         {
-
             DataDiskImpl dataDiskImpl = PrepareDataDisk(null, DiskCreateOptionTypes.Empty, parent);
             dataDiskImpl.Inner.DiskSizeGB = sizeInGB;
             return dataDiskImpl;
         }
 
-        internal static DataDiskImpl CreateFromExistingDisk(string storageAccountName, string containerName, string vhdName, VirtualMachineImpl parent)
+        internal static DataDiskImpl CreateFromExistingDisk (string storageAccountName, string containerName, string vhdName, VirtualMachineImpl parent)
         {
             DataDiskImpl dataDiskImpl = PrepareDataDisk(null, DiskCreateOptionTypes.Attach, parent);
             VirtualHardDisk diskVhd = new VirtualHardDisk();
@@ -64,37 +58,38 @@ namespace Microsoft.Azure.Management.V2.Compute
         {
             get
             {
-                return this.Inner.Name;
+                return Inner.Name;
             }
         }
-        public int? Size
+        public int Size
         {
             get
             {
-                return this.Inner.DiskSizeGB;
+                return (Inner.DiskSizeGB.HasValue) ? Inner.DiskSizeGB.Value : 0;
             }
         }
 
-        public int? Lun
+        public int Lun
         {
             get
             {
-                return this.Inner.Lun;
+                return Inner.Lun;
             }
         }
+
         public string VhdUri
         {
             get
             {
-                return this.Inner.Vhd.Uri;
+                return Inner.Vhd.Uri;
             }
         }
 
-        public CachingTypes? CachingType
+        public CachingTypes CachingType
         {
             get
             {
-                return this.Inner.Caching;
+                return Inner.Caching.Value;
             }
         }
 
@@ -102,64 +97,59 @@ namespace Microsoft.Azure.Management.V2.Compute
         {
             get
             {
-                if (this.Inner.Image != null)
-                {
-                    return this.Inner.Image.Uri;
-
-                }
-                return null;
+                return (Inner.Image != null) ? Inner.Image.Uri : null;
             }
         }
 
-        public DiskCreateOptionTypes? CreateOption
+        public DiskCreateOptionTypes CreationMethod
         {
             get
             {
-                return this.Inner.CreateOption;
+                return Inner.CreateOption;
             }
         }
 
-        public DataDiskImpl From(string storageAccountName, string containerName, string vhdName)
+        public DataDiskImpl From (string storageAccountName, string containerName, string vhdName)
         {
-            this.Inner.Vhd = new VirtualHardDisk();
+            Inner.Vhd = new VirtualHardDisk();
             //URL points to an existing data disk to be attached
-            this.Inner.Vhd.Uri = BlobUrl(storageAccountName, containerName, vhdName);
+            Inner.Vhd.Uri = BlobUrl(storageAccountName, containerName, vhdName);
             return this;
         }
 
-        public DataDiskImpl WithSizeInGB(int? sizeInGB)
+        public DataDiskImpl WithSizeInGB (int? sizeInGB)
         {
             // Note: Size can be specified only while attaching new blank disk.
             // Size cannot be specified while attaching an existing disk.
             // Once attached both type of data disk can be resized via VM update.
-            this.Inner.DiskSizeGB = sizeInGB;
+            Inner.DiskSizeGB = sizeInGB;
             return this;
         }
 
-        public DataDiskImpl StoreAt(string storageAccountName, string containerName, string vhdName)
+        public DataDiskImpl StoreAt (string storageAccountName, string containerName, string vhdName)
         {
-            this.Inner.Vhd = new VirtualHardDisk();
+            Inner.Vhd = new VirtualHardDisk();
             // URL points to where the new data disk needs to be stored
-            this.Inner.Vhd.Uri = BlobUrl(storageAccountName, containerName, vhdName);
+            Inner.Vhd.Uri = BlobUrl(storageAccountName, containerName, vhdName);
             return this;
         }
 
-        public DataDiskImpl WithLun(int? lun)
+        public DataDiskImpl WithLun (int? lun)
         {
-            this.Inner.Lun = lun.HasValue ? lun.Value : 0;
+            Inner.Lun = (lun.HasValue) ? lun.Value : 0;
             return this;
         }
 
-        public DataDiskImpl WithCaching(CachingTypes cachingType)
+        public DataDiskImpl WithCaching (CachingTypes cachingType)
         {
-            this.Inner.Caching = cachingType;
+            Inner.Caching = cachingType;
             return this;
         }
 
-        public IVirtualMachine Attach()
+        public VirtualMachineImpl Attach ()
         {
-            this.Parent.DataDisks().Add(this);
-            return this.Parent;
+            Parent.WithDataDisk(this);
+            return Parent;
         }
 
         internal static void SetDataDisksDefaults(IList<IVirtualMachineDataDisk> dataDisks, string namePrefix)
@@ -204,12 +194,12 @@ namespace Microsoft.Azure.Management.V2.Compute
 
             foreach (IVirtualMachineDataDisk dataDisk in dataDisks)
             {
-                if (dataDisk.CreateOption == DiskCreateOptionTypes.Empty)
+                if (dataDisk.CreationMethod == DiskCreateOptionTypes.Empty)
                 {
                     //New data disk requires Vhd Uri to be set
                     if (dataDisk.Inner.Vhd == null)
                     {
-                        dataDisk.Inner.Vhd  =new VirtualHardDisk();
+                        dataDisk.Inner.Vhd = new VirtualHardDisk();
                         dataDisk.Inner.Vhd.Uri = storageAccount.EndPoints.Primary.Blob
                             + "vhds/"
                             + namePrefix + "-data-disk-" + dataDisk.Lun + "-" + Guid.NewGuid().ToString() + ".vhd";
@@ -218,12 +208,12 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
 
-        internal static void EnsureDisksVhdUri (IList<IVirtualMachineDataDisk> dataDisks, string namePrefix)
+        internal static void EnsureDisksVhdUri(IList<IVirtualMachineDataDisk> dataDisks, string namePrefix)
         {
             string containerUrl = null;
             foreach (IVirtualMachineDataDisk dataDisk in dataDisks)
             {
-                if (dataDisk.CreateOption == DiskCreateOptionTypes.Empty && dataDisk.Inner.Vhd != null)
+                if (dataDisk.CreationMethod == DiskCreateOptionTypes.Empty && dataDisk.Inner.Vhd != null)
                 {
                     int idx = dataDisk.Inner.Vhd.Uri.LastIndexOf('/');
                     containerUrl = dataDisk.Inner.Vhd.Uri.Substring(0, idx);
@@ -234,7 +224,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             {
                 foreach (IVirtualMachineDataDisk dataDisk in dataDisks)
                 {
-                    if (dataDisk.CreateOption == DiskCreateOptionTypes.Empty)
+                    if (dataDisk.CreationMethod == DiskCreateOptionTypes.Empty)
                     {
                         //New data disk requires Vhd Uri to be set
                         if (dataDisk.Inner.Vhd == null)
@@ -248,16 +238,16 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
 
-        private static string BlobUrl (string storageAccountName, string containerName, string blobName)
+        private static string BlobUrl(string storageAccountName, string containerName, string blobName)
         {
 
             // Future: Get the storage domain from the environment
-            return  "https://" + storageAccountName + ".blob.core.windows.net" + "/" + containerName + "/" + blobName;
+            return "https://" + storageAccountName + ".blob.core.windows.net" + "/" + containerName + "/" + blobName;
         }
 
         VirtualMachine.Update.IUpdate ISettable<VirtualMachine.Update.IUpdate>.Parent()
         {
-            return base.Parent as VirtualMachine.Update.IUpdate;
+            return Parent;
         }
     }
 }

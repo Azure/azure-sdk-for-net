@@ -1,16 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.V2.Network;
-using Microsoft.Azure.Management.V2.Resource;
-using Microsoft.Azure.Management.V2.Resource.Authentication;
-using Microsoft.Azure.Management.V2.Resource.Core;
-using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+using Microsoft.Azure.Management.Fluent.Network;
+using Microsoft.Azure.Management.Fluent.Resource;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
+using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Fluent.Tests
@@ -105,7 +102,7 @@ namespace Fluent.Tests
             Assert.True(batchNics.Any(nic => nic.Name.Equals(nic3Name, StringComparison.OrdinalIgnoreCase)));
             Assert.True(batchNics.Any(nic => nic.Name.Equals(nic4Name, StringComparison.OrdinalIgnoreCase)));
 
-            IResourceGroup resourceGroup = (IResourceGroup) batchNics.CreatedRelatedResource(rgCreatable.Key);
+            IResourceGroup resourceGroup = (IResourceGroup)batchNics.CreatedRelatedResource(rgCreatable.Key);
             Assert.NotNull(resourceGroup);
             INetwork network = (INetwork)batchNics.CreatedRelatedResource(networkCreatable.Key);
             Assert.NotNull(network);
@@ -133,20 +130,20 @@ namespace Fluent.Tests
                     .Append("\n\tMAC Address:").Append(resource.MacAddress)
                     .Append("\n\tPrivate IP:").Append(resource.PrimaryPrivateIp)
                     .Append("\n\tPrivate allocation method:").Append(resource.PrimaryPrivateIpAllocationMethod)
-                    .Append("\n\tSubnet Id:").Append(resource.PrimarySubnetId)
+                    .Append("\n\tSubnet Name:").Append(resource.PrimaryIpConfiguration().SubnetName)
                     .Append("\n\tIP configurations: ");
 
             // Output IP configs
-            foreach (INicIpConfiguration ipConfig in resource.IpConfigurations())
+            foreach (INicIpConfiguration ipConfig in resource.IpConfigurations().Values)
             {
                 info.Append("\n\t\tName: ").Append(ipConfig.Name)
-                    .Append("\n\t\tPrivate IP: ").Append(ipConfig.PrivateIp)
+                    .Append("\n\t\tPrivate IP: ").Append(ipConfig.PrivateIpAddress)
                     .Append("\n\t\tPrivate IP allocation method: ").Append(ipConfig.PrivateIpAllocationMethod)
                     .Append("\n\t\tPIP id: ").Append(ipConfig.PublicIpAddressId)
-                    .Append("\n\t\tSubnet ID: ").Append(ipConfig.SubnetId);
+                    .Append("\n\t\tSubnet Name: ").Append(ipConfig.SubnetName);
             }
 
-            System.Console.WriteLine(info.ToString());
+            Console.WriteLine(info.ToString());
         }
     }
 }

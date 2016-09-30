@@ -1,63 +1,143 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
-
-namespace Microsoft.Azure.Management.V2.Network
+// Licensed under the MIT License. See License.txt in the project root for license information.
+namespace Microsoft.Azure.Management.Fluent.Network
 {
-
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Network.PublicIpAddress.Definition;
-    using Microsoft.Azure.Management.Network.Models;
-    using Microsoft.Azure.Management.V2.Network.PublicIpAddress.Update;
-    using Microsoft.Rest;
+    using Management.Network.Models;
     using System.Threading;
-    using Microsoft.Azure.Management.V2.Resource;
     using System.Threading.Tasks;
-    using Resource.Core.ResourceActions;
-    using System;
+    using Resource;
     using Management.Network;
-    using Resource.Core.Resource.Update;
-    using System.Collections.Generic;
-    using Resource.Core.GroupableResource.Definition;
-    using Resource.Core.Resource.Definition;
+    using Resource.Core;
 
     /// <summary>
-    /// Implementation for {@link PublicIpAddress} and its create and update interfaces.
+    /// Implementation for PublicIpAddress.
     /// </summary>
-    /// 
-    public partial class PublicIpAddressImpl  :
+    public partial class PublicIpAddressImpl :
         GroupableResource<IPublicIpAddress,
-            PublicIPAddressInner, 
+            PublicIPAddressInner,
             Rest.Azure.Resource,
             PublicIpAddressImpl,
-            INetworkManager, 
+            INetworkManager,
             PublicIpAddress.Definition.IWithGroup,
             PublicIpAddress.Definition.IWithCreate,
             PublicIpAddress.Definition.IWithCreate,
-            IUpdate>,
+            PublicIpAddress.Update.IUpdate>,
         IPublicIpAddress,
-        IDefinition,
-        IUpdate
+        PublicIpAddress.Definition.IDefinition,
+        PublicIpAddress.Update.IUpdate
     {
         private IPublicIPAddressesOperations client;
-
-        internal  PublicIpAddressImpl (string name, PublicIPAddressInner innerModel, IPublicIPAddressesOperations client, INetworkManager networkManager)
-            : base(name, innerModel, networkManager)
+        internal PublicIpAddressImpl(
+            string name,
+            PublicIPAddressInner innerModel,
+            IPublicIPAddressesOperations client,
+            NetworkManager networkManager) : base(name, innerModel, networkManager)
         {
             this.client = client;
         }
 
+        public PublicIpAddressImpl WithIdleTimeoutInMinutes(int minutes)
+        {
+            this.Inner.IdleTimeoutInMinutes = minutes;
+            return this;
+        }
 
-        /// <returns>the assigned reverse FQDN, if any</returns>
-        string ReverseFqdn
+        public PublicIpAddressImpl WithStaticIp()
+        {
+
+            this.Inner.PublicIPAllocationMethod = IPAllocationMethod.Static;
+            return this;
+        }
+
+        public PublicIpAddressImpl WithDynamicIp()
+        {
+            this.Inner.PublicIPAllocationMethod = IPAllocationMethod.Dynamic;
+            return this;
+        }
+
+        public PublicIpAddressImpl WithLeafDomainLabel(string dnsName)
+        {
+            this.Inner.DnsSettings.DomainNameLabel = dnsName.ToLower();
+            return this;
+        }
+
+        public PublicIpAddressImpl WithoutLeafDomainLabel()
+        {
+            return this.WithLeafDomainLabel(null);
+        }
+
+        public PublicIpAddressImpl WithReverseFqdn(string reverseFqdn)
+        {
+            this.Inner.DnsSettings.ReverseFqdn = reverseFqdn.ToLower();
+            return this;
+        }
+
+        public PublicIpAddressImpl WithoutReverseFqdn()
+        {
+            return this.WithReverseFqdn(null);
+        }
+
+        public int? IdleTimeoutInMinutes
         {
             get
             {
-                return this.Inner.DnsSettings.ReverseFqdn;
+                return this.Inner.IdleTimeoutInMinutes;
             }
         }
 
-        /// <returns>the assigned leaf domain label</returns>
-        string LeafDomainLabel
+        public string IpAllocationMethod
+        {
+            get
+            {
+                return this.Inner.PublicIPAllocationMethod;
+            }
+        }
+
+        public string Version
+        {
+            get
+            {
+                return this.Inner.PublicIPAddressVersion;
+            }
+        }
+
+        public string Fqdn
+        {
+            get
+            {
+                if (this.Inner.DnsSettings != null)
+                {
+                    return this.Inner.DnsSettings.Fqdn;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        public string ReverseFqdn
+        {
+            get
+            {
+                if (this.Inner.DnsSettings != null)
+                {
+                    return this.Inner.DnsSettings.ReverseFqdn;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+        public string IpAddress
+        {
+            get
+            {
+                return this.Inner.IpAddress;
+            }
+        }
+        public string LeafDomainLabel
         {
             get
             {
@@ -71,127 +151,62 @@ namespace Microsoft.Azure.Management.V2.Network
                 }
             }
         }
-        
-        /// <returns>the assigned FQDN (fully qualified domain name)</returns>
-        string Fqdn
+        override public async Task<IPublicIpAddress> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            get
+            PublicIPAddressDnsSettings dnsSettings = this.Inner.DnsSettings;
+            if (dnsSettings != null)
             {
-                return this.Inner.DnsSettings.Fqdn;
+                if (string.IsNullOrWhiteSpace(dnsSettings.DomainNameLabel)
+                   && string.IsNullOrWhiteSpace(dnsSettings.Fqdn)
+                   && string.IsNullOrWhiteSpace(dnsSettings.ReverseFqdn))
+                {
+                    this.Inner.DnsSettings = null;
+                }
             }
+
+            this.SetInner(await this.client.CreateOrUpdateAsync(this.ResourceGroupName, this.Name, this.Inner));
+            return this;
         }
-        
-        /// <returns>the idle connection timeout setting (in minutes)</returns>
-        int? IdleTimeoutInMinutes
+
+        private bool? EqualsResourceType(string resourceType)
         {
-            get
+
+            IPConfigurationInner ipConfig = this.Inner.IpConfiguration;
+            if (ipConfig == null || resourceType == null)
             {
-                return this.Inner.IdleTimeoutInMinutes;
+                return false;
             }
-        }
-        
-        /// <returns>the assigned IP address</returns>
-        string IpAddress
-        {
-            get
+            else
             {
-                return this.Inner.IpAddress;
-            }
-        }
-        
-        /// <returns>the IP address allocation method (Static/Dynamic)</returns>
-        string IpAllocationMethod
-        {
-            get
-            {
-                return this.Inner.PublicIPAllocationMethod;
+                string refId = this.Inner.IpConfiguration.Id;
+                string resourceType2 = ResourceUtils.ResourceTypeFromResourceId(refId);
+                return resourceType.Equals(resourceType2, System.StringComparison.OrdinalIgnoreCase);
             }
         }
 
-        /// <summary>
-        /// Specifies the reverse FQDN to assign to this public IP address.
-        /// </summary>
-        /// <param name="reverseFQDN">reverseFQDN the reverse FQDN to assign</param>
-        /// <returns>the next stage of the resource update</returns>
-        IUpdate WithReverseFqdn(string reverseFQDN)
+        public bool? HasAssignedLoadBalancer
         {
-            this.Inner.DnsSettings.ReverseFqdn = reverseFQDN.ToLower();
-            return this;
+            get
+            {
+                return EqualsResourceType("frontendIPConfigurations");
+            }
         }
 
-        /// <summary>
-        /// Ensures that no reverse FQDN will be used.
-        /// </summary>
-        /// <returns>The next stage of the resource update</returns>
-        IUpdate WithoutReverseFqdn()
-        {
-            return ((PublicIpAddress.Update.IWithReverseFQDN)this).WithReverseFqdn(null);
-        }
-
-        /// <summary>
-        /// Specifies the timeout (in minutes) for an idle connection.
-        /// </summary>
-        /// <param name="minutes">minutes the length of the time out in minutes</param>
-        /// <returns>the next stage of the resource update</returns>
-        IUpdate WithIdleTimeoutInMinutes(int minutes)
+        public IPublicFrontend GetAssignedLoadBalancerFrontend()
         {
 
-            this.Inner.IdleTimeoutInMinutes = minutes;
-            return this;
-        }
-
-        /// <summary>
-        /// Ensures that no leaf domain label will be used.
-        /// <p>
-        /// This means that this public IP address will not be associated with a domain name.
-        /// </summary>
-        /// <returns>the next stage of the resource update</returns>
-        IUpdate WithoutLeafDomainLabel()
-        {
-
-            return ((PublicIpAddress.Update.IWithLeafDomainLabel)this).WithLeafDomainLabel(null);
-        }
-
-        /// <summary>
-        /// Specifies the leaf domain label to associate with this public IP address.
-        /// <p>
-        /// The fully qualified domain name (FQDN)
-        /// will be constructed automatically by appending the rest of the domain to this label.
-        /// </summary>
-        /// <param name="dnsName">dnsName the leaf domain label to use. This must follow the required naming convention for leaf domain names.</param>
-        /// <returns>the next stage of the resource update</returns>
-        IUpdate WithLeafDomainLabel(string dnsName)
-        {
-            this.Inner.DnsSettings.DomainNameLabel = dnsName.ToLower();
-            return this;
-        }
-
-        /// <summary>
-        /// Enables static IP address allocation.
-        /// <p>
-        /// Use {@link PublicIpAddress#ipAddress()} after the public IP address is updated to
-        /// obtain the actual IP address allocated for this resource by Azure
-        /// </summary>
-        /// <returns>the next stage of the resource update</returns>
-        IUpdate WithStaticIp()
-        {
-            this.Inner.PublicIPAllocationMethod = IPAllocationMethod.Static;
-            return this;
-        }
-
-        /// <summary>
-        /// Enables dynamic IP address allocation.
-        /// </summary>
-        /// <returns>the next stage of the resource update</returns>
-        IUpdate WithDynamicIp()
-        {
-            this.Inner.PublicIPAllocationMethod = IPAllocationMethod.Dynamic;
-            return this;
-        }
-
-        public override IUpdate Update()
-        {
-            return this;
+            if (this.HasAssignedLoadBalancer == true)
+            {
+                string refId = this.Inner.IpConfiguration.Id;
+                string loadBalancerId = ResourceUtils.ParentResourcePathFromResourceId(refId);
+                ILoadBalancer lb = this.Manager.LoadBalancers.GetById(loadBalancerId);
+                string frontendName = ResourceUtils.NameFromResourceId(refId);
+                return (IPublicFrontend)lb.Frontends()[frontendName];
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public override IPublicIpAddress Refresh()
@@ -202,23 +217,29 @@ namespace Microsoft.Azure.Management.V2.Network
             return this;
         }
 
-        public override async Task<IPublicIpAddress> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
+        public bool? HasAssignedNetworkInterface
         {
-            // // Clean up empty DNS settings
-            var dnsSettings = this.Inner.DnsSettings;
-            if (dnsSettings != null)
+            get
             {
-                if (string.IsNullOrWhiteSpace(dnsSettings.DomainNameLabel)
-                && string.IsNullOrWhiteSpace(dnsSettings.Fqdn)
-                && string.IsNullOrWhiteSpace(dnsSettings.ReverseFqdn))
-                {
-                    this.Inner.DnsSettings = null;
-                }
+                return EqualsResourceType("ipConfigurations");
             }
+        }
 
-            var response = await this.client.CreateOrUpdateAsync(this.ResourceGroupName, this.Name, this.Inner);
-            this.SetInner(response);
-            return this;
+        public INicIpConfiguration GetAssignedNetworkInterfaceIpConfiguration()
+        {
+
+            if (this.HasAssignedNetworkInterface == true)
+            {
+                string refId = this.Inner.IpConfiguration.Id;
+                string parentId = ResourceUtils.ParentResourcePathFromResourceId(refId);
+                INetworkInterface nic = this.Manager.NetworkInterfaces.GetById(parentId);
+                string childName = ResourceUtils.NameFromResourceId(refId);
+                return nic.IpConfigurations()[childName];
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

@@ -3,27 +3,29 @@
 
 using Microsoft.Azure.Management.Compute;
 using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Management.V2.Compute.AvailabilitySet.Definition;
-using Microsoft.Azure.Management.V2.Resource;
-using Microsoft.Azure.Management.V2.Resource.Core;
+using Microsoft.Azure.Management.Fluent.Resource;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.Management.V2.Compute
+namespace Microsoft.Azure.Management.Fluent.Compute
 {
-    internal partial class AvailabilitySetsImpl : 
+    /// <summary>
+    /// The implementation for AvailabilitySets.
+    /// </summary>
+    internal partial class AvailabilitySetsImpl :
         GroupableResources<IAvailabilitySet,
             AvailabilitySetImpl,
             AvailabilitySetInner,
-            IAvailabilitySetsOperations,
+            IAvailabilitySetsOperations, 
             IComputeManager>,
         IAvailabilitySets
     {
         internal AvailabilitySetsImpl(IAvailabilitySetsOperations client, IComputeManager computeManager) : base(client, computeManager)
         {}
 
-        public IBlank Define(string name)
+        public AvailabilitySetImpl Define(string name)
         {
             return WrapModel(name);
         }
@@ -52,7 +54,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         {
             // There is no API supporting listing of availabiltiy set across subscription so enumerate all RGs and then
             // flatten the "list of list of availibility sets" as "list of availibility sets" .
-            return new ChildListFlattener<IResourceGroup, IAvailabilitySet>(MyManager.ResourceManager.ResourceGroups.List(), (IResourceGroup resourceGroup) =>
+            return new ChildListFlattener<IResourceGroup, IAvailabilitySet>(Manager.ResourceManager.ResourceGroups.List(), (IResourceGroup resourceGroup) =>
             {
                 return ListByGroup(resourceGroup.Name);
             }).Flatten();
@@ -80,12 +82,12 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         protected override IAvailabilitySet WrapModel(AvailabilitySetInner availabilitySetInner)
         {
-            return new AvailabilitySetImpl(availabilitySetInner.Name, availabilitySetInner, InnerCollection, MyManager);
+            return new AvailabilitySetImpl(availabilitySetInner.Name, availabilitySetInner, InnerCollection, Manager);
         }
 
         protected override AvailabilitySetImpl WrapModel(string name)
         {
-            return new AvailabilitySetImpl(name, new AvailabilitySetInner(), InnerCollection, MyManager);
+            return new AvailabilitySetImpl(name, new AvailabilitySetInner(), InnerCollection, Manager);
         }
 
         #endregion

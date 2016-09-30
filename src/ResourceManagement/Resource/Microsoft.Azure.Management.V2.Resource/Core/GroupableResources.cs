@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
+using Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions;
 using System.Threading.Tasks;
 using System;
 using System.Threading;
 
-namespace Microsoft.Azure.Management.V2.Resource.Core
+namespace Microsoft.Azure.Management.Fluent.Resource.Core
 {
     public abstract class GroupableResources<IFluentResourceT, FluentResourceT, InnerResourceT, InnerCollectionT, ManagerT> :
         CreatableResources<IFluentResourceT, FluentResourceT, InnerResourceT>,
@@ -19,12 +19,12 @@ namespace Microsoft.Azure.Management.V2.Resource.Core
         protected GroupableResources(InnerCollectionT innerCollection, ManagerT manager)
         {
             InnerCollection = innerCollection;
-            MyManager = manager;
+            Manager = manager;
         }
 
         protected InnerCollectionT InnerCollection { get; }
 
-        protected ManagerT MyManager { get; }
+        protected ManagerT Manager { get; }
 
         #region Implementation of ISupportsGettingByGroup interface
 

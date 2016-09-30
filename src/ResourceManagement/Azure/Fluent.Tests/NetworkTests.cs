@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.V2.Network;
-using Microsoft.Azure.Management.V2.Resource.Authentication;
-using Microsoft.Azure.Management.V2.Resource.Core;
+using Microsoft.Azure.Management.Fluent.Network;
+using Microsoft.Azure.Management.Fluent.Resource.Authentication;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -75,7 +75,7 @@ namespace Fluent.Tests
                     .Append("\n\tRegion: ").Append(resource.Region)
                     .Append("\n\tTags: ").Append(resource.Tags)
                     .Append("\n\tAddress spaces: ").Append(resource.AddressSpaces)
-                    .Append("\n\tDNS server IPs: ").Append(resource.DnsServerIPs);
+                    .Append("\n\tDNS server IPs: ").Append(resource.DnsServerIps);
 
             // Output subnets
             foreach (ISubnet subnet in resource.Subnets().Values)
@@ -87,7 +87,7 @@ namespace Fluent.Tests
                 INetworkSecurityGroup nsg;
                 try
                 {
-                    nsg = subnet.NetworkSecurityGroup();
+                    nsg = subnet.GetNetworkSecurityGroup();
                 }
                 catch (Exception e)
                 {

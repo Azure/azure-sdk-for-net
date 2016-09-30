@@ -2,21 +2,21 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Network.Models;
-using Microsoft.Azure.Management.V2.Network;
-using Microsoft.Azure.Management.V2.Resource;
-using Microsoft.Azure.Management.V2.Resource.Authentication;
-using Microsoft.Azure.Management.V2.Resource.Core;
+using Microsoft.Azure.Management.Fluent.Network;
+using Microsoft.Azure.Management.Fluent.Resource;
+using Microsoft.Azure.Management.Fluent.Resource.Authentication;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
 
 namespace Fluent.Tests
 {
-
-    public class ManageVirtualNetwork {
-
+    public class ManageVirtualNetwork
+    {
         /**
          * Main entry point.
          * @param args the parameters
          */
-        public void Test() {
+        public void Test()
+        {
             string vnetName1 = ResourceNamer.RandomResourceName("vnet1", 20);
             string vnetName2 = ResourceNamer.RandomResourceName("vnet2", 20);
             string vnet1FrontEndSubnetName = "frontend";
@@ -35,23 +35,23 @@ namespace Fluent.Tests
                     .WithRegion(Region.US_EAST)
                     .WithExistingResourceGroup(rgName)
                     .DefineRule("DenyInternetInComing")
-                        .DenyInbound()
+                        .DenyInbound
                         .FromAddress("INTERNET")
-                        .FromAnyPort()
-                        .ToAnyAddress()
-                        .ToAnyPort()
+                        .FromAnyPort
+                        .ToAnyAddress
+                        .ToAnyPort
                         .WithAnyProtocol()
                         .Attach()
                     .DefineRule("DenyInternetOutGoing")
-                        .DenyOutbound()
-                        .FromAnyAddress()
-                        .FromAnyPort()
+                        .DenyOutbound
+                        .FromAnyAddress
+                        .FromAnyPort
                         .ToAddress("INTERNET")
-                        .ToAnyPort()
+                        .ToAnyPort
                         .WithAnyProtocol()
                         .Attach()
                     .Create();
-            
+
             INetwork virtualNetwork1 = manager.Networks
                     .Define(vnetName1)
                     .WithRegion(Region.US_EAST)
@@ -63,29 +63,29 @@ namespace Fluent.Tests
                         .WithExistingNetworkSecurityGroup(backEndSubnetNsg)
                         .Attach()
                     .Create();
-            
+
             INetworkSecurityGroup frontEndSubnetNsg = manager.NetworkSecurityGroups
                     .Define(vnet1FrontEndSubnetNsgName)
                     .WithRegion(Region.US_EAST)
                     .WithExistingResourceGroup(rgName)
                     .DefineRule("AllowHttpInComing")
-                        .AllowInbound()
+                        .AllowInbound
                         .FromAddress("INTERNET")
-                        .FromAnyPort()
-                        .ToAnyAddress()
+                        .FromAnyPort
+                        .ToAnyAddress
                         .ToPort(80)
                         .WithProtocol(SecurityRuleProtocol.Tcp)
                         .Attach()
                     .DefineRule("DenyInternetOutGoing")
-                        .DenyOutbound()
-                        .FromAnyAddress()
-                        .FromAnyPort()
+                        .DenyOutbound
+                        .FromAnyAddress
+                        .FromAnyPort
                         .ToAddress("INTERNET")
-                        .ToAnyPort()
+                        .ToAnyPort
                         .WithAnyProtocol()
                         .Attach()
                     .Create();
-            
+
             virtualNetwork1.Update()
                     .UpdateSubnet(vnet1FrontEndSubnetName)
                         .WithExistingNetworkSecurityGroup(frontEndSubnetNsg)
@@ -99,7 +99,8 @@ namespace Fluent.Tests
                     .Create();
 
 
-            foreach (INetwork virtualNetwork in manager.Networks.ListByGroup(rgName)) {
+            foreach (INetwork virtualNetwork in manager.Networks.ListByGroup(rgName))
+            {
             }
 
 

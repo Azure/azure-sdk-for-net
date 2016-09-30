@@ -1,15 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information
 
-namespace Microsoft.Azure.Management.V2.Compute
+namespace Microsoft.Azure.Management.Fluent.Compute
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
-    using System;
+    using Resource.Core;
 
     /// <summary>
-    /// The implementation for {@link VirtualMachineExtensionImages}.
+    /// The implementation for VirtualMachineExtensionImages.
     /// </summary>
     internal partial class VirtualMachineExtensionImagesImpl  :
         IVirtualMachineExtensionImages
@@ -20,12 +18,12 @@ namespace Microsoft.Azure.Management.V2.Compute
             this.publishers = publishers;
         }
 
-        public PagedList<Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtensionImage> ListByRegion (Region region)
+        public PagedList<IVirtualMachineExtensionImage> ListByRegion (Region region)
         {
             return ListByRegion(EnumNameAttribute.GetName(region));
         }
 
-        public PagedList<Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtensionImage> ListByRegion (string regionName)
+        public PagedList<IVirtualMachineExtensionImage> ListByRegion (string regionName)
         {
 
             PagedList<IVirtualMachinePublisher> publishers = Publishers().ListByRegion(regionName);
@@ -39,7 +37,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             PagedList<IVirtualMachineExtensionImageVersion> versions = new ChildListFlattener<IVirtualMachineExtensionImageType, IVirtualMachineExtensionImageVersion>(types,
                 (IVirtualMachineExtensionImageType type) =>
                 {
-                    return type.Versions.List();
+                    return type.Versions().List();
                 }).Flatten();
 
             return PagedListConverter.Convert(versions, version => {

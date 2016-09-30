@@ -4,7 +4,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
 {
 
     using Microsoft.Azure.Management.Graph.RBAC.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
     /// <summary>
     /// An immutable client-side representation of an Azure AD user.
     /// </summary>

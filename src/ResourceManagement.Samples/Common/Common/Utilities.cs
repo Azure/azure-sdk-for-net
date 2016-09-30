@@ -4,14 +4,14 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.Storage.Models;
-using Microsoft.Azure.Management.V2.Compute;
-using Microsoft.Azure.Management.V2.Storage;
+using Microsoft.Azure.Management.Fluent.Compute;
+using Microsoft.Azure.Management.Fluent.Storage;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Azure.Management.Fluent.Redis;
 using Microsoft.Azure.Management.Fluent.Batch;
-using Microsoft.Azure.Management.V2.Network;
+using Microsoft.Azure.Management.Fluent.Network;
 
 namespace Microsoft.Azure.Management.Samples.Common
 {
@@ -263,7 +263,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                     .Append("\n\tTags: ").Append(resource.Tags);
 
             // Output security rules
-            foreach (var rule in resource.SecurityRules())
+            foreach (var rule in resource.SecurityRules().Values)
             {
                 nsgOutput.Append("\n\tRule: ").Append(rule.Name)
                         .Append("\n\t\tAccess: ").Append(rule.Access)

@@ -1,20 +1,28 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
-
-namespace Microsoft.Azure.Management.V2.Network.Subnet.UpdateDefinition
+// Licensed under the MIT License. See License.txt in the project root for license information.
+namespace Microsoft.Azure.Management.Fluent.Network.Subnet.UpdateDefinition
 {
 
-    using Microsoft.Azure.Management.V2.Network;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.Fluent.Network;
     /// <summary>
-    /// The entirety of a subnet definition as part of a virtual network update.
-    /// @param <ParentT> the return type of the final {@link UpdateDefinitionStages.WithAttach#attach()}
+    /// The first stage of the subnet definition.
+    /// @param <ParentT> the return type of the final {@link WithAttach#attach()}
     /// </summary>
-    public interface IUpdateDefinition<ParentT>  :
-        IBlank<ParentT>,
-        IWithAddressPrefix<ParentT>,
-        IWithNetworkSecurityGroup<ParentT>,
-        IWithAttach<ParentT>
+    public interface IBlank<ParentT>  :
+        IWithAddressPrefix<ParentT>
+    {
+    }
+    /// <summary>
+    /// The final stage of the subnet definition.
+    /// <p>
+    /// At this stage, any remaining optional settings can be specified, or the subnet definition
+    /// can be attached to the parent virtual network definition using {@link WithAttach#attach()}.
+    /// @param <ParentT> the return type of {@link WithAttach#attach()}
+    /// </summary>
+    public interface IWithAttach<ParentT>  :
+        IInUpdate<ParentT>,
+        IWithNetworkSecurityGroup<ParentT>
     {
     }
     /// <summary>
@@ -39,14 +47,6 @@ namespace Microsoft.Azure.Management.V2.Network.Subnet.UpdateDefinition
 
     }
     /// <summary>
-    /// The first stage of the subnet definition.
-    /// @param <ParentT> the return type of the final {@link WithAttach#attach()}
-    /// </summary>
-    public interface IBlank<ParentT>  :
-        IWithAddressPrefix<ParentT>
-    {
-    }
-    /// <summary>
     /// The stage of the subnet definition allowing to specify the address space for the subnet.
     /// @param <ParentT> the parent type
     /// </summary>
@@ -61,15 +61,14 @@ namespace Microsoft.Azure.Management.V2.Network.Subnet.UpdateDefinition
 
     }
     /// <summary>
-    /// The final stage of the subnet definition.
-    /// <p>
-    /// At this stage, any remaining optional settings can be specified, or the subnet definition
-    /// can be attached to the parent virtual network definition using {@link WithAttach#attach()}.
-    /// @param <ParentT> the return type of {@link WithAttach#attach()}
+    /// The entirety of a subnet definition as part of a virtual network update.
+    /// @param <ParentT> the return type of the final {@link UpdateDefinitionStages.WithAttach#attach()}
     /// </summary>
-    public interface IWithAttach<ParentT>  :
-        IInUpdate<ParentT>,
-        IWithNetworkSecurityGroup<ParentT>
+    public interface IUpdateDefinition<ParentT>  :
+        IBlank<ParentT>,
+        IWithAddressPrefix<ParentT>,
+        IWithNetworkSecurityGroup<ParentT>,
+        IWithAttach<ParentT>
     {
     }
 }

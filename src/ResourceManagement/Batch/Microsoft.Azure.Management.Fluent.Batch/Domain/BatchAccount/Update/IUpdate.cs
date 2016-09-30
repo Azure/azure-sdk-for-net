@@ -4,12 +4,12 @@
 namespace Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Update
 {
 
-    using Microsoft.Azure.Management.V2.Storage;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Storage;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.Fluent.Batch.Application.Update;
     using Microsoft.Azure.Management.Fluent.Batch.Application.UpdateDefinition;
     using Microsoft.Azure.Management.Fluent.Batch;
-    using V2.Resource.Core.Resource.Update;
+    using Fluent.Resource.Core.Resource.Update;
 
     /// <summary>
     /// The stage of the batch account update definition allowing to specify storage account.
@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Update
         /// </summary>
         /// <param name="storageAccountCreatable">storageAccountCreatable storage account to be created along with and used in batch</param>
         /// <returns>the stage representing updatable batch account definition</returns>
-        Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Update.IUpdate WithNewStorageAccount (ICreatable<Microsoft.Azure.Management.V2.Storage.IStorageAccount> storageAccountCreatable);
+        Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Update.IUpdate WithNewStorageAccount (ICreatable<Microsoft.Azure.Management.Fluent.Storage.IStorageAccount> storageAccountCreatable);
 
         /// <summary>
         /// Specifies that an existing storage account to be attached with the batch account.
