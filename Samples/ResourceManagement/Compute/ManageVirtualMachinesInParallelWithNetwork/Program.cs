@@ -46,7 +46,7 @@ namespace ManageVirtualMachinesInParallelWithNetwork
 
                 var azure = Azure
                     .Configure()
-                    .withLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
+                    .WithLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
                     .Authenticate(credentials)
                     .WithSubscription(credentials.DefaultSubscriptionId);
 

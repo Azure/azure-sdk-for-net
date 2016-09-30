@@ -37,7 +37,7 @@ namespace ManageResource
 
                 var azure = Azure
                     .Configure()
-                    .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                    .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                     .Authenticate(credentials)
                     .WithSubscription(credentials.DefaultSubscriptionId);
 
