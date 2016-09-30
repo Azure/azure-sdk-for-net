@@ -36,11 +36,11 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             return new ApplicationPackageImpl(name, parent, inner, client);
         }
 
-        public PackageState? State
+        public PackageState State
         {
             get
             {
-                return Inner.State;
+                return Inner.State.GetValueOrDefault();
             }
         }
 
@@ -99,19 +99,19 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             }
         }
 
-        public DateTime? StorageUrlExpiry
+        public DateTime StorageUrlExpiry
         {
             get
             {
-                return Inner.StorageUrlExpiry;
+                return Inner.StorageUrlExpiry.GetValueOrDefault();
             }
         }
 
-        public DateTime? LastActivationTime
+        public DateTime LastActivationTime
         {
             get
             {
-                return Inner.LastActivationTime;
+                return Inner.LastActivationTime.GetValueOrDefault();
             }
         }
 

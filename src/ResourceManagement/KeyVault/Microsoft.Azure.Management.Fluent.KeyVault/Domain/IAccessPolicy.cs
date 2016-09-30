@@ -1,6 +1,5 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-
 namespace Microsoft.Azure.Management.Fluent.KeyVault
 {
 
@@ -10,8 +9,8 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
     /// An immutable client-side representation of a key vault access policy.
     /// </summary>
     public interface IAccessPolicy  :
-        IChildResource<IVault>,
-        IWrapper<AccessPolicyEntry>
+        IChildResource<Microsoft.Azure.Management.Fluent.KeyVault.IVault>,
+        IWrapper<Microsoft.Azure.Management.KeyVault.Models.AccessPolicyEntry>
     {
         /// <returns>The Azure Active Directory tenant ID that should be used for</returns>
         /// <returns>authenticating requests to the key vault.</returns>

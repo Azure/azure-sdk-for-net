@@ -18,10 +18,10 @@ namespace Microsoft.Azure.Management.Fluent.Batch
         string DisplayName { get; }
 
         /// <returns>the list of application packages</returns>
-        IDictionary<string,Microsoft.Azure.Management.Fluent.Batch.IApplicationPackage> ApplicationPackages ();
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Fluent.Batch.IApplicationPackage> ApplicationPackages { get; }
 
         /// <returns>true if automatic updates are allowed, otherwise false</returns>
-        bool? UpdatesAllowed { get; }
+        bool UpdatesAllowed { get; }
 
         /// <returns>the default version for application.</returns>
         string DefaultVersion { get; }

@@ -119,11 +119,9 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
             }
         }
 
-        public AccessPolicyImpl AllowKeyPermission (KeyPermissions permission)
+        public AccessPolicyImpl AllowKeyPermissions (params KeyPermissions[] permissions)
         {
-            InitializeKeyPermissions();
-            Inner.Permissions.Keys.Add(permission.ToString());
-            return this;
+            return AllowKeyPermissions(new List<KeyPermissions>(permissions));
         }
 
         public AccessPolicyImpl AllowKeyPermissions (IList<KeyPermissions> permissions)
@@ -131,16 +129,14 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
             InitializeKeyPermissions();
             foreach (var permission in permissions)
             {
-                Inner.Permissions.Keys.Add(permissions.ToString());
+                Inner.Permissions.Keys.Add(permission.ToString());
             }
             return this;
         }
 
-        public AccessPolicyImpl AllowSecretPermission (SecretPermissions permission)
+        public AccessPolicyImpl AllowSecretPermissions (params SecretPermissions[] permissions)
         {
-            InitializeSecretPermissions();
-            Inner.Permissions.Secrets.Add(permission.ToString());
-            return this;
+            return AllowSecretPermissions(new List<SecretPermissions>(permissions));
         }
 
         public AccessPolicyImpl AllowSecretPermissions (IList<SecretPermissions> permissions)
@@ -148,7 +144,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
             InitializeSecretPermissions();
             foreach (var permission in permissions)
             {
-                Inner.Permissions.Secrets.Add(permissions.ToString());
+                Inner.Permissions.Secrets.Add(permission.ToString());
             }
             return this;
         }
@@ -197,7 +193,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
 
         public AccessPolicyImpl AllowKeyAllPermissions ()
         {
-            return AllowKeyPermission(KeyPermissions.All);
+            return AllowKeyPermissions(KeyPermissions.All);
         }
 
         public AccessPolicyImpl DisallowKeyAllPermissions ()
@@ -207,11 +203,9 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
             return this;
         }
 
-        public AccessPolicyImpl DisallowKeyPermission (KeyPermissions permission)
+        public AccessPolicyImpl DisallowKeyPermissions (params KeyPermissions[] permissions)
         {
-            InitializeSecretPermissions();
-            Inner.Permissions.Keys.Remove(permission.ToString());
-            return this;
+            return DisallowKeyPermissions(new List<KeyPermissions>(permissions));
         }
 
         public AccessPolicyImpl DisallowKeyPermissions (IList<KeyPermissions> permissions)
@@ -226,7 +220,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
 
         public AccessPolicyImpl AllowSecretAllPermissions ()
         {
-            return AllowSecretPermission(SecretPermissions.All);
+            return AllowSecretPermissions(SecretPermissions.All);
         }
 
         public AccessPolicyImpl DisallowSecretAllPermissions ()
@@ -236,11 +230,9 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
             return this;
         }
 
-        public AccessPolicyImpl DisallowSecretPermission (SecretPermissions permission)
+        public AccessPolicyImpl DisallowSecretPermissions (params SecretPermissions[] permissions)
         {
-            InitializeSecretPermissions();
-            Inner.Permissions.Secrets.Remove(permission.ToString());
-            return this;
+            return DisallowSecretPermissions(new List<SecretPermissions>(permissions));
         }
 
         public AccessPolicyImpl DisallowSecretPermissions (IList<SecretPermissions> permissions)

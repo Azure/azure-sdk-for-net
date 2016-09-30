@@ -88,11 +88,11 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             return this;
         }
 
-        public Management.Batch.Models.ProvisioningState? ProvisioningState
+        public Management.Batch.Models.ProvisioningState ProvisioningState
         {
             get
             {
-                return Inner.ProvisioningState;
+                return Inner.ProvisioningState.GetValueOrDefault();
             }
         }
 
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             }
         }
 
-        public int? CoreQuota
+        public int CoreQuota
         {
             get
             {
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             }
         }
 
-        public int? PoolQuota
+        public int PoolQuota
         {
             get
             {
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             }
         }
 
-        public int? ActiveJobAndJobScheduleQuota
+        public int ActiveJobAndJobScheduleQuota
         {
             get
             {
@@ -153,9 +153,12 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             innerCollection.SynchronizeAutoStorageKeys(ResourceGroupName, Name);
         }
 
-        public IDictionary<string, IApplication> Applications()
+        public IDictionary<string, IApplication> Applications
         {
-            return applicationsImpl.AsMap();
+            get
+            {
+                return applicationsImpl.AsMap();
+            }
         }
 
         public BatchAccountImpl WithExistingStorageAccount(IStorageAccount storageAccount)

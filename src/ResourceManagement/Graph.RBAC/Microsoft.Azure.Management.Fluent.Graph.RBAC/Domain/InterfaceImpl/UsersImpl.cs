@@ -61,14 +61,6 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
         }
 
         /// <summary>
-        /// Deletes a resource from Azure, identifying it by its resource ID.
-        /// </summary>
-        /// <param name="id">id the resource ID of the resource to delete</param>
-        void Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsDeleting.Delete (string id) {
-            this.Delete( id);
-        }
-
-        /// <summary>
         /// Lists all the resources of the specified type in the currently selected subscription.
         /// </summary>
         /// <returns>list of resources</returns>

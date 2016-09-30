@@ -57,16 +57,19 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             }
         }
 
-        public IDictionary<string, Microsoft.Azure.Management.Fluent.Batch.IApplicationPackage> ApplicationPackages()
-        {
-            return applicationPackages.AsMap();
-        }
-
-        public bool? UpdatesAllowed
+        public IDictionary<string, Microsoft.Azure.Management.Fluent.Batch.IApplicationPackage> ApplicationPackages
         {
             get
             {
-                return Inner.AllowUpdates;
+                return applicationPackages.AsMap();
+            }
+        }
+
+        public bool UpdatesAllowed
+        {
+            get
+            {
+                return Inner.AllowUpdates.GetValueOrDefault();
             }
         }
 

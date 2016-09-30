@@ -20,33 +20,33 @@ namespace Microsoft.Azure.Management.Fluent.Batch
     {
         /// <returns>the provisioned state of the resource. Possible values include:</returns>
         /// <returns>'Invalid', 'Creating', 'Deleting', 'Succeeded', 'Failed', 'Cancelled'</returns>
-        ProvisioningState? ProvisioningState { get; }
+        Microsoft.Azure.Management.Batch.Models.ProvisioningState ProvisioningState { get; }
 
         /// <returns>Get the accountEndpoint value.</returns>
         string AccountEndpoint { get; }
 
         /// <returns>the properties and status of any auto storage account associated with</returns>
         /// <returns>the account</returns>
-        AutoStorageProperties AutoStorage { get; }
+        Microsoft.Azure.Management.Batch.Models.AutoStorageProperties AutoStorage { get; }
 
         /// <returns>the core quota for this BatchAccount account</returns>
-        int? CoreQuota { get; }
+        int CoreQuota { get; }
 
         /// <returns>the pool quota for this BatchAccount account</returns>
-        int? PoolQuota { get; }
+        int PoolQuota { get; }
 
         /// <returns>the active job and job schedule quota for this BatchAccount account</returns>
-        int? ActiveJobAndJobScheduleQuota { get; }
+        int ActiveJobAndJobScheduleQuota { get; }
 
         /// <returns>the access keys for this batch account</returns>
-        BatchAccountKeys GetKeys ();
+        Microsoft.Azure.Management.Fluent.Batch.BatchAccountKeys GetKeys ();
 
         /// <summary>
         /// Regenerates the access keys for batch account.
         /// </summary>
         /// <param name="keyType">keyType either primary or secondary key to be regenerated</param>
         /// <returns>the access keys for this batch account</returns>
-        BatchAccountKeys RegenerateKeys (AccountKeyType keyType);
+        Microsoft.Azure.Management.Fluent.Batch.BatchAccountKeys RegenerateKeys (AccountKeyType keyType);
 
         /// <summary>
         /// Synchronize the storage account keys for batch account.
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
         void SynchronizeAutoStorageKeys ();
 
         /// <returns>the application in this batch account.</returns>
-        IDictionary<string,Microsoft.Azure.Management.Fluent.Batch.IApplication> Applications ();
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Fluent.Batch.IApplication> Applications { get; }
 
     }
 }

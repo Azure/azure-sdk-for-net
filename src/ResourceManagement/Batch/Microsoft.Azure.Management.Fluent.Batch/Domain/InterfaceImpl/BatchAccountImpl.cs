@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
         }
 
         /// <returns>the pool quota for this BatchAccount account</returns>
-        int? Microsoft.Azure.Management.Fluent.Batch.IBatchAccount.PoolQuota
+        int Microsoft.Azure.Management.Fluent.Batch.IBatchAccount.PoolQuota
         {
             get
             {
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
         }
 
         /// <returns>the core quota for this BatchAccount account</returns>
-        int? Microsoft.Azure.Management.Fluent.Batch.IBatchAccount.CoreQuota
+        int Microsoft.Azure.Management.Fluent.Batch.IBatchAccount.CoreQuota
         {
             get
             {
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
         }
         /// <returns>the provisioned state of the resource. Possible values include:</returns>
         /// <returns>'Invalid', 'Creating', 'Deleting', 'Succeeded', 'Failed', 'Cancelled'</returns>
-        Microsoft.Azure.Management.Batch.Models.ProvisioningState? Microsoft.Azure.Management.Fluent.Batch.IBatchAccount.ProvisioningState
+        Microsoft.Azure.Management.Batch.Models.ProvisioningState Microsoft.Azure.Management.Fluent.Batch.IBatchAccount.ProvisioningState
         {
             get
             {
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             }
         }
         /// <returns>the active job and job schedule quota for this BatchAccount account</returns>
-        int? Microsoft.Azure.Management.Fluent.Batch.IBatchAccount.ActiveJobAndJobScheduleQuota
+        int Microsoft.Azure.Management.Fluent.Batch.IBatchAccount.ActiveJobAndJobScheduleQuota
         {
             get
             {
@@ -123,8 +123,12 @@ namespace Microsoft.Azure.Management.Fluent.Batch
         }
 
         /// <returns>the application in this batch account.</returns>
-        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Fluent.Batch.IApplication> Microsoft.Azure.Management.Fluent.Batch.IBatchAccount.Applications () {
-            return this.Applications() as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Fluent.Batch.IApplication>;
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Fluent.Batch.IApplication> Microsoft.Azure.Management.Fluent.Batch.IBatchAccount.Applications
+        {
+            get
+            {
+                return this.Applications as System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Fluent.Batch.IApplication>;
+            }
         }
 
         /// <summary>
