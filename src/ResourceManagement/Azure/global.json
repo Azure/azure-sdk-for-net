@@ -1,3 +1,0 @@
-{
-  "projects": [ "Microsoft.Azure.Management", "../Resource", "../Storage", "../Compute", "../Network", "../Batch", "../RedisCache", "../Graph.RBAC", "../KeyVault" ]
-}

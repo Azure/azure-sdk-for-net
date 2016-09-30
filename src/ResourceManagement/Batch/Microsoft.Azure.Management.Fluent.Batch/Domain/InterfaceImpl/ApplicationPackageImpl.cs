@@ -19,14 +19,6 @@ namespace Microsoft.Azure.Management.Fluent.Batch
                 return this.State;
             }
         }
-        /// <returns>the name of application package.</returns>
-        string Microsoft.Azure.Management.Fluent.Batch.IApplicationPackage.Name
-        {
-            get
-            {
-                return this.Name as string;
-            }
-        }
         /// <returns>the date when last time this application package was activate.</returns>
         System.DateTime Microsoft.Azure.Management.Fluent.Batch.IApplicationPackage.LastActivationTime
         {

@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.KeyVault.Models
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public virtual void Validate()
+        public override void Validate()
         {
             if (Properties == null)
             {

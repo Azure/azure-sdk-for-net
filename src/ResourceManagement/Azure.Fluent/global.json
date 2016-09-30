@@ -1,0 +1,3 @@
+{
+  "projects": [ "../ResourceManager", "../Storage", "../Compute", "../Network", "../Batch", "../Graph.RBAC", "../KeyVault" ]
+}

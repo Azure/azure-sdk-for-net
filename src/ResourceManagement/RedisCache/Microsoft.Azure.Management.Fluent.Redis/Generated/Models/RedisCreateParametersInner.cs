@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.Fluent.Redis.Models
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public virtual void Validate()
+        public override void Validate()
         {
             if (Sku == null)
             {

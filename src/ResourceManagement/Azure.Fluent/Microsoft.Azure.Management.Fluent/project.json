@@ -1,0 +1,54 @@
+{
+  "version": "0.0.1-prerelease",
+  "description": "Microsoft Azure Management Fluent API library.",
+  "authors": [ "Microsoft" ],
+
+  "packOptions": {
+    "summary": "Microsoft Azure Management Fluent API library.",
+    "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
+    "tags": [ "Microsoft Azure Management Fluent", "REST HTTP client", "azureofficial", "windowsazureofficial" ],
+    "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+    "requireLicenseAcceptance": true
+  },
+
+  "buildOptions": {
+    "delaySign": true,
+    "publicSign": false,
+    "keyFile": "../../../../tools/MSSharedLibKey.snk"
+  },
+
+  "dependencies": {
+    "Microsoft.Azure.Management.Fluent.Batch": "0.0.1-prerelease",
+    "Microsoft.Azure.Management.Fluent.Compute": "0.0.1-prerelease",
+    "Microsoft.Azure.Management.Fluent.KeyVault": "0.0.1-prerelease",
+    "Microsoft.Azure.Management.Fluent.Network": "0.0.1-prerelease",
+    "Microsoft.Azure.Management.Fluent.ResourceManager": "0.0.1-prerelease",
+    "Microsoft.Azure.Management.Fluent.Storage": "0.0.1-prerelease"
+  },
+
+  "frameworks": {
+    "net45": {
+      "dependencies": {
+      }
+    },
+    "netstandard1.5": {
+      "imports": [ "dnxcore50" ],
+      "buildOptions": { "define": [ "PORTABLE" ] },
+      "dependencies": {
+        "Microsoft.NETCore.Platforms": "1.0.1",
+        "System.Diagnostics.Tools": "4.0.1",
+        "System.Net.Http": "4.1.0",
+        "System.Runtime.Serialization.Primitives": "4.1.1",
+        "System.Threading.Tasks": "4.0.11"
+      }
+    },
+    "netstandard1.1": {
+      "imports": [ "dnxcore50" ],
+      "buildOptions": { "define": [ "PORTABLE" ] },
+      "dependencies": {
+        "System.Runtime.Serialization.Primitives": "4.1.1"
+      }
+    }
+  }
+}
