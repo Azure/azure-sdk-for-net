@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
 
         internal NetworkSecurityGroupImpl WithRule(NetworkSecurityRuleImpl rule)
         {
-            rules[rule.Name] = rule;
+            rules[rule.Name()] = rule;
             return this;
         }
         #endregion

@@ -22,12 +22,9 @@ namespace Microsoft.Azure.Management.Fluent.Network
         }
 
         #region Accessors
-        override public string Name
+        override public string Name()
         {
-            get
-            {
-                return Inner.Name;
-            }
+            return Inner.Name;
         }
 
         public string Direction

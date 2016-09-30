@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
                         comitted.Add(res);
                         res.PendingOperation = PendingOperation.None;
                         FluentModelTImpl val;
-                        this.collection.TryRemove(res.Name, out val);
+                        this.collection.TryRemove(res.Name(), out val);
                     }
                 });
                 allTasks.Add(task);
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
                     if (createTask.IsFaulted)
                     {
                         FluentModelTImpl val;
-                        this.collection.TryRemove(res.Name, out val);
+                        this.collection.TryRemove(res.Name(), out val);
                         exceptions.Add(createTask.Exception);
                     }
                     else
@@ -217,7 +217,7 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
         /// <param name="childResource">childResource the external child resource</param>
         protected void AddChildResource(FluentModelTImpl childResource)
         {
-            this.collection.AddOrUpdate(childResource.Name,
+            this.collection.AddOrUpdate(childResource.Name(),
                 key => childResource,
                 (string key, FluentModelTImpl oldVal) => { return childResource; });
         }
@@ -231,7 +231,7 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
             this.collection.Clear();
             foreach (FluentModelTImpl childResource in this.ListChildResources())
             {
-                this.collection.AddOrUpdate(childResource.Name, 
+                this.collection.AddOrUpdate(childResource.Name(), 
                     key => childResource, 
                     (string key, FluentModelTImpl oldVal) => { return childResource;});
             }

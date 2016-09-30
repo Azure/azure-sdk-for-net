@@ -145,7 +145,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
         {
             get
             {
-                return this.Name as string;
+                return this.Name() as string;
             }
         }
         /// <summary>

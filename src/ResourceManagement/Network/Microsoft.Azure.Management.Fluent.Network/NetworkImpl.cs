@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
         {
             if (subnet != null)
             {
-                subnets[subnet.Name] = subnet;
+                subnets[subnet.Name()] = subnet;
             }
             return this;
         }
