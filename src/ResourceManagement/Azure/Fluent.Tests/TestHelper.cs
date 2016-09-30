@@ -18,9 +18,9 @@ namespace Fluent.Tests
         public static IAzure CreateRollupClient()
         {
             AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
-            return Azure.Configure()
-            .Authenticate(credentials)
-            .WithSubscription(credentials.DefaultSubscriptionId);
+            return Microsoft.Azure.Management.Azure.Configure()
+                .Authenticate(credentials)
+                .WithSubscription(credentials.DefaultSubscriptionId);
         }
 
         public static INetworkManager CreateNetworkManager()
