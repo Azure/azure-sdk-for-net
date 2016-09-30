@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
         /// <summary>
         /// Tests an uneventful upload from scratch made of several segments
         /// </summary>
-        [Fact(Skip ="This test is failing in build machine, toDo: BeGoldSm to fix this")]
+        [Fact(Skip = "begoldsm has acknowledged the flakiness of these tests. Hence skipping and issue 2344 is opened to track the progress")]
         public void MultipleSegmentUploader_MultipleSegmentsAndMultipleThreads()
         {
             var fe = new InMemoryFrontEnd();
