@@ -275,7 +275,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
                 return null;
             else 
             {
-                frontends[frontend.Name] = frontend;
+                frontends[frontend.Name()] = frontend;
                 return this;
             }
         }
@@ -286,11 +286,11 @@ namespace Microsoft.Azure.Management.Fluent.Network
                 return this;
             else if (probe.Protocol.Equals(ProbeProtocol.Http))
             {
-                httpProbes[probe.Name] = probe;
+                httpProbes[probe.Name()] = probe;
             }
             else if (probe.Protocol.Equals(ProbeProtocol.Tcp))
             {
-                tcpProbes[probe.Name]= probe;
+                tcpProbes[probe.Name()] = probe;
             }
             return this;
         }
@@ -300,7 +300,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             if (loadBalancingRule == null)
                 return null;
             else {
-                loadBalancingRules[loadBalancingRule.Name] = loadBalancingRule;
+                loadBalancingRules[loadBalancingRule.Name()] = loadBalancingRule;
                 return this;
             }
         }
@@ -310,7 +310,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             if (inboundNatRule == null)
                 return null;
             else {
-                inboundNatRules[inboundNatRule.Name] = inboundNatRule;
+                inboundNatRules[inboundNatRule.Name()] = inboundNatRule;
                 return this;
             }
         }
@@ -320,7 +320,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             if (inboundNatPool == null)
                 return null;
             else {
-                inboundNatPools[inboundNatPool.Name] = inboundNatPool;
+                inboundNatPools[inboundNatPool.Name()] = inboundNatPool;
                 return this;
             }
         }
@@ -330,7 +330,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             if (backend == null)
                 return null;
             else {
-                backends[backend.Name] = backend;
+                backends[backend.Name()] = backend;
                 return this;
             }
         }

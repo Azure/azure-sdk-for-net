@@ -250,8 +250,8 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         string Microsoft.Azure.Management.Fluent.Resource.Core.IChildResource<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet>.Name
         {
             get
-            { 
-            return this.Name() as string;
+            {
+                return this.Name() as string;
             }
         }
         /// <summary>

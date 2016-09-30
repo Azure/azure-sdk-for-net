@@ -31,8 +31,8 @@ namespace Fluent.Tests
                     .Create();
 
                 Assert.True(string.Equals(availabilitySet.ResourceGroupName, rgName));
-                Assert.True(availabilitySet.UpdateDomainCount.HasValue && availabilitySet.UpdateDomainCount == 2);
-                Assert.True(availabilitySet.FaultDomainCount.HasValue && availabilitySet.FaultDomainCount == 3);
+                Assert.True(availabilitySet.UpdateDomainCount == 2);
+                Assert.True(availabilitySet.FaultDomainCount == 3);
 
                 // Get
                 var feteched = computeManager.AvailabilitySets.GetById(availabilitySet.Id);

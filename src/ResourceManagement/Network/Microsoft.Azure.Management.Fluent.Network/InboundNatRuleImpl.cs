@@ -23,12 +23,9 @@ namespace Microsoft.Azure.Management.Fluent.Network
         {
         }
 
-        override public string Name
+        override public string Name()
         {
-            get
-            {
-                return Inner.Name;
-            }
+            return Inner.Name;
         }
 
         public string BackendNicIpConfigurationName

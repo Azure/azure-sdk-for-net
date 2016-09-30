@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             var inner = await client.CreateAsync(
                 Parent.ResourceGroupName,
                 Parent.Name,
-                Name, createParameter, cancellationToken);
+                Name(), createParameter, cancellationToken);
             SetInner(inner);
             await applicationPackages.CommitAndGetAllAsync(cancellationToken);
 
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             updateParameter.DisplayName = Inner.DisplayName;
             updateParameter.AllowUpdates = Inner.AllowUpdates;
 
-            await client.UpdateAsync(Parent.ResourceGroupName, Parent.Name, Name, updateParameter, cancellationToken);
+            await client.UpdateAsync(Parent.ResourceGroupName, Parent.Name, Name(), updateParameter, cancellationToken);
             await applicationPackages.CommitAndGetAllAsync(cancellationToken);
 
             return this;
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
 
         public override async Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await client.DeleteAsync(Parent.ResourceGroupName, Parent.Name, Name, cancellationToken);
+            await client.DeleteAsync(Parent.ResourceGroupName, Parent.Name, Name(), cancellationToken);
         }
 
         public IApplication Refresh()

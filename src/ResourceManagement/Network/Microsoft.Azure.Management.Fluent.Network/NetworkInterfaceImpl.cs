@@ -400,7 +400,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
                 foreach (NetworkInterfaceIPConfigurationInner inner in inners)
                 {
                     NicIpConfigurationImpl nicIpConfiguration = new NicIpConfigurationImpl(inner, this, Manager, false);
-                    nicIpConfigurations.Add(nicIpConfiguration.Name, nicIpConfiguration);
+                    nicIpConfigurations.Add(nicIpConfiguration.Name(), nicIpConfiguration);
                 }
             }
         }
@@ -424,7 +424,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
 
         internal NetworkInterfaceImpl WithIpConfiguration(NicIpConfigurationImpl nicIpConfiguration)
         {
-            nicIpConfigurations.Add(nicIpConfiguration.Name, nicIpConfiguration);
+            nicIpConfigurations.Add(nicIpConfiguration.Name(), nicIpConfiguration);
             return this;
         }
 

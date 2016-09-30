@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
     /// <summary>
     /// The implementation for DataDisk and its create and update interfaces.
     /// </summary>
-    internal partial class DataDiskImpl  :
+    internal partial class DataDiskImpl :
         ChildResource<DataDisk,
             VirtualMachineImpl,
             IVirtualMachine>,
@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         {
         }
 
-        internal static DataDiskImpl PrepareDataDisk (string name, DiskCreateOptionTypes createOption, VirtualMachineImpl parent)
+        internal static DataDiskImpl PrepareDataDisk(string name, DiskCreateOptionTypes createOption, VirtualMachineImpl parent)
         {
             DataDisk dataDiskInner = new DataDisk();
             dataDiskInner.Lun = -1;
@@ -38,17 +38,17 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             return new DataDiskImpl(dataDiskInner, parent);
         }
 
-        internal static DataDiskImpl CreateNewDataDisk (int sizeInGB, VirtualMachineImpl parent)
+        internal static DataDiskImpl CreateNewDataDisk(int sizeInGB, VirtualMachineImpl parent)
         {
             DataDiskImpl dataDiskImpl = PrepareDataDisk(null, DiskCreateOptionTypes.Empty, parent);
             dataDiskImpl.Inner.DiskSizeGB = sizeInGB;
             return dataDiskImpl;
         }
 
-        internal static DataDiskImpl CreateFromExistingDisk (string storageAccountName, string containerName, string vhdName, VirtualMachineImpl parent)
+        internal static DataDiskImpl CreateFromExistingDisk(string storageAccountName, string containerName, string vhdName, VirtualMachineImpl parent)
         {
             DataDiskImpl dataDiskImpl = PrepareDataDisk(null, DiskCreateOptionTypes.Attach, parent);
-            VirtualHardDisk diskVhd = 
+            VirtualHardDisk diskVhd =
                 new VirtualHardDisk();
             diskVhd.Uri = BlobUrl(storageAccountName, containerName, vhdName);
             dataDiskImpl.Inner.Vhd = diskVhd;

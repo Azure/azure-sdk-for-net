@@ -48,21 +48,18 @@ namespace Microsoft.Azure.Management.Fluent.Batch
         {
             get
             {
-                return Parent.Parent.Id + "/applications/" + Parent.Name + "/versions/" + Name;
+                return Parent.Parent.Id + "/applications/" + Parent.Name() + "/versions/" + Name();
             }
         }
 
-        public override string Name
+        public override string Name()
         {
-            get
-            {
-                return Inner.Version;
-            }
+            return Inner.Version;
         }
 
         public override async Task<IApplicationPackage> CreateAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            var applicationPackageInner = await client.CreateAsync(Parent.Parent.ResourceGroupName, Parent.Parent.Name, Parent.Name, Name, cancellationToken);
+            var applicationPackageInner = await client.CreateAsync(Parent.Parent.ResourceGroupName, Parent.Parent.Name, Parent.Name(), Name(), cancellationToken);
             SetInner(applicationPackageInner);
 
             return this;
@@ -75,12 +72,12 @@ namespace Microsoft.Azure.Management.Fluent.Batch
 
         public void Delete()
         {
-            client.Delete(Parent.Parent.ResourceGroupName, Parent.Parent.Name, Parent.Name, Name);
+            client.Delete(Parent.Parent.ResourceGroupName, Parent.Parent.Name, Parent.Name(), Name());
         }
 
         public override async Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await client.DeleteAsync(Parent.Parent.ResourceGroupName, Parent.Parent.Name, Parent.Name, Name, cancellationToken);
+            await client.DeleteAsync(Parent.Parent.ResourceGroupName, Parent.Parent.Name, Parent.Name(), Name(), cancellationToken);
         }
 
         public string Format
@@ -125,12 +122,12 @@ namespace Microsoft.Azure.Management.Fluent.Batch
 
         public void Activate(string format)
         {
-            client.Activate(Parent.Parent.ResourceGroupName, Parent.Parent.Name, Parent.Name, Name, format);
+            client.Activate(Parent.Parent.ResourceGroupName, Parent.Parent.Name, Parent.Name(), Name(), format);
         }
 
         public IApplicationPackage Refresh()
         {
-            ApplicationPackageInner inner = client.Get(Parent.Parent.ResourceGroupName, Parent.Parent.Name, Parent.Name, Name);
+            ApplicationPackageInner inner = client.Get(Parent.Parent.ResourceGroupName, Parent.Parent.Name, Parent.Name(), Name());
             SetInner(inner);
             return this;
         }
