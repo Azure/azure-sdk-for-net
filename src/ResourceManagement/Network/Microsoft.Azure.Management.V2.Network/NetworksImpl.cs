@@ -10,6 +10,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
     using System.Threading;
     using Management.Network;
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Implementation for Networks.
@@ -26,115 +27,102 @@ namespace Microsoft.Azure.Management.Fluent.Network
         internal  NetworksImpl (NetworkManagementClient networkClient, NetworkManager networkManager)
             : base(networkClient.VirtualNetworks, networkManager)
         {
-
-            //$ final NetworkManagementClientImpl networkClient,
-            //$ final NetworkManager networkManager) {
-            //$ super(networkClient.virtualNetworks(), networkManager);
-            //$ }
-
         }
 
         public PagedList<INetwork> List ()
         {
+            var pagedList = new PagedList<VirtualNetworkInner>(InnerCollection.ListAll(), (string nextPageLink) =>
+            {
+                return InnerCollection.ListAllNext(nextPageLink);
+            });
 
-            //$ return wrapList(this.innerCollection.listAll());
-
-            return null;
+            return WrapList(pagedList);
         }
 
         public PagedList<INetwork> ListByGroup (string groupName)
         {
+            var pagedList = new PagedList<VirtualNetworkInner>(InnerCollection.List(groupName), (string nextPageLink) =>
+            {
+                return InnerCollection.ListNext(nextPageLink);
+            });
 
-            //$ return wrapList(this.innerCollection.list(groupName));
-
-            return null;
+            return WrapList(pagedList);
         }
 
         public NetworkImpl Define (string name)
         {
-
-            //$ return wrapModel(name);
-
-            return null;
+            return WrapModel(name);
         }
 
         Task DeleteAsync(string groupName, string name)
         {
-            throw new NotImplementedException();
+            return InnerCollection.DeleteAsync(groupName, name);
         }
 
         public override async Task<INetwork> GetByGroupAsync(string groupName, string name)
         {
-            return this as INetwork;
+            var data = await InnerCollection.GetAsync(groupName, name);
+            return WrapModel(data);
         }
 
         override protected NetworkImpl WrapModel (string name)
         {
+            VirtualNetworkInner inner = new VirtualNetworkInner();
+            
+            // Initialize address space
+            AddressSpace addressSpace = inner.AddressSpace;
+            if (addressSpace == null)
+            {
+                addressSpace = new AddressSpace();
+                inner.AddressSpace = addressSpace;
+            }
 
-            //$ VirtualNetworkInner inner = new VirtualNetworkInner();
-            //$ 
-            //$ // Initialize address space
-            //$ AddressSpace addressSpace = inner.addressSpace();
-            //$ if (addressSpace == null) {
-            //$ addressSpace = new AddressSpace();
-            //$ inner.withAddressSpace(addressSpace);
-            //$ }
-            //$ 
-            //$ if (addressSpace.addressPrefixes() == null) {
-            //$ addressSpace.withAddressPrefixes(new ArrayList<String>());
-            //$ }
-            //$ 
-            //$ // Initialize subnets
-            //$ if (inner.subnets() == null) {
-            //$ inner.withSubnets(new ArrayList<SubnetInner>());
-            //$ }
-            //$ 
-            //$ // Initialize DHCP options (DNS servers)
-            //$ DhcpOptions dhcp = inner.dhcpOptions();
-            //$ if (dhcp == null) {
-            //$ dhcp = new DhcpOptions();
-            //$ inner.withDhcpOptions(dhcp);
-            //$ }
-            //$ 
-            //$ if (dhcp.dnsServers() == null) {
-            //$ dhcp.withDnsServers(new ArrayList<String>());
-            //$ }
-            //$ 
-            //$ return new NetworkImpl(
-            //$ name,
-            //$ inner,
-            //$ this.innerCollection,
-            //$ super.myManager);
+            if (addressSpace.AddressPrefixes == null)
+            {
+                addressSpace.AddressPrefixes = new List<string>();
+            }
+            
+            // Initialize subnets
+            if (inner.Subnets == null)
+            {
+                inner.Subnets = new List<SubnetInner>();
+            }
 
-            return null;
+            // Initialize DHCP options (DNS servers)
+            DhcpOptions dhcp = inner.DhcpOptions;
+            if (dhcp == null)
+            {
+                dhcp = new DhcpOptions();
+                inner.DhcpOptions = dhcp;
+            }
+
+            if (dhcp.DnsServers == null)
+            {
+                dhcp.DnsServers = new List<string>();
+            }
+            
+            return new NetworkImpl(name, inner, InnerCollection, Manager);
         }
 
         //$TODO: this should return NetworkImpl
         override protected INetwork WrapModel (VirtualNetworkInner inner)
         {
-
-            //$ return new NetworkImpl(
-            //$ inner.name(),
-            //$ inner,
-            //$ this.innerCollection,
-            //$ this.myManager);
-
-            return null;
+            return new NetworkImpl(inner.Name, inner, InnerCollection, Manager);
         }
 
-        void ISupportsDeleting.Delete(string id)
+        public void Delete(string id)
         {
-            throw new NotImplementedException();
+            DeleteAsync(id).Wait();
         }
 
-        Task ISupportsDeleting.DeleteAsync(string id, CancellationToken cancellationToken)
+        public Task DeleteAsync(string id, CancellationToken cancellationToken = default(CancellationToken))
         {
-            throw new NotImplementedException();
+            return DeleteAsync(ResourceUtils.GroupFromResourceId(id), ResourceUtils.NameFromResourceId(id));
         }
 
-        void ISupportsDeletingByGroup.Delete(string groupName, string name)
+        public void Delete(string groupName, string name)
         {
-            throw new NotImplementedException();
+            DeleteAsync(groupName, name).Wait();
         }
     }
 }

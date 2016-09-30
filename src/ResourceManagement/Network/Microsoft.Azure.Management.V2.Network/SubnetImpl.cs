@@ -5,6 +5,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
     using Management.Network.Models;
     using Resource.Core;
     using Resource.Core.ChildResourceActions;
+    using Rest.Azure;
     using System;
 
     /// <summary>
@@ -17,7 +18,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
         Subnet.UpdateDefinition.IUpdateDefinition<Network.Update.IUpdate>,
         Subnet.Update.IUpdate
     {
-        protected  SubnetImpl (SubnetInner inner, NetworkImpl parent) : base(inner.Name, inner, parent)
+        internal SubnetImpl (SubnetInner inner, NetworkImpl parent) : base(inner.Name, inner, parent)
         {
         }
 
@@ -25,76 +26,50 @@ namespace Microsoft.Azure.Management.Fluent.Network
         {
             get
             {
-            //$ return this.inner().addressPrefix();
-
-
-                return null;
+                return Inner.AddressPrefix;
             }
         }
+
         override public string Name
         {
             get
             {
-            //$ return this.inner().name();
-
-
-                return null;
+                return Inner.Name;
             }
         }
-        public INetworkSecurityGroup NetworkSecurityGroup ()
+
+        public INetworkSecurityGroup GetNetworkSecurityGroup ()
         {
-
-            //$ SubResource nsgResource = this.inner().networkSecurityGroup();
-            //$ if (nsgResource == null) {
-            //$ return null;
-            //$ } else {
-            //$ return this.parent().manager().networkSecurityGroups().getById(nsgResource.id());
-            //$ }
-
-            return null;
+            var nsgResource = Inner.NetworkSecurityGroup;
+            return (nsgResource != null) ? Parent.Manager.NetworkSecurityGroups.GetById(nsgResource.Id) : null;
         }
 
         public SubnetImpl WithExistingNetworkSecurityGroup (string resourceId)
         {
-
-            //$ // Workaround for REST API's expectation of an object rather than string ID - should be fixed in Swagger specs or REST
-            //$ SubResource reference = new SubResource();
-            //$ reference.withId(resourceId);
-            //$ 
-            //$ this.inner().withNetworkSecurityGroup(reference);
-            //$ return this;
-
+            NetworkSecurityGroupInner reference = new NetworkSecurityGroupInner(id: resourceId);
+            Inner.NetworkSecurityGroup = reference;
             return this;
         }
 
         public SubnetImpl WithAddressPrefix (string cidr)
         {
-
-            //$ this.inner().withAddressPrefix(cidr);
-            //$ return this;
-
+            Inner.AddressPrefix = cidr;
             return this;
         }
 
         public NetworkImpl Attach ()
         {
-
-            //$ return this.parent().withSubnet(this);
-
-            return null;
+            return Parent.WithSubnet(this);
         }
 
         public SubnetImpl WithExistingNetworkSecurityGroup (INetworkSecurityGroup nsg)
         {
-
-            //$ return withExistingNetworkSecurityGroup(nsg.id());
-
-            return this;
+            return WithExistingNetworkSecurityGroup(nsg.Id);
         }
 
         Network.Update.IUpdate ISettable<Network.Update.IUpdate>.Parent()
         {
-            throw new NotImplementedException();
+            return Parent;
         }
     }
 }

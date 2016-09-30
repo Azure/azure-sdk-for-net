@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
         List<string> AddressSpaces { get; }
 
         /// <returns>list of DNS server IP addresses associated with this virtual network</returns>
-        List<string> DnsServerIPs { get; }
+        IList<string> DnsServerIps { get; }
 
         /// <returns>subnets of this virtual network as a map indexed by subnet name</returns>
         /// <returns><p>Note that when a virtual network is created with no subnets explicitly defined, a default subnet is</returns>
