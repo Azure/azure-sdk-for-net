@@ -798,7 +798,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
 
         internal VirtualMachineScaleSetImpl WithExtension(VirtualMachineScaleSetExtensionImpl extension)
         {
-            this.extensions.Add(extension.Name, extension);
+            this.extensions.Add(extension.Name(), extension);
             return this;
         }
 

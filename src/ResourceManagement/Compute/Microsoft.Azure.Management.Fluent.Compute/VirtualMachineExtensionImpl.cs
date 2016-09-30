@@ -241,7 +241,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         {
             VirtualMachineExtensionInner inner = await this.client.CreateOrUpdateAsync(this.Parent.ResourceGroupName,
                 this.Parent.Name,
-                this.Name,
+                this.Name(),
                 this.Inner,
                 cancellationToken);
             this.SetInner(inner);
@@ -287,7 +287,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         {
             return this.client.DeleteAsync(this.Parent.ResourceGroupName,
                 this.Parent.Name,
-                this.Name);
+                this.Name());
         }
 
         /// <returns>true if this is just a reference to the extension.</returns>

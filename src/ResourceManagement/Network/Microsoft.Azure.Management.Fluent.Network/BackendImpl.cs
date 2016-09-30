@@ -61,12 +61,9 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return rules;
         }
 
-        override public string Name
+        override public string Name()
         {
-            get
-            {
-                return this.Inner.Name;
-            }
+            return this.Inner.Name;
         }
 
         public ISet<string> GetVirtualMachineIds ()

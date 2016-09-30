@@ -271,7 +271,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         {
             get
             {
-                return this.Name as string;
+                return this.Name() as string;
             }
         }
         /// <summary>

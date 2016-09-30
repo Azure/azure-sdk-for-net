@@ -54,13 +54,11 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             return dataDiskImpl;
         }
 
-        public override string Name
+        public override string Name()
         {
-            get
-            {
-                return Inner.Name;
-            }
+            return Inner.Name;
         }
+
         public int Size
         {
             get

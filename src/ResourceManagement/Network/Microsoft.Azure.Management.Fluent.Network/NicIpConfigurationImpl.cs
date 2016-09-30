@@ -50,12 +50,9 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return new NicIpConfigurationImpl(ipConfigurationInner, parent, networkManager, true);
         }
 
-        override public string Name
+        override public string Name()
         {
-            get
-            {
-                return Inner.Name;
-            }
+            return Inner.Name;
         }
 
         public string PrivateIpAddressVersion

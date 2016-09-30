@@ -28,12 +28,9 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             InitializeSettings();
         }
 
-        public override string Name
+        public override string Name()
         {
-            get
-            {
-                return this.Inner.Name;
-            }
+            return this.Inner.Name;
         }
         public string PublisherName
         {

@@ -89,12 +89,9 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
                 return Inner.Permissions;
             }
         }
-        public override string Name
+        public override string Name()
         {
-            get
-            {
-                return ObjectId;
-            }
+            return ObjectId;
         }
 
         private void InitializeKeyPermissions ()
