@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 namespace Microsoft.Azure.Management.Fluent.Compute
 {
@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
     /// <p>
     /// Note: Azure virtual machine extension image is also referred as virtual machine extension handler.
     /// </summary>
-    public interface IVirtualMachineExtensionImage :
+    public interface IVirtualMachineExtensionImage  :
         IWrapper<Microsoft.Azure.Management.Compute.Models.VirtualMachineExtensionImageInner>
     {
         /// <returns>the resource ID of the extension image</returns>
@@ -29,22 +29,22 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         string VersionName { get; }
 
         /// <returns>the operating system this virtual machine extension image supports</returns>
-        OperatingSystemTypes? OsType { get; }
+        Microsoft.Azure.Management.Compute.Models.OperatingSystemTypes OsType { get; }
 
         /// <returns>the type of role this virtual machine extension image supports</returns>
-        ComputeRoles? ComputeRole { get; }
+        Microsoft.Azure.Management.Fluent.Compute.ComputeRoles ComputeRole { get; }
 
         /// <returns>the schema defined by publisher, where extension consumers should provide settings in a matching schema</returns>
         string HandlerSchema { get; }
 
         /// <returns>true if the extension can be used with virtual machine scale sets, false otherwise</returns>
-        bool? SupportsVirtualMachineScaleSets { get; }
+        bool SupportsVirtualMachineScaleSets { get; }
 
         /// <returns>true if the handler can support multiple extensions</returns>
-        bool? SupportsMultipleExtensions { get; }
+        bool SupportsMultipleExtensions { get; }
 
         /// <returns>the virtual machine extension image version this image belongs to</returns>
-        IVirtualMachineExtensionImageVersion Version();
+        Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineExtensionImageVersion Version { get; }
 
     }
 }

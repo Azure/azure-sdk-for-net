@@ -120,16 +120,13 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             this.client.Redeploy(this.ResourceGroupName, this.Name);
         }
 
-        public PagedList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineSize> AvailableSizes // TODO: Converter emits this as property in this Impl (but emitted correctly as method in IVirtualMachine and InterfaceImpl/VirtualMachineImpl), this should be emitted as method
+        public PagedList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineSize> AvailableSizes() // TODO: Converter emits this as property in this Impl (but emitted correctly as method in IVirtualMachine and InterfaceImpl/VirtualMachineImpl), this should be emitted as method
         {
-            get
-            {
-                return PagedListConverter.Convert<VirtualMachineSize, IVirtualMachineSize>(this.client.ListAvailableSizes(this.ResourceGroupName,
-                    this.Name), innerSize =>
-                    {
-                        return new VirtualMachineSizeImpl(innerSize);
-                    });
-            }
+            return PagedListConverter.Convert<VirtualMachineSize, IVirtualMachineSize>(this.client.ListAvailableSizes(this.ResourceGroupName,
+                this.Name), innerSize =>
+                {
+                    return new VirtualMachineSizeImpl(innerSize);
+                });
         }
 
         public string Capture (string containerName, bool overwriteVhd)
@@ -142,15 +139,12 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             return JsonConvert.SerializeObject(captureResult.Output);
         }
 
-        public VirtualMachineInstanceView RefreshInstanceView // TODO: Converter emits this as property in this Impl (but emitted correctly as method in IVirtualMachine and InterfaceImpl/VirtualMachineImpl), this should be emitted as method
+        public VirtualMachineInstanceView RefreshInstanceView()
         {
-            get
-            {
-                this.virtualMachineInstanceView = this.client.Get(this.ResourceGroupName,
-                    this.Name,
-                    InstanceViewTypes.InstanceView).InstanceView;
-                return this.virtualMachineInstanceView;
-            }
+            this.virtualMachineInstanceView = this.client.Get(this.ResourceGroupName,
+                this.Name,
+                InstanceViewTypes.InstanceView).InstanceView;
+            return this.virtualMachineInstanceView;
         }
 
         /// <summary>
@@ -369,22 +363,16 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             return this;
         }
 
-        public VirtualMachineImpl DisableVmAgent
+        public VirtualMachineImpl DisableVmAgent()
         {
-            get
-            {
-                this.Inner.OsProfile.WindowsConfiguration.ProvisionVMAgent = false;
-                return this;
-            }
+            this.Inner.OsProfile.WindowsConfiguration.ProvisionVMAgent = false;
+            return this;
         }
 
-        public VirtualMachineImpl DisableAutoUpdate
+        public VirtualMachineImpl DisableAutoUpdate()
         {
-            get
-            {
-                this.Inner.OsProfile.WindowsConfiguration.EnableAutomaticUpdates = false;
-                return this;
-            }
+            this.Inner.OsProfile.WindowsConfiguration.EnableAutomaticUpdates = false;
+            return this;
         }
 
         public VirtualMachineImpl WithTimeZone (string timeZone)
@@ -635,70 +623,50 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             return this;
         }
 
-        public string ComputerName
+        public string ComputerName()
         {
-            get
-            {
-                return Inner.OsProfile.ComputerName;
-            }
+            return Inner.OsProfile.ComputerName;
         }
 
-        public VirtualMachineSizeTypes Size
+        public VirtualMachineSizeTypes Size()
         {
-            get
-            {
-                return new VirtualMachineSizeTypes(Inner.HardwareProfile.VmSize);
-            }
+            return new VirtualMachineSizeTypes(Inner.HardwareProfile.VmSize);
+            
         }
 
-        public OperatingSystemTypes OsType
+        public OperatingSystemTypes OsType()
         {
-            get
-            {
-                return Inner.StorageProfile.OsDisk.OsType.Value;
-            }
+            return Inner.StorageProfile.OsDisk.OsType.Value;
         }
-        public string OsDiskVhdUri
+        public string OsDiskVhdUri()
         {
-            get
-            {
-                return Inner.StorageProfile.OsDisk.Vhd.Uri;
-            }
+            return Inner.StorageProfile.OsDisk.Vhd.Uri;
         }
-        public CachingTypes OsDiskCachingType
+        public CachingTypes OsDiskCachingType()
         {
-            get
-            {
                 return Inner.StorageProfile.OsDisk.Caching.Value;
-            }
         }
 
-        public int OsDiskSize
+        public int OsDiskSize()
         {
-            get
+            if (Inner.StorageProfile.OsDisk.DiskSizeGB == null)
             {
-                if (Inner.StorageProfile.OsDisk.DiskSizeGB == null)
-                {
-                    // Server returns OS disk size as 0 for auto-created disks for which
-                    // size was not explicitly set by the user.
-                    return 0;
-                }
-
-                return Inner.StorageProfile.OsDisk.DiskSizeGB.Value;
+                // Server returns OS disk size as 0 for auto-created disks for which
+                // size was not explicitly set by the user.
+                return 0;
             }
+
+            return Inner.StorageProfile.OsDisk.DiskSizeGB.Value;
         }
 
-        public IList<IVirtualMachineDataDisk> DataDisks
+        public IList<IVirtualMachineDataDisk> DataDisks()
         {
-            get
-            {
-                return this.dataDisks;
-            }
+            return this.dataDisks;
         }
 
         public INetworkInterface GetPrimaryNetworkInterface ()
         {
-            return this.primaryNetworkInterface = this.networkManager.NetworkInterfaces.GetById(this.PrimaryNetworkInterfaceId);
+            return this.primaryNetworkInterface = this.networkManager.NetworkInterfaces.GetById(this.PrimaryNetworkInterfaceId());
         }
 
         public IPublicIpAddress GetPrimaryPublicIpAddress ()
@@ -711,161 +679,123 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             return this.GetPrimaryNetworkInterface().PrimaryIpConfiguration().PublicIpAddressId;
         }
 
-        public List<string> NetworkInterfaceIds
+        public List<string> NetworkInterfaceIds()
         {
-            get
+            List<string> nicIds = new List<string>();
+            foreach (NetworkInterfaceReferenceInner nicRef in Inner.NetworkProfile.NetworkInterfaces)
             {
-                List<string> nicIds = new List<string>();
+                nicIds.Add(nicRef.Id);
+            }
+            return nicIds;
+        }
+        public string PrimaryNetworkInterfaceId()
+        {
+            IList<NetworkInterfaceReferenceInner> nicRefs = this.Inner.NetworkProfile.NetworkInterfaces;
+            String primaryNicRefId = null;
+
+            if (nicRefs.Count == 1)
+            {
+                // One NIC so assume it to be primary
+                primaryNicRefId = nicRefs[0].Id;
+            }
+            else if (nicRefs.Count == 0)
+            {
+                // No NICs so null
+                primaryNicRefId = null;
+            }
+            else
+            {
+                // Find primary interface as flagged by Azure
                 foreach (NetworkInterfaceReferenceInner nicRef in Inner.NetworkProfile.NetworkInterfaces)
                 {
-                    nicIds.Add(nicRef.Id);
+                    if (nicRef.Primary != null && nicRef.Primary == true)
+                    {
+                        primaryNicRefId = nicRef.Id;
+                        break;
+                    }
                 }
-                return nicIds;
-            }
-        }
-        public string PrimaryNetworkInterfaceId
-        {
-            get
-            {
-                IList<NetworkInterfaceReferenceInner> nicRefs = this.Inner.NetworkProfile.NetworkInterfaces;
-                String primaryNicRefId = null;
 
-                if (nicRefs.Count == 1)
+                // If Azure didn't flag any NIC as primary then assume the first one
+                if (primaryNicRefId == null)
                 {
-                    // One NIC so assume it to be primary
                     primaryNicRefId = nicRefs[0].Id;
                 }
-                else if (nicRefs.Count == 0)
-                {
-                    // No NICs so null
-                    primaryNicRefId = null;
-                }
-                else
-                {
-                    // Find primary interface as flagged by Azure
-                    foreach (NetworkInterfaceReferenceInner nicRef in Inner.NetworkProfile.NetworkInterfaces)
-                    {
-                        if (nicRef.Primary != null && nicRef.Primary == true)
-                        {
-                            primaryNicRefId = nicRef.Id;
-                            break;
-                        }
-                    }
-
-                    // If Azure didn't flag any NIC as primary then assume the first one
-                    if (primaryNicRefId == null)
-                    {
-                        primaryNicRefId = nicRefs[0].Id;
-                    }
-                }
-
-                return primaryNicRefId;
             }
+
+            return primaryNicRefId;
         }
 
-        public string AvailabilitySetId
+        public string AvailabilitySetId()
         {
-            get
+            if (Inner.AvailabilitySet != null)
             {
-                if (Inner.AvailabilitySet != null)
-                {
-                    return Inner.AvailabilitySet.Id;
-                }
-
-                return null;
+                return Inner.AvailabilitySet.Id;
             }
+
+            return null;
         }
 
-        public string ProvisioningState
+        public string ProvisioningState()
         {
-            get
-            {
-                return Inner.ProvisioningState;
-            }
+            return Inner.ProvisioningState;
         }
 
-        public string LicenseType
+        public string LicenseType()
         {
-            get
-            {
-                return Inner.LicenseType;
-            }
+            return Inner.LicenseType;
         }
 
-        public IDictionary<string, IVirtualMachineExtension> Extensions
+        public IDictionary<string, IVirtualMachineExtension> Extensions()
         {
-            get
-            {
-                return this.virtualMachineExtensions.AsMap();
-            }
+            return this.virtualMachineExtensions.AsMap();
         }
 
-        public Plan Plan
+        public Plan Plan()
         {
-            get
-            {
-                return Inner.Plan;
-            }
+            return Inner.Plan;
         }
 
-        public StorageProfile StorageProfile
+        public StorageProfile StorageProfile()
         {
-            get
-            {
-                return Inner.StorageProfile;
-            }
+            return Inner.StorageProfile;
         }
 
-        public OSProfile OsProfile
+        public OSProfile OsProfile()
         {
-            get
-            {
-                return Inner.OsProfile;
-            }
+            return Inner.OsProfile;
         }
 
-        public DiagnosticsProfile DiagnosticsProfile
+        public DiagnosticsProfile DiagnosticsProfile()
         {
-            get
-            {
-                return Inner.DiagnosticsProfile;
-            }
+            return Inner.DiagnosticsProfile;
         }
 
-        public string VmId
+        public string VmId()
         {
-            get
-            {
-                return Inner.VmId;
-            }
+            return Inner.VmId;
         }
 
-        public VirtualMachineInstanceView InstanceView
+        public VirtualMachineInstanceView InstanceView()
         {
-            get
+            if (this.virtualMachineInstanceView == null)
             {
-                if (this.virtualMachineInstanceView == null)
-                {
-                    this.virtualMachineInstanceView = this.RefreshInstanceView;
-                }
-
-                return this.virtualMachineInstanceView;
+                this.virtualMachineInstanceView = this.RefreshInstanceView();
             }
+
+            return this.virtualMachineInstanceView;
         }
 
-        public PowerState PowerState
+        public PowerState PowerState()
         {
-            get
+            string powerStateCode = this.GetStatusCodeFromInstanceView("PowerState");
+            if (powerStateCode != null)
             {
-                string powerStateCode = this.GetStatusCodeFromInstanceView("PowerState");
-                if (powerStateCode != null)
-                {
-                    return (PowerState)Enum.Parse(typeof(Microsoft.Azure.Management.Fluent.Compute.PowerState), powerStateCode);
-                }
-
-                return PowerState.UNKNOWN;
+                return (PowerState)Enum.Parse(typeof(Microsoft.Azure.Management.Fluent.Compute.PowerState), powerStateCode);
             }
+
+            return Compute.PowerState.UNKNOWN;
         }
+
         public override async Task<IVirtualMachine> CreateResourceAsync (CancellationToken cancellationToken = default(CancellationToken))
         {
             if (IsInCreateMode)
@@ -1200,7 +1130,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             }
 
             this.dataDisks = new List<IVirtualMachineDataDisk>();
-            foreach (DataDisk dataDiskInner in this.StorageProfile.DataDisks)
+            foreach (DataDisk dataDiskInner in this.StorageProfile().DataDisks)
             {
                 this.dataDisks.Add(new DataDiskImpl(dataDiskInner, this));
             }
@@ -1226,7 +1156,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
 
         private string GetStatusCodeFromInstanceView(string codePrefix)
         {
-            foreach (InstanceViewStatus status in this.InstanceView.Statuses)
+            foreach (InstanceViewStatus status in this.InstanceView().Statuses)
             {
                 if (status.Code != null && status.Code.StartsWith(codePrefix))
                 {

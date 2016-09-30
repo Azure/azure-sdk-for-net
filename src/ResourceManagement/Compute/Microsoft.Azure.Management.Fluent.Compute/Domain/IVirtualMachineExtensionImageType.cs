@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
     /// <summary>
     /// An immutable client-side representation of an Azure virtual machine extension image type.
     /// </summary>
-    public interface IVirtualMachineExtensionImageType :
+    public interface IVirtualMachineExtensionImageType  :
         IWrapper<Microsoft.Azure.Management.Compute.Models.VirtualMachineExtensionImageInner>
     {
         /// <returns>the resource ID of the virtual machine extension image type</returns>
@@ -21,10 +21,10 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         string RegionName { get; }
 
         /// <returns>the publisher of this virtual machine extension image type</returns>
-        IVirtualMachinePublisher Publisher();
+        Microsoft.Azure.Management.Fluent.Compute.IVirtualMachinePublisher Publisher { get; }
 
         /// <returns>Virtual machine image extension versions available in this type</returns>
-        IVirtualMachineExtensionImageVersions Versions();
+        Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineExtensionImageVersions Versions { get; }
 
     }
 }

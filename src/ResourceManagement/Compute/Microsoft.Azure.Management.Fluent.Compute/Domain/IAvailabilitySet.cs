@@ -3,31 +3,31 @@
 namespace Microsoft.Azure.Management.Fluent.Compute
 {
 
-    using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Update;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.Fluent.Resource.Core;
     using System.Collections.Generic;
+    using Microsoft.Azure.Management.Compute.Models;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Update;
     /// <summary>
     /// An immutable client-side representation of an Azure availability set.
     /// </summary>
-    public interface IAvailabilitySet :
+    public interface IAvailabilitySet  :
         IGroupableResource,
         IRefreshable<Microsoft.Azure.Management.Fluent.Compute.IAvailabilitySet>,
         IWrapper<Microsoft.Azure.Management.Compute.Models.AvailabilitySetInner>,
         IUpdatable<Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Update.IUpdate>
     {
         /// <returns>the update domain count of this availability set</returns>
-        int? UpdateDomainCount { get; }
+        int UpdateDomainCount { get; }
 
         /// <returns>the fault domain count of this availability set</returns>
-        int? FaultDomainCount { get; }
+        int FaultDomainCount { get; }
 
         /// <returns>the resource IDs of the virtual machines in the availability set</returns>
-        List<string> VirtualMachineIds { get; }
+        System.Collections.Generic.IList<string> VirtualMachineIds { get; }
 
         /// <returns>the statuses of the existing virtual machines in the availability set</returns>
-        List<Microsoft.Azure.Management.Compute.Models.InstanceViewStatus> Statuses { get; }
+        System.Collections.Generic.IList<Microsoft.Azure.Management.Compute.Models.InstanceViewStatus> Statuses { get; }
 
     }
 }

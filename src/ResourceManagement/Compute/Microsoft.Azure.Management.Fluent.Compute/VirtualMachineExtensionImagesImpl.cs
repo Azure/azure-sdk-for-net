@@ -26,28 +26,31 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         public PagedList<IVirtualMachineExtensionImage> ListByRegion (string regionName)
         {
 
-            PagedList<IVirtualMachinePublisher> publishers = Publishers().ListByRegion(regionName);
+            PagedList<IVirtualMachinePublisher> publishers = Publishers.ListByRegion(regionName);
 
             PagedList<IVirtualMachineExtensionImageType> types = new ChildListFlattener<IVirtualMachinePublisher, IVirtualMachineExtensionImageType>(publishers,
                 (IVirtualMachinePublisher publisher) =>
                 {
-                    return publisher.ExtensionTypes().List();
+                    return publisher.ExtensionTypes.List();
                 }).Flatten();
 
             PagedList<IVirtualMachineExtensionImageVersion> versions = new ChildListFlattener<IVirtualMachineExtensionImageType, IVirtualMachineExtensionImageVersion>(types,
                 (IVirtualMachineExtensionImageType type) =>
                 {
-                    return type.Versions().List();
+                    return type.Versions.List();
                 }).Flatten();
 
             return PagedListConverter.Convert(versions, version => {
-                return version.Image();
+                return version.getImage();
             });
         }
 
-        public IVirtualMachinePublishers Publishers ()
+        public IVirtualMachinePublishers Publishers
         {
-            return this.publishers;
+            get
+            {
+                return this.publishers;
+            }
         }
     }
 }

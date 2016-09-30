@@ -45,12 +45,9 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
             this.PendingOperation = PendingOperation.None;
         }
 
-        public override string Name
+        public override string Name()
         {
-            get
-            {
-                return this.name;
-            }
+            return this.name;
         }
 
         /// <returns>the in-memory state of this child resource and state represents any pending action on the child resource.</returns>

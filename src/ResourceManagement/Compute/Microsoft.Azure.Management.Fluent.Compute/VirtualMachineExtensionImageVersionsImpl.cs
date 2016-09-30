@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         {
             return WrapList(this.client.ListVersions(
                 type.RegionName,
-                type.Publisher().Name,
+                type.Publisher.Name,
                 type.Name));
         }
 
