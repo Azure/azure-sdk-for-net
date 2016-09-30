@@ -1,21 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management;
 using Microsoft.Azure.Management.Fluent.Resource.Authentication;
 using Microsoft.Azure.Management.Fluent.Resource.Core;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ListVirtualMachineExtensionImages
 {
-   /**
-    * List all virtual machine extension image publishers and
-    * list all virtual machine extension images published by Microsoft.OSTCExtensions, Microsoft.Azure.Extensions
-    * by browsing through extension image publishers, types, and versions.
-    */
+    /**
+     * List all virtual machine extension image publishers and
+     * list all virtual machine extension images published by Microsoft.OSTCExtensions, Microsoft.Azure.Extensions
+     * by browsing through extension image publishers, types, and versions.
+     */
+
     public class Program
     {
         public static void Main(string[] args)

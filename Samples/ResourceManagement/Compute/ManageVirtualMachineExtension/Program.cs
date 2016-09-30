@@ -13,9 +13,19 @@ using System.Collections.Generic;
 
 namespace ManageVirtualMachineExtension
 {
+    /**
+     * Azure Compute sample for managing virtual machine extensions. -
+     *  - Create a Linux and Windows virtual machine
+     *  - Add three users (user names and passwords for windows, SSH keys for Linux)
+     *  - Resets user credentials
+     *  - Remove a user
+     *  - Install MySQL on Linux | something significant on Windows
+     *  - Remove extensions
+     */
+
     public class Program
     {
-        readonly static string rgName = ResourceNamer.RandomResourceName("rgCOMV", 15);
+        readonly static string rgName = ResourceNamer.RandomResourceName("rgCOVE", 15);
         readonly static string linuxVmName = ResourceNamer.RandomResourceName("lVM", 10);
         readonly static string windowsVmName = ResourceNamer.RandomResourceName("wVM", 10);
         readonly static string pipDnsLabelLinuxVM = ResourceNamer.RandomResourceName("rgPip1", 25);
@@ -79,7 +89,7 @@ namespace ManageVirtualMachineExtension
 
                 var azure = Azure
                     .Configure()
-                    .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                    .withLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
                     .Authenticate(credentials)
                     .WithSubscription(credentials.DefaultSubscriptionId);
 
