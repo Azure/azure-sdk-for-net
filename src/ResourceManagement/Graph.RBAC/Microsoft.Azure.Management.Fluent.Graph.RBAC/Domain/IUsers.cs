@@ -4,7 +4,7 @@
 namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions;
     using Microsoft.Rest;
     using System.Threading.Tasks;
     using Microsoft.Azure.Management.Fluent.Graph.RBAC.User.Definition;

@@ -3,13 +3,13 @@
 
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Storage.Models;
-using Microsoft.Azure.Management.V2.Resource.Core;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.Management.V2.Storage
+namespace Microsoft.Azure.Management.Fluent.Storage
 {
     internal class StorageAccountsImpl :
         GroupableResources<

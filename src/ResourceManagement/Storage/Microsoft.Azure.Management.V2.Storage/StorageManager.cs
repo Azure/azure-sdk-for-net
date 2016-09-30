@@ -2,13 +2,13 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Storage;
-using Microsoft.Azure.Management.V2.Resource;
-using Microsoft.Azure.Management.V2.Resource.Core;
+using Microsoft.Azure.Management.Fluent.Resource;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
 using Microsoft.Rest;
 using System;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.V2.Storage
+namespace Microsoft.Azure.Management.Fluent.Storage
 {
     public class StorageManager : ManagerBase, IStorageManager
     {

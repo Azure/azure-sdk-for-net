@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Network.Network.Definition
+namespace Microsoft.Azure.Management.Fluent.Network.Network.Definition
 {
 
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Network.Subnet.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core.Resource.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.V2.Network;
-    using Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition;
+    using Microsoft.Azure.Management.Fluent.Network.Subnet.Definition;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.Resource.Definition;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Network;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.GroupableResource.Definition;
     /// <summary>
     /// The stage of the virtual network definition allowing to add subnets.
     /// </summary>
@@ -41,14 +41,14 @@ namespace Microsoft.Azure.Management.V2.Network.Network.Definition
         /// </summary>
         /// <param name="name">name the name of the subnet</param>
         /// <returns>the first stage of the new subnet definition</returns>
-        IBlank<Microsoft.Azure.Management.V2.Network.Network.Definition.IWithCreateAndSubnet> DefineSubnet (string name);
+        IBlank<Microsoft.Azure.Management.Fluent.Network.Network.Definition.IWithCreateAndSubnet> DefineSubnet (string name);
 
     }
     /// <summary>
     /// The first stage of a virtual network definition.
     /// </summary>
     public interface IBlank  :
-        IDefinitionWithRegion<Microsoft.Azure.Management.V2.Network.Network.Definition.IWithGroup>
+        IDefinitionWithRegion<Microsoft.Azure.Management.Fluent.Network.Network.Definition.IWithGroup>
     {
     }
     /// <summary>
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.V2.Network.Network.Definition
     /// </summary>
     public interface IDefinition  :
         IBlank,
-        Microsoft.Azure.Management.V2.Network.Network.Definition.IWithGroup,
+        Microsoft.Azure.Management.Fluent.Network.Network.Definition.IWithGroup,
         IWithSubnet,
         IWithCreate,
         IWithCreateAndSubnet
@@ -81,8 +81,8 @@ namespace Microsoft.Azure.Management.V2.Network.Network.Definition
     /// (see {@link WithCreate#withAddressSpace(String)}).
     /// </summary>
     public interface IWithCreate  :
-        ICreatable<Microsoft.Azure.Management.V2.Network.INetwork>,
-        IDefinitionWithTags<Microsoft.Azure.Management.V2.Network.Network.Definition.IWithCreate>
+        ICreatable<Microsoft.Azure.Management.Fluent.Network.INetwork>,
+        IDefinitionWithTags<Microsoft.Azure.Management.Fluent.Network.Network.Definition.IWithCreate>
     {
         /// <summary>
         /// Specifies the IP address of an existing DNS server to associate with the virtual network.
@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.V2.Network.Network.Definition
     /// The stage of the virtual network definition allowing to specify the resource group.
     /// </summary>
     public interface IWithGroup  :
-        Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.V2.Network.Network.Definition.IWithCreate>
+        Microsoft.Azure.Management.Fluent.Resource.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.Fluent.Network.Network.Definition.IWithCreate>
     {
     }
 }

@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information. 
 
-namespace Microsoft.Azure.Management.V2.Resource.Feature
+namespace Microsoft.Azure.Management.Fluent.Resource.Feature
 {
 
-    using Microsoft.Azure.Management.V2.Resource;
-    using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
+    using Microsoft.Azure.Management.Fluent.Resource;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions;
 
     /// <summary>
     /// Entry point to features management API in a specific resource provider.

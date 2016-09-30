@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSetExtension.Definition
+namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSetExtension.Definition
 {
 
-    using Microsoft.Azure.Management.V2.Compute;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.Fluent.Compute;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Definition;
     using System.Collections.Generic;
     /// <summary>
     /// The stage of a virtual machine scale set extension definition allowing to specify the type of the virtual machine

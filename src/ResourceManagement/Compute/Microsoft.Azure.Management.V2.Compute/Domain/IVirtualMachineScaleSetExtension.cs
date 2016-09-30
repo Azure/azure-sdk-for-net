@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Compute
+namespace Microsoft.Azure.Management.Fluent.Compute
 {
 
     using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
     using System.Collections.Generic;
     /// <summary>
     /// An immutable client-side representation of an extension associated with virtual machines in a scale set.
@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.V2.Compute
     /// </summary>
     public interface IVirtualMachineScaleSetExtension :
         IWrapper<Microsoft.Azure.Management.Compute.Models.VirtualMachineScaleSetExtensionInner>,
-        IChildResource<Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet>
+        IChildResource<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet>
     {
         /// <returns>the publisher name of the virtual machine scale set extension image this extension is created from</returns>
         string PublisherName { get; }

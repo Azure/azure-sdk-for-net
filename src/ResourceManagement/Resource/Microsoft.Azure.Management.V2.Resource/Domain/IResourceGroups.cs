@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information. 
 
-namespace Microsoft.Azure.Management.V2.Resource
+namespace Microsoft.Azure.Management.Fluent.Resource
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core.CollectionActions;
-    using Microsoft.Azure.Management.V2.Resource.ResourceGroup.Definition;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions;
+    using Microsoft.Azure.Management.Fluent.Resource.ResourceGroup.Definition;
 
     /// <summary>
     /// Entry point to resource group management API.

@@ -1,19 +1,19 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Definition
+namespace Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Definition
 {
 
-    using Microsoft.Azure.Management.V2.Network.HasFloatingIp.Definition;
-    using Microsoft.Azure.Management.V2.Network.HasBackendPort.Definition;
-    using Microsoft.Azure.Management.V2.Network.HasFrontend.Definition;
-    using Microsoft.Azure.Management.V2.Network.HasProtocol.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.Fluent.Network.HasFloatingIp.Definition;
+    using Microsoft.Azure.Management.Fluent.Network.HasBackendPort.Definition;
+    using Microsoft.Azure.Management.Fluent.Network.HasFrontend.Definition;
+    using Microsoft.Azure.Management.Fluent.Network.HasProtocol.Definition;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Definition;
     /// <summary>
     /// The stage of a load balancing rule definition allowing to enable the floating IP functionality.
     /// @param <ParentT> the return type of {@link WithAttach#attach()}
     /// </summary>
     public interface IWithFloatingIp<ParentT>  :
-        Microsoft.Azure.Management.V2.Network.HasFloatingIp.Definition.IWithFloatingIp<Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Definition.IWithAttach<ParentT>>
+        Microsoft.Azure.Management.Fluent.Network.HasFloatingIp.Definition.IWithFloatingIp<Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Definition.IWithAttach<ParentT>>
     {
     }
     /// <summary>
@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Definition
     /// @param <ParentT> the return type of the final {@link WithAttach#attach()}
     /// </summary>
     public interface IWithBackendPort<ParentT>  :
-        Microsoft.Azure.Management.V2.Network.HasBackendPort.Definition.IWithBackendPort<Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Definition.IWithAttach<ParentT>>,
+        Microsoft.Azure.Management.Fluent.Network.HasBackendPort.Definition.IWithBackendPort<Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Definition.IWithAttach<ParentT>>,
         IWithAttach<ParentT>
     {
     }
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Definition
     /// @param <ParentT> the parent load balancer type
     /// </summary>
     public interface IWithFrontend<ParentT>  :
-        Microsoft.Azure.Management.V2.Network.HasFrontend.Definition.IWithFrontend<Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Definition.IWithFrontendPort<ParentT>>
+        Microsoft.Azure.Management.Fluent.Network.HasFrontend.Definition.IWithFrontend<Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Definition.IWithFrontendPort<ParentT>>
     {
     }
     /// <summary>
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Definition
     /// @param <ParentT> the return type of the final {@link WithAttach#attach()}
     /// </summary>
     public interface IWithProtocol<ParentT>  :
-        Microsoft.Azure.Management.V2.Network.HasProtocol.Definition.IWithProtocol<Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Definition.IWithFrontend<ParentT>,string>
+        Microsoft.Azure.Management.Fluent.Network.HasProtocol.Definition.IWithProtocol<Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Definition.IWithFrontend<ParentT>,string>
     {
     }
     /// <summary>
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Definition
     /// </summary>
     public interface IWithAttach<ParentT>  :
         IInDefinition<ParentT>,
-        Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Definition.IWithFloatingIp<ParentT>,
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Definition.IWithFloatingIp<ParentT>,
         IWithIdleTimeoutInMinutes<ParentT>,
         IWithLoadDistribution<ParentT>
     {
@@ -102,7 +102,7 @@ namespace Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Definition
     /// @param <ParentT> the return type of the final {@link WithAttach#attach()}
     /// </summary>
     public interface IBlank<ParentT>  :
-        Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Definition.IWithProtocol<ParentT>
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Definition.IWithProtocol<ParentT>
     {
     }
     /// <summary>
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Definition
         /// </summary>
         /// <param name="backendName">backendName the name of an existing backend</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Definition.IWithBackendPort<ParentT> WithBackend (string backendName);
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Definition.IWithBackendPort<ParentT> WithBackend (string backendName);
 
     }
     /// <summary>
@@ -128,12 +128,12 @@ namespace Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Definition
     public interface IDefinition<ParentT>  :
         IBlank<ParentT>,
         IWithAttach<ParentT>,
-        Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Definition.IWithProtocol<ParentT>,
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Definition.IWithProtocol<ParentT>,
         IWithFrontendPort<ParentT>,
-        Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Definition.IWithFrontend<ParentT>,
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Definition.IWithFrontend<ParentT>,
         IWithProbe<ParentT>,
         IWithBackend<ParentT>,
-        Microsoft.Azure.Management.V2.Network.LoadBalancingRule.Definition.IWithBackendPort<ParentT>
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Definition.IWithBackendPort<ParentT>
     {
     }
     /// <summary>

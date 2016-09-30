@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Network.NicIpConfiguration.UpdateDefinition
+namespace Microsoft.Azure.Management.Fluent.Network.NicIpConfiguration.UpdateDefinition
 {
 
-    using Microsoft.Azure.Management.V2.Network.HasPublicIpAddress.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.V2.Network;
-    using Microsoft.Azure.Management.V2.Network.HasPrivateIpAddress.UpdateDefinition;
+    using Microsoft.Azure.Management.Fluent.Network.HasPublicIpAddress.UpdateDefinition;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Network;
+    using Microsoft.Azure.Management.Fluent.Network.HasPrivateIpAddress.UpdateDefinition;
     /// <summary>
     /// The stage of the network interface IP configuration definition allowing to associate it with
     /// a public IP address.
@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.V2.Network.NicIpConfiguration.UpdateDefinit
     /// @param <ParentT> the return type of the final {@link Attachable#attach()}
     /// </summary>
     public interface IWithPublicIpAddress<ParentT>  :
-        Microsoft.Azure.Management.V2.Network.HasPublicIpAddress.UpdateDefinition.IWithPublicIpAddress<Microsoft.Azure.Management.V2.Network.NicIpConfiguration.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate>>
+        Microsoft.Azure.Management.Fluent.Network.HasPublicIpAddress.UpdateDefinition.IWithPublicIpAddress<Microsoft.Azure.Management.Fluent.Network.NicIpConfiguration.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Fluent.Network.NetworkInterface.Update.IUpdate>>
     {
     }
     /// <summary>
@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.V2.Network.NicIpConfiguration.UpdateDefinit
         IWithNetwork<ParentT>,
         IWithPrivateIp<ParentT>,
         IWithSubnet<ParentT>,
-        Microsoft.Azure.Management.V2.Network.NicIpConfiguration.UpdateDefinition.IWithPublicIpAddress<ParentT>
+        Microsoft.Azure.Management.Fluent.Network.NicIpConfiguration.UpdateDefinition.IWithPublicIpAddress<ParentT>
     {
     }
     /// <summary>
@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.V2.Network.NicIpConfiguration.UpdateDefinit
     /// </summary>
     public interface IWithAttach<ParentT>  :
         IInUpdate<ParentT>,
-        Microsoft.Azure.Management.V2.Network.NicIpConfiguration.UpdateDefinition.IWithPublicIpAddress<ParentT>
+        Microsoft.Azure.Management.Fluent.Network.NicIpConfiguration.UpdateDefinition.IWithPublicIpAddress<ParentT>
     {
     }
     /// <summary>
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.V2.Network.NicIpConfiguration.UpdateDefinit
         /// </summary>
         /// <param name="creatable">creatable a creatable definition for a new virtual network</param>
         /// <returns>the next stage of the network interface IP configuration definition</returns>
-        IWithPrivateIp<ParentT> WithNewNetwork (ICreatable<Microsoft.Azure.Management.V2.Network.INetwork> creatable);
+        IWithPrivateIp<ParentT> WithNewNetwork (ICreatable<Microsoft.Azure.Management.Fluent.Network.INetwork> creatable);
 
         /// <summary>
         /// Creates a new virtual network to associate with the network interface IP configuration.
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.V2.Network.NicIpConfiguration.UpdateDefinit
     /// @param <ParentT> the return type of the final {@link Attachable#attach()}
     /// </summary>
     public interface IWithPrivateIp<ParentT>  :
-        IWithPrivateIpAddress<Microsoft.Azure.Management.V2.Network.NicIpConfiguration.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.V2.Network.NetworkInterface.Update.IUpdate>>
+        IWithPrivateIpAddress<Microsoft.Azure.Management.Fluent.Network.NicIpConfiguration.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Fluent.Network.NetworkInterface.Update.IUpdate>>
     {
         /// <summary>
         /// Specifies the IP version for the private IP address.

@@ -1,20 +1,20 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Compute.AvailabilitySet.Definition
+namespace Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Definition
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.V2.Compute;
-    using Microsoft.Azure.Management.V2.Resource.Core.Resource.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Compute;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.Resource.Definition;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.GroupableResource.Definition;
     /// <summary>
     /// The stage of an availability set definition which contains all the minimum required inputs for
     /// the resource to be created (via {@link WithCreate#create()}), but also allows
     /// for any other optional settings to be specified.
     /// </summary>
     public interface IWithCreate  :
-        ICreatable<Microsoft.Azure.Management.V2.Compute.IAvailabilitySet>,
-        IDefinitionWithTags<Microsoft.Azure.Management.V2.Compute.AvailabilitySet.Definition.IWithCreate>,
+        ICreatable<Microsoft.Azure.Management.Fluent.Compute.IAvailabilitySet>,
+        IDefinitionWithTags<Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Definition.IWithCreate>,
         IWithUpdateDomainCount,
         IWithFaultDomainCount
     {
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.V2.Compute.AvailabilitySet.Definition
     /// The first stage of an availability set definition.
     /// </summary>
     public interface IBlank  :
-        IDefinitionWithRegion<Microsoft.Azure.Management.V2.Compute.AvailabilitySet.Definition.IWithGroup>
+        IDefinitionWithRegion<Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Definition.IWithGroup>
     {
     }
     /// <summary>
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.V2.Compute.AvailabilitySet.Definition
     /// </summary>
     public interface IDefinition  :
         IBlank,
-        Microsoft.Azure.Management.V2.Compute.AvailabilitySet.Definition.IWithGroup,
+        Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Definition.IWithGroup,
         IWithCreate
     {
     }
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.V2.Compute.AvailabilitySet.Definition
     /// The stage of the availability set definition allowing to specify the resource group.
     /// </summary>
     public interface IWithGroup  :
-        Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.V2.Compute.AvailabilitySet.Definition.IWithCreate>
+        Microsoft.Azure.Management.Fluent.Resource.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Definition.IWithCreate>
     {
     }
 }

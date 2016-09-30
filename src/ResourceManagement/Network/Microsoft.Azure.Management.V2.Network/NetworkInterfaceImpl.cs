@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Network
+namespace Microsoft.Azure.Management.Fluent.Network
 {
 
     using NetworkInterface.Update;
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.V2.Network
             if (this.creatableNetworkSecurityGroupKey == null)
             {
                 this.creatableNetworkSecurityGroupKey = creatable.Key;
-                this.AddCreatableDependency(creatable as IResourceCreator<V2.Resource.Core.IResource>);
+                this.AddCreatableDependency(creatable as IResourceCreator<Fluent.Resource.Core.IResource>);
             }
 
             return this;
@@ -289,7 +289,7 @@ namespace Microsoft.Azure.Management.V2.Network
                     return dnsServers;
                 else if (Inner.DnsSettings.AppliedDnsServers == null)
                     return dnsServers;
-                else 
+                else
                     return Inner.DnsSettings.AppliedDnsServers;
             }
         }
@@ -428,12 +428,12 @@ namespace Microsoft.Azure.Management.V2.Network
             return this;
         }
 
-        internal void AddToCreatableDependencies(ICreatable<V2.Resource.Core.IResource> creatableResource)
+        internal void AddToCreatableDependencies(ICreatable<Fluent.Resource.Core.IResource> creatableResource)
         {
-            AddCreatableDependency(creatableResource as IResourceCreator<V2.Resource.Core.IResource>);
+            AddCreatableDependency(creatableResource as IResourceCreator<Fluent.Resource.Core.IResource>);
         }
 
-        internal V2.Resource.Core.IResource CreatedDependencyResource(string key)
+        internal Fluent.Resource.Core.IResource CreatedDependencyResource(string key)
         {
             return CreatedResource(key);
         }

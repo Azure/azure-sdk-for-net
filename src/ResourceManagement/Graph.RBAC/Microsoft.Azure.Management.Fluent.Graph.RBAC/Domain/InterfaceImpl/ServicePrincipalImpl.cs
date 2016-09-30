@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
     using System.Threading;
     using System.Collections.Generic;
     using Microsoft.Azure.Management.Fluent.Graph.RBAC.ServicePrincipal.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
     using Microsoft.Azure.Management.Fluent.Graph.RBAC.ServicePrincipal.Update;
     internal partial class ServicePrincipalImpl 
     {

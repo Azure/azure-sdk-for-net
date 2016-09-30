@@ -3,9 +3,9 @@
 
 using System;
 using Microsoft.Azure.Management.ResourceManager.Models;
-using Microsoft.Azure.Management.V2.Resource.Core;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
 
-namespace Microsoft.Azure.Management.V2.Resource
+namespace Microsoft.Azure.Management.Fluent.Resource
 {
     internal class TenantImpl :
         IndexableWrapper<TenantIdDescription>,

@@ -5,10 +5,10 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault.Vault.Definition
 {
 
     using Microsoft.Azure.Management.KeyVault.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core.Resource.Definition;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.GroupableResource.Definition;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.Resource.Definition;
     using Microsoft.Azure.Management.Fluent.KeyVault;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Definition;
     /// <summary>
     /// A key vault definition allowing the sku to be set.
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault.Vault.Definition
     /// A key vault definition allowing resource group to be set.
     /// </summary>
     public interface IWithGroup  :
-        Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition.IWithGroup<IWithAccessPolicy>
+        Microsoft.Azure.Management.Fluent.Resource.Core.GroupableResource.Definition.IWithGroup<IWithAccessPolicy>
     {
     }
     /// <summary>

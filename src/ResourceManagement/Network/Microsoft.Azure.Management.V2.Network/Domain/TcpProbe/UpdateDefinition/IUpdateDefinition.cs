@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Network.TcpProbe.UpdateDefinition
+namespace Microsoft.Azure.Management.Fluent.Network.TcpProbe.UpdateDefinition
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Update;
     /// <summary>
     /// The final stage of the probe definition.
     /// <p>

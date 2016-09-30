@@ -7,7 +7,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault.Vault.Update
     using Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Update;
     using Microsoft.Azure.Management.Fluent.KeyVault;
     using Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.UpdateDefinition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
     /// <summary>
     /// A key vault update allowing various configurations to be set.
     /// </summary>

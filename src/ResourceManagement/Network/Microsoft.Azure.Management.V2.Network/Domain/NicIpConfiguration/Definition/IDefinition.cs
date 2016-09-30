@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Network.NicIpConfiguration.Definition
+namespace Microsoft.Azure.Management.Fluent.Network.NicIpConfiguration.Definition
 {
 
-    using Microsoft.Azure.Management.V2.Network;
-    using Microsoft.Azure.Management.V2.Network.HasPrivateIpAddress.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.V2.Network.HasPublicIpAddress.Definition;
+    using Microsoft.Azure.Management.Fluent.Network;
+    using Microsoft.Azure.Management.Fluent.Network.HasPrivateIpAddress.Definition;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.Fluent.Network.HasPublicIpAddress.Definition;
     /// <summary>
     /// The stage of the network interface IP configuration definition allowing to specify subnet.
     /// 
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.V2.Network.NicIpConfiguration.Definition
     /// @param <ParentT> the return type of the final {@link Attachable#attach()}
     /// </summary>
     public interface IWithPrivateIp<ParentT>  :
-        IWithPrivateIpAddress<Microsoft.Azure.Management.V2.Network.NicIpConfiguration.Definition.IWithAttach<ParentT>>
+        IWithPrivateIpAddress<Microsoft.Azure.Management.Fluent.Network.NicIpConfiguration.Definition.IWithAttach<ParentT>>
     {
         /// <summary>
         /// Specifies the IP version for the private IP address.
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.V2.Network.NicIpConfiguration.Definition
         /// </summary>
         /// <param name="creatable">creatable a creatable definition for a new virtual network</param>
         /// <returns>the next stage of the network interface IP configuration definition</returns>
-        IWithPrivateIp<ParentT> WithNewNetwork (ICreatable<Microsoft.Azure.Management.V2.Network.INetwork> creatable);
+        IWithPrivateIp<ParentT> WithNewNetwork (ICreatable<Microsoft.Azure.Management.Fluent.Network.INetwork> creatable);
 
         /// <summary>
         /// Creates a new virtual network to associate with the network interface IP configuration.
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.V2.Network.NicIpConfiguration.Definition
     /// </summary>
     public interface IWithAttach<ParentT>  :
         IInDefinition<ParentT>,
-        Microsoft.Azure.Management.V2.Network.NicIpConfiguration.Definition.IWithPublicIpAddress<ParentT>,
+        Microsoft.Azure.Management.Fluent.Network.NicIpConfiguration.Definition.IWithPublicIpAddress<ParentT>,
         IWithLoadBalancer<ParentT>
     {
     }
@@ -153,7 +153,7 @@ namespace Microsoft.Azure.Management.V2.Network.NicIpConfiguration.Definition
     /// @param <ParentT> the return type of the final {@link Attachable#attach()}
     /// </summary>
     public interface IWithPublicIpAddress<ParentT>  :
-        Microsoft.Azure.Management.V2.Network.HasPublicIpAddress.Definition.IWithPublicIpAddress<Microsoft.Azure.Management.V2.Network.NicIpConfiguration.Definition.IWithAttach<ParentT>>
+        Microsoft.Azure.Management.Fluent.Network.HasPublicIpAddress.Definition.IWithPublicIpAddress<Microsoft.Azure.Management.Fluent.Network.NicIpConfiguration.Definition.IWithAttach<ParentT>>
     {
     }
 }

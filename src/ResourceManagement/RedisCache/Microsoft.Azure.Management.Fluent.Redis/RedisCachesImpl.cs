@@ -4,7 +4,7 @@
 namespace Microsoft.Azure.Management.Fluent.Redis
 {
     using Microsoft.Azure.Management.Fluent.Redis.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
     using System.Collections.Generic;
 
     /// <summary>

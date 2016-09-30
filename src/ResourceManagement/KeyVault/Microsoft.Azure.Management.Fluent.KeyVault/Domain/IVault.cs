@@ -5,9 +5,9 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
 {
 
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
     using Microsoft.Azure.Management.KeyVault.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.Fluent.KeyVault.Vault.Update;
     /// <summary>
     /// An immutable client-side representation of an Azure Key Vault.

@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Network.PublicFrontend.UpdateDefinition
+namespace Microsoft.Azure.Management.Fluent.Network.PublicFrontend.UpdateDefinition
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Update;
-    using Microsoft.Azure.Management.V2.Network.HasPublicIpAddress.UpdateDefinition;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.Fluent.Network.HasPublicIpAddress.UpdateDefinition;
     /// <summary>
     /// The first stage of a public frontend definition.
     /// @param <ParentT> the return type of the final {@link WithAttach#attach()}
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.V2.Network.PublicFrontend.UpdateDefinition
     /// @param <ParentT> the return type of the final {@link WithAttach#attach()}
     /// </summary>
     public interface IWithPublicIpAddress<ParentT>  :
-        IWithExistingPublicIpAddress<Microsoft.Azure.Management.V2.Network.PublicFrontend.UpdateDefinition.IWithAttach<ParentT>>
+        IWithExistingPublicIpAddress<Microsoft.Azure.Management.Fluent.Network.PublicFrontend.UpdateDefinition.IWithAttach<ParentT>>
     {
     }
 }

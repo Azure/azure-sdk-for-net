@@ -5,11 +5,11 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Azure.Management.ResourceManager;
-using Microsoft.Azure.Management.V2.Resource.Core;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
 using Microsoft.Rest.Azure;
 using Microsoft.Azure.Management.ResourceManager.Models;
 
-namespace Microsoft.Azure.Management.V2.Resource
+namespace Microsoft.Azure.Management.Fluent.Resource
 {
     internal class ResourceGroupsImpl : 
         CreatableResources<IResourceGroup, ResourceGroupImpl, ResourceGroupInner>,

@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition
+namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.UpdateDefinition
 {
 
     using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Definition;
     /// <summary>
     /// The stage of the new data disk configuration allowing to specify location to store the VHD.
     /// 

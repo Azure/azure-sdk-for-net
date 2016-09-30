@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Microsoft.Azure.Management.V2.Network
+namespace Microsoft.Azure.Management.Fluent.Network
 {
     using Management.Network.Models;
     using NicIpConfiguration.UpdateDefinition;
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Management.V2.Network
         public NicIpConfigurationImpl WithNewNetwork(ICreatable<INetwork> creatable)
         {
             creatableVirtualNetworkKey = creatable.Key;
-            Parent.AddToCreatableDependencies(creatable as ICreatable<V2.Resource.Core.IResource>);
+            Parent.AddToCreatableDependencies(creatable as ICreatable<Fluent.Resource.Core.IResource>);
             return this;
         }
 
@@ -180,7 +180,7 @@ namespace Microsoft.Azure.Management.V2.Network
             if (creatablePublicIpKey == null)
             {
                 creatablePublicIpKey = creatable.Key;
-                Parent.AddToCreatableDependencies(creatable as ICreatable<V2.Resource.Core.IResource>);
+                Parent.AddToCreatableDependencies(creatable as ICreatable<Fluent.Resource.Core.IResource>);
             }
 
             return this;

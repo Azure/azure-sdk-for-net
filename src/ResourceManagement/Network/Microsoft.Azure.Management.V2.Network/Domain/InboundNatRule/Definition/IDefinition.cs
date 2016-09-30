@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Network.InboundNatRule.Definition
+namespace Microsoft.Azure.Management.Fluent.Network.InboundNatRule.Definition
 {
 
-    using Microsoft.Azure.Management.V2.Network.HasFrontend.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.V2.Network.HasProtocol.Definition;
-    using Microsoft.Azure.Management.V2.Network.HasFloatingIp.Definition;
-    using Microsoft.Azure.Management.V2.Network.HasBackendPort.Definition;
+    using Microsoft.Azure.Management.Fluent.Network.HasFrontend.Definition;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.Fluent.Network.HasProtocol.Definition;
+    using Microsoft.Azure.Management.Fluent.Network.HasFloatingIp.Definition;
+    using Microsoft.Azure.Management.Fluent.Network.HasBackendPort.Definition;
     /// <summary>
     /// The stage of an inbound NAT rule definition allowing to specify the frontend port.
     /// @param <ParentT> the parent load balancer type
@@ -28,8 +28,8 @@ namespace Microsoft.Azure.Management.V2.Network.InboundNatRule.Definition
     /// </summary>
     public interface IDefinition<ParentT>  :
         IBlank<ParentT>,
-        Microsoft.Azure.Management.V2.Network.InboundNatRule.Definition.IWithProtocol<ParentT>,
-        Microsoft.Azure.Management.V2.Network.InboundNatRule.Definition.IWithFrontend<ParentT>,
+        Microsoft.Azure.Management.Fluent.Network.InboundNatRule.Definition.IWithProtocol<ParentT>,
+        Microsoft.Azure.Management.Fluent.Network.InboundNatRule.Definition.IWithFrontend<ParentT>,
         IWithFrontendPort<ParentT>,
         IWithAttach<ParentT>
     {
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.V2.Network.InboundNatRule.Definition
     /// @param <ParentT> the parent load balancer type
     /// </summary>
     public interface IWithFrontend<ParentT>  :
-        Microsoft.Azure.Management.V2.Network.HasFrontend.Definition.IWithFrontend<Microsoft.Azure.Management.V2.Network.InboundNatRule.Definition.IWithFrontendPort<Microsoft.Azure.Management.V2.Network.LoadBalancer.Definition.IWithCreateAndInboundNatRule>>
+        Microsoft.Azure.Management.Fluent.Network.HasFrontend.Definition.IWithFrontend<Microsoft.Azure.Management.Fluent.Network.InboundNatRule.Definition.IWithFrontendPort<Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Definition.IWithCreateAndInboundNatRule>>
     {
     }
     /// <summary>
@@ -65,8 +65,8 @@ namespace Microsoft.Azure.Management.V2.Network.InboundNatRule.Definition
     /// </summary>
     public interface IWithAttach<ParentT>  :
         IInDefinition<ParentT>,
-        Microsoft.Azure.Management.V2.Network.InboundNatRule.Definition.IWithBackendPort<ParentT>,
-        Microsoft.Azure.Management.V2.Network.InboundNatRule.Definition.IWithFloatingIp<ParentT>,
+        Microsoft.Azure.Management.Fluent.Network.InboundNatRule.Definition.IWithBackendPort<ParentT>,
+        Microsoft.Azure.Management.Fluent.Network.InboundNatRule.Definition.IWithFloatingIp<ParentT>,
         IWithIdleTimeout<ParentT>
     {
     }
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.V2.Network.InboundNatRule.Definition
     /// @param <ParentT> the parent load balancer type
     /// </summary>
     public interface IWithProtocol<ParentT>  :
-        Microsoft.Azure.Management.V2.Network.HasProtocol.Definition.IWithProtocol<Microsoft.Azure.Management.V2.Network.InboundNatRule.Definition.IWithFrontend<Microsoft.Azure.Management.V2.Network.LoadBalancer.Definition.IWithCreateAndInboundNatRule>,string>
+        Microsoft.Azure.Management.Fluent.Network.HasProtocol.Definition.IWithProtocol<Microsoft.Azure.Management.Fluent.Network.InboundNatRule.Definition.IWithFrontend<Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Definition.IWithCreateAndInboundNatRule>,string>
     {
     }
     /// <summary>
@@ -83,7 +83,7 @@ namespace Microsoft.Azure.Management.V2.Network.InboundNatRule.Definition
     /// @param <ParentT> the parent load balancer type
     /// </summary>
     public interface IWithFloatingIp<ParentT>  :
-        Microsoft.Azure.Management.V2.Network.HasFloatingIp.Definition.IWithFloatingIp<Microsoft.Azure.Management.V2.Network.InboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.V2.Network.LoadBalancer.Definition.IWithCreateAndInboundNatRule>>
+        Microsoft.Azure.Management.Fluent.Network.HasFloatingIp.Definition.IWithFloatingIp<Microsoft.Azure.Management.Fluent.Network.InboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Definition.IWithCreateAndInboundNatRule>>
     {
     }
     /// <summary>
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.V2.Network.InboundNatRule.Definition
     /// @param <ParentT> the return type of the final {@link WithAttach#attach()}
     /// </summary>
     public interface IBlank<ParentT>  :
-        Microsoft.Azure.Management.V2.Network.InboundNatRule.Definition.IWithProtocol<ParentT>
+        Microsoft.Azure.Management.Fluent.Network.InboundNatRule.Definition.IWithProtocol<ParentT>
     {
     }
     /// <summary>
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.V2.Network.InboundNatRule.Definition
     /// @param <ParentT> the parent load balancer type
     /// </summary>
     public interface IWithBackendPort<ParentT>  :
-        Microsoft.Azure.Management.V2.Network.HasBackendPort.Definition.IWithBackendPort<Microsoft.Azure.Management.V2.Network.InboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.V2.Network.LoadBalancer.Definition.IWithCreateAndInboundNatRule>>
+        Microsoft.Azure.Management.Fluent.Network.HasBackendPort.Definition.IWithBackendPort<Microsoft.Azure.Management.Fluent.Network.InboundNatRule.Definition.IWithAttach<Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Definition.IWithCreateAndInboundNatRule>>
     {
     }
 }

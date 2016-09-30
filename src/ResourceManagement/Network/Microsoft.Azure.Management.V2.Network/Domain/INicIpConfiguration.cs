@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Network
+namespace Microsoft.Azure.Management.Fluent.Network
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
     using System.Collections.Generic;
     using Microsoft.Azure.Management.Network.Models;
     /// <summary>
@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.V2.Network
     /// </summary>
     public interface INicIpConfiguration  :
         IWrapper<Microsoft.Azure.Management.Network.Models.NetworkInterfaceIPConfigurationInner>,
-        IChildResource<Microsoft.Azure.Management.V2.Network.INetworkInterface>,
+        IChildResource<Microsoft.Azure.Management.Fluent.Network.INetworkInterface>,
         IHasPrivateIpAddress,
         IHasPublicIpAddress,
         IHasSubnet
@@ -23,10 +23,10 @@ namespace Microsoft.Azure.Management.V2.Network
         string PrivateIpAddressVersion { get; }
 
         /// <returns>the load balancer backends associated with this network interface IP configuration</returns>
-        List<Microsoft.Azure.Management.V2.Network.IBackend> ListAssociatedLoadBalancerBackends ();
+        List<Microsoft.Azure.Management.Fluent.Network.IBackend> ListAssociatedLoadBalancerBackends ();
 
         /// <returns>the load balancer inbound NAT rules associated with this network interface IP configuration</returns>
-        List<Microsoft.Azure.Management.V2.Network.IInboundNatRule> ListAssociatedLoadBalancerInboundNatRules ();
+        List<Microsoft.Azure.Management.Fluent.Network.IInboundNatRule> ListAssociatedLoadBalancerInboundNatRules ();
 
     }
 }

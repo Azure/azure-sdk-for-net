@@ -4,10 +4,10 @@
 namespace Microsoft.Azure.Management.Fluent.Batch
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Update;
     using Microsoft.Azure.Management.Batch.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
     using System.Collections.Generic;
     /// <summary>
     /// An immutable client-side representation of an Azure batch account.

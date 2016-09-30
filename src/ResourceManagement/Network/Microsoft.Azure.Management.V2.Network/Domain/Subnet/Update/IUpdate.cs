@@ -1,18 +1,18 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Network.Subnet.Update
+namespace Microsoft.Azure.Management.Fluent.Network.Subnet.Update
 {
 
-    using Microsoft.Azure.Management.V2.Network.Network.Update;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResourceActions;
-    using Microsoft.Azure.Management.V2.Network;
+    using Microsoft.Azure.Management.Fluent.Network.Network.Update;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.Fluent.Network;
     /// <summary>
     /// The entirety of a subnet update as part of a network update.
     /// </summary>
     public interface IUpdate  :
         IWithAddressPrefix,
         IWithNetworkSecurityGroup,
-        ISettable<Microsoft.Azure.Management.V2.Network.Network.Update.IUpdate>
+        ISettable<Microsoft.Azure.Management.Fluent.Network.Network.Update.IUpdate>
     {
     }
     /// <summary>
@@ -25,14 +25,14 @@ namespace Microsoft.Azure.Management.V2.Network.Subnet.Update
         /// </summary>
         /// <param name="resourceId">resourceId the resource ID of the network security group</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.V2.Network.Subnet.Update.IUpdate WithExistingNetworkSecurityGroup (string resourceId);
+        Microsoft.Azure.Management.Fluent.Network.Subnet.Update.IUpdate WithExistingNetworkSecurityGroup (string resourceId);
 
         /// <summary>
         /// Assigns an existing network security group to this subnet.
         /// </summary>
         /// <param name="nsg">nsg the network security group to assign</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.V2.Network.Subnet.Update.IUpdate WithExistingNetworkSecurityGroup (INetworkSecurityGroup nsg);
+        Microsoft.Azure.Management.Fluent.Network.Subnet.Update.IUpdate WithExistingNetworkSecurityGroup (INetworkSecurityGroup nsg);
 
     }
     /// <summary>
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.V2.Network.Subnet.Update
         /// </summary>
         /// <param name="cidr">cidr the IP address space prefix using the CIDR notation</param>
         /// <returns>the next stage</returns>
-        Microsoft.Azure.Management.V2.Network.Subnet.Update.IUpdate WithAddressPrefix (string cidr);
+        Microsoft.Azure.Management.Fluent.Network.Subnet.Update.IUpdate WithAddressPrefix (string cidr);
 
     }
 }

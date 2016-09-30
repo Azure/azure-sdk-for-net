@@ -3,7 +3,7 @@
 
 using Microsoft.Azure.Management.Compute.Models;
 
-namespace Microsoft.Azure.Management.V2.Compute
+namespace Microsoft.Azure.Management.Fluent.Compute
 {
     /// <summary>
     /// Scale set virtual machine sku types.

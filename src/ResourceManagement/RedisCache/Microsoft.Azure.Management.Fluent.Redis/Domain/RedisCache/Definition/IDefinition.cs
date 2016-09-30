@@ -4,12 +4,12 @@
 namespace Microsoft.Azure.Management.Fluent.Redis.RedisCache.Definition
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core.Resource.Definition;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.Resource.Definition;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.Fluent.Redis;
-    using Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.GroupableResource.Definition;
     using Microsoft.Azure.Management.Fluent.Redis.Models;
     /// <summary>
     /// A Redis Cache definition with sufficient inputs to create a new
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.Fluent.Redis.RedisCache.Definition
     /// A Redis Cache definition allowing resource group to be set.
     /// </summary>
     public interface IWithGroup  :
-        Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition.IWithGroup<IWithSku>
+        Microsoft.Azure.Management.Fluent.Resource.Core.GroupableResource.Definition.IWithGroup<IWithSku>
     {
     }
     /// <summary>

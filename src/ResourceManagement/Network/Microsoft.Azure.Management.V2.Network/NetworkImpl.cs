@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Microsoft.Azure.Management.V2.Network
+namespace Microsoft.Azure.Management.Fluent.Network
 {
     using Management.Network.Models;
     using System.Collections.Generic;
@@ -29,15 +29,15 @@ namespace Microsoft.Azure.Management.V2.Network
         private IVirtualNetworksOperations innerCollection;
         private IDictionary<string, ISubnet> subnets;
         internal NetworkImpl(
-            string name, 
-            VirtualNetworkInner innerModel, 
-            IVirtualNetworksOperations innerCollection, 
+            string name,
+            VirtualNetworkInner innerModel,
+            IVirtualNetworksOperations innerCollection,
             NetworkManager networkManager) : base(name, innerModel, networkManager)
         {
             this.innerCollection = innerCollection;
         }
 
-        override protected void InitializeChildrenFromInner ()
+        override protected void InitializeChildrenFromInner()
         {
             subnets = new SortedDictionary<string, ISubnet>();
             IList<SubnetInner> inners = Inner.Subnets;
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.V2.Network
             return this;
         }
 
-        internal NetworkImpl WithSubnet (SubnetImpl subnet)
+        internal NetworkImpl WithSubnet(SubnetImpl subnet)
         {
             if (subnet != null)
             {
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.V2.Network
             return this;
         }
 
-        public NetworkImpl WithDnsServer (string ipAddress)
+        public NetworkImpl WithDnsServer(string ipAddress)
         {
             if (Inner.DhcpOptions == null)
                 Inner.DhcpOptions = new DhcpOptions();
@@ -79,14 +79,14 @@ namespace Microsoft.Azure.Management.V2.Network
             return this;
         }
 
-        public NetworkImpl WithSubnet (string name, string cidr)
+        public NetworkImpl WithSubnet(string name, string cidr)
         {
             return DefineSubnet(name)
                 .WithAddressPrefix(cidr)
                 .Attach();
         }
 
-        public NetworkImpl WithSubnets (IDictionary<string,string> nameCidrPairs)
+        public NetworkImpl WithSubnets(IDictionary<string, string> nameCidrPairs)
         {
             subnets.Clear();
             foreach (var pair in nameCidrPairs)
@@ -96,13 +96,13 @@ namespace Microsoft.Azure.Management.V2.Network
             return this;
         }
 
-        public NetworkImpl WithoutSubnet (string name)
+        public NetworkImpl WithoutSubnet(string name)
         {
             subnets.Remove(name);
             return this;
         }
 
-        public NetworkImpl WithAddressSpace (string cidr)
+        public NetworkImpl WithAddressSpace(string cidr)
         {
             if (Inner.AddressSpace == null)
                 Inner.AddressSpace = new AddressSpace();
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Management.V2.Network
             return this;
         }
 
-        public SubnetImpl DefineSubnet (string name)
+        public SubnetImpl DefineSubnet(string name)
         {
             SubnetInner inner = new SubnetInner(name: name);
             return new SubnetImpl(inner, this);
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.V2.Network
                 {
                     return new List<string>();
                 }
-                else if(Inner.AddressSpace.AddressPrefixes == null)
+                else if (Inner.AddressSpace.AddressPrefixes == null)
                 {
                     return new List<string>();
                 }
@@ -158,12 +158,12 @@ namespace Microsoft.Azure.Management.V2.Network
             }
         }
 
-        public IDictionary<string, ISubnet> Subnets ()
+        public IDictionary<string, ISubnet> Subnets()
         {
             return subnets;
         }
 
-        override protected void BeforeCreating ()
+        override protected void BeforeCreating()
         {
             // Ensure address spaces
             if (AddressSpaces.Count == 0)
@@ -179,21 +179,21 @@ namespace Microsoft.Azure.Management.V2.Network
                     WithSubnet("subnet1", AddressSpaces[0]);
                 }
             }
-            
+
             // Reset and update subnets
             Inner.Subnets = InnersFromWrappers<SubnetInner, ISubnet>(subnets.Values);
         }
 
-        override protected void AfterCreating ()
+        override protected void AfterCreating()
         {
             InitializeChildrenFromInner();
         }
 
-        public SubnetImpl UpdateSubnet (string name)
+        public SubnetImpl UpdateSubnet(string name)
         {
             ISubnet subnet;
             subnets.TryGetValue(name, out subnet);
-            return (SubnetImpl) subnet;
+            return (SubnetImpl)subnet;
         }
 
         override protected Task<VirtualNetworkInner> CreateInner()

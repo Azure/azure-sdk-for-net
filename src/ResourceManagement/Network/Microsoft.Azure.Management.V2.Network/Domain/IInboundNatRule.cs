@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Network
+namespace Microsoft.Azure.Management.Fluent.Network
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
     using Microsoft.Azure.Management.Network.Models;
     /// <summary>
     /// An immutable client-side representation of an inbound NAT rule.
@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.V2.Network
         IHasProtocol<string>,
         IHasFloatingIp,
         IWrapper<Microsoft.Azure.Management.Network.Models.InboundNatRuleInner>,
-        IChildResource<Microsoft.Azure.Management.V2.Network.ILoadBalancer>
+        IChildResource<Microsoft.Azure.Management.Fluent.Network.ILoadBalancer>
     {
         /// <returns>the name of the IP configuration within the network interface associated with this NAT rule</returns>
         string BackendNicIpConfigurationName { get; }

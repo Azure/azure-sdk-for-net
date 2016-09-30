@@ -5,7 +5,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch.Application.Update
 {
 
     using Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Update;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResourceActions;
     /// <summary>
     /// The stage of the application update allowing to enable or disable auto upgrade of the
     /// application.

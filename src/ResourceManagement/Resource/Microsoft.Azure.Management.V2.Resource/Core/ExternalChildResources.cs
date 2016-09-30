@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.V2.Resource.Core;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.Management.V2.Resource.Core
+namespace Microsoft.Azure.Management.Fluent.Resource.Core
 {
     public abstract class ExternalChildResources<FluentModelTImpl, IFluentModelT, InnerModelT, IParentT, ParentImplT>
         where ParentImplT : IParentT

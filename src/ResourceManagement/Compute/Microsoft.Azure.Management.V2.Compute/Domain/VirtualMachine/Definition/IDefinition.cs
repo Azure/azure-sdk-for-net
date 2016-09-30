@@ -1,17 +1,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition
+namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition
 {
 
     using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core.Resource.Definition;
-    using Microsoft.Azure.Management.V2.Compute;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.Definition;
-    using Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition;
-    using Microsoft.Azure.Management.V2.Network;
-    using Microsoft.Azure.Management.V2.Storage;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.Resource.Definition;
+    using Microsoft.Azure.Management.Fluent.Compute;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Compute.VirtualMachineExtension.Definition;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.GroupableResource.Definition;
+    using Microsoft.Azure.Management.Fluent.Network;
+    using Microsoft.Azure.Management.Fluent.Storage;
+    using Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Definition;
     /// <summary>
     /// The stage of the Linux virtual machine definition allowing to specify root user name.
     /// </summary>
@@ -105,8 +105,8 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition
     /// for any other optional settings to be specified.
     /// </summary>
     public interface IWithCreate  :
-        ICreatable<Microsoft.Azure.Management.V2.Compute.IVirtualMachine>,
-        IDefinitionWithTags<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate>,
+        ICreatable<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine>,
+        IDefinitionWithTags<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate>,
         IWithPassword,
         IWithOsDiskSettings,
         IWithVMSize,
@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition
     /// The first stage of a virtual machine definition.
     /// </summary>
     public interface IBlank  :
-        IDefinitionWithRegion<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithGroup>
+        IDefinitionWithRegion<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithGroup>
     {
     }
     /// <summary>
@@ -134,7 +134,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition
         /// </summary>
         /// <param name="name">name the reference name for the extension</param>
         /// <returns>the stage representing configuration for the extension</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.Definition.IBlank<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate> DefineNewExtension (string name);
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineExtension.Definition.IBlank<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate> DefineNewExtension (string name);
 
     }
     /// <summary>
@@ -154,7 +154,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition
     /// The stage of the virtual machine definition allowing to specify the resource group.
     /// </summary>
     public interface IWithGroup  :
-        Microsoft.Azure.Management.V2.Resource.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithNetwork>
+        Microsoft.Azure.Management.Fluent.Resource.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithNetwork>
     {
     }
     /// <summary>
@@ -225,7 +225,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition
         /// </summary>
         /// <param name="creatable">creatable a creatable definition for a new virtual network</param>
         /// <returns>the next stage of the virtual machine definition</returns>
-        IWithPrivateIp WithNewPrimaryNetwork (ICreatable<Microsoft.Azure.Management.V2.Network.INetwork> creatable);
+        IWithPrivateIp WithNewPrimaryNetwork (ICreatable<Microsoft.Azure.Management.Fluent.Network.INetwork> creatable);
 
         /// <summary>
         /// Creates a new virtual network to associate with the virtual machine's primary network interface.
@@ -249,8 +249,8 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition
     /// The entirety of the virtual machine definition.
     /// </summary>
     public interface IDefinition  :
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IBlank,
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithGroup,
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IBlank,
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithGroup,
         IWithNetwork,
         IWithSubnet,
         IWithPrivateIp,
@@ -278,7 +278,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition
         /// </summary>
         /// <param name="creatable">creatable a creatable definition for a new network interface</param>
         /// <returns>the stage representing creatable VM definition</returns>
-        IWithCreate WithNewSecondaryNetworkInterface (ICreatable<Microsoft.Azure.Management.V2.Network.INetworkInterface> creatable);
+        IWithCreate WithNewSecondaryNetworkInterface (ICreatable<Microsoft.Azure.Management.Fluent.Network.INetworkInterface> creatable);
 
         /// <summary>
         /// Associate an existing network interface with the virtual machine.
@@ -301,7 +301,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition
         /// </summary>
         /// <param name="creatable">creatable a creatable definition for a new network interface</param>
         /// <returns>The next stage of the virtual machine definition</returns>
-        IWithOS WithNewPrimaryNetworkInterface (ICreatable<Microsoft.Azure.Management.V2.Network.INetworkInterface> creatable);
+        IWithOS WithNewPrimaryNetworkInterface (ICreatable<Microsoft.Azure.Management.Fluent.Network.INetworkInterface> creatable);
 
         /// <summary>
         /// Associate an existing network interface as the virtual machine with as it's primary network interface.
@@ -335,7 +335,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition
         /// </summary>
         /// <param name="creatable">creatable the storage account in creatable stage</param>
         /// <returns>the stage representing creatable VM definition</returns>
-        IWithCreate WithNewStorageAccount (ICreatable<Microsoft.Azure.Management.V2.Storage.IStorageAccount> creatable);
+        IWithCreate WithNewStorageAccount (ICreatable<Microsoft.Azure.Management.Fluent.Storage.IStorageAccount> creatable);
 
         /// <summary>
         /// Specifies an existing {@link StorageAccount} storage account to put the VM's OS and data disk VHD in.
@@ -374,7 +374,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition
         /// </summary>
         /// <param name="name">name the name for the data disk</param>
         /// <returns>the stage representing configuration for the data disk</returns>
-        IAttachNewDataDisk<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate> DefineNewDataDisk (string name);
+        IAttachNewDataDisk<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate> DefineNewDataDisk (string name);
 
         /// <summary>
         /// Specifies an existing VHD that needs to be attached to the virtual machine as data disk along with
@@ -382,7 +382,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition
         /// </summary>
         /// <param name="name">name the name for the data disk</param>
         /// <returns>the stage representing configuration for the data disk</returns>
-        IAttachExistingDataDisk<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate> DefineExistingDataDisk (string name);
+        IAttachExistingDataDisk<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate> DefineExistingDataDisk (string name);
 
     }
     /// <summary>
@@ -396,7 +396,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition
         /// </summary>
         /// <param name="creatable">creatable a creatable definition for a new public IP</param>
         /// <returns>the next stage of the virtual machine definition</returns>
-        IWithOS WithNewPrimaryPublicIpAddress (ICreatable<Microsoft.Azure.Management.V2.Network.IPublicIpAddress> creatable);
+        IWithOS WithNewPrimaryPublicIpAddress (ICreatable<Microsoft.Azure.Management.Fluent.Network.IPublicIpAddress> creatable);
 
         /// <summary>
         /// Creates a new public IP address in the same region and group as the resource, with the specified DNS label
@@ -459,7 +459,7 @@ namespace Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition
         /// </summary>
         /// <param name="creatable">creatable the availability set in creatable stage</param>
         /// <returns>the stage representing creatable VM definition</returns>
-        IWithCreate WithNewAvailabilitySet (ICreatable<Microsoft.Azure.Management.V2.Compute.IAvailabilitySet> creatable);
+        IWithCreate WithNewAvailabilitySet (ICreatable<Microsoft.Azure.Management.Fluent.Compute.IAvailabilitySet> creatable);
 
         /// <summary>
         /// Specifies an existing {@link AvailabilitySet} availability set to to associate the virtual machine with.

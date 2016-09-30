@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Network.Subnet.Definition
+namespace Microsoft.Azure.Management.Fluent.Network.Subnet.Definition
 {
 
-    using Microsoft.Azure.Management.V2.Network;
-    using Microsoft.Azure.Management.V2.Resource.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.Fluent.Network;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Definition;
     /// <summary>
     /// The stage of the subnet definition allowing to specify the network security group to assign to the subnet.
     /// @param <ParentT> the parent type

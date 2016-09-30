@@ -1,22 +1,22 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Compute
+namespace Microsoft.Azure.Management.Fluent.Compute
 {
 
     using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.V2.Storage;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.V2.Resource.Core;
-    using Microsoft.Azure.Management.V2.Network;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition;
+    using Microsoft.Azure.Management.Fluent.Storage;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Network;
+    using Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update;
+    using Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update;
     using Microsoft.Azure.Management.Storage.Models;
     using System.Threading.Tasks;
     using Microsoft.Azure.Management.Network.Models;
-    using Microsoft.Azure.Management.V2.Network.NetworkInterface.Definition;
+    using Microsoft.Azure.Management.Fluent.Network.NetworkInterface.Definition;
     using System.Threading;
-    using Microsoft.Azure.Management.V2.Resource;
+    using Microsoft.Azure.Management.Fluent.Resource;
     internal partial class VirtualMachineImpl
     {
         /// <summary>
@@ -26,9 +26,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// <param name="containerName">containerName the name of the container holding the VHD file</param>
         /// <param name="vhdName">vhdName the name for the VHD file</param>
         /// <returns>the stage representing creatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithDataDisk.WithExistingDataDisk(string storageAccountName, string containerName, string vhdName)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithDataDisk.WithExistingDataDisk(string storageAccountName, string containerName, string vhdName)
         {
-            return this.WithExistingDataDisk(storageAccountName, containerName, vhdName) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate;
+            return this.WithExistingDataDisk(storageAccountName, containerName, vhdName) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -36,9 +36,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="name">name the name for the data disk</param>
         /// <returns>the stage representing configuration for the data disk</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition.IAttachNewDataDisk<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate> Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithDataDisk.DefineNewDataDisk(string name)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Definition.IAttachNewDataDisk<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate> Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithDataDisk.DefineNewDataDisk(string name)
         {
-            return this.DefineNewDataDisk(name) as Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition.IAttachNewDataDisk<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate>;
+            return this.DefineNewDataDisk(name) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Definition.IAttachNewDataDisk<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="sizeInGB">sizeInGB the disk size in GB</param>
         /// <returns>the stage representing creatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithDataDisk.WithNewDataDisk(int sizeInGB)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithDataDisk.WithNewDataDisk(int sizeInGB)
         {
-            return this.WithNewDataDisk(sizeInGB) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate;
+            return this.WithNewDataDisk(sizeInGB) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -57,9 +57,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="name">name the name for the data disk</param>
         /// <returns>the stage representing configuration for the data disk</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition.IAttachExistingDataDisk<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate> Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithDataDisk.DefineExistingDataDisk(string name)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Definition.IAttachExistingDataDisk<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate> Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithDataDisk.DefineExistingDataDisk(string name)
         {
-            return this.DefineExistingDataDisk(name) as Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Definition.IAttachExistingDataDisk<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate>;
+            return this.DefineExistingDataDisk(name) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Definition.IAttachExistingDataDisk<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -69,9 +69,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// <param name="containerName">containerName the name of the container holding the VHD file</param>
         /// <param name="vhdName">vhdName the name for the VHD file</param>
         /// <returns>the stage representing creatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IWithDataDisk.WithExistingDataDisk(string storageAccountName, string containerName, string vhdName)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IWithDataDisk.WithExistingDataDisk(string storageAccountName, string containerName, string vhdName)
         {
-            return this.WithExistingDataDisk(storageAccountName, containerName, vhdName) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate;
+            return this.WithExistingDataDisk(storageAccountName, containerName, vhdName) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate;
         }
 
         /// <summary>
@@ -79,9 +79,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="name">name the name for the data disk</param>
         /// <returns>the stage representing configuration for the data disk</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IAttachNewDataDisk<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate> Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IWithDataDisk.DefineNewDataDisk(string name)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.UpdateDefinition.IAttachNewDataDisk<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate> Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IWithDataDisk.DefineNewDataDisk(string name)
         {
-            return this.DefineNewDataDisk(name) as Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IAttachNewDataDisk<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>;
+            return this.DefineNewDataDisk(name) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.UpdateDefinition.IAttachNewDataDisk<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate>;
         }
 
         /// <summary>
@@ -89,9 +89,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="sizeInGB">sizeInGB the disk size in GB</param>
         /// <returns>the stage representing creatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IWithDataDisk.WithNewDataDisk(int sizeInGB)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IWithDataDisk.WithNewDataDisk(int sizeInGB)
         {
-            return this.WithNewDataDisk(sizeInGB) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate;
+            return this.WithNewDataDisk(sizeInGB) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate;
         }
 
         /// <summary>
@@ -100,9 +100,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="name">name the name for the data disk</param>
         /// <returns>the stage representing configuration for the data disk</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IAttachExistingDataDisk<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate> Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IWithDataDisk.DefineExistingDataDisk(string name)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.UpdateDefinition.IAttachExistingDataDisk<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate> Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IWithDataDisk.DefineExistingDataDisk(string name)
         {
-            return this.DefineExistingDataDisk(name) as Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.UpdateDefinition.IAttachExistingDataDisk<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>;
+            return this.DefineExistingDataDisk(name) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.UpdateDefinition.IAttachExistingDataDisk<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate>;
         }
 
         /// <summary>
@@ -110,9 +110,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="name">name the name of the data disk to remove</param>
         /// <returns>the stage representing updatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IWithDataDisk.WithoutDataDisk(string name)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IWithDataDisk.WithoutDataDisk(string name)
         {
-            return this.WithoutDataDisk(name) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate;
+            return this.WithoutDataDisk(name) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate;
         }
 
         /// <summary>
@@ -120,9 +120,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="lun">lun the logical unit number of the data disk to remove</param>
         /// <returns>the stage representing updatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IWithDataDisk.WithoutDataDisk(int lun)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IWithDataDisk.WithoutDataDisk(int lun)
         {
-            return this.WithoutDataDisk(lun) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate;
+            return this.WithoutDataDisk(lun) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate;
         }
 
         /// <summary>
@@ -130,17 +130,17 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="name">name the name of the disk</param>
         /// <returns>the stage representing updating configuration for  data disk</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Update.IUpdate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IWithDataDisk.UpdateDataDisk(string name)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Update.IUpdate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IWithDataDisk.UpdateDataDisk(string name)
         {
-            return this.UpdateDataDisk(name) as Microsoft.Azure.Management.V2.Compute.VirtualMachineDataDisk.Update.IUpdate;
+            return this.UpdateDataDisk(name) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Update.IUpdate;
         }
 
         /// <returns>the extensions attached to the Azure Virtual Machine</returns>
-        System.Collections.Generic.IDictionary<string, Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtension> Microsoft.Azure.Management.V2.Compute.IVirtualMachine.Extensions
+        System.Collections.Generic.IDictionary<string, Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineExtension> Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine.Extensions
         {
             get
             {
-                return this.Extensions as System.Collections.Generic.IDictionary<string, Microsoft.Azure.Management.V2.Compute.IVirtualMachineExtension>;
+                return this.Extensions as System.Collections.Generic.IDictionary<string, Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineExtension>;
             }
         }
         /// <summary>
@@ -150,7 +150,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// event at least one virtual machine will be available.
         /// </summary>
         /// <returns>the availabilitySet reference id</returns>
-        string Microsoft.Azure.Management.V2.Compute.IVirtualMachine.AvailabilitySetId
+        string Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine.AvailabilitySetId
         {
             get
             {
@@ -158,7 +158,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
         /// <returns>the operating system disk caching type, valid values are 'None', 'ReadOnly', 'ReadWrite'</returns>
-        Microsoft.Azure.Management.Compute.Models.CachingTypes Microsoft.Azure.Management.V2.Compute.IVirtualMachine.OsDiskCachingType
+        Microsoft.Azure.Management.Compute.Models.CachingTypes Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine.OsDiskCachingType
         {
             get
             {
@@ -168,13 +168,13 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// <summary>
         /// Start the virtual machine.
         /// </summary>
-        void Microsoft.Azure.Management.V2.Compute.IVirtualMachine.Start()
+        void Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine.Start()
         {
             this.Start();
         }
 
         /// <returns>the plan value</returns>
-        Microsoft.Azure.Management.Compute.Models.Plan Microsoft.Azure.Management.V2.Compute.IVirtualMachine.Plan
+        Microsoft.Azure.Management.Compute.Models.Plan Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine.Plan
         {
             get
             {
@@ -182,7 +182,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
         /// <returns>the virtual machine unique id.</returns>
-        string Microsoft.Azure.Management.V2.Compute.IVirtualMachine.VmId
+        string Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine.VmId
         {
             get
             {
@@ -193,13 +193,13 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// List of all available virtual machine sizes this virtual machine can resized to.
         /// </summary>
         /// <returns>the virtual machine sizes</returns>
-        Microsoft.Azure.Management.V2.Resource.Core.PagedList<Microsoft.Azure.Management.V2.Compute.IVirtualMachineSize> Microsoft.Azure.Management.V2.Compute.IVirtualMachine.AvailableSizes()
+        Microsoft.Azure.Management.Fluent.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineSize> Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine.AvailableSizes()
         {
-            return this.AvailableSizes as Microsoft.Azure.Management.V2.Resource.Core.PagedList<Microsoft.Azure.Management.V2.Compute.IVirtualMachineSize>;
+            return this.AvailableSizes as Microsoft.Azure.Management.Fluent.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineSize>;
         }
 
         /// <returns>the operating system of this virtual machine</returns>
-        Microsoft.Azure.Management.Compute.Models.OperatingSystemTypes Microsoft.Azure.Management.V2.Compute.IVirtualMachine.OsType
+        Microsoft.Azure.Management.Compute.Models.OperatingSystemTypes Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine.OsType
         {
             get
             {
@@ -211,13 +211,13 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// <p>
         /// You are not billed for the compute resources that this Virtual Machine uses
         /// </summary>
-        void Microsoft.Azure.Management.V2.Compute.IVirtualMachine.Deallocate()
+        void Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine.Deallocate()
         {
             this.Deallocate();
         }
 
         /// <returns>the virtual machine size</returns>
-        Microsoft.Azure.Management.Compute.Models.VirtualMachineSizeTypes Microsoft.Azure.Management.V2.Compute.IVirtualMachine.Size
+        Microsoft.Azure.Management.Compute.Models.VirtualMachineSizeTypes Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine.Size
         {
             get
             {
@@ -229,7 +229,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// <p>
         /// You will be billed for the compute resources that this Virtual Machine uses.
         /// </summary>
-        void Microsoft.Azure.Management.V2.Compute.IVirtualMachine.PowerOff()
+        void Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine.PowerOff()
         {
             this.PowerOff();
         }
@@ -240,13 +240,13 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// this will caches the instance view which can be later retrieved using {@link VirtualMachine#instanceView()}.
         /// </summary>
         /// <returns>the refreshed instance view</returns>
-        Microsoft.Azure.Management.Compute.Models.VirtualMachineInstanceView Microsoft.Azure.Management.V2.Compute.IVirtualMachine.RefreshInstanceView()
+        Microsoft.Azure.Management.Compute.Models.VirtualMachineInstanceView Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine.RefreshInstanceView()
         {
             return this.RefreshInstanceView as Microsoft.Azure.Management.Compute.Models.VirtualMachineInstanceView;
         }
 
         /// <returns>the provisioningState value</returns>
-        string Microsoft.Azure.Management.V2.Compute.IVirtualMachine.ProvisioningState
+        string Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine.ProvisioningState
         {
             get
             {
@@ -254,7 +254,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
         /// <returns>the uri to the vhd file backing this virtual machine's operating system disk</returns>
-        string Microsoft.Azure.Management.V2.Compute.IVirtualMachine.OsDiskVhdUri
+        string Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine.OsDiskVhdUri
         {
             get
             {
@@ -262,7 +262,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
         /// <returns>the power state of the virtual machine</returns>
-        Microsoft.Azure.Management.V2.Compute.PowerState Microsoft.Azure.Management.V2.Compute.IVirtualMachine.PowerState
+        Microsoft.Azure.Management.Fluent.Compute.PowerState Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine.PowerState
         {
             get
             {
@@ -275,13 +275,13 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// note that this method makes a rest API call to fetch the resource.
         /// </summary>
         /// <returns>the public IP of the primary network interface</returns>
-        Microsoft.Azure.Management.V2.Network.IPublicIpAddress Microsoft.Azure.Management.V2.Compute.IVirtualMachine.GetPrimaryPublicIpAddress()
+        Microsoft.Azure.Management.Fluent.Network.IPublicIpAddress Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine.GetPrimaryPublicIpAddress()
         {
-            return this.GetPrimaryPublicIpAddress() as Microsoft.Azure.Management.V2.Network.IPublicIpAddress;
+            return this.GetPrimaryPublicIpAddress() as Microsoft.Azure.Management.Fluent.Network.IPublicIpAddress;
         }
 
         /// <returns>name of this virtual machine</returns>
-        string Microsoft.Azure.Management.V2.Compute.IVirtualMachine.ComputerName
+        string Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine.ComputerName
         {
             get
             {
@@ -292,7 +292,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// Gets the operating system profile of an Azure virtual machine.
         /// </summary>
         /// <returns>the osProfile value</returns>
-        Microsoft.Azure.Management.Compute.Models.OSProfile Microsoft.Azure.Management.V2.Compute.IVirtualMachine.OsProfile
+        Microsoft.Azure.Management.Compute.Models.OSProfile Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine.OsProfile
         {
             get
             {
@@ -303,7 +303,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// Restart the virtual machine.
         /// =
         /// </summary>
-        void Microsoft.Azure.Management.V2.Compute.IVirtualMachine.Restart()
+        void Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine.Restart()
         {
             this.Restart();
         }
@@ -315,7 +315,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// virtual machine from boot failures.
         /// </summary>
         /// <returns>the diagnosticsProfile value</returns>
-        Microsoft.Azure.Management.Compute.Models.DiagnosticsProfile Microsoft.Azure.Management.V2.Compute.IVirtualMachine.DiagnosticsProfile
+        Microsoft.Azure.Management.Compute.Models.DiagnosticsProfile Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine.DiagnosticsProfile
         {
             get
             {
@@ -325,7 +325,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// <summary>
         /// Redeploy the virtual machine.
         /// </summary>
-        void Microsoft.Azure.Management.V2.Compute.IVirtualMachine.Redeploy()
+        void Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine.Redeploy()
         {
             this.Redeploy();
         }
@@ -337,13 +337,13 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// <param name="containerName">containerName destination container name to store the captured Vhd</param>
         /// <param name="overwriteVhd">overwriteVhd whether to overwrites destination vhd if it exists</param>
         /// <returns>the template as json string</returns>
-        string Microsoft.Azure.Management.V2.Compute.IVirtualMachine.Capture(string containerName, bool overwriteVhd)
+        string Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine.Capture(string containerName, bool overwriteVhd)
         {
             return this.Capture(containerName, overwriteVhd) as string;
         }
 
         /// <returns>the licenseType value</returns>
-        string Microsoft.Azure.Management.V2.Compute.IVirtualMachine.LicenseType
+        string Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine.LicenseType
         {
             get
             {
@@ -356,7 +356,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// this method returns the cached instance view, to refresh the cache call {@link VirtualMachine#refreshInstanceView()}.
         /// </summary>
         /// <returns>the virtual machine instance view</returns>
-        Microsoft.Azure.Management.Compute.Models.VirtualMachineInstanceView Microsoft.Azure.Management.V2.Compute.IVirtualMachine.InstanceView
+        Microsoft.Azure.Management.Compute.Models.VirtualMachineInstanceView Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine.InstanceView
         {
             get
             {
@@ -371,7 +371,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// disk is stored, details of the data disk attached to the virtual machine.
         /// </summary>
         /// <returns>the storageProfile value</returns>
-        Microsoft.Azure.Management.Compute.Models.StorageProfile Microsoft.Azure.Management.V2.Compute.IVirtualMachine.StorageProfile
+        Microsoft.Azure.Management.Compute.Models.StorageProfile Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine.StorageProfile
         {
             get
             {
@@ -381,13 +381,13 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// <summary>
         /// Generalize the Virtual Machine.
         /// </summary>
-        void Microsoft.Azure.Management.V2.Compute.IVirtualMachine.Generalize()
+        void Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine.Generalize()
         {
             this.Generalize();
         }
 
         /// <returns>the size of the operating system disk in GB</returns>
-        int Microsoft.Azure.Management.V2.Compute.IVirtualMachine.OsDiskSize
+        int Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine.OsDiskSize
         {
             get
             {
@@ -395,15 +395,15 @@ namespace Microsoft.Azure.Management.V2.Compute
             }
         }
         /// <returns>the list of data disks attached to this virtual machine</returns>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.V2.Compute.IVirtualMachineDataDisk> Microsoft.Azure.Management.V2.Compute.IVirtualMachine.DataDisks
+        System.Collections.Generic.IList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineDataDisk> Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine.DataDisks
         {
             get
             {
-                return this.DataDisks as System.Collections.Generic.IList<Microsoft.Azure.Management.V2.Compute.IVirtualMachineDataDisk>;
+                return this.DataDisks as System.Collections.Generic.IList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineDataDisk>;
             }
         }
         /// <returns>the resource ID of the public IP address associated with this virtual machine's primary network interface</returns>
-        string Microsoft.Azure.Management.V2.Compute.IVirtualMachine.GetPrimaryPublicIpAddressId()
+        string Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine.GetPrimaryPublicIpAddressId()
         {
             return this.GetPrimaryPublicIpAddressId() as string;
         }
@@ -415,9 +415,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="networkInterface">networkInterface an existing network interface</param>
         /// <returns>the stage representing creatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithSecondaryNetworkInterface.WithExistingSecondaryNetworkInterface(INetworkInterface networkInterface)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithSecondaryNetworkInterface.WithExistingSecondaryNetworkInterface(INetworkInterface networkInterface)
         {
-            return this.WithExistingSecondaryNetworkInterface(networkInterface) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate;
+            return this.WithExistingSecondaryNetworkInterface(networkInterface) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -429,9 +429,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="creatable">creatable a creatable definition for a new network interface</param>
         /// <returns>the stage representing creatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithSecondaryNetworkInterface.WithNewSecondaryNetworkInterface(ICreatable<Microsoft.Azure.Management.V2.Network.INetworkInterface> creatable)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithSecondaryNetworkInterface.WithNewSecondaryNetworkInterface(ICreatable<Microsoft.Azure.Management.Fluent.Network.INetworkInterface> creatable)
         {
-            return this.WithNewSecondaryNetworkInterface(creatable) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate;
+            return this.WithNewSecondaryNetworkInterface(creatable) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -439,9 +439,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="name">name the name of the secondary network interface to remove</param>
         /// <returns>the stage representing updatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IWithSecondaryNetworkInterface.WithoutSecondaryNetworkInterface(string name)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IWithSecondaryNetworkInterface.WithoutSecondaryNetworkInterface(string name)
         {
-            return this.WithoutSecondaryNetworkInterface(name) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate;
+            return this.WithoutSecondaryNetworkInterface(name) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate;
         }
 
         /// <summary>
@@ -451,9 +451,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="networkInterface">networkInterface an existing network interface</param>
         /// <returns>the stage representing creatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IWithSecondaryNetworkInterface.WithExistingSecondaryNetworkInterface(INetworkInterface networkInterface)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IWithSecondaryNetworkInterface.WithExistingSecondaryNetworkInterface(INetworkInterface networkInterface)
         {
-            return this.WithExistingSecondaryNetworkInterface(networkInterface) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate;
+            return this.WithExistingSecondaryNetworkInterface(networkInterface) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate;
         }
 
         /// <summary>
@@ -465,18 +465,18 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="creatable">creatable a creatable definition for a new network interface</param>
         /// <returns>the stage representing creatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IWithSecondaryNetworkInterface.WithNewSecondaryNetworkInterface(ICreatable<Microsoft.Azure.Management.V2.Network.INetworkInterface> creatable)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IWithSecondaryNetworkInterface.WithNewSecondaryNetworkInterface(ICreatable<Microsoft.Azure.Management.Fluent.Network.INetworkInterface> creatable)
         {
-            return this.WithNewSecondaryNetworkInterface(creatable) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate;
+            return this.WithNewSecondaryNetworkInterface(creatable) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate;
         }
 
         /// <summary>
         /// Refreshes the resource to sync with Azure.
         /// </summary>
         /// <returns>the refreshed resource</returns>
-        Microsoft.Azure.Management.V2.Compute.IVirtualMachine Microsoft.Azure.Management.V2.Resource.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.V2.Compute.IVirtualMachine>.Refresh()
+        Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine>.Refresh()
         {
-            return this.Refresh() as Microsoft.Azure.Management.V2.Compute.IVirtualMachine;
+            return this.Refresh() as Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine;
         }
 
         /// <summary>
@@ -484,13 +484,13 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="rootUserName">rootUserName the Linux root user name. This must follow the required naming convention for Linux user name</param>
         /// <returns>the next stage of the Linux virtual machine definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithLinuxCreate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithRootUserName.WithRootUserName(string rootUserName)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithLinuxCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithRootUserName.WithRootUserName(string rootUserName)
         {
-            return this.WithRootUserName(rootUserName) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithLinuxCreate;
+            return this.WithRootUserName(rootUserName) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithLinuxCreate;
         }
 
         /// <returns>the resource id of the primary network interface associated with this resource</returns>
-        string Microsoft.Azure.Management.V2.Network.IHasNetworkInterfaces.PrimaryNetworkInterfaceId
+        string Microsoft.Azure.Management.Fluent.Network.IHasNetworkInterfaces.PrimaryNetworkInterfaceId
         {
             get
             {
@@ -503,13 +503,13 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// Note that this method can result in a call to the cloud to fetch the network interface information.
         /// </summary>
         /// <returns>the primary network interface associated with this resource</returns>
-        Microsoft.Azure.Management.V2.Network.INetworkInterface Microsoft.Azure.Management.V2.Network.IHasNetworkInterfaces.GetPrimaryNetworkInterface()
+        Microsoft.Azure.Management.Fluent.Network.INetworkInterface Microsoft.Azure.Management.Fluent.Network.IHasNetworkInterfaces.GetPrimaryNetworkInterface()
         {
-            return this.GetPrimaryNetworkInterface() as Microsoft.Azure.Management.V2.Network.INetworkInterface;
+            return this.GetPrimaryNetworkInterface() as Microsoft.Azure.Management.Fluent.Network.INetworkInterface;
         }
 
         /// <returns>the list of resource IDs of the network interfaces associated with this resource</returns>
-        System.Collections.Generic.IList<string> Microsoft.Azure.Management.V2.Network.IHasNetworkInterfaces.NetworkInterfaceIds
+        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Fluent.Network.IHasNetworkInterfaces.NetworkInterfaceIds
         {
             get
             {
@@ -520,9 +520,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// Specifies that no public IP needs to be associated with virtual machine.
         /// </summary>
         /// <returns>the next stage of the virtual machine definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithOS Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithPublicIpAddress.WithoutPrimaryPublicIpAddress()
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithOS Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithPublicIpAddress.WithoutPrimaryPublicIpAddress()
         {
-            return this.WithoutPrimaryPublicIpAddress() as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithOS;
+            return this.WithoutPrimaryPublicIpAddress() as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithOS;
         }
 
         /// <summary>
@@ -531,9 +531,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="creatable">creatable a creatable definition for a new public IP</param>
         /// <returns>the next stage of the virtual machine definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithOS Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithPublicIpAddress.WithNewPrimaryPublicIpAddress(ICreatable<Microsoft.Azure.Management.V2.Network.IPublicIpAddress> creatable)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithOS Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithPublicIpAddress.WithNewPrimaryPublicIpAddress(ICreatable<Microsoft.Azure.Management.Fluent.Network.IPublicIpAddress> creatable)
         {
-            return this.WithNewPrimaryPublicIpAddress(creatable) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithOS;
+            return this.WithNewPrimaryPublicIpAddress(creatable) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithOS;
         }
 
         /// <summary>
@@ -544,9 +544,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="leafDnsLabel">leafDnsLabel the leaf domain label</param>
         /// <returns>the next stage of the virtual machine definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithOS Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithPublicIpAddress.WithNewPrimaryPublicIpAddress(string leafDnsLabel)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithOS Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithPublicIpAddress.WithNewPrimaryPublicIpAddress(string leafDnsLabel)
         {
-            return this.WithNewPrimaryPublicIpAddress(leafDnsLabel) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithOS;
+            return this.WithNewPrimaryPublicIpAddress(leafDnsLabel) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithOS;
         }
 
         /// <summary>
@@ -554,9 +554,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="publicIpAddress">publicIpAddress an existing public IP address</param>
         /// <returns>the next stage of the virtual machine definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithOS Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithPublicIpAddress.WithExistingPrimaryPublicIpAddress(IPublicIpAddress publicIpAddress)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithOS Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithPublicIpAddress.WithExistingPrimaryPublicIpAddress(IPublicIpAddress publicIpAddress)
         {
-            return this.WithExistingPrimaryPublicIpAddress(publicIpAddress) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithOS;
+            return this.WithExistingPrimaryPublicIpAddress(publicIpAddress) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithOS;
         }
 
         /// <summary>
@@ -566,9 +566,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="publicKey">publicKey the SSH public key in PEM format.</param>
         /// <returns>the stage representing creatable Linux VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithLinuxCreate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithLinuxCreate.WithSsh(string publicKey)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithLinuxCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithLinuxCreate.WithSsh(string publicKey)
         {
-            return this.WithSsh(publicKey) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithLinuxCreate;
+            return this.WithSsh(publicKey) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithLinuxCreate;
         }
 
         /// <summary>
@@ -576,9 +576,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="password">password the password. This must follow the criteria for Azure VM password.</param>
         /// <returns>the stage representing creatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithPassword.WithPassword(string password)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithPassword.WithPassword(string password)
         {
-            return this.WithPassword(password) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate;
+            return this.WithPassword(password) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -586,9 +586,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="adminUserName">adminUserName the Windows administrator user name. This must follow the required naming convention for Windows user name.</param>
         /// <returns>the stage representing creatable Linux VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithWindowsCreate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithAdminUserName.WithAdminUserName(string adminUserName)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithWindowsCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithAdminUserName.WithAdminUserName(string adminUserName)
         {
-            return this.WithAdminUserName(adminUserName) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithWindowsCreate;
+            return this.WithAdminUserName(adminUserName) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithWindowsCreate;
         }
 
         /// <summary>
@@ -597,9 +597,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="creatable">creatable a creatable definition for a new virtual network</param>
         /// <returns>the next stage of the virtual machine definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithPrivateIp Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithNetwork.WithNewPrimaryNetwork(ICreatable<Microsoft.Azure.Management.V2.Network.INetwork> creatable)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithPrivateIp Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithNetwork.WithNewPrimaryNetwork(ICreatable<Microsoft.Azure.Management.Fluent.Network.INetwork> creatable)
         {
-            return this.WithNewPrimaryNetwork(creatable) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithPrivateIp;
+            return this.WithNewPrimaryNetwork(creatable) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithPrivateIp;
         }
 
         /// <summary>
@@ -610,9 +610,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="addressSpace">addressSpace the address space for the virtual network</param>
         /// <returns>the next stage of the virtual machine definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithPrivateIp Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithNetwork.WithNewPrimaryNetwork(string addressSpace)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithPrivateIp Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithNetwork.WithNewPrimaryNetwork(string addressSpace)
         {
-            return this.WithNewPrimaryNetwork(addressSpace) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithPrivateIp;
+            return this.WithNewPrimaryNetwork(addressSpace) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithPrivateIp;
         }
 
         /// <summary>
@@ -620,9 +620,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="network">network an existing virtual network</param>
         /// <returns>the next stage of the virtual machine definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithSubnet Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithNetwork.WithExistingPrimaryNetwork(INetwork network)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithSubnet Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithNetwork.WithExistingPrimaryNetwork(INetwork network)
         {
-            return this.WithExistingPrimaryNetwork(network) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithSubnet;
+            return this.WithExistingPrimaryNetwork(network) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithSubnet;
         }
 
         /// <summary>
@@ -634,9 +634,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="creatable">creatable the storage account in creatable stage</param>
         /// <returns>the stage representing creatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithStorageAccount.WithNewStorageAccount(ICreatable<Microsoft.Azure.Management.V2.Storage.IStorageAccount> creatable)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithStorageAccount.WithNewStorageAccount(ICreatable<Microsoft.Azure.Management.Fluent.Storage.IStorageAccount> creatable)
         {
-            return this.WithNewStorageAccount(creatable) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate;
+            return this.WithNewStorageAccount(creatable) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -647,9 +647,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="name">name the name of the storage account</param>
         /// <returns>the stage representing creatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithStorageAccount.WithNewStorageAccount(string name)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithStorageAccount.WithNewStorageAccount(string name)
         {
-            return this.WithNewStorageAccount(name) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate;
+            return this.WithNewStorageAccount(name) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -660,9 +660,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="storageAccount">storageAccount an existing storage account</param>
         /// <returns>the stage representing creatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithStorageAccount.WithExistingStorageAccount(IStorageAccount storageAccount)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithStorageAccount.WithExistingStorageAccount(IStorageAccount storageAccount)
         {
-            return this.WithExistingStorageAccount(storageAccount) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate;
+            return this.WithExistingStorageAccount(storageAccount) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -670,9 +670,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="name">name the reference name for the extension</param>
         /// <returns>the stage representing configuration for the extension</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.Definition.IBlank<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate> Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithExtension.DefineNewExtension(string name)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineExtension.Definition.IBlank<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate> Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithExtension.DefineNewExtension(string name)
         {
-            return this.DefineNewExtension(name) as Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.Definition.IBlank<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate>;
+            return this.DefineNewExtension(name) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineExtension.Definition.IBlank<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -680,9 +680,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="name">name the reference name for the extension to be removed/uninstalled</param>
         /// <returns>the stage representing updatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IWithExtension.WithoutExtension(string name)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IWithExtension.WithoutExtension(string name)
         {
-            return this.WithoutExtension(name) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate;
+            return this.WithoutExtension(name) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate;
         }
 
         /// <summary>
@@ -690,9 +690,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="name">name the reference name for the extension</param>
         /// <returns>the stage representing updatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.Update.IUpdate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IWithExtension.UpdateExtension(string name)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineExtension.Update.IUpdate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IWithExtension.UpdateExtension(string name)
         {
-            return this.UpdateExtension(name) as Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.Update.IUpdate;
+            return this.UpdateExtension(name) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineExtension.Update.IUpdate;
         }
 
         /// <summary>
@@ -700,9 +700,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="name">name the reference name for the extension</param>
         /// <returns>the stage representing configuration for the extension</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.UpdateDefinition.IBlank<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate> Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IWithExtension.DefineNewExtension(string name)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineExtension.UpdateDefinition.IBlank<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate> Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IWithExtension.DefineNewExtension(string name)
         {
-            return this.DefineNewExtension(name) as Microsoft.Azure.Management.V2.Compute.VirtualMachineExtension.UpdateDefinition.IBlank<Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate>;
+            return this.DefineNewExtension(name) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineExtension.UpdateDefinition.IBlank<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate>;
         }
 
         /// <summary>
@@ -712,9 +712,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// <param name="staticPrivateIpAddress">staticPrivateIpAddress the static IP address within the specified subnet to assign to</param>
         /// <param name="the">the network interface</param>
         /// <returns>the next stage of the virtual machine definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithPublicIpAddress Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithPrivateIp.WithPrimaryPrivateIpAddressStatic(string staticPrivateIpAddress)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithPublicIpAddress Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithPrivateIp.WithPrimaryPrivateIpAddressStatic(string staticPrivateIpAddress)
         {
-            return this.WithPrimaryPrivateIpAddressStatic(staticPrivateIpAddress) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithPublicIpAddress;
+            return this.WithPrimaryPrivateIpAddressStatic(staticPrivateIpAddress) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithPublicIpAddress;
         }
 
         /// <summary>
@@ -722,9 +722,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// virtual machine's primary network interface.
         /// </summary>
         /// <returns>the next stage of the virtual machine definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithPublicIpAddress Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithPrivateIp.WithPrimaryPrivateIpAddressDynamic()
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithPublicIpAddress Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithPrivateIp.WithPrimaryPrivateIpAddressDynamic()
         {
-            return this.WithPrimaryPrivateIpAddressDynamic() as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithPublicIpAddress;
+            return this.WithPrimaryPrivateIpAddressDynamic() as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithPublicIpAddress;
         }
 
         /// <summary>
@@ -734,9 +734,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// <param name="offer">offer specifies the offer of the image</param>
         /// <param name="sku">sku specifies the SKU of the image</param>
         /// <returns>the next stage of the virtual machine definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithRootUserName Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithOS.WithLatestLinuxImage(string publisher, string offer, string sku)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithRootUserName Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithOS.WithLatestLinuxImage(string publisher, string offer, string sku)
         {
-            return this.WithLatestLinuxImage(publisher, offer, sku) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithRootUserName;
+            return this.WithLatestLinuxImage(publisher, offer, sku) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithRootUserName;
         }
 
         /// <summary>
@@ -744,9 +744,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="imageUrl">imageUrl the url the the VHD</param>
         /// <returns>the next stage of the virtual machine definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithRootUserName Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithOS.WithStoredLinuxImage(string imageUrl)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithRootUserName Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithOS.WithStoredLinuxImage(string imageUrl)
         {
-            return this.WithStoredLinuxImage(imageUrl) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithRootUserName;
+            return this.WithStoredLinuxImage(imageUrl) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithRootUserName;
         }
 
         /// <summary>
@@ -754,9 +754,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="imageReference">imageReference describes publisher, offer, sku and version of the market-place image</param>
         /// <returns>the next stage of the virtual machine definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithRootUserName Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithOS.WithSpecificLinuxImageVersion(ImageReference imageReference)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithRootUserName Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithOS.WithSpecificLinuxImageVersion(ImageReference imageReference)
         {
-            return this.WithSpecificLinuxImageVersion(imageReference) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithRootUserName;
+            return this.WithSpecificLinuxImageVersion(imageReference) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithRootUserName;
         }
 
         /// <summary>
@@ -766,9 +766,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// <param name="offer">offer specifies the offer of the image</param>
         /// <param name="sku">sku specifies the SKU of the image</param>
         /// <returns>the next stage of the virtual machine definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithAdminUserName Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithOS.WithLatestWindowsImage(string publisher, string offer, string sku)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithAdminUserName Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithOS.WithLatestWindowsImage(string publisher, string offer, string sku)
         {
-            return this.WithLatestWindowsImage(publisher, offer, sku) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithAdminUserName;
+            return this.WithLatestWindowsImage(publisher, offer, sku) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithAdminUserName;
         }
 
         /// <summary>
@@ -776,9 +776,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="knownImage">knownImage enum value indicating known market-place image</param>
         /// <returns>the next stage of the virtual machine definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithAdminUserName Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithOS.WithPopularWindowsImage(KnownWindowsVirtualMachineImage knownImage)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithAdminUserName Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithOS.WithPopularWindowsImage(KnownWindowsVirtualMachineImage knownImage)
         {
-            return this.WithPopularWindowsImage(knownImage) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithAdminUserName;
+            return this.WithPopularWindowsImage(knownImage) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithAdminUserName;
         }
 
         /// <summary>
@@ -787,9 +787,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// <param name="osDiskUrl">osDiskUrl osDiskUrl the url to the OS disk in the Azure Storage account</param>
         /// <param name="osType">osType the OS type</param>
         /// <returns>the next stage of the Windows virtual machine definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithOS.WithOsDisk(string osDiskUrl, OperatingSystemTypes osType)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithOS.WithOsDisk(string osDiskUrl, OperatingSystemTypes osType)
         {
-            return this.WithOsDisk(osDiskUrl, osType) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate;
+            return this.WithOsDisk(osDiskUrl, osType) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -797,9 +797,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="knownImage">knownImage enum value indicating known market-place image</param>
         /// <returns>the next stage of the virtual machine definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithRootUserName Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithOS.WithPopularLinuxImage(KnownLinuxVirtualMachineImage knownImage)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithRootUserName Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithOS.WithPopularLinuxImage(KnownLinuxVirtualMachineImage knownImage)
         {
-            return this.WithPopularLinuxImage(knownImage) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithRootUserName;
+            return this.WithPopularLinuxImage(knownImage) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithRootUserName;
         }
 
         /// <summary>
@@ -807,9 +807,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="imageReference">imageReference describes publisher, offer, sku and version of the market-place image</param>
         /// <returns>the next stage of the virtual machine definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithAdminUserName Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithOS.WithSpecificWindowsImageVersion(ImageReference imageReference)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithAdminUserName Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithOS.WithSpecificWindowsImageVersion(ImageReference imageReference)
         {
-            return this.WithSpecificWindowsImageVersion(imageReference) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithAdminUserName;
+            return this.WithSpecificWindowsImageVersion(imageReference) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithAdminUserName;
         }
 
         /// <summary>
@@ -817,9 +817,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="imageUrl">imageUrl the url the the VHD</param>
         /// <returns>the next stage of the virtual machine definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithAdminUserName Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithOS.WithStoredWindowsImage(string imageUrl)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithAdminUserName Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithOS.WithStoredWindowsImage(string imageUrl)
         {
-            return this.WithStoredWindowsImage(imageUrl) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithAdminUserName;
+            return this.WithStoredWindowsImage(imageUrl) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithAdminUserName;
         }
 
         /// <summary>
@@ -827,9 +827,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="size">size the VHD size.</param>
         /// <returns>the stage representing updatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate.WithOsDiskSizeInGb(int size)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate.WithOsDiskSizeInGb(int size)
         {
-            return this.WithOsDiskSizeInGb(size) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate;
+            return this.WithOsDiskSizeInGb(size) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate;
         }
 
         /// <summary>
@@ -837,9 +837,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="cachingType">cachingType the caching type.</param>
         /// <returns>the stage representing updatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate.WithOsDiskCaching(CachingTypes cachingType)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate.WithOsDiskCaching(CachingTypes cachingType)
         {
-            return this.WithOsDiskCaching(cachingType) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate;
+            return this.WithOsDiskCaching(cachingType) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate;
         }
 
         /// <summary>
@@ -847,9 +847,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="sizeName">sizeName the name of the size for the virtual machine as text</param>
         /// <returns>the stage representing updatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate.WithSize(string sizeName)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate.WithSize(string sizeName)
         {
-            return this.WithSize(sizeName) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate;
+            return this.WithSize(sizeName) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate;
         }
 
         /// <summary>
@@ -857,9 +857,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="size">size a size from the list of available sizes for the virtual machine</param>
         /// <returns>the stage representing updatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate.WithSize(VirtualMachineSizeTypes size)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate.WithSize(VirtualMachineSizeTypes size)
         {
-            return this.WithSize(size) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Update.IUpdate;
+            return this.WithSize(size) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate;
         }
 
         /// <summary>
@@ -869,27 +869,27 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="listener">listener the WinRmListener</param>
         /// <returns>the stage representing creatable Windows VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithWindowsCreate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithWindowsCreate.WithWinRm(WinRMListener listener)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithWindowsCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithWindowsCreate.WithWinRm(WinRMListener listener)
         {
-            return this.WithWinRm(listener) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithWindowsCreate;
+            return this.WithWinRm(listener) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithWindowsCreate;
         }
 
         /// <summary>
         /// Specifies that automatic updates should be disabled.
         /// </summary>
         /// <returns>the stage representing creatable Windows VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithWindowsCreate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithWindowsCreate.DisableAutoUpdate()
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithWindowsCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithWindowsCreate.DisableAutoUpdate()
         {
-            return this.DisableAutoUpdate as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithWindowsCreate;
+            return this.DisableAutoUpdate as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithWindowsCreate;
         }
 
         /// <summary>
         /// Specifies that VM Agent should not be provisioned.
         /// </summary>
         /// <returns>the stage representing creatable Windows VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithWindowsCreate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithWindowsCreate.DisableVmAgent()
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithWindowsCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithWindowsCreate.DisableVmAgent()
         {
-            return this.DisableVmAgent as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithWindowsCreate;
+            return this.DisableVmAgent as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithWindowsCreate;
         }
 
         /// <summary>
@@ -897,9 +897,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="timeZone">timeZone the timezone</param>
         /// <returns>the stage representing creatable Windows VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithWindowsCreate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithWindowsCreate.WithTimeZone(string timeZone)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithWindowsCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithWindowsCreate.WithTimeZone(string timeZone)
         {
-            return this.WithTimeZone(timeZone) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithWindowsCreate;
+            return this.WithTimeZone(timeZone) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithWindowsCreate;
         }
 
         /// <summary>
@@ -907,9 +907,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="name">name the subnet name</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithPrivateIp Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithSubnet.WithSubnet(string name)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithPrivateIp Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithSubnet.WithSubnet(string name)
         {
-            return this.WithSubnet(name) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithPrivateIp;
+            return this.WithSubnet(name) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithPrivateIp;
         }
 
         /// <summary>
@@ -917,9 +917,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="size">size the VHD size.</param>
         /// <returns>the stage representing creatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithOsDiskSettings.WithOsDiskSizeInGb(int size)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithOsDiskSettings.WithOsDiskSizeInGb(int size)
         {
-            return this.WithOsDiskSizeInGb(size) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate;
+            return this.WithOsDiskSizeInGb(size) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -927,9 +927,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="name">name the OS Disk name.</param>
         /// <returns>the stage representing creatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithOsDiskSettings.WithOsDiskName(string name)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithOsDiskSettings.WithOsDiskName(string name)
         {
-            return this.WithOsDiskName(name) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate;
+            return this.WithOsDiskName(name) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -938,9 +938,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// <param name="containerName">containerName the name of the container in the selected storage account.</param>
         /// <param name="vhdName">vhdName the name for the OS Disk vhd.</param>
         /// <returns>the stage representing creatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithOsDiskSettings.WithOsDiskVhdLocation(string containerName, string vhdName)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithOsDiskSettings.WithOsDiskVhdLocation(string containerName, string vhdName)
         {
-            return this.WithOsDiskVhdLocation(containerName, vhdName) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate;
+            return this.WithOsDiskVhdLocation(containerName, vhdName) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -948,9 +948,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="cachingType">cachingType the caching type.</param>
         /// <returns>the stage representing creatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithOsDiskSettings.WithOsDiskCaching(CachingTypes cachingType)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithOsDiskSettings.WithOsDiskCaching(CachingTypes cachingType)
         {
-            return this.WithOsDiskCaching(cachingType) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate;
+            return this.WithOsDiskCaching(cachingType) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -958,9 +958,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="settings">settings the encryption settings.</param>
         /// <returns>the stage representing creatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithOsDiskSettings.WithOsDiskEncryptionSettings(DiskEncryptionSettings settings)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithOsDiskSettings.WithOsDiskEncryptionSettings(DiskEncryptionSettings settings)
         {
-            return this.WithOsDiskEncryptionSettings(settings) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate;
+            return this.WithOsDiskEncryptionSettings(settings) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -968,9 +968,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="sizeName">sizeName the name of the size for the virtual machine as text</param>
         /// <returns>the stage representing creatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithVMSize.WithSize(string sizeName)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithVMSize.WithSize(string sizeName)
         {
-            return this.WithSize(sizeName) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate;
+            return this.WithSize(sizeName) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -978,9 +978,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="size">size a size from the list of available sizes for the virtual machine</param>
         /// <returns>the stage representing creatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithVMSize.WithSize(VirtualMachineSizeTypes size)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithVMSize.WithSize(VirtualMachineSizeTypes size)
         {
-            return this.WithSize(size) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate;
+            return this.WithSize(size) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -989,9 +989,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="creatable">creatable a creatable definition for a new network interface</param>
         /// <returns>The next stage of the virtual machine definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithOS Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithPrimaryNetworkInterface.WithNewPrimaryNetworkInterface(ICreatable<Microsoft.Azure.Management.V2.Network.INetworkInterface> creatable)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithOS Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithPrimaryNetworkInterface.WithNewPrimaryNetworkInterface(ICreatable<Microsoft.Azure.Management.Fluent.Network.INetworkInterface> creatable)
         {
-            return this.WithNewPrimaryNetworkInterface(creatable) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithOS;
+            return this.WithNewPrimaryNetworkInterface(creatable) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithOS;
         }
 
         /// <summary>
@@ -999,9 +999,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="networkInterface">networkInterface an existing network interface</param>
         /// <returns>The next stage of the virtual machine definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithOS Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithPrimaryNetworkInterface.WithExistingPrimaryNetworkInterface(INetworkInterface networkInterface)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithOS Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithPrimaryNetworkInterface.WithExistingPrimaryNetworkInterface(INetworkInterface networkInterface)
         {
-            return this.WithExistingPrimaryNetworkInterface(networkInterface) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithOS;
+            return this.WithExistingPrimaryNetworkInterface(networkInterface) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithOS;
         }
 
         /// <summary>
@@ -1012,9 +1012,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="availabilitySet">availabilitySet an existing availability set</param>
         /// <returns>the stage representing creatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithAvailabilitySet.WithExistingAvailabilitySet(IAvailabilitySet availabilitySet)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithAvailabilitySet.WithExistingAvailabilitySet(IAvailabilitySet availabilitySet)
         {
-            return this.WithExistingAvailabilitySet(availabilitySet) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate;
+            return this.WithExistingAvailabilitySet(availabilitySet) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -1026,9 +1026,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="creatable">creatable the availability set in creatable stage</param>
         /// <returns>the stage representing creatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithAvailabilitySet.WithNewAvailabilitySet(ICreatable<Microsoft.Azure.Management.V2.Compute.IAvailabilitySet> creatable)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithAvailabilitySet.WithNewAvailabilitySet(ICreatable<Microsoft.Azure.Management.Fluent.Compute.IAvailabilitySet> creatable)
         {
-            return this.WithNewAvailabilitySet(creatable) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate;
+            return this.WithNewAvailabilitySet(creatable) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -1039,9 +1039,9 @@ namespace Microsoft.Azure.Management.V2.Compute
         /// </summary>
         /// <param name="name">name the name of the availability set</param>
         /// <returns>the stage representing creatable VM definition</returns>
-        Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithAvailabilitySet.WithNewAvailabilitySet(string name)
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithAvailabilitySet.WithNewAvailabilitySet(string name)
         {
-            return this.WithNewAvailabilitySet(name) as Microsoft.Azure.Management.V2.Compute.VirtualMachine.Definition.IWithCreate;
+            return this.WithNewAvailabilitySet(name) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate;
         }
 
     }

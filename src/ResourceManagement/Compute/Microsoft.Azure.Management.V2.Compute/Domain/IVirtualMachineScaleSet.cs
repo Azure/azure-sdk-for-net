@@ -1,26 +1,26 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.V2.Compute
+namespace Microsoft.Azure.Management.Fluent.Compute
 {
 
-    using Microsoft.Azure.Management.V2.Network;
+    using Microsoft.Azure.Management.Fluent.Network;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
     using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update;
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
     /// <summary>
     /// An immutable client-side representation of an Azure virtual machine scale set.
     /// </summary>
     public interface IVirtualMachineScaleSet :
         IGroupableResource,
-        IRefreshable<Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSet>,
+        IRefreshable<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet>,
         IWrapper<Microsoft.Azure.Management.Compute.Models.VirtualMachineScaleSetInner>,
-        IUpdatable<Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithPrimaryLoadBalancer>
+        IUpdatable<Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithPrimaryLoadBalancer>
     {
         /// <returns> available SKUs for the virtual machine scale set, including the minimum and maximum virtual machine instances</returns>
         /// <returns>allowed for a particular SKU</returns>
-        PagedList<Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSetSku> ListAvailableSkus();
+        PagedList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSetSku> ListAvailableSkus();
 
         /// <summary>
         /// Shuts down the virtual machines in the scale set and releases its compute resources.
@@ -85,11 +85,11 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         /// <returns>the internet-facing load balancer's backends associated with the primary network interface</returns>
         /// <returns>of the virtual machines in the scale set</returns>
-        IDictionary<string, Microsoft.Azure.Management.V2.Network.IBackend> ListPrimaryInternetFacingLoadBalancerBackends();
+        IDictionary<string, Microsoft.Azure.Management.Fluent.Network.IBackend> ListPrimaryInternetFacingLoadBalancerBackends();
 
         /// <returns>the internet-facing load balancer's inbound NAT pool associated with the primary network interface</returns>
         /// <returns>of the virtual machines in the scale set</returns>
-        IDictionary<string, Microsoft.Azure.Management.V2.Network.IInboundNatPool> ListPrimaryInternetFacingLoadBalancerInboundNatPools();
+        IDictionary<string, Microsoft.Azure.Management.Fluent.Network.IInboundNatPool> ListPrimaryInternetFacingLoadBalancerInboundNatPools();
 
         /// <returns>the internal load balancer associated with the primary network interface of</returns>
         /// <returns>the virtual machines in the scale set</returns>
@@ -97,11 +97,11 @@ namespace Microsoft.Azure.Management.V2.Compute
 
         /// <returns>the internal load balancer's backends associated with the primary network interface</returns>
         /// <returns>of the virtual machines in the scale set</returns>
-        IDictionary<string, Microsoft.Azure.Management.V2.Network.IBackend> ListPrimaryInternalLoadBalancerBackends();
+        IDictionary<string, Microsoft.Azure.Management.Fluent.Network.IBackend> ListPrimaryInternalLoadBalancerBackends();
 
         /// <returns>the inbound NAT pools of the internal load balancer associated with the primary network interface</returns>
         /// <returns>of the virtual machines in the scale set, if any.</returns>
-        IDictionary<string, Microsoft.Azure.Management.V2.Network.IInboundNatPool> ListPrimaryInternalLoadBalancerInboundNatPools();
+        IDictionary<string, Microsoft.Azure.Management.Fluent.Network.IInboundNatPool> ListPrimaryInternalLoadBalancerInboundNatPools();
 
         /// <returns>the list of IDs of the public IP addresses associated with the primary Internet-facing load balancer</returns>
         /// <returns>of the scale set</returns>
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.V2.Compute
         VirtualMachineScaleSetNetworkProfile NetworkProfile { get; }
 
         /// <returns>the extensions attached to the virtual machines in the scale set</returns>
-        IDictionary<string, Microsoft.Azure.Management.V2.Compute.IVirtualMachineScaleSetExtension> Extensions();
+        IDictionary<string, Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSetExtension> Extensions();
 
     }
 }

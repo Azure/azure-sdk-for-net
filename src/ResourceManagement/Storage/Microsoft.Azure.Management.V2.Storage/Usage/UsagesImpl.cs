@@ -3,10 +3,10 @@
 
 using Microsoft.Azure.Management.Storage;
 using Microsoft.Azure.Management.Storage.Models;
-using Microsoft.Azure.Management.V2.Resource.Core;
+using Microsoft.Azure.Management.Fluent.Resource.Core;
 using System.Collections.Generic;
 
-namespace Microsoft.Azure.Management.V2.Storage
+namespace Microsoft.Azure.Management.Fluent.Storage
 {
     internal class UsagesImpl : ReadableWrappers<IStorageUsage, UsageImpl, UsageInner>,
         IUsages

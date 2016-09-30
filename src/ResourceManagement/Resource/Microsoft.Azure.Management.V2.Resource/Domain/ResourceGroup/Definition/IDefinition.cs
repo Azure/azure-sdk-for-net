@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information. 
 
-namespace Microsoft.Azure.Management.V2.Resource.ResourceGroup.Definition
+namespace Microsoft.Azure.Management.Fluent.Resource.ResourceGroup.Definition
 {
 
-    using Microsoft.Azure.Management.V2.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.V2.Resource.Core.Resource.Definition;
-    using Microsoft.Azure.Management.V2.Resource;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.Resource.Definition;
+    using Microsoft.Azure.Management.Fluent.Resource;
 
     /// <summary>
     /// A resource group definition with sufficient inputs to create a new

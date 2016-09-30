@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information. 
 
-namespace Microsoft.Azure.Management.V2.Compute
+namespace Microsoft.Azure.Management.Fluent.Compute
 {
     using Resource.Core;
     using System.Collections.Generic;
@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.V2.Compute
             IVirtualMachineScaleSet>,
         IVirtualMachineScaleSetExtension,
         VirtualMachineScaleSetExtension.Definition.IDefinition<VirtualMachineScaleSet.Definition.IWithCreate>,
-        VirtualMachineScaleSetExtension.UpdateDefinition.IUpdateDefinition<Microsoft.Azure.Management.V2.Compute.VirtualMachineScaleSet.Update.IWithApply>,
+        VirtualMachineScaleSetExtension.UpdateDefinition.IUpdateDefinition<Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply>,
         VirtualMachineScaleSetExtension.Update.IUpdate
     {
         private IDictionary<string,object> publicSettings;

@@ -4,13 +4,13 @@
 namespace Microsoft.Azure.Management.Fluent.Redis
 {
     using Microsoft.Azure.Management.Fluent.Redis.Models;
-    using Microsoft.Azure.Management.V2.Resource.Core;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
     using RedisCache.Update;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    using V2.Resource;
+    using Fluent.Resource;
 
     /// <summary>
     /// Implementation for Redis Cache and its parent interfaces.

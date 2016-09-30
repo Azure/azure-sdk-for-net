@@ -3,7 +3,7 @@
 
 using Microsoft.Azure.Management.Storage.Models;
 
-namespace Microsoft.Azure.Management.V2.Storage
+namespace Microsoft.Azure.Management.Fluent.Storage
 {
     public class CheckNameAvailabilityResult
     {
