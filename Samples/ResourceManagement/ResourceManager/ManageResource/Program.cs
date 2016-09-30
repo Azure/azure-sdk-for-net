@@ -1,31 +1,28 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management;
 using Microsoft.Azure.Management.Fluent.Resource;
 using Microsoft.Azure.Management.Fluent.Resource.Authentication;
 using Microsoft.Azure.Management.Fluent.Resource.Core;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ManageResource
 {
+    /**
+     * Azure Resource sample for managing resources -
+     * - Create a resource
+     * - Update a resource
+     * - Create another resource
+     * - List resources
+     * - Delete a resource.
+     */
+
     public class Program
     {
-        /**
-         * Azure Resource sample for managing resources -
-         * - Create a resource
-         * - Update a resource
-         * - Create another resource
-         * - List resources
-         * - Delete a resource.
-         */
-
         public static void Main(string[] args)
         {
-            var rgName = ResourceNamer.RandomResourceName("rgRSMA", 24);
+            var rgName = ResourceNamer.RandomResourceName("rgRSMR", 24);
             var resourceName1 = ResourceNamer.RandomResourceName("rn1", 24);
             var resourceName2 = ResourceNamer.RandomResourceName("rn2", 24);
 
@@ -37,7 +34,7 @@ namespace ManageResource
 
                 var azure = Azure
                     .Configure()
-                    .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                    .withLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
                     .Authenticate(credentials)
                     .WithSubscription(credentials.DefaultSubscriptionId);
 
