@@ -106,6 +106,14 @@ namespace Microsoft.Azure.Management
             }
         }
 
+        public IVirtualMachineExtensionImages VirtualMachineExtensionImages
+        {
+            get
+            {
+                return computeManager.VirtualMachineExtensionImages;
+            }
+        }
+
         public IAvailabilitySets AvailabilitySets
         {
             get
@@ -314,6 +322,8 @@ namespace Microsoft.Azure.Management
         IDeployments Deployments { get; }
 
         IVirtualMachineImages VirtualMachineImages { get; }
+
+        IVirtualMachineExtensionImages VirtualMachineExtensionImages { get; }
 
         IAvailabilitySets AvailabilitySets { get; }
 

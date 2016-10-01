@@ -162,6 +162,9 @@ namespace Microsoft.Azure.Management.Fluent.Compute
     {
         IVirtualMachines VirtualMachines { get; }
         IVirtualMachineImages VirtualMachineImages { get; }
+
+        IVirtualMachineExtensionImages VirtualMachineExtensionImages { get; }
+
         IAvailabilitySets AvailabilitySets { get; }
         IVirtualMachineScaleSets VirtualMachineScaleSets { get; }
     }

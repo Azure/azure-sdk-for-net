@@ -16,7 +16,7 @@ namespace Azure.Tests
 {
     public class VirtualMachineExtensionTests
     {
-        [Fact]
+        [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanResetPasswordUsingVMAccessExtension()
         {
             string rgName = ResourceNamer.RandomResourceName("vmexttest", 15);
@@ -62,7 +62,7 @@ namespace Azure.Tests
                     .Apply();
         }
 
-        [Fact]
+        [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanInstallUnintallCustomExtension()
         {
             string rgName = ResourceNamer.RandomResourceName("vmexttest", 15);
@@ -117,7 +117,7 @@ namespace Azure.Tests
             Assert.True(vm.Extensions.Count() == 0);
         }
 
-        [Fact]
+        [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanHandleExtensionReference()
         {
             string rgName = ResourceNamer.RandomResourceName("vmexttest", 15);
@@ -196,9 +196,9 @@ namespace Azure.Tests
             // Even though VM's inner contain just extension reference VirtualMachine::extensions()
             // should resolve the reference and get full extension.
             Assert.NotNull(accessExtension);
-            Assert.Null(accessExtension.PublisherName);
-            Assert.Null(accessExtension.TypeName);
-            Assert.Null(accessExtension.VersionName);
+            Assert.NotNull(accessExtension.PublisherName);
+            Assert.NotNull(accessExtension.TypeName);
+            Assert.NotNull(accessExtension.VersionName);
         }
     }
 }
