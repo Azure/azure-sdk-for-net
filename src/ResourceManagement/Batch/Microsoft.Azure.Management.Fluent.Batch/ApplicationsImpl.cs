@@ -4,8 +4,8 @@
 namespace Microsoft.Azure.Management.Fluent.Batch
 {
     using Management.Batch;
-    using Microsoft.Azure.Management.Batch.Models;
-    using Microsoft.Azure.Management.Fluent.Resource.Core;
+    using Management.Batch.Models;
+    using Resource.Core;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
 
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             this.InitializeCollection();
         }
 
-        public IDictionary<string, IApplication> AsMap()
+        internal IDictionary<string, IApplication> AsMap()
         {
             var result = new Dictionary<string, IApplication>();
 
@@ -45,22 +45,22 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             return new ReadOnlyDictionary<string, IApplication>(result);
         }
 
-        public ApplicationImpl Define(string name)
+        internal ApplicationImpl Define(string name)
         {
             return PrepareDefine(name);
         }
 
-        public ApplicationImpl Update(string name)
+        internal ApplicationImpl Update(string name)
         {
             return PrepareUpdate(name);
         }
 
-        public void Remove(string name)
+        internal void Remove(string name)
         {
             PrepareRemove(name);
         }
 
-        public void AddApplication(ApplicationImpl application)
+        internal void AddApplication(ApplicationImpl application)
         {
             AddChildResource(application);
         }
