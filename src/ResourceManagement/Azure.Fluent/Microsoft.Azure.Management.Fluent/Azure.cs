@@ -58,6 +58,14 @@ namespace Microsoft.Azure.Management
             }
         }
 
+        public IVirtualMachineScaleSets VirtualMachineScaleSets
+        {
+            get
+            {
+                return computeManager.VirtualMachineScaleSets;
+            }
+        }
+
         public INetworks Networks
         {
             get
@@ -318,6 +326,8 @@ namespace Microsoft.Azure.Management
         IStorageAccounts StorageAccounts { get; }
 
         IVirtualMachines VirtualMachines { get; }
+
+        IVirtualMachineScaleSets VirtualMachineScaleSets { get; }
 
         INetworks Networks { get; }
 

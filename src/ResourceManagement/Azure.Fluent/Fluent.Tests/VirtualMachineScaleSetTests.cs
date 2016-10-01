@@ -1,10 +1,13 @@
 ﻿using Fluent.Tests;
+using Microsoft.Azure.Management.Compute.Models;
+using Microsoft.Azure.Management.Fluent.Compute;
 using Microsoft.Azure.Management.Fluent.Network;
 using Microsoft.Azure.Management.Fluent.Resource;
 using Microsoft.Azure.Management.Network.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -18,6 +21,11 @@ namespace Azure.Tests
         public void CanCreateVirtualMachineScaleSetWithCustomScriptExtension()
         {
             string rgName = ResourceNamer.RandomResourceName("javacsmrg", 20);
+            string vmssName = ResourceNamer.RandomResourceName("vmss", 10);
+            string apacheInstallScript = "https://raw.githubusercontent.com/Azure/azure-sdk-for-java/master/azure-mgmt-compute/src/test/assets/install_apache.sh";
+            string installCommand = "bash install_apache.sh Abc.123x(";
+            List<string> fileUris = new List<string>();
+            fileUris.Add(apacheInstallScript);
 
             var azure = TestHelper.CreateRollupClient();
 
@@ -35,12 +43,134 @@ namespace Azure.Tests
                 .WithSubnet("subnet1", "10.0.0.0/28")
                 .Create();
 
-            ILoadBalancer publicLoadBalancer0 = CreateInternalLoadBalancer(azure, resourceGroup, network, "1");
+            ILoadBalancer publicLoadBalancer = CreateHttpLoadBalancers(azure, resourceGroup, "1");
+            IVirtualMachineScaleSet virtualMachineScaleSet = azure.VirtualMachineScaleSets
+                    .Define(vmssName)
+                    .WithRegion(location)
+                    .WithExistingResourceGroup(resourceGroup)
+                    .WithSku(VirtualMachineScaleSetSkuTypes.STANDARD_A0)
+                    .WithExistingPrimaryNetworkSubnet(network, "subnet1")
+                    .WithPrimaryInternetFacingLoadBalancer(publicLoadBalancer)
+                    .WithoutPrimaryInternalLoadBalancer()
+                    .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
+                    .WithRootUserName("jvuser")
+                    .WithPassword("123OData!@#123")
+                    .WithNewStorageAccount(ResourceNamer.RandomResourceName("stg", 15))
+                    .WithNewStorageAccount(ResourceNamer.RandomResourceName("stg", 15))
+                    .DefineNewExtension("CustomScriptForLinux")
+                        .WithPublisher("Microsoft.OSTCExtensions")
+                        .WithType("CustomScriptForLinux")
+                        .WithVersion("1.4")
+                        .WithMinorVersionAutoUpgrade()
+                        .WithPublicSetting("fileUris", fileUris)
+                        .WithPublicSetting("commandToExecute", installCommand)
+                    .Attach()
+                    .Create();
 
-            ILoadBalancer publicLoadBalancer1 = CreateHttpLoadBalancers(azure, resourceGroup, "1");
-            Assert.True(true);
+            IList<string> publicIpAddressIds = virtualMachineScaleSet.PrimaryPublicIpAddressIds;
+            IPublicIpAddress publicIpAddress = azure.PublicIpAddresses
+                    .GetById(publicIpAddressIds[0]);
+
+            string fqdn = publicIpAddress.Fqdn;
+            // Assert public load balancing connection
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri("http://" + fqdn);
+            HttpResponseMessage response = client.GetAsync("/").Result;
+            Assert.True(response.IsSuccessStatusCode);
         }
 
+        [Fact]
+        public void CanCreateVirtualMachineScaleSet()
+        {
+            string vmss_name = ResourceNamer.RandomResourceName("vmss", 10);
+            string rgName = ResourceNamer.RandomResourceName("javacsmrg", 20);
+
+            var azure = TestHelper.CreateRollupClient();
+
+            IResourceGroup resourceGroup = azure.ResourceGroups
+                .Define(rgName)
+                .WithRegion(location)
+                .Create();
+
+            INetwork network = azure
+                .Networks
+                .Define("vmssvnet")
+                .WithRegion(location)
+                .WithExistingResourceGroup(resourceGroup)
+                .WithAddressSpace("10.0.0.0/28")
+                .WithSubnet("subnet1", "10.0.0.0/28")
+                .Create();
+
+            ILoadBalancer publicLoadBalancer = createInternetFacingLoadBalancer(azure, resourceGroup, "1");
+            List<string> backends = new List<string>();
+            foreach (string backend in publicLoadBalancer.Backends.Keys) {
+                backends.Add(backend);
+            }
+            Assert.True(backends.Count() == 2);
+
+            IVirtualMachineScaleSet virtualMachineScaleSet = azure.VirtualMachineScaleSets
+                .Define(vmss_name)
+                .WithRegion(location)
+                .WithExistingResourceGroup(resourceGroup)
+                .WithSku(VirtualMachineScaleSetSkuTypes.STANDARD_A0)
+                .WithExistingPrimaryNetworkSubnet(network, "subnet1")
+                .WithPrimaryInternetFacingLoadBalancer(publicLoadBalancer)
+                .WithPrimaryInternetFacingLoadBalancerBackends(backends[0], backends[1])
+                .WithoutPrimaryInternalLoadBalancer()
+                .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
+                .WithRootUserName("jvuser")
+                .WithPassword("123OData!@#123")
+                .WithNewStorageAccount(ResourceNamer.RandomResourceName("stg", 15))
+                .WithNewStorageAccount(ResourceNamer.RandomResourceName("stg", 15))
+                .Create();
+
+            Assert.Null(virtualMachineScaleSet.GetPrimaryInternalLoadBalancer());
+            Assert.True(virtualMachineScaleSet.ListPrimaryInternalLoadBalancerBackends().Count() == 0);
+            Assert.True(virtualMachineScaleSet.ListPrimaryInternalLoadBalancerInboundNatPools().Count() == 0);
+
+            Assert.NotNull(virtualMachineScaleSet.GetPrimaryInternetFacingLoadBalancer());
+            Assert.True(virtualMachineScaleSet.ListPrimaryInternetFacingLoadBalancerBackends().Count() == 2);
+            Assert.True(virtualMachineScaleSet.ListPrimaryInternetFacingLoadBalancerInboundNatPools().Count() == 2);
+
+            Assert.NotNull(virtualMachineScaleSet.GetPrimaryNetwork());
+
+            Assert.Equal(virtualMachineScaleSet.VhdContainers.Count(), 2);
+            Assert.Equal(virtualMachineScaleSet.Sku, VirtualMachineScaleSetSkuTypes.STANDARD_A0);
+            // Check defaults
+            Assert.True(virtualMachineScaleSet.UpgradeModel == UpgradeMode.Automatic);
+            Assert.Equal(virtualMachineScaleSet.Capacity, 2);
+            // Fetch the primary Virtual network
+            INetwork primaryNetwork = virtualMachineScaleSet.GetPrimaryNetwork();
+    
+            string inboundNatPoolToRemove = null;
+            foreach (string inboundNatPoolName in
+                virtualMachineScaleSet.ListPrimaryInternetFacingLoadBalancerInboundNatPools().Keys) {
+                inboundNatPoolToRemove = inboundNatPoolName;
+                break;
+            }
+
+            ILoadBalancer internalLoadBalancer = CreateInternalLoadBalancer(azure, resourceGroup,
+                primaryNetwork,
+                "1");
+
+            virtualMachineScaleSet
+                .Update()
+                .WithPrimaryInternalLoadBalancer(internalLoadBalancer)
+                .WithoutPrimaryInternalLoadBalancerNatPools(inboundNatPoolToRemove)
+                .Apply();
+
+            virtualMachineScaleSet = azure
+                .VirtualMachineScaleSets
+                .GetByGroup(rgName, vmss_name);
+
+            Assert.NotNull(virtualMachineScaleSet.GetPrimaryInternetFacingLoadBalancer());
+            Assert.True(virtualMachineScaleSet.ListPrimaryInternetFacingLoadBalancerBackends().Count() == 2);
+            Assert.True(virtualMachineScaleSet.ListPrimaryInternetFacingLoadBalancerInboundNatPools().Count() == 1);
+
+            Assert.NotNull(virtualMachineScaleSet.GetPrimaryInternalLoadBalancer());
+            Assert.True(virtualMachineScaleSet.ListPrimaryInternalLoadBalancerBackends().Count() == 2);
+            Assert.True(virtualMachineScaleSet.ListPrimaryInternalLoadBalancerInboundNatPools().Count() == 2);
+        }
 
 
         private ILoadBalancer createInternetFacingLoadBalancer(Microsoft.Azure.Management.IAzure azure, IResourceGroup resourceGroup, string id)
