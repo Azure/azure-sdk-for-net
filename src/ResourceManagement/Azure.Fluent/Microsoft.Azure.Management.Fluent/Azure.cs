@@ -90,6 +90,14 @@ namespace Microsoft.Azure.Management
             }
         }
 
+        public ILoadBalancers LoadBalancers
+        {
+            get
+            {
+                return networkManager.LoadBalancers;
+            }
+        }
+
         public IDeployments Deployments
         {
             get
@@ -318,6 +326,8 @@ namespace Microsoft.Azure.Management
         IPublicIpAddresses PublicIpAddresses { get; }
 
         INetworkInterfaces NetworkInterfaces { get; }
+
+        ILoadBalancers LoadBalancers { get; }
 
         IDeployments Deployments { get; }
 

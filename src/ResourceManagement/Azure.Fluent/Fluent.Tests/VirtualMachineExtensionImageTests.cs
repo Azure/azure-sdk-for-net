@@ -12,7 +12,7 @@ namespace Azure.Tests
 {
     public class VirtualMachineExtensionImageTests
     {
-        [Fact]
+        [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanListExtensionImages()
         {
             var azure = TestHelper.CreateRollupClient();
@@ -34,7 +34,7 @@ namespace Azure.Tests
         }
 
 
-        [Fact]
+        [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanGetExtensionTypeVersionAndImage()
         {
             var azure = TestHelper.CreateRollupClient();
