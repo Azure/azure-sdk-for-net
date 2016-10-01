@@ -31,15 +31,15 @@ namespace Microsoft.Azure.Management.Fluent.Network
     {
         static string DEFAULT = "default";
         private ILoadBalancersOperations innerCollection;
-        private IDictionary<string,string> nicsInBackends;
-        private IDictionary<string,string> creatablePIPKeys;
-        private IDictionary<string, IBackend> backends;
-        private IDictionary<string, ITcpProbe> tcpProbes;
-        private IDictionary<string, IHttpProbe> httpProbes;
-        private IDictionary<string, ILoadBalancingRule> loadBalancingRules;
-        private IDictionary<string, IFrontend> frontends;
-        private IDictionary<string, IInboundNatRule> inboundNatRules;
-        private IDictionary<string, IInboundNatPool> inboundNatPools;
+        private IDictionary<string,string> nicsInBackends = new Dictionary<string, string>();
+        private IDictionary<string,string> creatablePIPKeys = new Dictionary<string, string>();
+        private IDictionary<string, IBackend> backends = new Dictionary<string, IBackend>();
+        private IDictionary<string, ITcpProbe> tcpProbes = new Dictionary<string, ITcpProbe>();
+        private IDictionary<string, IHttpProbe> httpProbes = new Dictionary<string, IHttpProbe>();
+        private IDictionary<string, ILoadBalancingRule> loadBalancingRules = new Dictionary<string, ILoadBalancingRule>();
+        private IDictionary<string, IFrontend> frontends = new Dictionary<string, IFrontend>();
+        private IDictionary<string, IInboundNatRule> inboundNatRules = new Dictionary<string, IInboundNatRule>();
+        private IDictionary<string, IInboundNatPool> inboundNatPools = new Dictionary<string, IInboundNatPool>();
 
         internal  LoadBalancerImpl (
             string name, 
