@@ -17,7 +17,7 @@ namespace Azure.Tests
     {
         private readonly string location = "eastus";
 
-        [Fact]
+        [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanCreateVirtualMachineScaleSetWithCustomScriptExtension()
         {
             string rgName = ResourceNamer.RandomResourceName("javacsmrg", 20);
@@ -79,7 +79,7 @@ namespace Azure.Tests
             Assert.True(response.IsSuccessStatusCode);
         }
 
-        [Fact]
+        [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanCreateUpdateVirtualMachineScaleSet()
         {
             string vmss_name = ResourceNamer.RandomResourceName("vmss", 10);
