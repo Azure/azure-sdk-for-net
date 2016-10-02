@@ -4,8 +4,8 @@
 namespace Microsoft.Azure.Management.Fluent.Batch
 {
     using Management.Batch;
-    using Microsoft.Azure.Management.Batch.Models;
-    using Microsoft.Azure.Management.Fluent.Resource.Core;
+    using Management.Batch.Models;
+    using Resource.Core;
     using System;
     using System.Threading;
     using System.Threading.Tasks;
@@ -15,10 +15,10 @@ namespace Microsoft.Azure.Management.Fluent.Batch
     /// </summary>
     public partial class ApplicationPackageImpl :
         ExternalChildResource<
-            Microsoft.Azure.Management.Fluent.Batch.IApplicationPackage,
-            Microsoft.Azure.Management.Batch.Models.ApplicationPackageInner,
-            Microsoft.Azure.Management.Fluent.Batch.IApplication,
-            Microsoft.Azure.Management.Fluent.Batch.ApplicationImpl>,
+            IApplicationPackage,
+            ApplicationPackageInner,
+            IApplication,
+            ApplicationImpl>,
         IApplicationPackage
     {
         private IApplicationPackageOperations client;
@@ -36,9 +36,9 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             return new ApplicationPackageImpl(name, parent, inner, client);
         }
 
-        public PackageState State()
+        internal PackageState State()
         {
-                return Inner.State.GetValueOrDefault();
+            return Inner.State.GetValueOrDefault();
         }
 
         public string Id
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
 
         public override string Name()
         {
-            return Name();
+            return ResourceUtils.NameFromResourceId(Inner.Id);
         }
 
         public override async Task<IApplicationPackage> CreateAsync(CancellationToken cancellationToken = default(CancellationToken))
@@ -77,22 +77,22 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             await client.DeleteAsync(Parent.Parent.ResourceGroupName, Parent.Parent.Name,Parent.Name(), Name(), cancellationToken);
         }
 
-        public string Format()
+        internal string Format()
         {
             return Inner.Format;
         }
 
-        public string StorageUrl()
+        internal string StorageUrl()
         {
             return Inner.StorageUrl;
         }
 
-        public DateTime StorageUrlExpiry()
+        internal DateTime StorageUrlExpiry()
         {
             return Inner.StorageUrlExpiry.GetValueOrDefault();
         }
 
-        public DateTime LastActivationTime()
+        internal DateTime LastActivationTime()
         {
             return Inner.LastActivationTime.GetValueOrDefault();
         }
@@ -105,7 +105,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             }
         }
 
-        public void Activate(string format)
+        internal void Activate(string format)
         {
             client.Activate(Parent.Parent.ResourceGroupName, Parent.Parent.Name, Parent.Name(), Name(), format);
         }

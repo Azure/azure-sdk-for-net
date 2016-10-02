@@ -4,14 +4,12 @@
 namespace Microsoft.Azure.Management.Fluent.Batch
 {
     using Management.Batch;
-    using Microsoft.Azure.Management.Batch.Models;
-    using Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Definition;
-    using Microsoft.Azure.Management.Fluent.Resource.Core;
+    using Management.Batch.Models;
+    using Resource.Core;
     using Storage;
     using System;
     using System.Threading;
     using System.Threading.Tasks;
-    using Fluent.Storage;
 
     /// <summary>
     /// Implementation for BatchAccounts and its parent interfaces.
@@ -69,7 +67,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
                 storageManager);
         }
 
-        public PagedList<Microsoft.Azure.Management.Fluent.Batch.IBatchAccount> List()
+        internal PagedList<IBatchAccount> List()
         {
             var firstPage = InnerCollection.List();
             var pagedList = new PagedList<BatchAccountInner>(firstPage, (string nextPageLink) =>
@@ -80,7 +78,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             return WrapList(pagedList);
         }
 
-        public PagedList<Microsoft.Azure.Management.Fluent.Batch.IBatchAccount> ListByGroup(string resourceGroupName)
+        internal PagedList<IBatchAccount> ListByGroup(string resourceGroupName)
         {
             var firstPage = InnerCollection.ListByResourceGroup(resourceGroupName);
             var pagedList = new PagedList<BatchAccountInner>(firstPage, (string nextPageLink) =>
@@ -103,12 +101,12 @@ namespace Microsoft.Azure.Management.Fluent.Batch
                 storageManager);
         }
 
-        public IBlank Define(string name)
+        internal BatchAccountImpl Define(string name)
         {
             return WrapModel(name);
         }
 
-        public Task<PagedList<IBatchAccount>> ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+        internal Task<PagedList<IBatchAccount>> ListByGroupAsync(string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
         {
             throw new NotSupportedException();
         }
@@ -129,7 +127,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             return WrapModel(batchAccount);
         }
 
-        public int GetBatchAccountQuotaByLocation(Region region)
+        internal int GetBatchAccountQuotaByLocation(Region region)
         {
             return locationClient.GetQuotas(EnumNameAttribute.GetName(region)).AccountQuota.GetValueOrDefault();
         }
