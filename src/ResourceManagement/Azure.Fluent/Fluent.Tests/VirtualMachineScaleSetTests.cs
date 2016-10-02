@@ -80,7 +80,7 @@ namespace Azure.Tests
         }
 
         [Fact]
-        public void CanCreateVirtualMachineScaleSet()
+        public void CanCreateUpdateVirtualMachineScaleSet()
         {
             string vmss_name = ResourceNamer.RandomResourceName("vmss", 10);
             string rgName = ResourceNamer.RandomResourceName("javacsmrg", 20);
