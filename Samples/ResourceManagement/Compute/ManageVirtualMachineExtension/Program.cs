@@ -50,10 +50,21 @@ namespace ManageVirtualMachineExtension
         readonly static string linuxCustomScriptExtensionTypeName = "CustomScriptForLinux";
         readonly static string linuxCustomScriptExtensionVersionName = "1.4";
 
-        readonly static string mySqlScriptInstallCommand = "bash install_mysql_server_5.6.sh Abc.123x(";
-        readonly static List<string> fileUris = new List<string>()
+        readonly static string mySqlScriptLinuxInstallCommand = "bash install_mysql_server_5.6.sh Abc.123x(";
+        readonly static List<string> mySQLLinuxInstallScriptFileUris = new List<string>()
         {
             "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/4397e808d07df60ff3cdfd1ae40999f0130eb1b3/mysql-standalone-server-ubuntu/scripts/install_mysql_server_5.6.sh"
+        };
+
+        readonly static string windowsCustomScriptExtensionName = "CustomScriptExtension";
+        readonly static string windowsCustomScriptExtensionPublisherName = "Microsoft.Compute";
+        readonly static string windowsCustomScriptExtensionTypeName = "CustomScriptExtension";
+        readonly static string windowsCustomScriptExtensionVersionName = "1.7";
+
+        readonly static string mySqlScriptWindowsInstallCommand = "powershell.exe -ExecutionPolicy Unrestricted -File installMySQL.ps1";
+        readonly static List<string> mySQLWindowsInstallScriptFileUris = new List<string>()
+        {
+            "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/Fluent/Samples/ResourceManagement/Compute/ManageVirtualMachineExtension/Assets/installMySQL.ps1"
         };
 
         readonly static string linuxVmAccessExtensionName = "VMAccessForLinux";
@@ -178,8 +189,8 @@ namespace ManageVirtualMachineExtension
                                 .WithType(linuxCustomScriptExtensionTypeName)
                                 .WithVersion(linuxCustomScriptExtensionVersionName)
                                 .WithAutoUpgradeMinorVersionEnabled()
-                                .WithPublicSetting("fileUris", fileUris)
-                                .WithPublicSetting("commandToExecute", mySqlScriptInstallCommand)
+                                .WithPublicSetting("fileUris", mySQLLinuxInstallScriptFileUris)
+                                .WithPublicSetting("commandToExecute", mySqlScriptLinuxInstallCommand)
                             .Attach()
                             .Apply();
 
@@ -211,6 +222,14 @@ namespace ManageVirtualMachineExtension
                             .WithAdminUserName(firstWindowsUserName)
                             .WithPassword(firstWindowsUserPassword)
                             .WithSize(VirtualMachineSizeTypes.StandardD3V2)
+                            .DefineNewExtension(windowsCustomScriptExtensionName)
+                                .WithPublisher(windowsCustomScriptExtensionPublisherName)
+                                .WithType(windowsCustomScriptExtensionTypeName)
+                                .WithVersion(windowsCustomScriptExtensionVersionName)
+                                .WithAutoUpgradeMinorVersionEnabled()
+                                .WithPublicSetting("fileUris", mySQLWindowsInstallScriptFileUris)
+                                .WithPublicSetting("commandToExecute", mySqlScriptWindowsInstallCommand)
+                            .Attach()
                             .Create();
 
                     Console.WriteLine("Created a Windows VM:" + windowsVM.Id);
