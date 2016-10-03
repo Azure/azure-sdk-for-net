@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
             return this.CreatorTaskGroup.CreatedResource(key);
         }
 
-        public IEnumerable<IFluentResourceT> createdTopLevelResources()
+        public IEnumerable<IFluentResourceT> CreatedTopLevelResources()
         {
             List<IFluentResourceT> resources = new List<IFluentResourceT>();
             foreach (string resourceKey in keys)

@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
     internal interface ICreatableUpdatableResourcesRoot<IFluentResourceT> : IResource
         where IFluentResourceT : IResource
     {
-        IEnumerable<IFluentResourceT> createdTopLevelResources();
+        IEnumerable<IFluentResourceT> CreatedTopLevelResources();
         IResource CreatedRelatedResource(string key);
     }
 }
