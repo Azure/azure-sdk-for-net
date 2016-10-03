@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
     /// <summary>
     /// The implementation of Users and its parent interfaces.
     /// </summary>
-    internal partial class UsersImpl :
+    public partial class UsersImpl :
         CreatableWrappers<IUser, UserImpl, UserInner>,
         IUsers
     {

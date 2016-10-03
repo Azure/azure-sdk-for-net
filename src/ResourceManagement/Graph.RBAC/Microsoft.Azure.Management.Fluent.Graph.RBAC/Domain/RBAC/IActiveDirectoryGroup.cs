@@ -3,13 +3,13 @@
 namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
 {
 
-    using Microsoft.Azure.Management.Graph.RBAC.Models;
     using Microsoft.Azure.Management.Fluent.Resource.Core;
+    using Microsoft.Azure.Management.Graph.RBAC.Models ;
     /// <summary>
     /// An immutable client-side representation of an Azure AD group.
     /// </summary>
     public interface IActiveDirectoryGroup  :
-        IWrapper<Microsoft.Azure.Management.Graph.RBAC.Models.ADGroupInner>
+        IWrapper<Microsoft.Azure.Management.Graph.RBAC.Models .ADGroupInner>
     {
         /// <returns>object Id.</returns>
         string ObjectId { get; }

@@ -3,11 +3,11 @@
 namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
 {
 
-    using Microsoft.Rest;
     using Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions;
     using System.Threading;
-    using Microsoft.Azure.Management.Fluent.Graph.RBAC.User.Definition;
     using System.Threading.Tasks;
+    using Microsoft.Rest;
+    using Microsoft.Azure.Management.Fluent.Graph.RBAC.User.Definition;
     /// <summary>
     /// Entry point to AD user management API.
     /// </summary>
@@ -20,14 +20,14 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
         /// </summary>
         /// <param name="objectId">objectId the unique object id</param>
         /// <returns>an immutable representation of the resource</returns>
-        IUser GetByObjectId (string objectId);
+        Microsoft.Azure.Management.Fluent.Graph.RBAC.IUser GetByObjectId(string objectId);
 
         /// <summary>
         /// Gets the information about a user.
         /// </summary>
         /// <param name="upn">upn the user principal name</param>
         /// <returns>an immutable representation of the resource</returns>
-        IUser GetByUserPrincipalName (string upn);
+        Microsoft.Azure.Management.Fluent.Graph.RBAC.IUser GetByUserPrincipalName(string upn);
 
         /// <summary>
         /// Gets the information about a user.
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
         /// <param name="upn">upn the user principal name</param>
         /// <param name="cancellationToken">cancellationToken the cancellation token</param>
         /// <returns>an Future based service call</returns>
-        Task<Microsoft.Azure.Management.Fluent.Graph.RBAC.IUser> GetByUserPrincipalNameAsync (string upn, CancellationToken cancellationToken = default(CancellationToken));
+        Task<Microsoft.Azure.Management.Fluent.Graph.RBAC.IUser> GetByUserPrincipalNameAsync(string upn, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }
