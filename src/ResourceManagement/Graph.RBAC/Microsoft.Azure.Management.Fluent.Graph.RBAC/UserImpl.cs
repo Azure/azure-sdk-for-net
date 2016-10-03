@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
     /// <summary>
     /// Implementation for User and its parent interfaces.
     /// </summary>
-    internal partial class UserImpl :
+    public partial class UserImpl :
         CreatableUpdatable<IUser, UserInner, UserImpl, IUser, IUpdate>,
         IUser,
         IDefinition,
@@ -36,59 +36,34 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
             };
         }
 
-        #region Getters
-
-        public string ObjectId
+        public string ObjectId()
         {
-            get
-            {
-                return Inner.ObjectId;
-            }
+            return Inner.ObjectId;
         }
-        public string ObjectType
+        public string ObjectType()
         {
-            get
-            {
-                return Inner.ObjectType; 
-            }
+            return Inner.ObjectType; 
         }
-        public string UserPrincipalName
+        public string UserPrincipalName()
         {
-            get
-            {
-                return Inner.UserPrincipalName;
-            }
+            return Inner.UserPrincipalName;
         }
-        public string DisplayName
+        public string DisplayName()
         {
-            get
-            {
-                return Inner.DisplayName;
-            }
+            return Inner.DisplayName;
         }
-        public string SignInName
+        public string SignInName()
         {
-            get
-            {
-                return Inner.SignInName;
-            }
+            return Inner.SignInName;
         }
-        public string Mail
+        public string Mail()
         {
-            get
-            {
-                return Inner.Mail;
-            }
+            return Inner.Mail;
         }
-        public string MailNickname
+        public string MailNickname()
         {
-            get
-            {
-                return Inner.MailNickname;
-            }
+            return Inner.MailNickname;
         }
-
-        #endregion
 
         public UserImpl WithAccountEnabled (bool enabled)
         {
@@ -129,7 +104,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
 
         public override IUser Refresh ()
         {
-            var inner = client.Get(UserPrincipalName);
+            var inner = client.Get(UserPrincipalName());
             SetInner(inner);
             return this;
         }

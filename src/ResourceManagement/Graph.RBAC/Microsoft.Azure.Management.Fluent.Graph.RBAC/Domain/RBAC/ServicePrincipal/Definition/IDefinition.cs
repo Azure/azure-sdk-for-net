@@ -3,8 +3,8 @@
 namespace Microsoft.Azure.Management.Fluent.Graph.RBAC.ServicePrincipal.Definition
 {
 
-    using Microsoft.Azure.Management.Fluent.Graph.RBAC;
     using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Graph.RBAC;
     /// <summary>
     /// The first stage of the service principal definition.
     /// </summary>
@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC.ServicePrincipal.Definiti
         /// </summary>
         /// <param name="enabled">enabled if set to true, the service principal account is enabled.</param>
         /// <returns>the next stage in service principal definition</returns>
-        IWithCreate WithAccountEnabled (bool enabled);
+        Microsoft.Azure.Management.Fluent.Graph.RBAC.ServicePrincipal.Definition.IWithCreate WithAccountEnabled(bool enabled);
 
     }
     /// <summary>

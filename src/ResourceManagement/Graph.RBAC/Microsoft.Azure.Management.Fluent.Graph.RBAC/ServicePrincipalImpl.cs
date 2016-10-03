@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
     /// <summary>
     /// Implementation for ServicePrincipal and its parent interfaces.
     /// </summary>
-    internal partial class ServicePrincipalImpl :
+    public partial class ServicePrincipalImpl :
         CreatableUpdatable<IServicePrincipal, ServicePrincipalInner, ServicePrincipalImpl, IServicePrincipal, IUpdate>,
         IServicePrincipal,
         IDefinition,
@@ -35,59 +35,44 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
             this.client = client;
             this.createParameters = new ServicePrincipalCreateParametersInner()
             {
-                AppId = AppId
+                AppId = AppId()
             };
         }
 
-        public string ObjectId
+        public string ObjectId()
         {
-            get
-            {
-                return Inner.ObjectId;
-            }
+            return Inner.ObjectId;
         }
-        public string ObjectType
+        public string ObjectType()
         {
-            get
-            {
                 return Inner.ObjectType;
-            }
         }
-        public string DisplayName
+        public string DisplayName()
         {
-            get
-            {
                 return Inner.DisplayName;
-            }
         }
-        public string AppId
+        public string AppId()
         {
-            get
-            {
                 return Inner.AppId;
-            }
         }
-        public IList<string> ServicePrincipalNames
+        public IList<string> ServicePrincipalNames()
         {
-            get
-            {
                 return Inner.ServicePrincipalNames;
-            }
         }
-        public ServicePrincipalImpl WithAccountEnabled (bool enabled)
+        public ServicePrincipalImpl WithAccountEnabled(bool enabled)
         {
             createParameters.AccountEnabled = enabled;
             return this;
         }
 
-        public override IServicePrincipal Refresh ()
+        public override IServicePrincipal Refresh()
         {
-            var inner = client.List(new Rest.Azure.OData.ODataQuery<ServicePrincipalInner>(string.Format("servicePrincipalNames/any(c:c eq '{0}')", AppId)));
+            var inner = client.List(new Rest.Azure.OData.ODataQuery<ServicePrincipalInner>(string.Format("servicePrincipalNames/any(c:c eq '{0}')", AppId())));
             SetInner(inner.ToList()[0]);
             return this;
         }
 
-        public override async Task<IServicePrincipal> CreateResourceAsync (CancellationToken cancellationToken = default(CancellationToken))
+        public override async Task<IServicePrincipal> CreateResourceAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             throw new NotImplementedException();
         }

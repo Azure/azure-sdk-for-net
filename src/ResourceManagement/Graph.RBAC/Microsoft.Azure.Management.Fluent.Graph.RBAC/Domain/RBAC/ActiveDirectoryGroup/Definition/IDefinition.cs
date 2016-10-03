@@ -3,8 +3,8 @@
 namespace Microsoft.Azure.Management.Fluent.Graph.RBAC.ActiveDirectoryGroup.Definition
 {
 
-    using Microsoft.Azure.Management.Fluent.Graph.RBAC;
     using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Graph.RBAC;
     /// <summary>
     /// The first stage of the group definition.
     /// </summary>
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC.ActiveDirectoryGroup.Defi
         /// </summary>
         /// <param name="displayName">displayName the human readable display name</param>
         /// <returns>the next stage of group definition</returns>
-        IWithMailNickname WithDisplayName (string displayName);
+        Microsoft.Azure.Management.Fluent.Graph.RBAC.ActiveDirectoryGroup.Definition.IWithMailNickname WithDisplayName(string displayName);
 
     }
     /// <summary>
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC.ActiveDirectoryGroup.Defi
         /// </summary>
         /// <param name="mailNickname">mailNickname the mail nickname for the group</param>
         /// <returns>the next stage of group definition</returns>
-        IWithCreate WithMailNickname (string mailNickname);
+        Microsoft.Azure.Management.Fluent.Graph.RBAC.ActiveDirectoryGroup.Definition.IWithCreate WithMailNickname(string mailNickname);
 
     }
     /// <summary>

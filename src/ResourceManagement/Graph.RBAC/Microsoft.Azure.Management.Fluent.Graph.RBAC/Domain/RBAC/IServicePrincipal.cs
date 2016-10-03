@@ -4,13 +4,13 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
 {
 
     using Microsoft.Azure.Management.Fluent.Resource.Core;
-    using Microsoft.Azure.Management.Graph.RBAC.Models;
     using System.Collections.Generic;
+    using Microsoft.Azure.Management.Graph.RBAC.Models ;
     /// <summary>
     /// An immutable client-side representation of an Azure AD service principal.
     /// </summary>
     public interface IServicePrincipal  :
-        IWrapper<Microsoft.Azure.Management.Graph.RBAC.Models.ServicePrincipalInner>
+        IWrapper<Microsoft.Azure.Management.Graph.RBAC.Models .ServicePrincipalInner>
     {
         /// <returns>object Id.</returns>
         string ObjectId { get; }
@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
         string AppId { get; }
 
         /// <returns>the list of names.</returns>
-        IList<string> ServicePrincipalNames { get; }
+        System.Collections.Generic.IList<string> ServicePrincipalNames { get; }
 
     }
 }
