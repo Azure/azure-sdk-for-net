@@ -25,7 +25,7 @@ namespace Azure.Tests
         {
             string rgName = ResourceNamer.RandomResourceName("javacsmrg", 20);
             string vmssName = ResourceNamer.RandomResourceName("vmss", 10);
-            string apacheInstallScript = "https://raw.githubusercontent.com/Azure/azure-sdk-for-java/master/azure-mgmt-compute/src/test/assets/install_apache.sh";
+            string apacheInstallScript = "https://raw.githubusercontent.com/Azure/azure-sdk-for-net/Fluent/src/ResourceManagement/Azure.Fluent/Fluent.Tests/Assets/install_apache.sh";
             string installCommand = "bash install_apache.sh Abc.123x(";
             List<string> fileUris = new List<string>();
             fileUris.Add(apacheInstallScript);
