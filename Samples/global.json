@@ -5,6 +5,7 @@
     	"ResourceManagement/Batch",
     	"ResourceManagement/Compute",
     	"ResourceManagement/KeyVault",
+    	"ResourceManagement/Network",
     	"ResourceManagement/ResourceManager",
     	"ResourceManagement/Storage"
     ]
