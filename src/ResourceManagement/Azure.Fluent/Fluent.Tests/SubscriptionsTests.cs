@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
-using static Microsoft.Azure.Management.Fluent.Resource.ResourceManager2;
+using static Microsoft.Azure.Management.Fluent.Resource.ResourceManager;
 
 namespace Fluent.Tests
 {
@@ -35,7 +35,7 @@ namespace Fluent.Tests
         private IAuthenticated CreateResourceManager()
         {
             AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
-            IAuthenticated resourceManager = ResourceManager2.Configure()
+            IAuthenticated resourceManager = ResourceManager.Configure()
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                 .Authenticate(credentials);
             return resourceManager;

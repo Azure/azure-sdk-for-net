@@ -44,7 +44,7 @@ namespace Fluent.Tests
         public static IResourceManager CreateResourceManager()
         {
             AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
-            IResourceManager resourceManager = ResourceManager2.Configure()
+            IResourceManager resourceManager = ResourceManager.Configure()
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                 .Authenticate(credentials)
                 .WithSubscription(credentials.DefaultSubscriptionId);

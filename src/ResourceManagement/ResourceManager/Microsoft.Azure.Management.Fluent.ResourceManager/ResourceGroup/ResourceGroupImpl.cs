@@ -21,9 +21,9 @@ namespace Microsoft.Azure.Management.Fluent.Resource
             ResourceGroup.Definition.IDefinition,
             ResourceGroup.Update.IUpdate
     {
-        ResourceManager.IResourceGroupsOperations client;
+        IResourceGroupsOperations client;
 
-        internal ResourceGroupImpl(ResourceGroupInner innerModel, ResourceManager.IResourceGroupsOperations client) : base(innerModel.Name, innerModel)
+        internal ResourceGroupImpl(ResourceGroupInner innerModel, IResourceGroupsOperations client) : base(innerModel.Name, innerModel)
         {
             this.client = client;
         }

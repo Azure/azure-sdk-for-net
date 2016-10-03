@@ -160,7 +160,7 @@ namespace Microsoft.Azure.Management
 
         private Azure(RestClient restClient, string subscriptionId, string tenantId)
         {
-            resourceManager = ResourceManager2.Authenticate(restClient).WithSubscription(subscriptionId);
+            resourceManager = Fluent.Resource.ResourceManager.Authenticate(restClient).WithSubscription(subscriptionId);
             storageManager = StorageManager.Authenticate(restClient, subscriptionId);
             computeManager = ComputeManager.Authenticate(restClient, subscriptionId);
             networkManager = NetworkManager.Authenticate(restClient, subscriptionId);
@@ -230,7 +230,7 @@ namespace Microsoft.Azure.Management
         protected class Authenticated : IAuthenticated
         {
             private RestClient restClient;
-            private ResourceManager2.IAuthenticated resourceManagerAuthenticated;
+            private Fluent.Resource.ResourceManager.IAuthenticated resourceManagerAuthenticated;
             private string defaultSubscription;
             private string tenantId;
 
@@ -253,7 +253,7 @@ namespace Microsoft.Azure.Management
             public Authenticated(RestClient restClient, string tenantId)
             {
                 this.restClient = restClient;
-                resourceManagerAuthenticated = ResourceManager2.Authenticate(this.restClient);
+                resourceManagerAuthenticated = Fluent.Resource.ResourceManager.Authenticate(this.restClient);
                 this.tenantId = tenantId;
             }
 
