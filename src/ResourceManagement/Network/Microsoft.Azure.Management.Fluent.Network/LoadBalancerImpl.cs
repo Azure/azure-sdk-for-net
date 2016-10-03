@@ -31,15 +31,17 @@ namespace Microsoft.Azure.Management.Fluent.Network
     {
         static string DEFAULT = "default";
         private ILoadBalancersOperations innerCollection;
-        private IDictionary<string,string> nicsInBackends = new Dictionary<string, string>();
-        private IDictionary<string,string> creatablePIPKeys = new Dictionary<string, string>();
-        private IDictionary<string, IBackend> backends = new Dictionary<string, IBackend>();
-        private IDictionary<string, ITcpProbe> tcpProbes = new Dictionary<string, ITcpProbe>();
-        private IDictionary<string, IHttpProbe> httpProbes = new Dictionary<string, IHttpProbe>();
-        private IDictionary<string, ILoadBalancingRule> loadBalancingRules = new Dictionary<string, ILoadBalancingRule>();
-        private IDictionary<string, IFrontend> frontends = new Dictionary<string, IFrontend>();
-        private IDictionary<string, IInboundNatRule> inboundNatRules = new Dictionary<string, IInboundNatRule>();
-        private IDictionary<string, IInboundNatPool> inboundNatPools = new Dictionary<string, IInboundNatPool>();
+        private IDictionary<string, string> nicsInBackends = new Dictionary<string, string>();
+        private IDictionary<string, string> creatablePIPKeys = new Dictionary<string, string>();
+
+        // Children
+        private IDictionary<string, IBackend> backends;
+        private IDictionary<string, ITcpProbe> tcpProbes;
+        private IDictionary<string, IHttpProbe> httpProbes;
+        private IDictionary<string, ILoadBalancingRule> loadBalancingRules;
+        private IDictionary<string, IFrontend> frontends;
+        private IDictionary<string, IInboundNatRule> inboundNatRules;
+        private IDictionary<string, IInboundNatPool> inboundNatPools;
 
         internal  LoadBalancerImpl (
             string name, 
@@ -70,16 +72,19 @@ namespace Microsoft.Azure.Management.Fluent.Network
         override protected void BeforeCreating ()
         {
             // Account for the newly created public IPs
-            foreach (var pipFrontendAssociation in creatablePIPKeys)
+            if (creatablePIPKeys != null)
             {
-                IPublicIpAddress pip = (IPublicIpAddress)this.CreatedResource(pipFrontendAssociation.Key);
-                if (pip != null)
+                foreach (var pipFrontendAssociation in creatablePIPKeys)
                 {
-                    WithExistingPublicIpAddress(pip.Id, pipFrontendAssociation.Value);
+                    IPublicIpAddress pip = (IPublicIpAddress)this.CreatedResource(pipFrontendAssociation.Key);
+                    if (pip != null)
+                    {
+                        WithExistingPublicIpAddress(pip.Id, pipFrontendAssociation.Value);
+                    }
                 }
-            }
 
-            creatablePIPKeys.Clear();
+                creatablePIPKeys.Clear();
+            }
 
             // Reset and update probes
             Inner.Probes = InnersFromWrappers<ProbeInner, IHttpProbe>(httpProbes.Values);
@@ -143,26 +148,29 @@ namespace Microsoft.Azure.Management.Fluent.Network
         override protected void AfterCreating ()
         {
             // Update the NICs to point to the backend pool
-            foreach (var nicInBackend in nicsInBackends)
+            if (nicsInBackends != null)
             {
-                string nicId = nicInBackend.Key;
-                string backendName = nicInBackend.Value;
-                try
+                foreach (var nicInBackend in nicsInBackends)
                 {
-                    var nic = Manager.NetworkInterfaces.GetById(nicId);
-                    var nicIp = nic.PrimaryIpConfiguration;
-                    nic.Update()
-                        .UpdateIpConfiguration(nicIp.Name)
-                        .WithExistingLoadBalancerBackend(this, backendName)
-                        .Parent()
-                    .Apply();
+                    string nicId = nicInBackend.Key;
+                    string backendName = nicInBackend.Value;
+                    try
+                    {
+                        var nic = Manager.NetworkInterfaces.GetById(nicId);
+                        var nicIp = nic.PrimaryIpConfiguration;
+                        nic.Update()
+                            .UpdateIpConfiguration(nicIp.Name)
+                            .WithExistingLoadBalancerBackend(this, backendName)
+                            .Parent()
+                        .Apply();
 
-                    this.nicsInBackends.Clear();
-                    this.Refresh();
-                }
-                catch
-                {
-                    // Skip and continue
+                        this.nicsInBackends.Clear();
+                        this.Refresh();
+                    }
+                    catch
+                    {
+                        // Skip and continue
+                    }
                 }
             }
         }
