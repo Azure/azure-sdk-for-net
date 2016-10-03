@@ -1,4 +1,7 @@
-﻿using Fluent.Tests;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+using Fluent.Tests;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Fluent.Compute;
 using Microsoft.Azure.Management.Fluent.Resource.Core;
@@ -17,24 +20,14 @@ namespace Azure.Tests
         {
             var azure = TestHelper.CreateRollupClient();
             int maxListing = 20;
-            int count = 0;
             var extensionImages = azure.VirtualMachineExtensionImages
                             .ListByRegion(Region.US_EAST);
             // Lazy listing
-            foreach (var extensionImage in extensionImages)
-            {
-                Assert.NotNull(extensionImage);
-                count++;
-                if (count >= maxListing)
-                {
-                    break;
-                }
-            }
-            Assert.True(count == maxListing);
+            Assert.Equal(extensionImages.Take(maxListing).Count(), maxListing);
         }
 
 
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CanGetExtensionTypeVersionAndImage()
         {
             var azure = TestHelper.CreateRollupClient();
@@ -52,31 +45,19 @@ namespace Azure.Tests
                             .Publishers
                             .ListByRegion(Region.US_EAST);
 
-            IVirtualMachinePublisher azureDockerExtensionPublisher = null;
-            foreach (var publisher in publishers)
-            {
-                if (publisher.Name.Equals(dockerExtensionPublisherName, StringComparison.OrdinalIgnoreCase))
-                {
-                    azureDockerExtensionPublisher = publisher;
-                    break;
-                }
-            }
+            IVirtualMachinePublisher azureDockerExtensionPublisher = publishers
+                .Where(publisher => publisher.Name.Equals(dockerExtensionPublisherName, StringComparison.OrdinalIgnoreCase))
+                .FirstOrDefault();
             Assert.NotNull(azureDockerExtensionPublisher);
 
             // Lookup Azure docker extension type
             //
             var extensionImageTypes = azureDockerExtensionPublisher.ExtensionTypes;
             Assert.True(extensionImageTypes.List().Count() > 0);
-
-            IVirtualMachineExtensionImageType dockerExtensionImageType = null;
-            foreach (var extensionImageType in extensionImageTypes.List())
-            {
-                if (extensionImageType.Name.Equals(dockerExtensionImageTypeName, StringComparison.OrdinalIgnoreCase))
-                {
-                    dockerExtensionImageType = extensionImageType;
-                    break;
-                }
-            }
+            var dockerExtensionImageType = extensionImageTypes
+                .List()
+                .Where(imageType => imageType.Name.Equals(dockerExtensionImageTypeName, StringComparison.OrdinalIgnoreCase))
+                .FirstOrDefault();
             Assert.NotNull(dockerExtensionImageType);
 
             Assert.NotNull(dockerExtensionImageType.Id);
@@ -93,13 +74,7 @@ namespace Azure.Tests
             var extensionImageVersions = dockerExtensionImageType.Versions;
             Assert.True(extensionImageVersions.List().Count() > 0);
 
-            IVirtualMachineExtensionImageVersion extensionImageFirstVersion = null;
-            foreach (var extensionImageVersion in extensionImageVersions.List())
-            {
-                extensionImageFirstVersion = extensionImageVersion;
-                break;
-            }
-
+            IVirtualMachineExtensionImageVersion extensionImageFirstVersion = extensionImageVersions.List().FirstOrDefault();
             Assert.NotNull(extensionImageFirstVersion);
             String versionName = extensionImageFirstVersion.Name;
             Assert.True(extensionImageFirstVersion.Id
