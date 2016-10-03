@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
         IWrapper<InnerT>
 
     {
-        protected IndexableWrapper(string key, InnerT innerObject) : base(key)
+        protected IndexableWrapper(InnerT innerObject)
         {
             Inner = innerObject;
         }

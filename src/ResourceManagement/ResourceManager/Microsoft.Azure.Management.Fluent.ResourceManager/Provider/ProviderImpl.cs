@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Fluent.Resource
         IndexableWrapper<ProviderInner>,
         IProvider
     {
-        internal ProviderImpl(ProviderInner provider) : base(provider.Id, provider)
+        internal ProviderImpl(ProviderInner provider) : base(provider)
         {
         }
 

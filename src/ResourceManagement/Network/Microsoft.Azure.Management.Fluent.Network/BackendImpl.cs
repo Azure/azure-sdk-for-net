@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
         Backend.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
         Backend.Update.IUpdate
     {
-        internal BackendImpl (BackendAddressPoolInner inner, LoadBalancerImpl parent) : base(inner.Name, inner, parent)
+        internal BackendImpl (BackendAddressPoolInner inner, LoadBalancerImpl parent) : base(inner, parent)
         {
         }
 
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return rules;
         }
 
-        override public string Name()
+        public override string Name()
         {
             return this.Inner.Name;
         }

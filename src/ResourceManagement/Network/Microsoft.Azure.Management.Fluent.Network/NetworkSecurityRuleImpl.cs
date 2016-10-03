@@ -17,12 +17,12 @@ namespace Microsoft.Azure.Management.Fluent.Network
         NetworkSecurityRule.UpdateDefinition.IUpdateDefinition<NetworkSecurityGroup.Update.IUpdate>,
         NetworkSecurityRule.Update.IUpdate
     {
-        internal NetworkSecurityRuleImpl (SecurityRuleInner inner, NetworkSecurityGroupImpl parent) : base(inner.Name, inner, parent)
+        internal NetworkSecurityRuleImpl (SecurityRuleInner inner, NetworkSecurityGroupImpl parent) : base(inner, parent)
         {
         }
 
         #region Accessors
-        override public string Name()
+        public override string Name()
         {
             return Inner.Name;
         }

@@ -18,11 +18,11 @@ namespace Microsoft.Azure.Management.Fluent.Network
         InboundNatPool.Update.IUpdate
     {
         internal InboundNatPoolImpl (InboundNatPoolInner inner, LoadBalancerImpl parent) 
-            : base(inner.Name, inner, parent)
+            : base(inner, parent)
         {
         }
 
-        override public string Name()
+        public override string Name()
         {
             return Inner.Name;
         }

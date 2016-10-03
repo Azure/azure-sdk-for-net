@@ -17,6 +17,11 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions
         IIndexable
     {
         /// <summary>
+        /// Gets the name of the creatable resource.
+        /// </summary>
+        string Name { get; }
+
+        /// <summary>
         /// Execute the create request.
         /// </summary>
         /// <returns>the create resource</returns>

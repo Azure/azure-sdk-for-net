@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Management.Fluent.Resource
 
         public IDefinitionAfterResourceGroup WithNewResourceGroup(ICreatable<IResourceGroup> creatable)
         {
-            groupName = creatable.Key;
+            groupName = creatable.Name;
             newGroup = creatable;
             AddCreatableDependency(creatable as IResourceCreator<IResource>);
             return this as IDefinitionAfterResourceGroup;

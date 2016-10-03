@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
         }
 
         internal FrontendImpl (FrontendIPConfigurationInner inner, LoadBalancerImpl parent)
-            : base(inner.Name, inner, parent)
+            : base(inner, parent)
         {
         }
 
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return Inner.PrivateIPAllocationMethod;
         }
 
-        override public string Name()
+        public override string Name()
         {
             return Inner.Name;
         }

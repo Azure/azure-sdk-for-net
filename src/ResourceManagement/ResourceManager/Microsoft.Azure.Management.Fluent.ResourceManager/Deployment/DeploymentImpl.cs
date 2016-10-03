@@ -216,7 +216,7 @@ namespace Microsoft.Azure.Management.Fluent.Resource
         public Deployment.Definition.IWithTemplate WithNewResourceGroup(ICreatable<IResourceGroup> groupDefinition)
         {
             creatableResourceGroup = groupDefinition;
-            resourceGroupName = creatableResourceGroup.Key; // TODO Add support for Name in ICreatable
+            resourceGroupName = creatableResourceGroup.Name;
             return this;
         }
 
