@@ -1,5 +1,5 @@
 {
-  "version": "2.2.7-preview",
+  "version": "2.2.8-preview",
   "title": "Authentication for Azure Management Clients",
   "description": "Provides ADAL based authentication for Azure management client libraries \nSupported Platforms:\n  -   Portable Class Libraries\n  -   .NET Framework 4.5\n  -   Windows 8\n  -   Windows Phone 8.1\n  -   DotNet Core",
   "authors": [ "Microsoft" ],
