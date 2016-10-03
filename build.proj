@@ -46,6 +46,7 @@
     <LibraryRoot>$(MSBuildThisFileDirectory)</LibraryRoot>
     <LibrarySourceFolder>$(LibraryRoot)src</LibrarySourceFolder>
     <LibraryToolsFolder>$(LibraryRoot)tools</LibraryToolsFolder>
+    <SamplesFolder>$(LibraryRoot)Samples</SamplesFolder>
     <LibraryNugetPackageFolder>$(LibraryRoot)\packages</LibraryNugetPackageFolder>
     <LibraryFriendlyName>Microsoft Azure Management Libraries</LibraryFriendlyName>
     <ManagementLibrariesSolution>AzureManagementLibraries.sln</ManagementLibrariesSolution>
@@ -64,6 +65,7 @@
   <ItemGroup>
     <LibrariesToBuild Include="$(LibrarySourceFolder)\$(Scope)\*.sln" Condition=" '$(Scope)' != 'all'  " />
     <LibrariesToBuild Include="$(LibrarySourceFolder)\**\*.sln" Condition=" '$(Scope)' == 'all'  " />
+    <SamplesToBuild Include="$(SamplesFolder)\**\project.json" />
     <LibraryFxTargetList Include="$(FxTargetList)" />
     <AutoRestLibraryFxTargetList Include="portable;net45" />
   </ItemGroup>
@@ -122,6 +124,8 @@
     <!-- Restoring everyting from the root folder wipes out Storage nuget references and adds Storage project reference to all projects. -->
     <Exec Command="dotnet restore" WorkingDirectory="%(NetCore_AutoRestLibraries.Library)" Condition=" @(NetCore_AutoRestLibraries) != '' "/>
     <Exec Command="dotnet restore" WorkingDirectory="%(NetCore_AutoRestLibraries.Test)" Condition=" @(NetCore_AutoRestLibraries) != '' and '%(NetCore_AutoRestLibraries.Test)' != '' and '$(Configuration)' != 'Release' "/>
+    <Exec Command="dotnet restore" WorkingDirectory="$(SamplesFolder)"/>
+    
 
     <CallTarget Targets="BuildNetCoreLibraries" Condition=" @(NetCore_AutoRestLibraries) != '' " />
     <CallTarget Targets="CodeSignBinaries" Condition=" '$(CodeSign)' == 'true' " />
@@ -130,6 +134,7 @@
   <Target Name="BuildNetCoreLibraries">
     <Exec Command="dotnet build --configuration $(Configuration)" WorkingDirectory="%(NetCore_AutoRestLibraries.Library)" Condition=" '%(NetCore_AutoRestLibraries.Library)'!= '' "/>
     <Exec Command="dotnet build --configuration $(Configuration)" WorkingDirectory="%(NetCore_AutoRestLibraries.Test)" Condition=" '$(Configuration)' != 'Release' and '%(NetCore_AutoRestLibraries.Test)' != '' "/>
+    <Exec Command="dotnet build --configuration $(Configuration)" WorkingDirectory="%(SamplesToBuild.RelativeDir)" />
   </Target>
  
   <Target Name="Clean" DependsOnTargets="BuildMsBuildTask;PrepareForAutoRestLibraries;RestoreNugetPackages;">
