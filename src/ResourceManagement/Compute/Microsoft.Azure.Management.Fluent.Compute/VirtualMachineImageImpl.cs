@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
     internal partial class VirtualMachineImageImpl : IndexableWrapper<VirtualMachineImageInner>, IVirtualMachineImage
     {
         internal VirtualMachineImageImpl(Region location, string publisher, string offer, string sku, string version, VirtualMachineImageInner inner) 
-            : base(inner.Name, inner)
+            : base(inner)
         {
             Location = location;
             ImageReference = new ImageReference

@@ -23,8 +23,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         VirtualMachineDataDisk.UpdateDefinition.IUpdateDefinition<VirtualMachine.Update.IUpdate>,
         VirtualMachineDataDisk.Update.IUpdate
     {
-        internal DataDiskImpl(DataDisk inner, VirtualMachineImpl parent) :
-            base(inner.Name, inner, parent)
+        internal DataDiskImpl(DataDisk inner, VirtualMachineImpl parent) : base(inner, parent)
         {
         }
 

@@ -17,8 +17,8 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
           IChildResource<IParentT>
         where ParentImplT : IParentT
     {
-        protected ChildResource(string name, InnerT innerObject, ParentImplT parent)
-                : base(name, innerObject)
+        protected ChildResource(InnerT innerObject, ParentImplT parent)
+                : base(innerObject)
         {
             this.Parent = parent;
         }

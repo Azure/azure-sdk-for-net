@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
         Subnet.UpdateDefinition.IUpdateDefinition<Network.Update.IUpdate>,
         Subnet.Update.IUpdate
     {
-        internal SubnetImpl (SubnetInner inner, NetworkImpl parent) : base(inner.Name, inner, parent)
+        internal SubnetImpl (SubnetInner inner, NetworkImpl parent) : base(inner, parent)
         {
         }
 
@@ -25,7 +25,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return Inner.AddressPrefix;
         }
 
-        override public string Name()
+        public override string Name()
         {
             return Inner.Name;
         }

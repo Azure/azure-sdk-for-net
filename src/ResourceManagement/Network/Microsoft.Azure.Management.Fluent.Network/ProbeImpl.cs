@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
         HttpProbe.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
         HttpProbe.Update.IUpdate
     {
-        internal ProbeImpl (ProbeInner inner, LoadBalancerImpl parent) : base(inner.Name, inner, parent)
+        internal ProbeImpl (ProbeInner inner, LoadBalancerImpl parent) : base(inner, parent)
         {
         }
 
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return (Inner.NumberOfProbes.HasValue) ? Inner.NumberOfProbes.Value : 0;
         }
 
-        override public string Name()
+        public override string Name()
         {
             return Inner.Name;
         }

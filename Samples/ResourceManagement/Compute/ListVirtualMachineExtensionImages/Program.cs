@@ -63,7 +63,7 @@ namespace ListVirtualMachineExtensionImages
                         {
                             foreach (var version in imageType.Versions.List())
                             {
-                                var image = version.getImage();
+                                var image = version.GetImage();
                                 Console.WriteLine($"Image - {publisher.Name}/{image.TypeName}/{image.VersionName}");
                             }
                         }

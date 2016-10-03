@@ -15,11 +15,11 @@ namespace Microsoft.Azure.Management.Fluent.Network
         LoadBalancingRule.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
         LoadBalancingRule.Update.IUpdate
     {
-        internal  LoadBalancingRuleImpl (LoadBalancingRuleInner inner, LoadBalancerImpl parent) : base(inner.Name, inner, parent)
+        internal  LoadBalancingRuleImpl (LoadBalancingRuleInner inner, LoadBalancerImpl parent) : base(inner, parent)
         {
         }
 
-        override public string Name()
+        public override string Name()
         {
             return Inner.Name;
         }

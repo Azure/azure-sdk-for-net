@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             NetworkInterfaceIPConfigurationInner inner,
             NetworkInterfaceImpl parent,
             NetworkManager networkManager,
-            bool isInCreateMode) : base(inner.Name, inner, parent)
+            bool isInCreateMode) : base(inner, parent)
         {
             this.isInCreateMode = isInCreateMode;
             this.networkManager = networkManager;
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return new NicIpConfigurationImpl(ipConfigurationInner, parent, networkManager, true);
         }
 
-        override public string Name()
+        public override string Name()
         {
             return Inner.Name;
         }

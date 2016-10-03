@@ -23,8 +23,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
     {
         private IDictionary<string,object> publicSettings;
         private IDictionary<string,object> protectedSettings;
-        internal VirtualMachineScaleSetExtensionImpl (VirtualMachineScaleSetExtensionInner inner, VirtualMachineScaleSetImpl parent) 
-            : base(inner.Id, inner, parent)
+        internal VirtualMachineScaleSetExtensionImpl (VirtualMachineScaleSetExtensionInner inner, VirtualMachineScaleSetImpl parent) : base(inner, parent)
         {
             InitializeSettings();
         }

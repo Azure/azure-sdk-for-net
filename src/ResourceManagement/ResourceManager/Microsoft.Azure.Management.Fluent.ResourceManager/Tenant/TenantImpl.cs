@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Fluent.Resource
         IndexableWrapper<TenantIdDescription>,
         ITenant
     {
-        internal TenantImpl(TenantIdDescription inner) : base(inner.Id, inner)
+        internal TenantImpl(TenantIdDescription inner) : base(inner)
         {}
 
         public string TenantId

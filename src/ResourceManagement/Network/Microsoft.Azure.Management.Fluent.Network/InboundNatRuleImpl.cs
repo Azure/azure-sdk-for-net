@@ -19,11 +19,11 @@ namespace Microsoft.Azure.Management.Fluent.Network
         InboundNatRule.Update.IUpdate
     {
         internal InboundNatRuleImpl (InboundNatRuleInner inner, LoadBalancerImpl parent) 
-            : base(inner.Name, inner, parent)
+            : base(inner, parent)
         {
         }
 
-        override public string Name()
+        public override string Name()
         {
             return Inner.Name;
         }
