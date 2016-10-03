@@ -20,14 +20,14 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
     /// <typeparam name="InnerResourceT">The autorest generated resource</typeparam>
     /// <typeparam name="InnerResourceBaseT">The autorest generated base class from which <InnerResourceT @ref="InnerResourceT" /> inherits</typeparam>
     /// <typeparam name="FluentResourceT">The implementation for fluent wrapper interface</typeparam>
-    public abstract class ResourceBase<IFluentResourceT, InnerResourceT, InnerResourceBaseT, FluentResourceT, IDefintionAfterRegion, DefTypeWithTags, UTypeWithTags> : 
+    public abstract class ResourceBase<IFluentResourceT, InnerResourceT, InnerResourceBaseT, FluentResourceT, IDefinitionAfterRegion, DefTypeWithTags, UTypeWithTags> : 
         CreatableUpdatable<IFluentResourceT, InnerResourceT, FluentResourceT, IResource, UTypeWithTags>,
         IResource, IDefinitionWithTags<DefTypeWithTags>, IUpdateWithTags<UTypeWithTags>
-        where FluentResourceT : ResourceBase<IFluentResourceT, InnerResourceT, InnerResourceBaseT, FluentResourceT, IDefintionAfterRegion, DefTypeWithTags, UTypeWithTags>, IFluentResourceT
+        where FluentResourceT : ResourceBase<IFluentResourceT, InnerResourceT, InnerResourceBaseT, FluentResourceT, IDefinitionAfterRegion, DefTypeWithTags, UTypeWithTags>, IFluentResourceT
         where IFluentResourceT : class, IResource
         where InnerResourceBaseT : class
         where InnerResourceT : class, InnerResourceBaseT
-        where IDefintionAfterRegion: class
+        where IDefinitionAfterRegion: class
         where DefTypeWithTags : class
         where UTypeWithTags : class
     {
@@ -142,16 +142,16 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
 
         #region The fluent setters
 
-        public IDefintionAfterRegion WithRegion(string regionName)
+        public IDefinitionAfterRegion WithRegion(string regionName)
         {
             SetValue("Location", regionName);
-            return this as IDefintionAfterRegion;
+            return this as IDefinitionAfterRegion;
         }
 
-        public IDefintionAfterRegion WithRegion(Region region)
+        public IDefinitionAfterRegion WithRegion(Region region)
         {
             SetValue("Location", EnumNameAttribute.GetName(region));
-            return this as IDefintionAfterRegion;
+            return this as IDefinitionAfterRegion;
         }
 
         public FluentResourceT WithTags(IDictionary<string, string> tags)

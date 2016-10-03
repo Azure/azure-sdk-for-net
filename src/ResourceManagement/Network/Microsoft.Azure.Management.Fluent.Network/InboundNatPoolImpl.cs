@@ -18,33 +18,26 @@ namespace Microsoft.Azure.Management.Fluent.Network
         InboundNatPool.Update.IUpdate
     {
         internal InboundNatPoolImpl (InboundNatPoolInner inner, LoadBalancerImpl parent) 
-            : base(inner.Name, inner, parent)
+            : base(inner, parent)
         {
         }
 
-        override public string Name
+        public override string Name()
         {
-            get
-            {
-                return Inner.Name;
-            }
-        }
-        public string Protocol
-        {
-            get
-            {
-                return Inner.Protocol;
-            }
-        }
-        public int BackendPort
-        {
-            get
-            {
-                return Inner.BackendPort;
-            }
+            return Inner.Name;
         }
 
-        public IFrontend Frontend ()
+        internal string Protocol()
+        {
+            return Inner.Protocol;
+        }
+
+        internal int BackendPort()
+        {
+            return Inner.BackendPort;
+        }
+
+        internal IFrontend Frontend ()
         {
             IFrontend frontend;
             string name = ResourceUtils.NameFromResourceId(Inner.FrontendIPConfiguration.Id);
@@ -52,49 +45,43 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return frontend;
         }
 
-        public int FrontendPortRangeStart
+        internal int FrontendPortRangeStart()
         {
-            get
-            {
-                return Inner.FrontendPortRangeStart;
-            }
+            return Inner.FrontendPortRangeStart;
         }
 
-        public int FrontendPortRangeEnd
+        internal int FrontendPortRangeEnd()
         {
-            get
-            {
-                return Inner.FrontendPortRangeEnd;
-            }
+            return Inner.FrontendPortRangeEnd;
         }
 
-        public InboundNatPoolImpl WithBackendPort (int port)
+        internal InboundNatPoolImpl WithBackendPort (int port)
         {
             Inner.BackendPort = port;
             return this;
         }
 
-        public InboundNatPoolImpl WithProtocol (string protocol)
+        internal InboundNatPoolImpl WithProtocol (string protocol)
         {
             Inner.Protocol = protocol;
             return this;
         }
 
-        public InboundNatPoolImpl WithFrontend (string frontendName)
+        internal InboundNatPoolImpl WithFrontend (string frontendName)
         {
-            SubResource frontendRef = new SubResource(Parent.FutureResourceId + "/frontendIPConfigurations/" + frontendName);
+            SubResource frontendRef = new SubResource(Parent.FutureResourceId() + "/frontendIPConfigurations/" + frontendName);
             Inner.FrontendIPConfiguration = frontendRef;
             return this;
         }
 
-        public InboundNatPoolImpl WithFrontendPortRange (int from, int to)
+        internal InboundNatPoolImpl WithFrontendPortRange (int from, int to)
         {
             Inner.FrontendPortRangeStart = from;
             Inner.FrontendPortRangeEnd = to;
             return this;
         }
 
-        public LoadBalancerImpl Attach ()
+        internal LoadBalancerImpl Attach ()
         {
             return Parent.WithInboundNatPool(this);
         }

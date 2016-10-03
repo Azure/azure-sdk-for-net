@@ -47,7 +47,7 @@ namespace ManageVirtualMachinesInParallelWithNetwork
 
                 var azure = Azure
                     .Configure()
-                    .withLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
+                    .WithLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
                     .Authenticate(credentials)
                     .WithSubscription(credentials.DefaultSubscriptionId);
 
@@ -73,20 +73,20 @@ namespace ManageVirtualMachinesInParallelWithNetwork
                             .WithRegion(Region.US_EAST)
                             .WithExistingResourceGroup(resourceGroup)
                             .DefineRule("ALLOW-SSH")
-                                .AllowInbound
-                                .FromAnyAddress
-                                .FromAnyPort
-                                .ToAnyAddress
+                                .AllowInbound()
+                                .FromAnyAddress()
+                                .FromAnyPort()
+                                .ToAnyAddress()
                                 .ToPort(22)
                                 .WithProtocol(SecurityRuleProtocol.Tcp)
                                 .WithPriority(100)
                                 .WithDescription("Allow SSH")
                             .Attach()
                             .DefineRule("ALLOW-HTTP")
-                                .AllowInbound
-                                .FromAnyAddress
-                                .FromAnyPort
-                                .ToAnyAddress
+                                .AllowInbound()
+                                .FromAnyAddress()
+                                .FromAnyPort()
+                                .ToAnyAddress()
                                 .ToPort(80)
                                 .WithProtocol(SecurityRuleProtocol.Tcp)
                                 .WithPriority(101)
@@ -104,21 +104,21 @@ namespace ManageVirtualMachinesInParallelWithNetwork
                                 .WithRegion(Region.US_EAST)
                                 .WithExistingResourceGroup(resourceGroup)
                                 .DefineRule("ALLOW-SQL")
-                                .AllowInbound
+                                .AllowInbound()
                                 .FromAddress("172.16.1.0/24")
-                                .FromAnyPort
-                                .ToAnyAddress
+                                .FromAnyPort()
+                                .ToAnyAddress()
                                 .ToPort(1433)
                                 .WithProtocol(SecurityRuleProtocol.Tcp)
                                 .WithPriority(100)
                                 .WithDescription("Allow SQL")
                             .Attach()
                             .DefineRule("DENY-WEB")
-                                .DenyOutbound
-                                .FromAnyAddress
-                                .FromAnyPort
-                                .ToAnyAddress
-                                .ToAnyPort
+                                .DenyOutbound()
+                                .FromAnyAddress()
+                                .FromAnyPort()
+                                .ToAnyAddress()
+                                .ToAnyPort()
                                 .WithAnyProtocol()
                                 .WithDescription("Deny Web")
                                 .WithPriority(200)

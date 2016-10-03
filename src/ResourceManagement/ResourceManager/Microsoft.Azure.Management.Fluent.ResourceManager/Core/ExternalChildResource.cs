@@ -39,18 +39,15 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
         /// <param name="name">the name of this external child resource</param>
         /// <param name="parent">reference to the parent of this external child resource</param>
         /// <param name="innerObject">reference to the inner object representing this external child resource</param>
-        public ExternalChildResource(string name, ParentImplT parent, InnerModelT innerObject) : base(name, innerObject, parent)
+        public ExternalChildResource(string name, ParentImplT parent, InnerModelT innerObject) : base(innerObject, parent)
         {
             this.name = name;
             this.PendingOperation = PendingOperation.None;
         }
 
-        public override string Name
+        public override string Name()
         {
-            get
-            {
-                return this.name;
-            }
+            return this.name;
         }
 
         /// <returns>the in-memory state of this child resource and state represents any pending action on the child resource.</returns>

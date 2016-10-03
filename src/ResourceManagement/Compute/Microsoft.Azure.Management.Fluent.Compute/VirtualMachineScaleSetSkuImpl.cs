@@ -25,9 +25,12 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             }
         }
 
-        public VirtualMachineScaleSetSkuTypes SkuType ()
+        public VirtualMachineScaleSetSkuTypes SkuType
         {
-            return new VirtualMachineScaleSetSkuTypes(this.Inner.Sku);
+            get
+            {
+                return new VirtualMachineScaleSetSkuTypes(this.Inner.Sku);
+            }
         }
 
         public VirtualMachineScaleSetSkuCapacity Capacity

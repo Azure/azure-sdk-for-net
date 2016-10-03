@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             get; private set;
         }
 
-        public Region? Region
+        public Region Region
         {
             get
             {
@@ -31,19 +31,28 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             }
         }
 
-        public IVirtualMachineImagesInSku Images()
+        public IVirtualMachineImagesInSku Images
         {
-            return imagesInSku;
+            get
+            {
+                return imagesInSku;
+            }
         }
 
-        public IVirtualMachineOffer Offer()
+        public IVirtualMachineOffer Offer
         {
-            return offer;
+            get
+            {
+                return offer;
+            }
         }
 
-        public IVirtualMachinePublisher Publisher()
+        public IVirtualMachinePublisher Publisher
         {
-            return offer.Publisher();
+            get
+            {
+                return offer.Publisher;
+            }
         }
     }
 }

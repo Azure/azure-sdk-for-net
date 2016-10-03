@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
         {
         }
 
-        public PagedList<INetwork> List ()
+        internal PagedList<INetwork> List ()
         {
             var pagedList = new PagedList<VirtualNetworkInner>(InnerCollection.ListAll(), (string nextPageLink) =>
             {
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return WrapList(pagedList);
         }
 
-        public PagedList<INetwork> ListByGroup (string groupName)
+        internal PagedList<INetwork> ListByGroup (string groupName)
         {
             var pagedList = new PagedList<VirtualNetworkInner>(InnerCollection.List(groupName), (string nextPageLink) =>
             {
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return WrapList(pagedList);
         }
 
-        public NetworkImpl Define (string name)
+        internal NetworkImpl Define (string name)
         {
             return WrapModel(name);
         }

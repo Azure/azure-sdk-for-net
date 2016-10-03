@@ -7,11 +7,11 @@ namespace Microsoft.Azure.Management.Fluent.Compute
     /// <summary>
     /// Entry point to virtual machine extension image management API.
     /// </summary>
-    public interface IVirtualMachineExtensionImages :
+    public interface IVirtualMachineExtensionImages  :
         ISupportsListingByRegion<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineExtensionImage>
     {
         /// <returns>entry point to virtual machine extension image publishers</returns>
-        IVirtualMachinePublishers Publishers();
+        Microsoft.Azure.Management.Fluent.Compute.IVirtualMachinePublishers Publishers { get; }
 
     }
 }

@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.HasProtocol.UpdateDefinition
         /// </summary>
         /// <param name="protocol">protocol a transport protocol</param>
         /// <returns>the next stage of the definition</returns>
-        ReturnT WithProtocol (ProtocolT protocol);
+        ReturnT WithProtocol(ProtocolT protocol);
 
     }
 }

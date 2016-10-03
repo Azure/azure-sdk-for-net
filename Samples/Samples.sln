@@ -58,6 +58,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KeyVault", "KeyVault", "{357DE627-09BF-4D41-82FE-B1132AFCD21F}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageKeyVault", "ResourceManagement\KeyVault\ManageKeyVault\ManageKeyVault.xproj", "{0A3BAF80-9B32-492F-B4B1-274728EF98E7}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ManageVirtualMachineScaleSet", "ResourceManagement\Compute\ManageVirtualMachineScaleSet\ManageVirtualMachineScaleSet.xproj", "{6C6066FE-9D01-4E13-A9CC-E08E27DCF9D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -153,6 +154,10 @@ Global
 		{0A3BAF80-9B32-492F-B4B1-274728EF98E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A3BAF80-9B32-492F-B4B1-274728EF98E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A3BAF80-9B32-492F-B4B1-274728EF98E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C6066FE-9D01-4E13-A9CC-E08E27DCF9D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C6066FE-9D01-4E13-A9CC-E08E27DCF9D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C6066FE-9D01-4E13-A9CC-E08E27DCF9D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C6066FE-9D01-4E13-A9CC-E08E27DCF9D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -179,5 +184,6 @@ Global
 		{3A1AA1AC-2B74-4EC6-A777-4A79023B05E1} = {4C48BDD0-E067-4F02-BCCA-987BECF40735}
 		{839D89D4-B816-4197-AEF2-88E85FFEDA99} = {4C48BDD0-E067-4F02-BCCA-987BECF40735}
 		{0A3BAF80-9B32-492F-B4B1-274728EF98E7} = {357DE627-09BF-4D41-82FE-B1132AFCD21F}
+		{6C6066FE-9D01-4E13-A9CC-E08E27DCF9D8} = {4C48BDD0-E067-4F02-BCCA-987BECF40735}
 	EndGlobalSection
 EndGlobal

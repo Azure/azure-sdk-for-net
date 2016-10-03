@@ -23,70 +23,58 @@ namespace Microsoft.Azure.Management.Fluent.Network
         PublicFrontend.UpdateDefinition.IUpdateDefinition<LoadBalancer.Update.IUpdate>,
         PublicFrontend.Update.IUpdate
     {
-        internal  FrontendImpl (FrontendIPConfigurationInner inner, LoadBalancerImpl parent)
-            : base(inner.Name, inner, parent)
-        {
-        }
-
-        public string NetworkId
+        //$TODO: For some reason the converter doesn't implement this on the auto-gen'd interface implementations so putting it here for the time being
+        string IHasPrivateIpAddress.PrivateIpAllocationMethod
         {
             get
             {
-                var subnetRef = Inner.Subnet;
-                return (subnetRef != null) ? ResourceUtils.ParentResourcePathFromResourceId(subnetRef.Id) : null;
+                return PrivateIpAllocationMethod();
             }
         }
 
-        public string SubnetName
+        internal FrontendImpl (FrontendIPConfigurationInner inner, LoadBalancerImpl parent)
+            : base(inner, parent)
         {
-            get
-            {
-                var subnetRef = Inner.Subnet;
-                return (subnetRef != null) ? ResourceUtils.NameFromResourceId(subnetRef.Id) : null;
-            }
         }
 
-        public string PrivateIpAddress
+        internal string NetworkId()
         {
-            get
-            {
-                return this.Inner.PrivateIPAddress;
-            }
+            var subnetRef = Inner.Subnet;
+            return (subnetRef != null) ? ResourceUtils.ParentResourcePathFromResourceId(subnetRef.Id) : null;
         }
 
-        public string PrivateIpAllocationMethod
+        internal string SubnetName()
         {
-            get
-            {
-                return Inner.PrivateIPAllocationMethod;
-            }
+            var subnetRef = Inner.Subnet;
+            return (subnetRef != null) ? ResourceUtils.NameFromResourceId(subnetRef.Id) : null;
         }
 
-        override public string Name
+        internal string PrivateIpAddress()
         {
-            get
-            {
-                return Inner.Name;
-            }
+            return Inner.PrivateIPAddress;
         }
 
-        public string PublicIpAddressId
+        internal string PrivateIpAllocationMethod()
         {
-            get
-            {
-                return Inner.PublicIPAddress.Id;
-            }
+            return Inner.PrivateIPAllocationMethod;
         }
 
-        public bool IsPublic
+        public override string Name()
         {
-            get
-            {
-                return Inner.PublicIPAddress != null;
-            }
+            return Inner.Name;
         }
 
-        public IDictionary<string,Microsoft.Azure.Management.Fluent.Network.ILoadBalancingRule> LoadBalancingRules ()
+        internal string PublicIpAddressId()
+        {
+            return Inner.PublicIPAddress.Id;
+        }
+
+        internal bool IsPublic()
+        {
+            return Inner.PublicIPAddress != null;
+        }
+
+        internal IDictionary<string,Microsoft.Azure.Management.Fluent.Network.ILoadBalancingRule> LoadBalancingRules ()
         {
             IDictionary<string, ILoadBalancingRule> rules = new SortedDictionary<string, ILoadBalancingRule>();
             if(Inner.LoadBalancingRules != null)
@@ -95,18 +83,15 @@ namespace Microsoft.Azure.Management.Fluent.Network
                 {
                     string name = ResourceUtils.NameFromResourceId(innerRef.Id);
                     ILoadBalancingRule rule;
-                    Parent.LoadBalancingRules().TryGetValue(name, out rule);
-                    if(rule != null)
-                    {
+                    if(Parent.LoadBalancingRules().TryGetValue(name, out rule))
                         rules[name] = rule;
-                    }
                 }
             }
 
             return rules;
         }
 
-        public IDictionary<string, IInboundNatPool> InboundNatPools ()
+        internal IDictionary<string, IInboundNatPool> InboundNatPools ()
         {
             IDictionary<string, IInboundNatPool> pools = new SortedDictionary<string, IInboundNatPool>();
             if (Inner.InboundNatPools != null)
@@ -115,8 +100,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
                 {
                     string name = ResourceUtils.NameFromResourceId(innerRef.Id);
                     IInboundNatPool pool;
-                    Parent.InboundNatPools().TryGetValue(name, out pool);
-                    if (pool != null)
+                    if (Parent.InboundNatPools().TryGetValue(name, out pool))
                     {
                         pools[name] = pool;
                     }
@@ -126,7 +110,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return pools;
         }
 
-        public IDictionary<string, IInboundNatRule> InboundNatRules ()
+        internal IDictionary<string, IInboundNatRule> InboundNatRules ()
         {
             IDictionary<string, IInboundNatRule> rules = new SortedDictionary<string, IInboundNatRule>();
             if (Inner.InboundNatRules != null)
@@ -135,8 +119,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
                 {
                     string name = ResourceUtils.NameFromResourceId(innerRef.Id);
                     IInboundNatRule rule;
-                    Parent.InboundNatRules().TryGetValue(name, out rule);
-                    if (rule != null)
+                    if (Parent.InboundNatRules().TryGetValue(name, out rule))
                     {
                         rules[name] = rule;
                     }
@@ -146,12 +129,12 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return rules;
         }
 
-        public FrontendImpl WithExistingSubnet (INetwork network, string subnetName)
+        internal FrontendImpl WithExistingSubnet (INetwork network, string subnetName)
         {
             return this.WithExistingSubnet(network.Id, subnetName);
         }
 
-        public FrontendImpl WithExistingSubnet (string parentNetworkResourceId, string subnetName)
+        internal FrontendImpl WithExistingSubnet (string parentNetworkResourceId, string subnetName)
         {
             var subnetRef = new SubnetInner();
             subnetRef.Id = parentNetworkResourceId + "/subnets/" + subnetName;
@@ -160,12 +143,12 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return this;
         }
 
-        public FrontendImpl WithExistingPublicIpAddress (IPublicIpAddress pip)
+        internal FrontendImpl WithExistingPublicIpAddress (IPublicIpAddress pip)
         {
             return WithExistingPublicIpAddress(pip.Id);
         }
 
-        public FrontendImpl WithExistingPublicIpAddress (string resourceId)
+        internal FrontendImpl WithExistingPublicIpAddress (string resourceId)
         {
             var pipRef = new PublicIPAddressInner(id: resourceId);
             Inner.PublicIPAddress = pipRef;
@@ -177,13 +160,13 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return this;
         }
 
-        public FrontendImpl WithoutPublicIpAddress ()
+        internal FrontendImpl WithoutPublicIpAddress ()
         {
             Inner.PublicIPAddress = null;
             return this;
         }
 
-        public FrontendImpl WithPrivateIpAddressDynamic ()
+        internal FrontendImpl WithPrivateIpAddressDynamic ()
         {
             Inner.PrivateIPAddress = null;
             Inner.PrivateIPAllocationMethod = IPAllocationMethod.Dynamic;
@@ -193,7 +176,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return this;
         }
 
-        public FrontendImpl WithPrivateIpAddressStatic (string ipAddress)
+        internal FrontendImpl WithPrivateIpAddressStatic (string ipAddress)
         {
             Inner.PrivateIPAddress = ipAddress;
             Inner.PrivateIPAllocationMethod = IPAllocationMethod.Static;
@@ -203,14 +186,14 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return this;
         }
 
-        public LoadBalancerImpl Attach ()
+        internal LoadBalancerImpl Attach ()
         {
             return Parent.WithFrontend(this);
         }
 
-        public IPublicIpAddress GetPublicIpAddress ()
+        internal IPublicIpAddress GetPublicIpAddress ()
         {
-            string pipId = PublicIpAddressId;
+            string pipId = PublicIpAddressId();
             return (pipId != null) ? Parent.Manager.PublicIpAddresses.GetById(pipId) : null;
         }
 

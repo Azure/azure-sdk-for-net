@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return new NetworkInterfaceImpl(inner.Name, inner, InnerCollection, Manager);
         }
 
-        public PagedList<INetworkInterface> List()
+        internal PagedList<INetworkInterface> List()
         {
             var pagedList = new PagedList<NetworkInterfaceInner>(InnerCollection.ListAll(), (string nextPageLink) =>
             {
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return WrapList(pagedList);
         }
 
-        public PagedList<INetworkInterface> ListByGroup(string groupName)
+        internal PagedList<INetworkInterface> ListByGroup(string groupName)
         {
             var pagedList = new PagedList<NetworkInterfaceInner>(InnerCollection.List(groupName), (string nextPageLink) =>
             {
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
         }
 
 
-        public NetworkInterfaceImpl Define(string name)
+        internal NetworkInterfaceImpl Define(string name)
         {
             return WrapModel(name);
         }

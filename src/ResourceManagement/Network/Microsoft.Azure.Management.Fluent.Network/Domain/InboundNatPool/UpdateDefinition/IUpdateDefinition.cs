@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.InboundNatPool.UpdateDefinit
         /// <param name="from">from the starting port number, between 1 and 65534</param>
         /// <param name="to">to the ending port number, greater than the starting port number and no more than 65534</param>
         /// <returns>the next stage of the definition</returns>
-        IWithAttach<ParentT> WithFrontendPortRange (int from, int to);
+        Microsoft.Azure.Management.Fluent.Network.InboundNatPool.UpdateDefinition.IWithAttach<ParentT> WithFrontendPortRange(int from, int to);
 
     }
     /// <summary>

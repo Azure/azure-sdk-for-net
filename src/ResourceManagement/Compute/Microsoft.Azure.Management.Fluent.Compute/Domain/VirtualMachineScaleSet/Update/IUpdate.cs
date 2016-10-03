@@ -3,9 +3,9 @@
 namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update
 {
 
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.Fluent.Compute;
     using Microsoft.Azure.Management.Fluent.Resource.Core.Resource.Update;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSetExtension.Update;
     using Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSetExtension.UpdateDefinition;
     using Microsoft.Azure.Management.Fluent.Network;
@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Updat
         /// inbound NAT pools in the load balancer.
         /// </summary>
         /// <returns>the next stage of the update</returns>
-        IWithApply WithoutPrimaryInternetFacingLoadBalancer ();
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply WithoutPrimaryInternetFacingLoadBalancer();
 
         /// <summary>
         /// Removes the association between the internal load balancer and the primary network interface configuration.
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Updat
         /// inbound NAT pools in the load balancer.
         /// </summary>
         /// <returns>the next stage of the update</returns>
-        IWithApply WithoutPrimaryInternalLoadBalancer ();
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply WithoutPrimaryInternalLoadBalancer();
 
     }
     /// <summary>
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Updat
     /// </summary>
     public interface IWithApply  :
         IAppliable<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet>,
-        IUpdateWithTags<Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IUpdate>,
+        IUpdateWithTags<Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply>,
         IWithSku,
         IWithCapacity,
         IWithExtension,
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Updat
         /// </summary>
         /// <param name="capacity">capacity the virtual machine capacity of the scale set</param>
         /// <returns>the next stage of the update</returns>
-        IWithApply WithCapacity (int capacity);
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply WithCapacity(int capacity);
 
     }
     /// <summary>
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Updat
         /// </summary>
         /// <param name="backendNames">backendNames the names of existing backends on the selected load balancer</param>
         /// <returns>the next stage of the update</returns>
-        IWithPrimaryInternalLoadBalancerNatPool WithPrimaryInternalLoadBalancerBackends (params string[] backendNames);
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerNatPool WithPrimaryInternalLoadBalancerBackends(params string[] backendNames);
 
     }
     /// <summary>
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Updat
         /// </summary>
         /// <param name="backendNames">backendNames existing backend names</param>
         /// <returns>the next stage of the update</returns>
-        IWithApply WithoutPrimaryInternetFacingLoadBalancerBackends (params string[] backendNames);
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply WithoutPrimaryInternetFacingLoadBalancerBackends(params string[] backendNames);
 
         /// <summary>
         /// Removes the associations between the primary network interface configuration and the specified backends
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Updat
         /// </summary>
         /// <param name="backendNames">backendNames existing backend names</param>
         /// <returns>the next stage of the update</returns>
-        IWithApply WithoutPrimaryInternalLoadBalancerBackends (params string[] backendNames);
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply WithoutPrimaryInternalLoadBalancerBackends(params string[] backendNames);
 
     }
     /// <summary>
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Updat
         /// </summary>
         /// <param name="natPoolNames">natPoolNames the names of existing inbound NAT pools in the selected load balancer</param>
         /// <returns>the next stage of the update</returns>
-        IWithApply WithPrimaryInternalLoadBalancerInboundNatPools (params string[] natPoolNames);
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply WithPrimaryInternalLoadBalancerInboundNatPools(params string[] natPoolNames);
 
     }
     /// <summary>
@@ -132,7 +132,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Updat
         /// </summary>
         /// <param name="backendNames">backendNames the backend names</param>
         /// <returns>the next stage of the update</returns>
-        IWithPrimaryInternetFacingLoadBalancerNatPool WithPrimaryInternetFacingLoadBalancerBackends (params string[] backendNames);
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerNatPool WithPrimaryInternetFacingLoadBalancerBackends(params string[] backendNames);
 
     }
     /// <summary>
@@ -146,14 +146,14 @@ namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Updat
         /// </summary>
         /// <param name="skuType">skuType the SKU type</param>
         /// <returns>the next stage of the update</returns>
-        IWithApply WithSku (VirtualMachineScaleSetSkuTypes skuType);
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply WithSku(VirtualMachineScaleSetSkuTypes skuType);
 
         /// <summary>
         /// Specifies the SKU for the virtual machines in the scale set.
         /// </summary>
         /// <param name="sku">sku a SKU from the list of available sizes for the virtual machines in this scale set</param>
         /// <returns>the next stage of the update</returns>
-        IWithApply WithSku (IVirtualMachineScaleSetSku sku);
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply WithSku(IVirtualMachineScaleSetSku sku);
 
     }
     /// <summary>
@@ -166,21 +166,21 @@ namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Updat
         /// </summary>
         /// <param name="name">name the reference name for an extension</param>
         /// <returns>the first stage of the extension reference definition</returns>
-        IBlank<Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply> DefineNewExtension (string name);
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSetExtension.UpdateDefinition.IBlank<Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply> DefineNewExtension(string name);
 
         /// <summary>
         /// Begins the description of an update of an existing extension assigned to the virtual machines in the scale set.
         /// </summary>
         /// <param name="name">name the reference name for the extension</param>
         /// <returns>the first stage of the extension reference update</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSetExtension.Update.IUpdate UpdateExtension (string name); // TODO: Converter does not emit fully qualified path to IUpdate of extension - fixing it
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSetExtension.Update.IUpdate UpdateExtension(string name);
 
         /// <summary>
         /// Removes the extension with the specified name from the virtual machines in the scale set.
         /// </summary>
         /// <param name="name">name the reference name of the extension to be removed/uninstalled</param>
         /// <returns>the next stage of the update</returns>
-        IWithApply WithoutExtension (string name);
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply WithoutExtension(string name);
 
     }
     /// <summary>
@@ -201,7 +201,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Updat
         /// </summary>
         /// <param name="loadBalancer">loadBalancer the primary Internet-facing load balancer</param>
         /// <returns>the next stage of the update</returns>
-        IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool WithPrimaryInternetFacingLoadBalancer (ILoadBalancer loadBalancer);
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternetFacingLoadBalancerBackendOrNatPool WithPrimaryInternetFacingLoadBalancer(ILoadBalancer loadBalancer);
 
     }
     /// <summary>
@@ -216,7 +216,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Updat
         /// </summary>
         /// <param name="natPoolNames">natPoolNames the names of existing inbound NAT pools</param>
         /// <returns>the next stage of the update</returns>
-        IWithApply WithoutPrimaryInternetFacingLoadBalancerNatPools (params string[] natPoolNames);
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply WithoutPrimaryInternetFacingLoadBalancerNatPools(params string[] natPoolNames);
 
         /// <summary>
         /// Removes the associations between the primary network interface configuration and the specified inbound NAT pools
@@ -224,7 +224,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Updat
         /// </summary>
         /// <param name="natPoolNames">natPoolNames the names of existing inbound NAT pools</param>
         /// <returns>the next stage of the update</returns>
-        IWithApply WithoutPrimaryInternalLoadBalancerNatPools (params string[] natPoolNames);
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithApply WithoutPrimaryInternalLoadBalancerNatPools(params string[] natPoolNames);
 
     }
     /// <summary>
@@ -246,7 +246,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Updat
         /// </summary>
         /// <param name="loadBalancer">loadBalancer the primary Internet-facing load balancer</param>
         /// <returns>the next stage of the update</returns>
-        IWithPrimaryInternalLoadBalancerBackendOrNatPool WithPrimaryInternalLoadBalancer (ILoadBalancer loadBalancer);
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancerBackendOrNatPool WithPrimaryInternalLoadBalancer(ILoadBalancer loadBalancer);
 
     }
     /// <summary>
@@ -262,7 +262,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Updat
         /// </summary>
         /// <param name="natPoolNames">natPoolNames the names of existing inbound NAT pools on the selected load balancer</param>
         /// <returns>the next stage of the update</returns>
-        IWithPrimaryInternalLoadBalancer WithPrimaryInternetFacingLoadBalancerInboundNatPools (params string[] natPoolNames);
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Update.IWithPrimaryInternalLoadBalancer WithPrimaryInternetFacingLoadBalancerInboundNatPools(params string[] natPoolNames);
 
     }
     /// <summary>

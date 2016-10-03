@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
         string PublicIpAddressId { get; }
 
         /// <returns>the associated public IP address</returns>
-        IPublicIpAddress GetPublicIpAddress ();
+        Microsoft.Azure.Management.Fluent.Network.IPublicIpAddress GetPublicIpAddress();
 
     }
 }

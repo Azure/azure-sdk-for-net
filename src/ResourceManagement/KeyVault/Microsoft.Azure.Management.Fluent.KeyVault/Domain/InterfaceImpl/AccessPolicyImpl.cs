@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
         {
             get
             {
-                return this.Name as string;
+                return this.Name() as string;
             }
         }
         /// <summary>

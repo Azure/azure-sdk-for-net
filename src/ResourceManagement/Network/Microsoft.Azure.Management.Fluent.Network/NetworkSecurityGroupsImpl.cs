@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
         {
         }
 
-        public PagedList<INetworkSecurityGroup> List ()
+        internal PagedList<INetworkSecurityGroup> List ()
         {
             var pagedList = new PagedList<NetworkSecurityGroupInner>(InnerCollection.ListAll(), (string nextPageLink) =>
             {
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return WrapList(pagedList);
         }
 
-        public PagedList<INetworkSecurityGroup> ListByGroup (string groupName)
+        internal PagedList<INetworkSecurityGroup> ListByGroup (string groupName)
         {
             var pagedList = new PagedList<NetworkSecurityGroupInner>(InnerCollection.List(groupName), (string nextPageLink) =>
             {
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return WrapList(pagedList);
         }
 
-        public NetworkSecurityGroupImpl Define (string name)
+        internal NetworkSecurityGroupImpl Define (string name)
         {
             return WrapModel(name);
         }

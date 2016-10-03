@@ -7,6 +7,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
     using System.Collections.Generic;
     using Management.Compute.Models;
     using Resource.Core.ChildResourceActions;
+    using Newtonsoft.Json;
 
     /// <summary>
     /// Implementation of {@link VirtualMachineScaleSetExtension}.
@@ -22,67 +23,47 @@ namespace Microsoft.Azure.Management.Fluent.Compute
     {
         private IDictionary<string,object> publicSettings;
         private IDictionary<string,object> protectedSettings;
-        internal VirtualMachineScaleSetExtensionImpl (VirtualMachineScaleSetExtensionInner inner, VirtualMachineScaleSetImpl parent) 
-            : base(inner.Id, inner, parent)
+        internal VirtualMachineScaleSetExtensionImpl (VirtualMachineScaleSetExtensionInner inner, VirtualMachineScaleSetImpl parent) : base(inner, parent)
         {
             InitializeSettings();
         }
 
-        public override string Name
+        public override string Name()
         {
-            get
-            {
-                return this.Inner.Name;
-            }
+            return this.Inner.Name;
         }
-        public string PublisherName
+
+        public string PublisherName()
         {
-            get
-            {
-                return this.Inner.Publisher;
-            }
+            return this.Inner.Publisher;
         }
-        public string TypeName
+        public string TypeName()
         {
-            get
-            {
-                return this.Inner.Type;
-            }
+            return this.Inner.Type;
         }
-        public string VersionName
+        public string VersionName()
         {
-            get
-            {
-                return this.Inner.TypeHandlerVersion;
-            }
+            return this.Inner.TypeHandlerVersion;
         }
-        public bool? AutoUpgradeMinorVersionEnabled
+        public bool AutoUpgradeMinorVersionEnabled()
         {
-            get
-            {
-                return this.Inner.AutoUpgradeMinorVersion;
-            }
+            return this.Inner.AutoUpgradeMinorVersion.Value;
         }
-        public IDictionary<string, object> PublicSettings
+        public IDictionary<string, object> PublicSettings()
         {
-            get
-            {
-                return this.publicSettings;
-            }
+            return this.publicSettings;
         }
-        public string PublicSettingsAsJsonString
+        public string PublicSettingsAsJsonString()
         {
-            get
+            if (this.PublicSettings() != null)
             {
-                return null;
+                return JsonConvert.SerializeObject(this.PublicSettings());
             }
+            return null;
         }
-        public string ProvisioningState
+        public string ProvisioningState()
         {
-            get
-            {
-                return this.Inner.ProvisioningState;
-            }
+            return this.Inner.ProvisioningState;
         }
         public VirtualMachineScaleSetExtensionImpl WithMinorVersionAutoUpgrade ()
         {

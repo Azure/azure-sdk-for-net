@@ -7,16 +7,16 @@ namespace Microsoft.Azure.Management.Fluent.Compute
     /// <summary>
     /// A type representing a SKU available for virtual machines in a scale set.
     /// </summary>
-    public interface IVirtualMachineScaleSetSku
+    public interface IVirtualMachineScaleSetSku 
     {
         /// <returns>the type of resource the SKU applies to</returns>
         string ResourceType { get; }
 
         /// <returns>the SKU type</returns>
-        VirtualMachineScaleSetSkuTypes SkuType();
+        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSetSkuTypes SkuType { get; }
 
         /// <returns>available scaling information</returns>
-        VirtualMachineScaleSetSkuCapacity Capacity { get; }
+        Microsoft.Azure.Management.Compute.Models.VirtualMachineScaleSetSkuCapacity Capacity { get; }
 
     }
 }

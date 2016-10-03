@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         {
             get
             {
-                return this.Version().Type().Publisher().Name;
+                return this.Version.Type.Publisher.Name;
             }
         }
 
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         {
             get
             {
-                return this.Version().Type().Name;
+                return this.Version.Type.Name;
             }
         }
 
@@ -55,29 +55,25 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         {
             get
             {
-                return this.Version().Name;
+                return this.Version.Name;
             }
         }
-        public OperatingSystemTypes? OsType
+        public OperatingSystemTypes OsType
         {
             get
             {
-                if (this.Inner.OperatingSystem == null)
-                {
-                    return null;
-                }
                 // OperatingSystemTypes is an AutoRest generated type from the swagger
                 return EnumHelper.FromEnumMemberSerializationValue<OperatingSystemTypes>(this.Inner.OperatingSystem);
             }
         }
 
-        public ComputeRoles? ComputeRole
+        public ComputeRoles ComputeRole
         {
             get
             {
                 if (this.Inner.ComputeRole == null)
                 {
-                    return null;
+                    return ComputeRoles.UNKNOWN;
                 }
                 // ComputeRole is a fluent level convinence enum
                 return EnumNameAttribute.FromName<ComputeRoles>(this.Inner.ComputeRole);
@@ -92,25 +88,28 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             }
         }
 
-        public bool? SupportsVirtualMachineScaleSets
+        public bool SupportsVirtualMachineScaleSets
         {
             get
             {
-                return this.Inner.VmScaleSetEnabled;
+                return this.Inner.VmScaleSetEnabled.Value;
             }
         }
 
-        public bool? SupportsMultipleExtensions
+        public bool SupportsMultipleExtensions
         {
             get
             {
-                return this.Inner.SupportsMultipleExtensions;
+                return this.Inner.SupportsMultipleExtensions.Value;
             }
         }
 
-        public IVirtualMachineExtensionImageVersion Version()
+        public IVirtualMachineExtensionImageVersion Version
         {
-            return this.version;
+            get
+            {
+                return this.version;
+            }
         }
 
     }

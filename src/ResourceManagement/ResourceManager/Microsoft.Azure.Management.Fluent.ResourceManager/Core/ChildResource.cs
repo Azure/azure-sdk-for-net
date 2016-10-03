@@ -17,8 +17,8 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
           IChildResource<IParentT>
         where ParentImplT : IParentT
     {
-        protected ChildResource(string name, InnerT innerObject, ParentImplT parent)
-                : base(name, innerObject)
+        protected ChildResource(InnerT innerObject, ParentImplT parent)
+                : base(innerObject)
         {
             this.Parent = parent;
         }
@@ -31,7 +31,15 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
         /// </summary>
         public ParentImplT Parent { get; private set; }
 
-        public abstract string Name { get; }
+        public abstract string Name();
+
+        string IChildResource<IParentT>.Name
+        {
+            get
+            {
+                return this.Name();
+            }
+        }
 
         /// <returns>the parent fluent interface</returns>
         IParentT IChildResource<IParentT>.Parent

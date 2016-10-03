@@ -9,7 +9,7 @@ namespace Microsoft.Azure.Management.Fluent.Resource
     internal class FeatureImpl : IndexableWrapper<FeatureResultInner>,
         IFeature
     {
-        internal FeatureImpl(FeatureResultInner innerModel) : base(innerModel.Id, innerModel) { }
+        internal FeatureImpl(FeatureResultInner innerModel) : base(innerModel) { }
 
         public string Name
         {

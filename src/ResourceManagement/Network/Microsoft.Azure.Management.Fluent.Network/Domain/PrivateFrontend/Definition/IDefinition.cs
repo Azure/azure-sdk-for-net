@@ -5,8 +5,8 @@ namespace Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.Definition
 
     using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResourceActions;
     using Microsoft.Azure.Management.Fluent.Network.HasPrivateIpAddress.Definition;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.HasSubnet.Definition;
     using Microsoft.Azure.Management.Fluent.Network;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.HasSubnet.Definition;
     /// <summary>
     /// The final stage of a private frontend definition.
     /// <p>
@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.Definition
     /// </summary>
     public interface IWithAttach<ParentT>  :
         IInDefinitionAlt<ParentT>,
-        IWithPrivateIpAddress<Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.Definition.IWithAttach<ParentT>>
+        IWithPrivateIpAddress<Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Definition.IWithPrivateFrontendOrBackend>>
     {
     }
     /// <summary>
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.Definition
     /// @param <ParentT> the next stage of the parent definition
     /// </summary>
     public interface IWithSubnet<ParentT>  :
-        Microsoft.Azure.Management.Fluent.Resource.Core.HasSubnet.Definition.IWithSubnet<Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.Definition.IWithAttach<ParentT>>
+        Microsoft.Azure.Management.Fluent.Resource.Core.HasSubnet.Definition.IWithSubnet<Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.Definition.IWithAttach<Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Definition.IWithPrivateFrontendOrBackend>>
     {
         /// <summary>
         /// Assigns the specified subnet to this private frontend of an internal load balancer.
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.Definition
         /// <param name="network">network the virtual network the subnet exists in</param>
         /// <param name="subnetName">subnetName the name of a subnet</param>
         /// <returns>the next stage of the definition</returns>
-        IWithAttach<ParentT> WithExistingSubnet (INetwork network, string subnetName);
+        Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.Definition.IWithAttach<ParentT> WithExistingSubnet(INetwork network, string subnetName);
 
     }
 }

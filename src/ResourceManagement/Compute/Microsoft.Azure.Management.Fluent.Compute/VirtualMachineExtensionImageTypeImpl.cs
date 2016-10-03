@@ -45,22 +45,20 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             }
         }
 
-        public IVirtualMachinePublisher Publisher()
+        public IVirtualMachinePublisher Publisher
         {
-            return this.publisher;
-            //get
-            //{
-            //    return this.publisher;
-            //}
+            get
+            {
+                return this.publisher;
+            }
         }
 
-        public IVirtualMachineExtensionImageVersions Versions()
+        public IVirtualMachineExtensionImageVersions Versions
         {
-            return new VirtualMachineExtensionImageVersionsImpl(this.client, this);
-            //get
-            //{
-            //    return new VirtualMachineExtensionImageVersionsImpl(this.client, this);
-            //}
+            get
+            {
+                return new VirtualMachineExtensionImageVersionsImpl(this.client, this);
+            }
         }
     }
 }

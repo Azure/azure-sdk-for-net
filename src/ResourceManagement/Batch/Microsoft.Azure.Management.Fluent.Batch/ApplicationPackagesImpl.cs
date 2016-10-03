@@ -4,7 +4,7 @@
 namespace Microsoft.Azure.Management.Fluent.Batch
 {
     using Management.Batch;
-    using Microsoft.Azure.Management.Fluent.Resource.Core;
+    using Resource.Core;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
@@ -12,12 +12,12 @@ namespace Microsoft.Azure.Management.Fluent.Batch
     /// <summary>
     /// Represents a applicationPackage collection associated with a application.
     /// </summary>
-    internal partial class ApplicationPackagesImpl :
-        ExternalChildResources<Microsoft.Azure.Management.Fluent.Batch.ApplicationPackageImpl,
-            Microsoft.Azure.Management.Fluent.Batch.IApplicationPackage,
-            Microsoft.Azure.Management.Batch.Models.ApplicationPackageInner,
-            Microsoft.Azure.Management.Fluent.Batch.IApplication,
-            Microsoft.Azure.Management.Fluent.Batch.ApplicationImpl>
+    public partial class ApplicationPackagesImpl :
+        ExternalChildResources<ApplicationPackageImpl,
+            IApplicationPackage,
+            Management.Batch.Models.ApplicationPackageInner,
+            IApplication,
+            ApplicationImpl>
     {
         private IApplicationPackageOperations client;
         private ApplicationImpl parent;
@@ -35,12 +35,12 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             return PrepareDefine(name);
         }
 
-        public void Remove(string applicationPackageName)
+        internal void Remove(string applicationPackageName)
         {
             PrepareRemove(applicationPackageName);
         }
 
-        protected override IList<Microsoft.Azure.Management.Fluent.Batch.ApplicationPackageImpl> ListChildResources()
+        protected override IList<ApplicationPackageImpl> ListChildResources()
         {
             var childResources = new List<ApplicationPackageImpl>();
 
@@ -64,12 +64,12 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             return ApplicationPackageImpl.NewApplicationPackage(name, parent, client);
         }
 
-        public void AddApplicationPackage(ApplicationPackageImpl applicationPackage)
+        internal void AddApplicationPackage(ApplicationPackageImpl applicationPackage)
         {
             AddChildResource(applicationPackage);
         }
 
-        public IDictionary<string, Microsoft.Azure.Management.Fluent.Batch.IApplicationPackage> AsMap()
+        internal IDictionary<string, Microsoft.Azure.Management.Fluent.Batch.IApplicationPackage> AsMap()
         {
             var result = new Dictionary<string, IApplicationPackage>();
 

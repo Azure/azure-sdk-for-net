@@ -26,43 +26,43 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             }
         }
 
-        public int? NumberOfCores
+        public int NumberOfCores
         {
             get
             {
-                return innerModel.NumberOfCores;
+                return innerModel.NumberOfCores.Value;
             }
         }
 
-        public int? OsDiskSizeInMB
+        public int OsDiskSizeInMB
         {
             get
             {
-                return innerModel.OsDiskSizeInMB;
+                return innerModel.OsDiskSizeInMB.Value;
             }
         }
 
-        public int? ResourceDiskSizeInMB
+        public int ResourceDiskSizeInMB
         {
             get
             {
-                return innerModel.ResourceDiskSizeInMB;
+                return innerModel.ResourceDiskSizeInMB.Value;
             }
         }
 
-        public int? MemoryInMB
+        public int MemoryInMB
         {
             get
             {
-                return innerModel.MemoryInMB;
+                return innerModel.MemoryInMB.Value;
             }
         }
 
-        public int? MaxDataDiskCount
+        public int MaxDataDiskCount
         {
             get
             {
-                return innerModel.MaxDataDiskCount;
+                return innerModel.MaxDataDiskCount.Value;
             }
         }
     }

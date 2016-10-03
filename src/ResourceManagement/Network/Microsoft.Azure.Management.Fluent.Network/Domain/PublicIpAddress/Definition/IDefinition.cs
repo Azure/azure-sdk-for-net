@@ -5,8 +5,8 @@ namespace Microsoft.Azure.Management.Fluent.Network.PublicIpAddress.Definition
 
     using Microsoft.Azure.Management.Fluent.Resource.Core.GroupableResource.Definition;
     using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.Resource.Definition;
     using Microsoft.Azure.Management.Fluent.Network;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.Resource.Definition;
     /// <summary>
     /// Container interface for all the definitions.
     /// </summary>
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.PublicIpAddress.Definition
         /// </summary>
         /// <param name="dnsName">dnsName the leaf domain label to use. This must follow the required naming convention for leaf domain names.</param>
         /// <returns>the next stage of the public IP address definition</returns>
-        IWithCreate WithLeafDomainLabel (string dnsName);
+        Microsoft.Azure.Management.Fluent.Network.PublicIpAddress.Definition.IWithCreate WithLeafDomainLabel(string dnsName);
 
         /// <summary>
         /// Ensures that no leaf domain label will be used.
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.PublicIpAddress.Definition
         /// This means that this public IP address will not be associated with a domain name.
         /// </summary>
         /// <returns>the next stage of the public IP address definition</returns>
-        IWithCreate WithoutLeafDomainLabel ();
+        Microsoft.Azure.Management.Fluent.Network.PublicIpAddress.Definition.IWithCreate WithoutLeafDomainLabel();
 
     }
     /// <summary>
@@ -52,13 +52,13 @@ namespace Microsoft.Azure.Management.Fluent.Network.PublicIpAddress.Definition
         /// actual IP address allocated for this resource by Azure
         /// </summary>
         /// <returns>the next stage of the public IP address definition</returns>
-        IWithCreate WithStaticIp ();
+        Microsoft.Azure.Management.Fluent.Network.PublicIpAddress.Definition.IWithCreate WithStaticIp();
 
         /// <summary>
         /// Enables dynamic IP address allocation.
         /// </summary>
         /// <returns>the next stage of the public IP address definition</returns>
-        IWithCreate WithDynamicIp ();
+        Microsoft.Azure.Management.Fluent.Network.PublicIpAddress.Definition.IWithCreate WithDynamicIp();
 
     }
     /// <summary>
@@ -79,13 +79,13 @@ namespace Microsoft.Azure.Management.Fluent.Network.PublicIpAddress.Definition
         /// </summary>
         /// <param name="reverseFQDN">reverseFQDN the reverse FQDN to assign</param>
         /// <returns>the next stage of the resource definition</returns>
-        IWithCreate WithReverseFqdn (string reverseFQDN);
+        Microsoft.Azure.Management.Fluent.Network.PublicIpAddress.Definition.IWithCreate WithReverseFqdn(string reverseFQDN);
 
         /// <summary>
         /// Ensures that no reverse FQDN will be used.
         /// </summary>
         /// <returns>the next stage of the resource definition</returns>
-        IWithCreate WithoutReverseFqdn ();
+        Microsoft.Azure.Management.Fluent.Network.PublicIpAddress.Definition.IWithCreate WithoutReverseFqdn();
 
     }
     /// <summary>
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.PublicIpAddress.Definition
         /// </summary>
         /// <param name="minutes">minutes the length of the time out in minutes</param>
         /// <returns>the next stage of the resource definition</returns>
-        IWithCreate WithIdleTimeoutInMinutes (int minutes);
+        Microsoft.Azure.Management.Fluent.Network.PublicIpAddress.Definition.IWithCreate WithIdleTimeoutInMinutes(int minutes);
 
     }
     /// <summary>

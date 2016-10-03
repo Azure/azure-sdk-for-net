@@ -58,6 +58,14 @@ namespace Microsoft.Azure.Management
             }
         }
 
+        public IVirtualMachineScaleSets VirtualMachineScaleSets
+        {
+            get
+            {
+                return computeManager.VirtualMachineScaleSets;
+            }
+        }
+
         public INetworks Networks
         {
             get
@@ -90,6 +98,14 @@ namespace Microsoft.Azure.Management
             }
         }
 
+        public ILoadBalancers LoadBalancers
+        {
+            get
+            {
+                return networkManager.LoadBalancers;
+            }
+        }
+
         public IDeployments Deployments
         {
             get
@@ -103,6 +119,14 @@ namespace Microsoft.Azure.Management
             get
             {
                 return computeManager.VirtualMachineImages;
+            }
+        }
+
+        public IVirtualMachineExtensionImages VirtualMachineExtensionImages
+        {
+            get
+            {
+                return computeManager.VirtualMachineExtensionImages;
             }
         }
 
@@ -136,7 +160,7 @@ namespace Microsoft.Azure.Management
 
         private Azure(RestClient restClient, string subscriptionId, string tenantId)
         {
-            resourceManager = ResourceManager2.Authenticate(restClient).WithSubscription(subscriptionId);
+            resourceManager = Fluent.Resource.ResourceManager.Authenticate(restClient).WithSubscription(subscriptionId);
             storageManager = StorageManager.Authenticate(restClient, subscriptionId);
             computeManager = ComputeManager.Authenticate(restClient, subscriptionId);
             networkManager = NetworkManager.Authenticate(restClient, subscriptionId);
@@ -206,7 +230,7 @@ namespace Microsoft.Azure.Management
         protected class Authenticated : IAuthenticated
         {
             private RestClient restClient;
-            private ResourceManager2.IAuthenticated resourceManagerAuthenticated;
+            private Fluent.Resource.ResourceManager.IAuthenticated resourceManagerAuthenticated;
             private string defaultSubscription;
             private string tenantId;
 
@@ -229,7 +253,7 @@ namespace Microsoft.Azure.Management
             public Authenticated(RestClient restClient, string tenantId)
             {
                 this.restClient = restClient;
-                resourceManagerAuthenticated = ResourceManager2.Authenticate(this.restClient);
+                resourceManagerAuthenticated = Fluent.Resource.ResourceManager.Authenticate(this.restClient);
                 this.tenantId = tenantId;
             }
 
@@ -303,6 +327,8 @@ namespace Microsoft.Azure.Management
 
         IVirtualMachines VirtualMachines { get; }
 
+        IVirtualMachineScaleSets VirtualMachineScaleSets { get; }
+
         INetworks Networks { get; }
 
         INetworkSecurityGroups NetworkSecurityGroups { get; }
@@ -311,9 +337,13 @@ namespace Microsoft.Azure.Management
 
         INetworkInterfaces NetworkInterfaces { get; }
 
+        ILoadBalancers LoadBalancers { get; }
+
         IDeployments Deployments { get; }
 
         IVirtualMachineImages VirtualMachineImages { get; }
+
+        IVirtualMachineExtensionImages VirtualMachineExtensionImages { get; }
 
         IAvailabilitySets AvailabilitySets { get; }
 

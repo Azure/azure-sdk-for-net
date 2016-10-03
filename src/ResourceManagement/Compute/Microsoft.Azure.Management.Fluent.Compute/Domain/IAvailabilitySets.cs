@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
     /// <summary>
     /// Entry point to availability set management API.
     /// </summary>
-    public interface IAvailabilitySets :
+    public interface IAvailabilitySets  :
         ISupportsListingByGroup<Microsoft.Azure.Management.Fluent.Compute.IAvailabilitySet>,
         ISupportsGettingByGroup<Microsoft.Azure.Management.Fluent.Compute.IAvailabilitySet>,
         ISupportsGettingById<Microsoft.Azure.Management.Fluent.Compute.IAvailabilitySet>,

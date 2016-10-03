@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions
         Indexable,
         IRefreshable<IFluentResourceT>
     {
-        protected IndexableRefreshable(string name) : base(name) {}
+        protected IndexableRefreshable() {}
 
         public abstract IFluentResourceT Refresh();
     }

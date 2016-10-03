@@ -31,8 +31,10 @@ namespace Microsoft.Azure.Management.Fluent.Network
     {
         static string DEFAULT = "default";
         private ILoadBalancersOperations innerCollection;
-        private IDictionary<string,string> nicsInBackends;
-        private IDictionary<string,string> creatablePIPKeys;
+        private IDictionary<string, string> nicsInBackends = new Dictionary<string, string>();
+        private IDictionary<string, string> creatablePIPKeys = new Dictionary<string, string>();
+
+        // Children
         private IDictionary<string, IBackend> backends;
         private IDictionary<string, ITcpProbe> tcpProbes;
         private IDictionary<string, IHttpProbe> httpProbes;
@@ -52,7 +54,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
 
         override public ILoadBalancer Refresh ()
         {
-            var response = this.innerCollection.Get(this.ResourceGroupName, this.Name);
+            var response = this.innerCollection.Get(ResourceGroupName, Name);
             SetInner(response);
             return this;
         }
@@ -70,16 +72,19 @@ namespace Microsoft.Azure.Management.Fluent.Network
         override protected void BeforeCreating ()
         {
             // Account for the newly created public IPs
-            foreach (var pipFrontendAssociation in creatablePIPKeys)
+            if (creatablePIPKeys != null)
             {
-                IPublicIpAddress pip = (IPublicIpAddress)this.CreatedResource(pipFrontendAssociation.Key);
-                if (pip != null)
+                foreach (var pipFrontendAssociation in creatablePIPKeys)
                 {
-                    WithExistingPublicIpAddress(pip.Id, pipFrontendAssociation.Value);
+                    IPublicIpAddress pip = (IPublicIpAddress)this.CreatedResource(pipFrontendAssociation.Key);
+                    if (pip != null)
+                    {
+                        WithExistingPublicIpAddress(pip.Id, pipFrontendAssociation.Value);
+                    }
                 }
-            }
 
-            creatablePIPKeys.Clear();
+                creatablePIPKeys.Clear();
+            }
 
             // Reset and update probes
             Inner.Probes = InnersFromWrappers<ProbeInner, IHttpProbe>(httpProbes.Values);
@@ -143,26 +148,29 @@ namespace Microsoft.Azure.Management.Fluent.Network
         override protected void AfterCreating ()
         {
             // Update the NICs to point to the backend pool
-            foreach (var nicInBackend in nicsInBackends)
+            if (nicsInBackends != null)
             {
-                string nicId = nicInBackend.Key;
-                string backendName = nicInBackend.Value;
-                try
+                foreach (var nicInBackend in nicsInBackends)
                 {
-                    var nic = this.Manager.NetworkInterfaces.GetById(nicId);
-                    var nicIp = nic.PrimaryIpConfiguration();
-                    nic.Update()
-                        .UpdateIpConfiguration(nicIp.Name)
-                        .WithExistingLoadBalancerBackend(this, backendName)
-                        .Parent()
-                    .Apply();
+                    string nicId = nicInBackend.Key;
+                    string backendName = nicInBackend.Value;
+                    try
+                    {
+                        var nic = Manager.NetworkInterfaces.GetById(nicId);
+                        var nicIp = nic.PrimaryIpConfiguration;
+                        nic.Update()
+                            .UpdateIpConfiguration(nicIp.Name)
+                            .WithExistingLoadBalancerBackend(this, backendName)
+                            .Parent()
+                        .Apply();
 
-                    this.nicsInBackends.Clear();
-                    this.Refresh();
-                }
-                catch
-                {
-                    // Skip and continue
+                        this.nicsInBackends.Clear();
+                        this.Refresh();
+                    }
+                    catch
+                    {
+                        // Skip and continue
+                    }
                 }
             }
         }
@@ -257,16 +265,13 @@ namespace Microsoft.Azure.Management.Fluent.Network
             }
         }
 
-        internal string FutureResourceId
+        internal string FutureResourceId()
         {
-            get
-            {
-                return new StringBuilder()
-                    .Append(base.ResourceIdBase)
-                    .Append("/providers/Microsoft.Network/loadBalancers/")
-                    .Append(this.Name)
-                    .ToString();
-            }
+            return new StringBuilder()
+                .Append(base.ResourceIdBase)
+                .Append("/providers/Microsoft.Network/loadBalancers/")
+                .Append(this.Name)
+                .ToString();
         }
 
         internal LoadBalancerImpl WithFrontend (FrontendImpl frontend)
@@ -275,7 +280,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
                 return null;
             else 
             {
-                frontends[frontend.Name] = frontend;
+                frontends[frontend.Name()] = frontend;
                 return this;
             }
         }
@@ -284,13 +289,13 @@ namespace Microsoft.Azure.Management.Fluent.Network
         {
             if (probe == null)
                 return this;
-            else if (probe.Protocol.Equals(ProbeProtocol.Http))
+            else if (probe.Protocol().Equals(ProbeProtocol.Http))
             {
-                httpProbes[probe.Name] = probe;
+                httpProbes[probe.Name()] = probe;
             }
-            else if (probe.Protocol.Equals(ProbeProtocol.Tcp))
+            else if (probe.Protocol().Equals(ProbeProtocol.Tcp))
             {
-                tcpProbes[probe.Name]= probe;
+                tcpProbes[probe.Name()] = probe;
             }
             return this;
         }
@@ -300,7 +305,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             if (loadBalancingRule == null)
                 return null;
             else {
-                loadBalancingRules[loadBalancingRule.Name] = loadBalancingRule;
+                loadBalancingRules[loadBalancingRule.Name()] = loadBalancingRule;
                 return this;
             }
         }
@@ -310,7 +315,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             if (inboundNatRule == null)
                 return null;
             else {
-                inboundNatRules[inboundNatRule.Name] = inboundNatRule;
+                inboundNatRules[inboundNatRule.Name()] = inboundNatRule;
                 return this;
             }
         }
@@ -320,7 +325,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             if (inboundNatPool == null)
                 return null;
             else {
-                inboundNatPools[inboundNatPool.Name] = inboundNatPool;
+                inboundNatPools[inboundNatPool.Name()] = inboundNatPool;
                 return this;
             }
         }
@@ -330,19 +335,19 @@ namespace Microsoft.Azure.Management.Fluent.Network
             if (backend == null)
                 return null;
             else {
-                backends[backend.Name] = backend;
+                backends[backend.Name()] = backend;
                 return this;
             }
         }
 
-        public LoadBalancerImpl WithNewPublicIpAddress ()
+        internal LoadBalancerImpl WithNewPublicIpAddress ()
         {
             // Autogenerated DNS leaf label for the PIP
             string dnsLeafLabel = Name.ToLower().Replace(" ", "").Replace("\t", "").Replace("\n", "");
             return WithNewPublicIpAddress(dnsLeafLabel);
         }
 
-        public LoadBalancerImpl WithNewPublicIpAddress (string dnsLeafLabel)
+        internal LoadBalancerImpl WithNewPublicIpAddress (string dnsLeafLabel)
         {
             var precreatablePIP = Manager.PublicIpAddresses.Define(dnsLeafLabel)
                 .WithRegion(Region);
@@ -359,14 +364,14 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return WithNewPublicIpAddress(creatablePip);
         }
 
-        public LoadBalancerImpl WithNewPublicIpAddress (ICreatable<IPublicIpAddress> creatablePIP)
+        internal LoadBalancerImpl WithNewPublicIpAddress (ICreatable<IPublicIpAddress> creatablePIP)
         {
             creatablePIPKeys.Add(creatablePIP.Key, DEFAULT);
             AddCreatableDependency(creatablePIP as IResourceCreator<Fluent.Resource.Core.IResource>);
             return this;
         }
 
-        public LoadBalancerImpl WithExistingPublicIpAddress (IPublicIpAddress publicIpAddress)
+        internal LoadBalancerImpl WithExistingPublicIpAddress (IPublicIpAddress publicIpAddress)
         {
             return WithExistingPublicIpAddress(publicIpAddress.Id, DEFAULT);
         }
@@ -382,7 +387,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
                 .Attach();
         }
 
-        public LoadBalancerImpl WithExistingSubnet (INetwork network, string subnetName)
+        internal LoadBalancerImpl WithExistingSubnet (INetwork network, string subnetName)
         {
             return DefinePrivateFrontend(DEFAULT)
                 .WithExistingSubnet(network, subnetName)
@@ -404,7 +409,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return this;
         }
 
-        public LoadBalancerImpl WithExistingVirtualMachines (params IHasNetworkInterfaces[] vms)
+        internal LoadBalancerImpl WithExistingVirtualMachines (params IHasNetworkInterfaces[] vms)
         {
             if (vms != null) {
                 foreach (IHasNetworkInterfaces vm in vms) {
@@ -414,7 +419,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return this;
         }
 
-        public LoadBalancerImpl WithLoadBalancingRule (int frontendPort, string protocol, int backendPort)
+        internal LoadBalancerImpl WithLoadBalancingRule (int frontendPort, string protocol, int backendPort)
         {
             DefineLoadBalancingRule(DEFAULT)
                 .WithFrontendPort(frontendPort)
@@ -427,19 +432,19 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return this;
         }
 
-        public LoadBalancerImpl WithLoadBalancingRule (int port, string protocol)
+        internal LoadBalancerImpl WithLoadBalancingRule (int port, string protocol)
         {
             return WithLoadBalancingRule(port, protocol, port);
         }
 
-        public LoadBalancerImpl WithTcpProbe (int port)
+        internal LoadBalancerImpl WithTcpProbe (int port)
         {
             return DefineTcpProbe(DEFAULT)
                 .WithPort(port)
                 .Attach();
         }
 
-        public LoadBalancerImpl WithHttpProbe (string path)
+        internal LoadBalancerImpl WithHttpProbe (string path)
         {
             return DefineHttpProbe(DEFAULT)
                 .WithRequestPath(path)
@@ -447,11 +452,10 @@ namespace Microsoft.Azure.Management.Fluent.Network
                 .Attach();
         }
 
-        public ProbeImpl DefineTcpProbe (string name)
+        internal ProbeImpl DefineTcpProbe (string name)
         {
             ITcpProbe tcpProbe;
-            tcpProbes.TryGetValue(name, out tcpProbe);
-            if (tcpProbe == null)
+            if (!tcpProbes.TryGetValue(name, out tcpProbe))
             {
                 ProbeInner inner = new ProbeInner()
                 {
@@ -467,11 +471,10 @@ namespace Microsoft.Azure.Management.Fluent.Network
             }
         }
 
-        public ProbeImpl DefineHttpProbe (string name)
+        internal ProbeImpl DefineHttpProbe (string name)
         {
             IHttpProbe httpProbe;
-            httpProbes.TryGetValue(name, out httpProbe);
-            if (httpProbe == null) {
+            if (!httpProbes.TryGetValue(name, out httpProbe)) {
                 ProbeInner inner = new ProbeInner()
                 {
                     Name = name,
@@ -485,11 +488,10 @@ namespace Microsoft.Azure.Management.Fluent.Network
             }
         }
 
-        public LoadBalancingRuleImpl DefineLoadBalancingRule (string name)
+        internal LoadBalancingRuleImpl DefineLoadBalancingRule (string name)
         {
             ILoadBalancingRule lbRule;
-            loadBalancingRules.TryGetValue(name, out lbRule);
-            if (lbRule == null) {
+            if (!loadBalancingRules.TryGetValue(name, out lbRule)) {
                 LoadBalancingRuleInner inner = new LoadBalancingRuleInner()
                 {
                     Name = name
@@ -503,11 +505,10 @@ namespace Microsoft.Azure.Management.Fluent.Network
             }
         }
 
-        public InboundNatRuleImpl DefineInboundNatRule (string name)
+        internal InboundNatRuleImpl DefineInboundNatRule (string name)
         {
             IInboundNatRule natRule;
-            inboundNatRules.TryGetValue(name, out natRule);
-            if (natRule == null)
+            if (!inboundNatRules.TryGetValue(name, out natRule))
             {
                 InboundNatRuleInner inner = new InboundNatRuleInner()
                 {
@@ -522,11 +523,10 @@ namespace Microsoft.Azure.Management.Fluent.Network
             }
         }
 
-        public InboundNatPoolImpl DefineInboundNatPool (string name)
+        internal InboundNatPoolImpl DefineInboundNatPool (string name)
         {
             IInboundNatPool natPool; 
-            inboundNatPools.TryGetValue(name, out natPool);
-            if (natPool == null)
+            if (!inboundNatPools.TryGetValue(name, out natPool))
             {
                 InboundNatPoolInner inner = new InboundNatPoolInner()
                 {
@@ -541,12 +541,12 @@ namespace Microsoft.Azure.Management.Fluent.Network
             }
         }
 
-        public FrontendImpl DefinePrivateFrontend (string name)
+        internal FrontendImpl DefinePrivateFrontend (string name)
         {
             return DefineFrontend(name);
         }
 
-        public FrontendImpl DefinePublicFrontend (string name)
+        internal FrontendImpl DefinePublicFrontend (string name)
         {
             return DefineFrontend(name);
         }
@@ -554,8 +554,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
         private FrontendImpl DefineFrontend (string name)
         {
             IFrontend frontend;
-            frontends.TryGetValue(name, out frontend);
-            if (frontend == null)
+            if (!frontends.TryGetValue(name, out frontend))
             {
                 FrontendIPConfigurationInner inner = new FrontendIPConfigurationInner()
                 {
@@ -570,11 +569,10 @@ namespace Microsoft.Azure.Management.Fluent.Network
             }
         }
 
-        public BackendImpl DefineBackend (string name)
+        internal BackendImpl DefineBackend (string name)
         {
             IBackend backend;
-            backends.TryGetValue(name, out backend);
-            if (backend == null)
+            if (!backends.TryGetValue(name, out backend))
             {
                 BackendAddressPoolInner inner = new BackendAddressPoolInner()
                 {
@@ -589,59 +587,59 @@ namespace Microsoft.Azure.Management.Fluent.Network
             }
         }
 
-        public LoadBalancerImpl WithoutFrontend (string name)
+        internal LoadBalancerImpl WithoutFrontend (string name)
         {
             frontends.Remove(name);
             return this;
         }
 
-        public LoadBalancerImpl WithoutLoadBalancingRule(string name)
+        internal LoadBalancerImpl WithoutLoadBalancingRule(string name)
         {
             loadBalancingRules.Remove(name);
             return this;
         }
 
-        public LoadBalancerImpl WithoutInboundNatRule(string name)
+        internal LoadBalancerImpl WithoutInboundNatRule(string name)
         {
             inboundNatRules.Remove(name);
             return this;
         }
 
-        public LoadBalancerImpl WithoutBackend(string name)
+        internal LoadBalancerImpl WithoutBackend(string name)
         {
             backends.Remove(name);
             return this;
         }
 
-        public IUpdate WithoutInboundNatPool(string name)
+        internal IUpdate WithoutInboundNatPool(string name)
         {
             this.inboundNatPools.Remove(name);
             return this;
         }
 
-        public LoadBalancerImpl WithoutProbe (string name)
+        internal LoadBalancerImpl WithoutProbe (string name)
         {
             httpProbes.Remove(name);
             tcpProbes.Remove(name);
             return this;
         }
 
-        public ProbeImpl UpdateTcpProbe (string name)
+        internal ProbeImpl UpdateTcpProbe (string name)
         {
             return TryGetValue<ProbeImpl, ITcpProbe>(name, tcpProbes);
         }
 
-        public BackendImpl UpdateBackend (string name)
+        internal BackendImpl UpdateBackend (string name)
         {
             return TryGetValue<BackendImpl, IBackend>(name, backends);
         }
 
-        public FrontendImpl UpdateInternetFrontend (string name)
+        internal FrontendImpl UpdateInternetFrontend (string name)
         {
             return UpdateFrontend(name);
         }
 
-        public FrontendImpl UpdateInternalFrontend (string name)
+        internal FrontendImpl UpdateInternalFrontend (string name)
         {
             return UpdateFrontend(name);
         }
@@ -665,77 +663,74 @@ namespace Microsoft.Azure.Management.Fluent.Network
             }
         }
 
-        public InboundNatRuleImpl UpdateInboundNatRule (string name)
+        internal InboundNatRuleImpl UpdateInboundNatRule (string name)
         {
             return TryGetValue<InboundNatRuleImpl, IInboundNatRule>(name, inboundNatRules);
         }
 
-        public InboundNatPoolImpl UpdateInboundNatPool (string name)
+        internal InboundNatPoolImpl UpdateInboundNatPool (string name)
         {
             return TryGetValue<InboundNatPoolImpl, IInboundNatPool>(name, inboundNatPools);
         }
 
-        public ProbeImpl UpdateHttpProbe (string name)
+        internal ProbeImpl UpdateHttpProbe (string name)
         {
             return TryGetValue<ProbeImpl, IHttpProbe>(name, httpProbes);
         }
 
-        public LoadBalancingRuleImpl UpdateLoadBalancingRule (string name)
+        internal LoadBalancingRuleImpl UpdateLoadBalancingRule (string name)
         {
             return TryGetValue<LoadBalancingRuleImpl, ILoadBalancingRule>(name, loadBalancingRules);
         }
 
-        public IDictionary<string, IBackend> Backends ()
+        internal IDictionary<string, IBackend> Backends ()
         {
             return backends;
         }
 
-        public IDictionary<string, IInboundNatPool> InboundNatPools ()
+        internal IDictionary<string, IInboundNatPool> InboundNatPools ()
         {
             return inboundNatPools;
         }
 
-        public IDictionary<string, ITcpProbe> TcpProbes ()
+        internal IDictionary<string, ITcpProbe> TcpProbes ()
         {
             return tcpProbes;
         }
 
-        public IDictionary<string, IFrontend> Frontends ()
+        internal IDictionary<string, IFrontend> Frontends ()
         {
             return frontends;
         }
 
-        public IDictionary<string, IInboundNatRule> InboundNatRules ()
+        internal IDictionary<string, IInboundNatRule> InboundNatRules ()
         {
             return inboundNatRules;
         }
 
-        public IDictionary<string, IHttpProbe> HttpProbes ()
+        internal IDictionary<string, IHttpProbe> HttpProbes ()
         {
             return httpProbes;
         }
 
-        public IDictionary<string, ILoadBalancingRule> LoadBalancingRules ()
+        internal IDictionary<string, ILoadBalancingRule> LoadBalancingRules ()
         {
             return loadBalancingRules;
         }
 
-        public List<string> PublicIpAddressIds
+        internal List<string> PublicIpAddressIds()
         {
-            get
+            List<string> publicIpAddressIds = new List<string>();
+            foreach (IFrontend frontend in Frontends().Values)
             {
-                List<string> publicIpAddressIds = new List<string>();
-                foreach (IFrontend frontend in Frontends().Values)
+                if (frontend.IsPublic)
                 {
-                    if (frontend.IsPublic)
-                    {
-                        string pipId = ((IPublicFrontend) frontend).PublicIpAddressId;
-                        publicIpAddressIds.Add(pipId);
-                    }
+                    string pipId = ((IPublicFrontend)frontend).PublicIpAddressId;
+                    publicIpAddressIds.Add(pipId);
                 }
-
-                return publicIpAddressIds;
             }
+
+            return publicIpAddressIds;
         }
     }
 }

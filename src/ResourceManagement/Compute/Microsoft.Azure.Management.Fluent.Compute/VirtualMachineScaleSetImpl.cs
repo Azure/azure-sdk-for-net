@@ -20,7 +20,7 @@ using System;
 namespace Microsoft.Azure.Management.Fluent.Compute
 {
     internal partial class VirtualMachineScaleSetImpl :
-        GroupableResource<IVirtualMachineScaleSet,
+        GroupableParentResource<IVirtualMachineScaleSet,
             VirtualMachineScaleSetInner,
             Rest.Azure.Resource,
             VirtualMachineScaleSetImpl,
@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             VirtualMachineScaleSet.Definition.IWithGroup,
             VirtualMachineScaleSet.Definition.IWithSku,
             VirtualMachineScaleSet.Definition.IWithCreate,
-            VirtualMachineScaleSet.Update.IUpdate>,
+            VirtualMachineScaleSet.Update.IWithApply>,
         IVirtualMachineScaleSet,
         VirtualMachineScaleSet.Definition.IDefinition,
         VirtualMachineScaleSet.Update.IUpdate
@@ -84,62 +84,88 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             this.namer = new ResourceNamer(this.Name);
         }
 
+        protected override void InitializeChildrenFromInner()
+        {
+            this.extensions = new Dictionary<string, IVirtualMachineScaleSetExtension>();
+            if (this.Inner.VirtualMachineProfile.ExtensionProfile != null
+               && this.Inner.VirtualMachineProfile.ExtensionProfile.Extensions != null)
+            {
+                foreach (var innerExtenison in this.Inner.VirtualMachineProfile.ExtensionProfile.Extensions)
+                {
+                    this.extensions.Add(innerExtenison.Name, new VirtualMachineScaleSetExtensionImpl(innerExtenison, this));
+                }
+            }
+        }
+
+        protected override void BeforeCreating()
+        {
+            if (this.extensions.Count > 0)
+            {
+                this.Inner.VirtualMachineProfile
+                    .ExtensionProfile = new VirtualMachineScaleSetExtensionProfile
+                    {
+                        Extensions = new List<VirtualMachineScaleSetExtensionInner>()
+                    };
+                foreach (IVirtualMachineScaleSetExtension extension in this.extensions.Values)
+                {
+                    this.Inner.VirtualMachineProfile
+                        .ExtensionProfile
+                        .Extensions.Add(extension.Inner);
+                }
+            }
+        }
+
+        protected override async Task<VirtualMachineScaleSetInner> CreateInner()
+        {
+            this.setOSDiskAndOSProfileDefaults();
+            this.setPrimaryIpConfigurationSubnet();
+            this.setPrimaryIpConfigurationBackendsAndInboundNatPools();
+            await handleOSDiskContainersAsync();
+            return await client.CreateOrUpdateAsync(this.ResourceGroupName, this.Name, this.Inner);
+        }
+
+        protected override void AfterCreating()
+        {
+            this.ClearCachedProperties();
+            this.InitializeChildrenFromInner();
+        }
+
         #region Getters
 
-        public int? Capacity
+        public int Capacity()
         {
-            get
-            {
-                return (int?)this.Inner.Sku.Capacity;
-            }
+            return (int)this.Inner.Sku.Capacity.Value;
         }
 
-        public string ComputerNamePrefix
+        public string ComputerNamePrefix()
         {
-            get
-            {
-                return this.Inner.VirtualMachineProfile.OsProfile.ComputerNamePrefix;
-            }
+            return this.Inner.VirtualMachineProfile.OsProfile.ComputerNamePrefix;
         }
 
-        public VirtualMachineScaleSetNetworkProfile NetworkProfile
+        public VirtualMachineScaleSetNetworkProfile NetworkProfile()
         {
-            get
-            {
-                return this.Inner.VirtualMachineProfile.NetworkProfile;
-            }
+            return this.Inner.VirtualMachineProfile.NetworkProfile;
         }
 
-        public CachingTypes? OsDiskCachingType
+        public CachingTypes OsDiskCachingType()
         {
-            get
-            {
-                return this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.Caching;
-            }
+            return this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.Caching.Value;
         }
 
-        public string OsDiskName
+        public string OsDiskName()
         {
-            get
-            {
-                return this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.Name;
-            }
+            return this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.Name;
+
         }
 
-        public OperatingSystemTypes? OsType
+        public OperatingSystemTypes OsType()
         {
-            get
-            {
-                return this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.OsType;
-            }
+            return this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.OsType.Value;
         }
 
-        public bool? OverProvisionEnabled
+        public bool OverProvisionEnabled()
         {
-            get
-            {
-                return this.Inner.OverProvision;
-            }
+            return this.Inner.OverProvision.Value;
         }
 
 
@@ -214,47 +240,35 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             return new Dictionary<string, IInboundNatPool>();
         }
 
-        public IList<string> PrimaryPublicIpAddressIds
+        public IList<string> PrimaryPublicIpAddressIds()
         {
-            get
+            ILoadBalancer loadBalancer = (this as Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet).GetPrimaryInternetFacingLoadBalancer();
+            if (loadBalancer != null)
             {
-                ILoadBalancer loadBalancer = (this as Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet).GetPrimaryInternetFacingLoadBalancer();
-                if (loadBalancer != null)
-                {
-                    return loadBalancer.PublicIpAddressIds;
-                }
-                return new List<string>();
+                return loadBalancer.PublicIpAddressIds;
             }
+            return new List<string>();
         }
 
-        public VirtualMachineScaleSetStorageProfile StorageProfile
+        public VirtualMachineScaleSetStorageProfile StorageProfile()
         {
-            get
-            {
-                return this.Inner.VirtualMachineProfile.StorageProfile;
-            }
+            return this.Inner.VirtualMachineProfile.StorageProfile;
         }
 
-        public UpgradeMode? UpgradeModel
+        public UpgradeMode UpgradeModel()
         {
-            get
-            {
-                return this.Inner.UpgradePolicy.Mode;
-            }
+            return this.Inner.UpgradePolicy.Mode.Value;
         }
 
-        public IList<string> VhdContainers
+        public IList<string> VhdContainers()
         {
-            get
+            if (this.Inner.VirtualMachineProfile.StorageProfile != null
+                && this.Inner.VirtualMachineProfile.StorageProfile.OsDisk != null
+                && this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.VhdContainers != null)
             {
-                if (this.Inner.VirtualMachineProfile.StorageProfile != null
-                    && this.Inner.VirtualMachineProfile.StorageProfile.OsDisk != null
-                    && this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.VhdContainers != null)
-                {
-                    return this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.VhdContainers;
-                }
-                return new List<string>();
+                return this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.VhdContainers;
             }
+            return new List<string>();
         }
 
         public PagedList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSetSku> ListAvailableSkus()
@@ -292,7 +306,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
 
         public VirtualMachineScaleSetImpl WithSku(IVirtualMachineScaleSetSku sku)
         {
-            return this.WithSku(sku.SkuType());
+            return this.WithSku(sku.SkuType);
         }
 
         public VirtualMachineScaleSetImpl WithExistingPrimaryNetworkSubnet(INetwork network, string subnetName)
@@ -363,7 +377,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
                 throw new ArgumentException("Parameter loadBalancer must be an internal load balancer");
             }
             string lbNetworkId = null;
-            foreach (IFrontend frontEnd in loadBalancer.Frontends().Values)
+            foreach (IFrontend frontEnd in loadBalancer.Frontends.Values)
             {
                 if (frontEnd.Inner.Subnet.Id != null)
                 {
@@ -798,7 +812,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
 
         internal VirtualMachineScaleSetImpl WithExtension(VirtualMachineScaleSetExtensionImpl extension)
         {
-            this.extensions.Add(extension.Name, extension);
+            this.extensions.Add(extension.Name(), extension);
             return this;
         }
 
@@ -829,6 +843,8 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             var response = client.Get(this.ResourceGroupName,
                 this.Name);
             SetInner(response);
+            this.ClearCachedProperties();
+            this.InitializeChildrenFromInner();
             return this;
         }
 
@@ -859,31 +875,6 @@ namespace Microsoft.Azure.Management.Fluent.Compute
 
         #endregion
 
-        public override async Task<IVirtualMachineScaleSet> CreateResourceAsync(CancellationToken cancellationToken)
-        {
-            if (this.extensions.Count > 0)
-            {
-                this.Inner.VirtualMachineProfile
-                    .ExtensionProfile = new VirtualMachineScaleSetExtensionProfile
-                    {
-                        Extensions = new List<VirtualMachineScaleSetExtensionInner>()
-                    };
-                foreach (IVirtualMachineScaleSetExtension extension in this.extensions.Values)
-                {
-                    this.Inner.VirtualMachineProfile
-                        .ExtensionProfile
-                        .Extensions.Add(extension.Inner);
-                }
-            }
-
-            this.setOSDiskAndOSProfileDefaults();
-            this.setPrimaryIpConfigurationBackendsAndInboundNatPools();
-            await handleOSDiskContainersAsync();
-            await client.CreateOrUpdateAsync(this.ResourceGroupName, this.Name, this.Inner);
-            this.clearCachedProperties();
-            return this;
-        }
-
         #region Helpers
 
         private bool IsInUpdateMode
@@ -896,8 +887,6 @@ namespace Microsoft.Azure.Management.Fluent.Compute
 
         private void setOSDiskAndOSProfileDefaults()
         {
-            Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet self = this
-                as Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet;
             if (this.IsInUpdateMode)
             {
                 return;
@@ -921,7 +910,8 @@ namespace Microsoft.Azure.Management.Fluent.Compute
                     .VirtualMachineProfile
                     .OsProfile;
             // linux image: Custom or marketplace linux image
-            if (self.OsType == OperatingSystemTypes.Linux || this.isMarketplaceLinuxImage)
+            if ((this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.OsType != null 
+                && this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.OsType == OperatingSystemTypes.Linux) || this.isMarketplaceLinuxImage)
             {
                 if (osProfile.LinuxConfiguration == null)
                 {
@@ -932,24 +922,24 @@ namespace Microsoft.Azure.Management.Fluent.Compute
                     .DisablePasswordAuthentication = osProfile.AdminPassword == null;
             }
 
-            if (self.OsDiskCachingType == null)
+            if (this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.Caching == null)
             {
                 this.WithOsDiskCaching(CachingTypes.ReadWrite);
             }
 
-            if (self.OsDiskName == null)
+            if (this.OsDiskName() == null)
             {
                 this.WithOsDiskName(this.Name + "-os-disk");
             }
 
-            if (self.ComputerNamePrefix == null)
+            if (this.ComputerNamePrefix() == null)
             {
                 // VM name cannot contain only numeric values and cannot exceed 15 chars
-                if ((new Regex(@"^\d+$")).IsMatch(self.Name))
+                if ((new Regex(@"^\d+$")).IsMatch(this.Name))
                 {
                     this.WithComputerNamePrefix(ResourceNamer.RandomResourceName("vmss-vm", 12));
                 }
-                else if (self.Name.Length <= 12)
+                else if (this.Name.Length <= 12)
                 {
                     this.WithComputerNamePrefix(this.Name + "-vm");
                 }
@@ -1182,7 +1172,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             this.primaryInternalLBInboundNatPoolsToAddOnUpdate.Clear();
         }
 
-        private void clearCachedProperties()
+        private void ClearCachedProperties()
         {
             this.primaryInternetFacingLoadBalancer = null;
             this.primaryInternalLoadBalancer = null;
@@ -1367,7 +1357,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         {
             string loadBalancerId = loadBalancer.Id;
             IDictionary<string, IBackend> attachedBackends = new Dictionary<string, IBackend>();
-            IDictionary<string, IBackend> lbBackends = loadBalancer.Backends();
+            IDictionary<string, IBackend> lbBackends = loadBalancer.Backends;
             foreach (IBackend lbBackend in lbBackends.Values)
             {
                 string backendId = mergePath(loadBalancerId, "backendAddressPools", lbBackend.Name);
@@ -1387,7 +1377,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         {
             String loadBalancerId = loadBalancer.Id;
             IDictionary<string, IInboundNatPool> attachedInboundNatPools = new Dictionary<string, IInboundNatPool>();
-            IDictionary<string, IInboundNatPool> lbInboundNatPools = loadBalancer.InboundNatPools();
+            IDictionary<string, IInboundNatPool> lbInboundNatPools = loadBalancer.InboundNatPools;
             foreach (IInboundNatPool lbInboundNatPool in lbInboundNatPools.Values)
             {
                 String inboundNatPoolId = mergePath(loadBalancerId, "inboundNatPools", lbInboundNatPool.Name);
@@ -1405,7 +1395,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         private static void associateLoadBalancerToIpConfiguration(ILoadBalancer loadBalancer,
                                                                    VirtualMachineScaleSetIPConfigurationInner ipConfig)
         {
-            var backends = loadBalancer.Backends().Values;
+            var backends = loadBalancer.Backends.Values;
 
             string[] backendNames = new string[backends.Count];
             int i = 0;
@@ -1419,7 +1409,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
                     ipConfig,
                     backendNames);
 
-            var inboundNatPools = loadBalancer.InboundNatPools().Values;
+            var inboundNatPools = loadBalancer.InboundNatPools.Values;
             string[] natPoolNames = new string[inboundNatPools.Count];
             i = 0;
             foreach (IInboundNatPool inboundNatPool in inboundNatPools)

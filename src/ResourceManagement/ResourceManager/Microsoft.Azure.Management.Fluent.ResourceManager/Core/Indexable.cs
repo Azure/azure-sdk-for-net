@@ -2,14 +2,15 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+using System;
 
 namespace Microsoft.Azure.Management.Fluent.Resource.Core
 {
     public class Indexable : IIndexable
     {
-        protected Indexable(string key)
+        protected Indexable()
         {
-            Key = key;
+            Key = Guid.NewGuid().ToString();
         }
 
         public string Key

@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Update
         /// </summary>
         /// <param name="port">port a port number</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Update.IUpdate WithFrontendPort (int port);
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Update.IUpdate WithFrontendPort(int port);
 
     }
     /// <summary>
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Update
         /// </summary>
         /// <param name="minutes">minutes the desired number of minutes</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Update.IUpdate WithIdleTimeoutInMinutes (int minutes);
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Update.IUpdate WithIdleTimeoutInMinutes(int minutes);
 
     }
     /// <summary>
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Update
         /// </summary>
         /// <param name="loadDistribution">loadDistribution a supported load distribution mode</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Update.IUpdate WithLoadDistribution (string loadDistribution);
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Update.IUpdate WithLoadDistribution(string loadDistribution);
 
     }
 }

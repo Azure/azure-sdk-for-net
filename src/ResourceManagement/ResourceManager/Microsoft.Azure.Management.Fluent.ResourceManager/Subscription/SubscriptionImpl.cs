@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Fluent.Resource
     {
         private ISubscriptionsOperations innerCollection;
 
-        internal SubscriptionImpl(Management.ResourceManager.Models.SubscriptionInner innerModel, ISubscriptionsOperations client) : base(innerModel.Id, innerModel)
+        internal SubscriptionImpl(Management.ResourceManager.Models.SubscriptionInner innerModel, ISubscriptionsOperations client) : base(innerModel)
         {
             innerCollection = client;
         }

@@ -18,25 +18,25 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
                 .withEnvironment(AzureEnvironment.AzureGlobalCloud);
         }
 
-        public T withDelegatingHandler(DelegatingHandler delegatingHandler)
+        public T WithDelegatingHandler(DelegatingHandler delegatingHandler)
         {
             restClientBuilder.withDelegatingHandler(delegatingHandler);
             return this as T;
         }
 
-        public T withLogLevel(HttpLoggingDelegatingHandler.Level level)
+        public T WithLogLevel(HttpLoggingDelegatingHandler.Level level)
         {
             restClientBuilder.withLogLevel(level);
             return this as T;
         }
 
-        public T withRetryPolicy(RetryPolicy retryPolicy)
+        public T WithRetryPolicy(RetryPolicy retryPolicy)
         {
             restClientBuilder.withRetryPolicy(retryPolicy);
             return this as T;
         }
 
-        public T withUserAgent(string product, string version)
+        public T WithUserAgent(string product, string version)
         {
             restClientBuilder.withUserAgent(product, version);
             return this as T;

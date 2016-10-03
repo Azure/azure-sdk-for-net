@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
     public interface IHasFloatingIp 
     {
         /// <returns>the state of the floating IP enablement</returns>
-        bool? FloatingIpEnabled { get; }
+        bool FloatingIpEnabled { get; }
 
     }
 }

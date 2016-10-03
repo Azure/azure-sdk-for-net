@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.PublicFrontend.UpdateDefinit
     /// @param <ParentT> the return type of the final {@link WithAttach#attach()}
     /// </summary>
     public interface IWithPublicIpAddress<ParentT>  :
-        IWithExistingPublicIpAddress<Microsoft.Azure.Management.Fluent.Network.PublicFrontend.UpdateDefinition.IWithAttach<ParentT>>
+        IWithExistingPublicIpAddress<Microsoft.Azure.Management.Fluent.Network.PublicFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate>>
     {
     }
 }

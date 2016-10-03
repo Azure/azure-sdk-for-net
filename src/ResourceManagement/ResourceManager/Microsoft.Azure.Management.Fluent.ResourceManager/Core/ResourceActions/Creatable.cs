@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions
         {
             Name = name;
             IResourceCreator<IResourceT> creator = this as IResourceCreator<IResourceT>;
-            CreatorTaskGroup = new CreatorTaskGroup<IResourceT>(name, creator);
+            CreatorTaskGroup = new CreatorTaskGroup<IResourceT>(this.Key, creator);
         }
 
         protected void AddCreatableDependency(IResourceCreator<IResourceT> creatableResource)

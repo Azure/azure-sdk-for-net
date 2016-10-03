@@ -6,8 +6,8 @@ namespace Microsoft.Azure.Management.Fluent.Network
     using System.Collections.Generic;
     using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.Fluent.Resource.Core;
-    using Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update;
     using Microsoft.Azure.Management.Network.Models;
+    using Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update;
     /// <summary>
     /// Entry point for load balancer management API in Azure.
     /// </summary>
@@ -19,25 +19,25 @@ namespace Microsoft.Azure.Management.Fluent.Network
         IHasLoadBalancingRules
     {
         /// <returns>resource IDs of the public IP addresses assigned to the frontends of this load balancer</returns>
-        List<string> PublicIpAddressIds { get; }
+        System.Collections.Generic.IList<string> PublicIpAddressIds { get; }
 
         /// <returns>TCP probes of this load balancer, indexed by the name</returns>
-        IDictionary<string,Microsoft.Azure.Management.Fluent.Network.ITcpProbe> TcpProbes ();
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Fluent.Network.ITcpProbe> TcpProbes { get; }
 
         /// <returns>HTTP probes of this load balancer, indexed by the name</returns>
-        IDictionary<string,Microsoft.Azure.Management.Fluent.Network.IHttpProbe> HttpProbes ();
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Fluent.Network.IHttpProbe> HttpProbes { get; }
 
         /// <returns>backends for this load balancer to load balance the incoming traffic among, indexed by name</returns>
-        IDictionary<string,Microsoft.Azure.Management.Fluent.Network.IBackend> Backends ();
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Fluent.Network.IBackend> Backends { get; }
 
         /// <returns>inbound NAT rules for this balancer</returns>
-        IDictionary<string,Microsoft.Azure.Management.Fluent.Network.IInboundNatRule> InboundNatRules ();
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Fluent.Network.IInboundNatRule> InboundNatRules { get; }
 
         /// <returns>frontends for this load balancer, for the incoming traffic to come from.</returns>
-        IDictionary<string,Microsoft.Azure.Management.Fluent.Network.IFrontend> Frontends ();
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Fluent.Network.IFrontend> Frontends { get; }
 
         /// <returns>inbound NAT pools, indexed by name</returns>
-        IDictionary<string,Microsoft.Azure.Management.Fluent.Network.IInboundNatPool> InboundNatPools ();
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Fluent.Network.IInboundNatPool> InboundNatPools { get; }
 
     }
 }

@@ -48,20 +48,19 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             }
         }
 
-        public IVirtualMachineExtensionImageType Type()
+        public IVirtualMachineExtensionImageType Type
         {
-            return this.type;
-            //get 
-            //{
-            //    return this.type;
-            //}
+            get
+            {
+                return this.type;
+            }
         }
 
-        public IVirtualMachineExtensionImage Image ()
+        public IVirtualMachineExtensionImage GetImage ()
         {
             VirtualMachineExtensionImageInner inner = this.client.Get(this.RegionName,
-                this.Type().Publisher().Name,
-                this.Type().Name,
+                this.Type.Publisher.Name,
+                this.Type.Name,
                 this.Name);
             return new VirtualMachineExtensionImageImpl(this, inner);
         }

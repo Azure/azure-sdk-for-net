@@ -30,8 +30,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
     {
         private string userPrincipalName;
         private string servicePrincipalName;
-        internal AccessPolicyImpl (AccessPolicyEntry innerObject, VaultImpl parent)
-            : base(null, innerObject, parent)
+        internal AccessPolicyImpl (AccessPolicyEntry innerObject, VaultImpl parent) : base(innerObject, parent)
         {
             Inner.TenantId = Guid.Parse(parent.TenantId);
         }
@@ -89,12 +88,9 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
                 return Inner.Permissions;
             }
         }
-        public override string Name
+        public override string Name()
         {
-            get
-            {
-                return ObjectId;
-            }
+            return ObjectId;
         }
 
         private void InitializeKeyPermissions ()

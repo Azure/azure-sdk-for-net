@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Definition
         /// </summary>
         /// <param name="minutes">minutes the desired number of minutes</param>
         /// <returns>the next stage of the definition</returns>
-        IWithAttach<ParentT> WithIdleTimeoutInMinutes (int minutes);
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Definition.IWithAttach<ParentT> WithIdleTimeoutInMinutes(int minutes);
 
     }
     /// <summary>
@@ -58,7 +58,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Definition
         /// </summary>
         /// <param name="loadDistribution">loadDistribution a supported load distribution mode</param>
         /// <returns>the next stage of the definition</returns>
-        IWithAttach<ParentT> WithLoadDistribution (string loadDistribution);
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Definition.IWithAttach<ParentT> WithLoadDistribution(string loadDistribution);
 
     }
     /// <summary>
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Definition
         /// </summary>
         /// <param name="port">port a port number</param>
         /// <returns>the next stage of the definition</returns>
-        IWithProbe<ParentT> WithFrontendPort (int port);
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Definition.IWithProbe<ParentT> WithFrontendPort(int port);
 
     }
     /// <summary>
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Definition
         /// </summary>
         /// <param name="backendName">backendName the name of an existing backend</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Definition.IWithBackendPort<ParentT> WithBackend (string backendName);
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Definition.IWithBackendPort<ParentT> WithBackend(string backendName);
 
     }
     /// <summary>
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Definition
         /// </summary>
         /// <param name="name">name the name of an existing HTTP or TCP probe</param>
         /// <returns>the next stage of the definition</returns>
-        IWithBackend<ParentT> WithProbe (string name);
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Definition.IWithBackend<ParentT> WithProbe(string name);
 
     }
 }

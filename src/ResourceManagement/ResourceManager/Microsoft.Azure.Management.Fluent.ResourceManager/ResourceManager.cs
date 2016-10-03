@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Microsoft.Azure.Management.Fluent.Resource
 {
-    public class ResourceManager2 : ManagerBase, IResourceManager
+    public class ResourceManager : ManagerBase, IResourceManager
     {
         #region SDK clients
         private ResourceManagementClient resourceManagementClient;
@@ -18,9 +18,9 @@ namespace Microsoft.Azure.Management.Fluent.Resource
 
         #region ctrs
 
-        private ResourceManager2(RestClient restClient, string subscriptionId) : base(null, subscriptionId)
+        private ResourceManager(RestClient restClient, string subscriptionId) : base(null, subscriptionId)
         {
-            resourceManagementClient = new ResourceManager.ResourceManagementClient(new Uri(restClient.BaseUri),
+            resourceManagementClient = new ResourceManagementClient(new Uri(restClient.BaseUri),
                 restClient.Credentials,
                 restClient.RootHttpHandler,
                 restClient.Handlers.ToArray());
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.Fluent.Resource
 
             public IResourceManager WithSubscription(string subscriptionId)
             {
-                return new ResourceManager2(restClient, subscriptionId);
+                return new ResourceManager(restClient, subscriptionId);
             }
 
             #endregion
