@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
     public interface IHasBackendPort 
     {
         /// <returns>the backend port number the network traffic is sent to</returns>
-        int? BackendPort { get; }
+        int BackendPort { get; }
 
     }
 }

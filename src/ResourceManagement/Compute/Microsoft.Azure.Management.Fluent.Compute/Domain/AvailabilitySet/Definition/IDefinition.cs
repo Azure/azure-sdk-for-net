@@ -3,8 +3,8 @@
 namespace Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Definition
 {
 
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.Fluent.Compute;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
     using Microsoft.Azure.Management.Fluent.Resource.Core.Resource.Definition;
     using Microsoft.Azure.Management.Fluent.Resource.Core.GroupableResource.Definition;
     /// <summary>
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Definition
         /// </summary>
         /// <param name="updateDomainCount">updateDomainCount update domain count</param>
         /// <returns>the next stage of the definition</returns>
-        IWithCreate WithUpdateDomainCount (int updateDomainCount);
+        Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Definition.IWithCreate WithUpdateDomainCount(int updateDomainCount);
 
     }
     /// <summary>
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Definition
         /// </summary>
         /// <param name="faultDomainCount">faultDomainCount the fault domain count</param>
         /// <returns>the next stage of the definition</returns>
-        IWithCreate WithFaultDomainCount (int faultDomainCount);
+        Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Definition.IWithCreate WithFaultDomainCount(int faultDomainCount);
 
     }
     /// <summary>

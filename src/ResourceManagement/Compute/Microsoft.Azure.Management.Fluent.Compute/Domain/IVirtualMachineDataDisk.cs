@@ -3,8 +3,8 @@
 namespace Microsoft.Azure.Management.Fluent.Compute
 {
 
-    using Microsoft.Azure.Management.Compute.Models;
     using Microsoft.Azure.Management.Fluent.Resource.Core;
+    using Microsoft.Azure.Management.Compute.Models;
     /// <summary>
     /// A data disk of a virtual machine.
     /// </summary>
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// possible values are: 'None', 'ReadOnly', 'ReadWrite'
         /// </summary>
         /// <returns>the caching type</returns>
-        CachingTypes CachingType { get; }
+        Microsoft.Azure.Management.Compute.Models.CachingTypes CachingType { get; }
 
         /// <summary>
         /// Uri to the source virtual hard disk user image from which this disk was created.
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         string SourceImageUri { get; }
 
         /// <returns>the creation method used while creating this disk</returns>
-        DiskCreateOptionTypes CreationMethod { get; }
+        Microsoft.Azure.Management.Compute.Models.DiskCreateOptionTypes CreationMethod { get; }
 
     }
 }

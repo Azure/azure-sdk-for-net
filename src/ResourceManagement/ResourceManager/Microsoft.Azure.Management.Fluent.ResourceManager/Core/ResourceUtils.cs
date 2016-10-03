@@ -47,8 +47,7 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
 
         public static string ParentResourcePathFromResourceId(string id)
         {
-            string parent = id.Replace("/" + ResourceTypeFromResourceId(id) + "/" + NameFromResourceId(id) + "/", "");
-            return ExtractFromResourceId(parent, ResourceProviderFromResourceId(parent));
+            return id.TrimEnd(new char[] {'/'}).Replace("/" + ResourceTypeFromResourceId(id) + "/" + NameFromResourceId(id), "");
         }
     }
 }

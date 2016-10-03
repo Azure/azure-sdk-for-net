@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return this;
         }
 
-        public NetworkImpl WithDnsServer(string ipAddress)
+        internal NetworkImpl WithDnsServer(string ipAddress)
         {
             if (Inner.DhcpOptions == null)
                 Inner.DhcpOptions = new DhcpOptions();
@@ -79,14 +79,14 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return this;
         }
 
-        public NetworkImpl WithSubnet(string name, string cidr)
+        internal NetworkImpl WithSubnet(string name, string cidr)
         {
             return DefineSubnet(name)
                 .WithAddressPrefix(cidr)
                 .Attach();
         }
 
-        public NetworkImpl WithSubnets(IDictionary<string, string> nameCidrPairs)
+        internal NetworkImpl WithSubnets(IDictionary<string, string> nameCidrPairs)
         {
             subnets.Clear();
             foreach (var pair in nameCidrPairs)
@@ -96,13 +96,13 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return this;
         }
 
-        public NetworkImpl WithoutSubnet(string name)
+        internal NetworkImpl WithoutSubnet(string name)
         {
             subnets.Remove(name);
             return this;
         }
 
-        public NetworkImpl WithAddressSpace(string cidr)
+        internal NetworkImpl WithAddressSpace(string cidr)
         {
             if (Inner.AddressSpace == null)
                 Inner.AddressSpace = new AddressSpace();
@@ -114,51 +114,33 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return this;
         }
 
-        public SubnetImpl DefineSubnet(string name)
+        internal SubnetImpl DefineSubnet(string name)
         {
             SubnetInner inner = new SubnetInner(name: name);
             return new SubnetImpl(inner, this);
         }
 
-        public IList<string> AddressSpaces
+        internal IList<string> AddressSpaces()
         {
-            get
-            {
-                if (Inner.AddressSpace == null)
-                {
-                    return new List<string>();
-                }
-                else if (Inner.AddressSpace.AddressPrefixes == null)
-                {
-                    return new List<string>();
-                }
-                else
-                {
-                    return Inner.AddressSpace.AddressPrefixes;
-                }
-            }
+            if (Inner.AddressSpace == null)
+                return new List<string>();
+            else if (Inner.AddressSpace.AddressPrefixes == null)
+                return new List<string>();
+            else
+                return Inner.AddressSpace.AddressPrefixes;
         }
 
-        public IList<string> DnsServerIps
+        internal IList<string> DnsServerIps()
         {
-            get
-            {
-                if (Inner.DhcpOptions == null)
-                {
-                    return new List<string>();
-                }
-                else if (Inner.DhcpOptions.DnsServers == null)
-                {
-                    return new List<string>();
-                }
-                else
-                {
-                    return Inner.DhcpOptions.DnsServers;
-                }
-            }
+            if (Inner.DhcpOptions == null)
+                return new List<string>();
+            else if (Inner.DhcpOptions.DnsServers == null)
+                return new List<string>();
+            else
+                return Inner.DhcpOptions.DnsServers;
         }
 
-        public IDictionary<string, ISubnet> Subnets()
+        internal IDictionary<string, ISubnet> Subnets()
         {
             return subnets;
         }
@@ -166,7 +148,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
         override protected void BeforeCreating()
         {
             // Ensure address spaces
-            if (AddressSpaces.Count == 0)
+            if (AddressSpaces().Count == 0)
             {
                 WithAddressSpace("10.0.0.0/16"); // Default address space
             }
@@ -176,7 +158,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
                 // Create a subnet as needed, covering the entire first address space
                 if (subnets.Count == 0)
                 {
-                    WithSubnet("subnet1", AddressSpaces[0]);
+                    WithSubnet("subnet1", AddressSpaces()[0]);
                 }
             }
 
@@ -189,7 +171,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             InitializeChildrenFromInner();
         }
 
-        public SubnetImpl UpdateSubnet(string name)
+        internal SubnetImpl UpdateSubnet(string name)
         {
             ISubnet subnet;
             subnets.TryGetValue(name, out subnet);

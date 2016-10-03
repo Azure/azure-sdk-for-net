@@ -16,10 +16,10 @@ namespace Microsoft.Azure.Management.Fluent.Network
         IChildResource<Microsoft.Azure.Management.Fluent.Network.ILoadBalancer>
     {
         /// <returns>the starting frontend port number</returns>
-        int? FrontendPortRangeStart { get; }
+        int FrontendPortRangeStart { get; }
 
         /// <returns>the ending frontend port number</returns>
-        int? FrontendPortRangeEnd { get; }
+        int FrontendPortRangeEnd { get; }
 
     }
 }

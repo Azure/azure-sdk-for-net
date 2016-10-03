@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.InboundNatRule.Update
         /// </summary>
         /// <param name="port">port a port number</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Fluent.Network.InboundNatRule.Update.IUpdate WithFrontendPort (int port);
+        Microsoft.Azure.Management.Fluent.Network.InboundNatRule.Update.IUpdate WithFrontendPort(int port);
 
     }
     /// <summary>
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.InboundNatRule.Update
         /// </summary>
         /// <param name="minutes">minutes a number of minutes</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Fluent.Network.InboundNatRule.Update.IUpdate WithIdleTimeoutInMinutes (int minutes);
+        Microsoft.Azure.Management.Fluent.Network.InboundNatRule.Update.IUpdate WithIdleTimeoutInMinutes(int minutes);
 
     }
     /// <summary>

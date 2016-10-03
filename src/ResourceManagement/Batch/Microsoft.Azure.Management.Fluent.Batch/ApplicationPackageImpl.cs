@@ -4,8 +4,8 @@
 namespace Microsoft.Azure.Management.Fluent.Batch
 {
     using Management.Batch;
-    using Microsoft.Azure.Management.Batch.Models;
-    using Microsoft.Azure.Management.Fluent.Resource.Core;
+    using Management.Batch.Models;
+    using Resource.Core;
     using System;
     using System.Threading;
     using System.Threading.Tasks;
@@ -13,12 +13,12 @@ namespace Microsoft.Azure.Management.Fluent.Batch
     /// <summary>
     /// Implementation for BatchAccount Application Package and its parent interfaces.
     /// </summary>
-    internal partial class ApplicationPackageImpl :
+    public partial class ApplicationPackageImpl :
         ExternalChildResource<
-            Microsoft.Azure.Management.Fluent.Batch.IApplicationPackage,
-            Microsoft.Azure.Management.Batch.Models.ApplicationPackageInner,
-            Microsoft.Azure.Management.Fluent.Batch.IApplication,
-            Microsoft.Azure.Management.Fluent.Batch.ApplicationImpl>,
+            IApplicationPackage,
+            ApplicationPackageInner,
+            IApplication,
+            ApplicationImpl>,
         IApplicationPackage
     {
         private IApplicationPackageOperations client;
@@ -36,12 +36,9 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             return new ApplicationPackageImpl(name, parent, inner, client);
         }
 
-        public PackageState State
+        internal PackageState State()
         {
-            get
-            {
-                return Inner.State.GetValueOrDefault();
-            }
+            return Inner.State.GetValueOrDefault();
         }
 
         public string Id
@@ -54,7 +51,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
 
         public override string Name()
         {
-            return Inner.Version;
+            return ResourceUtils.NameFromResourceId(Inner.Id);
         }
 
         public override async Task<IApplicationPackage> CreateAsync(CancellationToken cancellationToken = default(CancellationToken))
@@ -72,44 +69,32 @@ namespace Microsoft.Azure.Management.Fluent.Batch
 
         public void Delete()
         {
-            client.Delete(Parent.Parent.ResourceGroupName, Parent.Parent.Name, Parent.Name(), Name());
+            client.Delete(Parent.Parent.ResourceGroupName, Parent.Parent.Name,Parent.Name(), Name());
         }
 
         public override async Task DeleteAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
-            await client.DeleteAsync(Parent.Parent.ResourceGroupName, Parent.Parent.Name, Parent.Name(), Name(), cancellationToken);
+            await client.DeleteAsync(Parent.Parent.ResourceGroupName, Parent.Parent.Name,Parent.Name(), Name(), cancellationToken);
         }
 
-        public string Format
+        internal string Format()
         {
-            get
-            {
-                return Inner.Format;
-            }
+            return Inner.Format;
         }
 
-        public string StorageUrl
+        internal string StorageUrl()
         {
-            get
-            {
-                return Inner.StorageUrl;
-            }
+            return Inner.StorageUrl;
         }
 
-        public DateTime StorageUrlExpiry
+        internal DateTime StorageUrlExpiry()
         {
-            get
-            {
-                return Inner.StorageUrlExpiry.GetValueOrDefault();
-            }
+            return Inner.StorageUrlExpiry.GetValueOrDefault();
         }
 
-        public DateTime LastActivationTime
+        internal DateTime LastActivationTime()
         {
-            get
-            {
-                return Inner.LastActivationTime.GetValueOrDefault();
-            }
+            return Inner.LastActivationTime.GetValueOrDefault();
         }
 
         IApplication IChildResource<IApplication>.Parent
@@ -120,7 +105,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             }
         }
 
-        public void Activate(string format)
+        internal void Activate(string format)
         {
             client.Activate(Parent.Parent.ResourceGroupName, Parent.Parent.Name, Parent.Name(), Name(), format);
         }

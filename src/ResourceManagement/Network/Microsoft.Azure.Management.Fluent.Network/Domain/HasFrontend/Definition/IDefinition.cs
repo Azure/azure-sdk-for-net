@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.HasFrontend.Definition
         /// </summary>
         /// <param name="frontendName">frontendName an existing frontend name on this load balancer</param>
         /// <returns>the next stage of the definition</returns>
-        ReturnT WithFrontend (string frontendName);
+        ReturnT WithFrontend(string frontendName);
 
     }
 }

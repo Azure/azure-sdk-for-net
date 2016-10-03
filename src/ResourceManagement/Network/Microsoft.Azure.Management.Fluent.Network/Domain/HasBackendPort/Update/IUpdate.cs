@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.HasBackendPort.Update
         /// </summary>
         /// <param name="port">port a port number</param>
         /// <returns>the next stage of the update</returns>
-        ReturnT WithBackendPort (int port);
+        ReturnT WithBackendPort(int port);
 
     }
 }

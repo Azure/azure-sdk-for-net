@@ -58,6 +58,14 @@ namespace Microsoft.Azure.Management
             }
         }
 
+        public IVirtualMachineScaleSets VirtualMachineScaleSets
+        {
+            get
+            {
+                return computeManager.VirtualMachineScaleSets;
+            }
+        }
+
         public INetworks Networks
         {
             get
@@ -90,6 +98,14 @@ namespace Microsoft.Azure.Management
             }
         }
 
+        public ILoadBalancers LoadBalancers
+        {
+            get
+            {
+                return networkManager.LoadBalancers;
+            }
+        }
+
         public IDeployments Deployments
         {
             get
@@ -103,6 +119,14 @@ namespace Microsoft.Azure.Management
             get
             {
                 return computeManager.VirtualMachineImages;
+            }
+        }
+
+        public IVirtualMachineExtensionImages VirtualMachineExtensionImages
+        {
+            get
+            {
+                return computeManager.VirtualMachineExtensionImages;
             }
         }
 
@@ -230,6 +254,7 @@ namespace Microsoft.Azure.Management
             {
                 this.restClient = restClient;
                 resourceManagerAuthenticated = ResourceManager2.Authenticate(this.restClient);
+                this.tenantId = tenantId;
             }
 
             public void SetDefaultSubscription(string subscriptionId)
@@ -302,6 +327,8 @@ namespace Microsoft.Azure.Management
 
         IVirtualMachines VirtualMachines { get; }
 
+        IVirtualMachineScaleSets VirtualMachineScaleSets { get; }
+
         INetworks Networks { get; }
 
         INetworkSecurityGroups NetworkSecurityGroups { get; }
@@ -310,9 +337,13 @@ namespace Microsoft.Azure.Management
 
         INetworkInterfaces NetworkInterfaces { get; }
 
+        ILoadBalancers LoadBalancers { get; }
+
         IDeployments Deployments { get; }
 
         IVirtualMachineImages VirtualMachineImages { get; }
+
+        IVirtualMachineExtensionImages VirtualMachineExtensionImages { get; }
 
         IAvailabilitySets AvailabilitySets { get; }
 

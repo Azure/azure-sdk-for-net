@@ -1,43 +1,41 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Samples.Common;
 using Microsoft.Azure.Management;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Fluent.Compute;
 using Microsoft.Azure.Management.Fluent.Resource;
 using Microsoft.Azure.Management.Fluent.Resource.Authentication;
 using Microsoft.Azure.Management.Fluent.Resource.Core;
+using Microsoft.Azure.Management.Samples.Common;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace ManageVirtualMachine
 {
+    /**
+     * Azure Compute sample for managing virtual machines -
+     *  - Create a virtual machine
+     *  - Start a virtual machine
+     *  - Stop a virtual machine
+     *  - Restart a virtual machine
+     *  - Update a virtual machine
+     *    - Expand the OS drive
+     *    - Tag a virtual machine (there are many possible variations here)
+     *    - Attach data disks
+     *    - Detach data disks
+     *  - List virtual machines
+     *  - Delete a virtual machine.
+     */
+
     public class Program
     {
-        /**
-         * Azure Compute sample for managing virtual machines -
-         *  - Create a virtual machine
-         *  - Start a virtual machine
-         *  - Stop a virtual machine
-         *  - Restart a virtual machine
-         *  - Update a virtual machine
-         *    - Expand the OS drive
-         *    - Tag a virtual machine (there are many possible variations here)
-         *    - Attach data disks
-         *    - Detach data disks
-         *  - List virtual machines
-         *  - Delete a virtual machine.
-         */
-
-        readonly static string rgName = ResourceNamer.RandomResourceName("rgCOMV", 24);
-        readonly static string windowsVMName = ResourceNamer.RandomResourceName("wVM", 24);
-        readonly static string linuxVMName = ResourceNamer.RandomResourceName("lVM", 24);
-        readonly static string userName = "tirekicker";
-        readonly static string password = "12NewPA$$w0rd!";
-        readonly static string dataDiskName = "disk2";
+        private static readonly string rgName = ResourceNamer.RandomResourceName("rgCOMV", 24);
+        private static readonly string windowsVMName = ResourceNamer.RandomResourceName("wVM", 24);
+        private static readonly string linuxVMName = ResourceNamer.RandomResourceName("lVM", 24);
+        private static readonly string userName = "tirekicker";
+        private static readonly string password = "12NewPA$$w0rd!";
+        private static readonly string dataDiskName = "disk2";
 
         public static void Main(string[] args)
         {
@@ -49,7 +47,7 @@ namespace ManageVirtualMachine
 
                 var azure = Azure
                     .Configure()
-                    .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                    .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                     .Authenticate(credentials)
                     .WithSubscription(credentials.DefaultSubscriptionId);
 
@@ -168,7 +166,7 @@ namespace ManageVirtualMachine
                     Console.WriteLine("Powered OFF VM: " + windowsVM.Id + "; state = " + windowsVM.PowerState);
 
                     // Get the network where Windows VM is hosted
-                    var network = windowsVM.GetPrimaryNetworkInterface().PrimaryIpConfiguration().GetNetwork();
+                    var network = windowsVM.GetPrimaryNetworkInterface().PrimaryIpConfiguration.GetNetwork();
 
                     //=============================================================
                     // Create a Linux VM in the same virtual network

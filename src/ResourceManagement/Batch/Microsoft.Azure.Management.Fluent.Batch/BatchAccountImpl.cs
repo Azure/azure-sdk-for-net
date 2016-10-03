@@ -4,34 +4,32 @@
 namespace Microsoft.Azure.Management.Fluent.Batch
 {
     using Management.Batch;
-    using Microsoft.Azure.Management.Batch.Models;
-    using Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Definition;
-    using Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Update;
-    using Microsoft.Azure.Management.Fluent.Resource;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.Fluent.Storage;
+    using Management.Batch.Models;
+    using Resource;
+    using Resource.Core.ResourceActions;
+    using Storage;
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    using Fluent.Resource.Core;
+    using Resource.Core;
 
     /// <summary>
     /// Implementation for BatchAccount and its parent interfaces.
     /// </summary>
-    internal partial class BatchAccountImpl :
+    public partial class BatchAccountImpl :
         GroupableResource<
             IBatchAccount,
             BatchAccountInner,
             Rest.Azure.Resource,
             BatchAccountImpl,
             BatchManager,
-            IWithGroup,
-            IWithCreateAndApplication,
-            IWithCreate,
-            IUpdate>,
+            BatchAccount.Definition.IWithGroup,
+            BatchAccount.Definition.IWithCreateAndApplication,
+            BatchAccount.Definition.IWithCreate,
+            BatchAccount.Update.IUpdate>,
         IBatchAccount,
-        IDefinition,
-        IUpdate
+        BatchAccount.Definition.IDefinition,
+        BatchAccount.Update.IUpdate
     {
         private IBatchAccountOperations innerCollection;
         private IStorageManager storageManager;
@@ -88,80 +86,59 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             return this;
         }
 
-        public Management.Batch.Models.ProvisioningState ProvisioningState
+        internal Management.Batch.Models.ProvisioningState ProvisioningState()
         {
-            get
-            {
-                return Inner.ProvisioningState.GetValueOrDefault();
-            }
+            return Inner.ProvisioningState.GetValueOrDefault();
         }
 
-        public string AccountEndpoint
+        internal string AccountEndpoint()
         {
-            get
-            {
-                return Inner.AccountEndpoint;
-            }
+            return Inner.AccountEndpoint;
         }
 
-        public AutoStorageProperties AutoStorage
+        internal AutoStorageProperties AutoStorage()
         {
-            get
-            {
-                return Inner.AutoStorage;
-            }
+            return Inner.AutoStorage;
         }
 
-        public int CoreQuota
+        internal int CoreQuota()
         {
-            get
-            {
-                return Inner.CoreQuota;
-            }
+            return Inner.CoreQuota;
         }
 
-        public int PoolQuota
+        internal int PoolQuota()
         {
-            get
-            {
-                return Inner.PoolQuota;
-            }
+            return Inner.PoolQuota;
         }
 
-        public int ActiveJobAndJobScheduleQuota
+        internal int ActiveJobAndJobScheduleQuota()
         {
-            get
-            {
-                return Inner.ActiveJobAndJobScheduleQuota;
-            }
+            return Inner.ActiveJobAndJobScheduleQuota;
         }
 
-        public BatchAccountKeys GetKeys()
+        internal BatchAccountKeys GetKeys()
         {
             BatchAccountKeysInner keys = innerCollection.GetKeys(ResourceGroupName, Name);
             return new BatchAccountKeys(keys.Primary, keys.Secondary);
         }
 
-        public BatchAccountKeys RegenerateKeys(AccountKeyType keyType)
+        internal BatchAccountKeys RegenerateKeys(AccountKeyType keyType)
         {
             BatchAccountKeysInner keys = innerCollection.RegenerateKey(ResourceGroupName, Name, keyType);
             return new BatchAccountKeys(keys.Primary, keys.Secondary);
         }
 
-        public void SynchronizeAutoStorageKeys()
+        internal void SynchronizeAutoStorageKeys()
         {
             innerCollection.SynchronizeAutoStorageKeys(ResourceGroupName, Name);
         }
 
-        public IDictionary<string, IApplication> Applications
+        internal IDictionary<string, IApplication> Applications()
         {
-            get
-            {
-                return applicationsImpl.AsMap();
-            }
+            return applicationsImpl.AsMap();
         }
 
-        public BatchAccountImpl WithExistingStorageAccount(IStorageAccount storageAccount)
+        internal BatchAccountImpl WithExistingStorageAccount(IStorageAccount storageAccount)
         {
             existingStorageAccountToAssociate = storageAccount;
             creatableStorageAccountKey = null;
@@ -169,7 +146,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             return this;
         }
 
-        public BatchAccountImpl WithNewStorageAccount(ICreatable<IStorageAccount> creatable)
+        internal BatchAccountImpl WithNewStorageAccount(ICreatable<IStorageAccount> creatable)
         {
             // This method's effect is NOT additive.
             if (creatableStorageAccountKey == null)
@@ -182,7 +159,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             return this;
         }
 
-        public BatchAccountImpl WithNewStorageAccount(string storageAccountName)
+        internal BatchAccountImpl WithNewStorageAccount(string storageAccountName)
         {
             var definitionWithGroup = storageManager.
                 StorageAccounts.
@@ -202,7 +179,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             return WithNewStorageAccount(definitionAfterGroup);
         }
 
-        public BatchAccountImpl WithoutStorageAccount()
+        internal BatchAccountImpl WithoutStorageAccount()
         {
             existingStorageAccountToAssociate = null;
             creatableStorageAccountKey = null;
@@ -211,17 +188,17 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             return this;
         }
 
-        public ApplicationImpl DefineNewApplication(string applicationId)
+        internal ApplicationImpl DefineNewApplication(string applicationId)
         {
             return applicationsImpl.Define(applicationId);
         }
 
-        public ApplicationImpl UpdateApplication(string applicationId)
+        internal ApplicationImpl UpdateApplication(string applicationId)
         {
             return applicationsImpl.Update(applicationId);
         }
 
-        public IUpdate WithoutApplication(string applicationId)
+        internal BatchAccountImpl WithoutApplication(string applicationId)
         {
             applicationsImpl.Remove(applicationId);
             return this;
@@ -252,7 +229,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             Inner.AutoStorage.StorageAccountId = storageAccount.Id;
         }
 
-        public BatchAccountImpl WithApplication(ApplicationImpl application)
+        internal BatchAccountImpl WithApplication(ApplicationImpl application)
         {
             applicationsImpl.AddApplication(application);
             return this;

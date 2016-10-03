@@ -1,35 +1,35 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Samples.Common;
 using Microsoft.Azure.Management;
 using Microsoft.Azure.Management.Batch.Models;
 using Microsoft.Azure.Management.Fluent.Batch;
 using Microsoft.Azure.Management.Fluent.Resource.Authentication;
 using Microsoft.Azure.Management.Fluent.Resource.Core;
+using Microsoft.Azure.Management.Samples.Common;
 using System;
 using System.Linq;
 
 namespace ManageBatchAccount
 {
+    /**
+     * Azure Batch sample for managing batch accounts -
+     *  - Get subscription batch account quota for a particular location.
+     *  - List all the batch accounts, look if quota allows you to create a new batch account at specified location by counting batch accounts in that particular location.
+     *  - Create a batch account with new application and application package, along with new storage account.
+     *  - Get the keys for batch account.
+     *  - Regenerate keys for batch account
+     *  - Regenerate the keys of storage accounts, sync with batch account.
+     *  - Update application's display name.
+     *  - Create another batch account using existing storage account.
+     *  - List the batch account.
+     *  - Delete the batch account.
+     *      - Delete the application packages.
+     *      - Delete applications.
+     */
+
     public class Program
     {
-        /**
-         * Azure Batch sample for managing batch accounts -
-         *  - Get subscription batch account quota for a particular location.
-         *  - List all the batch accounts, look if quota allows you to create a new batch account at specified location by counting batch accounts in that particular location.
-         *  - Create a batch account with new application and application package, along with new storage account.
-         *  - Get the keys for batch account.
-         *  - Regenerate keys for batch account
-         *  - Regenerate the keys of storage accounts, sync with batch account.
-         *  - Update application's display name.
-         *  - Create another batch account using existing storage account.
-         *  - List the batch account.
-         *  - Delete the batch account.
-         *      - Delete the application packages.
-         *      - Delete applications.
-         */
-
         private static readonly string batchAccountName = Utilities.CreateRandomName("ba");
         private static readonly string storageAccountName = Utilities.CreateRandomName("sa");
         private static readonly string applicationName = "application";
@@ -50,7 +50,7 @@ namespace ManageBatchAccount
 
                 var azure = Azure
                     .Configure()
-                    .withLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
+                    .WithLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
                     .Authenticate(credentials)
                     .WithSubscription(credentials.DefaultSubscriptionId);
 
@@ -59,7 +59,6 @@ namespace ManageBatchAccount
 
                 try
                 {
-
                     // ===========================================================
                     // Get how many batch accounts can be created in specified region.
 
@@ -144,7 +143,6 @@ namespace ManageBatchAccount
 
                     batchAccount.Refresh();
                     Utilities.PrintBatchAccount(batchAccount);
-
 
                     // ============================================================
                     // Create another batch account

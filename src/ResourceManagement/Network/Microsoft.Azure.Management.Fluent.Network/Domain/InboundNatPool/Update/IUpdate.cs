@@ -6,8 +6,8 @@ namespace Microsoft.Azure.Management.Fluent.Network.InboundNatPool.Update
     using Microsoft.Azure.Management.Fluent.Network.HasBackendPort.Update;
     using Microsoft.Azure.Management.Fluent.Network.HasFrontend.Update;
     using Microsoft.Azure.Management.Fluent.Network.HasProtocol.Update;
-    using Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update;
     using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update;
     /// <summary>
     /// The stage of an inbound NAT pool update allowing to specify the backend port.
     /// </summary>
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.InboundNatPool.Update
         /// <param name="from">from the starting port number, between 1 and 65534</param>
         /// <param name="to">to the ending port number, greater than the starting port number and no more than 65534</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.InboundNatPool.Update.IUpdate WithFrontendPortRange (int from, int to);
+        Microsoft.Azure.Management.Fluent.Network.InboundNatPool.Update.IUpdate WithFrontendPortRange(int from, int to);
 
     }
 }

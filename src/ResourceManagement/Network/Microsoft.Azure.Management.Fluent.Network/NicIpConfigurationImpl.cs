@@ -55,80 +55,62 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return Inner.Name;
         }
 
-        public string PrivateIpAddressVersion
+        internal string PrivateIpAddressVersion()
         {
-            get
-            {
-                return Inner.PrivateIPAddressVersion;
-            }
+            return Inner.PrivateIPAddressVersion;
         }
 
-        public string PublicIpAddressId
+        internal string PublicIpAddressId()
         {
-            get
-            {
-                return (Inner.PublicIPAddress != null) ? Inner.PublicIPAddress.Id : null;
-            }
+            return (Inner.PublicIPAddress != null) ? Inner.PublicIPAddress.Id : null;
         }
 
-        public IPublicIpAddress GetPublicIpAddress()
+        internal IPublicIpAddress GetPublicIpAddress()
         {
-            string id = PublicIpAddressId;
+            string id = PublicIpAddressId();
             return (id != null) ? Parent.Manager.PublicIpAddresses.GetById(id) : null;
         }
 
-        public string SubnetName
+        internal string SubnetName()
         {
-            get
-            {
-                SubResource subnetRef = Inner.Subnet;
-                return (subnetRef != null) ? ResourceUtils.NameFromResourceId(subnetRef.Id) : null;
-            }
+            SubResource subnetRef = Inner.Subnet;
+            return (subnetRef != null) ? ResourceUtils.NameFromResourceId(subnetRef.Id) : null;
         }
 
-        public string NetworkId
+        internal string NetworkId()
         {
-            get
-            {
-                SubResource subnetRef = Inner.Subnet;
-                return (subnetRef != null) ? ResourceUtils.ParentResourcePathFromResourceId(subnetRef.Id) : null;
-            }
+            SubResource subnetRef = Inner.Subnet;
+            return (subnetRef != null) ? ResourceUtils.ParentResourcePathFromResourceId(subnetRef.Id) : null;
         }
 
-        public INetwork GetNetwork()
+        internal INetwork GetNetwork()
         {
-            return (NetworkId != null) ? Parent.Manager.Networks.GetById(NetworkId) : null;
+            return (NetworkId() != null) ? Parent.Manager.Networks.GetById(NetworkId()) : null;
         }
 
-        public string PrivateIpAddress
+        internal string PrivateIpAddress()
         {
-            get
-            {
-                return Inner.PrivateIPAddress;
-            }
+            return Inner.PrivateIPAddress;
         }
 
-        public string PrivateIpAllocationMethod
+        internal string PrivateIpAllocationMethod()
         {
-            get
-            {
-                return Inner.PrivateIPAllocationMethod;
-            }
+            return Inner.PrivateIPAllocationMethod;
         }
 
-        public NetworkInterfaceImpl Attach()
+        internal NetworkInterfaceImpl Attach()
         {
             return Parent.WithIpConfiguration(this);
         }
 
-        public NicIpConfigurationImpl WithNewNetwork(ICreatable<INetwork> creatable)
+        internal NicIpConfigurationImpl WithNewNetwork(ICreatable<INetwork> creatable)
         {
             creatableVirtualNetworkKey = creatable.Key;
-            Parent.AddToCreatableDependencies(creatable as ICreatable<Fluent.Resource.Core.IResource>);
+            Parent.AddToCreatableDependencies(creatable as IResourceCreator<Fluent.Resource.Core.IResource>);
             return this;
         }
 
-        public NicIpConfigurationImpl WithNewNetwork(string name, string addressSpaceCidr)
+        internal NicIpConfigurationImpl WithNewNetwork(string name, string addressSpaceCidr)
         {
             Network.Definition.IWithGroup definitionWithGroup = Parent.Manager.Networks
                 .Define(name)
@@ -147,85 +129,85 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return WithNewNetwork(definitionAfterGroup.WithAddressSpace(addressSpaceCidr));
         }
 
-        public NicIpConfigurationImpl WithNewNetwork(string addressSpaceCidr)
+        internal NicIpConfigurationImpl WithNewNetwork(string addressSpaceCidr)
         {
             return WithNewNetwork(ResourceNamer.RandomResourceName("vnet", 20), addressSpaceCidr);
         }
 
-        public NicIpConfigurationImpl WithExistingNetwork(INetwork network)
+        internal NicIpConfigurationImpl WithExistingNetwork(INetwork network)
         {
             existingVirtualNetworkToAssociate = network;
             return this;
         }
 
-        public NicIpConfigurationImpl WithPrivateIpAddressDynamic()
+        internal NicIpConfigurationImpl WithPrivateIpAddressDynamic()
         {
             Inner.PrivateIPAllocationMethod = IPAllocationMethod.Dynamic;
             Inner.PrivateIPAddress = null;
             return this;
         }
 
-        public NicIpConfigurationImpl WithPrivateIpAddressStatic(string staticPrivateIpAddress)
+        internal NicIpConfigurationImpl WithPrivateIpAddressStatic(string staticPrivateIpAddress)
         {
             Inner.PrivateIPAllocationMethod = IPAllocationMethod.Static;
             Inner.PrivateIPAddress = staticPrivateIpAddress;
             return this;
         }
 
-        public NicIpConfigurationImpl WithNewPublicIpAddress(ICreatable<IPublicIpAddress> creatable)
+        internal NicIpConfigurationImpl WithNewPublicIpAddress(ICreatable<IPublicIpAddress> creatable)
         {
             if (creatablePublicIpKey == null)
             {
                 creatablePublicIpKey = creatable.Key;
-                Parent.AddToCreatableDependencies(creatable as ICreatable<Fluent.Resource.Core.IResource>);
+                Parent.AddToCreatableDependencies(creatable as IResourceCreator<Fluent.Resource.Core.IResource>);
             }
 
             return this;
         }
 
-        public NicIpConfigurationImpl WithNewPublicIpAddress()
+        internal NicIpConfigurationImpl WithNewPublicIpAddress()
         {
             string name = ResourceNamer.RandomResourceName("pip", 15);
             return WithNewPublicIpAddress(PrepareCreatablePublicIp(name, name));
         }
 
-        public NicIpConfigurationImpl WithNewPublicIpAddress(string leafDnsLabel)
+        internal NicIpConfigurationImpl WithNewPublicIpAddress(string leafDnsLabel)
         {
             return WithNewPublicIpAddress(
                 PrepareCreatablePublicIp(ResourceNamer.RandomResourceName("pip", 15), leafDnsLabel));
         }
 
-        public NicIpConfigurationImpl WithExistingPublicIpAddress(IPublicIpAddress publicIpAddress)
+        internal NicIpConfigurationImpl WithExistingPublicIpAddress(IPublicIpAddress publicIpAddress)
         {
 
             return WithExistingPublicIpAddress(publicIpAddress.Id);
         }
 
-        public NicIpConfigurationImpl WithExistingPublicIpAddress(string resourceId)
+        internal NicIpConfigurationImpl WithExistingPublicIpAddress(string resourceId)
         {
             existingPublicIpAddressIdToAssociate = resourceId;
             return this;
         }
 
-        public NicIpConfigurationImpl WithoutPublicIpAddress()
+        internal NicIpConfigurationImpl WithoutPublicIpAddress()
         {
             removePrimaryPublicIPAssociation = true;
             return this;
         }
 
-        public NicIpConfigurationImpl WithSubnet(string name)
+        internal NicIpConfigurationImpl WithSubnet(string name)
         {
             subnetToAssociate = name;
             return this;
         }
 
-        public NicIpConfigurationImpl WithExistingLoadBalancerBackend(ILoadBalancer loadBalancer, string backendName)
+        internal NicIpConfigurationImpl WithExistingLoadBalancerBackend(ILoadBalancer loadBalancer, string backendName)
         {
             foreach (var pool in loadBalancer.Inner.BackendAddressPools)
             {
                 if (pool.Name.Equals(backendName, StringComparison.OrdinalIgnoreCase))
                 {
-                    EnsureBackendAddressPools.Add(pool);
+                    EnsureBackendAddressPools().Add(pool);
                     return this;
                 }
             }
@@ -233,13 +215,13 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return this;
         }
 
-        public NicIpConfigurationImpl WithExistingLoadBalancerInboundNatRule(ILoadBalancer loadBalancer, string inboundNatRuleName)
+        internal NicIpConfigurationImpl WithExistingLoadBalancerInboundNatRule(ILoadBalancer loadBalancer, string inboundNatRuleName)
         {
             foreach (var rule in loadBalancer.Inner.InboundNatRules)
             {
                 if (rule.Name.Equals(inboundNatRuleName, StringComparison.OrdinalIgnoreCase))
                 {
-                    EnsureInboundNatRules.Add(rule);
+                    EnsureInboundNatRules().Add(rule);
                     return this;
                 }
             }
@@ -247,34 +229,28 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return this;
         }
 
-        private IList<BackendAddressPoolInner> EnsureBackendAddressPools
+        private IList<BackendAddressPoolInner> EnsureBackendAddressPools()
         {
-            get
+            IList<BackendAddressPoolInner> poolRefs = Inner.LoadBalancerBackendAddressPools;
+            if (poolRefs == null)
             {
-                IList<BackendAddressPoolInner> poolRefs = Inner.LoadBalancerBackendAddressPools;
-                if (poolRefs == null)
-                {
-                    poolRefs = new List<BackendAddressPoolInner>();
-                    Inner.LoadBalancerBackendAddressPools = poolRefs;
-                }
-
-                return poolRefs;
+                poolRefs = new List<BackendAddressPoolInner>();
+                Inner.LoadBalancerBackendAddressPools = poolRefs;
             }
+
+            return poolRefs;
         }
 
-        private IList<InboundNatRuleInner> EnsureInboundNatRules
+        private IList<InboundNatRuleInner> EnsureInboundNatRules()
         {
-            get
+            IList<InboundNatRuleInner> natRefs = Inner.LoadBalancerInboundNatRules;
+            if (natRefs == null)
             {
-                IList<InboundNatRuleInner> natRefs = Inner.LoadBalancerInboundNatRules;
-                if (natRefs == null)
-                {
-                    natRefs = new List<InboundNatRuleInner>();
-                    Inner.LoadBalancerInboundNatRules = natRefs;
-                }
-
-                return natRefs;
+                natRefs = new List<InboundNatRuleInner>();
+                Inner.LoadBalancerInboundNatRules = natRefs;
             }
+
+            return natRefs;
         }
 
         internal static void EnsureConfigurations(List<INicIpConfiguration> nicIpConfigurations)
@@ -391,25 +367,25 @@ namespace Microsoft.Azure.Management.Fluent.Network
             }
         }
 
-        public NicIpConfigurationImpl WithPrivateIpVersion(string ipVersion)
+        internal NicIpConfigurationImpl WithPrivateIpVersion(string ipVersion)
         {
             Inner.PrivateIPAddressVersion = ipVersion;
             return this;
         }
 
-        public NicIpConfigurationImpl WithoutLoadBalancerBackends()
+        internal NicIpConfigurationImpl WithoutLoadBalancerBackends()
         {
             Inner.LoadBalancerBackendAddressPools = null;
             return this;
         }
 
-        public NicIpConfigurationImpl WithoutLoadBalancerInboundNatRules()
+        internal NicIpConfigurationImpl WithoutLoadBalancerInboundNatRules()
         {
             Inner.LoadBalancerInboundNatRules = null;
             return this;
         }
 
-        public IList<IInboundNatRule> ListAssociatedLoadBalancerInboundNatRules()
+        internal IList<IInboundNatRule> ListAssociatedLoadBalancerInboundNatRules()
         {
             IList<InboundNatRuleInner> refs = Inner.LoadBalancerInboundNatRules;
             Dictionary<string, ILoadBalancer> loadBalancers = new Dictionary<string, ILoadBalancer>();
@@ -428,14 +404,14 @@ namespace Microsoft.Azure.Management.Fluent.Network
                     }
 
                     string ruleName = ResourceUtils.NameFromResourceId(reference.Id);
-                    rules.Add(loadBalancer.InboundNatRules()[ruleName]);
+                    rules.Add(loadBalancer.InboundNatRules[ruleName]);
                 }
             }
 
             return rules;
         }
 
-        public IList<IBackend> ListAssociatedLoadBalancerBackends()
+        internal IList<IBackend> ListAssociatedLoadBalancerBackends()
         {
             var backendRefs = Inner.LoadBalancerBackendAddressPools;
             var loadBalancers = new Dictionary<string, ILoadBalancer>();
@@ -456,7 +432,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
                     string backendName = ResourceUtils.NameFromResourceId(backendRef.Id);
 
                     IBackend backend;
-                    if (loadBalancer.Backends().TryGetValue(backendName, out backend))
+                    if (loadBalancer.Backends.TryGetValue(backendName, out backend))
                         backends.Add(backend);
                 }
             }

@@ -3,11 +3,11 @@
 namespace Microsoft.Azure.Management.Fluent.Network
 {
 
+    using Microsoft.Azure.Management.Network.Models;
+    using Microsoft.Azure.Management.Fluent.Resource.Core;
     using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
     using System.Collections.Generic;
     using Microsoft.Azure.Management.Fluent.Network.NetworkInterface.Update;
-    using Microsoft.Azure.Management.Network.Models;
-    using Microsoft.Azure.Management.Fluent.Resource.Core;
     /// <summary>
     /// Network interface.
     /// </summary>
@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
         IUpdatable<Microsoft.Azure.Management.Fluent.Network.NetworkInterface.Update.IUpdate>
     {
         /// <returns><tt>true</tt> if IP forwarding is enabled in this network interface</returns>
-        bool? IsIpForwardingEnabled { get; }
+        bool IsIpForwardingEnabled { get; }
 
         /// <returns>the MAC Address of the network interface</returns>
         string MacAddress { get; }
@@ -38,10 +38,10 @@ namespace Microsoft.Azure.Management.Fluent.Network
         string InternalDomainNameSuffix { get; }
 
         /// <returns>IP addresses of this network interface's DNS servers</returns>
-        List<string> DnsServers { get; }
+        System.Collections.Generic.IList<string> DnsServers { get; }
 
         /// <returns>applied DNS servers</returns>
-        List<string> AppliedDnsServers { get; }
+        System.Collections.Generic.IList<string> AppliedDnsServers { get; }
 
         /// <summary>
         /// Gets the private IP address allocated to this network interface's primary IP configuration.
@@ -56,10 +56,10 @@ namespace Microsoft.Azure.Management.Fluent.Network
         string PrimaryPrivateIpAllocationMethod { get; }
 
         /// <returns>the IP configurations of this network interface, indexed by their names</returns>
-        IDictionary<string,Microsoft.Azure.Management.Fluent.Network.INicIpConfiguration> IpConfigurations ();
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Fluent.Network.INicIpConfiguration> IpConfigurations { get; }
 
         /// <returns>the primary IP configuration of this network interface</returns>
-        INicIpConfiguration PrimaryIpConfiguration ();
+        Microsoft.Azure.Management.Fluent.Network.INicIpConfiguration PrimaryIpConfiguration { get; }
 
         /// <returns>the network security group resource id or null if there is no network security group</returns>
         /// <returns>associated with this network interface.</returns>
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
         /// This method makes a rest API call to fetch the Network Security Group resource.
         /// </summary>
         /// <returns>the network security group associated with this network interface.</returns>
-        INetworkSecurityGroup GetNetworkSecurityGroup ();
+        Microsoft.Azure.Management.Fluent.Network.INetworkSecurityGroup GetNetworkSecurityGroup();
 
         /// <returns>the resource ID of the associated virtual machine, or null if none.</returns>
         string VirtualMachineId { get; }

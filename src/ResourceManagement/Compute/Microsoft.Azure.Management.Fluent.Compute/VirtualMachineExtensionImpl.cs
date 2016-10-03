@@ -49,84 +49,58 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             }
         }
 
-        public string PublisherName
+        public string PublisherName()
         {
-            get
-            {
-                return this.Inner.Publisher;
-            }
+            return this.Inner.Publisher;
         }
 
-        public string TypeName
+        public string TypeName()
         {
-            get
-            {
-                return this.Inner.VirtualMachineExtensionType;
-            }
+            return this.Inner.VirtualMachineExtensionType;
         }
 
-        public string VersionName
+        public string VersionName()
         {
-            get
-            {
-                return this.Inner.TypeHandlerVersion;
-            }
+            return this.Inner.TypeHandlerVersion;
         }
 
-        public bool AutoUpgradeMinorVersionEnabled
+        public bool AutoUpgradeMinorVersionEnabled()
         {
-            get
-            {
-                return this.Inner.AutoUpgradeMinorVersion.Value;
-            }
+            return this.Inner.AutoUpgradeMinorVersion.Value;
         }
 
-        public IDictionary<string,object> PublicSettings
+        public IDictionary<string,object> PublicSettings()
         {
-            get
-            {
-                return new ReadOnlyDictionary<string, object>(this.publicSettings);
-            }
+            return new ReadOnlyDictionary<string, object>(this.publicSettings);
         }
 
-        public string PublicSettingsAsJsonString
+        public string PublicSettingsAsJsonString()
         {
-            get
+            if (this.publicSettings == null)
             {
-                if (this.publicSettings == null)
-                {
-                    return null;
-                }
-                return JsonConvert.SerializeObject(this.publicSettings);
+                return null;
             }
+            return JsonConvert.SerializeObject(this.publicSettings);
         }
 
-        public VirtualMachineExtensionInstanceView InstanceView
+        public VirtualMachineExtensionInstanceView InstanceView()
         {
-            get
-            {
-             return this.Inner.InstanceView;
-            }
-        }
-        public IDictionary<string,string> Tags
-        {
-            get
-            {
-                IDictionary<string, string> tags = this.Inner.Tags;
-                if (tags == null)
-                {
-                    tags = new Dictionary<string, string>();
-                }
-                return new ReadOnlyDictionary<string, string>(tags);
-            }
+            return this.Inner.InstanceView;
         }
 
-        public string ProvisioningState
+        public IDictionary<string,string> Tags()
         {
-            get
+            IDictionary<string, string> tags = this.Inner.Tags;
+            if (tags == null)
             {
-                return this.Inner.ProvisioningState;
+                tags = new Dictionary<string, string>();
             }
+            return new ReadOnlyDictionary<string, string>(tags);
+        }
+
+        public string ProvisioningState()
+        {
+            return this.Inner.ProvisioningState;
         }
 
         public VirtualMachineExtensionImpl WithAutoUpgradeMinorVersionEnabled ()

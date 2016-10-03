@@ -28,56 +28,39 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return Inner.Name;
         }
 
-        public string BackendNicIpConfigurationName
+        internal string BackendNicIpConfigurationName()
         {
-            get
-            {
-                var backendRef = Inner.BackendIPConfiguration;
-                return (backendRef != null) ? backendRef.Id : null;
-            }
+            var backendRef = Inner.BackendIPConfiguration;
+            return (backendRef != null) ? backendRef.Id : null;
         }
 
-        public int BackendPort
+        internal int BackendPort()
         {
-            get
-            {
-                return (Inner.BackendPort.HasValue) ? (int) Inner.BackendPort.Value : 0;
-            }
-        }
-        public string BackendNetworkInterfaceId
-        {
-            get
-            {
-                var backendRef = Inner.BackendIPConfiguration;
-                return (backendRef != null) ? ResourceUtils.ParentResourcePathFromResourceId(backendRef.Id) : null;
-            }
+            return (Inner.BackendPort.HasValue) ? Inner.BackendPort.Value : 0;
         }
 
-        public string Protocol
+        internal string BackendNetworkInterfaceId()
         {
-            get
-            {
-                return Inner.Protocol;
-            }
+            var backendRef = Inner.BackendIPConfiguration;
+            return (backendRef != null) ? ResourceUtils.ParentResourcePathFromResourceId(backendRef.Id) : null;
         }
 
-        public int FrontendPort
+        internal string Protocol()
         {
-            get
-            {
-                return (Inner.FrontendPort.HasValue) ? Inner.FrontendPort.Value : 0;
-            }
+            return Inner.Protocol;
         }
 
-        public bool FloatingIpEnabled
+        internal int FrontendPort()
         {
-            get
-            {
-                return (Inner.EnableFloatingIP.HasValue) ? Inner.EnableFloatingIP.Value : false;
-            }
+            return (Inner.FrontendPort.HasValue) ? Inner.FrontendPort.Value : 0;
         }
 
-        public IFrontend Frontend ()
+        internal bool FloatingIpEnabled()
+        {
+            return (Inner.EnableFloatingIP.HasValue) ? Inner.EnableFloatingIP.Value : false;
+        }
+
+        internal IFrontend Frontend ()
         {
             var frontendRef = Inner.FrontendIPConfiguration;
             if (frontendRef == null)
@@ -93,65 +76,62 @@ namespace Microsoft.Azure.Management.Fluent.Network
             }
         }
 
-        public int IdleTimeoutInMinutes
+        internal int IdleTimeoutInMinutes()
         {
-            get
-            {
-                return (Inner.IdleTimeoutInMinutes.HasValue) ? Inner.IdleTimeoutInMinutes.Value : 0;
-            }
+            return (Inner.IdleTimeoutInMinutes.HasValue) ? Inner.IdleTimeoutInMinutes.Value : 0;
         }
 
-        public InboundNatRuleImpl WithBackendPort (int port)
+        internal InboundNatRuleImpl WithBackendPort (int port)
         {
             Inner.BackendPort = port;
             return this;
         }
 
-        public InboundNatRuleImpl WithFloatingIpEnabled ()
+        internal InboundNatRuleImpl WithFloatingIpEnabled ()
         {
             return WithFloatingIp(true);
         }
 
-        public InboundNatRuleImpl WithFloatingIpDisabled ()
+        internal InboundNatRuleImpl WithFloatingIpDisabled ()
         {
             return WithFloatingIp(false);
         }
 
-        public InboundNatRuleImpl WithFloatingIp (bool enabled)
+        internal InboundNatRuleImpl WithFloatingIp (bool enabled)
         {
             Inner.EnableFloatingIP = enabled;
             return this;
         }
 
-        public InboundNatRuleImpl WithFrontendPort (int port)
+        internal InboundNatRuleImpl WithFrontendPort (int port)
         {
             Inner.FrontendPort = port;
 
             // By default, assume the same backend port
-            return (BackendPort == 0) ? WithBackendPort(port) : this;
+            return (BackendPort() == 0) ? WithBackendPort(port) : this;
         }
 
-        public InboundNatRuleImpl WithIdleTimeoutInMinutes (int minutes)
+        internal InboundNatRuleImpl WithIdleTimeoutInMinutes (int minutes)
         {
             Inner.IdleTimeoutInMinutes = minutes;
             return this;
         }
 
-        public InboundNatRuleImpl WithProtocol (string protocol)
+        internal InboundNatRuleImpl WithProtocol (string protocol)
         {
             Inner.Protocol = protocol;
             return this;
         }
 
-        public InboundNatRuleImpl WithFrontend (string frontendName)
+        internal InboundNatRuleImpl WithFrontend (string frontendName)
         {
-            string frontendId = Parent.FutureResourceId + "/frontendIPConfigurations/" + frontendName;
+            string frontendId = Parent.FutureResourceId() + "/frontendIPConfigurations/" + frontendName;
             SubResource frontendRef = new SubResource(frontendId);
             this.Inner.FrontendIPConfiguration = frontendRef;
             return this;
         }
 
-        public LoadBalancerImpl Attach ()
+        internal LoadBalancerImpl Attach ()
         {
             return Parent.WithInboundNatRule(this);
         }

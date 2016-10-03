@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.NicIpConfiguration.Definitio
         /// </summary>
         /// <param name="name">name the subnet name</param>
         /// <returns>the next stage of the network interface IP configuration definition</returns>
-        IWithPrivateIp<ParentT> WithSubnet (string name);
+        Microsoft.Azure.Management.Fluent.Network.NicIpConfiguration.Definition.IWithPrivateIp<ParentT> WithSubnet(string name);
 
     }
     /// <summary>
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.NicIpConfiguration.Definitio
         /// <param name="loadBalancer">loadBalancer an existing load balancer</param>
         /// <param name="backendName">backendName the name of an existing backend on that load balancer</param>
         /// <returns>the next stage of the update</returns>
-        IWithAttach<ParentT> WithExistingLoadBalancerBackend (ILoadBalancer loadBalancer, string backendName);
+        Microsoft.Azure.Management.Fluent.Network.NicIpConfiguration.Definition.IWithAttach<ParentT> WithExistingLoadBalancerBackend(ILoadBalancer loadBalancer, string backendName);
 
         /// <summary>
         /// Specifies the load balancer inbound NAT rule to associate this IP configuration with.
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.NicIpConfiguration.Definitio
         /// <param name="loadBalancer">loadBalancer an existing load balancer</param>
         /// <param name="inboundNatRuleName">inboundNatRuleName the name of an existing inbound NAT rule on the selected load balancer</param>
         /// <returns>the next stage of the update</returns>
-        IWithAttach<ParentT> WithExistingLoadBalancerInboundNatRule (ILoadBalancer loadBalancer, string inboundNatRuleName);
+        Microsoft.Azure.Management.Fluent.Network.NicIpConfiguration.Definition.IWithAttach<ParentT> WithExistingLoadBalancerInboundNatRule(ILoadBalancer loadBalancer, string inboundNatRuleName);
 
     }
     /// <summary>
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.NicIpConfiguration.Definitio
         /// </summary>
         /// <param name="ipVersion">ipVersion an IP version</param>
         /// <returns>the next stage of the definition</returns>
-        IWithAttach<ParentT> WithPrivateIpVersion (string ipVersion);
+        Microsoft.Azure.Management.Fluent.Network.NicIpConfiguration.Definition.IWithAttach<ParentT> WithPrivateIpVersion(string ipVersion);
 
     }
     /// <summary>
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.NicIpConfiguration.Definitio
         /// </summary>
         /// <param name="creatable">creatable a creatable definition for a new virtual network</param>
         /// <returns>the next stage of the network interface IP configuration definition</returns>
-        IWithPrivateIp<ParentT> WithNewNetwork (ICreatable<Microsoft.Azure.Management.Fluent.Network.INetwork> creatable);
+        Microsoft.Azure.Management.Fluent.Network.NicIpConfiguration.Definition.IWithPrivateIp<ParentT> WithNewNetwork(ICreatable<Microsoft.Azure.Management.Fluent.Network.INetwork> creatable);
 
         /// <summary>
         /// Creates a new virtual network to associate with the network interface IP configuration.
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.NicIpConfiguration.Definitio
         /// <param name="name">name the name of the new virtual network</param>
         /// <param name="addressSpace">addressSpace the address space for rhe virtual network</param>
         /// <returns>the next stage of the network interface IP configuration definition</returns>
-        IWithPrivateIp<ParentT> WithNewNetwork (string name, string addressSpace);
+        Microsoft.Azure.Management.Fluent.Network.NicIpConfiguration.Definition.IWithPrivateIp<ParentT> WithNewNetwork(string name, string addressSpace);
 
         /// <summary>
         /// Creates a new virtual network to associate with the network interface IP configuration.
@@ -110,14 +110,14 @@ namespace Microsoft.Azure.Management.Fluent.Network.NicIpConfiguration.Definitio
         /// </summary>
         /// <param name="addressSpace">addressSpace the address space for the virtual network</param>
         /// <returns>the next stage of the network interface IP configuration definition</returns>
-        IWithPrivateIp<ParentT> WithNewNetwork (string addressSpace);
+        Microsoft.Azure.Management.Fluent.Network.NicIpConfiguration.Definition.IWithPrivateIp<ParentT> WithNewNetwork(string addressSpace);
 
         /// <summary>
         /// Associate an existing virtual network with the network interface IP configuration.
         /// </summary>
         /// <param name="network">network an existing virtual network</param>
         /// <returns>the next stage of the network interface IP configuration definition</returns>
-        IWithSubnet<ParentT> WithExistingNetwork (INetwork network);
+        Microsoft.Azure.Management.Fluent.Network.NicIpConfiguration.Definition.IWithSubnet<ParentT> WithExistingNetwork(INetwork network);
 
     }
     /// <summary>

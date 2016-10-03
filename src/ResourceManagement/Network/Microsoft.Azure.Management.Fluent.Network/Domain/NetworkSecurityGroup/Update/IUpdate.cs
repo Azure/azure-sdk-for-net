@@ -18,21 +18,21 @@ namespace Microsoft.Azure.Management.Fluent.Network.NetworkSecurityGroup.Update
         /// </summary>
         /// <param name="name">name the name of the security rule to remove</param>
         /// <returns>the next stage of the network security group description</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityGroup.Update.IUpdate WithoutRule (string name);
+        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityGroup.Update.IUpdate WithoutRule(string name);
 
         /// <summary>
         /// Begins the definition of a new security rule to be added to this network security group.
         /// </summary>
         /// <param name="name">name the name of the new security rule</param>
         /// <returns>the first stage of the new security rule definition</returns>
-        IBlank<Microsoft.Azure.Management.Fluent.Network.NetworkSecurityGroup.Update.IUpdate> DefineRule (string name);
+        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.UpdateDefinition.IBlank<Microsoft.Azure.Management.Fluent.Network.NetworkSecurityGroup.Update.IUpdate> DefineRule(string name);
 
         /// <summary>
         /// Begins the description of an update of an existing security rule of this network security group.
         /// </summary>
         /// <param name="name">name the name of an existing security rule</param>
         /// <returns>the first stage of the security rule update description</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate UpdateRule (string name);
+        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate UpdateRule(string name);
 
     }
     /// <summary>

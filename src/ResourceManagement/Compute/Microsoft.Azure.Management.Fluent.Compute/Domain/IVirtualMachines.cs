@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
     /// <summary>
     /// Entry point to virtual machine management API.
     /// </summary>
-    public interface IVirtualMachines :
+    public interface IVirtualMachines  :
         ISupportsListing<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine>,
         ISupportsListingByGroup<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine>,
         ISupportsGettingByGroup<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine>,
@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         ISupportsBatchCreation<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine>
     {
         /// <returns>available virtual machine sizes</returns>
-        IVirtualMachineSizes Sizes();
+        Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineSizes Sizes { get; }
 
         /// <summary>
         /// Shuts down the virtual machine and releases the compute resources.

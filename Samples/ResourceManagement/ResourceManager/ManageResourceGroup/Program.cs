@@ -1,28 +1,25 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management;
 using Microsoft.Azure.Management.Fluent.Resource;
 using Microsoft.Azure.Management.Fluent.Resource.Authentication;
 using Microsoft.Azure.Management.Fluent.Resource.Core;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ManageResourceGroup
 {
+    /**
+     * Azure Resource sample for managing resource groups -
+     * - Create a resource group
+     * - Update a resource group
+     * - Create another resource group
+     * - List resource groups
+     * - Delete a resource group.
+     */
+
     public class Program
     {
-        /**
-         * Azure Resource sample for managing resource groups -
-         * - Create a resource group
-         * - Update a resource group
-         * - Create another resource group
-         * - List resource groups
-         * - Delete a resource group.
-         */
-
         public static void Main(string[] args)
         {
             try
@@ -40,7 +37,7 @@ namespace ManageResourceGroup
 
                     var azure = Azure
                         .Configure()
-                        .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                        .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                         .Authenticate(credentials)
                         .WithSubscription(credentials.DefaultSubscriptionId);
 

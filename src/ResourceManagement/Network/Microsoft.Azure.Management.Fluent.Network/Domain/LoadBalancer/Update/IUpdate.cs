@@ -3,25 +3,25 @@
 namespace Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update
 {
 
-    using Microsoft.Azure.Management.Fluent.Network.HttpProbe.UpdateDefinition;
-    using Microsoft.Azure.Management.Fluent.Network.TcpProbe.Update;
     using Microsoft.Azure.Management.Fluent.Network.HttpProbe.Update;
+    using Microsoft.Azure.Management.Fluent.Network.HttpProbe.UpdateDefinition;
     using Microsoft.Azure.Management.Fluent.Network.TcpProbe.UpdateDefinition;
+    using Microsoft.Azure.Management.Fluent.Network.TcpProbe.Update;
     using Microsoft.Azure.Management.Fluent.Network;
     using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.Fluent.Network.Backend.UpdateDefinition;
     using Microsoft.Azure.Management.Fluent.Network.Backend.Update;
+    using Microsoft.Azure.Management.Fluent.Network.Backend.UpdateDefinition;
     using Microsoft.Azure.Management.Fluent.Resource.Core.Resource.Update;
     using Microsoft.Azure.Management.Fluent.Network.PublicFrontend.UpdateDefinition;
     using Microsoft.Azure.Management.Fluent.Network.PublicFrontend.Update;
     using Microsoft.Azure.Management.Fluent.Network.InboundNatRule.UpdateDefinition;
     using Microsoft.Azure.Management.Fluent.Network.InboundNatRule.Update;
-    using Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.UpdateDefinition;
     using Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.Update;
+    using Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.UpdateDefinition;
     using Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.UpdateDefinition;
     using Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Update;
-    using Microsoft.Azure.Management.Fluent.Network.InboundNatPool.UpdateDefinition;
     using Microsoft.Azure.Management.Fluent.Network.InboundNatPool.Update;
+    using Microsoft.Azure.Management.Fluent.Network.InboundNatPool.UpdateDefinition;
     /// <summary>
     /// The stage of the load balancer update allowing to add, remove or modify probes.
     /// </summary>
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update
         /// </summary>
         /// <param name="port">port the port number for the probe to monitor</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate WithTcpProbe (int port);
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate WithTcpProbe(int port);
 
         /// <summary>
         /// Adds an HTTP probe checking for an HTTP 200 response from the specified path at regular intervals, using port 80.
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update
         /// </summary>
         /// <param name="requestPath">requestPath the path for the probe to invoke</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate WithHttpProbe (string requestPath);
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate WithHttpProbe(string requestPath);
 
         /// <summary>
         /// Begins the definition of a new HTTP probe to add to the load balancer.
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update
         /// </summary>
         /// <param name="name">name the name of the new probe</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.HttpProbe.UpdateDefinition.IBlank<Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate> DefineHttpProbe (string name);
+        Microsoft.Azure.Management.Fluent.Network.HttpProbe.UpdateDefinition.IBlank<Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate> DefineHttpProbe(string name);
 
         /// <summary>
         /// Begins the definition of a new TCP probe to add to the load balancer.
@@ -61,28 +61,28 @@ namespace Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update
         /// </summary>
         /// <param name="name">name the name of the new probe</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.TcpProbe.UpdateDefinition.IBlank<Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate> DefineTcpProbe (string name);
+        Microsoft.Azure.Management.Fluent.Network.TcpProbe.UpdateDefinition.IBlank<Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate> DefineTcpProbe(string name);
 
         /// <summary>
         /// Removes the specified probe from the load balancer, if present.
         /// </summary>
         /// <param name="name">name the name of the probe to remove</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate WithoutProbe (string name);
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate WithoutProbe(string name);
 
         /// <summary>
         /// Begins the description of an update to an existing TCP probe on this load balancer.
         /// </summary>
         /// <param name="name">name the name of the probe to update</param>
         /// <returns>the first stage of the probe update</returns>
-        Microsoft.Azure.Management.Fluent.Network.TcpProbe.Update.IUpdate UpdateTcpProbe (string name);
+        Microsoft.Azure.Management.Fluent.Network.TcpProbe.Update.IUpdate UpdateTcpProbe(string name);
 
         /// <summary>
         /// Begins the description of an update to an existing HTTP probe on this load balancer.
         /// </summary>
         /// <param name="name">name the name of the probe to update</param>
         /// <returns>the first stage of the probe update</returns>
-        Microsoft.Azure.Management.Fluent.Network.HttpProbe.Update.IUpdate UpdateHttpProbe (string name);
+        Microsoft.Azure.Management.Fluent.Network.HttpProbe.Update.IUpdate UpdateHttpProbe(string name);
 
     }
     /// <summary>
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update
         /// </summary>
         /// <param name="publicIpAddress">publicIpAddress an existing public IP address</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate WithExistingPublicIpAddress (IPublicIpAddress publicIpAddress);
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate WithExistingPublicIpAddress(IPublicIpAddress publicIpAddress);
 
         /// <summary>
         /// Creates a new public IP address as the default public frontend of the load balancer,
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update
         /// This will create a new default frontend for the load balancer under the name "default", if one does not already exist.
         /// </summary>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate WithNewPublicIpAddress ();
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate WithNewPublicIpAddress();
 
         /// <summary>
         /// Adds a new public IP address as the default public frontend of the load balancer,
@@ -116,14 +116,14 @@ namespace Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update
         /// </summary>
         /// <param name="dnsLeafLabel">dnsLeafLabel a DNS leaf label</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate WithNewPublicIpAddress (string dnsLeafLabel);
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate WithNewPublicIpAddress(string dnsLeafLabel);
 
         /// <summary>
         /// Adds a new public IP address to the default front end of the load balancer.
         /// </summary>
         /// <param name="creatablePublicIpAddress">creatablePublicIpAddress the creatable stage of a public IP address definition</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate WithNewPublicIpAddress (ICreatable<Microsoft.Azure.Management.Fluent.Network.IPublicIpAddress> creatablePublicIpAddress);
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate WithNewPublicIpAddress(ICreatable<Microsoft.Azure.Management.Fluent.Network.IPublicIpAddress> creatablePublicIpAddress);
 
     }
     /// <summary>
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update
         /// <param name="network">network an existing virtual network</param>
         /// <param name="subnetName">subnetName the name of an existing subnet on the specified network</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate WithExistingSubnet (INetwork network, string subnetName);
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate WithExistingSubnet(INetwork network, string subnetName);
 
     }
     /// <summary>
@@ -150,21 +150,21 @@ namespace Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update
         /// </summary>
         /// <param name="name">name the name of the backend to remove</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate WithoutBackend (string name);
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate WithoutBackend(string name);
 
         /// <summary>
         /// Begins the definition of a new backend as part of this load balancer update.
         /// </summary>
         /// <param name="name">name the name for the new backend</param>
         /// <returns>the first stage of the backend definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.Backend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate> DefineBackend (string name);
+        Microsoft.Azure.Management.Fluent.Network.Backend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate> DefineBackend(string name);
 
         /// <summary>
         /// Begins the description of an update to an existing backend of this load balancer.
         /// </summary>
         /// <param name="name">name the name of the backend to update</param>
         /// <returns>the first stage of the update</returns>
-        Microsoft.Azure.Management.Fluent.Network.Backend.Update.IUpdate UpdateBackend (string name);
+        Microsoft.Azure.Management.Fluent.Network.Backend.Update.IUpdate UpdateBackend(string name);
 
     }
     /// <summary>
@@ -199,21 +199,21 @@ namespace Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update
         /// </summary>
         /// <param name="name">name the name for the frontend</param>
         /// <returns>the first stage of the new frontend definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.PublicFrontend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate> DefinePublicFrontend (string name);
+        Microsoft.Azure.Management.Fluent.Network.PublicFrontend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate> DefinePublicFrontend(string name);
 
         /// <summary>
         /// Removes the specified frontend from the load balancer.
         /// </summary>
         /// <param name="name">name the name of an existing front end on this load balancer</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate WithoutFrontend (string name);
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate WithoutFrontend(string name);
 
         /// <summary>
         /// Begins the description of an update to an existing Internet-facing frontend.
         /// </summary>
         /// <param name="name">name the name of the frontend to update</param>
         /// <returns>the first stage of the frontend update</returns>
-        Microsoft.Azure.Management.Fluent.Network.PublicFrontend.Update.IUpdate UpdateInternetFrontend (string name);
+        Microsoft.Azure.Management.Fluent.Network.PublicFrontend.Update.IUpdate UpdateInternetFrontend(string name);
 
     }
     /// <summary>
@@ -226,7 +226,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update
         /// </summary>
         /// <param name="name">name the name of an existing inbound NAT rule on this load balancer</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate WithoutInboundNatRule (string name);
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate WithoutInboundNatRule(string name);
 
         /// <summary>
         /// Begins the definition of a new inbound NAT rule.
@@ -235,14 +235,14 @@ namespace Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update
         /// </summary>
         /// <param name="name">name the name for the inbound NAT rule</param>
         /// <returns>the first stage of the new inbound NAT rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.InboundNatRule.UpdateDefinition.IBlank<Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate> DefineInboundNatRule (string name);
+        Microsoft.Azure.Management.Fluent.Network.InboundNatRule.UpdateDefinition.IBlank<Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate> DefineInboundNatRule(string name);
 
         /// <summary>
         /// Begins the description of an update to an existing inbound NAT rule.
         /// </summary>
         /// <param name="name">name the name of the inbound NAT rule to update</param>
         /// <returns>the first stage of the inbound NAT rule update</returns>
-        Microsoft.Azure.Management.Fluent.Network.InboundNatRule.Update.IUpdate UpdateInboundNatRule (string name);
+        Microsoft.Azure.Management.Fluent.Network.InboundNatRule.Update.IUpdate UpdateInboundNatRule(string name);
 
     }
     /// <summary>
@@ -256,14 +256,14 @@ namespace Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update
         /// </summary>
         /// <param name="name">name the name for the frontend</param>
         /// <returns>the first stage of the new frontend definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate> DefinePrivateFrontend (string name);
+        Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.UpdateDefinition.IBlank<Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate> DefinePrivateFrontend(string name);
 
         /// <summary>
         /// Begins the description of an update to an existing internal frontend.
         /// </summary>
         /// <param name="name">name the name of an existing frontend from this load balancer</param>
         /// <returns>the first stage of the frontend update</returns>
-        Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.Update.IUpdate UpdateInternalFrontend (string name);
+        Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.Update.IUpdate UpdateInternalFrontend(string name);
 
     }
     /// <summary>
@@ -280,7 +280,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update
         /// <param name="protocol">protocol the protocol to load balance</param>
         /// <param name="backendPort">backendPort the port number on the back end to send load balanced traffic to</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate WithLoadBalancingRule (int frontendPort, string protocol, int backendPort);
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate WithLoadBalancingRule(int frontendPort, string protocol, int backendPort);
 
         /// <summary>
         /// Adds a load balancing rule for the specified port and protocol.
@@ -290,7 +290,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update
         /// <param name="port">port the port number on the front and back end for the network traffic to be load balanced on</param>
         /// <param name="protocol">protocol the protocol to load balance</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate WithLoadBalancingRule (int port, string protocol);
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate WithLoadBalancingRule(int port, string protocol);
 
         /// <summary>
         /// Begins the definition of a new load balancing rule to add to the load balancer.
@@ -299,21 +299,21 @@ namespace Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update
         /// </summary>
         /// <param name="name">name the name of the load balancing rule</param>
         /// <returns>the first stage of the new load balancing rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.UpdateDefinition.IBlank<Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate> DefineLoadBalancingRule (string name);
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.UpdateDefinition.IBlank<Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate> DefineLoadBalancingRule(string name);
 
         /// <summary>
         /// Removes the specified load balancing rule from the load balancer, if present.
         /// </summary>
         /// <param name="name">name the name of the load balancing rule to remove</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate WithoutLoadBalancingRule (string name);
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate WithoutLoadBalancingRule(string name);
 
         /// <summary>
         /// Begins the description of an update to an existing load balancing rule on this load balancer.
         /// </summary>
         /// <param name="name">name the name of the load balancing rule to update</param>
         /// <returns>the first stage of the load balancing rule update</returns>
-        Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Update.IUpdate UpdateLoadBalancingRule (string name);
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancingRule.Update.IUpdate UpdateLoadBalancingRule(string name);
 
     }
     /// <summary>
@@ -326,21 +326,21 @@ namespace Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update
         /// </summary>
         /// <param name="name">name the name of an existing inbound NAT pool on this load balancer</param>
         /// <returns>the next stage of the update</returns>
-        Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate WithoutInboundNatPool (string name);
+        Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate WithoutInboundNatPool(string name);
 
         /// <summary>
         /// Begins the definition of a new inbound NAT pool.
         /// </summary>
         /// <param name="name">name the name of the inbound NAT pool</param>
         /// <returns>the first stage of the new inbound NAT pool definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.InboundNatPool.UpdateDefinition.IBlank<Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate> DefineInboundNatPool (string name);
+        Microsoft.Azure.Management.Fluent.Network.InboundNatPool.UpdateDefinition.IBlank<Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate> DefineInboundNatPool(string name);
 
         /// <summary>
         /// Begins the description of an update to an existing inbound NAT pool.
         /// </summary>
         /// <param name="name">name the name of the inbound NAT pool to update</param>
         /// <returns>the first stage of the inbound NAT pool update</returns>
-        Microsoft.Azure.Management.Fluent.Network.InboundNatPool.Update.IUpdate UpdateInboundNatPool (string name);
+        Microsoft.Azure.Management.Fluent.Network.InboundNatPool.Update.IUpdate UpdateInboundNatPool(string name);
 
     }
 }

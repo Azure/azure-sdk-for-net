@@ -3,8 +3,8 @@
 namespace Microsoft.Azure.Management.Fluent.Network.HasPublicIpAddress.Definition
 {
 
-    using Microsoft.Azure.Management.Fluent.Network;
     using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Fluent.Network;
     /// <summary>
     /// The stage of the definition allowing to associate the resource with a public IP address.
     /// 
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.HasPublicIpAddress.Definitio
         /// </summary>
         /// <param name="creatable">creatable a creatable definition for a new public IP</param>
         /// <returns>the next stage of the definition</returns>
-        ReturnT WithNewPublicIpAddress (ICreatable<Microsoft.Azure.Management.Fluent.Network.IPublicIpAddress> creatable);
+        ReturnT WithNewPublicIpAddress(ICreatable<Microsoft.Azure.Management.Fluent.Network.IPublicIpAddress> creatable);
 
         /// <summary>
         /// Creates a new public IP address in the same region and group as the resource and associates it with the resource.
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.HasPublicIpAddress.Definitio
         /// The internal name and DNS label for the public IP address will be derived from the resource's name.
         /// </summary>
         /// <returns>the next stage of the definition</returns>
-        ReturnT WithNewPublicIpAddress ();
+        ReturnT WithNewPublicIpAddress();
 
         /// <summary>
         /// Creates a new public IP address in the same region and group as the resource, with the specified DNS label
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.HasPublicIpAddress.Definitio
         /// </summary>
         /// <param name="leafDnsLabel">leafDnsLabel the leaf domain label</param>
         /// <returns>the next stage of the definition</returns>
-        ReturnT WithNewPublicIpAddress (string leafDnsLabel);
+        ReturnT WithNewPublicIpAddress(string leafDnsLabel);
 
     }
     /// <summary>
@@ -60,14 +60,14 @@ namespace Microsoft.Azure.Management.Fluent.Network.HasPublicIpAddress.Definitio
         /// </summary>
         /// <param name="publicIpAddress">publicIpAddress an existing public IP address</param>
         /// <returns>the next stage of the definition</returns>
-        ReturnT WithExistingPublicIpAddress (IPublicIpAddress publicIpAddress);
+        ReturnT WithExistingPublicIpAddress(IPublicIpAddress publicIpAddress);
 
         /// <summary>
         /// Associates an existing public IP address with the resource.
         /// </summary>
         /// <param name="resourceId">resourceId the resource ID of an existing public IP address</param>
         /// <returns>the next stage of the definition</returns>
-        ReturnT WithExistingPublicIpAddress (string resourceId);
+        ReturnT WithExistingPublicIpAddress(string resourceId);
 
     }
 }

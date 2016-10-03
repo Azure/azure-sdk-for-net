@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
         {
         }
 
-        public PagedList<ILoadBalancer> List ()
+        internal PagedList<ILoadBalancer> List ()
         {
             var pagedList = new PagedList<LoadBalancerInner>(InnerCollection.ListAll(), (string nextPageLink) =>
             {
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return WrapList(pagedList);
         }
 
-        public PagedList<ILoadBalancer> ListByGroup (string groupName)
+        internal PagedList<ILoadBalancer> ListByGroup (string groupName)
         {
             var pagedList = new PagedList<LoadBalancerInner>(InnerCollection.List(groupName), (string nextPageLink) =>
             {
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
         }
 
 
-        public LoadBalancerImpl Define (string name)
+        internal LoadBalancerImpl Define (string name)
         {
             return WrapModel(name);
         }

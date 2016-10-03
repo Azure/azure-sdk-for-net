@@ -17,16 +17,16 @@ namespace Microsoft.Azure.Management.Fluent.Network
         IHasSubnet
     {
         /// <returns>the virtual network associated with this IP configuration</returns>
-        INetwork GetNetwork ();
+        Microsoft.Azure.Management.Fluent.Network.INetwork GetNetwork();
 
         /// <returns>private IP address version</returns>
         string PrivateIpAddressVersion { get; }
 
         /// <returns>the load balancer backends associated with this network interface IP configuration</returns>
-        List<Microsoft.Azure.Management.Fluent.Network.IBackend> ListAssociatedLoadBalancerBackends ();
+        System.Collections.Generic.IList<Microsoft.Azure.Management.Fluent.Network.IBackend> ListAssociatedLoadBalancerBackends();
 
         /// <returns>the load balancer inbound NAT rules associated with this network interface IP configuration</returns>
-        List<Microsoft.Azure.Management.Fluent.Network.IInboundNatRule> ListAssociatedLoadBalancerInboundNatRules ();
+        System.Collections.Generic.IList<Microsoft.Azure.Management.Fluent.Network.IInboundNatRule> ListAssociatedLoadBalancerInboundNatRules();
 
     }
 }

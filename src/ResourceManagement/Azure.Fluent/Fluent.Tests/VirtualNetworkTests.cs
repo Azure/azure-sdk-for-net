@@ -35,19 +35,19 @@ namespace Fluent.Tests
                     .WithRegion(Region.US_EAST)
                     .WithExistingResourceGroup(rgName)
                     .DefineRule("DenyInternetInComing")
-                        .DenyInbound
+                        .DenyInbound()
                         .FromAddress("INTERNET")
-                        .FromAnyPort
-                        .ToAnyAddress
-                        .ToAnyPort
+                        .FromAnyPort()
+                        .ToAnyAddress()
+                        .ToAnyPort()
                         .WithAnyProtocol()
                         .Attach()
                     .DefineRule("DenyInternetOutGoing")
-                        .DenyOutbound
-                        .FromAnyAddress
-                        .FromAnyPort
+                        .DenyOutbound()
+                        .FromAnyAddress()
+                        .FromAnyPort()
                         .ToAddress("INTERNET")
-                        .ToAnyPort
+                        .ToAnyPort()
                         .WithAnyProtocol()
                         .Attach()
                     .Create();
@@ -69,19 +69,19 @@ namespace Fluent.Tests
                     .WithRegion(Region.US_EAST)
                     .WithExistingResourceGroup(rgName)
                     .DefineRule("AllowHttpInComing")
-                        .AllowInbound
+                        .AllowInbound()
                         .FromAddress("INTERNET")
-                        .FromAnyPort
-                        .ToAnyAddress
+                        .FromAnyPort()
+                        .ToAnyAddress()
                         .ToPort(80)
                         .WithProtocol(SecurityRuleProtocol.Tcp)
                         .Attach()
                     .DefineRule("DenyInternetOutGoing")
-                        .DenyOutbound
-                        .FromAnyAddress
-                        .FromAnyPort
+                        .DenyOutbound()
+                        .FromAnyAddress()
+                        .FromAnyPort()
                         .ToAddress("INTERNET")
-                        .ToAnyPort
+                        .ToAnyPort()
                         .WithAnyProtocol()
                         .Attach()
                     .Create();
@@ -112,7 +112,7 @@ namespace Fluent.Tests
             AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
             return NetworkManager
                 .Configure()
-                .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                 .Authenticate(credentials, credentials.DefaultSubscriptionId);
         }
     }

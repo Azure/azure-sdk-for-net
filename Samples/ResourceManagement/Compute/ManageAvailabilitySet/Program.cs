@@ -1,17 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Samples.Common;
 using Microsoft.Azure.Management;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Fluent.Compute;
-using Microsoft.Azure.Management.Fluent.Network;
 using Microsoft.Azure.Management.Fluent.Resource.Authentication;
 using Microsoft.Azure.Management.Fluent.Resource.Core;
+using Microsoft.Azure.Management.Samples.Common;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ManageAvailabilitySet
 {
@@ -28,15 +24,15 @@ namespace ManageAvailabilitySet
 
     public class Program
     {
-        readonly static string rgName = Utilities.CreateRandomName("rgCOMA");
-        readonly static string availSetName1 = Utilities.CreateRandomName("av1");
-        readonly static string availSetName2 = Utilities.CreateRandomName("av2");
-        readonly static string vm1Name = Utilities.CreateRandomName("vm1");
-        readonly static string vm2Name = Utilities.CreateRandomName("vm2");
-        readonly static string vnetName = Utilities.CreateRandomName("vnet");
+        private static readonly string rgName = Utilities.CreateRandomName("rgCOMA");
+        private static readonly string availSetName1 = Utilities.CreateRandomName("av1");
+        private static readonly string availSetName2 = Utilities.CreateRandomName("av2");
+        private static readonly string vm1Name = Utilities.CreateRandomName("vm1");
+        private static readonly string vm2Name = Utilities.CreateRandomName("vm2");
+        private static readonly string vnetName = Utilities.CreateRandomName("vnet");
 
-        readonly static string userName = "tirekicker";
-        readonly static string password = "12NewPA$$w0rd!";
+        private static readonly string userName = "tirekicker";
+        private static readonly string password = "12NewPA$$w0rd!";
 
         public static void Main(string[] args)
         {
@@ -48,7 +44,7 @@ namespace ManageAvailabilitySet
 
                 var azure = Azure
                     .Configure()
-                    .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                    .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                     .Authenticate(credentials)
                     .WithSubscription(credentials.DefaultSubscriptionId);
 

@@ -31,8 +31,8 @@ namespace Fluent.Tests
                     .Create();
 
                 Assert.True(string.Equals(availabilitySet.ResourceGroupName, rgName));
-                Assert.True(availabilitySet.UpdateDomainCount.HasValue && availabilitySet.UpdateDomainCount == 2);
-                Assert.True(availabilitySet.FaultDomainCount.HasValue && availabilitySet.FaultDomainCount == 3);
+                Assert.True(availabilitySet.UpdateDomainCount == 2);
+                Assert.True(availabilitySet.FaultDomainCount == 3);
 
                 // Get
                 var feteched = computeManager.AvailabilitySets.GetById(availabilitySet.Id);
@@ -72,7 +72,7 @@ namespace Fluent.Tests
             AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
             return ComputeManager
                 .Configure()
-                .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                 .Authenticate(credentials, credentials.DefaultSubscriptionId);
         }
 
@@ -80,7 +80,7 @@ namespace Fluent.Tests
         {
             AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
             IResourceManager resourceManager = ResourceManager2.Configure()
-                .withLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                 .Authenticate(credentials)
                 .WithSubscription(credentials.DefaultSubscriptionId);
             return resourceManager;

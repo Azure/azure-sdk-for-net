@@ -8,7 +8,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
     /// <summary>
     /// Entry point to virtual machine scale set management API.
     /// </summary>
-    public interface IVirtualMachineScaleSets :
+    public interface IVirtualMachineScaleSets  :
         ISupportsListing<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet>,
         ISupportsListingByGroup<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet>,
         ISupportsGettingByGroup<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet>,

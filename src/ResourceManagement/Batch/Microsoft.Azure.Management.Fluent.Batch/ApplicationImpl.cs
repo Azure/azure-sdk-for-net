@@ -4,11 +4,8 @@
 namespace Microsoft.Azure.Management.Fluent.Batch
 {
     using Management.Batch;
-    using Microsoft.Azure.Management.Batch.Models;
-    using Microsoft.Azure.Management.Fluent.Batch.Application.Definition;
-    using Microsoft.Azure.Management.Fluent.Batch.Application.UpdateDefinition;
-    using Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Definition;
-    using Microsoft.Azure.Management.Fluent.Resource.Core;
+    using Management.Batch.Models;
+    using Resource.Core;
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
@@ -17,14 +14,14 @@ namespace Microsoft.Azure.Management.Fluent.Batch
     /// <summary>
     /// Implementation for BatchAccount Application and its parent interfaces.
     /// </summary>
-    internal partial class ApplicationImpl :
-        ExternalChildResource<Microsoft.Azure.Management.Fluent.Batch.IApplication,
-            Microsoft.Azure.Management.Batch.Models.ApplicationInner,
-            Microsoft.Azure.Management.Fluent.Batch.IBatchAccount,
-            Microsoft.Azure.Management.Fluent.Batch.BatchAccountImpl>,
+    public partial class ApplicationImpl :
+        ExternalChildResource<IApplication,
+            ApplicationInner,
+            IBatchAccount,
+            BatchAccountImpl>,
         IApplication,
-        IDefinition<Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Definition.IWithApplicationAndStorage>,
-        IUpdateDefinition<Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Update.IUpdate>,
+        Application.Definition.IDefinition<BatchAccount.Definition.IWithApplicationAndStorage>,
+        Application.UpdateDefinition.IUpdateDefinition<BatchAccount.Update.IUpdate>,
         Application.Update.IUpdate
     {
         private IApplicationOperations client;
@@ -49,36 +46,24 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             }
         }
 
-        public string DisplayName
+        internal string DisplayName()
         {
-            get
-            {
-                return Inner.DisplayName;
-            }
+            return Inner.DisplayName;
         }
 
-        public IDictionary<string, Microsoft.Azure.Management.Fluent.Batch.IApplicationPackage> ApplicationPackages
+        internal IDictionary<string, IApplicationPackage> ApplicationPackages()
         {
-            get
-            {
-                return applicationPackages.AsMap();
-            }
+            return applicationPackages.AsMap();
         }
 
-        public bool UpdatesAllowed
+        internal bool UpdatesAllowed()
         {
-            get
-            {
-                return Inner.AllowUpdates.GetValueOrDefault();
-            }
+            return Inner.AllowUpdates.GetValueOrDefault();
         }
 
-        public string DefaultVersion
+        internal string DefaultVersion()
         {
-            get
-            {
-                return Inner.DefaultVersion;
-            }
+            return Inner.DefaultVersion;
         }
 
         public override async Task<IApplication> CreateAsync(CancellationToken cancellationToken = default(CancellationToken))
@@ -128,13 +113,13 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             return Parent.WithApplication(this);
         }
 
-        public Application.Definition.IWithAttach<IWithApplicationAndStorage> WithAllowUpdates(bool allowUpdates)
+        public ApplicationImpl WithAllowUpdates(bool allowUpdates)
         {
             Inner.AllowUpdates = allowUpdates;
             return this;
         }
 
-        public Application.Definition.IWithAttach<IWithApplicationAndStorage> WithDisplayName(string displayName)
+        public ApplicationImpl WithDisplayName(string displayName)
         {
             Inner.DisplayName = displayName;
             return this;
@@ -164,7 +149,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             return this;
         }
 
-        public Application.Definition.IWithAttach<IWithApplicationAndStorage> DefineNewApplicationPackage(string applicationPackageName)
+        public ApplicationImpl DefineNewApplicationPackage(string applicationPackageName)
         {
             WithApplicationPackage(applicationPackages.Define(applicationPackageName));
             return this;

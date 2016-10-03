@@ -16,14 +16,14 @@ namespace Microsoft.Azure.Management.Fluent.Network.Subnet.Definition
         /// </summary>
         /// <param name="resourceId">resourceId the resource ID of the network security group</param>
         /// <returns>the next stage of the definition</returns>
-        IWithAttach<ParentT> WithExistingNetworkSecurityGroup (string resourceId);
+        Microsoft.Azure.Management.Fluent.Network.Subnet.Definition.IWithAttach<ParentT> WithExistingNetworkSecurityGroup(string resourceId);
 
         /// <summary>
         /// Assigns an existing network security group to this subnet.
         /// </summary>
         /// <param name="nsg">nsg the network security group to assign</param>
         /// <returns>the next stage of the definition</returns>
-        IWithAttach<ParentT> WithExistingNetworkSecurityGroup (INetworkSecurityGroup nsg);
+        Microsoft.Azure.Management.Fluent.Network.Subnet.Definition.IWithAttach<ParentT> WithExistingNetworkSecurityGroup(INetworkSecurityGroup nsg);
 
     }
     /// <summary>
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.Subnet.Definition
         /// </summary>
         /// <param name="cidr">cidr the IP address space prefix using the CIDR notation</param>
         /// <returns>the next stage of the subnet definition</returns>
-        IWithAttach<ParentT> WithAddressPrefix (string cidr);
+        Microsoft.Azure.Management.Fluent.Network.Subnet.Definition.IWithAttach<ParentT> WithAddressPrefix(string cidr);
 
     }
     /// <summary>

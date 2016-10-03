@@ -20,16 +20,16 @@ namespace Microsoft.Azure.Management.Fluent.Network
         string LoadDistribution { get; }
 
         /// <returns>the number of minutes before an inactive connection is closed</returns>
-        int? IdleTimeoutInMinutes { get; }
+        int IdleTimeoutInMinutes { get; }
 
         /// <returns>the load balanced front end port</returns>
-        int? FrontendPort { get; }
+        int FrontendPort { get; }
 
         /// <returns>the backend associated with the load balancing rule</returns>
-        IBackend Backend ();
+        Microsoft.Azure.Management.Fluent.Network.IBackend Backend { get; }
 
         /// <returns>the probe associated with the load balancing rule</returns>
-        IProbe Probe ();
+        Microsoft.Azure.Management.Fluent.Network.IProbe Probe { get; }
 
     }
 }

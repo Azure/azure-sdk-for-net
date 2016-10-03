@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.UpdateDefini
         /// <param name="network">network the virtual network the subnet exists in</param>
         /// <param name="subnetName">subnetName the name of a subnet</param>
         /// <returns>the next stage of the definition</returns>
-        IWithAttach<ParentT> WithExistingSubnet (INetwork network, string subnetName);
+        Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.UpdateDefinition.IWithAttach<ParentT> WithExistingSubnet(INetwork network, string subnetName);
 
     }
     /// <summary>
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.UpdateDefini
     /// </summary>
     public interface IWithAttach<ParentT>  :
         IInUpdateAlt<ParentT>,
-        IWithPrivateIpAddress<Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.UpdateDefinition.IWithAttach<ParentT>>
+        IWithPrivateIpAddress<Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate>>
     {
     }
     /// <summary>

@@ -3,11 +3,11 @@
 namespace Microsoft.Azure.Management.Fluent.Network
 {
 
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.Network.Models;
-    using Microsoft.Azure.Management.Fluent.Network.Network.Update;
     using System.Collections.Generic;
     using Microsoft.Azure.Management.Fluent.Resource.Core;
+    using Microsoft.Azure.Management.Network.Models;
+    using Microsoft.Azure.Management.Fluent.Network.Network.Update;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
     /// <summary>
     /// Entry point for Virtual Network management API in Azure.
     /// </summary>
@@ -18,15 +18,15 @@ namespace Microsoft.Azure.Management.Fluent.Network
         IUpdatable<Microsoft.Azure.Management.Fluent.Network.Network.Update.IUpdate>
     {
         /// <returns>list of address spaces associated with this virtual network, in the CIDR notation</returns>
-        List<string> AddressSpaces { get; }
+        System.Collections.Generic.IList<string> AddressSpaces { get; }
 
         /// <returns>list of DNS server IP addresses associated with this virtual network</returns>
-        IList<string> DnsServerIps { get; }
+        System.Collections.Generic.IList<string> DnsServerIps { get; }
 
         /// <returns>subnets of this virtual network as a map indexed by subnet name</returns>
         /// <returns><p>Note that when a virtual network is created with no subnets explicitly defined, a default subnet is</returns>
         /// <returns>automatically created with the name "subnet1".</returns>
-        IDictionary<string,Microsoft.Azure.Management.Fluent.Network.ISubnet> Subnets ();
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Fluent.Network.ISubnet> Subnets { get; }
 
     }
 }

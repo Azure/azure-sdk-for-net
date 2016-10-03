@@ -1,28 +1,28 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.txt in the project root for license information. 
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Samples.Common;
 using Microsoft.Azure.Management;
 using Microsoft.Azure.Management.Fluent.Resource.Authentication;
 using Microsoft.Azure.Management.Fluent.Resource.Core;
+using Microsoft.Azure.Management.Samples.Common;
 using System;
 
 namespace ManageStorageAccount
 {
+    /**
+     * Azure Storage sample for managing storage accounts -
+     *  - Create a storage account
+     *  - Get | regenerate storage account access keys
+     *  - Create another storage account
+     *  - List storage accounts
+     *  - Delete a storage account.
+     */
+
     public class Program
     {
-        /**
-         * Azure Storage sample for managing storage accounts -
-         *  - Create a storage account
-         *  - Get | regenerate storage account access keys
-         *  - Create another storage account
-         *  - List storage accounts
-         *  - Delete a storage account.
-         */
-
-        readonly static string rgName = Utilities.CreateRandomName("rgSTMS");
-        readonly static string storageAccountName = Utilities.CreateRandomName("sa");
-        readonly static string storageAccountName2 = Utilities.CreateRandomName("sa2");
+        private static readonly string rgName = Utilities.CreateRandomName("rgSTMS");
+        private static readonly string storageAccountName = Utilities.CreateRandomName("sa");
+        private static readonly string storageAccountName2 = Utilities.CreateRandomName("sa2");
 
         public static void Main(string[] args)
         {
@@ -34,7 +34,7 @@ namespace ManageStorageAccount
 
                 var azure = Azure
                     .Configure()
-                    .withLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
+                    .WithLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
                     .Authenticate(credentials)
                     .WithSubscription(credentials.DefaultSubscriptionId);
 

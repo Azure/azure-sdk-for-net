@@ -3,8 +3,8 @@
 namespace Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.Update
 {
 
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResourceActions;
     using Microsoft.Azure.Management.Fluent.Network.HasPrivateIpAddress.Update;
+    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResourceActions;
     using Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update;
     using Microsoft.Azure.Management.Fluent.Network;
     /// <summary>
@@ -27,7 +27,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.Update
         /// <param name="network">network the virtual network the subnet exists in</param>
         /// <param name="subnetName">subnetName the name of a subnet</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.Update.IUpdate WithExistingSubnet (INetwork network, string subnetName);
+        Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.Update.IUpdate WithExistingSubnet(INetwork network, string subnetName);
 
     }
 }
