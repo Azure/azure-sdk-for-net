@@ -29,7 +29,7 @@ namespace Microsoft.Azure.KeyVault
         public const int KeySize384 = 384 >> 3;
         public const int KeySize512 = 512 >> 3;
 
-        private static readonly int                      DefaultKeySize = KeySize256;
+        private static readonly int                   DefaultKeySize = KeySize256;
         private static readonly RandomNumberGenerator Rng            = RandomNumberGenerator.Create();
 
         private byte[] _key;
@@ -174,21 +174,16 @@ namespace Microsoft.Azure.KeyVault
             if ( algo == null )
                 throw new NotSupportedException( algorithm );
  
-            using ( var encryptor = algo.CreateDecryptor( _key, iv, authenticationData ) )
+            try
             {
-                var result    = encryptor.TransformFinalBlock( ciphertext, 0, ciphertext.Length );
-                var transform = encryptor as IAuthenticatedCryptoTransform;
-
-                if ( transform == null )
-                    return Task.FromResult( result );
-
-                if ( authenticationData == null || authenticationTag == null )
-                    throw new CryptographicException( "AuthenticatingCryptoTransform requires authenticationData and authenticationTag" );
-
-                if ( !authenticationTag.SequenceEqualConstantTime( transform.Tag ) )
-                    throw new CryptographicException( "Data is not authentic" );
-
-                return Task.FromResult( result );
+                using ( var encryptor = algo.CreateDecryptor( _key, iv, authenticationData, authenticationTag ) )
+                {
+                    return Task.FromResult( encryptor.TransformFinalBlock( ciphertext, 0, ciphertext.Length ) );
+                }
+            }
+            catch ( Exception ex )
+            {
+                return TaskException.FromException<byte[]>( ex );
             }
         }
 
@@ -210,28 +205,28 @@ namespace Microsoft.Azure.KeyVault
 
             if ( algo == null )
                 throw new NotSupportedException( algorithm );
- 
-            using ( var encryptor = algo.CreateEncryptor( _key, iv, authenticationData ) )
+
+            try
             {
-                var    cipherText        = encryptor.TransformFinalBlock( plaintext, 0, plaintext.Length );
-                byte[] authenticationTag = null;
-                var    transform         = encryptor as IAuthenticatedCryptoTransform;
-
-                if ( transform != null )
+                using ( var encryptor = algo.CreateEncryptor( _key, iv, authenticationData ) )
                 {
-                    authenticationTag = transform.Tag.Clone() as byte[];
-                }
+                    var    cipherText        = encryptor.TransformFinalBlock( plaintext, 0, plaintext.Length );
+                    byte[] authenticationTag = null;
+                    var    transform         = encryptor as IAuthenticatedCryptoTransform;
 
-                try
-                {
+                    if ( transform != null )
+                    {
+                        authenticationTag = transform.Tag.Clone() as byte[];
+                    }
+
                     var result = new Tuple<byte[], byte[], string>( cipherText, authenticationTag, algorithm );
 
                     return Task.FromResult( result );
                 }
-                catch ( Exception ex )
-                {
-                    return TaskException.FromException<Tuple<byte[], byte[], string>>( ex );
-                }
+            }
+            catch ( Exception ex )
+            {
+                return TaskException.FromException<Tuple<byte[], byte[], string>>( ex );
             }
         }
 
@@ -250,19 +245,19 @@ namespace Microsoft.Azure.KeyVault
 
             if ( algo == null )
                 throw new NotSupportedException( algorithm );
- 
-            using ( var encryptor = algo.CreateEncryptor( _key, null ) )
-            {
-                try
-                {
-                    var result = new Tuple<byte[], string>( encryptor.TransformFinalBlock( key, 0, key.Length ), algorithm );
 
-                    return Task.FromResult( result );
-                }
-                catch ( Exception ex )
+            try
+            {
+                using ( var encryptor = algo.CreateEncryptor( _key, null ) )
                 {
-                    return TaskException.FromException<Tuple<byte[], string>>( ex );
+                        var result = new Tuple<byte[], string>( encryptor.TransformFinalBlock( key, 0, key.Length ), algorithm );
+
+                        return Task.FromResult( result );
                 }
+            }
+            catch ( Exception ex )
+            {
+                return TaskException.FromException<Tuple<byte[], string>>( ex );
             }
         }
 
@@ -281,19 +276,19 @@ namespace Microsoft.Azure.KeyVault
 
             if ( algo == null )
                 throw new NotSupportedException( algorithm );
- 
-            using ( var encryptor = algo.CreateDecryptor( _key, null ) )
+
+            try
             {
-                try
+                using ( var encryptor = algo.CreateDecryptor( _key, null ) )
                 {
                     var result = encryptor.TransformFinalBlock( encryptedKey, 0, encryptedKey.Length );
 
                     return Task.FromResult( result );
                 }
-                catch ( Exception ex )
-                {
-                    return TaskException.FromException<byte[]>( ex );
-                }
+            }
+            catch ( Exception ex )
+            {
+                return TaskException.FromException<byte[]>( ex );
             }
         }
 
