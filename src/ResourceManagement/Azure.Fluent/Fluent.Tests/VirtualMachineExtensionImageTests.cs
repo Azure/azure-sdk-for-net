@@ -15,7 +15,7 @@ namespace Azure.Tests
 {
     public class VirtualMachineExtensionImageTests
     {
-        [Fact(Skip = "TODO: Convert to recorded tests")]
+        [Fact]
         public void CanListExtensionImages()
         {
             var azure = TestHelper.CreateRollupClient();
@@ -23,7 +23,9 @@ namespace Azure.Tests
             var extensionImages = azure.VirtualMachineExtensionImages
                             .ListByRegion(Region.US_EAST);
             // Lazy listing
-            Assert.Equal(extensionImages.Take(maxListing).Count(), maxListing);
+            var firstTwenty = extensionImages.Take(maxListing);
+            Assert.Equal(firstTwenty.Count(), maxListing);
+            Assert.False(firstTwenty.Any(image => image == null));
         }
 
 
