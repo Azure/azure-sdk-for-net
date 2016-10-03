@@ -20,7 +20,7 @@ using System;
 namespace Microsoft.Azure.Management.Fluent.Compute
 {
     internal partial class VirtualMachineScaleSetImpl :
-        GroupableResource<IVirtualMachineScaleSet,
+        GroupableParentResource<IVirtualMachineScaleSet,
             VirtualMachineScaleSetInner,
             Rest.Azure.Resource,
             VirtualMachineScaleSetImpl,
@@ -82,6 +82,52 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             this.storageManager = storageManager;
             this.networkManager = networkManager;
             this.namer = new ResourceNamer(this.Name);
+        }
+
+        protected override void InitializeChildrenFromInner()
+        {
+            this.extensions = new Dictionary<string, IVirtualMachineScaleSetExtension>();
+            if (this.Inner.VirtualMachineProfile.ExtensionProfile != null
+               && this.Inner.VirtualMachineProfile.ExtensionProfile.Extensions != null)
+            {
+                foreach (var innerExtenison in this.Inner.VirtualMachineProfile.ExtensionProfile.Extensions)
+                {
+                    this.extensions.Add(innerExtenison.Name, new VirtualMachineScaleSetExtensionImpl(innerExtenison, this));
+                }
+            }
+        }
+
+        protected override void BeforeCreating()
+        {
+            if (this.extensions.Count > 0)
+            {
+                this.Inner.VirtualMachineProfile
+                    .ExtensionProfile = new VirtualMachineScaleSetExtensionProfile
+                    {
+                        Extensions = new List<VirtualMachineScaleSetExtensionInner>()
+                    };
+                foreach (IVirtualMachineScaleSetExtension extension in this.extensions.Values)
+                {
+                    this.Inner.VirtualMachineProfile
+                        .ExtensionProfile
+                        .Extensions.Add(extension.Inner);
+                }
+            }
+        }
+
+        protected override async Task<VirtualMachineScaleSetInner> CreateInner()
+        {
+            this.setOSDiskAndOSProfileDefaults();
+            this.setPrimaryIpConfigurationSubnet();
+            this.setPrimaryIpConfigurationBackendsAndInboundNatPools();
+            await handleOSDiskContainersAsync();
+            return await client.CreateOrUpdateAsync(this.ResourceGroupName, this.Name, this.Inner);
+        }
+
+        protected override void AfterCreating()
+        {
+            this.ClearCachedProperties();
+            this.InitializeChildrenFromInner();
         }
 
         #region Getters
@@ -797,6 +843,8 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             var response = client.Get(this.ResourceGroupName,
                 this.Name);
             SetInner(response);
+            this.ClearCachedProperties();
+            this.InitializeChildrenFromInner();
             return this;
         }
 
@@ -827,31 +875,6 @@ namespace Microsoft.Azure.Management.Fluent.Compute
 
         #endregion
 
-        public override async Task<IVirtualMachineScaleSet> CreateResourceAsync(CancellationToken cancellationToken)
-        {
-            if (this.extensions.Count > 0)
-            {
-                this.Inner.VirtualMachineProfile
-                    .ExtensionProfile = new VirtualMachineScaleSetExtensionProfile
-                    {
-                        Extensions = new List<VirtualMachineScaleSetExtensionInner>()
-                    };
-                foreach (IVirtualMachineScaleSetExtension extension in this.extensions.Values)
-                {
-                    this.Inner.VirtualMachineProfile
-                        .ExtensionProfile
-                        .Extensions.Add(extension.Inner);
-                }
-            }
-
-            this.setOSDiskAndOSProfileDefaults();
-            this.setPrimaryIpConfigurationBackendsAndInboundNatPools();
-            await handleOSDiskContainersAsync();
-            await client.CreateOrUpdateAsync(this.ResourceGroupName, this.Name, this.Inner);
-            this.clearCachedProperties();
-            return this;
-        }
-
         #region Helpers
 
         private bool IsInUpdateMode
@@ -864,8 +887,6 @@ namespace Microsoft.Azure.Management.Fluent.Compute
 
         private void setOSDiskAndOSProfileDefaults()
         {
-            Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet self = this
-                as Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet;
             if (this.IsInUpdateMode)
             {
                 return;
@@ -889,7 +910,8 @@ namespace Microsoft.Azure.Management.Fluent.Compute
                     .VirtualMachineProfile
                     .OsProfile;
             // linux image: Custom or marketplace linux image
-            if (self.OsType == OperatingSystemTypes.Linux || this.isMarketplaceLinuxImage)
+            if ((this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.OsType != null 
+                && this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.OsType == OperatingSystemTypes.Linux) || this.isMarketplaceLinuxImage)
             {
                 if (osProfile.LinuxConfiguration == null)
                 {
@@ -900,24 +922,24 @@ namespace Microsoft.Azure.Management.Fluent.Compute
                     .DisablePasswordAuthentication = osProfile.AdminPassword == null;
             }
 
-            if (self.OsDiskCachingType == null)
+            if (this.Inner.VirtualMachineProfile.StorageProfile.OsDisk.Caching == null)
             {
                 this.WithOsDiskCaching(CachingTypes.ReadWrite);
             }
 
-            if (self.OsDiskName == null)
+            if (this.OsDiskName() == null)
             {
                 this.WithOsDiskName(this.Name + "-os-disk");
             }
 
-            if (self.ComputerNamePrefix == null)
+            if (this.ComputerNamePrefix() == null)
             {
                 // VM name cannot contain only numeric values and cannot exceed 15 chars
-                if ((new Regex(@"^\d+$")).IsMatch(self.Name))
+                if ((new Regex(@"^\d+$")).IsMatch(this.Name))
                 {
                     this.WithComputerNamePrefix(ResourceNamer.RandomResourceName("vmss-vm", 12));
                 }
-                else if (self.Name.Length <= 12)
+                else if (this.Name.Length <= 12)
                 {
                     this.WithComputerNamePrefix(this.Name + "-vm");
                 }
@@ -1150,7 +1172,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             this.primaryInternalLBInboundNatPoolsToAddOnUpdate.Clear();
         }
 
-        private void clearCachedProperties()
+        private void ClearCachedProperties()
         {
             this.primaryInternetFacingLoadBalancer = null;
             this.primaryInternalLoadBalancer = null;
