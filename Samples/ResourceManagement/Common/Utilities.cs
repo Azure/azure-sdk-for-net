@@ -9,7 +9,6 @@ using Microsoft.Azure.Management.Fluent.Storage;
 using Microsoft.Azure.Management.Storage.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace Microsoft.Azure.Management.Samples.Common
@@ -269,6 +268,37 @@ namespace Microsoft.Azure.Management.Samples.Common
                 .ToString());
         }
 
+        public static void PrintNetworkInterface(INetworkInterface resource)
+        {
+            var info = new StringBuilder();
+            info.Append("NetworkInterface: ").Append(resource.Id)
+                    .Append("Name: ").Append(resource.Name)
+                    .Append("\n\tResource group: ").Append(resource.ResourceGroupName)
+                    .Append("\n\tRegion: ").Append(resource.Region)
+                    .Append("\n\tTags: ").Append(GetPrintableStringForDictionary(resource.Tags))
+                    .Append("\n\tInternal DNS name label: ").Append(resource.InternalDnsNameLabel)
+                    .Append("\n\tInternal FQDN: ").Append(resource.InternalFqdn)
+                    .Append("\n\tInternal domain name suffix: ").Append(resource.InternalDomainNameSuffix)
+                    .Append("\n\tNetwork security group: ").Append(resource.NetworkSecurityGroupId)
+                    .Append("\n\tApplied DNS servers: ").Append(GetPrintableStringForList(resource.AppliedDnsServers))
+                    .Append("\n\tDNS server IPs: ");
+
+            // Output dns servers
+            foreach (var dnsServerIp in resource.DnsServers)
+            {
+                info.Append("\n\t\t").Append(dnsServerIp);
+            }
+
+            info.Append("\n\t IP forwarding enabled: ").Append(resource.IsIpForwardingEnabled)
+                    .Append("\n\tMAC Address:").Append(resource.MacAddress)
+                    .Append("\n\tPrivate IP:").Append(resource.PrimaryPrivateIp)
+                    .Append("\n\tPrivate allocation method:").Append(resource.PrimaryPrivateIpAllocationMethod)
+                    .Append("\n\tPrimary virtual network ID: ").Append(resource.PrimaryIpConfiguration.NetworkId)
+                    .Append("\n\tPrimary subnet name:").Append(resource.PrimaryIpConfiguration.SubnetName);
+
+            Console.WriteLine(info.ToString());
+        }
+
         public static void PrintLoadBalancer(ILoadBalancer loadBalancer)
         {
             var info = new StringBuilder();
@@ -513,6 +543,7 @@ namespace Microsoft.Azure.Management.Samples.Common
 
             return outputString.ToString();
         }
+
         private static string GetPrintableStringForList(IList<string> addressSpaces)
         {
             return string.Join(",", addressSpaces);

@@ -26,7 +26,7 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
         internal CreatedResources(ICreatableUpdatableResourcesRoot<ResourceT> creatableUpdatableResourcesRoot)
         {
             this.creatableUpdatableResourcesRoot = creatableUpdatableResourcesRoot;
-            this.topLevelResources = this.creatableUpdatableResourcesRoot.createdTopLevelResources();
+            this.topLevelResources = this.creatableUpdatableResourcesRoot.CreatedTopLevelResources();
         }
 
         #region Implementation of ICreatedResources interface

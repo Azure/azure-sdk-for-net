@@ -1,5 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License. See License.Txt in the project root for license information.
+// Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management;
 using Microsoft.Azure.Management.Fluent.Compute;
@@ -45,7 +45,7 @@ namespace ManageVirtualMachineScaleSet
         private readonly static string storageAccountName3 = ResourceNamer.RandomResourceName("stg3", 24);
         private readonly static string userName = "tirekicker";
         private readonly static string sshKey = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCfSPC2K7LZcFKEO+/t3dzmQYtrJFZNxOsbVgOVKietqHyvmYGHEC0J2wPdAqQ/63g/hhAEFRoyehM+rbeDri4txB3YFfnOK58jqdkyXzupWqXzOrlKY4Wz9SKjjN765+dqUITjKRIaAip1Ri137szRg71WnrmdP3SphTRlCx1Bk2nXqWPsclbRDCiZeF8QOTi4JqbmJyK5+0UqhqYRduun8ylAwKKQJ1NJt85sYIHn9f1Rfr6Tq2zS0wZ7DHbZL+zB5rSlAr8QyUdg/GQD+cmSs6LvPJKL78d6hMGk84ARtFo4A79ovwX/Fj01znDQkU6nJildfkaolH2rWFG/qttD azjava@javalib.Com";
-        private readonly static string apacheInstallScript = "https://raw.Githubusercontent.Com/Azure/azure-sdk-for-java/master/azure-mgmt-compute/src/test/assets/install_apache.Sh";
+        private readonly static string apacheInstallScript = "https://raw.Githubusercontent.Com/Azure/azure-sdk-for-net/Fluent/Samples/ResourceManagement/Compute/Resources/install_apache.sh";
         private readonly static string installCommand = "bash install_apache.Sh Abc.123x(";
 
         public static void Main(string[] args)
@@ -185,7 +185,7 @@ namespace ManageVirtualMachineScaleSet
                     Console.WriteLine("Creating virtual machine scale set with three virtual machines"
                             + " in the frontend subnet ...");
 
-                    var t1 = new DateTime();
+                    var t1 = DateTime.UtcNow;
 
                     var fileUris = new List<string>();
                     fileUris.Add(apacheInstallScript);
@@ -218,7 +218,7 @@ namespace ManageVirtualMachineScaleSet
                                 .Attach()
                             .Create();
 
-                    var t2 = new DateTime();
+                    var t2 = DateTime.UtcNow;
                     Console.WriteLine("Created a virtual machine scale set with "
                             + "3 Linux VMs & Apache Web servers on them: (took "
                             + ((t2 - t1).TotalSeconds) + " seconds) ");
@@ -278,14 +278,15 @@ namespace ManageVirtualMachineScaleSet
                     {
                         Console.WriteLine("Did not create any resources in Azure. No clean up is necessary");
                     }
-                    catch (Exception g)
+                    catch (Exception ex)
                     {
+                        Console.WriteLine(ex);
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                Console.WriteLine(e);
+                Console.WriteLine(ex);
             }
         }
     }
