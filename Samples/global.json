@@ -1,3 +1,11 @@
 {
-    "projects": [ "../src/ResourceManagement/Azure.Fluent", "ResourceManagement"]
+    "projects": [ 
+    	"../src/ResourceManagement/Azure.Fluent", 
+    	"ResourceManagement",
+    	"ResourceManagement/Batch",
+    	"ResourceManagement/Compute",
+    	"ResourceManagement/KeyVault",
+    	"ResourceManagement/ResourceManager",
+    	"ResourceManagement/Storage"
+    ]
 }
