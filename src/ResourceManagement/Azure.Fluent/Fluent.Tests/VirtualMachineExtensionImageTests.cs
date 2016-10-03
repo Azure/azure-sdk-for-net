@@ -27,7 +27,7 @@ namespace Azure.Tests
         }
 
 
-        [Fact]
+        [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanGetExtensionTypeVersionAndImage()
         {
             var azure = TestHelper.CreateRollupClient();
