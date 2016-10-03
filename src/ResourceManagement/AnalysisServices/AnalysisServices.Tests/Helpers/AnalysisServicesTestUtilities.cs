@@ -38,7 +38,6 @@ namespace AnalysisServices.Tests.Helpers
 {
     public static class AnalysisServicesTestUtilities
     {
-        public static bool IsTestTenant = false;
         private static HttpClientHandler Handler = null;
         private static string testSubscription = "00000000-0000-0000-0000-000000000000";
         private static Uri testUri = new Uri("https://api-dogfood.resources.windows-int.net/");
@@ -49,9 +48,9 @@ namespace AnalysisServices.Tests.Helpers
         private static string certPassword = null;
 #endif
         // These are used to create default accounts
-        public static string DefaultResourceGroup = "testrg";
-        public static string DefaultServerName = "asaztest";
-        public static string DefaultLocation = IsTestTenant ? null : "West US";
+        public static string DefaultResourceGroup = "TestRG";
+        public static string DefaultServerName = "azsdktest";
+        public static string DefaultLocation = "West US";
         public static ResourceSku DefaultSku = new ResourceSku
         {
             Name = SkuName.S1.ToString(),
@@ -66,8 +65,8 @@ namespace AnalysisServices.Tests.Helpers
 
         public static IList<string> DefaultAdministrators = new List<string>()
         {
-            "aztest0@contoso.com",
-            "aztest1@contoso.com"
+            "aztest0@stabletest.ccsctp.net",
+            "aztest1@stabletest.ccsctp.net"
         };
 
         public static string GetDefaultCreatedResponse(string provisioningState)
@@ -106,16 +105,9 @@ namespace AnalysisServices.Tests.Helpers
 
         public static ResourceManagementClient GetResourceManagementClient(MockContext context, RecordedDelegatingHandler handler)
         {
-            if (IsTestTenant)
-            {
-                return null;
-            }
-            else
-            {
-                handler.IsPassThrough = true;
-                ResourceManagementClient resourcesClient = context.GetServiceClient<ResourceManagementClient>(handlers: handler);
-                return resourcesClient;
-            }
+            handler.IsPassThrough = true;
+            ResourceManagementClient resourcesClient = context.GetServiceClient<ResourceManagementClient>(handlers: handler);
+            return resourcesClient;
         }
 
         public static AnalysisServicesServer GetDefaultAnalysisServicesResource()
@@ -131,6 +123,17 @@ namespace AnalysisServices.Tests.Helpers
             return defaultServer;
         }
 
+        /// <summary>
+        /// Default constructor for management clients, using the TestSupport Infrastructure
+        /// </summary>
+        /// <param name="testBase">the test class</param>
+        /// <param name="context">Mock context object</param>
+        /// <returns>A redis cache management client, created from the current context (environment variables)</returns>
+        public static AnalysisServicesManagementClient GetAnalysisServicesClient(this TestBase testBase, MockContext context)
+        {
+            return context.GetServiceClient<AnalysisServicesManagementClient>();
+        }
+
         public static AnalysisServicesManagementClient GetAnalysisServicesClient(RecordedDelegatingHandler handler)
         {
             handler.IsPassThrough = false;
@@ -141,24 +144,6 @@ namespace AnalysisServices.Tests.Helpers
                 client.LongRunningOperationRetryTimeout = 0;
             }
             return client;
-        }
-
-        public static AnalysisServicesManagementClient GetAnalysisServicesClient(MockContext context, RecordedDelegatingHandler handler)
-        {
-            AnalysisServicesManagementClient analysisServicesClient;
-            if (IsTestTenant)
-            {
-                analysisServicesClient = new AnalysisServicesManagementClient(new TokenCredentials("xyz"), GetHandler());
-                analysisServicesClient.SubscriptionId = testSubscription;
-                analysisServicesClient.BaseUri = testUri;
-            }
-            else
-            {
-                handler.IsPassThrough = true;
-                analysisServicesClient = context.GetServiceClient<AnalysisServicesManagementClient>(handlers: handler);
-            }
-
-            return analysisServicesClient;
         }
 
         private static HttpClientHandler GetHandler()
@@ -181,25 +166,25 @@ namespace AnalysisServices.Tests.Helpers
             const string testPrefix = "res";
             var rgname = TestUtilities.GenerateName(testPrefix);
 
-            if (!IsTestTenant)
-            {
-                var resourceGroup = resourcesClient.ResourceGroups.CreateOrUpdate(
-                    rgname,
-                    new ResourceGroup
-                    {
-                        Location = DefaultLocation
-                    });
-            }
+            //if (!IsTestTenant)
+            //{
+            //    var resourceGroup = resourcesClient.ResourceGroups.CreateOrUpdate(
+            //        rgname,
+            //        new ResourceGroup
+            //        {
+            //            Location = DefaultLocation
+            //        });
+            //}
 
             return rgname;
         }
 
         public static void DeleteResourceGroup(ResourceManagementClient resourcesClient, string resourceGroupName)
         {
-            if (!IsTestTenant)
-            {
-                resourcesClient.ResourceGroups.Delete(resourceGroupName);
-            }
+            //if (!IsTestTenant)
+            //{
+            //    resourcesClient.ResourceGroups.Delete(resourceGroupName);
+            //}
         }
 
         public static void WaitIfNotInPlaybackMode()

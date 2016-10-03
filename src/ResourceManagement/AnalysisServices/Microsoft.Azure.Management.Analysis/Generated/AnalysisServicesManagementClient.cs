@@ -276,7 +276,7 @@ namespace Microsoft.Azure.Management.Analysis
         {
             this.Servers = new ServersOperations(this);
             this.BaseUri = new System.Uri("https://management.azure.com");
-            this.ApiVersion = "2016-05-06";
+            this.ApiVersion = "2016-05-16";
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;
             this.GenerateClientRequestId = true;

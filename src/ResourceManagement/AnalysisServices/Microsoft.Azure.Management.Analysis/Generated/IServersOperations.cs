@@ -19,12 +19,12 @@ namespace Microsoft.Azure.Management.Analysis
         /// <summary>
         /// Gets details about the specified Analysis Services server
         /// </summary>
-        /// <param name='serverName'>
-        /// Name of the Analysis Services server
-        /// </param>
         /// <param name='resourceGroupName'>
         /// Name of the Azure Resource group which a given Analysis Services
         /// server is part of.
+        /// </param>
+        /// <param name='serverName'>
+        /// Name of the Analysis Services server
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -41,17 +41,17 @@ namespace Microsoft.Azure.Management.Analysis
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<AnalysisServicesServer>> GetDetailsWithHttpMessagesAsync(string serverName, string resourceGroupName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<AnalysisServicesServer>> GetDetailsWithHttpMessagesAsync(string resourceGroupName, string serverName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Provisions the specified Analysis Services server based on the
         /// configuration specified in the request
         /// </summary>
-        /// <param name='serverName'>
-        /// Name of the Analysis Services server
-        /// </param>
         /// <param name='resourceGroupName'>
         /// Name of the Azure Resource group which a given Analysis Services
         /// server is part of.
+        /// </param>
+        /// <param name='serverName'>
+        /// Name of the Analysis Services server
         /// </param>
         /// <param name='serverParameters'>
         /// Request body for provisioning
@@ -71,17 +71,17 @@ namespace Microsoft.Azure.Management.Analysis
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<AnalysisServicesServer>> CreateWithHttpMessagesAsync(string serverName, string resourceGroupName, AnalysisServicesServer serverParameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<AnalysisServicesServer>> CreateWithHttpMessagesAsync(string resourceGroupName, string serverName, AnalysisServicesServer serverParameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Provisions the specified Analysis Services server based on the
         /// configuration specified in the request
         /// </summary>
-        /// <param name='serverName'>
-        /// Name of the Analysis Services server
-        /// </param>
         /// <param name='resourceGroupName'>
         /// Name of the Azure Resource group which a given Analysis Services
         /// server is part of.
+        /// </param>
+        /// <param name='serverName'>
+        /// Name of the Analysis Services server
         /// </param>
         /// <param name='serverParameters'>
         /// Request body for provisioning
@@ -101,16 +101,16 @@ namespace Microsoft.Azure.Management.Analysis
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<AnalysisServicesServer>> BeginCreateWithHttpMessagesAsync(string serverName, string resourceGroupName, AnalysisServicesServer serverParameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<AnalysisServicesServer>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string serverName, AnalysisServicesServer serverParameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Deletes the specified Analysis Services server.
         /// </summary>
-        /// <param name='serverName'>
-        /// Name of the Analysis Services server
-        /// </param>
         /// <param name='resourceGroupName'>
         /// Name of the Azure Resource group which a given Analysis Services
         /// server is part of.
+        /// </param>
+        /// <param name='serverName'>
+        /// Name of the Analysis Services server
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -121,19 +121,22 @@ namespace Microsoft.Azure.Management.Analysis
         /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> DeleteWithHttpMessagesAsync(string serverName, string resourceGroupName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<AnalysisServicesServer>> DeleteWithHttpMessagesAsync(string resourceGroupName, string serverName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Deletes the specified Analysis Services server.
         /// </summary>
-        /// <param name='serverName'>
-        /// Name of the Analysis Services server
-        /// </param>
         /// <param name='resourceGroupName'>
         /// Name of the Azure Resource group which a given Analysis Services
         /// server is part of.
+        /// </param>
+        /// <param name='serverName'>
+        /// Name of the Analysis Services server
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -144,19 +147,22 @@ namespace Microsoft.Azure.Management.Analysis
         /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string serverName, string resourceGroupName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<AnalysisServicesServer>> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string serverName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Updates the current state of the specified Analysis Services server
         /// </summary>
-        /// <param name='serverName'>
-        /// Name of the Analysis Services server
-        /// </param>
         /// <param name='resourceGroupName'>
         /// Name of the Azure Resource group which a given Analysis Services
         /// server is part of.
+        /// </param>
+        /// <param name='serverName'>
+        /// Name of the Analysis Services server
         /// </param>
         /// <param name='serverUpdateParameters'>
         /// Request object for updating the server
@@ -176,16 +182,16 @@ namespace Microsoft.Azure.Management.Analysis
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<AnalysisServicesServer>> UpdateWithHttpMessagesAsync(string serverName, string resourceGroupName, AnalysisServicesServerUpdateParameters serverUpdateParameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<AnalysisServicesServer>> UpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, AnalysisServicesServerUpdateParameters serverUpdateParameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Updates the current state of the specified Analysis Services server
         /// </summary>
-        /// <param name='serverName'>
-        /// Name of the Analysis Services server
-        /// </param>
         /// <param name='resourceGroupName'>
         /// Name of the Azure Resource group which a given Analysis Services
         /// server is part of.
+        /// </param>
+        /// <param name='serverName'>
+        /// Name of the Analysis Services server
         /// </param>
         /// <param name='serverUpdateParameters'>
         /// Request object for updating the server
@@ -205,7 +211,7 @@ namespace Microsoft.Azure.Management.Analysis
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<AnalysisServicesServer>> BeginUpdateWithHttpMessagesAsync(string serverName, string resourceGroupName, AnalysisServicesServerUpdateParameters serverUpdateParameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<AnalysisServicesServer>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, AnalysisServicesServerUpdateParameters serverUpdateParameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Gets all the Analysis Services servers for the given resource group
         /// </summary>

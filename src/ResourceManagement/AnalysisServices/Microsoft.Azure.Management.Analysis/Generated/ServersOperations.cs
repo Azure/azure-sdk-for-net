@@ -44,12 +44,12 @@ namespace Microsoft.Azure.Management.Analysis
         /// <summary>
         /// Gets details about the specified Analysis Services server
         /// </summary>
-        /// <param name='serverName'>
-        /// Name of the Analysis Services server
-        /// </param>
         /// <param name='resourceGroupName'>
         /// Name of the Azure Resource group which a given Analysis Services server is
         /// part of.
+        /// </param>
+        /// <param name='serverName'>
+        /// Name of the Analysis Services server
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -69,27 +69,8 @@ namespace Microsoft.Azure.Management.Analysis
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<AnalysisServicesServer>> GetDetailsWithHttpMessagesAsync(string serverName, string resourceGroupName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<AnalysisServicesServer>> GetDetailsWithHttpMessagesAsync(string resourceGroupName, string serverName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            if (serverName == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "serverName");
-            }
-            if (serverName != null)
-            {
-                if (serverName.Length > 63)
-                {
-                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MaxLength, "serverName", 63);
-                }
-                if (serverName.Length < 3)
-                {
-                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MinLength, "serverName", 3);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(serverName, "^[a-z][a-z0-9]*$"))
-                {
-                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.Pattern, "serverName", "^[a-z][a-z0-9]*$");
-                }
-            }
             if (resourceGroupName == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "resourceGroupName");
@@ -109,6 +90,25 @@ namespace Microsoft.Azure.Management.Analysis
                     throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
+            if (serverName == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "serverName");
+            }
+            if (serverName != null)
+            {
+                if (serverName.Length > 63)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MaxLength, "serverName", 63);
+                }
+                if (serverName.Length < 3)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MinLength, "serverName", 3);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(serverName, "^[a-z][a-z0-9]*$"))
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.Pattern, "serverName", "^[a-z][a-z0-9]*$");
+                }
+            }
             if (this.Client.ApiVersion == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -124,16 +124,16 @@ namespace Microsoft.Azure.Management.Analysis
             {
                 _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
                 System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
-                tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "GetDetails", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AnalysisServices/servers/{serverName}").ToString();
-            _url = _url.Replace("{serverName}", System.Uri.EscapeDataString(serverName));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{serverName}", System.Uri.EscapeDataString(serverName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(this.Client.SubscriptionId));
             System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (this.Client.ApiVersion != null)
@@ -267,12 +267,12 @@ namespace Microsoft.Azure.Management.Analysis
         /// Provisions the specified Analysis Services server based on the
         /// configuration specified in the request
         /// </summary>
-        /// <param name='serverName'>
-        /// Name of the Analysis Services server
-        /// </param>
         /// <param name='resourceGroupName'>
         /// Name of the Azure Resource group which a given Analysis Services server is
         /// part of.
+        /// </param>
+        /// <param name='serverName'>
+        /// Name of the Analysis Services server
         /// </param>
         /// <param name='serverParameters'>
         /// Request body for provisioning
@@ -283,11 +283,11 @@ namespace Microsoft.Azure.Management.Analysis
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<AnalysisServicesServer>> CreateWithHttpMessagesAsync(string serverName, string resourceGroupName, AnalysisServicesServer serverParameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<AnalysisServicesServer>> CreateWithHttpMessagesAsync(string resourceGroupName, string serverName, AnalysisServicesServer serverParameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Send Request
             Microsoft.Rest.Azure.AzureOperationResponse<AnalysisServicesServer> _response = await BeginCreateWithHttpMessagesAsync(
-                serverName, resourceGroupName, serverParameters, customHeaders, cancellationToken);
+                resourceGroupName, serverName, serverParameters, customHeaders, cancellationToken);
             return await this.Client.GetPutOrPatchOperationResultAsync(_response,
                 customHeaders,
                 cancellationToken);
@@ -297,12 +297,12 @@ namespace Microsoft.Azure.Management.Analysis
         /// Provisions the specified Analysis Services server based on the
         /// configuration specified in the request
         /// </summary>
-        /// <param name='serverName'>
-        /// Name of the Analysis Services server
-        /// </param>
         /// <param name='resourceGroupName'>
         /// Name of the Azure Resource group which a given Analysis Services server is
         /// part of.
+        /// </param>
+        /// <param name='serverName'>
+        /// Name of the Analysis Services server
         /// </param>
         /// <param name='serverParameters'>
         /// Request body for provisioning
@@ -325,27 +325,8 @@ namespace Microsoft.Azure.Management.Analysis
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<AnalysisServicesServer>> BeginCreateWithHttpMessagesAsync(string serverName, string resourceGroupName, AnalysisServicesServer serverParameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<AnalysisServicesServer>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string serverName, AnalysisServicesServer serverParameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            if (serverName == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "serverName");
-            }
-            if (serverName != null)
-            {
-                if (serverName.Length > 63)
-                {
-                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MaxLength, "serverName", 63);
-                }
-                if (serverName.Length < 3)
-                {
-                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MinLength, "serverName", 3);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(serverName, "^[a-z][a-z0-9]*$"))
-                {
-                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.Pattern, "serverName", "^[a-z][a-z0-9]*$");
-                }
-            }
             if (resourceGroupName == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "resourceGroupName");
@@ -363,6 +344,25 @@ namespace Microsoft.Azure.Management.Analysis
                 if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
                 {
                     throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
+            }
+            if (serverName == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "serverName");
+            }
+            if (serverName != null)
+            {
+                if (serverName.Length > 63)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MaxLength, "serverName", 63);
+                }
+                if (serverName.Length < 3)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MinLength, "serverName", 3);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(serverName, "^[a-z][a-z0-9]*$"))
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.Pattern, "serverName", "^[a-z][a-z0-9]*$");
                 }
             }
             if (serverParameters == null)
@@ -388,8 +388,8 @@ namespace Microsoft.Azure.Management.Analysis
             {
                 _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
                 System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
-                tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("serverParameters", serverParameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "BeginCreate", tracingParameters);
@@ -397,8 +397,8 @@ namespace Microsoft.Azure.Management.Analysis
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AnalysisServices/servers/{serverName}").ToString();
-            _url = _url.Replace("{serverName}", System.Uri.EscapeDataString(serverName));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{serverName}", System.Uri.EscapeDataString(serverName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(this.Client.SubscriptionId));
             System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (this.Client.ApiVersion != null)
@@ -555,12 +555,12 @@ namespace Microsoft.Azure.Management.Analysis
         /// <summary>
         /// Deletes the specified Analysis Services server.
         /// </summary>
-        /// <param name='serverName'>
-        /// Name of the Analysis Services server
-        /// </param>
         /// <param name='resourceGroupName'>
         /// Name of the Azure Resource group which a given Analysis Services server is
         /// part of.
+        /// </param>
+        /// <param name='serverName'>
+        /// Name of the Analysis Services server
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -568,23 +568,23 @@ namespace Microsoft.Azure.Management.Analysis
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> DeleteWithHttpMessagesAsync(string serverName, string resourceGroupName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<AnalysisServicesServer>> DeleteWithHttpMessagesAsync(string resourceGroupName, string serverName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Send request
-            Microsoft.Rest.Azure.AzureOperationResponse _response = await BeginDeleteWithHttpMessagesAsync(
-                serverName, resourceGroupName, customHeaders, cancellationToken);
+            Microsoft.Rest.Azure.AzureOperationResponse<AnalysisServicesServer> _response = await BeginDeleteWithHttpMessagesAsync(
+                resourceGroupName, serverName, customHeaders, cancellationToken);
             return await this.Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken);
         }
 
         /// <summary>
         /// Deletes the specified Analysis Services server.
         /// </summary>
-        /// <param name='serverName'>
-        /// Name of the Analysis Services server
-        /// </param>
         /// <param name='resourceGroupName'>
         /// Name of the Azure Resource group which a given Analysis Services server is
         /// part of.
+        /// </param>
+        /// <param name='serverName'>
+        /// Name of the Analysis Services server
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -595,33 +595,17 @@ namespace Microsoft.Azure.Management.Analysis
         /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
+        /// <exception cref="Microsoft.Rest.SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string serverName, string resourceGroupName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<AnalysisServicesServer>> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string serverName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            if (serverName == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "serverName");
-            }
-            if (serverName != null)
-            {
-                if (serverName.Length > 63)
-                {
-                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MaxLength, "serverName", 63);
-                }
-                if (serverName.Length < 3)
-                {
-                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MinLength, "serverName", 3);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(serverName, "^[a-z][a-z0-9]*$"))
-                {
-                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.Pattern, "serverName", "^[a-z][a-z0-9]*$");
-                }
-            }
             if (resourceGroupName == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "resourceGroupName");
@@ -641,6 +625,25 @@ namespace Microsoft.Azure.Management.Analysis
                     throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
                 }
             }
+            if (serverName == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "serverName");
+            }
+            if (serverName != null)
+            {
+                if (serverName.Length > 63)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MaxLength, "serverName", 63);
+                }
+                if (serverName.Length < 3)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MinLength, "serverName", 3);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(serverName, "^[a-z][a-z0-9]*$"))
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.Pattern, "serverName", "^[a-z][a-z0-9]*$");
+                }
+            }
             if (this.Client.ApiVersion == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
@@ -656,16 +659,16 @@ namespace Microsoft.Azure.Management.Analysis
             {
                 _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
                 System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
-                tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AnalysisServices/servers/{serverName}").ToString();
-            _url = _url.Replace("{serverName}", System.Uri.EscapeDataString(serverName));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{serverName}", System.Uri.EscapeDataString(serverName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(this.Client.SubscriptionId));
             System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (this.Client.ApiVersion != null)
@@ -728,14 +731,22 @@ namespace Microsoft.Azure.Management.Analysis
             System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 204)
+            if ((int)_statusCode != 200 && (int)_statusCode != 204 && (int)_statusCode != 202)
             {
                 var ex = new Microsoft.Rest.Azure.CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
+                try
+                {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new Microsoft.Rest.Azure.CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
                 }
-                else {
-                    _responseContent = string.Empty;
+                catch (Newtonsoft.Json.JsonException)
+                {
+                    // Ignore the exception
                 }
                 ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
                 ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
@@ -755,12 +766,30 @@ namespace Microsoft.Azure.Management.Analysis
                 throw ex;
             }
             // Create Result
-            var _result = new Microsoft.Rest.Azure.AzureOperationResponse();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<AnalysisServicesServer>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
             {
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 202)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<AnalysisServicesServer>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (Newtonsoft.Json.JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new Microsoft.Rest.SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
             }
             if (_shouldTrace)
             {
@@ -772,12 +801,12 @@ namespace Microsoft.Azure.Management.Analysis
         /// <summary>
         /// Updates the current state of the specified Analysis Services server
         /// </summary>
-        /// <param name='serverName'>
-        /// Name of the Analysis Services server
-        /// </param>
         /// <param name='resourceGroupName'>
         /// Name of the Azure Resource group which a given Analysis Services server is
         /// part of.
+        /// </param>
+        /// <param name='serverName'>
+        /// Name of the Analysis Services server
         /// </param>
         /// <param name='serverUpdateParameters'>
         /// Request object for updating the server
@@ -788,11 +817,11 @@ namespace Microsoft.Azure.Management.Analysis
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<AnalysisServicesServer>> UpdateWithHttpMessagesAsync(string serverName, string resourceGroupName, AnalysisServicesServerUpdateParameters serverUpdateParameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<AnalysisServicesServer>> UpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, AnalysisServicesServerUpdateParameters serverUpdateParameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Send Request
             Microsoft.Rest.Azure.AzureOperationResponse<AnalysisServicesServer> _response = await BeginUpdateWithHttpMessagesAsync(
-                serverName, resourceGroupName, serverUpdateParameters, customHeaders, cancellationToken);
+                resourceGroupName, serverName, serverUpdateParameters, customHeaders, cancellationToken);
             return await this.Client.GetPutOrPatchOperationResultAsync(_response,
                 customHeaders,
                 cancellationToken);
@@ -801,12 +830,12 @@ namespace Microsoft.Azure.Management.Analysis
         /// <summary>
         /// Updates the current state of the specified Analysis Services server
         /// </summary>
-        /// <param name='serverName'>
-        /// Name of the Analysis Services server
-        /// </param>
         /// <param name='resourceGroupName'>
         /// Name of the Azure Resource group which a given Analysis Services server is
         /// part of.
+        /// </param>
+        /// <param name='serverName'>
+        /// Name of the Analysis Services server
         /// </param>
         /// <param name='serverUpdateParameters'>
         /// Request object for updating the server
@@ -829,27 +858,8 @@ namespace Microsoft.Azure.Management.Analysis
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<AnalysisServicesServer>> BeginUpdateWithHttpMessagesAsync(string serverName, string resourceGroupName, AnalysisServicesServerUpdateParameters serverUpdateParameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<AnalysisServicesServer>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string serverName, AnalysisServicesServerUpdateParameters serverUpdateParameters, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            if (serverName == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "serverName");
-            }
-            if (serverName != null)
-            {
-                if (serverName.Length > 63)
-                {
-                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MaxLength, "serverName", 63);
-                }
-                if (serverName.Length < 3)
-                {
-                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MinLength, "serverName", 3);
-                }
-                if (!System.Text.RegularExpressions.Regex.IsMatch(serverName, "^[a-z][a-z0-9]*$"))
-                {
-                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.Pattern, "serverName", "^[a-z][a-z0-9]*$");
-                }
-            }
             if (resourceGroupName == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "resourceGroupName");
@@ -867,6 +877,25 @@ namespace Microsoft.Azure.Management.Analysis
                 if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
                 {
                     throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
+            }
+            if (serverName == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "serverName");
+            }
+            if (serverName != null)
+            {
+                if (serverName.Length > 63)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MaxLength, "serverName", 63);
+                }
+                if (serverName.Length < 3)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MinLength, "serverName", 3);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(serverName, "^[a-z][a-z0-9]*$"))
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.Pattern, "serverName", "^[a-z][a-z0-9]*$");
                 }
             }
             if (serverUpdateParameters == null)
@@ -888,8 +917,8 @@ namespace Microsoft.Azure.Management.Analysis
             {
                 _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
                 System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
-                tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("serverUpdateParameters", serverUpdateParameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
@@ -897,8 +926,8 @@ namespace Microsoft.Azure.Management.Analysis
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AnalysisServices/servers/{serverName}").ToString();
-            _url = _url.Replace("{serverName}", System.Uri.EscapeDataString(serverName));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{serverName}", System.Uri.EscapeDataString(serverName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(this.Client.SubscriptionId));
             System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (this.Client.ApiVersion != null)
