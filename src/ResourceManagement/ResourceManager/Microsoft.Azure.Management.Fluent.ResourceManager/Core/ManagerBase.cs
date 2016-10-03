@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
             SubscriptionId = subscriptionId;
             if (restClient != null)
             {
-                ResourceManager = ResourceManager2
+                ResourceManager = Fluent.Resource.ResourceManager
                     .Authenticate(restClient)
                     .WithSubscription(subscriptionId);
             }
