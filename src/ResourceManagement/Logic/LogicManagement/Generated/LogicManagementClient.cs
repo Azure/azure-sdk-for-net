@@ -26,6 +26,7 @@ namespace Microsoft.Azure.Management.Logic
     using Models;
 
     /// <summary>
+    /// Composite Swagger for Logic Management Client
     /// </summary>
     public partial class LogicManagementClient : ServiceClient<LogicManagementClient>, ILogicManagementClient, IAzureClient
     {
@@ -53,11 +54,6 @@ namespace Microsoft.Azure.Management.Logic
         /// The subscription id.
         /// </summary>
         public string SubscriptionId { get; set; }
-
-        /// <summary>
-        /// The API version.
-        /// </summary>
-        public string ApiVersion { get; private set; }
 
         /// <summary>
         /// Gets or sets the preferred language for the response.
@@ -110,6 +106,36 @@ namespace Microsoft.Azure.Management.Logic
         /// Gets the IWorkflowRunActionsOperations.
         /// </summary>
         public virtual IWorkflowRunActionsOperations WorkflowRunActions { get; private set; }
+
+        /// <summary>
+        /// Gets the IIntegrationAccountsOperations.
+        /// </summary>
+        public virtual IIntegrationAccountsOperations IntegrationAccounts { get; private set; }
+
+        /// <summary>
+        /// Gets the IIntegrationAccountSchemasOperations.
+        /// </summary>
+        public virtual IIntegrationAccountSchemasOperations IntegrationAccountSchemas { get; private set; }
+
+        /// <summary>
+        /// Gets the IIntegrationAccountMapsOperations.
+        /// </summary>
+        public virtual IIntegrationAccountMapsOperations IntegrationAccountMaps { get; private set; }
+
+        /// <summary>
+        /// Gets the IIntegrationAccountPartnersOperations.
+        /// </summary>
+        public virtual IIntegrationAccountPartnersOperations IntegrationAccountPartners { get; private set; }
+
+        /// <summary>
+        /// Gets the IIntegrationAccountAgreementsOperations.
+        /// </summary>
+        public virtual IIntegrationAccountAgreementsOperations IntegrationAccountAgreements { get; private set; }
+
+        /// <summary>
+        /// Gets the IIntegrationAccountCertificatesOperations.
+        /// </summary>
+        public virtual IIntegrationAccountCertificatesOperations IntegrationAccountCertificates { get; private set; }
 
         /// <summary>
         /// Initializes a new instance of the LogicManagementClient class.
@@ -297,8 +323,13 @@ namespace Microsoft.Azure.Management.Logic
             this.WorkflowTriggerHistories = new WorkflowTriggerHistoriesOperations(this);
             this.WorkflowRuns = new WorkflowRunsOperations(this);
             this.WorkflowRunActions = new WorkflowRunActionsOperations(this);
+            this.IntegrationAccounts = new IntegrationAccountsOperations(this);
+            this.IntegrationAccountSchemas = new IntegrationAccountSchemasOperations(this);
+            this.IntegrationAccountMaps = new IntegrationAccountMapsOperations(this);
+            this.IntegrationAccountPartners = new IntegrationAccountPartnersOperations(this);
+            this.IntegrationAccountAgreements = new IntegrationAccountAgreementsOperations(this);
+            this.IntegrationAccountCertificates = new IntegrationAccountCertificatesOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
-            this.ApiVersion = "2015-02-01-preview";
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;
             this.GenerateClientRequestId = true;

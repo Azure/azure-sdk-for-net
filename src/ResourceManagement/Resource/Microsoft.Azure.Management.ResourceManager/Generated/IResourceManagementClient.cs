@@ -84,7 +84,5 @@ namespace Microsoft.Azure.Management.ResourceManager
 
         IDeploymentOperationsOperations DeploymentOperations { get; }
 
-        IResourceProviderOperationDetailsOperations ResourceProviderOperationDetails { get; }
-
     }
 }

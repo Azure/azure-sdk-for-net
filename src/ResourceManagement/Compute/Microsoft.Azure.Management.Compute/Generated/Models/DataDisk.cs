@@ -41,49 +41,49 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the logical unit number.
+        /// the logical unit number.
         /// </summary>
         [JsonProperty(PropertyName = "lun")]
         public int Lun { get; set; }
 
         /// <summary>
-        /// Gets or sets the disk name.
+        /// the disk name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the Virtual Hard Disk.
+        /// the Virtual Hard Disk.
         /// </summary>
         [JsonProperty(PropertyName = "vhd")]
         public VirtualHardDisk Vhd { get; set; }
 
         /// <summary>
-        /// Gets or sets the Source User Image VirtualHardDisk. This
-        /// VirtualHardDisk will be copied before using it to attach to the
-        /// Virtual Machine.If SourceImage is provided, the destination
-        /// VirtualHardDisk should not exist.
+        /// the Source User Image VirtualHardDisk. This VirtualHardDisk will
+        /// be copied before using it to attach to the Virtual Machine.If
+        /// SourceImage is provided, the destination VirtualHardDisk should
+        /// not exist.
         /// </summary>
         [JsonProperty(PropertyName = "image")]
         public VirtualHardDisk Image { get; set; }
 
         /// <summary>
-        /// Gets or sets the caching type. Possible values include: 'None',
-        /// 'ReadOnly', 'ReadWrite'
+        /// the caching type. Possible values include: 'None', 'ReadOnly',
+        /// 'ReadWrite'
         /// </summary>
         [JsonProperty(PropertyName = "caching")]
         public CachingTypes? Caching { get; set; }
 
         /// <summary>
-        /// Gets or sets the create option. Possible values include:
-        /// 'fromImage', 'empty', 'attach'
+        /// the create option. Possible values include: 'fromImage', 'empty',
+        /// 'attach'
         /// </summary>
         [JsonProperty(PropertyName = "createOption")]
         public DiskCreateOptionTypes CreateOption { get; set; }
 
         /// <summary>
-        /// Gets or sets the initial disk size in GB for blank data disks, and
-        /// the new desired size for existing OS and Data disks.
+        /// the initial disk size in GB for blank data disks, and the new
+        /// desired size for existing OS and Data disks.
         /// </summary>
         [JsonProperty(PropertyName = "diskSizeGB")]
         public int? DiskSizeGB { get; set; }

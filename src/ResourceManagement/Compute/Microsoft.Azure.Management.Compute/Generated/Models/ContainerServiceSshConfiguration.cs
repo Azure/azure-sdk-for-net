@@ -37,8 +37,8 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the list of SSH public keys used to authenticate with
-        /// Linux based VMs
+        /// the list of SSH public keys used to authenticate with Linux based
+        /// VMs
         /// </summary>
         [JsonProperty(PropertyName = "publicKeys")]
         public IList<ContainerServiceSshPublicKey> PublicKeys { get; set; }

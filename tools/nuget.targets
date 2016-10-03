@@ -7,7 +7,7 @@
   <Import Project="$(LibrarySourceFolder)\$(Scope)\**\*$(PackageName).nuget.proj"
           Condition=" '$(Scope)' != 'all' " />
 
-  <!--TODO: remove when we convert them to be dnx based-->
+  <!--TODO: remove when we convert them to be NetCore based-->
   <Import Project="$(LibrarySourceFolder)\ResourceManagement\Logic\LogicManagement\*.nuget.proj" 
           Condition=" '$(Scope)' == 'all' "/>
   <Import Project="$(LibrarySourceFolder)\ResourceManagement\Scheduler\SchedulerManagement\*.nuget.proj" 
@@ -79,18 +79,18 @@
   Build NuGet packages
   -->
   <Target Name="Package" DependsOnTargets="PrepareForAutoRestLibraries">
-    <CallTarget Targets="BuildDynamicNuSpecs" Condition=" @(Non_Dnx_AutoRestLibraries) != '' or @(NonAutoRestLibraries) != ''" />
+    <CallTarget Targets="BuildDynamicNuSpecs" Condition=" @(Non_NetCore_AutoRestLibraries) != '' or @(NonAutoRestLibraries) != ''" />
     
     <Message Text="Generating NuGet library" Importance="high" />
     <Exec Condition=" '%(SdkNuGetPackage.Identity)' != '' "
           Command="$(NuGetCommand) pack -BasePath .\src\ -Verbosity $(NuGetVerbosity) &quot;binaries\packages\specs\%(SdkNuGetPackage.Identity).nuspec&quot; -Version %(SdkNuGetPackage.PackageVersion) -OutputDirectory &quot;$(PackageOutputDir)&quot; -Symbols" />
 
-    <Exec Command="dnu pack --configuration $(Configuration)" WorkingDirectory="%(Dnx_AutoRestLibraries.Library)" Condition=" @(Dnx_AutoRestLibraries) != '' "/>
+    <Exec Command="dotnet pack --configuration $(Configuration)" WorkingDirectory="%(NetCore_AutoRestLibraries.Library)" Condition=" @(NetCore_AutoRestLibraries) != '' "/>
     <ItemGroup>
-      <_DnxPackages Include="%(Dnx_AutoRestLibraries.Library)\bin\$(Configuration)\%(Dnx_AutoRestLibraries.PackageName)*.nupkg" />
+      <_NetCorePackages Include="%(NetCore_AutoRestLibraries.Library)\bin\$(Configuration)\%(NetCore_AutoRestLibraries.PackageName)*.nupkg" />
     </ItemGroup>
-    <Copy SourceFiles="@(_DnxPackages)" DestinationFolder="$(PackageOutputDir)" Condition=" @(Dnx_AutoRestLibraries) != '' " />
-    <CallTarget Targets="SignAssembliesInDnxPackages" Condition=" @(Dnx_AutoRestLibraries) != '' and '$(CodeSign)' == 'true' " />
+    <Copy SourceFiles="@(_NetCorePackages)" DestinationFolder="$(PackageOutputDir)" Condition=" @(NetCore_AutoRestLibraries) != '' " />
+    <CallTarget Targets="SignAssembliesInNetCorePackages" Condition=" @(NetCore_AutoRestLibraries) != '' and '$(CodeSign)' == 'true' " />
   </Target>
  
   <Target Name="Publish" DependsOnTargets="PrepareForAutoRestLibraries">
@@ -111,17 +111,23 @@
              Condition=" '%(SdkNuGetPackage.Publish)' == 'false' " />
 
     <MSBuild Projects="$(MSBuildProjectFullPath)"
-             Properties="NuGetKey=$(NuGetKey);DnxPackageName=%(Dnx_AutoRestLibraries.PackageName);PackageOutputDir=$(PackageOutputDir)"
-             Targets="PublishDnxPackage" Condition=" %(Dnx_AutoRestLibraries.PackageName) != '' " />
+             Properties="NuGetKey=$(NuGetKey);NetCorePackageName=%(NetCore_AutoRestLibraries.PackageName);PackageOutputDir=$(PackageOutputDir)"
+             Targets="PublishNetCorePackage" Condition=" %(NetCore_AutoRestLibraries.PackageName) != '' " />
   </Target>
 
-  <Target Name="PublishDnxPackage">
+  <Target Name="PublishNetCorePackage">
     <ItemGroup>
-      <_DnxPackagesToPublish Include="$(PackageOutputDir)\$(DnxPackageName)*.nupkg"
-                             Exclude="$(PackageOutputDir)\$(DnxPackageName)*.symbols.nupkg">
-      </_DnxPackagesToPublish>
+      <_NetCorePackagesToPublish Include="$(PackageOutputDir)\$(NetCorePackageName)*.nupkg"
+                             Exclude="$(PackageOutputDir)\$(NetCorePackageName)*.symbols.nupkg">
+      </_NetCorePackagesToPublish>
     </ItemGroup>
-    <Exec Command="$(NuGetCommand) push &quot;%(_DnxPackagesToPublish.Identity)&quot; $(NuGetKey)$(ActualSource)"
+
+    <PropertyGroup>
+      <ActualSource Condition=" '$(NuGetPublishingSource)' == '' "></ActualSource>
+      <ActualSource Condition=" '$(NuGetPublishingSource)' != '' "> -Source $(NuGetPublishingSource)</ActualSource>
+    </PropertyGroup>
+    
+    <Exec Command="$(NuGetCommand) push &quot;%(_NetCorePackagesToPublish.Identity)&quot; $(NuGetKey)$(ActualSource)"
           IgnoreExitCode="true" />
   </Target>
   

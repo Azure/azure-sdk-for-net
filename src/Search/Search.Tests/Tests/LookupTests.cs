@@ -6,7 +6,7 @@ namespace Microsoft.Azure.Search.Tests
 {
     using System;
     using System.Net;
-    using Microsoft.AspNet.WebUtilities;
+    using Microsoft.AspNetCore.WebUtilities;
     using Microsoft.Azure.Search.Models;
     using Microsoft.Azure.Search.Tests.Utilities;
     using Microsoft.Rest.Azure;

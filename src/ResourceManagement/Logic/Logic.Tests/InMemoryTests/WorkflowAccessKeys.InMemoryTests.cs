@@ -12,7 +12,7 @@ namespace Test.Azure.Management.Logic
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Xunit;
-
+    using System;
     public class WorkflowAccessKeysInMemoryTests : BaseInMemoryTests
     {
         #region Constructor
@@ -49,7 +49,7 @@ namespace Test.Azure.Management.Logic
         public void WorkflowAccessKeys_List_Exception()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -66,7 +66,7 @@ namespace Test.Azure.Management.Logic
         public void WorkflowAccessKeys_List_OK()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -92,7 +92,7 @@ namespace Test.Azure.Management.Logic
         public void WorkflowAccessKeys_ListNext_Exception()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -108,7 +108,7 @@ namespace Test.Azure.Management.Logic
         public void WorkflowAccessKeys_ListNext_OK()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -134,7 +134,7 @@ namespace Test.Azure.Management.Logic
         public void WorkflowAccessKeys_Get_Exception()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -152,7 +152,7 @@ namespace Test.Azure.Management.Logic
         public void WorkflowAccessKeys_Get_OK()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -178,7 +178,7 @@ namespace Test.Azure.Management.Logic
         public void WorkflowAccessKeys_CreateOrUpdate_Exception()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -197,7 +197,7 @@ namespace Test.Azure.Management.Logic
         public void WorkflowAccessKeys_CreateOrUpdate_OK()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -219,8 +219,8 @@ namespace Test.Azure.Management.Logic
         public void WorkflowAccessKeys_CreateOrUpdate_Created()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
-
+            var client = this.CreateWorkflowClient(handler);            
+            
             handler.Response = new HttpResponseMessage
             {
                 StatusCode = HttpStatusCode.Created,
@@ -245,7 +245,7 @@ namespace Test.Azure.Management.Logic
         public void WorkflowAccessKeys_Delete_Exception()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -263,7 +263,7 @@ namespace Test.Azure.Management.Logic
         public void WorkflowAccessKeys_Delete_OK()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -282,7 +282,7 @@ namespace Test.Azure.Management.Logic
         public void WorkflowAccessKeys_Delete_NoContent()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -305,7 +305,7 @@ namespace Test.Azure.Management.Logic
         public void WorkflowAccessKeys_ListSecretKeys_Exception()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -323,7 +323,7 @@ namespace Test.Azure.Management.Logic
         public void WorkflowAccessKeys_ListSecretKeys_OK()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -348,7 +348,7 @@ namespace Test.Azure.Management.Logic
         public void WorkflowAccessKeys_RegenerateSecretKey_Exception()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -356,18 +356,17 @@ namespace Test.Azure.Management.Logic
                 Content = this.Empty
             };
 
-            Assert.Throws<ValidationException>(() => client.WorkflowAccessKeys.RegenerateSecretKey(null, "wfName", "accessKeyName", new RegenerateSecretKeyParameters()));
-            Assert.Throws<ValidationException>(() => client.WorkflowAccessKeys.RegenerateSecretKey("rgName", null, "accessKeyName", new RegenerateSecretKeyParameters()));
-            Assert.Throws<ValidationException>(() => client.WorkflowAccessKeys.RegenerateSecretKey("rgName", "wfName", null, new RegenerateSecretKeyParameters()));
-            Assert.Throws<ValidationException>(() => client.WorkflowAccessKeys.RegenerateSecretKey("rgName", "wfName", "accessKeyName", null));
-            Assert.Throws<CloudException>(() => client.WorkflowAccessKeys.RegenerateSecretKey("rgName", "wfName", "accessKeyName", new RegenerateSecretKeyParameters()));
+            Assert.Throws<ValidationException>(() => client.WorkflowAccessKeys.RegenerateSecretKey(null, "wfName", "accessKeyName", KeyType.Primary));
+            Assert.Throws<ValidationException>(() => client.WorkflowAccessKeys.RegenerateSecretKey("rgName", null, "accessKeyName", KeyType.Primary));
+            Assert.Throws<ValidationException>(() => client.WorkflowAccessKeys.RegenerateSecretKey("rgName", "wfName", null, KeyType.Primary));            
+            Assert.Throws<CloudException>(() => client.WorkflowAccessKeys.RegenerateSecretKey("rgName", "wfName", "accessKeyName", KeyType.Primary));
         }
 
         [Fact]
         public void WorkflowAccessKeys_RegenerateSecretKey_OK()
         {
             var handler = new RecordedDelegatingHandler();
-            var client = this.CreateLogicManagementClient(handler);
+            var client = this.CreateWorkflowClient(handler);
 
             handler.Response = new HttpResponseMessage
             {
@@ -375,7 +374,7 @@ namespace Test.Azure.Management.Logic
                 Content = this.SecretKeyResponse
             };
 
-            var response = client.WorkflowAccessKeys.RegenerateSecretKey("rgName", "wfName", "accessKeyName", new RegenerateSecretKeyParameters());
+            var response = client.WorkflowAccessKeys.RegenerateSecretKey("rgName", "wfName", "accessKeyName", KeyType.Primary );
 
             // Validates request.
             handler.Request.ValidateAuthorizationHeader();

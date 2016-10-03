@@ -42,43 +42,43 @@ namespace Microsoft.Azure.Management.Compute.Models
         }
 
         /// <summary>
-        /// Gets or sets the disk name.
+        /// the disk name.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the caching type. Possible values include: 'None',
-        /// 'ReadOnly', 'ReadWrite'
+        /// the caching type. Possible values include: 'None', 'ReadOnly',
+        /// 'ReadWrite'
         /// </summary>
         [JsonProperty(PropertyName = "caching")]
         public CachingTypes? Caching { get; set; }
 
         /// <summary>
-        /// Gets or sets the create option. Possible values include:
-        /// 'fromImage', 'empty', 'attach'
+        /// the create option. Possible values include: 'fromImage', 'empty',
+        /// 'attach'
         /// </summary>
         [JsonProperty(PropertyName = "createOption")]
         public DiskCreateOptionTypes CreateOption { get; set; }
 
         /// <summary>
-        /// Gets or sets the Operating System type. Possible values include:
-        /// 'Windows', 'Linux'
+        /// the Operating System type. Possible values include: 'Windows',
+        /// 'Linux'
         /// </summary>
         [JsonProperty(PropertyName = "osType")]
         public OperatingSystemTypes? OsType { get; set; }
 
         /// <summary>
-        /// Gets or sets the Source User Image VirtualHardDisk. This
-        /// VirtualHardDisk will be copied before using it to attach to the
-        /// Virtual Machine.If SourceImage is provided, the destination
-        /// VirtualHardDisk should not exist.
+        /// the Source User Image VirtualHardDisk. This VirtualHardDisk will
+        /// be copied before using it to attach to the Virtual Machine.If
+        /// SourceImage is provided, the destination VirtualHardDisk should
+        /// not exist.
         /// </summary>
         [JsonProperty(PropertyName = "image")]
         public VirtualHardDisk Image { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of virtual hard disk container uris.
+        /// the list of virtual hard disk container uris.
         /// </summary>
         [JsonProperty(PropertyName = "vhdContainers")]
         public IList<string> VhdContainers { get; set; }

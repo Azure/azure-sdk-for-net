@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='subscriptionId'>
             /// Id of the subscription
             /// </param>
-            public static IPage<Location> ListLocations(this ISubscriptionsOperations operations, string subscriptionId)
+            public static IEnumerable<Location> ListLocations(this ISubscriptionsOperations operations, string subscriptionId)
             {
                 return Task.Factory.StartNew(s => ((ISubscriptionsOperations)s).ListLocationsAsync(subscriptionId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Location>> ListLocationsAsync( this ISubscriptionsOperations operations, string subscriptionId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IEnumerable<Location>> ListLocationsAsync( this ISubscriptionsOperations operations, string subscriptionId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListLocationsWithHttpMessagesAsync(subscriptionId, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -110,40 +110,6 @@ namespace Microsoft.Azure.Management.ResourceManager
             public static async Task<IPage<Subscription>> ListAsync( this ISubscriptionsOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Gets a list of the subscription locations.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<Location> ListLocationsNext(this ISubscriptionsOperations operations, string nextPageLink)
-            {
-                return Task.Factory.StartNew(s => ((ISubscriptionsOperations)s).ListLocationsNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Gets a list of the subscription locations.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<Location>> ListLocationsNextAsync( this ISubscriptionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListLocationsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -74,7 +74,7 @@ namespace Compute.Tests
                 }
             }
         }
-        
+
         protected ImageReference FindVMImage(string publisher, string offer, string sku)
         {
             var query = new Microsoft.Rest.Azure.OData.ODataQuery<VirtualMachineImageResource>();
@@ -85,7 +85,10 @@ namespace Compute.Tests
             var image = images.First();
             return new ImageReference
             {
-                Publisher = publisher, Offer = offer, Sku = sku, Version = image.Name
+                Publisher = publisher,
+                Offer = offer,
+                Sku = sku,
+                Version = image.Name
             };
         }
 
@@ -95,7 +98,6 @@ namespace Compute.Tests
             {
                 if (m_windowsImageReference == null)
                 {
-                    Trace.TraceInformation("Querying available Windows Server image from PIR...");
                     m_windowsImageReference = FindVMImage("MicrosoftWindowsServer", "WindowsServer", "2012-R2-Datacenter");
                 }
                 return m_windowsImageReference;
@@ -103,7 +105,6 @@ namespace Compute.Tests
 
             if (m_linuxImageReference == null)
             {
-                Trace.TraceInformation("Querying available Ubuntu image from PIR...");
                 // If this sku disappears, query latest with 
                 // GET https://management.azure.com/subscriptions/<subId>/providers/Microsoft.Compute/locations/SoutheastAsia/publishers/Canonical/artifacttypes/vmimage/offers/UbuntuServer/skus?api-version=2015-06-15
                 m_linuxImageReference = FindVMImage("Canonical", "UbuntuServer", "15.10");
@@ -128,7 +129,7 @@ namespace Compute.Tests
             string testVaultId =
                 @"/subscriptions/21466899-20b2-463c-8c30-b8fb28a43248/resourceGroups/RgTest1/providers/Microsoft.KeyVault/vaults/TestVault123";
             string encryptionKeyFakeUri = @"https://testvault123.vault.azure.net/secrets/Test1/514ceb769c984379a7e0230bdd703272";
-            
+
             DiskEncryptionSettings diskEncryptionSettings = new DiskEncryptionSettings
             {
                 DiskEncryptionKey = new KeyVaultSecretReference
@@ -198,7 +199,7 @@ namespace Compute.Tests
         }
 
         protected VirtualMachine CreateVM_NoAsyncTracking(
-            string rgName, string asName, StorageAccount storageAccount, ImageReference imageRef, 
+            string rgName, string asName, StorageAccount storageAccount, ImageReference imageRef,
             out VirtualMachine inputVM,
             Action<VirtualMachine> vmCustomizer = null,
             bool createWithPublicIpAddress = false,
@@ -216,12 +217,12 @@ namespace Compute.Tests
                     });
 
                 PublicIPAddress getPublicIpAddressResponse = createWithPublicIpAddress ? null : CreatePublicIP(rgName);
-                
+
                 Subnet subnetResponse = CreateVNET(rgName);
 
                 NetworkInterface nicResponse = CreateNIC(
-                    rgName, 
-                    subnetResponse, 
+                    rgName,
+                    subnetResponse,
                     getPublicIpAddressResponse != null ? getPublicIpAddressResponse.IpAddress : null);
 
                 string asetId = CreateAvailabilitySet(rgName, asName);
@@ -245,7 +246,7 @@ namespace Compute.Tests
                 }
 
                 Assert.True(createOrUpdateResponse.Name == inputVM.Name);
-                Assert.True(createOrUpdateResponse.Location == inputVM.Location.ToLower().Replace(" ", "") || 
+                Assert.True(createOrUpdateResponse.Location == inputVM.Location.ToLower().Replace(" ", "") ||
                     createOrUpdateResponse.Location.ToLower() == inputVM.Location.ToLower());
 
                 Assert.True(
@@ -407,6 +408,46 @@ namespace Compute.Tests
             return getNicResponse;
         }
 
+        protected NetworkInterface CreateMultiIpConfigNIC(string rgName, Subnet subnet, string nicname)
+        {
+            // Create Nic
+            nicname = nicname ?? ComputeManagementTestUtilities.GenerateName("nic");
+
+            string ipConfigName = ComputeManagementTestUtilities.GenerateName("ip");
+            string ipConfigName2 = ComputeManagementTestUtilities.GenerateName("ip2");
+
+            var nicParameters = new NetworkInterface()
+            {
+                Location = m_location,
+                Tags = new Dictionary<string, string>()
+                {
+                    { "key" ,"value" }
+                },
+                IpConfigurations = new List<NetworkInterfaceIPConfiguration>()
+                {
+                    new NetworkInterfaceIPConfiguration()
+                    {
+                        Name = ipConfigName,
+                        Primary = true,
+                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                        Subnet = subnet,
+                    },
+
+                    new NetworkInterfaceIPConfiguration()
+                    {
+                        Name = ipConfigName2,
+                        Primary = false,
+                        PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                        Subnet = subnet,
+                    }
+                }
+            };
+
+            var putNicResponse = m_NrpClient.NetworkInterfaces.CreateOrUpdate(rgName, nicname, nicParameters);
+            var getNicResponse = m_NrpClient.NetworkInterfaces.Get(rgName, nicname);
+            return getNicResponse;
+        }
+
         private static string GetChildAppGwResourceId(string subscriptionId,
                                                         string resourceGroupName,
                                                         string appGwname,
@@ -443,7 +484,7 @@ namespace Compute.Tests
             {
                 Name = frontendIPConfigName,
                 PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
-                Subnet = new Microsoft.Azure.Management.Network.Models.SubResource { Id = subnet.Id}
+                Subnet = new Microsoft.Azure.Management.Network.Models.SubResource { Id = subnet.Id }
             };
 
             ApplicationGatewayFrontendPort frontendPort = new ApplicationGatewayFrontendPort()
@@ -667,7 +708,7 @@ namespace Compute.Tests
                 }
             }
 
-            if(vm.OsProfile != null &&
+            if (vm.OsProfile != null &&
                vm.OsProfile.Secrets != null &&
                vm.OsProfile.Secrets.Any())
             {
@@ -691,9 +732,7 @@ namespace Compute.Tests
             Assert.NotNull(vmOut.AvailabilitySet);
             Assert.True(vm.AvailabilitySet.Id.ToLowerInvariant() == vmOut.AvailabilitySet.Id.ToLowerInvariant());
             ValidatePlan(vm.Plan, vmOut.Plan);
-            // TODO: it's null somtimes.
-            //Assert.NotNull(vmOut.Properties.Id);
-            //Assert.True(expectedVMReferenceId.ToLowerInvariant() == vmOut.Properties.Id.ToLowerInvariant());
+            Assert.NotNull(vmOut.VmId);
         }
 
         protected void ValidateVMInstanceView(VirtualMachine vmIn, VirtualMachine vmOut)
@@ -721,7 +760,7 @@ namespace Compute.Tests
 
         protected void ValidatePlan(Microsoft.Azure.Management.Compute.Models.Plan inputPlan, Microsoft.Azure.Management.Compute.Models.Plan outPutPlan)
         {
-            if (    inputPlan == null
+            if (inputPlan == null
                  || outPutPlan == null
                )
             {
@@ -734,7 +773,7 @@ namespace Compute.Tests
             Assert.Equal(inputPlan.Product, outPutPlan.Product);
             Assert.Equal(inputPlan.PromotionCode, outPutPlan.PromotionCode);
         }
-        
+
 
     }
 }
