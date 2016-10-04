@@ -87,77 +87,77 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
 
             public interface IWithBaseUri
             {
-                IBuildable withBaseUri(string baseUri);
+                IBuildable WithBaseUri(string baseUri);
             }
 
             public interface IWithEnvironment
             {
-                IBuildable withEnvironment(AzureEnvironment environment);
+                IBuildable WithEnvironment(AzureEnvironment environment);
             }
 
-            public interface IBuildable
+            public interface IBuildable : IWithEnvironment, IWithBaseUri
             {
-                IBuildable withUserAgent(string product, string version);
-                IBuildable withRetryPolicy(RetryPolicy retryPolicy);
-                IBuildable withDelegatingHandler(DelegatingHandler delegatingHandler);
-                IBuildable withLogLevel(HttpLoggingDelegatingHandler.Level level);
-                IBuildable withCredentials(ServiceClientCredentials credentials);
-                RestClient build();
+                IBuildable WithUserAgent(string product, string version);
+                IBuildable WithRetryPolicy(RetryPolicy retryPolicy);
+                IBuildable WithDelegatingHandler(DelegatingHandler delegatingHandler);
+                IBuildable WithLogLevel(HttpLoggingDelegatingHandler.Level level);
+                IBuildable WithCredentials(ServiceClientCredentials credentials);
+                RestClient Build();
             }
             #endregion
 
-            public IBuildable withBaseUri(string baseUri)
+            public IBuildable WithBaseUri(string baseUri)
             {
                 this.baseUri = baseUri;
                 return this;
             }
 
-            public IBuildable withEnvironment(AzureEnvironment environment)
+            public IBuildable WithEnvironment(AzureEnvironment environment)
             {
-                return withBaseUri(environment.ResourceManagerEndpoint);
+                return WithBaseUri(environment.ResourceManagerEndpoint);
             }
 
-            public IBuildable withUserAgent(string product, string version)
+            public IBuildable WithUserAgent(string product, string version)
             {
                 if (userAgentDelegatingHandler == null)
                 {
                     userAgentDelegatingHandler = new UserAgentDelegatingHandler();
-                    withDelegatingHandler(userAgentDelegatingHandler);
+                    WithDelegatingHandler(userAgentDelegatingHandler);
                 }
                 userAgentDelegatingHandler.appendUserAgent(product + "/" + version);
                 return this;
             }
 
-            public IBuildable withDelegatingHandler(DelegatingHandler delegatingHandler)
+            public IBuildable WithDelegatingHandler(DelegatingHandler delegatingHandler)
             {
                 handlers.Add(delegatingHandler);
                 return this;
             }
 
-            public IBuildable withRetryPolicy(RetryPolicy retryPolicy)
+            public IBuildable WithRetryPolicy(RetryPolicy retryPolicy)
             {
                 this.retryPolicy = retryPolicy;
                 return this;
             }
 
-            public IBuildable withLogLevel(HttpLoggingDelegatingHandler.Level level)
+            public IBuildable WithLogLevel(HttpLoggingDelegatingHandler.Level level)
             {
                 if (loggingDelegatingHandler == null)
                 {
                     loggingDelegatingHandler = new HttpLoggingDelegatingHandler();
-                    withDelegatingHandler(loggingDelegatingHandler);
+                    WithDelegatingHandler(loggingDelegatingHandler);
                 }
                 loggingDelegatingHandler.LogLevel = level;
                 return this;
             }
 
-            public IBuildable withCredentials(ServiceClientCredentials credentials)
+            public IBuildable WithCredentials(ServiceClientCredentials credentials)
             {
                 this.credentials = credentials;
                 return this;
             }
 
-            public RestClient build()
+            public RestClient Build()
             {
 #if NET45
                 HttpClientHandler httpClientHandler = new WebRequestHandler();

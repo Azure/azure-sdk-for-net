@@ -9,6 +9,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
     using Rest;
     using System;
     using System.Linq;
+    using Resource.Authentication;
 
     public class NetworkManager : ManagerBase, INetworkManager
     {
@@ -32,15 +33,15 @@ namespace Microsoft.Azure.Management.Fluent.Network
         /// <summary>
         /// Creates an instance of NetworkManager that exposes storage resource management API entry points.
         /// </summary>
-        /// <param name="serviceClientCredentials">the credentials to use</param>
+        /// <param name="credentials">the credentials to use</param>
         /// <param name="subscriptionId">the subscription UUID</param>
         /// <returns>the NetworkManager</returns>
-        public static INetworkManager Authenticate(ServiceClientCredentials serviceClientCredentials, string subscriptionId)
+        public static INetworkManager Authenticate(AzureCredentials credentials, string subscriptionId)
         {
             return new NetworkManager(RestClient.Configure()
-                    .withEnvironment(AzureEnvironment.AzureGlobalCloud)
-                    .withCredentials(serviceClientCredentials)
-                    .build(), subscriptionId);
+                    .WithEnvironment(credentials.Environment)
+                    .WithCredentials(credentials)
+                    .Build(), subscriptionId);
         }
 
         /// <summary>
@@ -69,7 +70,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
         /// </summary>
         public interface IConfigurable : IAzureConfigurable<IConfigurable>
         {
-            INetworkManager Authenticate(ServiceClientCredentials serviceClientCredentials, string subscriptionId);
+            INetworkManager Authenticate(AzureCredentials credentials, string subscriptionId);
         }
 
         protected class Configurable :
@@ -82,7 +83,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             /// <param name="credentials">credentials the credentials to use</param>
             /// <param name="subscriptionId">The subscription UUID</param>
             /// <return>the interface exposing storage management API entry points that work in a subscription</returns>
-            public INetworkManager Authenticate(ServiceClientCredentials credentials, string subscriptionId)
+            public INetworkManager Authenticate(AzureCredentials credentials, string subscriptionId)
             {
                 return new NetworkManager(BuildRestClient(credentials), subscriptionId);
             }

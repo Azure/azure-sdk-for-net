@@ -173,21 +173,12 @@ namespace Microsoft.Azure.Management
 
         #region Azure builder
 
-        public static IAuthenticated Authenticate(ServiceClientCredentials serviceClientCredentials, string tenantId)
-        {
-            return new Authenticated(RestClient.Configure()
-                    .withEnvironment(AzureEnvironment.AzureGlobalCloud)
-                    .withCredentials(serviceClientCredentials)
-                    .build(), tenantId
-                );
-        }
-
         public static IAuthenticated Authenticate(AzureCredentials azureCredentials)
         {
             return new Authenticated(RestClient.Configure()
-                    .withEnvironment(AzureEnvironment.AzureGlobalCloud)
-                    .withCredentials(azureCredentials)
-                    .build(), azureCredentials.TenantId
+                    .WithEnvironment(azureCredentials.Environment)
+                    .WithCredentials(azureCredentials)
+                    .Build(), azureCredentials.TenantId
                 );
         }
 
@@ -195,9 +186,9 @@ namespace Microsoft.Azure.Management
         {
             AzureCredentials credentials = AzureCredentials.FromFile(authFile);
             var authenticated = new Authenticated(RestClient.Configure()
-                    .withEnvironment(AzureEnvironment.AzureGlobalCloud)
-                    .withCredentials(credentials)
-                    .build(), credentials.TenantId);
+                    .WithEnvironment(credentials.Environment)
+                    .WithCredentials(credentials)
+                    .Build(), credentials.TenantId);
             authenticated.SetDefaultSubscription(credentials.DefaultSubscriptionId);
             return authenticated;
         }
@@ -294,8 +285,6 @@ namespace Microsoft.Azure.Management
 
         public interface IConfigurable : IAzureConfigurable<IConfigurable>
         {
-            IAuthenticated Authenticate(ServiceClientCredentials serviceClientCredentials, string tenantId);
-
             IAuthenticated Authenticate(AzureCredentials azureCredentials);
         }
 
@@ -303,11 +292,6 @@ namespace Microsoft.Azure.Management
             AzureConfigurable<IConfigurable>,
             IConfigurable
         {
-            IAuthenticated IConfigurable.Authenticate(ServiceClientCredentials credentials, string tenantId)
-            {
-                return new Authenticated(BuildRestClient(credentials), tenantId);
-            }
-
             IAuthenticated IConfigurable.Authenticate(AzureCredentials credentials)
             {
                 return new Authenticated(BuildRestClient(credentials), credentials.TenantId);
