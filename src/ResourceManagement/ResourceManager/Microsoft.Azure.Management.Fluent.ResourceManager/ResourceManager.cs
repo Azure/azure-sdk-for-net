@@ -41,9 +41,9 @@ namespace Microsoft.Azure.Management.Fluent.Resource
         public static IAuthenticated Authenticate(AzureCredentials credentials)
         {
             return new Authenticated(RestClient.Configure()
-                    .withEnvironment(credentials.Environment)
-                    .withCredentials(credentials)
-                    .build()
+                    .WithEnvironment(credentials.Environment)
+                    .WithCredentials(credentials)
+                    .Build()
                 );
         }
 

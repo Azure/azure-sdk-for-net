@@ -43,9 +43,9 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
         public static IGraphRbacManager Authenticate(AzureCredentials credentials, string subscriptionId, string tenantId)
         {
             return new GraphRbacManager(RestClient.Configure()
-                    .withBaseUri(credentials.Environment.GraphEndpoint)
-                    .withCredentials(credentials)
-                    .build(), subscriptionId, tenantId);
+                    .WithBaseUri(credentials.Environment.GraphEndpoint)
+                    .WithCredentials(credentials)
+                    .Build(), subscriptionId, tenantId);
         }
 
         public static IGraphRbacManager Authenticate(RestClient restClient, string subscriptionId, string tenantId)

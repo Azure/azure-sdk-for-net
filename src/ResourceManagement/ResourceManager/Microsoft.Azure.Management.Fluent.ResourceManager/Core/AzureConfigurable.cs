@@ -16,47 +16,47 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
         {
             restClientBuilder = RestClient
                 .Configure()
-                .withEnvironment(AzureEnvironment.AzureGlobalCloud);
+                .WithEnvironment(AzureEnvironment.AzureGlobalCloud);
         }
 
         public T WithDelegatingHandler(DelegatingHandler delegatingHandler)
         {
-            restClientBuilder.withDelegatingHandler(delegatingHandler);
+            restClientBuilder.WithDelegatingHandler(delegatingHandler);
             return this as T;
         }
 
         public T WithLogLevel(HttpLoggingDelegatingHandler.Level level)
         {
-            restClientBuilder.withLogLevel(level);
+            restClientBuilder.WithLogLevel(level);
             return this as T;
         }
 
         public T WithRetryPolicy(RetryPolicy retryPolicy)
         {
-            restClientBuilder.withRetryPolicy(retryPolicy);
+            restClientBuilder.WithRetryPolicy(retryPolicy);
             return this as T;
         }
 
         public T WithUserAgent(string product, string version)
         {
-            restClientBuilder.withUserAgent(product, version);
+            restClientBuilder.WithUserAgent(product, version);
             return this as T;
         }
 
         protected RestClient BuildRestClient(AzureCredentials credentials)
         {
             return restClientBuilder
-                .withCredentials(credentials)
-                .withEnvironment(credentials.Environment)
-                .build();
+                .WithCredentials(credentials)
+                .WithEnvironment(credentials.Environment)
+                .Build();
         }
 
         protected RestClient BuildRestClientForGraph(AzureCredentials credentials)
         {
             return restClientBuilder
-                .withCredentials(credentials)
-                .withBaseUri(credentials.Environment.GraphEndpoint)
-                .build();
+                .WithCredentials(credentials)
+                .WithBaseUri(credentials.Environment.GraphEndpoint)
+                .Build();
         }
     }
 }

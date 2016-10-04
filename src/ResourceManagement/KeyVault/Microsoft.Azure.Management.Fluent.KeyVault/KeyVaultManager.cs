@@ -44,9 +44,9 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
                 graphEndpoint = ((AzureCredentials)restClient.Credentials).Environment.GraphEndpoint;
             }
             graphRbacManager = GraphRbacManager.Authenticate(RestClient.Configure()
-                .withBaseUri(graphEndpoint)
-                .withCredentials(restClient.Credentials)
-                .build(), subscriptionId, tenantId);
+                .WithBaseUri(graphEndpoint)
+                .WithCredentials(restClient.Credentials)
+                .Build(), subscriptionId, tenantId);
             this.tenantId = tenantId;
         }
 
@@ -57,9 +57,9 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault
         public static IKeyVaultManager Authenticate(AzureCredentials credentials, string subscriptionId)
         {
             return new KeyVaultManager(RestClient.Configure()
-                    .withEnvironment(credentials.Environment)
-                    .withCredentials(credentials)
-                    .build(), subscriptionId, credentials.TenantId);
+                    .WithEnvironment(credentials.Environment)
+                    .WithCredentials(credentials)
+                    .Build(), subscriptionId, credentials.TenantId);
         }
 
         public static IKeyVaultManager Authenticate(RestClient restClient, string subscriptionId, string tenantId)

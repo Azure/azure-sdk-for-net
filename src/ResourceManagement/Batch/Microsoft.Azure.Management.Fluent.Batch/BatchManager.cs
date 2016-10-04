@@ -37,9 +37,9 @@ namespace Microsoft.Azure.Management.Fluent.Batch
         public static IBatchManager Authenticate(AzureCredentials credentials, string subscriptionId)
         {
             return new BatchManager(RestClient.Configure()
-                    .withEnvironment(credentials.Environment)
-                    .withCredentials(credentials)
-                    .build(), subscriptionId);
+                    .WithEnvironment(credentials.Environment)
+                    .WithCredentials(credentials)
+                    .Build(), subscriptionId);
         }
 
         /**

@@ -39,9 +39,9 @@ namespace Microsoft.Azure.Management.Fluent.Network
         public static INetworkManager Authenticate(AzureCredentials credentials, string subscriptionId)
         {
             return new NetworkManager(RestClient.Configure()
-                    .withEnvironment(credentials.Environment)
-                    .withCredentials(credentials)
-                    .build(), subscriptionId);
+                    .WithEnvironment(credentials.Environment)
+                    .WithCredentials(credentials)
+                    .Build(), subscriptionId);
         }
 
         /// <summary>

@@ -176,9 +176,9 @@ namespace Microsoft.Azure.Management
         public static IAuthenticated Authenticate(AzureCredentials azureCredentials)
         {
             return new Authenticated(RestClient.Configure()
-                    .withEnvironment(azureCredentials.Environment)
-                    .withCredentials(azureCredentials)
-                    .build(), azureCredentials.TenantId
+                    .WithEnvironment(azureCredentials.Environment)
+                    .WithCredentials(azureCredentials)
+                    .Build(), azureCredentials.TenantId
                 );
         }
 
@@ -186,9 +186,9 @@ namespace Microsoft.Azure.Management
         {
             AzureCredentials credentials = AzureCredentials.FromFile(authFile);
             var authenticated = new Authenticated(RestClient.Configure()
-                    .withEnvironment(credentials.Environment)
-                    .withCredentials(credentials)
-                    .build(), credentials.TenantId);
+                    .WithEnvironment(credentials.Environment)
+                    .WithCredentials(credentials)
+                    .Build(), credentials.TenantId);
             authenticated.SetDefaultSubscription(credentials.DefaultSubscriptionId);
             return authenticated;
         }
