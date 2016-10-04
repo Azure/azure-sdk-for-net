@@ -33,7 +33,7 @@ namespace NotificationHubs.Tests.ScenarioTests
                 InitializeClients(context);
 
                 var validNamespaceName = TestUtilities.GenerateName(NotificationHubsManagementHelper.NamespacePrefix);
-                var responseNS = NotificationHubsManagementClient.Namespaces.CheckAvailability(new CheckAvailabilityParameters(NotificationHubsManagementHelper.DefaultLocation, name: validNamespaceName));
+                var responseNS = NotificationHubsManagementClient.Namespaces.CheckAvailability(new CheckAvailabilityParameters(validNamespaceName, NotificationHubsManagementHelper.DefaultLocation));
                 Assert.NotNull(responseNS);
                 Assert.True(responseNS.IsAvailiable);                
 
@@ -55,7 +55,7 @@ namespace NotificationHubs.Tests.ScenarioTests
 
                 var validNotificationHubName = TestUtilities.GenerateName(NotificationHubsManagementHelper.NotificationHubPrefix) + "-valid" + TestUtilities.GenerateName();
                 var responseNH = NotificationHubsManagementClient.NotificationHubs.CheckAvailability(resourceGroup, validNamespaceName, 
-                    new CheckAvailabilityParameters(NotificationHubsManagementHelper.DefaultLocation, name: validNotificationHubName));
+                    new CheckAvailabilityParameters(validNotificationHubName, NotificationHubsManagementHelper.DefaultLocation));
                 Assert.NotNull(responseNH);
                 Assert.True(responseNH.IsAvailiable);
 
@@ -67,7 +67,7 @@ namespace NotificationHubs.Tests.ScenarioTests
                 Assert.NotNull(createNHResponse);
 
                 responseNH = NotificationHubsManagementClient.NotificationHubs.CheckAvailability(resourceGroup, validNamespaceName, 
-                    new CheckAvailabilityParameters(NotificationHubsManagementHelper.DefaultLocation, name: validNotificationHubName));
+                    new CheckAvailabilityParameters(validNotificationHubName, NotificationHubsManagementHelper.DefaultLocation));
                 Assert.NotNull(responseNH);
                 Assert.False(responseNH.IsAvailiable);
 

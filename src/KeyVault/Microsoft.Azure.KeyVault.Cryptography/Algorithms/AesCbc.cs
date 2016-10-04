@@ -6,6 +6,9 @@ using System.Security.Cryptography;
 
 namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
 {
+    /// <summary>
+    /// Abstract base class for vanilla AESCBC
+    /// </summary>
     public abstract class AesCbc : SymmetricEncryptionAlgorithm
     {
         private static Aes Create( byte[] key, byte[] iv )

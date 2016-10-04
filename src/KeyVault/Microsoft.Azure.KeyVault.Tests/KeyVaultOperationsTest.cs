@@ -1364,7 +1364,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                         {
                             ContentType = certificateMimeType
                         },
-                        IssuerReference = new IssuerReference
+                        IssuerParameters = new IssuerParameters
                         {
                             Name = WellKnownIssuers.Self
                         },
@@ -1441,7 +1441,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     {
                         ContentType = certificateMimeType
                     },
-                    IssuerReference = new IssuerReference
+                    IssuerParameters = new IssuerParameters
                     {
                         Name = WellKnownIssuers.Self
                     },
@@ -1531,7 +1531,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     {
                         ContentType = certificateMimeType
                     },
-                    IssuerReference = new IssuerReference
+                    IssuerParameters = new IssuerParameters
                     {
                         Name = createdIssuer01.IssuerIdentifier.Name
                     },
@@ -1622,7 +1622,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     {
                         ContentType = certificateMimeType
                     },
-                    IssuerReference = new IssuerReference
+                    IssuerParameters = new IssuerParameters
                     {
                         Name = createdIssuer01.IssuerIdentifier.Name
                     },
@@ -1696,7 +1696,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     {
                         ContentType = certificateMimeType
                     },
-                    IssuerReference = new IssuerReference
+                    IssuerParameters = new IssuerParameters
                     {
                         Name = createdIssuer01.IssuerIdentifier.Name
                     },
@@ -1891,19 +1891,19 @@ namespace Microsoft.Azure.KeyVault.Tests
                     Assert.NotNull(certificateBundlePolicy);
 
                     // Update certificate policy
-                    certificateBundlePolicy.IssuerReference = new IssuerReference
+                    certificateBundlePolicy.IssuerParameters = new IssuerParameters
                     {
                         Name = WellKnownIssuers.Self
                     };
 
                     var certificateBundlePolicyUpdatedResponse = client.UpdateCertificatePolicyAsync(_vaultAddress, certificateName, certificateBundlePolicy).GetAwaiter().GetResult();
                     Assert.NotNull(certificateBundlePolicyUpdatedResponse);
-                    Assert.True(0 == string.CompareOrdinal(certificateBundlePolicyUpdatedResponse.IssuerReference.Name, WellKnownIssuers.Self));
+                    Assert.True(0 == string.CompareOrdinal(certificateBundlePolicyUpdatedResponse.IssuerParameters.Name, WellKnownIssuers.Self));
 
                     // Get the update certificate policy
                     var certificateBundlePolicyUpdated = client.GetCertificatePolicyAsync(_vaultAddress, certificateName).GetAwaiter().GetResult();
                     Assert.NotNull(certificateBundlePolicyUpdated);
-                    Assert.True(0 == string.CompareOrdinal(certificateBundlePolicyUpdated.IssuerReference.Name, WellKnownIssuers.Self));
+                    Assert.True(0 == string.CompareOrdinal(certificateBundlePolicyUpdated.IssuerParameters.Name, WellKnownIssuers.Self));
                 }
                 finally
                 {
@@ -2127,7 +2127,7 @@ namespace Microsoft.Azure.KeyVault.Tests
                     {
                         ContentType = certificateMimeType
                     },
-                    IssuerReference = new IssuerReference
+                    IssuerParameters = new IssuerParameters
                     {
                         Name = WellKnownIssuers.Unknown
                     },

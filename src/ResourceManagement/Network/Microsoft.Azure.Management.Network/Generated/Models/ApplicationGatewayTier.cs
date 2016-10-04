@@ -18,5 +18,6 @@ namespace Microsoft.Azure.Management.Network.Models
     public static class ApplicationGatewayTier
     {
         public const string Standard = "Standard";
+        public const string WAF = "WAF";
     }
 }

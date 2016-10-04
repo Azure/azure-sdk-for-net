@@ -1,13 +1,18 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿//
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
+//
 
 using System;
 using System.Security.Cryptography;
 
 namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
 {
-    public class Rs256 : AsymmetricSignatureAlgorithm
+    /// <summary>
+    /// RSA SHA-256 Signature algorithim.
+    /// </summary>
+    public class Rs256 : RsaSignature
     {
         public const string AlgorithmName = "RS256";
 
@@ -20,38 +25,50 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
         {
         }
 
-        public override byte[] SignHash( AsymmetricAlgorithm key, byte[] digest )
+        public override ISignatureTransform CreateSignatureTransform( AsymmetricAlgorithm key )
         {
-            if ( key == null )
-                throw new ArgumentNullException( "key" );
-
-            if ( digest == null )
-                throw new ArgumentNullException( "digest" );
-
-            var rsa = key as RSACryptoServiceProvider;
-
-            if ( rsa == null )
-                throw new ArgumentException( "key must be an instance of RSACryptoServiceProvider", "key" );
-
-            return rsa.SignHash( digest, OID_OIWSEC_SHA256 );
+            return new Rs256SignatureTransform( key );
         }
 
-
-        public override bool VerifyHash( AsymmetricAlgorithm key, byte[] digest, byte[] signature )
+        class Rs256SignatureTransform : ISignatureTransform
         {
-            if ( key == null )
-                throw new ArgumentNullException( "key" );
+            private RSACryptoServiceProvider _key;
 
-            if ( digest == null )
-                throw new ArgumentNullException( "digest" );
+            public Rs256SignatureTransform( AsymmetricAlgorithm key )
+            {
+                if ( key == null )
+                    throw new ArgumentNullException( "key" );
 
-            var rsa = key as RSACryptoServiceProvider;
+                if ( !( key is RSACryptoServiceProvider ) )
+                    throw new ArgumentException( string.Format( "key must be of type {0}", typeof( RSACryptoServiceProvider ).AssemblyQualifiedName ), "key" );
 
-            if ( rsa == null )
-                throw new ArgumentException( "key must be an instance of RSACryptoServiceProvider", "key" );
+                _key = key as RSACryptoServiceProvider;
+            }
 
-            return rsa.VerifyHash( digest, OID_OIWSEC_SHA256, signature );
+            public byte[] Sign( byte[] digest )
+            {
+                if ( digest == null || digest.Length == 0 )
+                    throw new ArgumentNullException( "digest" );
+
+                if ( digest.Length != 32 )
+                    throw new ArgumentOutOfRangeException( "digest", "The digest must be 32 bytes for SHA-256" );
+
+                return _key.SignHash( digest, OID_OIWSEC_SHA256 );
+            }
+
+            public bool Verify( byte[] digest, byte[] signature )
+            {
+                if ( digest == null || digest.Length == 0 )
+                    throw new ArgumentNullException( "digest" );
+
+                if ( digest.Length != 32 )
+                    throw new ArgumentOutOfRangeException( "digest", "The digest must be 32 bytes for SHA-256" );
+
+                if ( signature == null || signature.Length == 0 )
+                    throw new ArgumentNullException( "signature" );
+
+                return _key.VerifyHash( digest, OID_OIWSEC_SHA256, signature );
+            }
         }
-
     }
 }

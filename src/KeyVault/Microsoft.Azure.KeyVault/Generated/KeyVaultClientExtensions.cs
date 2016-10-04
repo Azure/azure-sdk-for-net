@@ -193,7 +193,8 @@ namespace Microsoft.Azure.KeyVault
             /// The name of the key
             /// </param>
             /// <param name='maxresults'>
-            /// Maximum number of results to return.
+            /// Maximum number of results to return in a page. If not specified the
+            /// service will return up to 25 results.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -216,7 +217,8 @@ namespace Microsoft.Azure.KeyVault
             /// The vault name, e.g. https://myvault.vault.azure.net
             /// </param>
             /// <param name='maxresults'>
-            /// Maximum number of results to return.
+            /// Maximum number of results to return in a page. If not specified the
+            /// service will return up to 25 results.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -600,7 +602,8 @@ namespace Microsoft.Azure.KeyVault
             /// The vault name, e.g. https://myvault.vault.azure.net
             /// </param>
             /// <param name='maxresults'>
-            /// Maximum number of secrets to return.
+            /// Maximum number of results to return in a page. If not specified the
+            /// service will return up to 25 results.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -626,7 +629,8 @@ namespace Microsoft.Azure.KeyVault
             /// The name of the secret in the given vault
             /// </param>
             /// <param name='maxresults'>
-            /// Maximum number of results to return.
+            /// Maximum number of results to return in a page. If not specified the
+            /// service will return up to 25 results.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -649,7 +653,8 @@ namespace Microsoft.Azure.KeyVault
             /// The vault name, e.g. https://myvault.vault.azure.net
             /// </param>
             /// <param name='maxresults'>
-            /// Maximum number of results to return.
+            /// Maximum number of results to return in a page. If not specified the
+            /// service will return up to 25 results.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -758,7 +763,8 @@ namespace Microsoft.Azure.KeyVault
             /// The vault name, e.g. https://myvault.vault.azure.net
             /// </param>
             /// <param name='maxresults'>
-            /// Maximum number of results to return.
+            /// Maximum number of results to return in a page. If not specified the
+            /// service will return up to 25 results.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -973,7 +979,8 @@ namespace Microsoft.Azure.KeyVault
             /// The name of the certificate
             /// </param>
             /// <param name='maxresults'>
-            /// Maximum number of results to return.
+            /// Maximum number of results to return in a page. If not specified the
+            /// service will return up to 25 results.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.

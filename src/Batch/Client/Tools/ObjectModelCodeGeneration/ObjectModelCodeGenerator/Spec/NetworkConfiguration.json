@@ -1,0 +1,18 @@
+    {
+      "Name": "NetworkConfiguration",
+      "ProtocolName": "Models.NetworkConfiguration",
+      "Comment": "The network configuration for a pool.",
+      "Properties": [
+        {
+          "Key": {
+            "Type": "string",
+            "Name": "SubnetId",
+            "SummaryComment": "The ARM resource identifier of the virtual network subnet which the compute nodes of the pool will join.",
+            "RemarksComment": "The virtual network must be in the same region and subscription as the Azure Batch account, and the specified subnet should have enough spare IP addresses to accommodate the number of nodes in the pool. This property can only be specified for pools created with a <see cref=\"CloudPool.CloudServiceConfiguration\"/>.",
+            "BoundAccess": "read",
+            "UnboundAccess": "read,write"
+          },
+          "Value": null
+        }
+      ]
+    }

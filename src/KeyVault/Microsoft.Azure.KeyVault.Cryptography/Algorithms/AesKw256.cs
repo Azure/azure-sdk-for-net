@@ -7,6 +7,9 @@ using System.Security.Cryptography;
 
 namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
 {
+    /// <summary>
+    /// JWE A256KW: https://tools.ietf.org/html/rfc7518#section-4.4
+    /// </summary>
     public class AesKw256 : AesKw
     {
         public const string AlgorithmName = "A256KW";

@@ -36,7 +36,7 @@ using StorageAccount = Microsoft.Azure.Management.MachineLearning.WebServices.Mo
 
 namespace MachineLearning.Tests.ScenarioTests
 {
-    public class WebServiceTests : TestBase
+    public class WebServiceTests : BaseScenarioTests
     {
         private const string DefaultLocation = "South Central US";
         private const string TestServiceNamePrefix = "amlws";
@@ -110,7 +110,7 @@ namespace MachineLearning.Tests.ScenarioTests
                     // Remove the web service
                     if (!serviceWasRemoved)
                     {
-                        WebServiceTests.DisposeOfTestResource(() => amlServicesClient.WebServices.RemoveWithRequestId(resourceGroupName, webServiceName));
+                        BaseScenarioTests.DisposeOfTestResource(() => amlServicesClient.WebServices.RemoveWithRequestId(resourceGroupName, webServiceName));
                     }
                 }
             });
@@ -156,7 +156,7 @@ namespace MachineLearning.Tests.ScenarioTests
                 finally
                 {
                     // Remove the web service
-                    WebServiceTests.DisposeOfTestResource(() => amlServicesClient.WebServices.RemoveWithRequestId(resourceGroupName, webServiceName));
+                    BaseScenarioTests.DisposeOfTestResource(() => amlServicesClient.WebServices.RemoveWithRequestId(resourceGroupName, webServiceName));
                 }
             });
         }
@@ -215,11 +215,11 @@ namespace MachineLearning.Tests.ScenarioTests
                 finally
                 {
                     // Remove the resources created by the test
-                    WebServiceTests.DisposeOfTestResource(() => amlServicesClient.WebServices.RemoveWithRequestId(resourceGroupName, webServiceName));
-                    WebServiceTests.DisposeOfTestResource(() => amlServicesClient.WebServices.RemoveWithRequestId(resourceGroupName, service2Name));
-                    WebServiceTests.DisposeOfTestResource(() => amlServicesClient.WebServices.RemoveWithRequestId(resourceGroupName, service3Name));
-                    WebServiceTests.DisposeOfTestResource(() => amlServicesClient.WebServices.RemoveWithRequestId(otherResourceGroupName, otherServiceName));
-                    WebServiceTests.DisposeOfTestResource(() => resourcesClient.ResourceGroups.Delete(otherResourceGroupName));
+                    BaseScenarioTests.DisposeOfTestResource(() => amlServicesClient.WebServices.RemoveWithRequestId(resourceGroupName, webServiceName));
+                    BaseScenarioTests.DisposeOfTestResource(() => amlServicesClient.WebServices.RemoveWithRequestId(resourceGroupName, service2Name));
+                    BaseScenarioTests.DisposeOfTestResource(() => amlServicesClient.WebServices.RemoveWithRequestId(resourceGroupName, service3Name));
+                    BaseScenarioTests.DisposeOfTestResource(() => amlServicesClient.WebServices.RemoveWithRequestId(otherResourceGroupName, otherServiceName));
+                    BaseScenarioTests.DisposeOfTestResource(() => resourcesClient.ResourceGroups.Delete(otherResourceGroupName));
                 }
             });
         }
@@ -277,7 +277,7 @@ namespace MachineLearning.Tests.ScenarioTests
                 catch (CloudException cloudEx)
                 {
                     Trace.TraceError("Caught unexpected exception: ");
-                    Trace.TraceError(WebServiceTests.GenerateCloudExceptionReport(cloudEx));
+                    Trace.TraceError(BaseScenarioTests.GenerateCloudExceptionReport(cloudEx));
                     testIsSuccessfull = false;
                 }
                 finally
@@ -287,15 +287,15 @@ namespace MachineLearning.Tests.ScenarioTests
                         // Delete the deployment with the commitment plan
                         if (cpRpApiVersion != string.Empty)
                         {
-                            WebServiceTests.DisposeOfTestResource(() => resourcesClient.Resources.Delete(resourceGroupName, WebServiceTests.MLResourceProviderNamespace, string.Empty, WebServiceTests.CPResourceType, commitmentPlanName, cpRpApiVersion));
-                            WebServiceTests.DisposeOfTestResource(() => resourcesClient.Deployments.Delete(resourceGroupName, cpDeploymentName));
+                            BaseScenarioTests.DisposeOfTestResource(() => resourcesClient.Resources.Delete(resourceGroupName, WebServiceTests.MLResourceProviderNamespace, string.Empty, WebServiceTests.CPResourceType, commitmentPlanName, cpRpApiVersion));
+                            BaseScenarioTests.DisposeOfTestResource(() => resourcesClient.Deployments.Delete(resourceGroupName, cpDeploymentName));
                         }
 
                         // Delete the created storage account
-                        WebServiceTests.DisposeOfTestResource(() => storageManagementClient.StorageAccounts.Delete(resourceGroupName, storageAccountName));
+                        BaseScenarioTests.DisposeOfTestResource(() => storageManagementClient.StorageAccounts.Delete(resourceGroupName, storageAccountName));
 
                         // Delete the created resource group
-                        WebServiceTests.DisposeOfTestResource(() => resourcesClient.ResourceGroups.Delete(resourceGroupName));
+                        BaseScenarioTests.DisposeOfTestResource(() => resourcesClient.ResourceGroups.Delete(resourceGroupName));
                     }
                 }
                 Assert.True(testIsSuccessfull);
@@ -352,40 +352,6 @@ namespace MachineLearning.Tests.ScenarioTests
             }
         }
 
-        private static string GenerateCloudExceptionReport(CloudException cloudException)
-        {
-            var errorReport = new StringBuilder();
-
-            string requestId = cloudException.RequestId;
-            if (string.IsNullOrWhiteSpace(requestId) && cloudException.Response != null)
-            {
-                // Try to obtain the request id from the HTTP response associated with the exception
-                IEnumerable<string> headerValues = Enumerable.Empty<string>();
-                if (cloudException.Response.Headers != null &&
-                    cloudException.Response.Headers.TryGetValue("x-ms-request-id", out headerValues))
-                {
-                    requestId = headerValues.First();
-                }
-            }
-
-            errorReport.AppendLine($"Request Id: {requestId}");
-            if (cloudException.Body != null)
-            {
-                errorReport.AppendLine($"Error Code: {cloudException.Body.Code}");
-                errorReport.AppendLine($"Error Message: {cloudException.Body.Message}");
-                if (cloudException.Body.Details.Any())
-                {
-                    errorReport.AppendLine("Error Details:");
-                    foreach (var errorDetail in cloudException.Body.Details)
-                    {
-                        errorReport.AppendLine($"\t[Code={errorDetail.Code}, Message={errorDetail.Message}]");
-                    }
-                }
-            }
-
-            return errorReport.ToString();
-        }
-
         private static Tuple<DeploymentExtended, GenericResource> CreateCommitmentPlanResource(string resourceGroupName, string commitmentPlanName, string deploymentName, ResourceManagementClient resourcesClient, string cpApiVersion)
         {
             string deploymentParams = @"{'planName': {'value': '" + commitmentPlanName + "'}, 'planSkuName': {'value': 'PLAN_SKU_NAME'}, 'planSkuTier': {'value': 'PLAN_SKU_TIER'}, 'apiVersion': {'value': '" + cpApiVersion + "'}}";
@@ -400,23 +366,6 @@ namespace MachineLearning.Tests.ScenarioTests
             var cpResource = resourcesClient.Resources.Get(resourceGroupName, WebServiceTests.MLResourceProviderNamespace, string.Empty, WebServiceTests.CPResourceType, commitmentPlanName, cpApiVersion);
 
             return Tuple.Create(deployment, cpResource);
-        }
-
-        private static void DisposeOfTestResource(Action disposalCall)
-        {
-            try
-            {
-                disposalCall();
-            }
-            catch (CloudException cloudEx)
-            {
-                Trace.TraceWarning("Caught unexpected exception during resource cleanup: ");
-                Trace.TraceWarning(WebServiceTests.GenerateCloudExceptionReport(cloudEx));
-            }
-            catch (Exception ex)
-            {
-                Trace.TraceWarning("Caught unexpected exception during resource cleanup: {0}", ex.Message);
-            }
         }
     }
 }

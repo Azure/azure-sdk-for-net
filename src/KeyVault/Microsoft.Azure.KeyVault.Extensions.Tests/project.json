@@ -25,7 +25,7 @@
     }
   },
   "dependencies": {
-    "Microsoft.Azure.KeyVault": "2.0.1-preview",
+    "Microsoft.Azure.KeyVault": "2.0.2-preview",
     "Microsoft.Azure.KeyVault.Cryptography": "2.0.0-preview",
     "Microsoft.Azure.KeyVault.Extensions": "2.0.0-preview",
     "Microsoft.Azure.KeyVault.Core": "2.0.0-preview",

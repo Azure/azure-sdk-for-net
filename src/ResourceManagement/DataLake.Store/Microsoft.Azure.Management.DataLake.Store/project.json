@@ -1,5 +1,5 @@
 {
-  "version": "0.12.5-preview",
+  "version": "0.12.6-preview",
   "description": "Provides Data Lake Store account and filesystem management capabilities for Microsoft Azure.",
   "authors": [ "Microsoft" ],
 
