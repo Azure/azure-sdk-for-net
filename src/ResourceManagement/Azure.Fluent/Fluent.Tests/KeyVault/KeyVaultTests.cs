@@ -103,7 +103,7 @@ namespace Fluent.Tests.KeyVault
             return KeyVaultManager
                 .Configure()
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                .Authenticate(credentials, credentials.DefaultSubscriptionId, credentials.TenantId);
+                .Authenticate(credentials, credentials.DefaultSubscriptionId);
         }
     }
 }

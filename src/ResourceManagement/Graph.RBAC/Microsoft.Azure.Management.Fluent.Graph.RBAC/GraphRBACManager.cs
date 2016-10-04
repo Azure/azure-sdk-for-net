@@ -10,6 +10,7 @@ using Microsoft.Rest.Azure;
 using Microsoft.Rest;
 using Microsoft.Azure.Management.Fluent.Resource;
 using Microsoft.Azure.Management.Graph.RBAC;
+using Microsoft.Azure.Management.Fluent.Resource.Authentication;
 
 namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
 {
@@ -28,7 +29,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
 
         public GraphRbacManager(RestClient restClient, string subscriptionId, string tenantId) : base(restClient, subscriptionId)
         {
-            client = new GraphRbacManagementClient(
+            client = new GraphRbacManagementClient(new Uri(restClient.BaseUri),
                 restClient.Credentials,
                 restClient.RootHttpHandler,
                 restClient.Handlers.ToArray());
@@ -39,11 +40,11 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
 
         #region Graph RBAC Manager builder
 
-        public static IGraphRbacManager Authenticate(ServiceClientCredentials graphCredentials, string subscriptionId, string tenantId)
+        public static IGraphRbacManager Authenticate(AzureCredentials credentials, string subscriptionId, string tenantId)
         {
             return new GraphRbacManager(RestClient.Configure()
-                    .withEnvironment(AzureEnvironment.AzureGlobalCloud)
-                    .withCredentials(graphCredentials)
+                    .withBaseUri(credentials.Environment.GraphEndpoint)
+                    .withCredentials(credentials)
                     .build(), subscriptionId, tenantId);
         }
 
@@ -64,16 +65,16 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
 
         public interface IConfigurable : IAzureConfigurable<IConfigurable>
         {
-            IGraphRbacManager Authenticate(ServiceClientCredentials graphCredentials, string subscriptionId, string tenantId);
+            IGraphRbacManager Authenticate(AzureCredentials credentials, string subscriptionId, string tenantId);
         }
 
         protected class Configurable :
             AzureConfigurable<IConfigurable>,
             IConfigurable
         {
-            public IGraphRbacManager Authenticate(ServiceClientCredentials credentials, string subscriptionId, string tenantId)
+            public IGraphRbacManager Authenticate(AzureCredentials credentials, string subscriptionId, string tenantId)
             {
-                return new GraphRbacManager(BuildRestClient(credentials), subscriptionId, tenantId);
+                return new GraphRbacManager(BuildRestClientForGraph(credentials), subscriptionId, tenantId);
             }
         }
 

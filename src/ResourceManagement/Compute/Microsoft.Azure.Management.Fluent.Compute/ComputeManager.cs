@@ -9,6 +9,7 @@ using Microsoft.Rest;
 using Microsoft.Azure.Management.Fluent.Resource;
 using Microsoft.Azure.Management.Fluent.Storage;
 using Microsoft.Azure.Management.Fluent.Network;
+using Microsoft.Azure.Management.Fluent.Resource.Authentication;
 
 namespace Microsoft.Azure.Management.Fluent.Compute
 {
@@ -46,11 +47,11 @@ namespace Microsoft.Azure.Management.Fluent.Compute
 
         #region ComputeManager builder
 
-        public static IComputeManager Authenticate(ServiceClientCredentials serviceClientCredentials, string subscriptionId)
+        public static IComputeManager Authenticate(AzureCredentials credentials, string subscriptionId)
         {
             return new ComputeManager(RestClient.Configure()
-                    .withEnvironment(AzureEnvironment.AzureGlobalCloud)
-                    .withCredentials(serviceClientCredentials)
+                    .withEnvironment(credentials.Environment)
+                    .withCredentials(credentials)
                     .build(), subscriptionId);
         }
 
@@ -71,14 +72,14 @@ namespace Microsoft.Azure.Management.Fluent.Compute
 
         public interface IConfigurable : IAzureConfigurable<IConfigurable>
         {
-            IComputeManager Authenticate(ServiceClientCredentials serviceClientCredentials, string subscriptionId);
+            IComputeManager Authenticate(AzureCredentials credentials, string subscriptionId);
         }
 
         protected class Configurable :
             AzureConfigurable<IConfigurable>,
             IConfigurable
         {
-            public IComputeManager Authenticate(ServiceClientCredentials credentials, string subscriptionId)
+            public IComputeManager Authenticate(AzureCredentials credentials, string subscriptionId)
             {
                 return new ComputeManager(BuildRestClient(credentials), subscriptionId);
             }

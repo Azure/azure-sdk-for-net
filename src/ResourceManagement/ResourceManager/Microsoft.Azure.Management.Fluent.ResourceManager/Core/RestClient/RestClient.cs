@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
                 IBuildable withEnvironment(AzureEnvironment environment);
             }
 
-            public interface IBuildable
+            public interface IBuildable : IWithEnvironment, IWithBaseUri
             {
                 IBuildable withUserAgent(string product, string version);
                 IBuildable withRetryPolicy(RetryPolicy retryPolicy);

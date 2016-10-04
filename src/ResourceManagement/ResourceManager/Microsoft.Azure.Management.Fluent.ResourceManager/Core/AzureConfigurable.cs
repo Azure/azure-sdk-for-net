@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Microsoft.Azure.Management.Fluent.Resource.Authentication;
 using Microsoft.Rest;
 using Microsoft.Rest.TransientFaultHandling;
 using System.Net.Http;
@@ -42,10 +43,19 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
             return this as T;
         }
 
-        protected RestClient BuildRestClient(ServiceClientCredentials credentials)
+        protected RestClient BuildRestClient(AzureCredentials credentials)
         {
             return restClientBuilder
                 .withCredentials(credentials)
+                .withEnvironment(credentials.Environment)
+                .build();
+        }
+
+        protected RestClient BuildRestClientForGraph(AzureCredentials credentials)
+        {
+            return restClientBuilder
+                .withCredentials(credentials)
+                .withBaseUri(credentials.Environment.GraphEndpoint)
                 .build();
         }
     }
