@@ -163,15 +163,15 @@ namespace Microsoft.Azure.Management.Fluent.Network
                             .WithExistingLoadBalancerBackend(this, backendName)
                             .Parent()
                         .Apply();
-
-                        this.nicsInBackends.Clear();
-                        this.Refresh();
                     }
                     catch
                     {
                         // Skip and continue
                     }
                 }
+
+                nicsInBackends.Clear();
+                Refresh();
             }
         }
 
