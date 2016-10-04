@@ -26,7 +26,7 @@ namespace ListVirtualMachineImages
 
                 var azure = Azure
                     .Configure()
-                    .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                    .WithLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
                     .Authenticate(credentials)
                     .WithSubscription(credentials.DefaultSubscriptionId);
 
