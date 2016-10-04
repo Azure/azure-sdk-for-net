@@ -190,15 +190,15 @@ You can find plenty of sample code that illustrates management scenarios in Azur
 
 If you are using released builds from 1.0.0-preview1, add the following to your POM file:
 
-Azure Management Library for                              | Package name                              | Stable (`1.0.0-preview1` release)    | Nightly (`Fluent` branch)
+Azure Management Library                              | Package name                              | Stable (`1.0.0-preview1` release)
 -----------------------|-------------------------------------------|-----------------------------|-------------------------
-Rollup Client | `Microsoft.Azure.Management.Fluent` | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent/) | [![MyGet](https://img.shields.io/fluent.myget/aspnetcore-dev/vpre/Microsoft.Azure.Management.Fluent.svg?style=flat-square&label=myget)](https://fluent.myget.org/feed/aspnetcore-dev/package/nuget/Microsoft.Azure.Management.Fluent)
-Batch | `Microsoft.Azure.Management.Fluent.Batch` | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.Batch.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent.Batch/) | [![MyGet](https://img.shields.io/fluent.myget/aspnetcore-dev/vpre/Microsoft.Azure.Management.Fluent.Batch.svg?style=flat-square&label=myget)](https://fluent.myget.org/feed/aspnetcore-dev/package/nuget/Microsoft.Azure.Management.Fluent.Batch)
-Virtual Machines and Virtual Machine Scale Sets | `Microsoft.Azure.Management.Fluent.Compute`    | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.Compute.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent.Compute/) | [![MyGet](https://img.shields.io/fluent.myget/aspnetcore-dev/vpre/Microsoft.Azure.Management.Fluent.Compute.svg?style=flat-square&label=myget)](https://fluent.myget.org/feed/aspnetcore-dev/package/nuget/Microsoft.Azure.Management.Fluent.Compute)
-Key Vault |`Microsoft.Azure.Management.Fluent.KeyVault`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.KeyVault.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent.KeyVault/) | [![MyGet](https://img.shields.io/fluent.myget/aspnetcore-dev/vpre/Microsoft.Azure.Management.Fluent.KeyVault.svg?style=flat-square&label=myget)](https://fluent.myget.org/feed/aspnetcore-dev/package/nuget/Microsoft.Azure.Management.Fluent.KeyVault)
-Network  |`Microsoft.Azure.Management.Fluent.Network`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.Network.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent.Network/) | [![MyGet](https://img.shields.io/fluent.myget/aspnetcore-dev/vpre/Microsoft.Azure.Management.Fluent.Network.svg?style=flat-square&label=myget)](https://fluent.myget.org/feed/aspnetcore-dev/package/nuget/Microsoft.Azure.Management.Fluent.Network)
-Resource Manager  |`Microsoft.Azure.Management.Fluent.ResourceManager`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.ResourceManager.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent.ResourceManager/) | [![MyGet](https://img.shields.io/fluent.myget/aspnetcore-dev/vpre/Microsoft.Azure.Management.Fluent.ResourceManager.svg?style=flat-square&label=myget)](https://fluent.myget.org/feed/aspnetcore-dev/package/nuget/Microsoft.Azure.Management.Fluent.ResourceManager)
-Storage  |`Microsoft.Azure.Management.Fluent.Storage`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.Storage.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent.Storage/) | [![MyGet](https://img.shields.io/fluent.myget/aspnetcore-dev/vpre/Microsoft.Azure.Management.Fluent.Storage.svg?style=flat-square&label=myget)](https://fluent.myget.org/feed/aspnetcore-dev/package/nuget/Microsoft.Azure.Management.Fluent.Storage)
+Rollup Client | `Microsoft.Azure.Management.Fluent` | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent/)
+Batch | `Microsoft.Azure.Management.Fluent.Batch` | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.Batch.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent.Batch/)
+Virtual Machines and Virtual Machine Scale Sets | `Microsoft.Azure.Management.Fluent.Compute`    | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.Compute.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent.Compute/)
+Key Vault |`Microsoft.Azure.Management.Fluent.KeyVault`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.KeyVault.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent.KeyVault/)
+Network  |`Microsoft.Azure.Management.Fluent.Network`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.Network.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent.Network/)
+Resource Manager  |`Microsoft.Azure.Management.Fluent.ResourceManager`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.ResourceManager.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent.ResourceManager/)
+Storage  |`Microsoft.Azure.Management.Fluent.Storage`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.Storage.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent.Storage/)
 
 
 #Pre-requisites
@@ -224,7 +224,7 @@ If you would like to become an active contributor to this project please follow 
 
 #More Information
 * [https://azure.microsoft.com/en-us/develop/net/](https://azure.microsoft.com/en-us/develop/net/)
-* If you don't have a Microsoft Azure subscription you can get a FREE trial account [here](http://go.microsoft.com/fwlink/?LinkId=330212)
+* If you don't have a Microsoft Azure subscription you can get a FREE trial account [here](http://go.microsoft.com/fwlink/?LinkId=330212).
 
 **Previous Releases and Corresponding Repo Branches**
 
