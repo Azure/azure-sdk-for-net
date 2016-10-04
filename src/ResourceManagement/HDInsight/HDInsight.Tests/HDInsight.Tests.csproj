@@ -50,6 +50,9 @@
     <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateWindowsClusterWithStandardTier.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateLinuxSparkClusterWithComponentVersion.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\HDInsight.Tests.CreateClusterTests\TestCreateWithEmptyParameters.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
