@@ -26,8 +26,9 @@ namespace ListVirtualMachineExtensionImages
 
                 var azure = Azure
                     .Configure()
+                    .WithLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
                     .Authenticate(credentials)
-                    .WithSubscription(credentials.DefaultSubscriptionId);
+                    .WithDefaultSubscription();
 
                 //=================================================================
                 // List all virtual machine extension image publishers and

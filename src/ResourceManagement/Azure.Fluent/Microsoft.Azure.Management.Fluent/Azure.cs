@@ -173,29 +173,31 @@ namespace Microsoft.Azure.Management
 
         #region Azure builder
 
+        private static Authenticated CreateAuthenticated(RestClient restClient, string tenantId)
+        {
+            return new Authenticated(restClient, tenantId);
+        }
+
         public static IAuthenticated Authenticate(AzureCredentials azureCredentials)
         {
-            return new Authenticated(RestClient.Configure()
+            var authenticated = CreateAuthenticated(RestClient.Configure()
                     .WithEnvironment(azureCredentials.Environment)
                     .WithCredentials(azureCredentials)
-                    .Build(), azureCredentials.TenantId
-                );
+                    .Build(), azureCredentials.TenantId);
+            authenticated.SetDefaultSubscription(azureCredentials.DefaultSubscriptionId);
+            return authenticated;
+
         }
 
         public static IAuthenticated Authenticate(string authFile)
         {
             AzureCredentials credentials = AzureCredentials.FromFile(authFile);
-            var authenticated = new Authenticated(RestClient.Configure()
-                    .WithEnvironment(credentials.Environment)
-                    .WithCredentials(credentials)
-                    .Build(), credentials.TenantId);
-            authenticated.SetDefaultSubscription(credentials.DefaultSubscriptionId);
-            return authenticated;
+            return Authenticate(credentials);
         }
 
         public static IAuthenticated Authenticate(RestClient restClient, string tenantId)
         {
-            return new Authenticated(restClient, tenantId);
+            return CreateAuthenticated(restClient, tenantId);
         }
 
         public static IConfigurable Configure()
@@ -260,21 +262,19 @@ namespace Microsoft.Azure.Management
 
             public IAzure WithDefaultSubscription()
             {
-                if (defaultSubscription != null)
+                if (!string.IsNullOrWhiteSpace(defaultSubscription))
                 {
                     return WithSubscription(defaultSubscription);
                 }
                 else
                 {
-                    ISubscription subscription = Subscriptions.List().FirstOrDefault();
-                    if (subscription != null)
-                    {
-                        return WithSubscription(subscription.SubscriptionId);
-                    }
-                    else
-                    {
-                        return WithSubscription(null);
-                    }
+                    var resourceManager = Fluent.Resource.ResourceManager.Authenticate(
+                        RestClient.Configure()
+                            .WithBaseUri(restClient.BaseUri)
+                            .WithCredentials(restClient.Credentials).Build());
+                    var subscription = resourceManager.Subscriptions.List().FirstOrDefault();
+
+                    return WithSubscription(subscription?.SubscriptionId);
                 }
             }
         }
@@ -294,7 +294,9 @@ namespace Microsoft.Azure.Management
         {
             IAuthenticated IConfigurable.Authenticate(AzureCredentials credentials)
             {
-                return new Authenticated(BuildRestClient(credentials), credentials.TenantId);
+                var authenticated = new Authenticated(BuildRestClient(credentials), credentials.TenantId);
+                authenticated.SetDefaultSubscription(credentials.DefaultSubscriptionId);
+                return authenticated;
             }
         }
 
