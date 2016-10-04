@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Fluent.Tests;
+using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Fluent.Compute;
 using Microsoft.Azure.Management.Fluent.Network;
@@ -11,10 +11,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
 using Xunit;
 
-namespace Azure.Tests
+namespace Fluent.Tests.Compute
 {
     public class VirtualMachineScaleSetTests
     {

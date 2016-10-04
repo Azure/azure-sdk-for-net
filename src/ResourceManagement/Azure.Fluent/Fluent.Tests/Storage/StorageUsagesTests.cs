@@ -4,13 +4,9 @@
 using Microsoft.Azure.Management.Fluent.Resource.Authentication;
 using Microsoft.Azure.Management.Fluent.Resource.Core;
 using Microsoft.Azure.Management.Fluent.Storage;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
-namespace Fluent.Tests
+namespace Fluent.Tests.Storage
 {
     public class StorageUsagesTests
     {
