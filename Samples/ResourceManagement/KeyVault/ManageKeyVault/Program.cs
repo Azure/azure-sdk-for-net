@@ -41,7 +41,7 @@ namespace ManageKeyVault
                     .Configure()
                     .WithLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
                     .Authenticate(credentials)
-                    .WithSubscription(credentials.DefaultSubscriptionId);
+                    .WithDefaultSubscription();
 
                 // Print selected subscription
                 Console.WriteLine("Selected subscription: " + azure.SubscriptionId);

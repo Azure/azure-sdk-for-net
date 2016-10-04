@@ -93,9 +93,9 @@ namespace Microsoft.Azure.Management.Fluent.Resource
             {
                 this.restClient = restClient;
                 subscriptionClient = new SubscriptionClient(new Uri(restClient.BaseUri),
-                restClient.Credentials,
-                restClient.RootHttpHandler,
-                restClient.Handlers.ToArray());
+                    restClient.Credentials,
+                    restClient.RootHttpHandler,
+                    restClient.Handlers.ToArray());
             }
 
             #region Implementaiton of IAuthenticated interface

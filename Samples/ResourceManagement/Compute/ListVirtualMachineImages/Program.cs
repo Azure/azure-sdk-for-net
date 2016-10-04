@@ -28,7 +28,7 @@ namespace ListVirtualMachineImages
                     .Configure()
                     .WithLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
                     .Authenticate(credentials)
-                    .WithSubscription(credentials.DefaultSubscriptionId);
+                    .WithDefaultSubscription();
 
                 //=================================================================
                 // List all virtual machine image publishers and

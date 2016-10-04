@@ -39,7 +39,7 @@ namespace ManageResourceGroup
                         .Configure()
                         .WithLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
                         .Authenticate(credentials)
-                        .WithSubscription(credentials.DefaultSubscriptionId);
+                        .WithDefaultSubscription();
 
                     try
                     {

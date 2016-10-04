@@ -3,12 +3,9 @@
 
 using Microsoft.Rest;
 using Microsoft.Rest.TransientFaultHandling;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.Fluent.Resource.Core
 {
@@ -81,6 +78,7 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
             }
 
             #region Fluent builder interfaces
+
             public interface IBlank : IWithBaseUri, IWithEnvironment
             {
             }
@@ -98,13 +96,19 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
             public interface IBuildable : IWithEnvironment, IWithBaseUri
             {
                 IBuildable WithUserAgent(string product, string version);
+
                 IBuildable WithRetryPolicy(RetryPolicy retryPolicy);
+
                 IBuildable WithDelegatingHandler(DelegatingHandler delegatingHandler);
+
                 IBuildable WithLogLevel(HttpLoggingDelegatingHandler.Level level);
+
                 IBuildable WithCredentials(ServiceClientCredentials credentials);
+
                 RestClient Build();
             }
-            #endregion
+
+            #endregion Fluent builder interfaces
 
             public IBuildable WithBaseUri(string baseUri)
             {
