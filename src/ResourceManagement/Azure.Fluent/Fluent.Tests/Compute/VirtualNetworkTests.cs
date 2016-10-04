@@ -7,7 +7,7 @@ using Microsoft.Azure.Management.Fluent.Resource;
 using Microsoft.Azure.Management.Fluent.Resource.Authentication;
 using Microsoft.Azure.Management.Fluent.Resource.Core;
 
-namespace Fluent.Tests
+namespace Fluent.Tests.Compute
 {
     public class ManageVirtualNetwork
     {

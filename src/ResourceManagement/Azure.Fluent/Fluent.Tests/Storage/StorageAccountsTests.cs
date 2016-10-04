@@ -9,7 +9,7 @@ using Microsoft.Azure.Management.Fluent.Storage;
 using System.Linq;
 using Xunit;
 
-namespace Fluent.Tests
+namespace Fluent.Tests.Storage
 {
     public class StorageAccountsTests
     {
@@ -85,7 +85,7 @@ namespace Fluent.Tests
         private IResourceManager CreateResourceManager()
         {
             AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
-            IResourceManager resourceManager = ResourceManager.Configure()
+            IResourceManager resourceManager = Microsoft.Azure.Management.Fluent.Resource.ResourceManager.Configure()
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                 .Authenticate(credentials)
                 .WithSubscription(credentials.DefaultSubscriptionId);

@@ -9,7 +9,7 @@ using Microsoft.Azure.Management.Fluent.Resource;
 using Microsoft.Azure.Management.Fluent.Resource.Authentication;
 using Microsoft.Azure.Management.Fluent.Resource.Core;
 
-namespace Fluent.Tests
+namespace Fluent.Tests.Common
 {
     public class TestHelper
     {
@@ -44,7 +44,7 @@ namespace Fluent.Tests
         public static IResourceManager CreateResourceManager()
         {
             AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
-            IResourceManager resourceManager = ResourceManager.Configure()
+            IResourceManager resourceManager = Microsoft.Azure.Management.Fluent.Resource.ResourceManager.Configure()
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                 .Authenticate(credentials)
                 .WithSubscription(credentials.DefaultSubscriptionId);
