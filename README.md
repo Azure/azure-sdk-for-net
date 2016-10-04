@@ -1,129 +1,238 @@
-# Microsoft Azure SDK for .NET
-----------
-The Microsoft Azure SDK for .NET allows you to build applications
-that take advantage of scalable cloud computing resources.
+[![Build Status](https://travis-ci.org/Azure/azure-sdk-for-net.svg?style=flat-square&label=build)](https://travis-ci.org/Azure/azure-sdk-for-net)
 
-### Target Frameworks:
+#Azure Management Libraries for .NET
 
-* .NET Framework 4.5
-* Netstandard 1.5, based on the NetCore framework
+This README is based on the latest released preview version (1.0.0-preview1). If you are looking for other releases, see [More Information](#more-information)
 
-### Prerequisites:
-  Install .Net CoreCLR using [these steps](https://www.microsoft.com/net/core).
-
-### To build:
-
-####Full Build
-
- 1. Navigate to repository root directory
- 2. Invoke **msbuild** build.proj
-
-####Build one nuget package
-
- 1. **msbuild** build.proj /t:build;package /p:scope=ResourceManagement\Compute
+The Azure Management Libraries for C# is a higher-level, object-oriented API for managing Azure resources.
 
 
-####Using Visual Studio:
+> **1.0.0-preview1** is a developer preview that supports major parts of Azure Virtual Machines, Virtual Machine Scale Sets, Storage, Networking, Resource Manager, Key Vault and Batch. The next preview version of the Azure Management Libraries for .NET is a work in-progress. We will be adding support for more Azure services and tweaking the API over the next few months.
 
-  
+**Azure Authentication**
 
- 1. Open any solution, say, "src\ResourceManagement\Compute\Compute.sln"
- 2. Invoke "build" command.
+The `Azure` class is the simplest entry point for creating and interacting with Azure resources.
+
+```csharp
+Azure azure = Azure.Authenticate(credFile).WithDefaultSubscription();``` 
+
+**Create a Virtual Machine**
+
+You can create a virtual machine instance by using a `Define() … Create()` method chain.
+
+```csharp
+Console.WriteLine("Creating a Windows VM");
+
+var windowsVM = azure.VirtualMachines.Define("myWindowsVM")
+    .WithRegion(Region.US_EAST)
+    .WithNewResourceGroup(rgName)
+    .WithNewPrimaryNetwork("10.0.0.0/28")
+    .WithPrimaryPrivateIpAddressDynamic()
+    .WithNewPrimaryPublicIpAddress("mywindowsvmdns")
+    .WithPopularWindowsImage(KnownWindowsVirtualMachineImage.WINDOWS_SERVER_2012_R2_DATACENTER)
+    .WithAdminUserName("tirekicker")
+    .WithPassword(password)
+    .WithSize(VirtualMachineSizeTypes.StandardD3V2)
+    .Create();
+	
+Console.WriteLine("Created a Windows VM: " + windowsVM.Id);
+```
+
+**Update a Virtual Machine**
+
+You can update a virtual machine instance by using an `Update() … Apply()` method chain.
+
+```csharp
+windowsVM.Update()
+	.WithNewDataDisk(10)
+	.DefineNewDataDisk(dataDiskName)
+	    .WithSizeInGB(20)
+	    .WithCaching(CachingTypes.ReadWrite)
+	    .Attach()
+	.Apply();
+```
+**Create a Virtual Machine Scale Set**
+
+You can create a virtual machine scale set instance by using another `Define() … Create()` method chain.
+
+```csharp
+var virtualMachineScaleSet = azure.VirtualMachineScaleSets
+	.Define(vmssName)
+	.WithRegion(Region.US_EAST)
+	.WithExistingResourceGroup(rgName)
+	.WithSku(VirtualMachineScaleSetSkuTypes.STANDARD_D3_V2)
+	.WithExistingPrimaryNetworkSubnet(network, "Front-end")
+	.WithPrimaryInternetFacingLoadBalancer(loadBalancer1)
+	.WithPrimaryInternetFacingLoadBalancerBackends(backendPoolName1, backendPoolName2)
+	.WithPrimaryInternetFacingLoadBalancerInboundNatPools(natPool50XXto22, natPool60XXto23)
+	.WithoutPrimaryInternalLoadBalancer()
+	.WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
+	.WithRootUserName(userName)
+	.WithSsh(sshKey)
+	.WithNewStorageAccount(storageAccountName1)
+	.WithNewStorageAccount(storageAccountName2)
+	.WithNewStorageAccount(storageAccountName3)
+	.WithCapacity(3)
+	.Create();
+```
+
+**Create a Network Security Group**
+
+You can create a network security group instance by using another `Define() … Create()` method chain.
+
+```csharp
+var frontEndNSG = azure.NetworkSecurityGroups.Define(frontEndNSGName)
+	.WithRegion(Region.US_EAST)
+	.WithNewResourceGroup(rgName)
+	.DefineRule("ALLOW-SSH")
+	    .AllowInbound()
+	    .FromAnyAddress()
+	    .FromAnyPort()
+	    .ToAnyAddress()
+	    .ToPort(22)
+	    .WithProtocol(SecurityRuleProtocol.Tcp)
+	    .WithPriority(100)
+	    .WithDescription("Allow SSH")
+	    .Attach()
+	.DefineRule("ALLOW-HTTP")
+	    .AllowInbound()
+	    .FromAnyAddress()
+	    .FromAnyPort()
+	    .ToAnyAddress()
+	    .ToPort(80)
+	    .WithProtocol(SecurityRuleProtocol.Tcp)
+	    .WithPriority(101)
+	    .WithDescription("Allow HTTP")
+	    .Attach()
+	.Create();
+```
 
 
-### To run the tests:
+#Sample Code
 
-Using Visual Studio:
+You can find plenty of sample code that illustrates management scenarios in Azure Virtual Machines, Virtual Machine Scale Sets, Storage, Networking, Resource Manager, Key Vault and Batch … 
 
-  - Build.
-  - "Test Explorer" window will get populated with tests. Go select and invoke.
+<table>
+  <tr>
+    <th>Service</th>
+    <th>Management Scenario</th>
+  </tr>
+  <tr>
+    <td>Virtual Machines</td>
+    <td><ul style="list-style-type:circle">
+<li><a href="https://github.com/Azure-Samples/compute-dotnet-manage-vm">Manage virtual machine</a></li>
+<li><a href="https://github.com/Azure-Samples/compute-dotnet-manage-availability-sets"> Manage availability set</li>
+<li><a href="https://github.com/Azure-Samples/compute-dotnet-list-vm-images">List virtual machine images</li>
+<li><a href="https://github.com/Azure-Samples/compute-dotnet-manage-virtual-machine-using-vm-extensions">Manage virtual machines using VM extensions</li>
+<li><a href="https://github.com/Azure-Samples/compute-dotnet-list-vm-extension-images">List virtual machine extension images</li>
+</ul>
+</td>
+  </tr>
+  <tr>
+    <td>Virtual Machines - parallel execution</td>
+    <td><ul style="list-style-type:circle">
+<li><a href="http://github.com/azure-samples/compute-dotnet-manage-virtual-machines-in-parallel">Create multiple virtual machines in parallel</li>
+<li><a href="http://github.com/azure-samples/compute-dotnet-manage-virtual-machines-with-network-in-parallel">Create multiple virtual machines with network in parallel</li>
+</ul></td>
+  </tr>
+  <tr>
+    <td>Virtual Machine Scale Sets</td>
+    <td><ul style="list-style-type:circle">
+<li><a href="https://github.com/Azure-Samples/compute-dotnet-manage-virtual-machine-scale-sets">Manage virtual machine scale sets (behind an Internet facing load balancer)</a></li>
+</ul></td>
+  </tr>
+  <tr>
+    <td>Storage</td>
+    <td><ul style="list-style-type:circle">
+<li><a href="https://github.com/Azure-Samples/storage-dotnet-manage-storage-accounts">Manage storage accounts</a></li>
+</ul></td>
+  </tr>
+  <tr>
+    <td>Network</td>
+    <td><ul style="list-style-type:circle">
 
-Using the command line:
+<li><a href="https://github.com/Azure-Samples/network-dotnet-manage-virtual-network">Manage virtual network</a></li>
+<li><a href="https://github.com/Azure-Samples/network-dotnet-manage-network-interface">Manage network interface</a></li>
+<li><a href="https://github.com/Azure-Samples/network-dotnet-manage-network-security-group">Manage network security group</a></li>
+<li><a href="https://github.com/Azure-Samples/network-dotnet-manage-ip-address">Manage IP address</a></li>
+<li><a href="https://github.com/Azure-Samples/network-dotnet-manage-internet-facing-load-balancers">Manage Internet facing load balancers</a></li>
+<li><a href="https://github.com/Azure-Samples/network-dotnet-manage-internal-load-balancers">Manage internal load balancers</a></li>
+</ul>
+</td>
+  </tr>
+  <tr>
+    <td>Resource Groups</td>
+    <td><ul style="list-style-type:circle">
+<li><a href="https://github.com/Azure-Samples/resources-dotnet-manage-resource-group">Manage resource groups</a></li>
+<li><a href="https://github.com/Azure-Samples/resources-dotnet-manage-resource">Manage resources</a></li>
+<li><a href="https://github.com/Azure-Samples/resources-dotnet-deploy-using-arm-template">Deploy resources with ARM templates</a></li>
+<li><a href="https://github.com/Azure-Samples/resources-dotnet-deploy-using-arm-template-with-progress">Deploy resources with ARM templates (with progress)</a></li>
+</ul></td>
+  </tr>
+  <tr>
+    <td>Key Vault</td>
+    <td><ul style="list-style-type:circle">
+<li><a href="https://github.com/Azure-Samples/key-vault-dotnet-manage-key-vaults">Manage key vaults</a></li>
+</ul></td>
+  </tr>
+  <tr>
+    <td>Batch</td>
+    <td><ul style="list-style-type:circle">
+<li><a href="https://github.com/Azure-Samples/batch-java-dotnet-batch-accounts">Manage batch accounts</a></li>
+</ul></td>
+  </tr>
+</table>
 
-  - Refer to the "To build" section to get the command window set up.
-  - Invoke "Test" target from "Build.proj". Likely, you need to build test project first, so put in "build" target as well. 
-        *msbuild build.proj /t:build;test /p:scope=ResourceManagement\Compute*
+# Download
 
-## To on-board new libraries
 
-### Project Structure
+**1.0.0-preview1**
 
-In "src\ResourceManagement", you will find projects for services that have already been implemented
+If you are using released builds from 1.0.0-preview1, add the following to your POM file:
 
-  - Each service contains a project for their generated/customized code
-    - The folder 'Generated' contains the generated code
-    - The folder 'Customizations' contains additions to the generated code - this can include additions to the generated partial classes, or additional classes that augment the SDK or call the generated code
-    - The file 'generate.cmd', used to generate library code for the given service, can also be found in this project
-  - Services also contain a project for their tests
+Azure Management Library for                              | Package name                              | Stable (`1.0.0-preview1` release)    | Nightly (`Fluent` branch)
+-----------------------|-------------------------------------------|-----------------------------|-------------------------
+Rollup Client | `Microsoft.Azure.Management.Fluent` | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent/) | [![MyGet](https://img.shields.io/fluent.myget/aspnetcore-dev/vpre/Microsoft.Azure.Management.Fluent.svg?style=flat-square&label=myget)](https://fluent.myget.org/feed/aspnetcore-dev/package/nuget/Microsoft.Azure.Management.Fluent)
+Batch | `Microsoft.Azure.Management.Fluent.Batch` | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.Batch.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent.Batch/) | [![MyGet](https://img.shields.io/fluent.myget/aspnetcore-dev/vpre/Microsoft.Azure.Management.Fluent.Batch.svg?style=flat-square&label=myget)](https://fluent.myget.org/feed/aspnetcore-dev/package/nuget/Microsoft.Azure.Management.Fluent.Batch)
+Virtual Machines and Virtual Machine Scale Sets | `Microsoft.Azure.Management.Fluent.Compute`    | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.Compute.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent.Compute/) | [![MyGet](https://img.shields.io/fluent.myget/aspnetcore-dev/vpre/Microsoft.Azure.Management.Fluent.Compute.svg?style=flat-square&label=myget)](https://fluent.myget.org/feed/aspnetcore-dev/package/nuget/Microsoft.Azure.Management.Fluent.Compute)
+Key Vault |`Microsoft.Azure.Management.Fluent.KeyVault`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.KeyVault.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent.KeyVault/) | [![MyGet](https://img.shields.io/fluent.myget/aspnetcore-dev/vpre/Microsoft.Azure.Management.Fluent.KeyVault.svg?style=flat-square&label=myget)](https://fluent.myget.org/feed/aspnetcore-dev/package/nuget/Microsoft.Azure.Management.Fluent.KeyVault)
+Network  |`Microsoft.Azure.Management.Fluent.Network`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.Network.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent.Network/) | [![MyGet](https://img.shields.io/fluent.myget/aspnetcore-dev/vpre/Microsoft.Azure.Management.Fluent.Network.svg?style=flat-square&label=myget)](https://fluent.myget.org/feed/aspnetcore-dev/package/nuget/Microsoft.Azure.Management.Fluent.Network)
+Resource Manager  |`Microsoft.Azure.Management.Fluent.ResourceManager`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.ResourceManager.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent.ResourceManager/) | [![MyGet](https://img.shields.io/fluent.myget/aspnetcore-dev/vpre/Microsoft.Azure.Management.Fluent.ResourceManager.svg?style=flat-square&label=myget)](https://fluent.myget.org/feed/aspnetcore-dev/package/nuget/Microsoft.Azure.Management.Fluent.ResourceManager)
+Storage  |`Microsoft.Azure.Management.Fluent.Storage`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.Storage.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent.Storage/) | [![MyGet](https://img.shields.io/fluent.myget/aspnetcore-dev/vpre/Microsoft.Azure.Management.Fluent.Storage.svg?style=flat-square&label=myget)](https://fluent.myget.org/feed/aspnetcore-dev/package/nuget/Microsoft.Azure.Management.Fluent.Storage)
 
-### Branches: AutoRest vs. master
 
-The **AutoRest** branch contains the code generated from AutoRest tool.
+#Pre-requisites
 
-The **master** branch contains the code generated from Hydra/Hyak.
-  - Hydra/Hyak is Azure's legacy code generation technology.
-  - This can still be used to generate client libraries, but the project is not being advanced in favor of AutoRest. Your team should move to AutoRest and Swagger as soon as possible.
+- [.NET Core](https://www.microsoft.com/net/core) 
+- Azure Service Principal - see [how to create authentication info](./AUTH.md).
 
-### Standard Process
 
- 1. Create fork of [Azure REST API Specs](https://github.com/azure/azure-rest-api-specs)
- 2. Create fork of [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
- 3. Create your Swagger specification for your HTTP API. For more information see 
- [Introduction to Swagger - The World's Most Popular Framework for APIs](http://swagger.io)
- 4. Install the latest version of AutoRest and use it to generate your C# client. For more info on getting started with AutoRest, 
- see the [AutoRest repository](https://github.com/Azure/autorest)
- 5. Create a branch in your fork of Azure SDK for .NET and add your newly generated code to your project. If you don't have a project in the SDK yet, look at some of the existing projects and build one like the others. 
- 6. **MANDATORY**: Add or update tests for the newly generated code.
- 7. Once added to the Azure SDK for .NET, build your local package using command "msbuild build.proj /t:build;package /p:scope=YourService" 
- (Note, 'YourService' comes from the sub folder under <sdk-repo-root>\src, for example: "ResourceManagement\Compute")
- 8. If you're using **master** branch, bump up the package version in YourService.nuget.proj. If you're using **AutoRest** branch, change the package version in the project.json file, as well as in the AssemblyInfo.cs file.
- 9. Use this local Package for your Powershell development
- 10. Create 2 Pull Requests and send an email to [azsdkcode@microsoft.com](mailto:azsdkcode@microsoft.com)
-    - A Pull Request of your spec changes against **master** branch of the [Azure REST API Specs](https://github.com/azure/azure-rest-api-specs)
-    - A Pull request of your Azure SDK for .NET changes against **master** branch of the [Azure SDK for .NET](https://github.com/azure/azure-sdk-for-net)
- 11. Both the pull requests will be reviewed and merged by the Azure SDK team
+# Help
 
-### Code Review Process
 
-Before a pull request will be considered by the Azure SDK team, the following requirements must be met:
+If you encounter any bugs with these libraries, please file issues via [Issues](https://github.com/Azure/azure-sdk-for-net/issues) and tag them [Fluent](https://github.com/Azure/azure-sdk-for-net/labels/Fluent) or checkout [StackOverflow for Azure Java SDK](http://stackoverflow.com/questions/tagged/azure-sdk).
 
-- Prior to issuing the pull request:
-  - All code must have completed any necessary legal signoff for being publically viewable (Patent review, JSR review, etc.)
-  - The changes cannot break any existing functional/unit tests that are part of the central repository.
-    - This includes all tests, even those not associated with the given feature area.
-  - Code submitted must have basic unit test coverage, and have all the unit tests pass. Testing is the full responsibility of the service team
-    - Functional tests are encouraged, and provide teams with a way to mitigate regressions caused by other code contributions.
-  - Code should be commented.
-  - Code should be fully code reviewed.
-  - Code should be able to merge without any conflicts into the dev branch being targeted.
-  - Code should pass all relevant static checks and coding guidelines set forth by the specific repository.
-  - All build warnings and code analysis warnings should be fixed prior to submission.
-- As part of the pull request (aka, in the text box on GitHub as part of submitting the pull request):
-  - Proof of completion of the code review and test passes requirements above.
-  - Identity of QA responsible for feature testing (can be conducted post-merging of the pull request).
-  - Short description of the payload of pull request.
-- After the pull request is submitted:
-  - Send an email to the Azure SDK Code Review (azsdkcode@microsoft.com) alias.
-    - Include all interested parties from your team as well.
-    - In the message, make sure to acknowledge that the legal signoff process is complete.
+#Contribute Code
 
-Once all of the above steps are met, the following process will be followed:
+If you would like to become an active contributor to this project please follow the instructions provided in [Microsoft Azure Projects Contribution Guidelines](http://azure.github.io/guidelines.html).
 
-- A member of the Azure SDK team will review the pull request on GitHub.
-- If the pull request meets the respository's requirements, the individual will aproove the pull request, merging the code into the dev branch of the source repository.
-  - The owner will then respond to the email sent as part of the pull request, informing the group of the completion of the request.
-- If the request does not meet any of the requirements, the pull request will not be merged, and the necessary fixes for acceptance will be communicated back to the partner team.
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
 
-### Adding Tests
+#More Information
+* [https://azure.microsoft.com/en-us/develop/net/](https://azure.microsoft.com/en-us/develop/net/)
+* If you don't have a Microsoft Azure subscription you can get a FREE trial account [here](http://go.microsoft.com/fwlink/?LinkId=330212)
 
-Regarding the test project, one thing that's important is to name the test project by adding a ".Tests" suffix to the folder name for the folder containing your project. For example, the test project for "Compute\Microsoft.Azure.Management.Compute" should be named 'Compute.Tests'
+**Previous Releases and Corresponding Repo Branches**
 
-  - This is for improving CI performance so to find exactly one copy of your test assembly.
-  - Also, due to test dependencies, the test project should build both .NET 4.5 and NETStandard 1.5. For example, check out "src\ResourceManagement\Resource\Resource.tests"
+| Version           | SHA1                                                                                      | Remarks                                               |
+|-------------------|-------------------------------------------------------------------------------------------|-------------------------------------------------------|
+| 1.0.0-preview1       | [1.0.0-preview1](https://github.com/Azure/azure-net-for-net/tree/1.0.0-preview1)               | Tagged release for 1.0.0-preview1 version of Azure management libraries |
+| AutoRest       | [AutoRest](https://github.com/selvasingh/azure-sdk-for-net/tree/AutoRest)               | Main branch for AutoRest generated raw clients |
 
-### Issues with Generated Code
+---
 
-Much of the SDK code is generated from metadata specs about the REST APIs. Do not submit PRs that modify generated code. Instead, 
-  - File an issue describing the problem,
-  - Refer to the the [AutoRest project](https://github.com/azure/autorest) to view and modify the generator, or
-  - Add additional methods, properties, and overloads to the SDK by adding classes in the 'Customizations' folder of a project
+This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
