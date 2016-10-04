@@ -101,7 +101,8 @@ namespace NotificationHubs.Tests.TestHelper
         {
             var namespaceParameter = new NamespaceCreateOrUpdateParameters()
             {
-                Location = location
+                Location = location,
+                NamespaceType = NamespaceType.NotificationHub
             };
 
             if (!string.IsNullOrEmpty(scaleUnit))

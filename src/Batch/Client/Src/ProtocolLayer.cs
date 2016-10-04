@@ -35,7 +35,7 @@
 
         private const int StreamCopyBufferSize = 4096; //This is the same as the default for Stream.CopyToAsync()
 
-        private static Models.NodeFile CreateNodeFromFromHeadersType(string fileName, Models.IProtocolNodeFile protocolNodeFile)
+        private static Models.NodeFile CreateNodeFromHeadersType(string fileName, Models.IProtocolNodeFile protocolNodeFile)
         {
             Models.NodeFile file = new Models.NodeFile()
                 {
@@ -133,7 +133,7 @@
             return asyncTask;
         }
 
-        public Task<AzureOperationResponse<bool, Models.JobScheduleExistsHeaders>> JobScheduleExists(string jobScheduleId, BehaviorManager bhMgr, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse<bool, Models.JobScheduleExistsHeaders>> JobScheduleExists(string jobScheduleId, BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
             var request = new JobScheduleExistsBatchRequest(this._client, cancellationToken);
 
@@ -145,7 +145,18 @@
 
             var asyncTask = ProcessAndExecuteBatchRequest(request, bhMgr);
 
-            return asyncTask;
+            //Force disposal of the response because the HEAD request doesn't read the body stream, which leaves the connection open. Disposing forces a close of the connection
+            using (var response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false))
+            {
+                var result = new AzureOperationResponse<bool, Models.JobScheduleExistsHeaders>()
+                    {
+                        Body = response.Body,
+                        RequestId = response.RequestId,
+                        Headers = response.Headers
+                    };
+
+                return result;
+            }
         }
 
         public Task<AzureOperationHeaderResponse<Models.JobScheduleAddHeaders>> AddJobSchedule(Models.JobScheduleAddParameter cloudJobSchedule, BehaviorManager bhMgr, CancellationToken cancellationToken)
@@ -650,10 +661,8 @@
 
             var result = new AzureOperationResponse<Models.NodeFile, Models.FileGetFromTaskHeaders>()
                 {
-                    Body = CreateNodeFromFromHeadersType(fileName, response.Headers),
-                    Request = response.Request,
+                    Body = CreateNodeFromHeadersType(fileName, response.Headers),
                     RequestId = response.RequestId,
-                    Response = response.Response,
                     Headers = response.Headers,
                 };
 
@@ -679,18 +688,18 @@
 
             var asyncTask = ProcessAndExecuteBatchRequest(request, bhMgr);
 
-            var response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
-
-            var result = new AzureOperationResponse<Models.NodeFile, Models.FileGetNodeFilePropertiesFromTaskHeaders>()
+            //Force disposal of the response because the HEAD request doesn't read the body stream, which leaves the connection open. Disposing forces a close of the connection
+            using (var response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false))
             {
-                Body = CreateNodeFromFromHeadersType(fileName, response.Headers),
-                Request = response.Request,
-                RequestId = response.RequestId,
-                Response = response.Response,
-                Headers = response.Headers,
-            };
+                var result = new AzureOperationResponse<Models.NodeFile, Models.FileGetNodeFilePropertiesFromTaskHeaders>()
+                    {
+                        Body = CreateNodeFromHeadersType(fileName, response.Headers),
+                        RequestId = response.RequestId,
+                        Headers = response.Headers,
+                    };
 
-            return result;
+                return result;
+            }
         }
 
         public Task<AzureOperationHeaderResponse<Models.TaskAddHeaders>> AddTask(string jobId, Models.TaskAddParameter task, BehaviorManager bhMgr, CancellationToken cancellationToken)
@@ -800,7 +809,7 @@
             return asyncTask;
         }
 
-        public Task<AzureOperationResponse<bool, Models.PoolExistsHeaders>> PoolExists(string poolId, BehaviorManager bhMgr, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse<bool, Models.PoolExistsHeaders>> PoolExists(string poolId, BehaviorManager bhMgr, CancellationToken cancellationToken)
         {
             var request = new PoolExistsBatchRequest(this._client, cancellationToken);
 
@@ -811,8 +820,18 @@
                     lambdaCancelToken);
 
             var asyncTask = ProcessAndExecuteBatchRequest(request, bhMgr);
+            //Force disposal of the response because the HEAD request doesn't read the body stream, which leaves the connection open. Disposing forces a close of the connection
+            using (var response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false))
+            {
+                var result = new AzureOperationResponse<bool, Models.PoolExistsHeaders>()
+                    {
+                        Body = response.Body,
+                        RequestId = response.RequestId,
+                        Headers = response.Headers
+                    };
 
-            return asyncTask;
+                return result;
+            }
         }
 
         public Task<AzureOperationHeaderResponse<Models.PoolAddHeaders>> AddPool(Models.PoolAddParameter pool, BehaviorManager bhMgr, CancellationToken cancellationToken)
@@ -1344,10 +1363,8 @@
 
             var result = new AzureOperationResponse<Models.NodeFile, Models.FileGetFromComputeNodeHeaders>()
             {
-                Body = CreateNodeFromFromHeadersType(fileName, response.Headers),
-                Request = response.Request,
+                Body = CreateNodeFromHeadersType(fileName, response.Headers),
                 RequestId = response.RequestId,
-                Response = response.Response,
                 Headers = response.Headers
             };
 
@@ -1373,18 +1390,18 @@
 
             var asyncTask = ProcessAndExecuteBatchRequest(request, bhMgr);
 
-            var response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false);
-
-            var result = new AzureOperationResponse<Models.NodeFile, Models.FileGetNodeFilePropertiesFromComputeNodeHeaders>()
+            //Force disposal of the response because the HEAD request doesn't read the body stream, which leaves the connection open. Disposing forces a close of the connection
+            using (var response = await asyncTask.ConfigureAwait(continueOnCapturedContext: false))
             {
-                Body = CreateNodeFromFromHeadersType(fileName, response.Headers),
-                Request = response.Request,
-                RequestId = response.RequestId,
-                Response = response.Response,
-                Headers = response.Headers
-            };
+                var result = new AzureOperationResponse<Models.NodeFile, Models.FileGetNodeFilePropertiesFromComputeNodeHeaders>()
+                    {
+                        Body = CreateNodeFromHeadersType(fileName, response.Headers),
+                        RequestId = response.RequestId,
+                        Headers = response.Headers
+                    };
 
-            return result;
+                return result;
+            }
         }
 
         public Task<AzureOperationResponse<IPage<Models.NodeFile>, Models.FileListFromComputeNodeHeaders>> ListNodeFilesByNode(

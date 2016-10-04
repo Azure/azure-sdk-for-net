@@ -162,7 +162,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
         /// <summary>
         /// Tests the case of a fresh upload with multiple segments.
         /// </summary>
-        [Fact(Skip = "begoldsm has acknowledged the falkiness of these tests. Hence skipping and issue 2344 is opened to track the progress")]
+        [Fact(Skip = "begoldsm has acknowledged the flakiness of these tests. Hence skipping and issue 2344 is opened to track the progress")]
         public void DataLakeUploader_FreshUploadDownload()
         {
             var frontEnd = new InMemoryFrontEnd();
@@ -367,7 +367,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader.Tests
         /// <summary>
         /// Tests the resume upload when only some segments were uploaded previously with progress tracking enabled
         /// </summary>
-        [Fact]
+        [Fact(Skip = "begoldsm has acknowledged the flakiness of these tests.Hence skipping and issue 2344 is opened to track the progress")]
         public void DataLakeUploader_ResumePartialFolderUploadWithProgress()
         {
             //attempt to load the file fully, but only allow creating 1 target stream

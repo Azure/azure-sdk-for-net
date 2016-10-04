@@ -24,8 +24,7 @@ namespace NotificationHubs.Tests.ScenarioTests
     using TestHelper;
     using Xunit;
     using System.Collections.Generic;
-
-    public partial class ScenarioTests 
+    public partial class ScenarioTests
     {
         [Fact]
         public void NamespaceCreateGetUpdateDelete()
@@ -48,15 +47,19 @@ namespace NotificationHubs.Tests.ScenarioTests
                     new NamespaceCreateOrUpdateParameters()
                     {
                         Location = location,
+                        NamespaceType = NamespaceType.NotificationHub,
+                        Sku = new Sku { Name = SkuName.Standard }
                     });
 
                 Assert.NotNull(createNamespaceResponse);
                 Assert.Equal(createNamespaceResponse.Name, namespaceName);
 
-                ActivateNamespace(resourceGroup, namespaceName);
+                TestUtilities.Wait(TimeSpan.FromSeconds(30));
 
                 //Get the created namespace
                 var getNamespaceResponse = NotificationHubsManagementClient.Namespaces.Get(resourceGroup, namespaceName);
+                if (string.Compare(getNamespaceResponse.ProvisioningState, "Succeeded", true) != 0)
+                    TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
                 getNamespaceResponse = NotificationHubsManagementClient.Namespaces.Get(resourceGroup, namespaceName);
                 Assert.NotNull(getNamespaceResponse);
@@ -64,6 +67,7 @@ namespace NotificationHubs.Tests.ScenarioTests
                 Assert.Equal("Active", getNamespaceResponse.Status, StringComparer.CurrentCultureIgnoreCase);
                 Assert.Equal(NamespaceType.NotificationHub, getNamespaceResponse.NamespaceType);
                 Assert.Equal(location, getNamespaceResponse.Location, StringComparer.CurrentCultureIgnoreCase);
+                Assert.Equal("Standard", getNamespaceResponse.Sku.Name, StringComparer.CurrentCultureIgnoreCase);
 
                 //Get all namespaces created within a resourceGroup
                 var getAllNamespacesResponse = NotificationHubsManagementClient.Namespaces.List(resourceGroup);
@@ -94,7 +98,7 @@ namespace NotificationHubs.Tests.ScenarioTests
                 var updateNamespaceResponse = NotificationHubsManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName, updateNamespaceParameter);
 
                 Assert.NotNull(updateNamespaceResponse);
-                Assert.True(updateNamespaceResponse.ProvisioningState.Equals("Active", StringComparison.CurrentCultureIgnoreCase) || 
+                Assert.True(updateNamespaceResponse.ProvisioningState.Equals("Active", StringComparison.CurrentCultureIgnoreCase) ||
                     updateNamespaceResponse.ProvisioningState.Equals("Succeeded", StringComparison.CurrentCultureIgnoreCase));
                 Assert.Equal(namespaceName, updateNamespaceResponse.Name);
                 //Regression in the service . uncomment after the fix goes out 
@@ -119,16 +123,40 @@ namespace NotificationHubs.Tests.ScenarioTests
                     Assert.True(getNamespaceResponse.Tags.Any(t => t.Key.Equals(tag.Key)));
                     Assert.True(getNamespaceResponse.Tags.Any(t => t.Value.Equals(tag.Value)));
                 }
-                
+
+                var updateNamespacePatchParameter = new NamespacePatchParameters()
+                {
+                    Tags = new Dictionary<string, string>()
+                        {
+                            {"tag5", "value5"},
+                            {"tag6", "value6"},
+                        },
+                    Sku = new Sku { Name = SkuName.Basic}
+                };
+
+                var updateNamespacePatchResponse = NotificationHubsManagementClient.Namespaces.Patch(resourceGroup, namespaceName, updateNamespacePatchParameter);
+
+                Assert.NotNull(updateNamespacePatchResponse);
+                Assert.Equal(updateNamespacePatchResponse.Tags.Count, 2);
+                foreach (var tag in updateNamespacePatchParameter.Tags)
+                {
+                    Assert.True(updateNamespacePatchParameter.Tags.Any(t => t.Key.Equals(tag.Key)));
+                    Assert.True(updateNamespacePatchParameter.Tags.Any(t => t.Value.Equals(tag.Value)));
+                }
+
+                TestUtilities.Wait(TimeSpan.FromSeconds(5));
+                getNamespaceResponse = NotificationHubsManagementClient.Namespaces.Get(resourceGroup, namespaceName);
+                Assert.Equal("Basic", getNamespaceResponse.Sku.Name, StringComparer.CurrentCultureIgnoreCase);
+
                 try
-                {
-                    //Delete namespace
-                    NotificationHubsManagementClient.Namespaces.Delete(resourceGroup, namespaceName);
-                }
-                catch (Exception ex)
-                {
-                    Assert.True(ex.Message.Contains("NotFound"));
-                }
+                    {
+                        //Delete namespace
+                        NotificationHubsManagementClient.Namespaces.Delete(resourceGroup, namespaceName);
+                    }
+                    catch (Exception ex)
+                    {
+                        Assert.True(ex.Message.Contains("NotFound"));
+                    }
             }
         }
     }

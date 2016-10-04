@@ -28,8 +28,9 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
-        public SharedAccessAuthorizationRuleCreateOrUpdateParameters(string location, SharedAccessAuthorizationRuleProperties properties, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>))
-            : base(location, id, name, type, tags)
+        /// <param name="sku">The sku of the created namespace</param>
+        public SharedAccessAuthorizationRuleCreateOrUpdateParameters(string location, SharedAccessAuthorizationRuleProperties properties, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), Sku sku = default(Sku))
+            : base(location, id, name, type, tags, sku)
         {
             Properties = properties;
         }
