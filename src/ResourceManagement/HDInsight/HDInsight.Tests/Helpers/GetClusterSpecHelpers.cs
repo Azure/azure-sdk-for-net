@@ -34,10 +34,11 @@ namespace HDInsight.Tests.Helpers
         private const string RdpPassword = "";
         private const string VirtualNetworkId = "";
         private const string SubnetName = "";
-        private const string DomainAdminUserName = "";
-        private const string DomainAdminPassword = "";
+        private const string DomainUserName = "";
+        private const string DomainUserPassword = "";
         private const string OrganizationalUnitDN = "";
-        private static readonly List<string> LdapUrls = new List<string> { "" };
+        private static readonly List<string> ClusterUsersGroupDNs = new List<string> {""};
+        private static readonly List<string> LdapsUrls = new List<string> { "" };
         private static readonly string[] DomainNameParts = new string[2] { "", "" };
 
         public static ClusterCreateParametersExtended GetIaasClusterSpec()
@@ -290,21 +291,19 @@ namespace HDInsight.Tests.Helpers
         public static ClusterCreateParameters GetAdJoinedCreateParametersIaas()
         {
             var clusterparams = GetCustomCreateParametersIaas();
-            clusterparams.Version = "3.4";
+            clusterparams.Version = "3.5";
             clusterparams.Location = "East US 2";
             clusterparams.VirtualNetworkId = VirtualNetworkId;
             clusterparams.SubnetName = SubnetName;
             clusterparams.SecurityProfile = new SecurityProfile
             {
-                ActiveDirectoryConfiguration = new ActiveDirectoryConfiguration
-                {
-                    DirectoryType = DirectoryType.ActiveDirectory,
-                    Domain = string.Format("{0}.{1}", DomainNameParts[0], DomainNameParts[1]),
-                    DomainAdminPassword = DomainAdminPassword,
-                    DomainAdminUsername = DomainAdminUserName,
-                    LdapUrls = LdapUrls,
-                    OrganizationalUnitDN = OrganizationalUnitDN
-                }
+                DirectoryType = DirectoryType.ActiveDirectory,
+                Domain = string.Format("{0}.{1}", DomainNameParts[0], DomainNameParts[1]),
+                DomainUserPassword = DomainUserPassword,
+                DomainUsername = DomainUserName,
+                LdapsUrls = LdapsUrls,
+                OrganizationalUnitDN = OrganizationalUnitDN,
+                ClusterUsersGroupDNs = ClusterUsersGroupDNs
             };
             
             return clusterparams;
