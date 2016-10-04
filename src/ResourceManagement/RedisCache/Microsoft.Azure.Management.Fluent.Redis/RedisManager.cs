@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Fluent.Resource;
+using Microsoft.Azure.Management.Fluent.Resource.Authentication;
 using Microsoft.Azure.Management.Fluent.Resource.Core;
 using Microsoft.Rest;
 using System;
@@ -25,12 +26,12 @@ namespace Microsoft.Azure.Management.Fluent.Redis
         }
 
         #region StorageManager builder
-        public static IRedisManager Authenticate(ServiceClientCredentials serviceClientCredentials, string subscriptionId)
+        public static IRedisManager Authenticate(AzureCredentials credentials, string subscriptionId)
         {
             return new RedisManager(RestClient.Configure()
-                    .withEnvironment(AzureEnvironment.AzureGlobalCloud)
-                    .withCredentials(serviceClientCredentials)
-                    .build(), subscriptionId);
+                    .WithEnvironment(credentials.Environment)
+                    .WithCredentials(credentials)
+                    .Build(), subscriptionId);
         }
         
         public static IRedisManager Authenticate(RestClient restClient, String subscriptionId)
@@ -53,14 +54,14 @@ namespace Microsoft.Azure.Management.Fluent.Redis
 
         public interface IConfigurable : IAzureConfigurable<IConfigurable>
         {
-            IRedisManager Authenticate(ServiceClientCredentials serviceClientCredentials, string subscriptionId);
+            IRedisManager Authenticate(AzureCredentials credentials, string subscriptionId);
         }
 
         protected class Configurable :
             AzureConfigurable<IConfigurable>,
             IConfigurable
         {
-            public IRedisManager Authenticate(ServiceClientCredentials credentials, string subscriptionId)
+            public IRedisManager Authenticate(AzureCredentials credentials, string subscriptionId)
             {
                 return new RedisManager(BuildRestClient(credentials), subscriptionId);
             }

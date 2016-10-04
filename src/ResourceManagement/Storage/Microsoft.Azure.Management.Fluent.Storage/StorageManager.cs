@@ -7,6 +7,7 @@ using Microsoft.Azure.Management.Fluent.Resource.Core;
 using Microsoft.Rest;
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.Fluent.Resource.Authentication;
 
 namespace Microsoft.Azure.Management.Fluent.Storage
 {
@@ -34,15 +35,15 @@ namespace Microsoft.Azure.Management.Fluent.Storage
         /// <summary>
         /// Creates an instance of StorageManager that exposes storage resource management API entry points.
         /// </summary>
-        /// <param name="serviceClientCredentials">the credentials to use</param>
+        /// <param name="credentials">the credentials to use</param>
         /// <param name="subscriptionId">the subscription UUID</param>
         /// <returns>the StorageManager</returns>
-        public static IStorageManager Authenticate(ServiceClientCredentials serviceClientCredentials, string subscriptionId)
+        public static IStorageManager Authenticate(AzureCredentials credentials, string subscriptionId)
         {
             return new StorageManager(RestClient.Configure()
-                    .withEnvironment(AzureEnvironment.AzureGlobalCloud)
-                    .withCredentials(serviceClientCredentials)
-                    .build(), subscriptionId);
+                    .WithEnvironment(credentials.Environment)
+                    .WithCredentials(credentials)
+                    .Build(), subscriptionId);
         }
 
         /// <summary>
@@ -75,7 +76,7 @@ namespace Microsoft.Azure.Management.Fluent.Storage
         /// </summary>
         public interface IConfigurable : IAzureConfigurable<IConfigurable>
         {
-            IStorageManager Authenticate(ServiceClientCredentials serviceClientCredentials, string subscriptionId);
+            IStorageManager Authenticate(AzureCredentials credentials, string subscriptionId);
         }
 
         protected class Configurable :
@@ -88,7 +89,7 @@ namespace Microsoft.Azure.Management.Fluent.Storage
             /// <param name="credentials">credentials the credentials to use</param>
             /// <param name="subscriptionId">The subscription UUID</param>
             /// <return>the interface exposing storage management API entry points that work in a subscription</returns>
-            public IStorageManager Authenticate(ServiceClientCredentials credentials, string subscriptionId)
+            public IStorageManager Authenticate(AzureCredentials credentials, string subscriptionId)
             {
                 return new StorageManager(BuildRestClient(credentials), subscriptionId);
             }

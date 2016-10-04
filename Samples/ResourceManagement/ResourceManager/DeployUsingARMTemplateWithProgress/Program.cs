@@ -5,24 +5,27 @@ using Microsoft.Azure.Management;
 using Microsoft.Azure.Management.Fluent.Resource;
 using Microsoft.Azure.Management.Fluent.Resource.Authentication;
 using Microsoft.Azure.Management.Fluent.Resource.Core;
+using Microsoft.Azure.Management.ResourceManager.Models;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Threading;
 
-namespace DeployUsingARMTemplate
+namespace DeployUsingARMTemplateWithProgress
 {
     /**
-     * Azure Resource sample for deploying resources using an ARM template.
+     * Azure Resource sample for deploying resources using an ARM template and
+     * showing progress.
      */
 
     public class Program
     {
+        private static readonly string rgName = ResourceNamer.RandomResourceName("rgRSAP", 24);
+        private static readonly string deploymentName = ResourceNamer.RandomResourceName("dpRSAP", 24);
+
         public static void Main(string[] args)
         {
             try
             {
-                var rgName = ResourceNamer.RandomResourceName("rgRSAT", 24);
-                var deploymentName = ResourceNamer.RandomResourceName("dpRSAT", 24);
-
                 try
                 {
                     //=================================================================
@@ -34,7 +37,6 @@ namespace DeployUsingARMTemplate
                         .WithLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
                         .Authenticate(credentials)
                         .WithSubscription(credentials.DefaultSubscriptionId);
-
                     try
                     {
                         var templateJson = GetTemplate();
@@ -45,8 +47,8 @@ namespace DeployUsingARMTemplate
                         Console.WriteLine("Creating a resource group with name: " + rgName);
 
                         azure.ResourceGroups.Define(rgName)
-                            .WithRegion(Region.US_WEST)
-                            .Create();
+                                .WithRegion(Region.US_WEST)
+                                .Create();
 
                         Console.WriteLine("Created a resource group with name: " + rgName);
 
@@ -57,13 +59,25 @@ namespace DeployUsingARMTemplate
                         Console.WriteLine("Starting a deployment for an Azure App Service: " + deploymentName);
 
                         azure.Deployments.Define(deploymentName)
-                            .WithExistingResourceGroup(rgName)
-                            .WithTemplate(templateJson)
-                            .WithParameters("{}")
-                            .WithMode(Microsoft.Azure.Management.ResourceManager.Models.DeploymentMode.Incremental)
-                            .Create();
+                                .WithExistingResourceGroup(rgName)
+                                .WithTemplate(templateJson)
+                                .WithParameters("{}")
+                                .WithMode(DeploymentMode.Incremental)
+                                .BeginCreate();
 
-                        Console.WriteLine("Completed the deployment: " + deploymentName);
+                        Console.WriteLine("Started a deployment for an Azure App Service: " + deploymentName);
+
+                        var deployment = azure.Deployments.GetByGroup(rgName, deploymentName);
+                        Console.WriteLine("Current deployment status : " + deployment.ProvisioningState);
+
+                        while (!(StringComparer.OrdinalIgnoreCase.Equals(deployment.ProvisioningState, "Succeeded")
+                                || StringComparer.OrdinalIgnoreCase.Equals(deployment.ProvisioningState, "Failed")
+                                || StringComparer.OrdinalIgnoreCase.Equals(deployment.ProvisioningState, "Cancelled")))
+                        {
+                            Thread.Sleep(10000);
+                            deployment = azure.Deployments.GetByGroup(rgName, deploymentName);
+                            Console.WriteLine("Current deployment status : " + deployment.ProvisioningState);
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -76,6 +90,10 @@ namespace DeployUsingARMTemplate
                             Console.WriteLine("Deleting Resource Group: " + rgName);
                             azure.ResourceGroups.Delete(rgName);
                             Console.WriteLine("Deleted Resource Group: " + rgName);
+                        }
+                        catch (NullReferenceException)
+                        {
+                            Console.WriteLine("Did not create any resources in Azure. No clean up is necessary");
                         }
                         catch (Exception ex)
                         {

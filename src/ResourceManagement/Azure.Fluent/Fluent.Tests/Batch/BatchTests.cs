@@ -1,17 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Batch.Models;
 using Microsoft.Azure.Management.Fluent.Batch;
-using Microsoft.Azure.Management.Fluent.Resource;
-using Microsoft.Azure.Management.Fluent.Resource.Authentication;
 using Microsoft.Azure.Management.Fluent.Resource.Core;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Fluent.Tests
+namespace Fluent.Tests.Batch
 {
     public class BatchTests
     {
