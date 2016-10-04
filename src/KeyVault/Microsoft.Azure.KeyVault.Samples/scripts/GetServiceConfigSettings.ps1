@@ -10,14 +10,6 @@ $resourceGroupName   = 'MyResourceGroupName'
 $applicationName     = 'MyAppName'
 $storageName         = 'MyStorageName'
 
-$vaultName           = 'demo9218'
-$resourceGroupName   = 'demo9218rg'
-$applicationName     = 'demo9218app'
-$storageName         = 'demo9218sa'
-
-
-
-
 # **********************************************************************************************
 # You MAY set the following values before running this script
 # **********************************************************************************************
