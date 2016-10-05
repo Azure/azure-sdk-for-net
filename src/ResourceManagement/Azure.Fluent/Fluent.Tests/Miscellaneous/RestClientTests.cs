@@ -18,7 +18,7 @@ namespace Fluent.Tests.Miscellaneous
         private string rgName = ResourceNamer.RandomResourceName("rg", 15);
         private string stgName = ResourceNamer.RandomResourceName("stg", 15);
 
-        [Fact]
+        [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanSetMultipleDelegateHandlers()
         {
             // Sets the intercepter so that logging and user agent in log can be asserted.
