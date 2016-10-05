@@ -210,7 +210,7 @@ Storage  |`Microsoft.Azure.Management.Storage.Fluent`  | [![NuGet](https://img.s
 # Help
 
 
-If you encounter any bugs with these libraries, please file issues via [Issues](https://github.com/Azure/azure-sdk-for-net/issues) and tag them [Fluent](https://github.com/Azure/azure-sdk-for-net/labels/Fluent) or checkout [StackOverflow for Azure Java SDK](http://stackoverflow.com/questions/tagged/azure-sdk).
+If you encounter any bugs with these libraries, please file issues via [Issues](https://github.com/Azure/azure-sdk-for-net/issues) and tag them [Fluent](https://github.com/Azure/azure-sdk-for-net/labels/Fluent) or checkout [StackOverflow for Azure Management Libraries for .NET](http://stackoverflow.com/questions/tagged/azure-sdk).
 
 #Contribute Code
 
