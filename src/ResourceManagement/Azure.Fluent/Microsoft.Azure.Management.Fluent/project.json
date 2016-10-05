@@ -1,13 +1,14 @@
 {
-  "version": "0.0.1-prerelease",
-  "description": "Microsoft Azure Management Fluent API library.",
+  "version": "1.0.0-beta3",
+  "title": "Microsoft Azure Management Client Library",
+  "description": "Provides management (Fluent) capabilities for Microsoft Azure.",
   "authors": [ "Microsoft" ],
 
   "packOptions": {
-    "summary": "Microsoft Azure Management Fluent API library.",
+    "summary": "Microsoft Azure Management library.",
     "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
     "tags": [ "Microsoft Azure Management Fluent", "REST HTTP client", "azureofficial", "windowsazureofficial" ],
-    "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+    "projectUrl": "https://github.com/Azure/azure-sdk-for-net/tree/Fluent",
     "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
     "requireLicenseAcceptance": true
   },
@@ -19,12 +20,12 @@
   },
 
   "dependencies": {
-    "Microsoft.Azure.Management.Fluent.Batch": "0.0.1-prerelease",
-    "Microsoft.Azure.Management.Fluent.Compute": "0.0.1-prerelease",
-    "Microsoft.Azure.Management.Fluent.KeyVault": "0.0.1-prerelease",
-    "Microsoft.Azure.Management.Fluent.Network": "0.0.1-prerelease",
-    "Microsoft.Azure.Management.Fluent.ResourceManager": "0.0.1-prerelease",
-    "Microsoft.Azure.Management.Fluent.Storage": "0.0.1-prerelease"
+    "Microsoft.Azure.Management.Batch.Fluent": "[1.0.0-beta3, 2.0)",
+    "Microsoft.Azure.Management.Compute.Fluent": "[1.0.0-beta3, 2.0)",
+    "Microsoft.Azure.Management.KeyVault.Fluent": "[1.0.0-beta3, 2.0)",
+    "Microsoft.Azure.Management.Network.Fluent": "[1.0.0-beta3, 2.0)",
+    "Microsoft.Azure.Management.ResourceManager.Fluent": "[1.0.0-beta3, 2.0)",
+    "Microsoft.Azure.Management.Storage.Fluent": "[1.0.0-beta3, 2.0)"
   },
 
   "frameworks": {

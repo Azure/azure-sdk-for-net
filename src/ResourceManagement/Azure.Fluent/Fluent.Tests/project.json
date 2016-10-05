@@ -20,13 +20,13 @@
     "xunit": "2.2.0-beta2-build3300",
     "dotnet-test-xunit": "2.2.0-preview2-build1029",
     "Microsoft.Rest.ClientRuntime.Azure.Authentication": "[2.2.8-preview,3.0.0)",
-    "Microsoft.Azure.Management.Fluent": "0.0.1-prerelease",
-    "Microsoft.Azure.Management.Fluent.ResourceManager": "0.0.1-prerelease",
-    "Microsoft.Azure.Management.Fluent.Storage": "0.0.1-prerelease",
-    "Microsoft.Azure.Management.Fluent.Compute": "0.0.1-prerelease",
-    "Microsoft.Azure.Management.Fluent.Network": "0.0.1-prerelease",
-    "Microsoft.Azure.Management.Fluent.Graph.RBAC": "0.0.1-prerelease",
-    "Microsoft.Azure.Management.Fluent.KeyVault": "0.0.1-prerelease",
-    "Microsoft.Azure.Management.Fluent.Batch": "0.0.1-prerelease"
+    "Microsoft.Azure.Management.Fluent": "[1.0.0-beta3, 2.0)",
+    "Microsoft.Azure.Management.ResourceManager.Fluent": "[1.0.0-beta3, 2.0)",
+    "Microsoft.Azure.Management.Storage.Fluent": "[1.0.0-beta3, 2.0)",
+    "Microsoft.Azure.Management.Compute.Fluent": "[1.0.0-beta3, 2.0)",
+    "Microsoft.Azure.Management.Network.Fluent": "[1.0.0-beta3, 2.0)",
+    "Microsoft.Azure.Management.Graph.RBAC.Fluent": "[1.0.0-beta3, 2.0)",
+    "Microsoft.Azure.Management.KeyVault.Fluent": "[1.0.0-beta3, 2.0)",
+    "Microsoft.Azure.Management.Batch.Fluent": "[1.0.0-beta3, 2.0)"
   }
 }

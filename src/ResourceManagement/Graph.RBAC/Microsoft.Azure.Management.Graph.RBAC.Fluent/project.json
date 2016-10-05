@@ -1,13 +1,14 @@
 {
-  "version": "0.0.1-prerelease",
-  "description": "Microsoft Azure Batch Management Fluent Library.",
+  "version": "1.0.0-beta3",
+  "title": "Microsoft Azure Graph RBAC Management Library",
+  "description": "Provides Graph RBAC management (Fluent) capabilities for Microsoft Azure.",
   "authors": [ "Microsoft" ],
 
   "packOptions": {
-    "summary": "Microsoft Azure Batch Management Fluent Library.",
+    "summary": "Microsoft Azure Management Graph RBAC library.",
     "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
-    "tags": [ "Microsoft Azure batch management", "REST HTTP client", "azureofficial", "windowsazureofficial", "Fluent" ],
-    "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
+    "tags": [ "Microsoft Azure GraphRBAC management", "virtual machine", "graphrbac", "REST HTTP client", "azureofficial", "windowsazureofficial" ],
+    "projectUrl": "https://github.com/Azure/azure-sdk-for-net/tree/Fluent",
     "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
     "requireLicenseAcceptance": true
   },
@@ -20,8 +21,7 @@
 
   "dependencies": {
     "Microsoft.Rest.ClientRuntime.Azure": "[3.3.2, 4.0)",
-    "Microsoft.Azure.Management.Fluent.ResourceManager": "0.0.1-prerelease",
-    "Microsoft.Azure.Management.Fluent.Storage": "0.0.1-prerelease"
+    "Microsoft.Azure.Management.ResourceManager.Fluent": "[1.0.0-beta3, 2.0)"
   },
 
   "frameworks": {
@@ -31,6 +31,7 @@
     },
     "netstandard1.5": {
       "imports": [ "dnxcore50" ],
+      "buildOptions": { "define": [ "PORTABLE" ] },
       "dependencies": {
         "Microsoft.NETCore.Platforms": "1.0.1",
         "System.Diagnostics.Tools": "4.0.1",
@@ -41,6 +42,7 @@
     },
     "netstandard1.1": {
       "imports": [ "dnxcore50" ],
+      "buildOptions": { "define": [ "PORTABLE" ] },
       "dependencies": {
         "System.Runtime.Serialization.Primitives": "4.1.1"
       }
