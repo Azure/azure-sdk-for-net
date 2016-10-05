@@ -7,8 +7,9 @@ using Microsoft.Azure.Management.Fluent.Resource.Core;
 using System;
 using System.Text;
 using Xunit;
+using Fluent.Tests.Common;
 
-namespace Fluent.Tests
+namespace Fluent.Tests.Network
 {
     public class NSGTests
     {
@@ -99,7 +100,7 @@ namespace Fluent.Tests
             }
 
             info.Append("\n\tNICs: ").Append(resource.NetworkInterfaceIds);
-            Console.WriteLine(info.ToString());
+            TestHelper.WriteLine(info.ToString());
         }
     }
 }

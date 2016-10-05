@@ -6,6 +6,7 @@ using Microsoft.Azure.Management.Fluent.Resource.Core;
 using Microsoft.Rest;
 using System;
 using System.Linq;
+using Microsoft.Azure.Management.Fluent.Resource.Authentication;
 
 namespace Microsoft.Azure.Management.Fluent.Resource
 {
@@ -37,12 +38,12 @@ namespace Microsoft.Azure.Management.Fluent.Resource
 
         #region ResourceManager2 builder
 
-        public static IAuthenticated Authenticate(ServiceClientCredentials serviceClientCredentials)
+        public static IAuthenticated Authenticate(AzureCredentials credentials)
         {
             return new Authenticated(RestClient.Configure()
-                    .withEnvironment(AzureEnvironment.AzureGlobalCloud)
-                    .withCredentials(serviceClientCredentials)
-                    .build()
+                    .WithEnvironment(credentials.Environment)
+                    .WithCredentials(credentials)
+                    .Build()
                 );
         }
 
@@ -92,9 +93,9 @@ namespace Microsoft.Azure.Management.Fluent.Resource
             {
                 this.restClient = restClient;
                 subscriptionClient = new SubscriptionClient(new Uri(restClient.BaseUri),
-                restClient.Credentials,
-                restClient.RootHttpHandler,
-                restClient.Handlers.ToArray());
+                    restClient.Credentials,
+                    restClient.RootHttpHandler,
+                    restClient.Handlers.ToArray());
             }
 
             #region Implementaiton of IAuthenticated interface
@@ -145,16 +146,16 @@ namespace Microsoft.Azure.Management.Fluent.Resource
             /// <summary>
             /// Creates an IAuthentciated implementaition exposing resource managment API entry point that work across subscriptions
             /// </summary>
-            /// <param name="serviceClientCredentials">The credentials to use</param>
+            /// <param name="credentials">The credentials to use</param>
             /// <returns>IAuthentciated, the inteface exposing resource managment API entry point that work across subscriptions</returns>
-            IAuthenticated Authenticate(ServiceClientCredentials serviceClientCredentials);
+            IAuthenticated Authenticate(AzureCredentials credentials);
         }
 
         protected class Configurable :
             AzureConfigurable<IConfigurable>,
             IConfigurable
         {
-            IAuthenticated IConfigurable.Authenticate(ServiceClientCredentials credentials)
+            IAuthenticated IConfigurable.Authenticate(AzureCredentials credentials)
             {
                 return new Authenticated(BuildRestClient(credentials));
             }

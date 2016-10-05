@@ -9,8 +9,9 @@ using System;
 using System.Linq;
 using System.Text;
 using Xunit;
+using Fluent.Tests.Common;
 
-namespace Fluent.Tests
+namespace Fluent.Tests.Network
 {
     public class NetworkInterfaceTests
     {
@@ -143,7 +144,7 @@ namespace Fluent.Tests
                     .Append("\n\t\tSubnet Name: ").Append(ipConfig.SubnetName);
             }
 
-            Console.WriteLine(info.ToString());
+            TestHelper.WriteLine(info.ToString());
         }
     }
 }

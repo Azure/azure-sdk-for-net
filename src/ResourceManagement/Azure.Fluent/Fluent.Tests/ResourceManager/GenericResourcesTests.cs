@@ -11,7 +11,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Fluent.Tests
+namespace Fluent.Tests.ResourceManager
 {
     public class GenericResourcesTests
     {
@@ -89,7 +89,7 @@ namespace Fluent.Tests
         private IResourceManager CreateResourceManager()
         {
             AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
-            IResourceManager resourceManager = ResourceManager.Configure()
+            IResourceManager resourceManager = Microsoft.Azure.Management.Fluent.Resource.ResourceManager.Configure()
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                 .Authenticate(credentials)
                 .WithSubscription(credentials.DefaultSubscriptionId);

@@ -1,7 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Fluent.Tests;
+using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Fluent.Compute;
 using Microsoft.Azure.Management.Fluent.Network;
@@ -11,10 +11,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
 using Xunit;
 
-namespace Azure.Tests
+namespace Fluent.Tests.Compute
 {
     public class VirtualMachineScaleSetTests
     {
@@ -176,7 +175,7 @@ namespace Azure.Tests
         }
 
 
-        private ILoadBalancer createInternetFacingLoadBalancer(Microsoft.Azure.Management.IAzure azure, IResourceGroup resourceGroup, string id)
+        private ILoadBalancer createInternetFacingLoadBalancer(Microsoft.Azure.Management.Fluent.IAzure azure, IResourceGroup resourceGroup, string id)
         {
             string loadBalancerName = ResourceNamer.RandomResourceName("extlb" + id + "-", 18);
             string publicIpName = "pip-" + loadBalancerName;
@@ -256,7 +255,7 @@ namespace Azure.Tests
             return loadBalancer;
         }
 
-        private ILoadBalancer CreateInternalLoadBalancer(Microsoft.Azure.Management.IAzure azure, IResourceGroup resourceGroup,
+        private ILoadBalancer CreateInternalLoadBalancer(Microsoft.Azure.Management.Fluent.IAzure azure, IResourceGroup resourceGroup,
                                                 INetwork network, string id)
         {
             string loadBalancerName = ResourceNamer.RandomResourceName("InternalLb" + id + "-", 18);
@@ -334,7 +333,7 @@ namespace Azure.Tests
             return loadBalancer;
         }
 
-        private ILoadBalancer CreateHttpLoadBalancers(Microsoft.Azure.Management.IAzure azure, IResourceGroup resourceGroup, string id)
+        private ILoadBalancer CreateHttpLoadBalancers(Microsoft.Azure.Management.Fluent.IAzure azure, IResourceGroup resourceGroup, string id)
         {
             string loadBalancerName = ResourceNamer.RandomResourceName("extlb" + id + "-", 18);
             string publicIpName = "pip-" + loadBalancerName;

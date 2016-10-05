@@ -1,16 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Fluent.Network;
 using Microsoft.Azure.Management.Fluent.Resource.Core;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
-namespace Fluent.Tests
+namespace Fluent.Tests.Network
 {
     public class IPublicIpAddressTests
     {
@@ -51,7 +49,7 @@ namespace Fluent.Tests
 
         public void print(IPublicIpAddress resource)
         {
-            System.Console.WriteLine(new StringBuilder().Append("Public IP Address: ").Append(resource.Id)
+            TestHelper.WriteLine(new StringBuilder().Append("Public IP Address: ").Append(resource.Id)
                     .Append("Name: ").Append(resource.Name)
                     .Append("\n\tResource group: ").Append(resource.ResourceGroupName)
                     .Append("\n\tRegion: ").Append(resource.Region)

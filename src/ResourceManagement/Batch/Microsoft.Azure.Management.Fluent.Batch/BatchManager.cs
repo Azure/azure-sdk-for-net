@@ -2,6 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Batch;
+using Microsoft.Azure.Management.Fluent.Resource.Authentication;
 using Microsoft.Azure.Management.Fluent.Resource.Core;
 using Microsoft.Azure.Management.Fluent.Storage;
 using Microsoft.Rest;
@@ -33,6 +34,14 @@ namespace Microsoft.Azure.Management.Fluent.Batch
 
         #region BatchManager builder
 
+        public static IBatchManager Authenticate(AzureCredentials credentials, string subscriptionId)
+        {
+            return new BatchManager(RestClient.Configure()
+                    .WithEnvironment(credentials.Environment)
+                    .WithCredentials(credentials)
+                    .Build(), subscriptionId);
+        }
+
         /**
          * Creates an instance of BatchManager that exposes Batch resource management API entry points.
          *
@@ -41,7 +50,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
          * @return the BatchManager
          */
 
-        public static BatchManager Authenticate(RestClient restClient, String subscriptionId)
+        public static IBatchManager Authenticate(RestClient restClient, String subscriptionId)
         {
             return new BatchManager(restClient, subscriptionId);
         }
@@ -57,14 +66,14 @@ namespace Microsoft.Azure.Management.Fluent.Batch
 
         public interface IConfigurable : IAzureConfigurable<IConfigurable>
         {
-            IBatchManager Authenticate(ServiceClientCredentials serviceClientCredentials, string subscriptionId);
+            IBatchManager Authenticate(AzureCredentials credentials, string subscriptionId);
         }
 
         protected class Configurable :
             AzureConfigurable<IConfigurable>,
             IConfigurable
         {
-            public IBatchManager Authenticate(ServiceClientCredentials credentials, string subscriptionId)
+            public IBatchManager Authenticate(AzureCredentials credentials, string subscriptionId)
             {
                 return new BatchManager(BuildRestClient(credentials), subscriptionId);
             }

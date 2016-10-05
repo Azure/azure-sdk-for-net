@@ -1,20 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Fluent.KeyVault;
-using Microsoft.Azure.Management.KeyVault.Models;
-using Microsoft.Azure.Management.Network.Models;
-using Microsoft.Azure.Management.Fluent.Network;
 using Microsoft.Azure.Management.Fluent.Resource;
 using Microsoft.Azure.Management.Fluent.Resource.Authentication;
 using Microsoft.Azure.Management.Fluent.Resource.Core;
-using Microsoft.IdentityModel.Clients.ActiveDirectory;
-using Microsoft.Rest;
-using Microsoft.Rest.Azure.Authentication;
+using Microsoft.Azure.Management.KeyVault.Models;
 using System.Linq;
 using Xunit;
 
-namespace Fluent.Tests
+namespace Fluent.Tests.KeyVault
 {
 
     public class ManageKeyVault {
@@ -107,7 +103,7 @@ namespace Fluent.Tests
             return KeyVaultManager
                 .Configure()
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
-                .Authenticate(credentials, credentials.DefaultSubscriptionId, credentials.TenantId);
+                .Authenticate(credentials, credentials.DefaultSubscriptionId);
         }
     }
 }
