@@ -14,7 +14,8 @@ The Azure Management Libraries for .NET is a higher-level, object-oriented API f
 The `Azure` class is the simplest entry point for creating and interacting with Azure resources.
 
 ```csharp
-Azure azure = Azure.Authenticate(credFile).WithDefaultSubscription();``` 
+Azure azure = Azure.Authenticate(credFile).WithDefaultSubscription();
+``` 
 
 **Create a Virtual Machine**
 
