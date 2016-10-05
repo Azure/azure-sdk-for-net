@@ -9,8 +9,7 @@ using Microsoft.Azure.Management.Fluent.Storage;
 using Microsoft.Rest;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Net.Http;
 using Xunit;
 
 namespace Fluent.Tests.Miscellaneous
@@ -24,7 +23,7 @@ namespace Fluent.Tests.Miscellaneous
         public void CanSetMultipleDelegateHandlers()
         {
             // Sets the intercepter so that logging and user agent in log can be asserted.
-            var logAndUserAgentInterceptor = new LogAndUserAgentInterceptor();
+            var logAndUserAgentInterceptor = new LogAndUserAgentTracer();
             ServiceClientTracing.AddTracingInterceptor(logAndUserAgentInterceptor);
             ServiceClientTracing.IsEnabled = true;
             try
@@ -37,13 +36,13 @@ namespace Fluent.Tests.Miscellaneous
                 var azure = Azure
                     .Configure()
                     .WithUserAgent("azure-fluent-test", "1.0.0-prelease")
-                    .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                    .WithLogLevel(HttpLoggingInterceptor.Level.BODY)
                     .Authenticate(credentials)
                     .WithDefaultSubscription();
 
                 IStorageAccount storageAccount = azure.StorageAccounts
-    .               Define(stgName)
-    .               WithRegion(Region.US_EAST)
+                   .Define(stgName)
+                    .WithRegion(Region.US_EAST)
                    .WithNewResourceGroup(rgName)
                    .Create();
 
@@ -61,5 +60,48 @@ namespace Fluent.Tests.Miscellaneous
             }
             Assert.True(logAndUserAgentInterceptor.FoundUserAgentInLog);
         }
+
+        private class LogAndUserAgentTracer : IServiceClientTracingInterceptor
+        {
+            public bool FoundUserAgentInLog { get; private set; }
+            public void Configuration(string source, string name, string value)
+            {
+            }
+
+            public void EnterMethod(string invocationId, object instance, string method, IDictionary<string, object> parameters)
+            {
+            }
+
+            public void ExitMethod(string invocationId, object returnValue)
+            {
+            }
+
+            public void Information(string message)
+            {
+                if (message != null)
+                {
+                    if (message.ToLower().Contains("User-Agent :".ToLower()))
+                    {
+                        if (message.ToLower().Contains("azure-fluent-test/1.0.0-prelease".ToLower()))
+                        {
+                            this.FoundUserAgentInLog = true;
+                        }
+                    }
+                }
+            }
+
+            public void ReceiveResponse(string invocationId, HttpResponseMessage response)
+            {
+            }
+
+            public void SendRequest(string invocationId, HttpRequestMessage request)
+            {
+            }
+
+            public void TraceError(string invocationId, Exception exception)
+            {
+            }
+        }
     }
+
 }

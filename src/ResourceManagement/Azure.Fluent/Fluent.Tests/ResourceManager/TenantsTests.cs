@@ -23,7 +23,7 @@ namespace Fluent.Tests.ResourceManager
         {
             AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
             IAuthenticated resourceManager = Microsoft.Azure.Management.Fluent.Resource.ResourceManager.Configure()
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .WithLogLevel(HttpLoggingInterceptor.Level.BODY)
                 .Authenticate(credentials);
             return resourceManager;
         }

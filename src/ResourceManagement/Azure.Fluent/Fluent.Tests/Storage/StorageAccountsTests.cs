@@ -78,7 +78,7 @@ namespace Fluent.Tests.Storage
             AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
             return StorageManager
                 .Configure()
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .WithLogLevel(HttpLoggingInterceptor.Level.BODY)
                 .Authenticate(credentials, credentials.DefaultSubscriptionId);
         }
 
@@ -86,7 +86,7 @@ namespace Fluent.Tests.Storage
         {
             AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
             IResourceManager resourceManager = Microsoft.Azure.Management.Fluent.Resource.ResourceManager.Configure()
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .WithLogLevel(HttpLoggingInterceptor.Level.BODY)
                 .Authenticate(credentials)
                 .WithSubscription(credentials.DefaultSubscriptionId);
             return resourceManager;

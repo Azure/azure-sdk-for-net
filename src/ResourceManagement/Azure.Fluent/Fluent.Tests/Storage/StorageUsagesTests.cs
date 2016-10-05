@@ -22,7 +22,7 @@ namespace Fluent.Tests.Storage
             AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
             return StorageManager
                 .Configure()
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .WithLogLevel(HttpLoggingInterceptor.Level.BODY)
                 .Authenticate(credentials, credentials.DefaultSubscriptionId);
         }
     }

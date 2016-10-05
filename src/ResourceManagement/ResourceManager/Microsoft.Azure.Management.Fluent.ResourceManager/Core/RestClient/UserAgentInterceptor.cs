@@ -10,15 +10,12 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.Fluent.Resource.Core
 {
-    public class UserAgentDelegatingHandler : DelegatingHandlerBase
+    public class UserAgentInterceptor : RequestInterceptorBase
     {
         private List<string> userAgents;
-        public UserAgentDelegatingHandler() : base() {
+        public UserAgentInterceptor() : base() {
             this.userAgents = new List<string>();
         }
-
-        public UserAgentDelegatingHandler(HttpMessageHandler innerHandler) : base(innerHandler)
-        { }
 
         public void SetUserAgent(string userAgent)
         {
@@ -31,7 +28,9 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
             this.userAgents.Add(userAgent);
         }
 
-        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        public override async Task<HttpResponseMessage> SendAsync(Func<HttpRequestMessage, CancellationToken, Task<HttpResponseMessage>> nextSendAsync,
+            HttpRequestMessage request,
+            CancellationToken cancellationToken)
         {
             if (this.userAgents.Any())
             {
@@ -47,7 +46,7 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
                     request.Headers.Add("User-Agent", string.Join(" ", this.userAgents));
                 }
             }
-            return await base.SendAsync(request, cancellationToken);
+            return await nextSendAsync(request, cancellationToken);
         }
     }
 }

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.Fluent.Resource.Core
 {
-    public class HttpLoggingDelegatingHandler : DelegatingHandlerBase
+    public class HttpLoggingInterceptor : RequestInterceptorBase
     {
         public enum Level
         {
@@ -24,16 +24,15 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
 
         public Level LogLevel { get; set; }
 
-        public HttpLoggingDelegatingHandler() : base() { }
+        public HttpLoggingInterceptor() : base() { }
 
-        public HttpLoggingDelegatingHandler(HttpMessageHandler innerHandler) : base(innerHandler)
-        { }
-
-        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        public override async Task<HttpResponseMessage> SendAsync(Func<HttpRequestMessage, CancellationToken, Task<HttpResponseMessage>> nextSendAsync,
+            HttpRequestMessage request,
+            CancellationToken cancellationToken)
         {
             if (LogLevel == Level.NONE)
             {
-                return await base.SendAsync(request, cancellationToken);
+                return await nextSendAsync(request, cancellationToken);
             }
 
             ServiceClientTracing.Information("Request: {0} {1}", request.Method, request.RequestUri);
@@ -56,7 +55,7 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
                 // TODO: Checking for binary request contents and omitting them
             }
 
-            HttpResponseMessage response = await base.SendAsync(request, cancellationToken);
+            HttpResponseMessage response = await nextSendAsync(request, cancellationToken);
             if (LogLevel == Level.BODY || LogLevel == Level.HEADERS)
             {
                 ServiceClientTracing.Information("Response:");

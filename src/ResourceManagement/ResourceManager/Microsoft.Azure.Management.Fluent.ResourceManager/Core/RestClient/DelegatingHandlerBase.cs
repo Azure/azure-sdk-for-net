@@ -6,16 +6,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.Fluent.Resource.Core
 {
-    public class DelegatingHandlerBase : DelegatingHandler
+    public abstract class RequestInterceptorBase : IRequestInterceptor
     {
-        public DelegatingHandlerBase() : base() { }
+        protected RequestInterceptorBase() { }
 
-        public DelegatingHandlerBase(HttpMessageHandler innerHandler) : base(innerHandler)
-        { }
+        abstract public Task<HttpResponseMessage> SendAsync(Func<HttpRequestMessage, CancellationToken, Task<HttpResponseMessage>> nextSendAsync,
+            HttpRequestMessage request,
+            CancellationToken cancellationToken);
 
         protected string getHeader(HttpHeaders headers, string name)
         {
