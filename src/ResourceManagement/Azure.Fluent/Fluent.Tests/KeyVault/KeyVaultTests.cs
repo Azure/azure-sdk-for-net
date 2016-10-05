@@ -102,7 +102,7 @@ namespace Fluent.Tests.KeyVault
             AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
             return KeyVaultManager
                 .Configure()
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .WithLogLevel(HttpLoggingInterceptor.Level.BODY)
                 .Authenticate(credentials, credentials.DefaultSubscriptionId);
         }
     }

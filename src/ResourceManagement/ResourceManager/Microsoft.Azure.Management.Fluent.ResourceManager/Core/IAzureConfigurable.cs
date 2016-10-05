@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
     {
         T WithUserAgent(string product, string version);
         T WithRetryPolicy(RetryPolicy retryPolicy);
-        T WithDelegatingHandler(DelegatingHandler delegatingHandler);
-        T WithLogLevel(HttpLoggingDelegatingHandler.Level level);
+        T WithDelegatingHandler(IRequestInterceptor interceptor);
+        T WithLogLevel(HttpLoggingInterceptor.Level level);
     }
 }

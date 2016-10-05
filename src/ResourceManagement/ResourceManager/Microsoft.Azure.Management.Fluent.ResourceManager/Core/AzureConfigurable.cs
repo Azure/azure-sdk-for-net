@@ -19,13 +19,13 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
                 .WithEnvironment(AzureEnvironment.AzureGlobalCloud);
         }
 
-        public T WithDelegatingHandler(DelegatingHandler delegatingHandler)
+        public T WithDelegatingHandler(IRequestInterceptor interceptor)
         {
-            restClientBuilder.WithDelegatingHandler(delegatingHandler);
+            restClientBuilder.WithRequestInterceptor(interceptor);
             return this as T;
         }
 
-        public T WithLogLevel(HttpLoggingDelegatingHandler.Level level)
+        public T WithLogLevel(HttpLoggingInterceptor.Level level)
         {
             restClientBuilder.WithLogLevel(level);
             return this as T;

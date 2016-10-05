@@ -6,6 +6,8 @@ using Microsoft.Rest.TransientFaultHandling;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Microsoft.Azure.Management.Fluent.Resource.Core
 {
@@ -14,12 +16,12 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
     /// </summary>
     public class RestClient
     {
-        private List<DelegatingHandler> handlers;
+        private List<IRequestInterceptor> interceptors;
 
-        private RestClient(HttpClientHandler httpClientHandler, List<DelegatingHandler> handlers)
+        private RestClient(HttpClientHandler httpClientHandler, List<IRequestInterceptor> interceptors)
         {
             RootHttpHandler = httpClientHandler;
-            this.handlers = handlers;
+            this.interceptors = interceptors;
         }
 
         public string BaseUri
@@ -41,7 +43,13 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
         {
             get
             {
-                return new ReadOnlyCollection<DelegatingHandler>(handlers);
+                IList<InterceptorWrapperDelegateHandler> handlers = new List<InterceptorWrapperDelegateHandler>();
+                foreach(var interceptor in this.interceptors)
+                {
+                    handlers.Add(new InterceptorWrapperDelegateHandler(interceptor));
+                } 
+
+                return new ReadOnlyCollection<InterceptorWrapperDelegateHandler>(handlers);
             }
         }
 
@@ -64,17 +72,17 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
         {
             private string baseUri;
             private ServiceClientCredentials credentials;
-            private List<DelegatingHandler> handlers;
+            private List<IRequestInterceptor> interceptors;
             private RetryPolicy retryPolicy;
-            private HttpLoggingDelegatingHandler loggingDelegatingHandler;
-            private UserAgentDelegatingHandler userAgentDelegatingHandler;
+            private HttpLoggingInterceptor loggingInterceptor;
+            private UserAgentInterceptor userAgentInterceptor;
 
             /// <summary>
             /// Restrict access so that for users it can be created only by <HttpClient cref="RestClient.Configure" />
             /// </summary>
             internal RestClientBuilder()
             {
-                handlers = new List<DelegatingHandler>();
+                interceptors = new List<IRequestInterceptor>();
             }
 
             #region Fluent builder interfaces
@@ -99,9 +107,9 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
 
                 IBuildable WithRetryPolicy(RetryPolicy retryPolicy);
 
-                IBuildable WithDelegatingHandler(DelegatingHandler delegatingHandler);
+                IBuildable WithRequestInterceptor(IRequestInterceptor interceptor);
 
-                IBuildable WithLogLevel(HttpLoggingDelegatingHandler.Level level);
+                IBuildable WithLogLevel(HttpLoggingInterceptor.Level level);
 
                 IBuildable WithCredentials(ServiceClientCredentials credentials);
 
@@ -123,18 +131,18 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
 
             public IBuildable WithUserAgent(string product, string version)
             {
-                if (userAgentDelegatingHandler == null)
+                if (userAgentInterceptor == null)
                 {
-                    userAgentDelegatingHandler = new UserAgentDelegatingHandler();
-                    WithDelegatingHandler(userAgentDelegatingHandler);
+                    userAgentInterceptor = new UserAgentInterceptor();
+                    WithRequestInterceptor(userAgentInterceptor);
                 }
-                userAgentDelegatingHandler.appendUserAgent(product + "/" + version);
+                userAgentInterceptor.AppendUserAgent(product + "/" + version);
                 return this;
             }
 
-            public IBuildable WithDelegatingHandler(DelegatingHandler delegatingHandler)
+            public IBuildable WithRequestInterceptor(IRequestInterceptor interceptor)
             {
-                handlers.Add(delegatingHandler);
+                interceptors.Add(interceptor);
                 return this;
             }
 
@@ -144,14 +152,14 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
                 return this;
             }
 
-            public IBuildable WithLogLevel(HttpLoggingDelegatingHandler.Level level)
+            public IBuildable WithLogLevel(HttpLoggingInterceptor.Level level)
             {
-                if (loggingDelegatingHandler == null)
+                if (loggingInterceptor == null)
                 {
-                    loggingDelegatingHandler = new HttpLoggingDelegatingHandler();
-                    WithDelegatingHandler(loggingDelegatingHandler);
+                    loggingInterceptor = new HttpLoggingInterceptor();
+                    WithRequestInterceptor(loggingInterceptor);
                 }
-                loggingDelegatingHandler.LogLevel = level;
+                loggingInterceptor.LogLevel = level;
                 return this;
             }
 
@@ -168,12 +176,27 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
 #else
                 HttpClientHandler httpClientHandler = new HttpClientHandler();
 #endif
-                return new RestClient(httpClientHandler, handlers)
+                return new RestClient(httpClientHandler, interceptors)
                 {
                     BaseUri = baseUri,
                     Credentials = credentials,
                     RetryPolicy = retryPolicy
                 };
+            }
+        }
+
+        private class InterceptorWrapperDelegateHandler : DelegatingHandler
+        {
+            private readonly IRequestInterceptor interceptor;
+
+            public InterceptorWrapperDelegateHandler(IRequestInterceptor interceptor)
+            {
+                this.interceptor = interceptor;
+            }
+
+            protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+            {
+                return await this.interceptor.SendAsync(base.SendAsync, request, cancellationToken);
             }
         }
     }

@@ -49,7 +49,7 @@ namespace Fluent.Tests.Common
             AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
             return NetworkManager
                 .Configure()
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .WithLogLevel(HttpLoggingInterceptor.Level.BODY)
                 .Authenticate(credentials, credentials.DefaultSubscriptionId);
         }
 
@@ -58,7 +58,7 @@ namespace Fluent.Tests.Common
             AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
             return ComputeManager
                 .Configure()
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .WithLogLevel(HttpLoggingInterceptor.Level.BODY)
                 .Authenticate(credentials, credentials.DefaultSubscriptionId);
         }
 
@@ -66,7 +66,7 @@ namespace Fluent.Tests.Common
         {
             AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
             IResourceManager resourceManager = Microsoft.Azure.Management.Fluent.Resource.ResourceManager.Configure()
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .WithLogLevel(HttpLoggingInterceptor.Level.BODY)
                 .Authenticate(credentials)
                 .WithSubscription(credentials.DefaultSubscriptionId);
             return resourceManager;
@@ -77,7 +77,7 @@ namespace Fluent.Tests.Common
             AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
             return BatchManager
                 .Configure()
-                .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
+                .WithLogLevel(HttpLoggingInterceptor.Level.BODY)
                 .Authenticate(credentials, credentials.DefaultSubscriptionId);
         }
 
