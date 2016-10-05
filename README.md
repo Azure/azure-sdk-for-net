@@ -4,7 +4,7 @@
 
 This README is based on the latest released preview version (1.0.0-beta3). If you are looking for other releases, see [More Information](#more-information)
 
-The Azure Management Libraries for .NET is a higher-level, object-oriented API for managing Azure resources. Libraries are built on [auto generated clients](https://github.com/Azure/azure-sdk-for-net/tree/AutoRest) and can run side-by-side with [auto generated clients](https://github.com/Azure/azure-sdk-for-net/tree/AutoRest).
+The Azure Management Libraries for .NET is a higher-level, object-oriented API for managing Azure resources. Libraries are built on the lower-level, request-response style [auto generated clients](https://github.com/Azure/azure-sdk-for-net/tree/AutoRest) and can run side-by-side with [auto generated clients](https://github.com/Azure/azure-sdk-for-net/tree/AutoRest).
 
 
 > **1.0.0-beta3** is a developer preview that supports major parts of Azure Virtual Machines, Virtual Machine Scale Sets, Storage, Networking, Resource Manager, Key Vault and Batch. The next preview version of the Azure Management Libraries for .NET is a work in-progress. We will be adding support for more Azure services and tweaking the API over the next few months.
