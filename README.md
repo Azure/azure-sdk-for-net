@@ -2,12 +2,12 @@
 
 #Azure Management Libraries for .NET
 
-This README is based on the latest released preview version (1.0.0-preview1). If you are looking for other releases, see [More Information](#more-information)
+This README is based on the latest released preview version (1.0.0-beta3). If you are looking for other releases, see [More Information](#more-information)
 
-The Azure Management Libraries for .NET is a higher-level, object-oriented API for managing Azure resources (built on auto generated clients and can run side-by-side with auto generated clients).
+The Azure Management Libraries for .NET is a higher-level, object-oriented API for managing Azure resources. Libraries are built on [auto generated clients](https://github.com/Azure/azure-sdk-for-net/tree/AutoRest) and can run side-by-side with [auto generated clients](https://github.com/Azure/azure-sdk-for-net/tree/AutoRest).
 
 
-> **1.0.0-preview1** is a developer preview that supports major parts of Azure Virtual Machines, Virtual Machine Scale Sets, Storage, Networking, Resource Manager, Key Vault and Batch. The next preview version of the Azure Management Libraries for .NET is a work in-progress. We will be adding support for more Azure services and tweaking the API over the next few months.
+> **1.0.0-beta3** is a developer preview that supports major parts of Azure Virtual Machines, Virtual Machine Scale Sets, Storage, Networking, Resource Manager, Key Vault and Batch. The next preview version of the Azure Management Libraries for .NET is a work in-progress. We will be adding support for more Azure services and tweaking the API over the next few months.
 
 **Azure Authentication**
 
@@ -186,20 +186,19 @@ You can find plenty of sample code that illustrates management scenarios in Azur
 # Download
 
 
-**1.0.0-preview1**
+**1.0.0-beta3**
 
-If you are using released builds from 1.0.0-preview1, add the following to your POM file:
+1.0.0-beta3 release builds are available on NuGet:
 
-Azure Management Library                              | Package name                              | Stable (`1.0.0-preview1` release)
+Azure Management Library                              | Package name                              | Stable (`1.0.0-beta3` release)
 -----------------------|-------------------------------------------|-----------------------------|-------------------------
-Rollup Client | `Microsoft.Azure.Management.Fluent` | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent/)
-Batch | `Microsoft.Azure.Management.Fluent.Batch` | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.Batch.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent.Batch/)
-Virtual Machines and Virtual Machine Scale Sets | `Microsoft.Azure.Management.Fluent.Compute`    | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.Compute.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent.Compute/)
-Key Vault |`Microsoft.Azure.Management.Fluent.KeyVault`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.KeyVault.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent.KeyVault/)
-Network  |`Microsoft.Azure.Management.Fluent.Network`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.Network.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent.Network/)
-Resource Manager  |`Microsoft.Azure.Management.Fluent.ResourceManager`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.ResourceManager.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent.ResourceManager/)
-Storage  |`Microsoft.Azure.Management.Fluent.Storage`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.Storage.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent.Storage/)
-
+Azure Management Client | `Microsoft.Azure.Management.Fluent` | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Fluent/)
+Batch | `Microsoft.Azure.Management.Batch.Fluent` | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Batch.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Batch.Fluent/)
+Virtual Machines & Virtual Machine Scale Sets | `Microsoft.Azure.Management.Compute.Fluent`    | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Compute.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Compute.Fluent/)
+Key Vault |`Microsoft.Azure.Management.KeyVault.Fluent`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.KeyVault.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.KeyVault.Fluent/)
+Network  |`Microsoft.Azure.Management.Network.Fluent`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Network.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Network.Fluent/)
+Resource Manager  |`Microsoft.Azure.Management.ResourceManager.Fluent`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.ResourceManager.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.ResourceManager.Fluent/)
+Storage  |`Microsoft.Azure.Management.Storage.Fluent`  | [![NuGet](https://img.shields.io/nuget/v/Microsoft.Azure.Management.Storage.Fluent.svg?style=flat-square&label=nuget)](https://www.nuget.org/packages/Microsoft.Azure.Management.Storage.Fluent/)
 
 #Pre-requisites
 
@@ -230,7 +229,7 @@ If you would like to become an active contributor to this project please follow 
 
 | Version           | SHA1                                                                                      | Remarks                                               |
 |-------------------|-------------------------------------------------------------------------------------------|-------------------------------------------------------|
-| 1.0.0-preview1       | [1.0.0-preview1](https://github.com/Azure/azure-net-for-net/tree/1.0.0-preview1)               | Tagged release for 1.0.0-preview1 version of Azure management libraries |
+| 1.0.0-beta3       | [1.0.0-beta3](https://github.com/Azure/azure-net-for-net/tree/1.0.0-beta3)               | Tagged release for 1.0.0-beta3 version of Azure management libraries |
 | AutoRest       | [AutoRest](https://github.com/selvasingh/azure-sdk-for-net/tree/AutoRest)               | Main branch for AutoRest generated raw clients |
 
 ---
