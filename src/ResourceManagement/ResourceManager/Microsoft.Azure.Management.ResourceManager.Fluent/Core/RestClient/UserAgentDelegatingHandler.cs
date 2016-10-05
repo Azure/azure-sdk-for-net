@@ -8,7 +8,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.Management.Fluent.Resource.Core
+namespace Microsoft.Azure.Management.Resource.Fluent.Core
 {
     public class UserAgentDelegatingHandler : DelegatingHandlerBase
     {

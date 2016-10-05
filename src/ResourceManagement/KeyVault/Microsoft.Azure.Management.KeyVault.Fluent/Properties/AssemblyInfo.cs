@@ -6,11 +6,11 @@ using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Microsoft Azure Key Vault Fluent Management Library")]
-[assembly: AssemblyDescription("Provides Microsoft Azure Key Vault management Fluent APIs.")]
+[assembly: AssemblyTitle("Microsoft Azure Key Vault Management Library")]
+[assembly: AssemblyDescription("Provides Microsoft Azure Key Vault management APIs.")]
 
-[assembly: AssemblyVersion("0.0.1.0")]
-[assembly: AssemblyFileVersion("0.0.1.0")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]

@@ -1,22 +1,22 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Microsoft.Azure.Management.Fluent.KeyVault
+namespace Microsoft.Azure.Management.KeyVault.Fluent
 {
 
-    using Microsoft.Azure.Management.Fluent.Graph.RBAC;
-    using Microsoft.Azure.Management.Fluent.KeyVault.Vault.Update;
-    using Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.UpdateDefinition;
-    using Microsoft.Azure.Management.KeyVault.Models;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Update;
-    using Microsoft.Azure.Management.Fluent.Resource.Core;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent;
+    using Microsoft.Azure.Management.KeyVault.Fluent.Vault.Update;
+    using Microsoft.Azure.Management.KeyVault.Fluent.AccessPolicy.UpdateDefinition;
+    using Microsoft.Azure.Management.KeyVault.Fluent.Models;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Definition;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Update;
+    using Microsoft.Azure.Management.KeyVault.Fluent.AccessPolicy.Definition;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.KeyVault.Fluent.AccessPolicy.Update;
     using System;
-    using Microsoft.Azure.Management.Fluent.KeyVault.Vault.Definition;
-    using Fluent.Resource.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.KeyVault.Fluent.Vault.Definition;
+    using Resource.Fluent.Core.ChildResourceActions;
 
     /// <summary>
     /// Implementation for AccessPolicy and its parent interfaces.

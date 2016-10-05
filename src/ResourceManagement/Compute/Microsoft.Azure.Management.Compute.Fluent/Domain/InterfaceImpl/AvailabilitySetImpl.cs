@@ -1,20 +1,20 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.Compute
+namespace Microsoft.Azure.Management.Compute.Fluent
 {
 
-    using Microsoft.Azure.Management.Compute.Models;
+    using Microsoft.Azure.Management.Compute.Fluent.Models;
     using System.Threading;
-    using Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Definition;
+    using Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Update;
-    using Microsoft.Azure.Management.Fluent.Resource;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Update;
+    using Microsoft.Azure.Management.Resource.Fluent;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     internal partial class AvailabilitySetImpl 
     {
         /// <returns>the fault domain count of this availability set</returns>
-        int Microsoft.Azure.Management.Fluent.Compute.IAvailabilitySet.FaultDomainCount
+        int Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet.FaultDomainCount
         {
             get
             { 
@@ -22,15 +22,15 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             }
         }
         /// <returns>the statuses of the existing virtual machines in the availability set</returns>
-        System.Collections.Generic.IList<Microsoft.Azure.Management.Compute.Models.InstanceViewStatus> Microsoft.Azure.Management.Fluent.Compute.IAvailabilitySet.Statuses
+        System.Collections.Generic.IList<Microsoft.Azure.Management.Compute.Fluent.Models.InstanceViewStatus> Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet.Statuses
         {
             get
             { 
-            return this.Statuses() as System.Collections.Generic.IList<Microsoft.Azure.Management.Compute.Models.InstanceViewStatus>;
+            return this.Statuses() as System.Collections.Generic.IList<Microsoft.Azure.Management.Compute.Fluent.Models.InstanceViewStatus>;
             }
         }
         /// <returns>the resource IDs of the virtual machines in the availability set</returns>
-        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Fluent.Compute.IAvailabilitySet.VirtualMachineIds
+        System.Collections.Generic.IList<string> Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet.VirtualMachineIds
         {
             get
             { 
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             }
         }
         /// <returns>the update domain count of this availability set</returns>
-        int Microsoft.Azure.Management.Fluent.Compute.IAvailabilitySet.UpdateDomainCount
+        int Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet.UpdateDomainCount
         {
             get
             { 
@@ -49,8 +49,8 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// Refreshes the resource to sync with Azure.
         /// </summary>
         /// <returns>the refreshed resource</returns>
-        Microsoft.Azure.Management.Fluent.Compute.IAvailabilitySet Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Fluent.Compute.IAvailabilitySet>.Refresh() { 
-            return this.Refresh() as Microsoft.Azure.Management.Fluent.Compute.IAvailabilitySet;
+        Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions.IRefreshable<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>.Refresh() { 
+            return this.Refresh() as Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet;
         }
 
         /// <summary>
@@ -58,8 +58,8 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// </summary>
         /// <param name="faultDomainCount">faultDomainCount the fault domain count</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Definition.IWithFaultDomainCount.WithFaultDomainCount(int faultDomainCount) { 
-            return this.WithFaultDomainCount( faultDomainCount) as Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Definition.IWithCreate;
+        Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition.IWithCreate Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition.IWithFaultDomainCount.WithFaultDomainCount(int faultDomainCount) { 
+            return this.WithFaultDomainCount( faultDomainCount) as Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -67,8 +67,8 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// </summary>
         /// <param name="updateDomainCount">updateDomainCount update domain count</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Definition.IWithUpdateDomainCount.WithUpdateDomainCount(int updateDomainCount) { 
-            return this.WithUpdateDomainCount( updateDomainCount) as Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Definition.IWithCreate;
+        Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition.IWithCreate Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition.IWithUpdateDomainCount.WithUpdateDomainCount(int updateDomainCount) { 
+            return this.WithUpdateDomainCount( updateDomainCount) as Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition.IWithCreate;
         }
 
     }

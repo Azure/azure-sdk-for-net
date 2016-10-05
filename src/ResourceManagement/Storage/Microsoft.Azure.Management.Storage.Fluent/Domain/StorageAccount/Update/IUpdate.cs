@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Update
+namespace Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update
 {
 
-    using Management.Storage.Models;
-    using Resource.Core.Resource.Update;
-    using Resource.Core.ResourceActions;
+    using Management.Storage.Fluent.Models;
+    using Resource.Fluent.Core.Resource.Update;
+    using Resource.Fluent.Core.ResourceActions;
     /// <summary>
     /// A storage account update stage allowing to change the parameters.
     /// </summary>
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Update
         IWithCustomDomain,
         IWithEncryption,
         IWithAccessTier,
-        IUpdateWithTags<Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Update.IUpdate>
+        IUpdateWithTags<Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update.IUpdate>
     {
     }
     /// <summary>

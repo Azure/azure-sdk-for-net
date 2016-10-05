@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.Network
+namespace Microsoft.Azure.Management.Network.Fluent
 {
 
     using System.Collections.Generic;
@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
         /// Note that this method can result in a call to the cloud to fetch the network interface information.
         /// </summary>
         /// <returns>the primary network interface associated with this resource</returns>
-        Microsoft.Azure.Management.Fluent.Network.INetworkInterface GetPrimaryNetworkInterface();
+        Microsoft.Azure.Management.Network.Fluent.INetworkInterface GetPrimaryNetworkInterface();
 
         /// <returns>the resource id of the primary network interface associated with this resource</returns>
         string PrimaryNetworkInterfaceId { get; }

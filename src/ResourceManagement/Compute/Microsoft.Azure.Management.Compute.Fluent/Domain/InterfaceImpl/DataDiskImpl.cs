@@ -1,19 +1,19 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.Compute
+namespace Microsoft.Azure.Management.Compute.Fluent
 {
 
-    using Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.UpdateDefinition;
-    using Microsoft.Azure.Management.Fluent.Resource.Core;
-    using Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Update;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.UpdateDefinition;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Update;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update;
-    using Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Definition;
-    using Microsoft.Azure.Management.Fluent.Storage;
-    using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Update;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Definition;
+    using Microsoft.Azure.Management.Storage.Fluent;
+    using Microsoft.Azure.Management.Compute.Fluent.Models;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
     internal partial class DataDiskImpl 
     {
         /// <summary>
@@ -23,8 +23,8 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// <param name="containerName">containerName the name of the container holding the VHD file</param>
         /// <param name="vhdName">vhdName the name for the VHD file</param>
         /// <returns>the stage representing optional additional settings for the attachable data disk</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate> Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.UpdateDefinition.IAttachExistingDataDisk<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate>.From(string storageAccountName, string containerName, string vhdName) { 
-            return this.From( storageAccountName,  containerName,  vhdName) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate>;
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate> Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.UpdateDefinition.IAttachExistingDataDisk<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate>.From(string storageAccountName, string containerName, string vhdName) { 
+            return this.From( storageAccountName,  containerName,  vhdName) as Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate>;
         }
 
         /// <summary>
@@ -34,12 +34,12 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// <param name="containerName">containerName the name of the container holding the VHD file</param>
         /// <param name="vhdName">vhdName the name for the VHD file</param>
         /// <returns>the stage representing optional additional settings for the attachable data disk</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate> Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Definition.IAttachExistingDataDisk<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate>.From(string storageAccountName, string containerName, string vhdName) { 
-            return this.From( storageAccountName,  containerName,  vhdName) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate>;
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate> Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Definition.IAttachExistingDataDisk<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate>.From(string storageAccountName, string containerName, string vhdName) { 
+            return this.From( storageAccountName,  containerName,  vhdName) as Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate>;
         }
 
         /// <returns>uri to the virtual hard disk backing this data disk</returns>
-        string Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineDataDisk.VhdUri
+        string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk.VhdUri
         {
             get
             { 
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             }
         }
         /// <returns>the logical unit number assigned to this data disk</returns>
-        int Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineDataDisk.Lun
+        int Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk.Lun
         {
             get
             { 
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             }
         }
         /// <returns>the creation method used while creating this disk</returns>
-        Microsoft.Azure.Management.Compute.Models.DiskCreateOptionTypes Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineDataDisk.CreationMethod
+        Microsoft.Azure.Management.Compute.Fluent.Models.DiskCreateOptionTypes Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk.CreationMethod
         {
             get
             { 
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// possible values are: 'None', 'ReadOnly', 'ReadWrite'
         /// </summary>
         /// <returns>the caching type</returns>
-        Microsoft.Azure.Management.Compute.Models.CachingTypes Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineDataDisk.CachingType
+        Microsoft.Azure.Management.Compute.Fluent.Models.CachingTypes Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk.CachingType
         {
             get
             { 
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             }
         }
         /// <returns>the size of this data disk in GB</returns>
-        int Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineDataDisk.Size
+        int Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk.Size
         {
             get
             { 
@@ -89,7 +89,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// null will be returned if this disk is not based on an image
         /// </summary>
         /// <returns>the uri of the source vhd image</returns>
-        string Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineDataDisk.SourceImageUri
+        string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineDataDisk.SourceImageUri
         {
             get
             { 
@@ -101,16 +101,16 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// </summary>
         /// <param name="cachingType">cachingType the disk caching type. Possible values include: 'None', 'ReadOnly', 'ReadWrite'</param>
         /// <returns>the next stage of data disk update</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Update.IUpdate Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Update.IWithDiskCaching.WithCaching(CachingTypes cachingType) { 
-            return this.WithCaching( cachingType) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Update.IUpdate;
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Update.IUpdate Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Update.IWithDiskCaching.WithCaching(CachingTypes cachingType) { 
+            return this.WithCaching( cachingType) as Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Update.IUpdate;
         }
 
         /// <summary>
         /// Attaches the child definition to the parent resource update.
         /// </summary>
         /// <returns>the next stage of the parent definition</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Update.IInUpdate<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate>.Attach() { 
-            return this.Attach() as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate;
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update.IInUpdate<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate>.Attach() { 
+            return this.Attach() as Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate;
         }
 
         /// <summary>
@@ -118,8 +118,8 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// </summary>
         /// <param name="sizeInGB">sizeInGB the disk size in GB</param>
         /// <returns>the stage representing optional additional settings for the attachable data disk</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithStoreAt<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate> Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.UpdateDefinition.IAttachNewDataDisk<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate>.WithSizeInGB(int sizeInGB) { 
-            return this.WithSizeInGB( sizeInGB) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithStoreAt<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate>;
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.UpdateDefinition.IWithStoreAt<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate> Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.UpdateDefinition.IAttachNewDataDisk<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate>.WithSizeInGB(int sizeInGB) { 
+            return this.WithSizeInGB( sizeInGB) as Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.UpdateDefinition.IWithStoreAt<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate>;
         }
 
         /// <summary>
@@ -127,16 +127,16 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// </summary>
         /// <param name="sizeInGB">sizeInGB the disk size in GB</param>
         /// <returns>the stage representing optional additional settings for the attachable data disk</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Definition.IWithStoreAt<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate> Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Definition.IAttachNewDataDisk<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate>.WithSizeInGB(int sizeInGB) { 
-            return this.WithSizeInGB( sizeInGB) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Definition.IWithStoreAt<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate>;
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Definition.IWithStoreAt<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate> Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Definition.IAttachNewDataDisk<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate>.WithSizeInGB(int sizeInGB) { 
+            return this.WithSizeInGB( sizeInGB) as Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Definition.IWithStoreAt<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate>;
         }
 
         /// <summary>
         /// Attaches the child definition to the parent resource definiton.
         /// </summary>
         /// <returns>the next stage of the parent definition</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Definition.IInDefinition<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate>.Attach() { 
-            return this.Attach() as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate;
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition.IInDefinition<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate>.Attach() { 
+            return this.Attach() as Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate;
         }
 
         /// <summary>
@@ -144,8 +144,8 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// </summary>
         /// <param name="sizeInGB">sizeInGB the disk size in GB</param>
         /// <returns>the next stage of data disk update</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Update.IUpdate Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Update.IWithDiskSize.WithSizeInGB(int sizeInGB) { 
-            return this.WithSizeInGB( sizeInGB) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Update.IUpdate;
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Update.IUpdate Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Update.IWithDiskSize.WithSizeInGB(int sizeInGB) { 
+            return this.WithSizeInGB( sizeInGB) as Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Update.IUpdate;
         }
 
         /// <summary>
@@ -153,8 +153,8 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// </summary>
         /// <param name="lun">lun the logical unit number</param>
         /// <returns>the next stage of data disk update</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Update.IUpdate Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Update.IWithDiskLun.WithLun(int lun) { 
-            return this.WithLun( lun) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Update.IUpdate;
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Update.IUpdate Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Update.IWithDiskLun.WithLun(int lun) { 
+            return this.WithLun( lun) as Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Update.IUpdate;
         }
 
         /// <summary>
@@ -162,8 +162,8 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// </summary>
         /// <param name="lun">lun the logical unit number</param>
         /// <returns>the next stage of data disk definition</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate> Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate>.WithLun(int lun) { 
-            return this.WithLun( lun) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate>;
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate> Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate>.WithLun(int lun) { 
+            return this.WithLun( lun) as Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate>;
         }
 
         /// <summary>
@@ -171,8 +171,8 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// </summary>
         /// <param name="cachingType">cachingType the disk caching type. Possible values include: 'None', 'ReadOnly', 'ReadWrite'</param>
         /// <returns>the next stage of data disk definition</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate> Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate>.WithCaching(CachingTypes cachingType) { 
-            return this.WithCaching( cachingType) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate>;
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate> Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate>.WithCaching(CachingTypes cachingType) { 
+            return this.WithCaching( cachingType) as Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate>;
         }
 
         /// <summary>
@@ -180,8 +180,8 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// </summary>
         /// <param name="lun">lun the logical unit number</param>
         /// <returns>the next stage of data disk definition</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate> Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate>.WithLun(int lun) { 
-            return this.WithLun( lun) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate>;
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate> Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate>.WithLun(int lun) { 
+            return this.WithLun( lun) as Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -189,8 +189,8 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// </summary>
         /// <param name="cachingType">cachingType the disk caching type. Possible values include: 'None', 'ReadOnly', 'ReadWrite'</param>
         /// <returns>the next stage of data disk definition</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate> Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate>.WithCaching(CachingTypes cachingType) { 
-            return this.WithCaching( cachingType) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate>;
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate> Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate>.WithCaching(CachingTypes cachingType) { 
+            return this.WithCaching( cachingType) as Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate>;
         }
 
         /// <summary>
@@ -200,8 +200,8 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// <param name="containerName">containerName the name of the container to hold the new VHD file</param>
         /// <param name="vhdName">vhdName the name for the new VHD file</param>
         /// <returns>the stage representing optional additional configurations for the data disk</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate> Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithStoreAt<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate>.StoreAt(string storageAccountName, string containerName, string vhdName) { 
-            return this.StoreAt( storageAccountName,  containerName,  vhdName) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate>;
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate> Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.UpdateDefinition.IWithStoreAt<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate>.StoreAt(string storageAccountName, string containerName, string vhdName) { 
+            return this.StoreAt( storageAccountName,  containerName,  vhdName) as Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate>;
         }
 
         /// <summary>
@@ -211,12 +211,12 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// <param name="containerName">containerName the name of the container to hold the new VHD file</param>
         /// <param name="vhdName">vhdName the name for the new VHD file</param>
         /// <returns>the stage representing optional additional configurations for the data disk</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate> Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Definition.IWithStoreAt<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate>.StoreAt(string storageAccountName, string containerName, string vhdName) { 
-            return this.StoreAt( storageAccountName,  containerName,  vhdName) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IWithCreate>;
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate> Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Definition.IWithStoreAt<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate>.StoreAt(string storageAccountName, string containerName, string vhdName) { 
+            return this.StoreAt( storageAccountName,  containerName,  vhdName) as Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Definition.IWithAttach<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IWithCreate>;
         }
 
         /// <returns>the name of this child object</returns>
-        string Microsoft.Azure.Management.Fluent.Resource.Core.IChildResource<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine>.Name
+        string Microsoft.Azure.Management.Resource.Fluent.Core.IChildResource<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>.Name
         {
             get
             {

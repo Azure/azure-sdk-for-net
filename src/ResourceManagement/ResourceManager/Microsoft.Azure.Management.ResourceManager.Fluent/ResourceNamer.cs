@@ -7,7 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.Management.Fluent.Resource
+namespace Microsoft.Azure.Management.Resource.Fluent
 {
     public class ResourceNamer
     {

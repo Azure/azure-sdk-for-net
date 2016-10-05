@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.Fluent.Resource.Core.DAG
+namespace Microsoft.Azure.Management.Resource.Fluent.Core.DAG
 {
     public class Node<DataT>
     {

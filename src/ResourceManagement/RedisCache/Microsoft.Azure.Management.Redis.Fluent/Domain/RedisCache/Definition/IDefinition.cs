@@ -1,16 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information. 
 
-namespace Microsoft.Azure.Management.Fluent.Redis.RedisCache.Definition
+namespace Microsoft.Azure.Management.Redis.Fluent.RedisCache.Definition
 {
 
-    using Microsoft.Azure.Management.Fluent.Resource.Core.Resource.Definition;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Definition;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Fluent.Resource.Core;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.Fluent.Redis;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.GroupableResource.Definition;
-    using Microsoft.Azure.Management.Fluent.Redis.Models;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.Redis.Fluent;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition;
+    using Microsoft.Azure.Management.Redis.Fluent.Models;
     /// <summary>
     /// A Redis Cache definition with sufficient inputs to create a new
     /// Redis Cache in the cloud, but exposing additional optional inputs to
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Fluent.Redis.RedisCache.Definition
     /// </summary>
     public interface IDefinition  :
         IBlank,
-        Microsoft.Azure.Management.Fluent.Redis.RedisCache.Definition.IWithGroup,
+        Microsoft.Azure.Management.Redis.Fluent.RedisCache.Definition.IWithGroup,
         IWithSku,
         IWithCreate,
         IWithPremiumSkuCreate
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.Fluent.Redis.RedisCache.Definition
     /// A Redis Cache definition allowing resource group to be set.
     /// </summary>
     public interface IWithGroup  :
-        Microsoft.Azure.Management.Fluent.Resource.Core.GroupableResource.Definition.IWithGroup<IWithSku>
+        Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition.IWithGroup<IWithSku>
     {
     }
     /// <summary>
@@ -177,7 +177,7 @@ namespace Microsoft.Azure.Management.Fluent.Redis.RedisCache.Definition
     /// The first stage of the Redis Cache definition.
     /// </summary>
     public interface IBlank  :
-        IDefinitionWithRegion<Microsoft.Azure.Management.Fluent.Redis.RedisCache.Definition.IWithGroup>
+        IDefinitionWithRegion<Microsoft.Azure.Management.Redis.Fluent.RedisCache.Definition.IWithGroup>
     {
     }
 }

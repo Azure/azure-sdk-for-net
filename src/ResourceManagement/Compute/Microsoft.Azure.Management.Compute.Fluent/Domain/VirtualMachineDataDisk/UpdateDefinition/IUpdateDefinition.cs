@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.UpdateDefinition
+namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.UpdateDefinition
 {
 
-    using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.Compute.Fluent.Models;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
     /// <summary>
     /// The stage of the new data disk configuration allowing to specify location to store the VHD.
     /// 
@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Updat
         /// <param name="containerName">containerName the name of the container to hold the new VHD file</param>
         /// <param name="vhdName">vhdName the name for the new VHD file</param>
         /// <returns>the stage representing optional additional configurations for the data disk</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<ParentT> StoreAt(string storageAccountName, string containerName, string vhdName);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<ParentT> StoreAt(string storageAccountName, string containerName, string vhdName);
 
     }
     /// <summary>
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Updat
         /// </summary>
         /// <param name="sizeInGB">sizeInGB the disk size in GB</param>
         /// <returns>the stage representing optional additional settings for the attachable data disk</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithStoreAt<ParentT> WithSizeInGB(int sizeInGB);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.UpdateDefinition.IWithStoreAt<ParentT> WithSizeInGB(int sizeInGB);
 
     }
     /// <summary>
@@ -63,14 +63,14 @@ namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Updat
         /// </summary>
         /// <param name="lun">lun the logical unit number</param>
         /// <returns>the next stage of data disk definition</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<ParentT> WithLun(int lun);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<ParentT> WithLun(int lun);
 
         /// <summary>
         /// Specifies the caching type for the data disk.
         /// </summary>
         /// <param name="cachingType">cachingType the disk caching type. Possible values include: 'None', 'ReadOnly', 'ReadWrite'</param>
         /// <returns>the next stage of data disk definition</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<ParentT> WithCaching(CachingTypes cachingType);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<ParentT> WithCaching(CachingTypes cachingType);
 
     }
     /// <summary>
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Updat
         /// <param name="containerName">containerName the name of the container holding the VHD file</param>
         /// <param name="vhdName">vhdName the name for the VHD file</param>
         /// <returns>the stage representing optional additional settings for the attachable data disk</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<ParentT> From(string storageAccountName, string containerName, string vhdName);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.UpdateDefinition.IWithAttach<ParentT> From(string storageAccountName, string containerName, string vhdName);
 
     }
     /// <summary>

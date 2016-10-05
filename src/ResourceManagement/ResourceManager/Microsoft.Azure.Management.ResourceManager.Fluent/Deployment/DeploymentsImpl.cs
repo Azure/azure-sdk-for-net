@@ -6,13 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.Fluent.Resource.Core;
-using Microsoft.Azure.Management.Fluent.Resource.Deployment.Definition;
-using Microsoft.Azure.Management.ResourceManager.Models;
-using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Azure.Management.Resource.Fluent.Deployment.Definition;
+using Microsoft.Azure.Management.Resource.Fluent.Models;
+using Microsoft.Azure.Management.Resource.Fluent;
 using Microsoft.Rest.Azure;
 
-namespace Microsoft.Azure.Management.Fluent.Resource
+namespace Microsoft.Azure.Management.Resource.Fluent
 {
     internal class DeploymentsImpl : IDeployments
     {

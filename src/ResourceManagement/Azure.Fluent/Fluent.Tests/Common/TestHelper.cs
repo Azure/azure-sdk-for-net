@@ -2,12 +2,12 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Fluent;
-using Microsoft.Azure.Management.Fluent.Batch;
-using Microsoft.Azure.Management.Fluent.Compute;
-using Microsoft.Azure.Management.Fluent.Network;
-using Microsoft.Azure.Management.Fluent.Resource;
-using Microsoft.Azure.Management.Fluent.Resource.Authentication;
-using Microsoft.Azure.Management.Fluent.Resource.Core;
+using Microsoft.Azure.Management.Batch.Fluent;
+using Microsoft.Azure.Management.Compute.Fluent;
+using Microsoft.Azure.Management.Network.Fluent;
+using Microsoft.Azure.Management.Resource.Fluent;
+using Microsoft.Azure.Management.Resource.Fluent.Authentication;
+using Microsoft.Azure.Management.Resource.Fluent.Core;
 using System;
 using Xunit.Abstractions;
 
@@ -65,7 +65,7 @@ namespace Fluent.Tests.Common
         public static IResourceManager CreateResourceManager()
         {
             AzureCredentials credentials = AzureCredentials.FromFile(authFilePath);
-            IResourceManager resourceManager = Microsoft.Azure.Management.Fluent.Resource.ResourceManager.Configure()
+            IResourceManager resourceManager = Microsoft.Azure.Management.Resource.Fluent.ResourceManager.Configure()
                 .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
                 .Authenticate(credentials)
                 .WithSubscription(credentials.DefaultSubscriptionId);

@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information. 
 
-namespace Microsoft.Azure.Management.Fluent.Resource.GenericResource.Definition
+namespace Microsoft.Azure.Management.Resource.Fluent.GenericResource.Definition
 {
 
-    using Microsoft.Azure.Management.Fluent.Resource.Core.Resource.Definition;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.GroupableResource.Definition;
-    using Microsoft.Azure.Management.Fluent.Resource;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Definition;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition;
+    using Microsoft.Azure.Management.Resource.Fluent;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
 
     /// <summary>
     /// Container interface for all the definitions that need to be implemented.
@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Fluent.Resource.GenericResource.Definition
     /// A generic resource definition allowing region to be specified.
     /// </summary>
     public interface IBlank  :
-        Resource.Core.Resource.Definition.IDefinitionWithRegion<IWithGroup>
+        Core.Resource.Definition.IDefinitionWithRegion<IWithGroup>
     {
     }
 
@@ -75,7 +75,7 @@ namespace Microsoft.Azure.Management.Fluent.Resource.GenericResource.Definition
     /// A generic resource definition allowing resource group to be specified.
     /// </summary>
     public interface IWithGroup  :
-        Resource.Core.GroupableResource.Definition.IWithGroup<IWithResourceType>
+        Core.GroupableResource.Definition.IWithGroup<IWithResourceType>
     {
     }
 

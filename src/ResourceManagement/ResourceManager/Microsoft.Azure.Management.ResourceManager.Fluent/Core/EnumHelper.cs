@@ -5,7 +5,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 
-namespace Microsoft.Azure.Management.Fluent.Resource.Core
+namespace Microsoft.Azure.Management.Resource.Fluent.Core
 {
     public static class EnumHelper
     {

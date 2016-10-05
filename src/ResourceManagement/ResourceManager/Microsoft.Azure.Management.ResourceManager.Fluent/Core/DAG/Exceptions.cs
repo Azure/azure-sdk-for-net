@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Microsoft.Azure.Management.Fluent.Resource.Core.DAG
+namespace Microsoft.Azure.Management.Resource.Fluent.Core.DAG
 {
     public class ChildExistsException : Exception {
         public ChildExistsException(string parentKey, string childKey) : base("A child with key '" + childKey + "' already exists in the parent '" + parentKey + "'") {}

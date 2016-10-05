@@ -1,15 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
+namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 {
 
     using Microsoft.Rest;
-    using Microsoft.Azure.Management.Graph.RBAC.Models;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
     using System.Threading;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Fluent.Resource.Core;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
     using Management.Graph.RBAC;
     using System;
     using System.Collections.Generic;

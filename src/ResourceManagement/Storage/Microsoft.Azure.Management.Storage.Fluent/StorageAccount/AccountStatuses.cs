@@ -1,9 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Storage.Models;
+using Microsoft.Azure.Management.Storage.Fluent.Models;
 
-namespace Microsoft.Azure.Management.Fluent.Storage
+namespace Microsoft.Azure.Management.Storage.Fluent
 {
     public class AccountStatuses
     {

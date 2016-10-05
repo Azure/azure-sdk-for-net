@@ -1,15 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Batch;
-using Microsoft.Azure.Management.Fluent.Resource.Authentication;
-using Microsoft.Azure.Management.Fluent.Resource.Core;
-using Microsoft.Azure.Management.Fluent.Storage;
+using Microsoft.Azure.Management.Batch.Fluent;
+using Microsoft.Azure.Management.Resource.Fluent.Authentication;
+using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Azure.Management.Storage.Fluent;
 using Microsoft.Rest;
 using System;
 using System.Linq;
 
-namespace Microsoft.Azure.Management.Fluent.Batch
+namespace Microsoft.Azure.Management.Batch.Fluent
 {
     public class BatchManager : ManagerBase, IBatchManager
     {

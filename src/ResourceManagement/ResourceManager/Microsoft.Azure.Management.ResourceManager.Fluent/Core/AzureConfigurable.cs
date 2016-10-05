@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Fluent.Resource.Authentication;
+using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Microsoft.Rest;
 using Microsoft.Rest.TransientFaultHandling;
 using System.Net.Http;
 
-namespace Microsoft.Azure.Management.Fluent.Resource.Core
+namespace Microsoft.Azure.Management.Resource.Fluent.Core
 {
     public class AzureConfigurable<T> : IAzureConfigurable<T>
         where T : class, IAzureConfigurable<T>

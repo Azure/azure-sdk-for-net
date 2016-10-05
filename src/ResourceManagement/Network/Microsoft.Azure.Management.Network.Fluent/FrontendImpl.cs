@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.Network
+namespace Microsoft.Azure.Management.Network.Fluent
 {
     using System.Collections.Generic;
-    using Resource.Core.ChildResourceActions;
-    using Management.Network.Models;
-    using Resource.Core;
+    using Resource.Fluent.Core.ChildResourceActions;
+    using Management.Network.Fluent.Models;
+    using Resource.Fluent.Core;
     using System;
 
     /// <summary>
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return Inner.PublicIPAddress != null;
         }
 
-        internal IDictionary<string,Microsoft.Azure.Management.Fluent.Network.ILoadBalancingRule> LoadBalancingRules ()
+        internal IDictionary<string,Microsoft.Azure.Management.Network.Fluent.ILoadBalancingRule> LoadBalancingRules ()
         {
             IDictionary<string, ILoadBalancingRule> rules = new SortedDictionary<string, ILoadBalancingRule>();
             if(Inner.LoadBalancingRules != null)

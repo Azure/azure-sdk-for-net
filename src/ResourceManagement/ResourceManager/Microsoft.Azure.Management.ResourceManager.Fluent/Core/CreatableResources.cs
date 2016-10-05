@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions;
-using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.Management.Fluent.Resource.Core
+namespace Microsoft.Azure.Management.Resource.Fluent.Core
 {
     /// <summary>
     /// Base class for creatable resource collection, i.e.those where the member of the collection is of Resource

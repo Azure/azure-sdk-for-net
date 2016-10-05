@@ -1,21 +1,21 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.ResourceManager;
-using Microsoft.Azure.Management.ResourceManager.Models;
-using Microsoft.Azure.Management.Fluent.Resource.Core;
+using Microsoft.Azure.Management.Resource.Fluent;
+using Microsoft.Azure.Management.Resource.Fluent.Models;
+using Microsoft.Azure.Management.Resource.Fluent.Core;
 using System.Collections.Generic;
 using System;
 
-namespace Microsoft.Azure.Management.Fluent.Resource
+namespace Microsoft.Azure.Management.Resource.Fluent
 {
     internal class SubscriptionImpl :
-        IndexableWrapper<Management.ResourceManager.Models.SubscriptionInner>,
+        IndexableWrapper<Management.Resource.Fluent.Models.SubscriptionInner>,
         ISubscription
     {
         private ISubscriptionsOperations innerCollection;
 
-        internal SubscriptionImpl(Management.ResourceManager.Models.SubscriptionInner innerModel, ISubscriptionsOperations client) : base(innerModel)
+        internal SubscriptionImpl(Management.Resource.Fluent.Models.SubscriptionInner innerModel, ISubscriptionsOperations client) : base(innerModel)
         {
             innerCollection = client;
         }

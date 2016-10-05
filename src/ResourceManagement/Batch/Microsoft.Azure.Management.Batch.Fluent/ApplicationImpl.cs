@@ -1,15 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Microsoft.Azure.Management.Fluent.Batch
+namespace Microsoft.Azure.Management.Batch.Fluent
 {
     using Management.Batch;
-    using Management.Batch.Models;
-    using Resource.Core;
+    using Management.Batch.Fluent.Models;
+    using Resource.Fluent.Core;
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    using Fluent.Resource.Core.ChildResourceActions;
+    using Resource.Fluent.Core.ChildResourceActions;
 
     /// <summary>
     /// Implementation for BatchAccount Application and its parent interfaces.

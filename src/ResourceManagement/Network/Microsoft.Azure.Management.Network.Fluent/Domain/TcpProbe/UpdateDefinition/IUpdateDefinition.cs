@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.Network.TcpProbe.UpdateDefinition
+namespace Microsoft.Azure.Management.Network.Fluent.TcpProbe.UpdateDefinition
 {
 
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
     /// <summary>
     /// The final stage of the probe definition.
     /// <p>
@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.TcpProbe.UpdateDefinition
         /// </summary>
         /// <param name="port">port a port number</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.TcpProbe.UpdateDefinition.IWithAttach<ParentT> WithPort(int port);
+        Microsoft.Azure.Management.Network.Fluent.TcpProbe.UpdateDefinition.IWithAttach<ParentT> WithPort(int port);
 
     }
     /// <summary>
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.TcpProbe.UpdateDefinition
         /// </summary>
         /// <param name="probes">probes number of probes</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.TcpProbe.UpdateDefinition.IWithAttach<ParentT> WithNumberOfProbes(int probes);
+        Microsoft.Azure.Management.Network.Fluent.TcpProbe.UpdateDefinition.IWithAttach<ParentT> WithNumberOfProbes(int probes);
 
     }
     /// <summary>
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.TcpProbe.UpdateDefinition
         /// </summary>
         /// <param name="seconds">seconds number of seconds</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.TcpProbe.UpdateDefinition.IWithAttach<ParentT> WithIntervalInSeconds(int seconds);
+        Microsoft.Azure.Management.Network.Fluent.TcpProbe.UpdateDefinition.IWithAttach<ParentT> WithIntervalInSeconds(int seconds);
 
     }
 }

@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 
-namespace Microsoft.Azure.Management.Fluent.Resource.Core.DAG
+namespace Microsoft.Azure.Management.Resource.Fluent.Core.DAG
 {
     public class DAGNode<DataT> : Node<DataT>
     {

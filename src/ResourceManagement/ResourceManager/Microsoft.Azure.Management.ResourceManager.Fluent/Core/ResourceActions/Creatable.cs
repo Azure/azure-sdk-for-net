@@ -3,10 +3,10 @@
 
 using System;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.Fluent.Resource.Core.DAG;
+using Microsoft.Azure.Management.Resource.Fluent.Core.DAG;
 using System.Threading;
 
-namespace Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions
+namespace Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions
 {
     /// <summary>
     /// The base class for all creatable resource.

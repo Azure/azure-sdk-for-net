@@ -1,20 +1,20 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.KeyVault
+namespace Microsoft.Azure.Management.KeyVault.Fluent
 {
 
-    using Microsoft.Azure.Management.Fluent.KeyVault.Vault.Definition;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions;
+    using Microsoft.Azure.Management.KeyVault.Fluent.Vault.Definition;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
     /// <summary>
     /// Entry point for key vaults management API.
     /// </summary>
     public interface IVaults  :
-        ISupportsListing<Microsoft.Azure.Management.Fluent.KeyVault.IVault>,
-        ISupportsCreating<Microsoft.Azure.Management.Fluent.KeyVault.Vault.Definition.IBlank>,
+        ISupportsListing<Microsoft.Azure.Management.KeyVault.Fluent.IVault>,
+        ISupportsCreating<Microsoft.Azure.Management.KeyVault.Fluent.Vault.Definition.IBlank>,
         ISupportsDeleting,
-        ISupportsListingByGroup<Microsoft.Azure.Management.Fluent.KeyVault.IVault>,
-        ISupportsGettingByGroup<Microsoft.Azure.Management.Fluent.KeyVault.IVault>,
-        ISupportsGettingById<Microsoft.Azure.Management.Fluent.KeyVault.IVault>,
+        ISupportsListingByGroup<Microsoft.Azure.Management.KeyVault.Fluent.IVault>,
+        ISupportsGettingByGroup<Microsoft.Azure.Management.KeyVault.Fluent.IVault>,
+        ISupportsGettingById<Microsoft.Azure.Management.KeyVault.Fluent.IVault>,
         ISupportsDeletingByGroup
     {
     }

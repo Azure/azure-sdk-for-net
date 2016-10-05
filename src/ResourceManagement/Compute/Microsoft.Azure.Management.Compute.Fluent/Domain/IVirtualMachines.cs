@@ -1,25 +1,25 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.Compute
+namespace Microsoft.Azure.Management.Compute.Fluent
 {
 
-    using Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions;
-    using Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition;
     /// <summary>
     /// Entry point to virtual machine management API.
     /// </summary>
     public interface IVirtualMachines  :
-        ISupportsListing<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine>,
-        ISupportsListingByGroup<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine>,
-        ISupportsGettingByGroup<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine>,
-        ISupportsGettingById<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine>,
-        ISupportsCreating<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IBlank>,
+        ISupportsListing<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>,
+        ISupportsListingByGroup<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>,
+        ISupportsGettingByGroup<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>,
+        ISupportsGettingById<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>,
+        ISupportsCreating<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IBlank>,
         ISupportsDeleting,
         ISupportsDeletingByGroup,
-        ISupportsBatchCreation<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine>
+        ISupportsBatchCreation<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>
     {
         /// <returns>available virtual machine sizes</returns>
-        Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineSizes Sizes { get; }
+        Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSizes Sizes { get; }
 
         /// <summary>
         /// Shuts down the virtual machine and releases the compute resources.

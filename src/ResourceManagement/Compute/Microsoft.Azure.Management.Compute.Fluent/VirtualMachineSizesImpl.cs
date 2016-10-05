@@ -1,11 +1,11 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Microsoft.Azure.Management.Fluent.Compute
+namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using Management.Compute;
-    using Management.Compute.Models;
-    using Resource.Core;
+    using Management.Compute.Fluent.Models;
+    using Resource.Fluent.Core;
     /// <summary>
     /// The implementation for VirtualMachineSizes.
     /// </summary>

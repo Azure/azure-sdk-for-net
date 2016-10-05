@@ -1,19 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Fluent.Resource.Core;
-using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using System;
-using Microsoft.Azure.Management.Fluent.Resource.ResourceGroup.Definition;
-using Microsoft.Azure.Management.Fluent.Resource.Core.Resource.Update;
-using Microsoft.Azure.Management.Fluent.Resource.ResourceGroup.Update;
-using Microsoft.Azure.Management.ResourceManager.Models;
-using Microsoft.Azure.Management.ResourceManager;
+using Microsoft.Azure.Management.Resource.Fluent.ResourceGroup.Definition;
+using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Update;
+using Microsoft.Azure.Management.Resource.Fluent.ResourceGroup.Update;
+using Microsoft.Azure.Management.Resource.Fluent.Models;
+using Microsoft.Azure.Management.Resource.Fluent;
 
-namespace Microsoft.Azure.Management.Fluent.Resource
+namespace Microsoft.Azure.Management.Resource.Fluent
 {
     internal class ResourceGroupImpl : 
             CreatableUpdatable<IResourceGroup, ResourceGroupInner, ResourceGroupImpl, IResource, ResourceGroup.Update.IUpdate>,

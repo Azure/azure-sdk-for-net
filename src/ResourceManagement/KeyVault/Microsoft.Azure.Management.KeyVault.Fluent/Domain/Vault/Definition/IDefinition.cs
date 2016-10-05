@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.KeyVault.Vault.Definition
+namespace Microsoft.Azure.Management.KeyVault.Fluent.Vault.Definition
 {
 
-    using Microsoft.Azure.Management.KeyVault.Models;
-    using Microsoft.Azure.Management.Fluent.KeyVault;
-    using Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Definition;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.Resource.Definition;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.GroupableResource.Definition;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.KeyVault.Fluent.Models;
+    using Microsoft.Azure.Management.KeyVault.Fluent;
+    using Microsoft.Azure.Management.KeyVault.Fluent.AccessPolicy.Definition;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Definition;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     /// <summary>
     /// A key vault definition allowing various configurations to be set.
     /// </summary>
@@ -68,8 +68,8 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault.Vault.Definition
     /// Container interface for all the definitions that need to be implemented.
     /// </summary>
     public interface IDefinition  :
-        Microsoft.Azure.Management.Fluent.KeyVault.Vault.Definition.IBlank,
-        Microsoft.Azure.Management.Fluent.KeyVault.Vault.Definition.IWithGroup,
+        Microsoft.Azure.Management.KeyVault.Fluent.Vault.Definition.IBlank,
+        Microsoft.Azure.Management.KeyVault.Fluent.Vault.Definition.IWithGroup,
         IWithAccessPolicy,
         IWithCreate
     {
@@ -96,21 +96,21 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault.Vault.Definition
         /// Begins the definition of a new access policy to be added to this key vault.
         /// </summary>
         /// <returns>the first stage of the access policy definition</returns>
-        Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.Definition.IBlank<Microsoft.Azure.Management.Fluent.KeyVault.Vault.Definition.IWithCreate> DefineAccessPolicy ();
+        Microsoft.Azure.Management.KeyVault.Fluent.AccessPolicy.Definition.IBlank<Microsoft.Azure.Management.KeyVault.Fluent.Vault.Definition.IWithCreate> DefineAccessPolicy ();
 
     }
     /// <summary>
     /// The first stage of the key vault definition.
     /// </summary>
     public interface IBlank  :
-        IDefinitionWithRegion<Microsoft.Azure.Management.Fluent.KeyVault.Vault.Definition.IWithGroup>
+        IDefinitionWithRegion<Microsoft.Azure.Management.KeyVault.Fluent.Vault.Definition.IWithGroup>
     {
     }
     /// <summary>
     /// A key vault definition allowing resource group to be set.
     /// </summary>
     public interface IWithGroup  :
-        Microsoft.Azure.Management.Fluent.Resource.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.Fluent.KeyVault.Vault.Definition.IWithAccessPolicy>
+        Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.KeyVault.Fluent.Vault.Definition.IWithAccessPolicy>
     {
     }
     /// <summary>
@@ -119,8 +119,8 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault.Vault.Definition
     /// specify.
     /// </summary>
     public interface IWithCreate  :
-        ICreatable<Microsoft.Azure.Management.Fluent.KeyVault.IVault>,
-        IDefinitionWithTags<Microsoft.Azure.Management.Fluent.KeyVault.Vault.Definition.IWithCreate>,
+        ICreatable<Microsoft.Azure.Management.KeyVault.Fluent.IVault>,
+        IDefinitionWithTags<Microsoft.Azure.Management.KeyVault.Fluent.Vault.Definition.IWithCreate>,
         IWithSku,
         IWithConfigurations,
         IWithAccessPolicy

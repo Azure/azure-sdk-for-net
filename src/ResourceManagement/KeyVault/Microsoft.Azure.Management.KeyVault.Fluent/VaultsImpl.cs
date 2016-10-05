@@ -1,16 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Microsoft.Azure.Management.Fluent.KeyVault
+namespace Microsoft.Azure.Management.KeyVault.Fluent
 {
 
-    using Microsoft.Azure.Management.Fluent.Resource.Core;
-    using Microsoft.Azure.Management.KeyVault.Models;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions;
-    using Microsoft.Azure.Management.Graph.RBAC.Models;
-    using Microsoft.Azure.Management.Fluent.Resource;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.KeyVault.Fluent.Models;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
+    using Microsoft.Azure.Management.Resource.Fluent;
     using Management.KeyVault;
-    using Graph.RBAC;
+    using Graph.RBAC.Fluent;
     using System;
     using System.Threading.Tasks;
     using System.Threading;

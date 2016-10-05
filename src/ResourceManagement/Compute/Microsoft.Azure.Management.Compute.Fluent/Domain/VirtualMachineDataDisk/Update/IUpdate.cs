@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Update
+namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Update
 {
 
-    using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.Compute.Fluent.Models;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
     /// <summary>
     /// The stage of the virtual machine data disk update allowing to set the disk size.
     /// </summary>
@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Updat
         /// </summary>
         /// <param name="sizeInGB">sizeInGB the disk size in GB</param>
         /// <returns>the next stage of data disk update</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Update.IUpdate WithSizeInGB(int sizeInGB);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Update.IUpdate WithSizeInGB(int sizeInGB);
 
     }
     /// <summary>
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Updat
         /// </summary>
         /// <param name="lun">lun the logical unit number</param>
         /// <returns>the next stage of data disk update</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Update.IUpdate WithLun(int lun);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Update.IUpdate WithLun(int lun);
 
     }
     /// <summary>
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Updat
         /// </summary>
         /// <param name="cachingType">cachingType the disk caching type. Possible values include: 'None', 'ReadOnly', 'ReadWrite'</param>
         /// <returns>the next stage of data disk update</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Update.IUpdate WithCaching(CachingTypes cachingType);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineDataDisk.Update.IUpdate WithCaching(CachingTypes cachingType);
 
     }
     /// <summary>
@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineDataDisk.Updat
         IWithDiskSize,
         IWithDiskLun,
         IWithDiskCaching,
-        ISettable<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Update.IUpdate>
+        ISettable<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Update.IUpdate>
     {
     }
 }

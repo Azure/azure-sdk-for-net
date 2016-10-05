@@ -1,18 +1,18 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Microsoft.Azure.Management.Fluent.Network
+namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using Management.Network.Models;
+    using Management.Network.Fluent.Models;
     using NicIpConfiguration.UpdateDefinition;
     using System.Collections.Generic;
-    using Resource.Core;
+    using Resource.Fluent.Core;
     using NicIpConfiguration.Definition;
-    using Resource.Core.ResourceActions;
-    using Resource.Core.ChildResourceActions;
+    using Resource.Fluent.Core.ResourceActions;
+    using Resource.Fluent.Core.ChildResourceActions;
     using System;
     using Rest.Azure;
-    using Resource;
+    using Resource.Fluent;
 
     /// <summary>
     /// Implementation for NicIpConfiguration and its create and update interfaces.
@@ -106,7 +106,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
         internal NicIpConfigurationImpl WithNewNetwork(ICreatable<INetwork> creatable)
         {
             creatableVirtualNetworkKey = creatable.Key;
-            Parent.AddToCreatableDependencies(creatable as IResourceCreator<Fluent.Resource.Core.IResource>);
+            Parent.AddToCreatableDependencies(creatable as IResourceCreator<Management.Resource.Fluent.Core.IResource>);
             return this;
         }
 
@@ -159,7 +159,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             if (creatablePublicIpKey == null)
             {
                 creatablePublicIpKey = creatable.Key;
-                Parent.AddToCreatableDependencies(creatable as IResourceCreator<Fluent.Resource.Core.IResource>);
+                Parent.AddToCreatableDependencies(creatable as IResourceCreator<Management.Resource.Fluent.Core.IResource>);
             }
 
             return this;

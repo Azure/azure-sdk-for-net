@@ -1,18 +1,18 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Microsoft.Azure.Management.Fluent.Compute
+namespace Microsoft.Azure.Management.Compute.Fluent
 {
 
     using System.Threading.Tasks;
     using System.Collections.Generic;
-    using Resource.Core;
+    using Resource.Fluent.Core;
     using System.Threading;
-    using Management.Compute.Models;
+    using Management.Compute.Fluent.Models;
     using Management.Compute;
     using System.Collections.ObjectModel;
     using Newtonsoft.Json;
-    using Resource.Core.ChildResourceActions;
+    using Resource.Fluent.Core.ChildResourceActions;
 
     /// <summary>
     /// Implementation of VirtualMachineExtension.

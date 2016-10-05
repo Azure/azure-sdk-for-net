@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.Graph.RBAC.ActiveDirectoryGroup.Definition
+namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryGroup.Definition
 {
 
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.Fluent.Graph.RBAC;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent;
     /// <summary>
     /// The first stage of the group definition.
     /// </summary>
@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC.ActiveDirectoryGroup.Defi
     /// specify.
     /// </summary>
     public interface IWithCreate  :
-        ICreatable<Microsoft.Azure.Management.Fluent.Graph.RBAC.IActiveDirectoryGroup>
+        ICreatable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IActiveDirectoryGroup>
     {
     }
     /// <summary>
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC.ActiveDirectoryGroup.Defi
         /// </summary>
         /// <param name="displayName">displayName the human readable display name</param>
         /// <returns>the next stage of group definition</returns>
-        Microsoft.Azure.Management.Fluent.Graph.RBAC.ActiveDirectoryGroup.Definition.IWithMailNickname WithDisplayName(string displayName);
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryGroup.Definition.IWithMailNickname WithDisplayName(string displayName);
 
     }
     /// <summary>
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC.ActiveDirectoryGroup.Defi
         /// </summary>
         /// <param name="mailNickname">mailNickname the mail nickname for the group</param>
         /// <returns>the next stage of group definition</returns>
-        Microsoft.Azure.Management.Fluent.Graph.RBAC.ActiveDirectoryGroup.Definition.IWithCreate WithMailNickname(string mailNickname);
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.ActiveDirectoryGroup.Definition.IWithCreate WithMailNickname(string mailNickname);
 
     }
     /// <summary>

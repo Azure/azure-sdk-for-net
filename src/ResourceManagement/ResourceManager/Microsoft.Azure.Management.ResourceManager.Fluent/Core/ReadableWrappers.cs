@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.Management.Fluent.Resource.Core
+namespace Microsoft.Azure.Management.Resource.Fluent.Core
 {
     public abstract class ReadableWrappers<IFluentResourceT, FluentResourceT, InnerResourceT>
         where FluentResourceT : IFluentResourceT

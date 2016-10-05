@@ -1,21 +1,21 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.Network
+namespace Microsoft.Azure.Management.Network.Fluent
 {
 
-    using Microsoft.Azure.Management.Network.Models;
-    using Microsoft.Azure.Management.Fluent.Resource.Core;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Fluent.Network.NetworkInterface.Update;
+    using Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update;
     /// <summary>
     /// Network interface.
     /// </summary>
     public interface INetworkInterface  :
         IGroupableResource,
-        IRefreshable<Microsoft.Azure.Management.Fluent.Network.INetworkInterface>,
-        IWrapper<Microsoft.Azure.Management.Network.Models.NetworkInterfaceInner>,
-        IUpdatable<Microsoft.Azure.Management.Fluent.Network.NetworkInterface.Update.IUpdate>
+        IRefreshable<Microsoft.Azure.Management.Network.Fluent.INetworkInterface>,
+        IWrapper<Microsoft.Azure.Management.Network.Fluent.Models.NetworkInterfaceInner>,
+        IUpdatable<Microsoft.Azure.Management.Network.Fluent.NetworkInterface.Update.IUpdate>
     {
         /// <returns><tt>true</tt> if IP forwarding is enabled in this network interface</returns>
         bool IsIpForwardingEnabled { get; }
@@ -56,10 +56,10 @@ namespace Microsoft.Azure.Management.Fluent.Network
         string PrimaryPrivateIpAllocationMethod { get; }
 
         /// <returns>the IP configurations of this network interface, indexed by their names</returns>
-        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Fluent.Network.INicIpConfiguration> IpConfigurations { get; }
+        System.Collections.Generic.IDictionary<string,Microsoft.Azure.Management.Network.Fluent.INicIpConfiguration> IpConfigurations { get; }
 
         /// <returns>the primary IP configuration of this network interface</returns>
-        Microsoft.Azure.Management.Fluent.Network.INicIpConfiguration PrimaryIpConfiguration { get; }
+        Microsoft.Azure.Management.Network.Fluent.INicIpConfiguration PrimaryIpConfiguration { get; }
 
         /// <returns>the network security group resource id or null if there is no network security group</returns>
         /// <returns>associated with this network interface.</returns>
@@ -71,7 +71,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
         /// This method makes a rest API call to fetch the Network Security Group resource.
         /// </summary>
         /// <returns>the network security group associated with this network interface.</returns>
-        Microsoft.Azure.Management.Fluent.Network.INetworkSecurityGroup GetNetworkSecurityGroup();
+        Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup GetNetworkSecurityGroup();
 
         /// <returns>the resource ID of the associated virtual machine, or null if none.</returns>
         string VirtualMachineId { get; }

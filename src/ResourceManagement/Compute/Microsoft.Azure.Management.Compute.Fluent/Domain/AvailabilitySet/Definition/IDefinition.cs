@@ -1,20 +1,20 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Definition
+namespace Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition
 {
 
-    using Microsoft.Azure.Management.Fluent.Compute;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.Resource.Definition;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.GroupableResource.Definition;
+    using Microsoft.Azure.Management.Compute.Fluent;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Definition;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition;
     /// <summary>
     /// The stage of an availability set definition which contains all the minimum required inputs for
     /// the resource to be created (via {@link WithCreate#create()}), but also allows
     /// for any other optional settings to be specified.
     /// </summary>
     public interface IWithCreate  :
-        ICreatable<Microsoft.Azure.Management.Fluent.Compute.IAvailabilitySet>,
-        IDefinitionWithTags<Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Definition.IWithCreate>,
+        ICreatable<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet>,
+        IDefinitionWithTags<Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition.IWithCreate>,
         IWithUpdateDomainCount,
         IWithFaultDomainCount
     {
@@ -29,14 +29,14 @@ namespace Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Definition
         /// </summary>
         /// <param name="updateDomainCount">updateDomainCount update domain count</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Definition.IWithCreate WithUpdateDomainCount(int updateDomainCount);
+        Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition.IWithCreate WithUpdateDomainCount(int updateDomainCount);
 
     }
     /// <summary>
     /// The first stage of an availability set definition.
     /// </summary>
     public interface IBlank  :
-        IDefinitionWithRegion<Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Definition.IWithGroup>
+        IDefinitionWithRegion<Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition.IWithGroup>
     {
     }
     /// <summary>
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Definition
         /// </summary>
         /// <param name="faultDomainCount">faultDomainCount the fault domain count</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Definition.IWithCreate WithFaultDomainCount(int faultDomainCount);
+        Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition.IWithCreate WithFaultDomainCount(int faultDomainCount);
 
     }
     /// <summary>
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Definition
     /// </summary>
     public interface IDefinition  :
         IBlank,
-        Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Definition.IWithGroup,
+        Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition.IWithGroup,
         IWithCreate
     {
     }
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Definition
     /// The stage of the availability set definition allowing to specify the resource group.
     /// </summary>
     public interface IWithGroup  :
-        Microsoft.Azure.Management.Fluent.Resource.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.Fluent.Compute.AvailabilitySet.Definition.IWithCreate>
+        Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.Compute.Fluent.AvailabilitySet.Definition.IWithCreate>
     {
     }
 }

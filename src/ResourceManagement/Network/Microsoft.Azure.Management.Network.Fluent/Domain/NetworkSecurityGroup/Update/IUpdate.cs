@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.Network.NetworkSecurityGroup.Update
+namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Update
 {
 
-    using Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.UpdateDefinition;
-    using Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update;
-    using Microsoft.Azure.Management.Fluent.Network;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.Resource.Update;
+    using Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Update;
+    using Microsoft.Azure.Management.Network.Fluent;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Update;
     /// <summary>
     /// The stage of the resource definition allowing to add or remove security rules.
     /// </summary>
@@ -18,21 +18,21 @@ namespace Microsoft.Azure.Management.Fluent.Network.NetworkSecurityGroup.Update
         /// </summary>
         /// <param name="name">name the name of the security rule to remove</param>
         /// <returns>the next stage of the network security group description</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityGroup.Update.IUpdate WithoutRule(string name);
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Update.IUpdate WithoutRule(string name);
 
         /// <summary>
         /// Begins the definition of a new security rule to be added to this network security group.
         /// </summary>
         /// <param name="name">name the name of the new security rule</param>
         /// <returns>the first stage of the new security rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.UpdateDefinition.IBlank<Microsoft.Azure.Management.Fluent.Network.NetworkSecurityGroup.Update.IUpdate> DefineRule(string name);
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Update.IUpdate> DefineRule(string name);
 
         /// <summary>
         /// Begins the description of an update of an existing security rule of this network security group.
         /// </summary>
         /// <param name="name">name the name of an existing security rule</param>
         /// <returns>the first stage of the security rule update description</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Update.IUpdate UpdateRule(string name);
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Update.IUpdate UpdateRule(string name);
 
     }
     /// <summary>
@@ -42,8 +42,8 @@ namespace Microsoft.Azure.Management.Fluent.Network.NetworkSecurityGroup.Update
     /// Call {@link Update#apply()} to apply the changes to the resource in Azure.
     /// </summary>
     public interface IUpdate  :
-        IAppliable<Microsoft.Azure.Management.Fluent.Network.INetworkSecurityGroup>,
-        IUpdateWithTags<Microsoft.Azure.Management.Fluent.Network.NetworkSecurityGroup.Update.IUpdate>,
+        IAppliable<Microsoft.Azure.Management.Network.Fluent.INetworkSecurityGroup>,
+        IUpdateWithTags<Microsoft.Azure.Management.Network.Fluent.NetworkSecurityGroup.Update.IUpdate>,
         IWithRule
     {
     }

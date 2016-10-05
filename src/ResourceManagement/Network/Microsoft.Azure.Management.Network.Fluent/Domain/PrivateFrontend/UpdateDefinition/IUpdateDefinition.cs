@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.UpdateDefinition
+namespace Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.UpdateDefinition
 {
 
-    using Microsoft.Azure.Management.Fluent.Network;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResourceActions;
-    using Microsoft.Azure.Management.Fluent.Network.HasPrivateIpAddress.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResourceActions;
+    using Microsoft.Azure.Management.Network.Fluent.HasPrivateIpAddress.UpdateDefinition;
     /// <summary>
     /// The stage of a private frontend definition allowing to specify a subnet from the selected network.
     /// @param <ParentT> the next stage of the parent definition
@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.UpdateDefini
         /// <param name="network">network the virtual network the subnet exists in</param>
         /// <param name="subnetName">subnetName the name of a subnet</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.UpdateDefinition.IWithAttach<ParentT> WithExistingSubnet(INetwork network, string subnetName);
+        Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.UpdateDefinition.IWithAttach<ParentT> WithExistingSubnet(INetwork network, string subnetName);
 
     }
     /// <summary>
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.UpdateDefini
     /// </summary>
     public interface IWithAttach<ParentT>  :
         IInUpdateAlt<ParentT>,
-        IWithPrivateIpAddress<Microsoft.Azure.Management.Fluent.Network.PrivateFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Fluent.Network.LoadBalancer.Update.IUpdate>>
+        IWithPrivateIpAddress<Microsoft.Azure.Management.Network.Fluent.PrivateFrontend.UpdateDefinition.IWithAttach<Microsoft.Azure.Management.Network.Fluent.LoadBalancer.Update.IUpdate>>
     {
     }
     /// <summary>

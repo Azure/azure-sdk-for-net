@@ -1,20 +1,20 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.Compute
+namespace Microsoft.Azure.Management.Compute.Fluent
 {
 
     using System.Threading;
-    using Resource.Core.ResourceActions;
+    using Resource.Fluent.Core.ResourceActions;
     using System.Collections.Generic;
-    using Management.Compute.Models;
-    using Network;
-    using Resource.Core;
-    using Storage;
+    using Management.Compute.Fluent.Models;
+    using Network.Fluent;
+    using Resource.Fluent.Core;
+    using Storage.Fluent;
     using System.Threading.Tasks;
-    using Resource;
+    using Resource.Fluent;
     using Newtonsoft.Json;
     using System.Text.RegularExpressions;
-    using Management.Compute;
+    using Compute.Fluent;
     using System;
 
     /// <summary>
@@ -52,9 +52,9 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         private VirtualMachineInstanceView virtualMachineInstanceView;
         private bool isMarketplaceLinuxImage;
         private IList<IVirtualMachineDataDisk> dataDisks;
-        private Network.NetworkInterface.Definition.IWithPrimaryPrivateIp nicDefinitionWithPrivateIp;
-        private Network.NetworkInterface.Definition.IWithPrimaryNetworkSubnet nicDefinitionWithSubnet;
-        private Network.NetworkInterface.Definition.IWithCreate nicDefinitionWithCreate;
+        private Network.Fluent.NetworkInterface.Definition.IWithPrimaryPrivateIp nicDefinitionWithPrivateIp;
+        private Network.Fluent.NetworkInterface.Definition.IWithPrimaryNetworkSubnet nicDefinitionWithSubnet;
+        private Network.Fluent.NetworkInterface.Definition.IWithCreate nicDefinitionWithCreate;
         private VirtualMachineExtensionsImpl virtualMachineExtensions;
 
         internal VirtualMachineImpl(string name,
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             this.client.Redeploy(this.ResourceGroupName, this.Name);
         }
 
-        public PagedList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineSize> AvailableSizes() 
+        public PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSize> AvailableSizes() 
         {
             return PagedListConverter.Convert<VirtualMachineSize, IVirtualMachineSize>(this.client.ListAvailableSizes(this.ResourceGroupName,
                 this.Name), innerSize =>
@@ -193,7 +193,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             return this;
         }
 
-        public VirtualMachineImpl WithNewPrimaryPublicIpAddress (ICreatable<Microsoft.Azure.Management.Fluent.Network.IPublicIpAddress> creatable)
+        public VirtualMachineImpl WithNewPrimaryPublicIpAddress (ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress> creatable)
         {
             var nicCreatable = this.nicDefinitionWithCreate
                 .WithNewPrimaryPublicIpAddress(creatable);
@@ -227,7 +227,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             return this;
         }
 
-        public VirtualMachineImpl WithNewPrimaryNetworkInterface (ICreatable<Microsoft.Azure.Management.Fluent.Network.INetworkInterface> creatable)
+        public VirtualMachineImpl WithNewPrimaryNetworkInterface (ICreatable<Microsoft.Azure.Management.Network.Fluent.INetworkInterface> creatable)
         {
             this.creatablePrimaryNetworkInterfaceKey = creatable.Key;
             this.AddCreatableDependency(creatable as IResourceCreator<IResource>);
@@ -467,7 +467,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             return WithDataDisk(DataDiskImpl.CreateFromExistingDisk(storageAccountName, containerName, vhdName, this)); ;
         }
 
-        public VirtualMachineImpl WithNewStorageAccount (ICreatable<Microsoft.Azure.Management.Fluent.Storage.IStorageAccount> creatable)
+        public VirtualMachineImpl WithNewStorageAccount (ICreatable<Microsoft.Azure.Management.Storage.Fluent.IStorageAccount> creatable)
         {
             // This method's effect is NOT additive.
             if (this.creatableStorageAccountKey == null)
@@ -480,11 +480,11 @@ namespace Microsoft.Azure.Management.Fluent.Compute
 
         public VirtualMachineImpl WithNewStorageAccount (string name)
         {
-            Storage.StorageAccount.Definition.IWithGroup definitionWithGroup = this.storageManager
+            Storage.Fluent.StorageAccount.Definition.IWithGroup definitionWithGroup = this.storageManager
                 .StorageAccounts
                 .Define(name)
                 .WithRegion(this.RegionName);
-            Storage.StorageAccount.Definition.IWithCreate definitionAfterGroup;
+            Storage.Fluent.StorageAccount.Definition.IWithCreate definitionAfterGroup;
             if (this.newGroup != null)
             {
                 definitionAfterGroup = definitionWithGroup.WithNewResourceGroup(this.newGroup);
@@ -503,7 +503,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             return this;
         }
 
-        public VirtualMachineImpl WithNewAvailabilitySet (ICreatable<Microsoft.Azure.Management.Fluent.Compute.IAvailabilitySet> creatable)
+        public VirtualMachineImpl WithNewAvailabilitySet (ICreatable<Microsoft.Azure.Management.Compute.Fluent.IAvailabilitySet> creatable)
         {
             // This method's effect is NOT additive.
             if (this.creatableAvailabilitySetKey == null)
@@ -527,7 +527,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             return this;
         }
 
-        public VirtualMachineImpl WithNewSecondaryNetworkInterface (ICreatable<Microsoft.Azure.Management.Fluent.Network.INetworkInterface> creatable)
+        public VirtualMachineImpl WithNewSecondaryNetworkInterface (ICreatable<Microsoft.Azure.Management.Network.Fluent.INetworkInterface> creatable)
         {
             this.creatableSecondaryNetworkInterfaceKeys.Add(creatable.Key);
             this.AddCreatableDependency(creatable as IResourceCreator<IResource>);
@@ -790,10 +790,10 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             string powerStateCode = this.GetStatusCodeFromInstanceView("PowerState");
             if (powerStateCode != null)
             {
-                return (PowerState)Enum.Parse(typeof(Microsoft.Azure.Management.Fluent.Compute.PowerState), powerStateCode);
+                return (PowerState)Enum.Parse(typeof(Microsoft.Azure.Management.Compute.Fluent.PowerState), powerStateCode);
             }
 
-            return Compute.PowerState.UNKNOWN;
+            return Compute.Fluent.PowerState.UNKNOWN;
         }
 
         public override async Task<IVirtualMachine> CreateResourceAsync (CancellationToken cancellationToken = default(CancellationToken))
@@ -1101,12 +1101,12 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             return "{storage-base-url}" + containerName + "/" + blobName;
         }
 
-        private Network.NetworkInterface.Definition.IWithPrimaryPublicIpAddress PrepareNetworkInterface(string name)
+        private Network.Fluent.NetworkInterface.Definition.IWithPrimaryPublicIpAddress PrepareNetworkInterface(string name)
         {
-            Network.NetworkInterface.Definition.IWithGroup definitionWithGroup = this.networkManager.NetworkInterfaces
+            Network.Fluent.NetworkInterface.Definition.IWithGroup definitionWithGroup = this.networkManager.NetworkInterfaces
                 .Define(name)
                 .WithRegion(this.RegionName);
-            Network.NetworkInterface.Definition.IWithPrimaryNetwork definitionWithNetwork;
+            Network.Fluent.NetworkInterface.Definition.IWithPrimaryNetwork definitionWithNetwork;
             if (this.newGroup != null)
             {
                 definitionWithNetwork = definitionWithGroup.WithNewResourceGroup(this.newGroup);
@@ -1136,12 +1136,12 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             }
         }
 
-        private Network.NetworkInterface.Definition.IWithPrimaryNetwork PreparePrimaryNetworkInterface(string name)
+        private Network.Fluent.NetworkInterface.Definition.IWithPrimaryNetwork PreparePrimaryNetworkInterface(string name)
         {
-            Network.NetworkInterface.Definition.IWithGroup definitionWithGroup = this.networkManager.NetworkInterfaces
+            Network.Fluent.NetworkInterface.Definition.IWithGroup definitionWithGroup = this.networkManager.NetworkInterfaces
             .Define(name)
             .WithRegion(this.RegionName);
-            Network.NetworkInterface.Definition.IWithPrimaryNetwork definitionAfterGroup;
+            Network.Fluent.NetworkInterface.Definition.IWithPrimaryNetwork definitionAfterGroup;
             if (this.newGroup != null)
             {
                 definitionAfterGroup = definitionWithGroup.WithNewResourceGroup(this.newGroup);

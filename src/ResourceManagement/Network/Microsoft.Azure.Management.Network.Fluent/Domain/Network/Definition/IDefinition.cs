@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.Network.Network.Definition
+namespace Microsoft.Azure.Management.Network.Fluent.Network.Definition
 {
 
-    using Microsoft.Azure.Management.Fluent.Network.Subnet.Definition;
+    using Microsoft.Azure.Management.Network.Fluent.Subnet.Definition;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.Resource.Definition;
-    using Microsoft.Azure.Management.Fluent.Network;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.GroupableResource.Definition;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Definition;
+    using Microsoft.Azure.Management.Network.Fluent;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition;
     /// <summary>
     /// The stage of the virtual network definition allowing to add subnets.
     /// </summary>
@@ -25,14 +25,14 @@ namespace Microsoft.Azure.Management.Fluent.Network.Network.Definition
         /// <param name="name">name the name to assign to the subnet</param>
         /// <param name="cidr">cidr the address space of the subnet, within the address space of the network, using the CIDR notation</param>
         /// <returns>the next stage of the virtual network definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.Network.Definition.IWithCreateAndSubnet WithSubnet(string name, string cidr);
+        Microsoft.Azure.Management.Network.Fluent.Network.Definition.IWithCreateAndSubnet WithSubnet(string name, string cidr);
 
         /// <summary>
         /// Explicitly defines subnets in the virtual network based on the provided map.
         /// </summary>
         /// <param name="nameCidrPairs">nameCidrPairs a {@link Map} of CIDR addresses for the subnets, indexed by the name of each subnet to be defined</param>
         /// <returns>the next stage of the virtual network definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.Network.Definition.IWithCreateAndSubnet WithSubnets(IDictionary<string,string> nameCidrPairs);
+        Microsoft.Azure.Management.Network.Fluent.Network.Definition.IWithCreateAndSubnet WithSubnets(IDictionary<string,string> nameCidrPairs);
 
         /// <summary>
         /// Begins the definition of a new subnet to add to the virtual network.
@@ -41,14 +41,14 @@ namespace Microsoft.Azure.Management.Fluent.Network.Network.Definition
         /// </summary>
         /// <param name="name">name the name of the subnet</param>
         /// <returns>the first stage of the new subnet definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.Subnet.Definition.IBlank<Microsoft.Azure.Management.Fluent.Network.Network.Definition.IWithCreateAndSubnet> DefineSubnet(string name);
+        Microsoft.Azure.Management.Network.Fluent.Subnet.Definition.IBlank<Microsoft.Azure.Management.Network.Fluent.Network.Definition.IWithCreateAndSubnet> DefineSubnet(string name);
 
     }
     /// <summary>
     /// The first stage of a virtual network definition.
     /// </summary>
     public interface IBlank  :
-        IDefinitionWithRegion<Microsoft.Azure.Management.Fluent.Network.Network.Definition.IWithGroup>
+        IDefinitionWithRegion<Microsoft.Azure.Management.Network.Fluent.Network.Definition.IWithGroup>
     {
     }
     /// <summary>
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.Network.Definition
     /// </summary>
     public interface IDefinition  :
         IBlank,
-        Microsoft.Azure.Management.Fluent.Network.Network.Definition.IWithGroup,
+        Microsoft.Azure.Management.Network.Fluent.Network.Definition.IWithGroup,
         IWithSubnet,
         IWithCreate,
         IWithCreateAndSubnet
@@ -81,8 +81,8 @@ namespace Microsoft.Azure.Management.Fluent.Network.Network.Definition
     /// (see {@link WithCreate#withAddressSpace(String)}).
     /// </summary>
     public interface IWithCreate  :
-        ICreatable<Microsoft.Azure.Management.Fluent.Network.INetwork>,
-        IDefinitionWithTags<Microsoft.Azure.Management.Fluent.Network.Network.Definition.IWithCreate>
+        ICreatable<Microsoft.Azure.Management.Network.Fluent.INetwork>,
+        IDefinitionWithTags<Microsoft.Azure.Management.Network.Fluent.Network.Definition.IWithCreate>
     {
         /// <summary>
         /// Specifies the IP address of an existing DNS server to associate with the virtual network.
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.Network.Definition
         /// </summary>
         /// <param name="ipAddress">ipAddress the IP address of the DNS server</param>
         /// <returns>the next stage of the virtual network definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.Network.Definition.IWithCreate WithDnsServer(string ipAddress);
+        Microsoft.Azure.Management.Network.Fluent.Network.Definition.IWithCreate WithDnsServer(string ipAddress);
 
         /// <summary>
         /// Explicitly adds an address space to the virtual network.
@@ -106,14 +106,14 @@ namespace Microsoft.Azure.Management.Fluent.Network.Network.Definition
         /// </summary>
         /// <param name="cidr">cidr the CIDR representation of the address space</param>
         /// <returns>the next stage of the virtual network definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.Network.Definition.IWithCreateAndSubnet WithAddressSpace(string cidr);
+        Microsoft.Azure.Management.Network.Fluent.Network.Definition.IWithCreateAndSubnet WithAddressSpace(string cidr);
 
     }
     /// <summary>
     /// The stage of the virtual network definition allowing to specify the resource group.
     /// </summary>
     public interface IWithGroup  :
-        Microsoft.Azure.Management.Fluent.Resource.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.Fluent.Network.Network.Definition.IWithCreate>
+        Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition.IWithGroup<Microsoft.Azure.Management.Network.Fluent.Network.Definition.IWithCreate>
     {
     }
 }

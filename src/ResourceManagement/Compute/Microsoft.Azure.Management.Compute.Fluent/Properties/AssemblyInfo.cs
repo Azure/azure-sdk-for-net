@@ -6,11 +6,11 @@ using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Microsoft Azure Compute Fluent Management Library")]
-[assembly: AssemblyDescription("Provides Microsoft Azure Compute management Fluent APIs.")]
+[assembly: AssemblyTitle("Microsoft Azure Compute Management Library")]
+[assembly: AssemblyDescription("Provides Microsoft Azure Compute management APIs.")]
 
-[assembly: AssemblyVersion("0.0.1.0")]
-[assembly: AssemblyFileVersion("0.0.1.0")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]

@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.Network.HasPublicIpAddress.Update
+namespace Microsoft.Azure.Management.Network.Fluent.HasPublicIpAddress.Update
 {
 
-    using Microsoft.Azure.Management.Fluent.Network;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Network.Fluent;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     /// <summary>
     /// The stage definition allowing to associate the resource with an existing public IP address.
     /// 
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.HasPublicIpAddress.Update
         /// </summary>
         /// <param name="creatable">creatable a creatable definition for a new public IP address</param>
         /// <returns>the next stage of the update</returns>
-        ReturnT WithNewPublicIpAddress(ICreatable<Microsoft.Azure.Management.Fluent.Network.IPublicIpAddress> creatable);
+        ReturnT WithNewPublicIpAddress(ICreatable<Microsoft.Azure.Management.Network.Fluent.IPublicIpAddress> creatable);
 
         /// <summary>
         /// Creates a new public IP address in the same region and group as the resource and associates it with the resource.

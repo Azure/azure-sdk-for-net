@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Fluent.Tests.Common;
-using Microsoft.Azure.Management.Fluent.Network;
+using Microsoft.Azure.Management.Network.Fluent;
 using System;
 using System.Collections.Generic;
 using System.Linq;

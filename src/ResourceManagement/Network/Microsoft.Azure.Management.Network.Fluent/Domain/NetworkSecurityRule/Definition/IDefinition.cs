@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Definition
+namespace Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Definition
 {
 
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
     /// <summary>
     /// The stage of the network rule definition allowing the source port(s) to be specified.
     /// @param <ParentT> the return type of the final {@link WithAttach#attach()}
@@ -15,13 +15,13 @@ namespace Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Definiti
         /// </summary>
         /// <param name="port">port the source port number</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Definition.IWithDestinationAddress<ParentT> FromPort(int port);
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Definition.IWithDestinationAddress<ParentT> FromPort(int port);
 
         /// <summary>
         /// Makes this rule apply to any source port.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Definition.IWithDestinationAddress<ParentT> FromAnyPort();
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Definition.IWithDestinationAddress<ParentT> FromAnyPort();
 
         /// <summary>
         /// Specifies the source port range to which this rule applies.
@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Definiti
         /// <param name="from">from the starting port number</param>
         /// <param name="to">to the ending port number</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Definition.IWithDestinationAddress<ParentT> FromPortRange(int from, int to);
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Definition.IWithDestinationAddress<ParentT> FromPortRange(int from, int to);
 
     }
     /// <summary>
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Definiti
         /// </summary>
         /// <param name="description">description the text description to associate with this security rule</param>
         /// <returns>the next stage</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Definition.IWithAttach<ParentT> WithDescription(string description);
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Definition.IWithAttach<ParentT> WithDescription(string description);
 
     }
     /// <summary>
@@ -70,13 +70,13 @@ namespace Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Definiti
         /// </summary>
         /// <param name="cidr">cidr an IP address prefix expressed in the CIDR notation</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Definition.IWithSourcePort<ParentT> FromAddress(string cidr);
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Definition.IWithSourcePort<ParentT> FromAddress(string cidr);
 
         /// <summary>
         /// Specifies that the rule applies to any traffic source address.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Definition.IWithSourcePort<ParentT> FromAnyAddress();
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Definition.IWithSourcePort<ParentT> FromAnyAddress();
 
     }
     /// <summary>
@@ -105,13 +105,13 @@ namespace Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Definiti
         /// </summary>
         /// <param name="port">port the destination port number</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Definition.IWithProtocol<ParentT> ToPort(int port);
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Definition.IWithProtocol<ParentT> ToPort(int port);
 
         /// <summary>
         /// Makes this rule apply to any destination port.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Definition.IWithProtocol<ParentT> ToAnyPort();
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Definition.IWithProtocol<ParentT> ToAnyPort();
 
         /// <summary>
         /// Specifies the destination port range to which this rule applies.
@@ -119,7 +119,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Definiti
         /// <param name="from">from the starting port number</param>
         /// <param name="to">to the ending port number</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Definition.IWithProtocol<ParentT> ToPortRange(int from, int to);
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Definition.IWithProtocol<ParentT> ToPortRange(int from, int to);
 
     }
     /// <summary>
@@ -143,7 +143,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Definiti
         /// </summary>
         /// <param name="priority">priority the priority number in the range 100 to 4096</param>
         /// <returns>the next stage</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Definition.IWithAttach<ParentT> WithPriority(int priority);
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Definition.IWithAttach<ParentT> WithPriority(int priority);
 
     }
     /// <summary>
@@ -157,13 +157,13 @@ namespace Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Definiti
         /// </summary>
         /// <param name="protocol">protocol one of the supported protocols</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Definition.IWithAttach<ParentT> WithProtocol(string protocol);
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Definition.IWithAttach<ParentT> WithProtocol(string protocol);
 
         /// <summary>
         /// Makes this rule apply to any supported protocol.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Definition.IWithAttach<ParentT> WithAnyProtocol();
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Definition.IWithAttach<ParentT> WithAnyProtocol();
 
     }
     /// <summary>
@@ -176,25 +176,25 @@ namespace Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Definiti
         /// Allows inbound traffic.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Definition.IWithSourceAddress<ParentT> AllowInbound();
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Definition.IWithSourceAddress<ParentT> AllowInbound();
 
         /// <summary>
         /// Allows outbound traffic.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Definition.IWithSourceAddress<ParentT> AllowOutbound();
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Definition.IWithSourceAddress<ParentT> AllowOutbound();
 
         /// <summary>
         /// Blocks inbound traffic.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Definition.IWithSourceAddress<ParentT> DenyInbound();
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Definition.IWithSourceAddress<ParentT> DenyInbound();
 
         /// <summary>
         /// Blocks outbound traffic.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Definition.IWithSourceAddress<ParentT> DenyOutbound();
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Definition.IWithSourceAddress<ParentT> DenyOutbound();
 
     }
     /// <summary>
@@ -208,13 +208,13 @@ namespace Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Definiti
         /// </summary>
         /// <param name="cidr">cidr an IP address range expressed in the CIDR notation</param>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Definition.IWithDestinationPort<ParentT> ToAddress(string cidr);
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Definition.IWithDestinationPort<ParentT> ToAddress(string cidr);
 
         /// <summary>
         /// Makes the rule apply to any traffic destination address.
         /// </summary>
         /// <returns>the next stage of the security rule definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.NetworkSecurityRule.Definition.IWithDestinationPort<ParentT> ToAnyAddress();
+        Microsoft.Azure.Management.Network.Fluent.NetworkSecurityRule.Definition.IWithDestinationPort<ParentT> ToAnyAddress();
 
     }
 }

@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.Graph.RBAC.User.Definition
+namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.User.Definition
 {
 
-    using Microsoft.Azure.Management.Fluent.Graph.RBAC;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
     /// <summary>
     /// The stage of a user definition allowing password to be set.
     /// </summary>
@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC.User.Definition
         /// </summary>
         /// <param name="password">password the password</param>
         /// <returns>the next stage for a user definition</returns>
-        Microsoft.Azure.Management.Fluent.Graph.RBAC.User.Definition.IWithMailNickname WithPassword(string password);
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.User.Definition.IWithMailNickname WithPassword(string password);
 
         /// <summary>
         /// Specifies the temporary password for the user.
@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC.User.Definition
         /// <param name="password">password the temporary password</param>
         /// <param name="forceChangePasswordNextLogin">forceChangePasswordNextLogin if set to true, the user will have to change the password next time</param>
         /// <returns>the next stage for a user definition</returns>
-        Microsoft.Azure.Management.Fluent.Graph.RBAC.User.Definition.IWithMailNickname WithPassword(string password, bool forceChangePasswordNextLogin);
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.User.Definition.IWithMailNickname WithPassword(string password, bool forceChangePasswordNextLogin);
 
     }
     /// <summary>
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC.User.Definition
         /// </summary>
         /// <param name="enabled">enabled if set to true, the user account is enabled</param>
         /// <returns>the next stage for a user definition</returns>
-        Microsoft.Azure.Management.Fluent.Graph.RBAC.User.Definition.IWithCreate WithAccountEnabled(bool enabled);
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.User.Definition.IWithCreate WithAccountEnabled(bool enabled);
 
     }
     /// <summary>
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC.User.Definition
     /// specify.
     /// </summary>
     public interface IWithCreate  :
-        ICreatable<Microsoft.Azure.Management.Fluent.Graph.RBAC.IUser>,
+        ICreatable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IUser>,
         IWithAccountEnabled
     {
     }
@@ -59,7 +59,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC.User.Definition
         /// </summary>
         /// <param name="mailNickname">mailNickname the mail nickname</param>
         /// <returns>the next stage for a user definition</returns>
-        Microsoft.Azure.Management.Fluent.Graph.RBAC.User.Definition.IWithCreate WithMailNickname(string mailNickname);
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.User.Definition.IWithCreate WithMailNickname(string mailNickname);
 
     }
     /// <summary>
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC.User.Definition
         /// </summary>
         /// <param name="displayName">displayName the human-readable display name</param>
         /// <returns>the next stage of a user definition</returns>
-        Microsoft.Azure.Management.Fluent.Graph.RBAC.User.Definition.IWithPassword WithDisplayName(string displayName);
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.User.Definition.IWithPassword WithDisplayName(string displayName);
 
     }
     /// <summary>

@@ -1,18 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Microsoft.Azure.Management.Fluent.Graph.RBAC
+namespace Microsoft.Azure.Management.Graph.RBAC.Fluent
 {
 
-    using Microsoft.Azure.Management.Fluent.Graph.RBAC.User.Definition;
-    using Microsoft.Azure.Management.Graph.RBAC.Models;
-    using Microsoft.Azure.Management.Fluent.Resource.Core;
-    using Microsoft.Azure.Management.Fluent.Graph.RBAC.User.Update;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent.Models;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent.User.Definition;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent.User.Update;
+    using Resource.Fluent.Core.ResourceActions;
+    using System;
     using System.Threading;
     using System.Threading.Tasks;
-    using Management.Graph.RBAC;
-    using Fluent.Resource.Core.ResourceActions;
-    using System;
 
     /// <summary>
     /// Implementation for User and its parent interfaces.

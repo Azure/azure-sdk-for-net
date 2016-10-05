@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.Network.Subnet.UpdateDefinition
+namespace Microsoft.Azure.Management.Network.Fluent.Subnet.UpdateDefinition
 {
 
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Update;
-    using Microsoft.Azure.Management.Fluent.Network;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.Network.Fluent;
     /// <summary>
     /// The first stage of the subnet definition.
     /// @param <ParentT> the return type of the final {@link WithAttach#attach()}
@@ -36,14 +36,14 @@ namespace Microsoft.Azure.Management.Fluent.Network.Subnet.UpdateDefinition
         /// </summary>
         /// <param name="resourceId">resourceId the resource ID of the network security group</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.Subnet.UpdateDefinition.IWithAttach<ParentT> WithExistingNetworkSecurityGroup(string resourceId);
+        Microsoft.Azure.Management.Network.Fluent.Subnet.UpdateDefinition.IWithAttach<ParentT> WithExistingNetworkSecurityGroup(string resourceId);
 
         /// <summary>
         /// Assigns an existing network security group to this subnet.
         /// </summary>
         /// <param name="nsg">nsg the network security group to assign</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.Subnet.UpdateDefinition.IWithAttach<ParentT> WithExistingNetworkSecurityGroup(INetworkSecurityGroup nsg);
+        Microsoft.Azure.Management.Network.Fluent.Subnet.UpdateDefinition.IWithAttach<ParentT> WithExistingNetworkSecurityGroup(INetworkSecurityGroup nsg);
 
     }
     /// <summary>
@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.Subnet.UpdateDefinition
         /// </summary>
         /// <param name="cidr">cidr the IP address space prefix using the CIDR notation</param>
         /// <returns>the next stage of the subnet definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.Subnet.UpdateDefinition.IWithAttach<ParentT> WithAddressPrefix(string cidr);
+        Microsoft.Azure.Management.Network.Fluent.Subnet.UpdateDefinition.IWithAttach<ParentT> WithAddressPrefix(string cidr);
 
     }
     /// <summary>

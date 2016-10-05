@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Microsoft.Azure.Management.Fluent.Batch
+namespace Microsoft.Azure.Management.Batch.Fluent
 {
     using Management.Batch;
-    using Management.Batch.Models;
-    using Resource.Core;
-    using Storage;
+    using Management.Batch.Fluent.Models;
+    using Resource.Fluent.Core;
+    using Storage.Fluent;
     using System;
     using System.Threading;
     using System.Threading.Tasks;

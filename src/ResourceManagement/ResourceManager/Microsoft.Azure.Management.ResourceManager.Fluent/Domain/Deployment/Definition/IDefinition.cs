@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information. 
 
-namespace Microsoft.Azure.Management.Fluent.Resource.Deployment.Definition
+namespace Microsoft.Azure.Management.Resource.Fluent.Deployment.Definition
 {
 
-    using Microsoft.Azure.Management.ResourceManager.Models;
-    using Microsoft.Azure.Management.Fluent.Resource;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.GroupableResource.Definition;
+    using Microsoft.Azure.Management.Resource.Fluent.Models;
+    using Microsoft.Azure.Management.Resource.Fluent;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.GroupableResource.Definition;
     using Core;
 
     /// <summary>

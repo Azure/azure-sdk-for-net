@@ -6,7 +6,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.Storage
+namespace Microsoft.Azure.Management.Storage.Fluent
 {
     using System.Linq;
     using Microsoft.Rest.Azure;

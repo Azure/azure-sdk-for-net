@@ -4,7 +4,7 @@
 using Microsoft.Rest.TransientFaultHandling;
 using System.Net.Http;
 
-namespace Microsoft.Azure.Management.Fluent.Resource.Core
+namespace Microsoft.Azure.Management.Resource.Fluent.Core
 {
     public interface IAzureConfigurable<T> where T : IAzureConfigurable<T>
     {

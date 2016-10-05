@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.Network
+namespace Microsoft.Azure.Management.Network.Fluent
 {
 
 
@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
     public interface IHasFrontend 
     {
         /// <returns>the associated frontend</returns>
-        Microsoft.Azure.Management.Fluent.Network.IFrontend Frontend { get; }
+        Microsoft.Azure.Management.Network.Fluent.IFrontend Frontend { get; }
 
     }
 }

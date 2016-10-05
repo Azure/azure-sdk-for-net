@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Microsoft.Azure.Management.Fluent.Network
+namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using Resource.Core;
-    using Management.Network.Models;
-    using Resource.Core.ChildResourceActions;
+    using Resource.Fluent.Core;
+    using Management.Network.Fluent.Models;
+    using Resource.Fluent.Core.ChildResourceActions;
 
     /// <summary>
     /// Implementation for NetworkSecurityRule and its create and update interfaces.

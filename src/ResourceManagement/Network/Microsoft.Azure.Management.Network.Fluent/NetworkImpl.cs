@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Microsoft.Azure.Management.Fluent.Network
+namespace Microsoft.Azure.Management.Network.Fluent
 {
-    using Management.Network.Models;
+    using Management.Network.Fluent.Models;
     using System.Collections.Generic;
-    using Resource.Core;
-    using Management.Network;
+    using Resource.Fluent.Core;
+    using Management.Network.Fluent;
     using System.Threading.Tasks;
 
     /// <summary>

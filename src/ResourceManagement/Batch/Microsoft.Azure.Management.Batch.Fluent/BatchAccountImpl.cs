@@ -1,17 +1,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Microsoft.Azure.Management.Fluent.Batch
+namespace Microsoft.Azure.Management.Batch.Fluent
 {
-    using Management.Batch;
-    using Management.Batch.Models;
-    using Resource;
-    using Resource.Core.ResourceActions;
-    using Storage;
+    using Management.Batch.Fluent;
+    using Management.Batch.Fluent.Models;
+    using Resource.Fluent;
+    using Resource.Fluent.Core.ResourceActions;
+    using Storage.Fluent;
     using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
-    using Resource.Core;
+    using Resource.Fluent.Core;
 
     /// <summary>
     /// Implementation for BatchAccount and its parent interfaces.
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             return this;
         }
 
-        internal Management.Batch.Models.ProvisioningState ProvisioningState()
+        internal Management.Batch.Fluent.Models.ProvisioningState ProvisioningState()
         {
             return Inner.ProvisioningState.GetValueOrDefault();
         }
@@ -166,7 +166,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
                 Define(storageAccountName).
                 WithRegion(RegionName);
 
-            Fluent.Storage.StorageAccount.Definition.IWithCreate definitionAfterGroup;
+            Storage.Fluent.StorageAccount.Definition.IWithCreate definitionAfterGroup;
 
             if (newGroup != null)
             {

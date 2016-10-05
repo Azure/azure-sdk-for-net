@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.Graph.RBAC.ServicePrincipal.Definition
+namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition
 {
 
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.Fluent.Graph.RBAC;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent;
     /// <summary>
     /// The first stage of the service principal definition.
     /// </summary>
@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC.ServicePrincipal.Definiti
         /// </summary>
         /// <param name="enabled">enabled if set to true, the service principal account is enabled.</param>
         /// <returns>the next stage in service principal definition</returns>
-        Microsoft.Azure.Management.Fluent.Graph.RBAC.ServicePrincipal.Definition.IWithCreate WithAccountEnabled(bool enabled);
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition.IWithCreate WithAccountEnabled(bool enabled);
 
     }
     /// <summary>
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Management.Fluent.Graph.RBAC.ServicePrincipal.Definiti
     /// specify.
     /// </summary>
     public interface IWithCreate  :
-        ICreatable<Microsoft.Azure.Management.Fluent.Graph.RBAC.IServicePrincipal>,
+        ICreatable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal>,
         IWithAccountEnabled
     {
     }

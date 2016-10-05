@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information. 
 
-namespace Microsoft.Azure.Management.Fluent.Compute
+namespace Microsoft.Azure.Management.Compute.Fluent
 {
-    using Management.Compute.Models;
-    using Resource.Core;
+    using Management.Compute.Fluent.Models;
+    using Resource.Fluent.Core;
     /// <summary>
     /// implementation of VirtualMachineScaleSetSku.
     /// </summary>
@@ -12,7 +12,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         Wrapper<VirtualMachineScaleSetSku>,
         IVirtualMachineScaleSetSku
     {
-        // TODO: Report bug -> autorest generator is not appending 'Inner' to type Microsoft.Azure.Management.Compute.Models.VirtualMachineScaleSetSku
+        // TODO: Report bug -> autorest generator is not appending 'Inner' to type Microsoft.Azure.Management.Compute.Fluent.Models.VirtualMachineScaleSetSku
         internal VirtualMachineScaleSetSkuImpl (VirtualMachineScaleSetSku inner) : base(inner)
         {
         }

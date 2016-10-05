@@ -2,10 +2,10 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using System;
-using Microsoft.Azure.Management.ResourceManager.Models;
-using Microsoft.Azure.Management.Fluent.Resource.Core;
+using Microsoft.Azure.Management.Resource.Fluent.Models;
+using Microsoft.Azure.Management.Resource.Fluent.Core;
 
-namespace Microsoft.Azure.Management.Fluent.Resource
+namespace Microsoft.Azure.Management.Resource.Fluent
 {
     internal class TenantImpl :
         IndexableWrapper<TenantIdDescription>,

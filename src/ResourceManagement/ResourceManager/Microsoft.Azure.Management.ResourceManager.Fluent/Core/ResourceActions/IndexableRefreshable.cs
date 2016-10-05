@@ -4,7 +4,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions
+namespace Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions
 {
     public abstract class IndexableRefreshable<IFluentResourceT> : 
         Indexable,

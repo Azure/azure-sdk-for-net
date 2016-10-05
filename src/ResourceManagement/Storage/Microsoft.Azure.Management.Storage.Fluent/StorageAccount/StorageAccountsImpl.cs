@@ -1,15 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Storage;
-using Microsoft.Azure.Management.Storage.Models;
-using Microsoft.Azure.Management.Fluent.Resource.Core;
+using Microsoft.Azure.Management.Storage.Fluent;
+using Microsoft.Azure.Management.Storage.Fluent.Models;
+using Microsoft.Azure.Management.Resource.Fluent.Core;
 using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Microsoft.Azure.Management.Fluent.Storage
+namespace Microsoft.Azure.Management.Storage.Fluent
 {
     internal class StorageAccountsImpl :
         GroupableResources<
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.Fluent.Storage
 
         protected override StorageAccountImpl WrapModel(string name)
         {
-            Management.Storage.Models.StorageAccountInner innerObject = new StorageAccountInner();
+            Management.Storage.Fluent.Models.StorageAccountInner innerObject = new StorageAccountInner();
             return new StorageAccountImpl(name,
                 innerObject,
                 InnerCollection,

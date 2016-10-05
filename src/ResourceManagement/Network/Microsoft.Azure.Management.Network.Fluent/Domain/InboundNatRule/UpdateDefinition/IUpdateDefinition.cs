@@ -1,19 +1,19 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.Network.InboundNatRule.UpdateDefinition
+namespace Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition
 {
 
-    using Microsoft.Azure.Management.Fluent.Network.HasProtocol.UpdateDefinition;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Update;
-    using Microsoft.Azure.Management.Fluent.Network.HasBackendPort.UpdateDefinition;
-    using Microsoft.Azure.Management.Fluent.Network.HasFloatingIp.UpdateDefinition;
-    using Microsoft.Azure.Management.Fluent.Network.HasFrontend.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.HasProtocol.UpdateDefinition;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.Network.Fluent.HasBackendPort.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.HasFrontend.UpdateDefinition;
     /// <summary>
     /// The stage of an inbound NAT rule definition allowing to specify the transport protocol.
     /// @param <ParentT> the parent load balancer type
     /// </summary>
     public interface IWithProtocol<ParentT>  :
-        Microsoft.Azure.Management.Fluent.Network.HasProtocol.UpdateDefinition.IWithProtocol<Microsoft.Azure.Management.Fluent.Network.InboundNatRule.UpdateDefinition.IWithFrontend<ParentT>,string>
+        Microsoft.Azure.Management.Network.Fluent.HasProtocol.UpdateDefinition.IWithProtocol<Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithFrontend<ParentT>,string>
     {
     }
     /// <summary>
@@ -22,8 +22,8 @@ namespace Microsoft.Azure.Management.Fluent.Network.InboundNatRule.UpdateDefinit
     /// </summary>
     public interface IUpdateDefinition<ParentT>  :
         IBlank<ParentT>,
-        Microsoft.Azure.Management.Fluent.Network.InboundNatRule.UpdateDefinition.IWithProtocol<ParentT>,
-        Microsoft.Azure.Management.Fluent.Network.InboundNatRule.UpdateDefinition.IWithFrontend<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithProtocol<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithFrontend<ParentT>,
         IWithFrontendPort<ParentT>,
         IWithAttach<ParentT>
     {
@@ -37,8 +37,8 @@ namespace Microsoft.Azure.Management.Fluent.Network.InboundNatRule.UpdateDefinit
     /// </summary>
     public interface IWithAttach<ParentT>  :
         IInUpdate<ParentT>,
-        Microsoft.Azure.Management.Fluent.Network.InboundNatRule.UpdateDefinition.IWithBackendPort<ParentT>,
-        Microsoft.Azure.Management.Fluent.Network.InboundNatRule.UpdateDefinition.IWithFloatingIp<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithBackendPort<ParentT>,
+        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithFloatingIp<ParentT>,
         IWithIdleTimeout<ParentT>
     {
     }
@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.InboundNatRule.UpdateDefinit
     /// @param <ParentT> the parent load balancer type
     /// </summary>
     public interface IWithBackendPort<ParentT>  :
-        Microsoft.Azure.Management.Fluent.Network.HasBackendPort.UpdateDefinition.IWithBackendPort<Microsoft.Azure.Management.Fluent.Network.InboundNatRule.UpdateDefinition.IWithAttach<ParentT>>
+        Microsoft.Azure.Management.Network.Fluent.HasBackendPort.UpdateDefinition.IWithBackendPort<Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithAttach<ParentT>>
     {
     }
     /// <summary>
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.InboundNatRule.UpdateDefinit
         /// </summary>
         /// <param name="port">port a port number</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.InboundNatRule.UpdateDefinition.IWithAttach<ParentT> WithFrontendPort(int port);
+        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithAttach<ParentT> WithFrontendPort(int port);
 
     }
     /// <summary>
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.InboundNatRule.UpdateDefinit
     /// @param <ParentT> the return type of the final {@link WithAttach#attach()}
     /// </summary>
     public interface IBlank<ParentT>  :
-        Microsoft.Azure.Management.Fluent.Network.InboundNatRule.UpdateDefinition.IWithProtocol<ParentT>
+        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithProtocol<ParentT>
     {
     }
     /// <summary>
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.InboundNatRule.UpdateDefinit
     /// @param <ParentT> the parent load balancer type
     /// </summary>
     public interface IWithFloatingIp<ParentT>  :
-        Microsoft.Azure.Management.Fluent.Network.HasFloatingIp.UpdateDefinition.IWithFloatingIp<Microsoft.Azure.Management.Fluent.Network.InboundNatRule.UpdateDefinition.IWithAttach<ParentT>>
+        Microsoft.Azure.Management.Network.Fluent.HasFloatingIp.UpdateDefinition.IWithFloatingIp<Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithAttach<ParentT>>
     {
     }
     /// <summary>
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.InboundNatRule.UpdateDefinit
         /// </summary>
         /// <param name="minutes">minutes a number of minutes</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.InboundNatRule.UpdateDefinition.IWithAttach<ParentT> WithIdleTimeoutInMinutes(int minutes);
+        Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithAttach<ParentT> WithIdleTimeoutInMinutes(int minutes);
 
     }
     /// <summary>
@@ -99,7 +99,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.InboundNatRule.UpdateDefinit
     /// @param <ParentT> the parent load balancer type
     /// </summary>
     public interface IWithFrontend<ParentT>  :
-        Microsoft.Azure.Management.Fluent.Network.HasFrontend.UpdateDefinition.IWithFrontend<Microsoft.Azure.Management.Fluent.Network.InboundNatRule.UpdateDefinition.IWithFrontendPort<ParentT>>
+        Microsoft.Azure.Management.Network.Fluent.HasFrontend.UpdateDefinition.IWithFrontend<Microsoft.Azure.Management.Network.Fluent.InboundNatRule.UpdateDefinition.IWithFrontendPort<ParentT>>
     {
     }
 }

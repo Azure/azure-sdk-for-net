@@ -3,15 +3,15 @@
 
 using System;
 using System.Linq;
-using Microsoft.Azure.Management.Compute;
-using Microsoft.Azure.Management.Fluent.Resource.Core;
+using Microsoft.Azure.Management.Compute.Fluent;
+using Microsoft.Azure.Management.Resource.Fluent.Core;
 using Microsoft.Rest;
-using Microsoft.Azure.Management.Fluent.Resource;
-using Microsoft.Azure.Management.Fluent.Storage;
-using Microsoft.Azure.Management.Fluent.Network;
-using Microsoft.Azure.Management.Fluent.Resource.Authentication;
+using Microsoft.Azure.Management.Resource.Fluent;
+using Microsoft.Azure.Management.Storage.Fluent;
+using Microsoft.Azure.Management.Network.Fluent;
+using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 
-namespace Microsoft.Azure.Management.Fluent.Compute
+namespace Microsoft.Azure.Management.Compute.Fluent
 {
     public class ComputeManager : ManagerBase, IComputeManager
     {

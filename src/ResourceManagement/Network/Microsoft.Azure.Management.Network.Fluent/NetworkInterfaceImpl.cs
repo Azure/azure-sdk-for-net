@@ -1,15 +1,15 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.Network
+namespace Microsoft.Azure.Management.Network.Fluent
 {
 
     using NetworkInterface.Update;
-    using Management.Network.Models;
+    using Management.Network.Fluent.Models;
     using NetworkInterface.Definition;
     using System.Collections.Generic;
-    using Resource.Core.ResourceActions;
-    using Resource;
-    using Resource.Core;
+    using Resource.Fluent.Core.ResourceActions;
+    using Resource.Fluent;
+    using Resource.Fluent.Core;
     using Management.Network;
     using System.Threading.Tasks;
 
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
             if (this.creatableNetworkSecurityGroupKey == null)
             {
                 this.creatableNetworkSecurityGroupKey = creatable.Key;
-                this.AddCreatableDependency(creatable as IResourceCreator<Fluent.Resource.Core.IResource>);
+                this.AddCreatableDependency(creatable as IResourceCreator<IResource>);
             }
 
             return this;
@@ -396,12 +396,12 @@ namespace Microsoft.Azure.Management.Fluent.Network
             return this;
         }
 
-        internal void AddToCreatableDependencies(IResourceCreator<Fluent.Resource.Core.IResource> creatableResource)
+        internal void AddToCreatableDependencies(IResourceCreator<IResource> creatableResource)
         {
             AddCreatableDependency(creatableResource);
         }
 
-        internal Fluent.Resource.Core.IResource CreatedDependencyResource(string key)
+        internal IResource CreatedDependencyResource(string key)
         {
             return CreatedResource(key);
         }

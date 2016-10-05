@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Microsoft.Azure.Management.Fluent.Batch
+namespace Microsoft.Azure.Management.Batch.Fluent
 {
     using Management.Batch;
-    using Resource.Core;
+    using Resource.Fluent.Core;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
     public partial class ApplicationPackagesImpl :
         ExternalChildResources<ApplicationPackageImpl,
             IApplicationPackage,
-            Management.Batch.Models.ApplicationPackageInner,
+            Management.Batch.Fluent.Models.ApplicationPackageInner,
             IApplication,
             ApplicationImpl>
     {
@@ -69,7 +69,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
             AddChildResource(applicationPackage);
         }
 
-        internal IDictionary<string, Microsoft.Azure.Management.Fluent.Batch.IApplicationPackage> AsMap()
+        internal IDictionary<string, Microsoft.Azure.Management.Batch.Fluent.IApplicationPackage> AsMap()
         {
             var result = new Dictionary<string, IApplicationPackage>();
 

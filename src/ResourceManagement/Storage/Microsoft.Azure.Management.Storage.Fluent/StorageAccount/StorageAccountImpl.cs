@@ -4,15 +4,15 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.Storage.Models;
-using Microsoft.Azure.Management.Fluent.Resource;
-using Microsoft.Azure.Management.Storage;
-using Microsoft.Azure.Management.Fluent.Resource.Core;
+using Microsoft.Azure.Management.Storage.Fluent.Models;
+using Microsoft.Azure.Management.Resource.Fluent;
+using Microsoft.Azure.Management.Storage.Fluent;
+using Microsoft.Azure.Management.Resource.Fluent.Core;
 using System.Threading;
-using Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Definition;
-using Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Update;
+using Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Definition;
+using Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Update;
 
-namespace Microsoft.Azure.Management.Fluent.Storage
+namespace Microsoft.Azure.Management.Storage.Fluent
 {
     internal class StorageAccountImpl :
         GroupableResource<
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Fluent.Storage
 
 
         internal StorageAccountImpl(string name,
-            Management.Storage.Models.StorageAccountInner innerObject,
+            Management.Storage.Fluent.Models.StorageAccountInner innerObject,
             IStorageAccountsOperations client,
             IStorageManager manager) : base(name, innerObject, manager)
         {
@@ -172,13 +172,13 @@ namespace Microsoft.Azure.Management.Fluent.Storage
 
         public IWithCreateAndAccessTier WithBlobStorageAccountKind()
         {
-            createParameters.Kind = Management.Storage.Models.Kind.BlobStorage;
+            createParameters.Kind = Management.Storage.Fluent.Models.Kind.BlobStorage;
             return this;
         }
 
         public IWithCreate WithGeneralPurposeAccountKind()
         {
-            createParameters.Kind = Management.Storage.Models.Kind.Storage;
+            createParameters.Kind = Management.Storage.Fluent.Models.Kind.Storage;
             return this;
         }
 
@@ -217,7 +217,7 @@ namespace Microsoft.Azure.Management.Fluent.Storage
 
         IUpdate IWithAccessTier.WithAccessTier(AccessTier accessTier)
         {
-            if (Inner.Kind != Management.Storage.Models.Kind.BlobStorage)
+            if (Inner.Kind != Management.Storage.Fluent.Models.Kind.BlobStorage)
             {
                 throw new ArgumentException("Access tier cannot be changed for general purpose storage accounts");
             }

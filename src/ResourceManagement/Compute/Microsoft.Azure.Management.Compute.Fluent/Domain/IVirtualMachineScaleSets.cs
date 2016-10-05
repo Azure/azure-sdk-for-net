@@ -1,22 +1,22 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.Compute
+namespace Microsoft.Azure.Management.Compute.Fluent
 {
 
-    using Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions;
-    using Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition;
     /// <summary>
     /// Entry point to virtual machine scale set management API.
     /// </summary>
     public interface IVirtualMachineScaleSets  :
-        ISupportsListing<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet>,
-        ISupportsListingByGroup<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet>,
-        ISupportsGettingByGroup<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet>,
-        ISupportsGettingById<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet>,
-        ISupportsCreating<Microsoft.Azure.Management.Fluent.Compute.VirtualMachineScaleSet.Definition.IBlank>,
+        ISupportsListing<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>,
+        ISupportsListingByGroup<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>,
+        ISupportsGettingByGroup<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>,
+        ISupportsGettingById<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>,
+        ISupportsCreating<Microsoft.Azure.Management.Compute.Fluent.VirtualMachineScaleSet.Definition.IBlank>,
         ISupportsDeleting,
         ISupportsDeletingByGroup,
-        ISupportsBatchCreation<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet>
+        ISupportsBatchCreation<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet>
     {
         /// <summary>
         /// Shuts down the virtual machine in the scale set and releases the compute resources.

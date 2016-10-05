@@ -1,17 +1,17 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.Compute
+namespace Microsoft.Azure.Management.Compute.Fluent
 {
 
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions;
-    using Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition;
-    using Microsoft.Azure.Management.Fluent.Resource;
-    using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.Network.Models;
-    using Microsoft.Azure.Management.Storage.Models;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition;
+    using Microsoft.Azure.Management.Resource.Fluent;
+    using Microsoft.Azure.Management.Compute.Fluent.Models;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
+    using Microsoft.Azure.Management.Storage.Fluent.Models;
     using System.Threading;
-    using Microsoft.Azure.Management.Fluent.Resource.Core;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
     internal partial class VirtualMachinesImpl 
     {
         /// <summary>
@@ -30,8 +30,8 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// </summary>
         /// <param name="name">name the name of the new resource</param>
         /// <returns>the first stage of the new resource definition</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IBlank Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsCreating<Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IBlank>.Define(string name) { 
-            return this.Define( name) as Microsoft.Azure.Management.Fluent.Compute.VirtualMachine.Definition.IBlank;
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IBlank Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsCreating<Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IBlank>.Define(string name) { 
+            return this.Define( name) as Microsoft.Azure.Management.Compute.Fluent.VirtualMachine.Definition.IBlank;
         }
 
         /// <summary>
@@ -39,8 +39,8 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// </summary>
         /// <param name="resourceGroupName">resourceGroupName the name of the resource group to list the resources from</param>
         /// <returns>the list of resources</returns>
-        Microsoft.Azure.Management.Fluent.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine> Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine>.ListByGroup(string resourceGroupName) { 
-            return this.ListByGroup( resourceGroupName) as Microsoft.Azure.Management.Fluent.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine>;
+        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>.ListByGroup(string resourceGroupName) { 
+            return this.ListByGroup( resourceGroupName) as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>;
         }
 
         /// <summary>
@@ -49,8 +49,8 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// <param name="resourceGroupName">resourceGroupName the name of the resource group the resource is in</param>
         /// <param name="name">name the name of the resource. (Note, this is not the ID)</param>
         /// <returns>an immutable representation of the resource</returns>
-        Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsGettingByGroup<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine>.GetByGroup(string resourceGroupName, string name) { 
-            return this.GetByGroup( resourceGroupName,  name) as Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine;
+        Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsGettingByGroup<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>.GetByGroup(string resourceGroupName, string name) { 
+            return this.GetByGroup( resourceGroupName,  name) as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine;
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// <param name="name">name The name of the resource</param>
         /// <param name="cancellationToken">cancellationToken the cancellation token</param>
         /// <returns>an observable to the request</returns>
-        async Task Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsDeletingByGroup.DeleteAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken)) { 
+        async Task Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsDeletingByGroup.DeleteAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken)) { 
             await this.DeleteAsync( groupName,  name);
         }
 
@@ -68,8 +68,8 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// Lists all the resources of the specified type in the currently selected subscription.
         /// </summary>
         /// <returns>list of resources</returns>
-        Microsoft.Azure.Management.Fluent.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine> Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine>.List() { 
-            return this.List() as Microsoft.Azure.Management.Fluent.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine>;
+        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>.List() { 
+            return this.List() as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>;
         }
 
         /// <summary>
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// </summary>
         /// <param name="groupName">groupName the name of the resource group the virtual machine is in</param>
         /// <param name="name">name the virtual machine name</param>
-        void Microsoft.Azure.Management.Fluent.Compute.IVirtualMachines.Start(string groupName, string name) { 
+        void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachines.Start(string groupName, string name) { 
             this.Start( groupName,  name);
         }
 
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// </summary>
         /// <param name="groupName">groupName the name of the resource group the virtual machine is in</param>
         /// <param name="name">name the virtual machine name</param>
-        void Microsoft.Azure.Management.Fluent.Compute.IVirtualMachines.PowerOff(string groupName, string name) { 
+        void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachines.PowerOff(string groupName, string name) { 
             this.PowerOff( groupName,  name);
         }
 
@@ -95,7 +95,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// </summary>
         /// <param name="groupName">groupName the name of the resource group the virtual machine is in</param>
         /// <param name="name">name the virtual machine name</param>
-        void Microsoft.Azure.Management.Fluent.Compute.IVirtualMachines.Generalize(string groupName, string name) { 
+        void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachines.Generalize(string groupName, string name) { 
             this.Generalize( groupName,  name);
         }
 
@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// </summary>
         /// <param name="groupName">groupName the name of the resource group the virtual machine is in</param>
         /// <param name="name">name the virtual machine name</param>
-        void Microsoft.Azure.Management.Fluent.Compute.IVirtualMachines.Redeploy(string groupName, string name) { 
+        void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachines.Redeploy(string groupName, string name) { 
             this.Redeploy( groupName,  name);
         }
 
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// <param name="containerName">containerName destination container name to store the captured VHD</param>
         /// <param name="overwriteVhd">overwriteVhd whether to overwrites destination VHD if it exists</param>
         /// <returns>the template as JSON string</returns>
-        string Microsoft.Azure.Management.Fluent.Compute.IVirtualMachines.Capture(string groupName, string name, string containerName, bool overwriteVhd) { 
+        string Microsoft.Azure.Management.Compute.Fluent.IVirtualMachines.Capture(string groupName, string name, string containerName, bool overwriteVhd) { 
             return this.Capture( groupName,  name,  containerName,  overwriteVhd) as string;
         }
 
@@ -126,7 +126,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// </summary>
         /// <param name="groupName">groupName the name of the resource group the virtual machine is in</param>
         /// <param name="name">name the virtual machine name</param>
-        void Microsoft.Azure.Management.Fluent.Compute.IVirtualMachines.Deallocate(string groupName, string name) { 
+        void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachines.Deallocate(string groupName, string name) { 
             this.Deallocate( groupName,  name);
         }
 
@@ -135,16 +135,16 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         /// </summary>
         /// <param name="groupName">groupName the name of the resource group the virtual machine is in</param>
         /// <param name="name">name the virtual machine name</param>
-        void Microsoft.Azure.Management.Fluent.Compute.IVirtualMachines.Restart(string groupName, string name) { 
+        void Microsoft.Azure.Management.Compute.Fluent.IVirtualMachines.Restart(string groupName, string name) { 
             this.Restart( groupName,  name);
         }
 
         /// <returns>available virtual machine sizes</returns>
-        Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineSizes Microsoft.Azure.Management.Fluent.Compute.IVirtualMachines.Sizes
+        Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSizes Microsoft.Azure.Management.Compute.Fluent.IVirtualMachines.Sizes
         {
             get
             { 
-            return this.Sizes() as Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineSizes;
+            return this.Sizes() as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineSizes;
             }
         }
     }

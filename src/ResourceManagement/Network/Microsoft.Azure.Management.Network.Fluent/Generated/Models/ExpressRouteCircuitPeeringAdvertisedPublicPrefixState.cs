@@ -6,7 +6,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.Network.Models
+namespace Microsoft.Azure.Management.Network.Fluent.Models
 {
 
     /// <summary>

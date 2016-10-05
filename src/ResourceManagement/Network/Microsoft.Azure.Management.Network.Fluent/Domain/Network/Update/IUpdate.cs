@@ -1,14 +1,14 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.Network.Network.Update
+namespace Microsoft.Azure.Management.Network.Fluent.Network.Update
 {
 
-    using Microsoft.Azure.Management.Fluent.Network;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.Resource.Update;
+    using Microsoft.Azure.Management.Network.Fluent;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.Resource.Update;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Fluent.Network.Subnet.Update;
-    using Microsoft.Azure.Management.Fluent.Network.Subnet.UpdateDefinition;
+    using Microsoft.Azure.Management.Network.Fluent.Subnet.Update;
+    using Microsoft.Azure.Management.Network.Fluent.Subnet.UpdateDefinition;
     /// <summary>
     /// The stage of the virtual network update allowing to specify the DNS server.
     /// </summary>
@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.Network.Update
         /// </summary>
         /// <param name="ipAddress">ipAddress the IP address of the DNS server</param>
         /// <returns>the next stage of the virtual network update</returns>
-        Microsoft.Azure.Management.Fluent.Network.Network.Update.IUpdate WithDnsServer(string ipAddress);
+        Microsoft.Azure.Management.Network.Fluent.Network.Update.IUpdate WithDnsServer(string ipAddress);
 
     }
     /// <summary>
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.Network.Update
         /// </summary>
         /// <param name="cidr">cidr the CIDR representation of the address space</param>
         /// <returns>the next stage of the virtual network update</returns>
-        Microsoft.Azure.Management.Fluent.Network.Network.Update.IUpdate WithAddressSpace(string cidr);
+        Microsoft.Azure.Management.Network.Fluent.Network.Update.IUpdate WithAddressSpace(string cidr);
 
     }
     /// <summary>
@@ -50,8 +50,8 @@ namespace Microsoft.Azure.Management.Fluent.Network.Network.Update
     /// Call {@link Update#apply()} to apply the changes to the resource in Azure.
     /// </summary>
     public interface IUpdate  :
-        IAppliable<Microsoft.Azure.Management.Fluent.Network.INetwork>,
-        IUpdateWithTags<Microsoft.Azure.Management.Fluent.Network.Network.Update.IUpdate>,
+        IAppliable<Microsoft.Azure.Management.Network.Fluent.INetwork>,
+        IUpdateWithTags<Microsoft.Azure.Management.Network.Fluent.Network.Update.IUpdate>,
         IWithSubnet,
         IWithDnsServer,
         IWithAddressSpace
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Fluent.Network.Network.Update
         /// <param name="name">name the name to assign to the subnet</param>
         /// <param name="cidr">cidr the address space of the subnet, within the address space of the network, using the CIDR notation</param>
         /// <returns>the next stage of the virtual network update</returns>
-        Microsoft.Azure.Management.Fluent.Network.Network.Update.IUpdate WithSubnet(string name, string cidr);
+        Microsoft.Azure.Management.Network.Fluent.Network.Update.IUpdate WithSubnet(string name, string cidr);
 
         /// <summary>
         /// Explicitly defines all the subnets in the virtual network based on the provided map.
@@ -79,28 +79,28 @@ namespace Microsoft.Azure.Management.Fluent.Network.Network.Update
         /// </summary>
         /// <param name="nameCidrPairs">nameCidrPairs a {@link Map} of CIDR addresses for the subnets, indexed by the name of each subnet to be added</param>
         /// <returns>the next stage of the virtual network update</returns>
-        Microsoft.Azure.Management.Fluent.Network.Network.Update.IUpdate WithSubnets(IDictionary<string,string> nameCidrPairs);
+        Microsoft.Azure.Management.Network.Fluent.Network.Update.IUpdate WithSubnets(IDictionary<string,string> nameCidrPairs);
 
         /// <summary>
         /// Removes a subnet from the virtual network.
         /// </summary>
         /// <param name="name">name name of the subnet to remove</param>
         /// <returns>the next stage of the virtual network update</returns>
-        Microsoft.Azure.Management.Fluent.Network.Network.Update.IUpdate WithoutSubnet(string name);
+        Microsoft.Azure.Management.Network.Fluent.Network.Update.IUpdate WithoutSubnet(string name);
 
         /// <summary>
         /// Begins the description of an update of an existing subnet of this network.
         /// </summary>
         /// <param name="name">name the name of an existing subnet</param>
         /// <returns>the first stage of the subnet update description</returns>
-        Microsoft.Azure.Management.Fluent.Network.Subnet.Update.IUpdate UpdateSubnet(string name);
+        Microsoft.Azure.Management.Network.Fluent.Subnet.Update.IUpdate UpdateSubnet(string name);
 
         /// <summary>
         /// Begins the definition of a new subnet to be added to this virtual network.
         /// </summary>
         /// <param name="name">name the name of the new subnet</param>
         /// <returns>the first stage of the new subnet definition</returns>
-        Microsoft.Azure.Management.Fluent.Network.Subnet.UpdateDefinition.IBlank<Microsoft.Azure.Management.Fluent.Network.Network.Update.IUpdate> DefineSubnet(string name);
+        Microsoft.Azure.Management.Network.Fluent.Subnet.UpdateDefinition.IBlank<Microsoft.Azure.Management.Network.Fluent.Network.Update.IUpdate> DefineSubnet(string name);
 
     }
 }

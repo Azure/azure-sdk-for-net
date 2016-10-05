@@ -6,7 +6,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.Compute
+namespace Microsoft.Azure.Management.Compute.Fluent
 {
     using System.Linq;
     using Microsoft.Rest.Azure;

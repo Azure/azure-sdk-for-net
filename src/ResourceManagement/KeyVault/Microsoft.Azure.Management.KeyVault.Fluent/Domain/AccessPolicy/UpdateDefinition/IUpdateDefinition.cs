@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.UpdateDefinition
+namespace Microsoft.Azure.Management.KeyVault.Fluent.AccessPolicy.UpdateDefinition
 {
 
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Definition;
-    using Microsoft.Azure.Management.Fluent.Graph.RBAC;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent;
     using System;
-    using Microsoft.Azure.Management.KeyVault.Models;
+    using Microsoft.Azure.Management.KeyVault.Fluent.Models;
     using System.Collections.Generic;
     /// <summary>
     /// The final stage of the access policy definition.
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.UpdateDefiniti
         /// </summary>
         /// <param name="permissions">permissions the list of permissions allowed</param>
         /// <returns>the next stage of access policy definition</returns>
-        IWithAttach<ParentT> AllowKeyPermissions (IList<Microsoft.Azure.Management.KeyVault.Models.KeyPermissions> permissions);
+        IWithAttach<ParentT> AllowKeyPermissions (IList<Microsoft.Azure.Management.KeyVault.Fluent.Models.KeyPermissions> permissions);
 
         /// <summary>
         /// Allow all permissions for the AD identity to access secrets.
@@ -114,7 +114,7 @@ namespace Microsoft.Azure.Management.Fluent.KeyVault.AccessPolicy.UpdateDefiniti
         /// </summary>
         /// <param name="permissions">permissions the list of permissions allowed</param>
         /// <returns>the next stage of access policy definition</returns>
-        IWithAttach<ParentT> AllowSecretPermissions (IList<Microsoft.Azure.Management.KeyVault.Models.SecretPermissions> permissions);
+        IWithAttach<ParentT> AllowSecretPermissions (IList<Microsoft.Azure.Management.KeyVault.Fluent.Models.SecretPermissions> permissions);
 
     }
     /// <summary>

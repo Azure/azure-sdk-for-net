@@ -5,19 +5,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Azure.Management.Compute.Models;
-using Microsoft.Azure.Management.Fluent.Network;
-using Microsoft.Azure.Management.Fluent.Resource;
-using Microsoft.Azure.Management.Fluent.Resource.Core;
-using Microsoft.Azure.Management.Fluent.Resource.Core.ResourceActions;
-using Microsoft.Azure.Management.Fluent.Storage;
-using Microsoft.Azure.Management.Compute;
+using Microsoft.Azure.Management.Compute.Fluent.Models;
+using Microsoft.Azure.Management.Network.Fluent;
+using Microsoft.Azure.Management.Resource.Fluent;
+using Microsoft.Azure.Management.Resource.Fluent.Core;
+using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+using Microsoft.Azure.Management.Storage.Fluent;
+using Microsoft.Azure.Management.Compute.Fluent;
 using Microsoft.Rest.Azure;
 using System.Text;
 using System.Text.RegularExpressions;
 using System;
 
-namespace Microsoft.Azure.Management.Fluent.Compute
+namespace Microsoft.Azure.Management.Compute.Fluent
 {
     internal partial class VirtualMachineScaleSetImpl :
         GroupableParentResource<IVirtualMachineScaleSet,
@@ -202,7 +202,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
 
         public IDictionary<string, IBackend> ListPrimaryInternalLoadBalancerBackends()
         {
-            if ((this as Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet).GetPrimaryInternalLoadBalancer() != null)
+            if ((this as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet).GetPrimaryInternalLoadBalancer() != null)
             {
                 return getBackendsAssociatedWithIpConfiguration(this.primaryInternalLoadBalancer,
                         primaryNicDefaultIPConfiguration());
@@ -212,7 +212,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
 
         public IDictionary<string, IInboundNatPool> ListPrimaryInternalLoadBalancerInboundNatPools()
         {
-            if ((this as Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet).GetPrimaryInternalLoadBalancer() != null)
+            if ((this as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet).GetPrimaryInternalLoadBalancer() != null)
             {
                 return getInboundNatPoolsAssociatedWithIpConfiguration(this.primaryInternalLoadBalancer,
                         primaryNicDefaultIPConfiguration());
@@ -222,7 +222,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
 
         public IDictionary<string, IBackend> ListPrimaryInternetFacingLoadBalancerBackends()
         {
-            if ((this as Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet).GetPrimaryInternetFacingLoadBalancer() != null)
+            if ((this as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet).GetPrimaryInternetFacingLoadBalancer() != null)
             {
                 return getBackendsAssociatedWithIpConfiguration(this.primaryInternetFacingLoadBalancer,
                         primaryNicDefaultIPConfiguration());
@@ -232,7 +232,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
 
         public IDictionary<string, IInboundNatPool> ListPrimaryInternetFacingLoadBalancerInboundNatPools()
         {
-            if ((this as Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet).GetPrimaryInternetFacingLoadBalancer() != null)
+            if ((this as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet).GetPrimaryInternetFacingLoadBalancer() != null)
             {
                 return getInboundNatPoolsAssociatedWithIpConfiguration(this.primaryInternetFacingLoadBalancer,
                         primaryNicDefaultIPConfiguration());
@@ -242,7 +242,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
 
         public IList<string> PrimaryPublicIpAddressIds()
         {
-            ILoadBalancer loadBalancer = (this as Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSet).GetPrimaryInternetFacingLoadBalancer();
+            ILoadBalancer loadBalancer = (this as Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSet).GetPrimaryInternetFacingLoadBalancer();
             if (loadBalancer != null)
             {
                 return loadBalancer.PublicIpAddressIds;
@@ -271,7 +271,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             return new List<string>();
         }
 
-        public PagedList<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSetSku> ListAvailableSkus()
+        public PagedList<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetSku> ListAvailableSkus()
         {
             PagedList<VirtualMachineScaleSetSku> innerPagedList = new PagedList<VirtualMachineScaleSetSku>(this.client.ListSkus(this.ResourceGroupName, this.Name), nextLink =>
             {
@@ -284,7 +284,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
             });
         }
 
-        public IDictionary<string, Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineScaleSetExtension> Extensions()
+        public IDictionary<string, Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineScaleSetExtension> Extensions()
         {
             return this.extensions;
         }
@@ -776,7 +776,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
 
         public VirtualMachineScaleSetImpl WithNewStorageAccount(String name)
         {
-            Storage.StorageAccount.Definition.IWithGroup definitionWithGroup = this.storageManager
+            Storage.Fluent.StorageAccount.Definition.IWithGroup definitionWithGroup = this.storageManager
                     .StorageAccounts
                     .Define(name)
                     .WithRegion(this.RegionName);
@@ -795,7 +795,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         public VirtualMachineScaleSetImpl WithNewStorageAccount(ICreatable<IStorageAccount> creatable)
         {
             this.creatableStorageAccountKeys.Add(creatable.Key);
-            this.AddCreatableDependency(creatable as IResourceCreator<Microsoft.Azure.Management.Fluent.Resource.Core.IResource>);
+            this.AddCreatableDependency(creatable as IResourceCreator<Microsoft.Azure.Management.Resource.Fluent.Core.IResource>);
             return this;
         }
 

@@ -4,7 +4,7 @@
 * license information.
 */ 
 
-namespace Microsoft.Azure.Management.Fluent.Resource.Core.HasSubnet.Definition
+namespace Microsoft.Azure.Management.Resource.Fluent.Core.HasSubnet.Definition
 {
 
 

@@ -1,18 +1,18 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.Compute
+namespace Microsoft.Azure.Management.Compute.Fluent
 {
 
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Compute.Models;
-    using Microsoft.Azure.Management.Fluent.Resource.Core;
+    using Microsoft.Azure.Management.Compute.Fluent.Models;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
     /// <summary>
     /// An immutable client-side representation of an Azure virtual machine extension.
     /// An extension associated with a virtual machine will be created from a {@link VirtualMachineExtensionImage }.
     /// </summary>
     public interface IVirtualMachineExtension  :
-        IExternalChildResource<Microsoft.Azure.Management.Fluent.Compute.IVirtualMachineExtension,Microsoft.Azure.Management.Fluent.Compute.IVirtualMachine>,
-        IWrapper<Microsoft.Azure.Management.Compute.Models.VirtualMachineExtensionInner>
+        IExternalChildResource<Microsoft.Azure.Management.Compute.Fluent.IVirtualMachineExtension,Microsoft.Azure.Management.Compute.Fluent.IVirtualMachine>,
+        IWrapper<Microsoft.Azure.Management.Compute.Fluent.Models.VirtualMachineExtensionInner>
     {
         /// <returns>the publisher name of the virtual machine extension image this extension is created from</returns>
         string PublisherName { get; }
@@ -34,7 +34,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute
         string PublicSettingsAsJsonString { get; }
 
         /// <returns>the instance view of this virtual machine extension</returns>
-        Microsoft.Azure.Management.Compute.Models.VirtualMachineExtensionInstanceView InstanceView { get; }
+        Microsoft.Azure.Management.Compute.Fluent.Models.VirtualMachineExtensionInstanceView InstanceView { get; }
 
         /// <returns>the tags for this virtual machine extension</returns>
         System.Collections.Generic.IDictionary<string,string> Tags { get; }

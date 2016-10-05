@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.Storage.StorageAccount.Definition
+namespace Microsoft.Azure.Management.Storage.Fluent.StorageAccount.Definition
 {
 
-    using Management.Storage.Models;
-    using Resource.Core.GroupableResource.Definition;
-    using Resource.Core.Resource.Definition;
-    using Resource.Core.ResourceActions;
+    using Management.Storage.Fluent.Models;
+    using Resource.Fluent.Core.GroupableResource.Definition;
+    using Resource.Fluent.Core.Resource.Definition;
+    using Resource.Fluent.Core.ResourceActions;
     using Storage;
     /// <summary>
     /// A storage account definition specifying a custom domain to associate with the account.

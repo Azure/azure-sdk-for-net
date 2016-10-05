@@ -6,11 +6,11 @@ using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("Microsoft Azure Graph RBAC Fluent Management Library")]
-[assembly: AssemblyDescription("Provides Microsoft Azure Graph RBAC management Fluent APIs.")]
+[assembly: AssemblyTitle("Microsoft Azure Graph RBAC Management Library")]
+[assembly: AssemblyDescription("Provides Microsoft Azure Graph RBAC management APIs.")]
 
-[assembly: AssemblyVersion("0.0.1.0")]
-[assembly: AssemblyFileVersion("0.0.1.0")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]

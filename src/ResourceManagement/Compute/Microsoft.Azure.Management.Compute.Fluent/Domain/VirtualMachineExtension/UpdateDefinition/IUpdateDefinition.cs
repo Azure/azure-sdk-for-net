@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineExtension.UpdateDefinition
+namespace Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.UpdateDefinition
 {
 
-    using Microsoft.Azure.Management.Fluent.Resource.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
     using System.Collections.Generic;
-    using Microsoft.Azure.Management.Fluent.Compute;
+    using Microsoft.Azure.Management.Compute.Fluent;
     /// <summary>
     /// The stage of the virtual machine extension definition allowing to specify the type of the virtual machine
     /// extension version this extension is based on.
@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineExtension.Upda
         /// </summary>
         /// <param name="extensionImageVersionName">extensionImageVersionName the version name</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineExtension.UpdateDefinition.IWithAttach<ParentT> WithVersion(string extensionImageVersionName);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.UpdateDefinition.IWithAttach<ParentT> WithVersion(string extensionImageVersionName);
 
     }
     /// <summary>
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineExtension.Upda
         /// </summary>
         /// <param name="extensionImageTypeName">extensionImageTypeName the image type name</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineExtension.UpdateDefinition.IWithVersion<ParentT> WithType(string extensionImageTypeName);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.UpdateDefinition.IWithVersion<ParentT> WithType(string extensionImageTypeName);
 
     }
     /// <summary>
@@ -64,7 +64,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineExtension.Upda
         /// </summary>
         /// <param name="tags">tags a {@link Map} of tags</param>
         /// <returns>the next stage of the resource definition</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineExtension.UpdateDefinition.IWithAttach<ParentT> WithTags(IDictionary<string,string> tags);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.UpdateDefinition.IWithAttach<ParentT> WithTags(IDictionary<string,string> tags);
 
         /// <summary>
         /// Adds a tag to the resource.
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineExtension.Upda
         /// <param name="key">key the key for the tag</param>
         /// <param name="value">value the value for the tag</param>
         /// <returns>the next stage of the resource definition</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineExtension.UpdateDefinition.IWithAttach<ParentT> WithTag(string key, string value);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.UpdateDefinition.IWithAttach<ParentT> WithTag(string key, string value);
 
     }
     /// <summary>
@@ -96,13 +96,13 @@ namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineExtension.Upda
         /// enables auto upgrade of the extension.
         /// </summary>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineExtension.UpdateDefinition.IWithAttach<ParentT> WithAutoUpgradeMinorVersionEnabled();
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.UpdateDefinition.IWithAttach<ParentT> WithAutoUpgradeMinorVersionEnabled();
 
         /// <summary>
         /// disables auto upgrade of the extension.
         /// </summary>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineExtension.UpdateDefinition.IWithAttach<ParentT> WithAutoUpgradeMinorVersionDisabled();
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.UpdateDefinition.IWithAttach<ParentT> WithAutoUpgradeMinorVersionDisabled();
 
     }
     /// <summary>
@@ -118,7 +118,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineExtension.Upda
         /// </summary>
         /// <param name="extensionImagePublisherName">extensionImagePublisherName the publisher name</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineExtension.UpdateDefinition.IWithType<ParentT> WithPublisher(string extensionImagePublisherName);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.UpdateDefinition.IWithType<ParentT> WithPublisher(string extensionImagePublisherName);
 
     }
     /// <summary>
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineExtension.Upda
         /// <param name="key">key the key of a public settings entry</param>
         /// <param name="value">value the value of the public settings entry</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineExtension.UpdateDefinition.IWithAttach<ParentT> WithPublicSetting(string key, object value);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.UpdateDefinition.IWithAttach<ParentT> WithPublicSetting(string key, object value);
 
         /// <summary>
         /// Specifies a private settings entry.
@@ -155,21 +155,21 @@ namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineExtension.Upda
         /// <param name="key">key the key of a private settings entry</param>
         /// <param name="value">value the value of the private settings entry</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineExtension.UpdateDefinition.IWithAttach<ParentT> WithProtectedSetting(string key, object value);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.UpdateDefinition.IWithAttach<ParentT> WithProtectedSetting(string key, object value);
 
         /// <summary>
         /// Specifies public settings.
         /// </summary>
         /// <param name="settings">settings the public settings</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineExtension.UpdateDefinition.IWithAttach<ParentT> WithPublicSettings(IDictionary<string,object> settings);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.UpdateDefinition.IWithAttach<ParentT> WithPublicSettings(IDictionary<string,object> settings);
 
         /// <summary>
         /// Specifies private settings.
         /// </summary>
         /// <param name="settings">settings the private settings</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineExtension.UpdateDefinition.IWithAttach<ParentT> WithProtectedSettings(IDictionary<string,object> settings);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.UpdateDefinition.IWithAttach<ParentT> WithProtectedSettings(IDictionary<string,object> settings);
 
     }
     /// <summary>
@@ -186,7 +186,7 @@ namespace Microsoft.Azure.Management.Fluent.Compute.VirtualMachineExtension.Upda
         /// </summary>
         /// <param name="image">image the image</param>
         /// <returns>the next stage of the definition</returns>
-        Microsoft.Azure.Management.Fluent.Compute.VirtualMachineExtension.UpdateDefinition.IWithAttach<ParentT> WithImage(IVirtualMachineExtensionImage image);
+        Microsoft.Azure.Management.Compute.Fluent.VirtualMachineExtension.UpdateDefinition.IWithAttach<ParentT> WithImage(IVirtualMachineExtensionImage image);
 
     }
 }

@@ -1,16 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.Network
+namespace Microsoft.Azure.Management.Network.Fluent
 {
 
-    using Microsoft.Azure.Management.Fluent.Resource.Core;
-    using Microsoft.Azure.Management.Network.Models;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.Network.Fluent.Models;
     /// <summary>
     /// An immutable client-side representation of an HTTP load balancing rule.
     /// </summary>
     public interface ILoadBalancingRule  :
-        IWrapper<Microsoft.Azure.Management.Network.Models.LoadBalancingRuleInner>,
-        IChildResource<Microsoft.Azure.Management.Fluent.Network.ILoadBalancer>,
+        IWrapper<Microsoft.Azure.Management.Network.Fluent.Models.LoadBalancingRuleInner>,
+        IChildResource<Microsoft.Azure.Management.Network.Fluent.ILoadBalancer>,
         IHasBackendPort,
         IHasFrontend,
         IHasFloatingIp,
@@ -26,10 +26,10 @@ namespace Microsoft.Azure.Management.Fluent.Network
         int FrontendPort { get; }
 
         /// <returns>the backend associated with the load balancing rule</returns>
-        Microsoft.Azure.Management.Fluent.Network.IBackend Backend { get; }
+        Microsoft.Azure.Management.Network.Fluent.IBackend Backend { get; }
 
         /// <returns>the probe associated with the load balancing rule</returns>
-        Microsoft.Azure.Management.Fluent.Network.IProbe Probe { get; }
+        Microsoft.Azure.Management.Network.Fluent.IProbe Probe { get; }
 
     }
 }

@@ -1,16 +1,16 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
-namespace Microsoft.Azure.Management.Fluent.Batch
+namespace Microsoft.Azure.Management.Batch.Fluent
 {
 
-    using Microsoft.Azure.Management.Batch.Models;
-    using Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions;
-    using Microsoft.Azure.Management.Fluent.Resource.Core;
-    using Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Definition;
+    using Microsoft.Azure.Management.Batch.Fluent.Models;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Definition;
     using System.Threading;
-    using Microsoft.Azure.Management.Storage.Models;
+    using Microsoft.Azure.Management.Storage.Fluent.Models;
     using System.Threading.Tasks;
-    using Microsoft.Azure.Management.Fluent.Resource;
+    using Microsoft.Azure.Management.Resource.Fluent;
     public partial class BatchAccountsImpl 
     {
         /// <summary>
@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.Fluent.Batch
         /// </summary>
         /// <param name="name">name the name of the new resource</param>
         /// <returns>the first stage of the new resource definition</returns>
-        Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Definition.IBlank Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsCreating<Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Definition.IBlank>.Define(string name) { 
-            return this.Define( name) as Microsoft.Azure.Management.Fluent.Batch.BatchAccount.Definition.IBlank;
+        Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Definition.IBlank Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsCreating<Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Definition.IBlank>.Define(string name) { 
+            return this.Define( name) as Microsoft.Azure.Management.Batch.Fluent.BatchAccount.Definition.IBlank;
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
         /// </summary>
         /// <param name="region">region the region in for which to check quota</param>
         /// <returns>whether the number of batch accounts can be created in specified region.</returns>
-        int Microsoft.Azure.Management.Fluent.Batch.IBatchAccounts.GetBatchAccountQuotaByLocation(Region region) { 
+        int Microsoft.Azure.Management.Batch.Fluent.IBatchAccounts.GetBatchAccountQuotaByLocation(Region region) { 
             return this.GetBatchAccountQuotaByLocation( region);
         }
 
@@ -47,8 +47,8 @@ namespace Microsoft.Azure.Management.Fluent.Batch
         /// </summary>
         /// <param name="resourceGroupName">resourceGroupName the name of the resource group to list the resources from</param>
         /// <returns>the list of resources</returns>
-        Microsoft.Azure.Management.Fluent.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Batch.IBatchAccount> Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Fluent.Batch.IBatchAccount>.ListByGroup(string resourceGroupName) { 
-            return this.ListByGroup( resourceGroupName) as Microsoft.Azure.Management.Fluent.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Batch.IBatchAccount>;
+        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListingByGroup<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>.ListByGroup(string resourceGroupName) { 
+            return this.ListByGroup( resourceGroupName) as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>;
         }
 
         /// <summary>
@@ -57,8 +57,8 @@ namespace Microsoft.Azure.Management.Fluent.Batch
         /// <param name="resourceGroupName">resourceGroupName the name of the resource group the resource is in</param>
         /// <param name="name">name the name of the resource. (Note, this is not the ID)</param>
         /// <returns>an immutable representation of the resource</returns>
-        Microsoft.Azure.Management.Fluent.Batch.IBatchAccount Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsGettingByGroup<Microsoft.Azure.Management.Fluent.Batch.IBatchAccount>.GetByGroup(string resourceGroupName, string name) { 
-            return this.GetByGroup( resourceGroupName,  name) as Microsoft.Azure.Management.Fluent.Batch.IBatchAccount;
+        Microsoft.Azure.Management.Batch.Fluent.IBatchAccount Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsGettingByGroup<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>.GetByGroup(string resourceGroupName, string name) { 
+            return this.GetByGroup( resourceGroupName,  name) as Microsoft.Azure.Management.Batch.Fluent.IBatchAccount;
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Fluent.Batch
         /// <param name="name">name The name of the resource</param>
         /// <param name="cancellationToken">cancellationToken the cancellation token</param>
         /// <returns>an observable to the request</returns>
-        async Task Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsDeletingByGroup.DeleteAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken)) { 
+        async Task Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsDeletingByGroup.DeleteAsync(string groupName, string name, CancellationToken cancellationToken = default(CancellationToken)) { 
             await this.DeleteAsync( groupName,  name);
         }
 
@@ -76,8 +76,8 @@ namespace Microsoft.Azure.Management.Fluent.Batch
         /// Lists all the resources of the specified type in the currently selected subscription.
         /// </summary>
         /// <returns>list of resources</returns>
-        Microsoft.Azure.Management.Fluent.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Batch.IBatchAccount> Microsoft.Azure.Management.Fluent.Resource.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Fluent.Batch.IBatchAccount>.List() { 
-            return this.List() as Microsoft.Azure.Management.Fluent.Resource.Core.PagedList<Microsoft.Azure.Management.Fluent.Batch.IBatchAccount>;
+        Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount> Microsoft.Azure.Management.Resource.Fluent.Core.CollectionActions.ISupportsListing<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>.List() { 
+            return this.List() as Microsoft.Azure.Management.Resource.Fluent.Core.PagedList<Microsoft.Azure.Management.Batch.Fluent.IBatchAccount>;
         }
 
     }
