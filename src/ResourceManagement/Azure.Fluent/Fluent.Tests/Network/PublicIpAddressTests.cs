@@ -49,7 +49,7 @@ namespace Fluent.Tests.Network
 
         public void print(IPublicIpAddress resource)
         {
-            System.Console.WriteLine(new StringBuilder().Append("Public IP Address: ").Append(resource.Id)
+            TestHelper.WriteLine(new StringBuilder().Append("Public IP Address: ").Append(resource.Id)
                     .Append("Name: ").Append(resource.Name)
                     .Append("\n\tResource group: ").Append(resource.ResourceGroupName)
                     .Append("\n\tRegion: ").Append(resource.Region)

@@ -12,7 +12,7 @@ using Microsoft.Rest;
 using System.Linq;
 using Microsoft.Azure.Management.Fluent.KeyVault;
 
-namespace Microsoft.Azure.Management
+namespace Microsoft.Azure.Management.Fluent
 {
     public class Azure : IAzure
     {

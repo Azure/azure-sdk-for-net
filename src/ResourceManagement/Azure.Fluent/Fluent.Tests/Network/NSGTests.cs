@@ -100,7 +100,7 @@ namespace Fluent.Tests.Network
             }
 
             info.Append("\n\tNICs: ").Append(resource.NetworkInterfaceIds);
-            Console.WriteLine(info.ToString());
+            TestHelper.WriteLine(info.ToString());
         }
     }
 }

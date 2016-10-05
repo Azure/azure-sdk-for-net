@@ -101,7 +101,7 @@ namespace Fluent.Tests.Network
                 }
             }
 
-            Console.WriteLine(info.ToString());
+            TestHelper.WriteLine(info.ToString());
         }
     }
 }
