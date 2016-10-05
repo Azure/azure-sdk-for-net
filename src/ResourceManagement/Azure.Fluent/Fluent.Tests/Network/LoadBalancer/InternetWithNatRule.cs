@@ -38,9 +38,10 @@ namespace Azure.Tests.Network.LoadBalancer
         public override ILoadBalancer CreateResource(ILoadBalancers resources)
         {
             var existingVMs = LoadBalancerHelper.EnsureVMs(this.networks, this.vms, LoadBalancerHelper.VM_IDS);
+            Assert.Equal(existingVMs.Count(), 2);
             var existingPips = LoadBalancerHelper.EnsurePIPs(pips);
             var nic1 = existingVMs.ElementAt(0).GetPrimaryNetworkInterface();
-            var nic2 = existingVMs.ElementAt(0).GetPrimaryNetworkInterface();
+            var nic2 = existingVMs.ElementAt(1).GetPrimaryNetworkInterface();
 
             // Create a load balancer
             var lb = resources.Define(LoadBalancerHelper.LB_NAME)
@@ -148,6 +149,7 @@ namespace Azure.Tests.Network.LoadBalancer
         public override ILoadBalancer UpdateResource(ILoadBalancer resource)
         {
             var existingVMs = LoadBalancerHelper.EnsureVMs(this.networks, this.vms, LoadBalancerHelper.VM_IDS);
+            Assert.Equal(existingVMs.Count(), 2);
             var nic1 = existingVMs.ElementAt(0).GetPrimaryNetworkInterface();
             var nic2 = existingVMs.ElementAt(1).GetPrimaryNetworkInterface();
 

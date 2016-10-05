@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
         {
             get
             {
-                throw new NotImplementedException();
+                return null;
             }
         }
 

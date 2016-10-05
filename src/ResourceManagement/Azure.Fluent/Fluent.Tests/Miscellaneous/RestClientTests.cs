@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
+using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.Fluent.Resource;
 using Microsoft.Azure.Management.Fluent.Resource.Authentication;
 using Microsoft.Azure.Management.Fluent.Resource.Core;
@@ -21,6 +22,7 @@ namespace Fluent.Tests.Miscellaneous
         [Fact(Skip = "TODO: Convert to recorded tests")]
         public void CanSetMultipleDelegateHandlers()
         {
+            IAzure azure = null;
             // Sets the intercepter so that logging and user agent in log can be asserted.
             var logAndUserAgentInterceptor = new LogAndUserAgentInterceptor();
             ServiceClientTracing.AddTracingInterceptor(logAndUserAgentInterceptor);
@@ -32,7 +34,7 @@ namespace Fluent.Tests.Miscellaneous
                                                            // file so that below WithDefaultSubscription() 
                                                            // will force listing subscriptions and fetching
                                                            // the first.
-                var azure = Microsoft.Azure.Management.Fluent.Azure
+                azure = Microsoft.Azure.Management.Fluent.Azure
                     .Configure()
                     .WithUserAgent("azure-fluent-test", "1.0.0-prelease")
                     .WithLogLevel(HttpLoggingDelegatingHandler.Level.BODY)
@@ -40,22 +42,21 @@ namespace Fluent.Tests.Miscellaneous
                     .WithDefaultSubscription();
 
                 IStorageAccount storageAccount = azure.StorageAccounts
-                   . Define(stgName)
+                   .Define(stgName)
                    .WithRegion(Region.US_EAST)
                    .WithNewResourceGroup(rgName)
                    .Create();
 
                 Assert.True(string.Equals(storageAccount.ResourceGroupName, rgName));
-                azure.ResourceGroups.Delete(rgName);
-            }
-            catch
-            {
-
             }
             finally
             {
                 ServiceClientTracing.RemoveTracingInterceptor(logAndUserAgentInterceptor);
                 ServiceClientTracing.IsEnabled = false;
+                if (azure != null)
+                {
+                    azure.ResourceGroups.Delete(rgName);
+                }
             }
             Assert.True(logAndUserAgentInterceptor.FoundUserAgentInLog);
         }
