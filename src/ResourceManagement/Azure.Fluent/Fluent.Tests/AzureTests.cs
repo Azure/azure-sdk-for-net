@@ -20,7 +20,7 @@ namespace Azure.Tests
         {
             TestHelper.TestLogger = output;
 
-            AzureCredentials credentials = AzureCredentials.FromFile(@"C:\my.azureauth");
+            AzureCredentials credentials = AzureCredentials.FromFile(@"C:\automation\my.azureauth");
             
             // Authenticate based on credentials instance
             var azureAuthed = Microsoft.Azure.Management.Fluent.Azure.Configure()
@@ -32,7 +32,7 @@ namespace Azure.Tests
             subscriptions = azureAuthed.Subscriptions;
             this.azure = azureAuthed.WithDefaultSubscription();
         }
-        
+
         [Fact(Skip = "TODO: Convert to recorded tests")]
         public void TestLoadBalancersNatRules()
         {

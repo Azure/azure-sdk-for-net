@@ -41,9 +41,8 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
         {
             get
             {
-                for (int i = handlers.ToArray().Length - 1; i >= 0; --i)
+                foreach (var handler in handlers)
                 {
-                    DelegatingHandler handler = handlers[i];
                     handler.InnerHandler = new HttpClientHandler();
                 }
                 return new ReadOnlyCollection<DelegatingHandler>(handlers);

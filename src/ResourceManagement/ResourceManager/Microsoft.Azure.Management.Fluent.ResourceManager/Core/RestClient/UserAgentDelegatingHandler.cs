@@ -13,7 +13,8 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
     public class UserAgentDelegatingHandler : DelegatingHandlerBase
     {
         private List<string> userAgents;
-        public UserAgentDelegatingHandler() : base() {
+        public UserAgentDelegatingHandler() : base()
+        {
             this.userAgents = new List<string>();
         }
 
@@ -37,10 +38,10 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
             {
                 if (request.Headers.UserAgent != null)
                 {
-                    this.userAgents.All(userAgent => {
+                    foreach(var userAgent in this.userAgents)
+                    {
                         request.Headers.UserAgent.TryParseAdd(userAgent);
-                        return true;
-                    });
+                    }
                 }
                 else
                 {
