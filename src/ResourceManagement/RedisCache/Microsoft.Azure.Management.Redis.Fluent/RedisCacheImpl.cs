@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    using Fluent.Resource;
+    using Resource.Fluent;
 
     /// <summary>
     /// Implementation for Redis Cache and its parent interfaces.
