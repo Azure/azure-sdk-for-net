@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
         {
             get
             {
-                return CurrentPage.NextPageLink != null;
+                return CurrentPage?.NextPageLink != null;
             }
         }
 

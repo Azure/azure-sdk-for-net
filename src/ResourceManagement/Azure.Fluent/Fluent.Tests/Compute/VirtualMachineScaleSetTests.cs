@@ -175,7 +175,7 @@ namespace Fluent.Tests.Compute
         }
 
 
-        private ILoadBalancer createInternetFacingLoadBalancer(Microsoft.Azure.Management.IAzure azure, IResourceGroup resourceGroup, string id)
+        private ILoadBalancer createInternetFacingLoadBalancer(Microsoft.Azure.Management.Fluent.IAzure azure, IResourceGroup resourceGroup, string id)
         {
             string loadBalancerName = ResourceNamer.RandomResourceName("extlb" + id + "-", 18);
             string publicIpName = "pip-" + loadBalancerName;
@@ -255,7 +255,7 @@ namespace Fluent.Tests.Compute
             return loadBalancer;
         }
 
-        private ILoadBalancer CreateInternalLoadBalancer(Microsoft.Azure.Management.IAzure azure, IResourceGroup resourceGroup,
+        private ILoadBalancer CreateInternalLoadBalancer(Microsoft.Azure.Management.Fluent.IAzure azure, IResourceGroup resourceGroup,
                                                 INetwork network, string id)
         {
             string loadBalancerName = ResourceNamer.RandomResourceName("InternalLb" + id + "-", 18);
@@ -333,7 +333,7 @@ namespace Fluent.Tests.Compute
             return loadBalancer;
         }
 
-        private ILoadBalancer CreateHttpLoadBalancers(Microsoft.Azure.Management.IAzure azure, IResourceGroup resourceGroup, string id)
+        private ILoadBalancer CreateHttpLoadBalancers(Microsoft.Azure.Management.Fluent.IAzure azure, IResourceGroup resourceGroup, string id)
         {
             string loadBalancerName = ResourceNamer.RandomResourceName("extlb" + id + "-", 18);
             string publicIpName = "pip-" + loadBalancerName;

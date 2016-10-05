@@ -144,7 +144,7 @@ namespace Fluent.Tests.Network
                     .Append("\n\t\tSubnet Name: ").Append(ipConfig.SubnetName);
             }
 
-            Console.WriteLine(info.ToString());
+            TestHelper.WriteLine(info.ToString());
         }
     }
 }

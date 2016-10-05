@@ -2,7 +2,7 @@
 // Licensed under the MIT License. See License.txt in the project root for license information. 
 
 using Microsoft.Azure.Management.Samples.Common;
-using Microsoft.Azure.Management;
+using Microsoft.Azure.Management.Fluent;
 using Microsoft.Azure.Management.Compute.Models;
 using Microsoft.Azure.Management.Fluent.Compute;
 using Microsoft.Azure.Management.Fluent.Resource;
