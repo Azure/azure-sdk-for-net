@@ -103,8 +103,12 @@
       </Exec>
   
       <!-- Enable strong name checking -->  
+      <!-->
       <Exec Command='"C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools\sn.exe" -Vx *' Condition="$(isadmin) == 0"/>
       <Exec Command='"C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools\x64\sn.exe" -Vx *' Condition="$(isadmin) == 0"/>
+      -->
+      <Exec Command='$(WindowsSDK_ExecutablePath_x86)\sn.exe -Vx *' Condition="$(isadmin) == 0"/>
+      <Exec Command='$(WindowsSDK_ExecutablePath_x64)\sn.exe -Vx *' Condition="$(isadmin) == 0"/>
   </Target>
 
   <!--
