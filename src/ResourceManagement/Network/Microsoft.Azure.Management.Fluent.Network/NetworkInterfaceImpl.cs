@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.Fluent.Network
                    .WithoutLoadBalancerBackends();
             }
 
-            return null;
+            return this;
         }
 
         internal IUpdate WithoutLoadBalancerInboundNatRules()

@@ -41,6 +41,10 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
         {
             get
             {
+                foreach (var handler in handlers)
+                {
+                    handler.InnerHandler = new HttpClientHandler();
+                }
                 return new ReadOnlyCollection<DelegatingHandler>(handlers);
             }
         }
@@ -128,7 +132,7 @@ namespace Microsoft.Azure.Management.Fluent.Resource.Core
                     userAgentDelegatingHandler = new UserAgentDelegatingHandler();
                     WithDelegatingHandler(userAgentDelegatingHandler);
                 }
-                userAgentDelegatingHandler.appendUserAgent(product + "/" + version);
+                userAgentDelegatingHandler.AppendUserAgent(product + "/" + version);
                 return this;
             }
 
