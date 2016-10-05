@@ -27,12 +27,12 @@ graphURL=https\://graph.windows.net/
 
 This approach enables unattended authentication for your application (i.e. no interactive user login, no token management needed). The `client`, `key` and `tenant` are from [your service principal registration](#creating-a-service-principal-in-azure). The `subscription` represents the subscription ID you want to use as the default subscription. The remaining URIs and URLs represent the end points for the needed Azure services, and the example above assumes you are using the Azure worldwide cloud.
 
-## Using `ApplicationTokenCredentials`
+## Using `AzureCredentials`
 
-Similarly to the [file-based approach](#using-an-authentication-file), this method requires a [service principal registration](#creating-a-service-principal-in-azure), but instead of storing the credentials in a local file, the required inputs can be supplied directly via an instance of the `ApplicationTokenCredentials` class:
+Similarly to the [file-based approach](#using-an-authentication-file), this method requires a [service principal registration](#creating-a-service-principal-in-azure), but instead of storing the credentials in a local file, the required inputs can be supplied directly via an instance of the `AzureCredentials` class:
 
 ```
-ApplicationTokenCredentials credentials = new ApplicationTokenCredentials(client, tenant, key, AzureEnvironment.AZURE);
+AzureCredentials credentials = AzureCredentials.fromServicePrincipal(client, key, tenant, AzureEnvironment.AZURE);
 Azure azure = Azure.authenticate(credentials).withSubscription(subscriptionId);
 ```
 
