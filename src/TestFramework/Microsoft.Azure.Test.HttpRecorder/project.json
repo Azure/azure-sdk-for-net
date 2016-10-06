@@ -11,13 +11,14 @@
   	"projectUrl": "https://github.com/Azure/azure-sdk-for-net",
   	"licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
     "tags": [ "Microsoft AutoRest ClientRuntime HttpRecorder REST" ],
-    "requireLicenseAcceptance":  true,
+    "requireLicenseAcceptance": true,
   },
 
   "buildOptions": {
     "delaySign": true,
     "publicSign": false,
-    "keyFile": "../../../tools/MSSharedLibKey.snk"
+    "keyFile": "../../../tools/MSSharedLibKey.snk",
+    "outputName": "Microsoft.Azure.Test.HttpRecorder"
   },
 
   "frameworks": {
