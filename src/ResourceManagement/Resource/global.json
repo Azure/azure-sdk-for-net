@@ -1,3 +1,2 @@
 {
-  "projects": [ "../../ClientRuntime", "../../TestFramework", "Microsoft.Azure.Management.ResourceManager", "Resource.Tests" ]
-}
+  "projects": [ "../../ClientRuntime", "../../TestFramework", "Microsoft.Rest.ClientRuntime.Additions", "Microsoft.Rest.ClientRuntime.Azure.Additions", "Microsoft.Rest.ClientRuntime.Azure.Authentication.Additions", "Microsoft.Azure.Management.ResourceManager", "Resource.Tests" ]}
