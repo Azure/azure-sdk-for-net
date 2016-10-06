@@ -1,10 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management;
-using Microsoft.Azure.Management.Fluent.Resource;
-using Microsoft.Azure.Management.Fluent.Resource.Authentication;
-using Microsoft.Azure.Management.Fluent.Resource.Core;
+using Microsoft.Azure.Management.Fluent;
+using Microsoft.Azure.Management.Resource.Fluent;
+using Microsoft.Azure.Management.Resource.Fluent.Authentication;
+using Microsoft.Azure.Management.Resource.Fluent.Core;
 using System;
 
 namespace ManageResourceGroup
@@ -39,7 +39,7 @@ namespace ManageResourceGroup
                         .Configure()
                         .WithLogLevel(HttpLoggingDelegatingHandler.Level.BASIC)
                         .Authenticate(credentials)
-                        .WithSubscription(credentials.DefaultSubscriptionId);
+                        .WithDefaultSubscription();
 
                     try
                     {
