@@ -27,8 +27,8 @@ namespace ManageVirtualMachinesInParallelWithNetwork
 
     public class Program
     {
-        private static readonly int frontendVmCount = 5;
-        private static readonly int backendVmCount = 5;
+        private static readonly int frontendVmCount = 10;
+        private static readonly int backendVmCount = 10;
         private static readonly string rgName = ResourceNamer.RandomResourceName("rgNEPP", 24);
         private static readonly string frontEndNSGName = ResourceNamer.RandomResourceName("fensg", 24);
         private static readonly string backEndNSGName = ResourceNamer.RandomResourceName("bensg", 24);
