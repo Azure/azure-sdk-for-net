@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.Samples.Common
         {
             foreach (var storageAccountKey in storageAccountKeys)
             {
-                Console.WriteLine($"Key + {storageAccountKey.KeyName} = {storageAccountKey.Value}");
+                Console.WriteLine($"Key {storageAccountKey.KeyName} = {storageAccountKey.Value}");
             }
         }
 
@@ -534,6 +534,11 @@ namespace Microsoft.Azure.Management.Samples.Common
 
         private static string GetPrintableStringForDictionary(IDictionary<string, string> dictionary)
         {
+            if (dictionary == null)
+            {
+                return string.Empty;
+            }
+
             var outputString = new StringBuilder();
 
             foreach (var entity in dictionary)
