@@ -2,9 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Azure.Tests.Common;
-using Microsoft.Azure.Management.Fluent.Compute;
-using Microsoft.Azure.Management.Fluent.Network;
-using Microsoft.Azure.Management.Network.Models;
+using Microsoft.Azure.Management.Compute.Fluent;
+using Microsoft.Azure.Management.Network.Fluent;
+using Microsoft.Azure.Management.Network.Fluent.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

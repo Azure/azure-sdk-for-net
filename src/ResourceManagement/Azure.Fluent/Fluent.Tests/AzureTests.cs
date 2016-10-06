@@ -3,11 +3,11 @@
 
 using Fluent.Tests.Common;
 using Microsoft.Azure.Management.Fluent;
-using Microsoft.Azure.Management.Fluent.Resource;
-using Microsoft.Azure.Management.Fluent.Resource.Authentication;
+using Microsoft.Azure.Management.Resource.Fluent;
+using Microsoft.Azure.Management.Resource.Fluent.Authentication;
 using Xunit;
 using Xunit.Abstractions;
-using static Microsoft.Azure.Management.Fluent.Resource.Core.HttpLoggingDelegatingHandler;
+using static Microsoft.Azure.Management.Resource.Fluent.Core.HttpLoggingDelegatingHandler;
 
 namespace Azure.Tests
 {
@@ -25,8 +25,7 @@ namespace Azure.Tests
             // Authenticate based on credentials instance
             var azureAuthed = Microsoft.Azure.Management.Fluent.Azure.Configure()
                     .WithLogLevel(Level.NONE)
-                    // TODO: Currently hangs
-                    //.WithUserAgent("AzureTests", "0.0.1-prerelease")
+                    .WithUserAgent("AzureTests", "0.0.1-prerelease")
                     .Authenticate(credentials);
 
             subscriptions = azureAuthed.Subscriptions;

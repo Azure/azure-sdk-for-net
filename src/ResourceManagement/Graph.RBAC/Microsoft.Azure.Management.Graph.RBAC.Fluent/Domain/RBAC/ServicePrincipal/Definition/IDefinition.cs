@@ -1,0 +1,46 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+namespace Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition
+{
+
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ResourceActions;
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent;
+    /// <summary>
+    /// The first stage of the service principal definition.
+    /// </summary>
+    public interface IBlank  :
+        IWithCreate
+    {
+    }
+    /// <summary>
+    /// The stage of service principal definition allowing specifying if the service principal account is enabled.
+    /// </summary>
+    public interface IWithAccountEnabled 
+    {
+        /// <summary>
+        /// Specifies whether the service principal account is enabled upon creation.
+        /// </summary>
+        /// <param name="enabled">enabled if set to true, the service principal account is enabled.</param>
+        /// <returns>the next stage in service principal definition</returns>
+        Microsoft.Azure.Management.Graph.RBAC.Fluent.ServicePrincipal.Definition.IWithCreate WithAccountEnabled(bool enabled);
+
+    }
+    /// <summary>
+    /// A service principal definition with sufficient inputs to create a new
+    /// service principal in the cloud, but exposing additional optional inputs to
+    /// specify.
+    /// </summary>
+    public interface IWithCreate  :
+        ICreatable<Microsoft.Azure.Management.Graph.RBAC.Fluent.IServicePrincipal>,
+        IWithAccountEnabled
+    {
+    }
+    /// <summary>
+    /// Container interface for all the definitions that need to be implemented.
+    /// </summary>
+    public interface IDefinition  :
+        IBlank,
+        IWithCreate
+    {
+    }
+}

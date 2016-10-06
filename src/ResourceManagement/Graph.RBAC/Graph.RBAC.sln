@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Fluent.Graph.RBAC", "Microsoft.Azure.Management.Fluent.Graph.RBAC\Microsoft.Azure.Management.Fluent.Graph.RBAC.xproj", "{148A7E48-BBB2-4F38-8708-DF0CB128DE50}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Graph.RBAC.Fluent", "Microsoft.Azure.Management.Graph.RBAC.Fluent\Microsoft.Azure.Management.Graph.RBAC.Fluent.xproj", "{148A7E48-BBB2-4F38-8708-DF0CB128DE50}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Fluent.ResourceManager", "..\ResourceManager\Microsoft.Azure.Management.Fluent.ResourceManager\Microsoft.Azure.Management.Fluent.ResourceManager.xproj", "{A5986BDB-0D0D-48AA-9E49-ECE96BAC8AEE}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.ResourceManager.Fluent", "..\ResourceManager\Microsoft.Azure.Management.ResourceManager.Fluent\Microsoft.Azure.Management.ResourceManager.Fluent.xproj", "{A5986BDB-0D0D-48AA-9E49-ECE96BAC8AEE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7762B6CF-752D-4D32-A89A-564CC39DDA3B}"
 	ProjectSection(SolutionItems) = preProject

@@ -2,9 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 using Microsoft.Azure.Management.Fluent;
-using Microsoft.Azure.Management.Fluent.Resource;
-using Microsoft.Azure.Management.Fluent.Resource.Authentication;
-using Microsoft.Azure.Management.Fluent.Resource.Core;
+using Microsoft.Azure.Management.Resource.Fluent;
+using Microsoft.Azure.Management.Resource.Fluent.Authentication;
+using Microsoft.Azure.Management.Resource.Fluent.Core;
 using System;
 
 namespace ManageResource
@@ -69,7 +69,7 @@ namespace ManageResource
                     Console.WriteLine("Updating the storage account with name: " + resourceName1);
 
                     storageAccount.Update()
-                        .WithSku(Microsoft.Azure.Management.Storage.Models.SkuName.StandardRAGRS)
+                        .WithSku(Microsoft.Azure.Management.Storage.Fluent.Models.SkuName.StandardRAGRS)
                         .Apply();
 
                     Console.WriteLine("Updated the storage account with name: " + resourceName1);

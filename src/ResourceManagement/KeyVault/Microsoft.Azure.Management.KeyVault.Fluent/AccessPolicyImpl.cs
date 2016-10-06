@@ -1,0 +1,249 @@
+// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for license information.
+
+namespace Microsoft.Azure.Management.KeyVault.Fluent
+{
+
+    using Microsoft.Azure.Management.Graph.RBAC.Fluent;
+    using Microsoft.Azure.Management.KeyVault.Fluent.Vault.Update;
+    using Microsoft.Azure.Management.KeyVault.Fluent.AccessPolicy.UpdateDefinition;
+    using Microsoft.Azure.Management.KeyVault.Fluent.Models;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Update;
+    using Microsoft.Azure.Management.Resource.Fluent.Core;
+    using System.Collections.Generic;
+    using Microsoft.Azure.Management.KeyVault.Fluent.AccessPolicy.Definition;
+    using Microsoft.Azure.Management.Resource.Fluent.Core.ChildResource.Definition;
+    using Microsoft.Azure.Management.KeyVault.Fluent.AccessPolicy.Update;
+    using System;
+    using Microsoft.Azure.Management.KeyVault.Fluent.Vault.Definition;
+    using Resource.Fluent.Core.ChildResourceActions;
+
+    /// <summary>
+    /// Implementation for AccessPolicy and its parent interfaces.
+    /// </summary>
+    internal partial class AccessPolicyImpl  :
+        ChildResource<AccessPolicyEntry, VaultImpl, IVault>,
+        IAccessPolicy,
+        IDefinition<IWithCreate>,
+        IUpdateDefinition<Vault.Update.IUpdate>,
+        AccessPolicy.Update.IUpdate
+    {
+        private string userPrincipalName;
+        private string servicePrincipalName;
+        internal AccessPolicyImpl (AccessPolicyEntry innerObject, VaultImpl parent) : base(innerObject, parent)
+        {
+            Inner.TenantId = Guid.Parse(parent.TenantId);
+        }
+
+        internal string UserPrincipalName
+        {
+            get
+            {
+                return this.userPrincipalName;
+            }
+        }
+        internal string ServicePrincipalName
+        {
+            get
+            {
+                return this.servicePrincipalName;
+            }
+        }
+        public string TenantId
+        {
+            get
+            {
+                if (Inner.TenantId == null) {
+                    return null;
+                }
+                return Inner.TenantId.ToString();
+            }
+        }
+        public string ObjectId
+        {
+            get
+            {
+                if (Inner.ObjectId == null)
+                {
+                    return null;
+                }
+                return Inner.ObjectId.ToString();
+            }
+        }
+        public string ApplicationId
+        {
+            get
+            {
+                if (Inner.ApplicationId == null)
+                {
+                    return null;
+                }
+                return Inner.ApplicationId.ToString();
+            }
+        }
+        public Permissions Permissions
+        {
+            get
+            {
+                return Inner.Permissions;
+            }
+        }
+        public override string Name()
+        {
+            return ObjectId;
+        }
+
+        private void InitializeKeyPermissions ()
+        {
+            if (Inner.Permissions == null) {
+                Inner.Permissions = new Permissions();
+            }
+            if (Inner.Permissions.Keys == null) {
+                Inner.Permissions.Keys = new List<string>();
+            }
+        }
+
+        private void InitializeSecretPermissions ()
+        {
+            if (Inner.Permissions == null)
+            {
+                Inner.Permissions = new Permissions();
+            }
+            if (Inner.Permissions.Secrets == null)
+            {
+                Inner.Permissions.Secrets = new List<string>();
+            }
+        }
+
+        public AccessPolicyImpl AllowKeyPermissions (params KeyPermissions[] permissions)
+        {
+            return AllowKeyPermissions(new List<KeyPermissions>(permissions));
+        }
+
+        public AccessPolicyImpl AllowKeyPermissions (IList<KeyPermissions> permissions)
+        {
+            InitializeKeyPermissions();
+            foreach (var permission in permissions)
+            {
+                Inner.Permissions.Keys.Add(permission.ToString());
+            }
+            return this;
+        }
+
+        public AccessPolicyImpl AllowSecretPermissions (params SecretPermissions[] permissions)
+        {
+            return AllowSecretPermissions(new List<SecretPermissions>(permissions));
+        }
+
+        public AccessPolicyImpl AllowSecretPermissions (IList<SecretPermissions> permissions)
+        {
+            InitializeSecretPermissions();
+            foreach (var permission in permissions)
+            {
+                Inner.Permissions.Secrets.Add(permission.ToString());
+            }
+            return this;
+        }
+
+        public VaultImpl Attach ()
+        {
+            Parent.WithAccessPolicy(this);
+            return Parent;
+        }
+
+        public AccessPolicyImpl ForObjectId (Guid objectId)
+        {
+            Inner.ObjectId = objectId;
+            return this;
+        }
+
+        public AccessPolicyImpl ForUser (IUser user)
+        {
+            Inner.ObjectId = Guid.Parse(user.ObjectId);
+            return this;
+        }
+
+        public AccessPolicyImpl ForUser (string userPrincipalName)
+        {
+            this.userPrincipalName = userPrincipalName;
+            return this;
+        }
+
+        public AccessPolicyImpl ForGroup (IActiveDirectoryGroup group)
+        {
+            Inner.ObjectId = Guid.Parse(group.ObjectId);
+            return this;
+        }
+
+        public AccessPolicyImpl ForServicePrincipal (IServicePrincipal servicePrincipal)
+        {
+            Inner.ObjectId = Guid.Parse(servicePrincipal.ObjectId);
+            return this;
+        }
+
+        public AccessPolicyImpl ForServicePrincipal (string servicePrincipalName)
+        {
+            this.servicePrincipalName = servicePrincipalName;
+            return this;
+        }
+
+        public AccessPolicyImpl AllowKeyAllPermissions ()
+        {
+            return AllowKeyPermissions(KeyPermissions.All);
+        }
+
+        public AccessPolicyImpl DisallowKeyAllPermissions ()
+        {
+            InitializeKeyPermissions();
+            Inner.Permissions.Keys.Clear();
+            return this;
+        }
+
+        public AccessPolicyImpl DisallowKeyPermissions (params KeyPermissions[] permissions)
+        {
+            return DisallowKeyPermissions(new List<KeyPermissions>(permissions));
+        }
+
+        public AccessPolicyImpl DisallowKeyPermissions (IList<KeyPermissions> permissions)
+        {
+            InitializeSecretPermissions();
+            foreach (var permission in permissions)
+            {
+                Inner.Permissions.Keys.Remove(permission.ToString());
+            }
+            return this;
+        }
+
+        public AccessPolicyImpl AllowSecretAllPermissions ()
+        {
+            return AllowSecretPermissions(SecretPermissions.All);
+        }
+
+        public AccessPolicyImpl DisallowSecretAllPermissions ()
+        {
+            InitializeKeyPermissions();
+            Inner.Permissions.Keys.Clear();
+            return this;
+        }
+
+        public AccessPolicyImpl DisallowSecretPermissions (params SecretPermissions[] permissions)
+        {
+            return DisallowSecretPermissions(new List<SecretPermissions>(permissions));
+        }
+
+        public AccessPolicyImpl DisallowSecretPermissions (IList<SecretPermissions> permissions)
+        {
+            InitializeSecretPermissions();
+            foreach (var permission in permissions)
+            {
+                Inner.Permissions.Secrets.Remove(permission.ToString());
+            }
+            return this;
+        }
+
+        Vault.Update.IUpdate ISettable<Vault.Update.IUpdate>.Parent()
+        {
+            return Parent;
+        }
+    }
+}

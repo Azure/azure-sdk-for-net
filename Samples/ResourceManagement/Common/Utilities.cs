@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-using Microsoft.Azure.Management.Fluent.Batch;
-using Microsoft.Azure.Management.Fluent.Compute;
-using Microsoft.Azure.Management.Fluent.KeyVault;
-using Microsoft.Azure.Management.Fluent.Network;
-using Microsoft.Azure.Management.Fluent.Storage;
-using Microsoft.Azure.Management.Storage.Models;
+using Microsoft.Azure.Management.Batch.Fluent;
+using Microsoft.Azure.Management.Compute.Fluent;
+using Microsoft.Azure.Management.KeyVault.Fluent;
+using Microsoft.Azure.Management.Network.Fluent;
+using Microsoft.Azure.Management.Storage.Fluent;
+using Microsoft.Azure.Management.Storage.Fluent.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -519,7 +519,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                 .Append("Name: ").Append(vault.Name)
                 .Append("\n\tResource group: ").Append(vault.ResourceGroupName)
                 .Append("\n\tRegion: ").Append(vault.Region)
-                .Append("\n\tSku: ").Append(vault.Sku.Name).Append(" - ").Append(KeyVault.Models.Sku.Family)
+                .Append("\n\tSku: ").Append(vault.Sku.Name).Append(" - ").Append(KeyVault.Fluent.Models.Sku.Family)
                 .Append("\n\tVault URI: ").Append(vault.VaultUri)
                 .Append("\n\tAccess policies: ");
             foreach (var accessPolicy in vault.AccessPolicies)

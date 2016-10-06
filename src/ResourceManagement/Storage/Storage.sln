@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Fluent.Storage", "Microsoft.Azure.Management.Fluent.Storage\Microsoft.Azure.Management.Fluent.Storage.xproj", "{A9B44E1B-C26F-44AB-B13F-F22742371135}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Storage.Fluent", "Microsoft.Azure.Management.Storage.Fluent\Microsoft.Azure.Management.Storage.Fluent.xproj", "{A9B44E1B-C26F-44AB-B13F-F22742371135}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Fluent.ResourceManager", "..\ResourceManager\Microsoft.Azure.Management.Fluent.ResourceManager\Microsoft.Azure.Management.Fluent.ResourceManager.xproj", "{A5986BDB-0D0D-48AA-9E49-ECE96BAC8AEE}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.ResourceManager.Fluent", "..\ResourceManager\Microsoft.Azure.Management.ResourceManager.Fluent\Microsoft.Azure.Management.ResourceManager.Fluent.xproj", "{A5986BDB-0D0D-48AA-9E49-ECE96BAC8AEE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5EDB7AF4-97CA-4E00-AE39-1B2D5E98EA25}"
 	ProjectSection(SolutionItems) = preProject
