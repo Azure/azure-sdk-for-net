@@ -113,7 +113,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                     .Append("Name: ").Append(virtualMachine.Name)
                     .Append("\n\tResource group: ").Append(virtualMachine.ResourceGroupName)
                     .Append("\n\tRegion: ").Append(virtualMachine.Region)
-                    .Append("\n\tTags: ").Append(GetPrintableStringForDictionary(virtualMachine.Tags))
+                    .Append("\n\tTags: ").Append(FormatDictionary(virtualMachine.Tags))
                     .Append("\n\tHardwareProfile: ")
                     .Append("\n\t\tSize: ").Append(virtualMachine.Size)
                     .Append(storageProfile)
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                 .Append("Name: ").Append(resource.Name)
                 .Append("\n\tResource group: ").Append(resource.ResourceGroupName)
                 .Append("\n\tRegion: ").Append(resource.Region)
-                .Append("\n\tTags: ").Append(GetPrintableStringForDictionary(resource.Tags))
+                .Append("\n\tTags: ").Append(FormatDictionary(resource.Tags))
                 .Append("\n\tFault domain count: ").Append(resource.FaultDomainCount)
                 .Append("\n\tUpdate domain count: ").Append(resource.UpdateDomainCount)
                 .ToString());
@@ -187,7 +187,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                     .Append("Name: ").Append(batchAccount.Name)
                     .Append("\n\tResource group: ").Append(batchAccount.ResourceGroupName)
                     .Append("\n\tRegion: ").Append(batchAccount.Region)
-                    .Append("\n\tTags: ").Append(GetPrintableStringForDictionary(batchAccount.Tags))
+                    .Append("\n\tTags: ").Append(FormatDictionary(batchAccount.Tags))
                     .Append("\n\tAccountEndpoint: ").Append(batchAccount.AccountEndpoint)
                     .Append("\n\tPoolQuota: ").Append(batchAccount.PoolQuota)
                     .Append("\n\tActiveJobAndJobScheduleQuota: ").Append(batchAccount.ActiveJobAndJobScheduleQuota)
@@ -209,7 +209,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                     .Append("Name: ").Append(resource.Name)
                     .Append("\n\tResource group: ").Append(resource.ResourceGroupName)
                     .Append("\n\tRegion: ").Append(resource.RegionName)
-                    .Append("\n\tTags: ").Append(GetPrintableStringForDictionary(resource.Tags));
+                    .Append("\n\tTags: ").Append(FormatDictionary(resource.Tags));
 
             // Output security rules
             foreach (var rule in resource.SecurityRules.Values)
@@ -234,7 +234,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                     .Append("Name: ").Append(network.Name)
                     .Append("\n\tResource group: ").Append(network.ResourceGroupName)
                     .Append("\n\tRegion: ").Append(network.Region)
-                    .Append("\n\tTags: ").Append(GetPrintableStringForDictionary(network.Tags))
+                    .Append("\n\tTags: ").Append(FormatDictionary(network.Tags))
                     .Append("\n\tAddress spaces: ").Append(FormatCollection(network.AddressSpaces))
                     .Append("\n\tDNS server IPs: ").Append(FormatCollection(network.DnsServerIps));
 
@@ -259,7 +259,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                 .Append("Name: ").Append(publicIpAddress.Name)
                 .Append("\n\tResource group: ").Append(publicIpAddress.ResourceGroupName)
                 .Append("\n\tRegion: ").Append(publicIpAddress.Region)
-                .Append("\n\tTags: ").Append(GetPrintableStringForDictionary(publicIpAddress.Tags))
+                .Append("\n\tTags: ").Append(FormatDictionary(publicIpAddress.Tags))
                 .Append("\n\tIP Address: ").Append(publicIpAddress.IpAddress)
                 .Append("\n\tLeaf domain label: ").Append(publicIpAddress.LeafDomainLabel)
                 .Append("\n\tFQDN: ").Append(publicIpAddress.Fqdn)
@@ -276,7 +276,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                     .Append("Name: ").Append(resource.Name)
                     .Append("\n\tResource group: ").Append(resource.ResourceGroupName)
                     .Append("\n\tRegion: ").Append(resource.Region)
-                    .Append("\n\tTags: ").Append(GetPrintableStringForDictionary(resource.Tags))
+                    .Append("\n\tTags: ").Append(FormatDictionary(resource.Tags))
                     .Append("\n\tInternal DNS name label: ").Append(resource.InternalDnsNameLabel)
                     .Append("\n\tInternal FQDN: ").Append(resource.InternalFqdn)
                     .Append("\n\tInternal domain name suffix: ").Append(resource.InternalDomainNameSuffix)
@@ -307,7 +307,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                     .Append("Name: ").Append(loadBalancer.Name)
                     .Append("\n\tResource group: ").Append(loadBalancer.ResourceGroupName)
                     .Append("\n\tRegion: ").Append(loadBalancer.Region)
-                    .Append("\n\tTags: ").Append(GetPrintableStringForDictionary(loadBalancer.Tags))
+                    .Append("\n\tTags: ").Append(FormatDictionary(loadBalancer.Tags))
                     .Append("\n\tBackends: ").Append(FormatCollection(loadBalancer.Backends.Keys));
 
             // Show public IP addresses
@@ -533,7 +533,7 @@ namespace Microsoft.Azure.Management.Samples.Common
             Console.WriteLine(info.ToString());
         }
 
-        private static string GetPrintableStringForDictionary(IDictionary<string, string> dictionary)
+        private static string FormatDictionary(IDictionary<string, string> dictionary)
         {
             if (dictionary == null)
             {
