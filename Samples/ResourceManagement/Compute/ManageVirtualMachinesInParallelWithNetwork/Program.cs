@@ -149,7 +149,7 @@ namespace ManageVirtualMachinesInParallelWithNetwork
                                 .WithAddressPrefix("172.16.1.0/24")
                                 .WithExistingNetworkSecurityGroup(frontendNSG)
                             .Attach()
-                            .DefineSubnet("Back-End")
+                            .DefineSubnet("Back-end")
                                 .WithAddressPrefix("172.16.2.0/24")
                                 .WithExistingNetworkSecurityGroup(backendNSG)
                             .Attach()
@@ -191,7 +191,7 @@ namespace ManageVirtualMachinesInParallelWithNetwork
                             .WithRegion(Region.US_EAST)
                             .WithExistingResourceGroup(resourceGroup)
                             .WithExistingPrimaryNetwork(network)
-                            .WithSubnet("Backend-end")
+                            .WithSubnet("Back-end")
                             .WithPrimaryPrivateIpAddressDynamic()
                             .WithoutPrimaryPublicIpAddress()
                             .WithPopularLinuxImage(KnownLinuxVirtualMachineImage.UBUNTU_SERVER_16_04_LTS)
@@ -219,7 +219,7 @@ namespace ManageVirtualMachinesInParallelWithNetwork
                         Console.WriteLine(virtualMachine.Id);
                     }
 
-                    Console.WriteLine($"Virtual machines create: took {(endTime - startTime).Seconds} seconds");
+                    Console.WriteLine($"Virtual machines create: took {(endTime - startTime).TotalSeconds } seconds");
                 }
                 catch (Exception ex)
                 {

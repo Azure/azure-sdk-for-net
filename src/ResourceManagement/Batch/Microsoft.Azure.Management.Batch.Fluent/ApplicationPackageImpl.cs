@@ -49,11 +49,6 @@ namespace Microsoft.Azure.Management.Batch.Fluent
             }
         }
 
-        public override string Name()
-        {
-            return ResourceUtils.NameFromResourceId(Inner.Id);
-        }
-
         public override async Task<IApplicationPackage> CreateAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
             var applicationPackageInner = await client.CreateAsync(Parent.Parent.ResourceGroupName, Parent.Parent.Name, Parent.Name(), Name(), cancellationToken);
