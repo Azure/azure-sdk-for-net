@@ -71,12 +71,12 @@ namespace ManageVirtualMachine
                             .Create();
                     var endTime = DateTimeOffset.Now.UtcDateTime;
 
-                    Console.WriteLine($"Created VM: took {(endTime - startTime).Seconds} seconds");
+                    Console.WriteLine($"Created VM: took {(endTime - startTime).TotalSeconds} seconds");
 
                     Utilities.PrintVirtualMachine(windowsVM);
 
                     windowsVM.Update()
-                            .WithTag("who-rocks", "java")
+                            .WithTag("who-rocks", "open source")
                             .WithTag("where", "on azure")
                             .Apply();
 
