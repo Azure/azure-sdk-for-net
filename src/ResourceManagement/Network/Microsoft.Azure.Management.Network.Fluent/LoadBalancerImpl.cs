@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     public partial class LoadBalancerImpl : GroupableParentResource<
             ILoadBalancer,
             LoadBalancerInner,
-            Rest.Azure.Resource,
+            Microsoft.Azure.Management.Resource.Fluent.Resource,
             LoadBalancerImpl,
             INetworkManager,
             LoadBalancer.Definition.IWithGroup,

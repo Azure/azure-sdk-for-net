@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Batch.Fluent
         GroupableResource<
             IBatchAccount,
             BatchAccountInner,
-            Rest.Azure.Resource,
+            Microsoft.Azure.Management.Resource.Fluent.Resource,
             BatchAccountImpl,
             BatchManager,
             BatchAccount.Definition.IWithGroup,

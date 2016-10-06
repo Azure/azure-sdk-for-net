@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     internal partial class VirtualMachineImpl  :
         GroupableResource<IVirtualMachine,
             VirtualMachineInner,
-            Rest.Azure.Resource,
+            Microsoft.Azure.Management.Resource.Fluent.Resource,
             VirtualMachineImpl,
             IComputeManager,
             VirtualMachine.Definition.IWithGroup,
@@ -1017,7 +1017,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
             {
                 if (this.Inner.AvailabilitySet == null)
                 {
-                    this.Inner.AvailabilitySet = new Rest.Azure.SubResource();
+                    this.Inner.AvailabilitySet = new SubResource();
                 }
 
                 this.Inner.AvailabilitySet.Id = availabilitySet.Id;

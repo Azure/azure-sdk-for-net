@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
     /// Describes a Virtual Machine Scale Set.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class VirtualMachineScaleSetInner : Microsoft.Rest.Azure.Resource
+    public partial class VirtualMachineScaleSetInner : Microsoft.Azure.Management.Resource.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the VirtualMachineScaleSetInner

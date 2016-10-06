@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// A common class for general resource information
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class VirtualNetworkGatewayInner : Microsoft.Rest.Azure.Resource
+    public partial class VirtualNetworkGatewayInner : Microsoft.Azure.Management.Resource.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the VirtualNetworkGatewayInner class.
@@ -49,7 +49,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// VirtualNetworkGateway resource Updating/Deleting/Failed</param>
         /// <param name="etag">Gets a unique read-only string that changes
         /// whenever the resource is updated</param>
-        public VirtualNetworkGatewayInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), System.Collections.Generic.IList<VirtualNetworkGatewayIPConfigurationInner> ipConfigurations = default(System.Collections.Generic.IList<VirtualNetworkGatewayIPConfigurationInner>), string gatewayType = default(string), string vpnType = default(string), bool? enableBgp = default(bool?), Microsoft.Rest.Azure.SubResource gatewayDefaultSite = default(Microsoft.Rest.Azure.SubResource), VirtualNetworkGatewaySku sku = default(VirtualNetworkGatewaySku), VpnClientConfiguration vpnClientConfiguration = default(VpnClientConfiguration), BgpSettings bgpSettings = default(BgpSettings), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
+        public VirtualNetworkGatewayInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), System.Collections.Generic.IList<VirtualNetworkGatewayIPConfigurationInner> ipConfigurations = default(System.Collections.Generic.IList<VirtualNetworkGatewayIPConfigurationInner>), string gatewayType = default(string), string vpnType = default(string), bool? enableBgp = default(bool?), Microsoft.Azure.Management.Resource.Fluent.SubResource gatewayDefaultSite = default(Microsoft.Azure.Management.Resource.Fluent.SubResource), VirtualNetworkGatewaySku sku = default(VirtualNetworkGatewaySku), VpnClientConfiguration vpnClientConfiguration = default(VpnClientConfiguration), BgpSettings bgpSettings = default(BgpSettings), string resourceGuid = default(string), string provisioningState = default(string), string etag = default(string))
             : base(location, id, name, type, tags)
         {
             IpConfigurations = ipConfigurations;
@@ -97,7 +97,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// Null value in case of removing existing default site setting.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.gatewayDefaultSite")]
-        public Microsoft.Rest.Azure.SubResource GatewayDefaultSite { get; set; }
+        public Microsoft.Azure.Management.Resource.Fluent.SubResource GatewayDefaultSite { get; set; }
 
         /// <summary>
         /// Gets or sets the reference of the VirtualNetworkGatewaySku

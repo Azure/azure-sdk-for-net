@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// Pool of backend IP addresseses
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class BackendAddressPoolInner : Microsoft.Rest.Azure.SubResource
+    public partial class BackendAddressPoolInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the BackendAddressPoolInner class.
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public BackendAddressPoolInner(string id = default(string), System.Collections.Generic.IList<NetworkInterfaceIPConfigurationInner> backendIPConfigurations = default(System.Collections.Generic.IList<NetworkInterfaceIPConfigurationInner>), System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource> loadBalancingRules = default(System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource>), Microsoft.Rest.Azure.SubResource outboundNatRule = default(Microsoft.Rest.Azure.SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public BackendAddressPoolInner(string id = default(string), System.Collections.Generic.IList<NetworkInterfaceIPConfigurationInner> backendIPConfigurations = default(System.Collections.Generic.IList<NetworkInterfaceIPConfigurationInner>), System.Collections.Generic.IList<Microsoft.Azure.Management.Resource.Fluent.SubResource> loadBalancingRules = default(System.Collections.Generic.IList<Microsoft.Azure.Management.Resource.Fluent.SubResource>), Microsoft.Azure.Management.Resource.Fluent.SubResource outboundNatRule = default(Microsoft.Azure.Management.Resource.Fluent.SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             BackendIPConfigurations = backendIPConfigurations;
@@ -58,13 +58,13 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// Gets Load Balancing rules that use this Backend Address Pool
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.loadBalancingRules")]
-        public System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource> LoadBalancingRules { get; private set; }
+        public System.Collections.Generic.IList<Microsoft.Azure.Management.Resource.Fluent.SubResource> LoadBalancingRules { get; private set; }
 
         /// <summary>
         /// Gets outbound rules that use this Backend Address Pool
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.outboundNatRule")]
-        public Microsoft.Rest.Azure.SubResource OutboundNatRule { get; private set; }
+        public Microsoft.Azure.Management.Resource.Fluent.SubResource OutboundNatRule { get; private set; }
 
         /// <summary>
         /// Gets or sets get provisioning state of the PublicIP resource

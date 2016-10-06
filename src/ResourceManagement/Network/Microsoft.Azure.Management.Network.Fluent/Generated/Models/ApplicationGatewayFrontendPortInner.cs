@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// Frontend Port of application gateway
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class ApplicationGatewayFrontendPortInner : Microsoft.Rest.Azure.SubResource
+    public partial class ApplicationGatewayFrontendPortInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the

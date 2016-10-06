@@ -22,7 +22,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent
     internal partial class VirtualMachineScaleSetImpl :
         GroupableParentResource<IVirtualMachineScaleSet,
             VirtualMachineScaleSetInner,
-            Rest.Azure.Resource,
+            Microsoft.Azure.Management.Resource.Fluent.Resource,
             VirtualMachineScaleSetImpl,
             IComputeManager,
             VirtualMachineScaleSet.Definition.IWithGroup,

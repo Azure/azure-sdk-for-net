@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// Subnet in a VirtualNework resource
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class SubnetInner : Microsoft.Rest.Azure.SubResource
+    public partial class SubnetInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the SubnetInner class.

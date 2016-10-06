@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// A common class for general resource information
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class LocalNetworkGatewayInner : Microsoft.Rest.Azure.Resource
+    public partial class LocalNetworkGatewayInner : Microsoft.Azure.Management.Resource.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the LocalNetworkGatewayInner class.

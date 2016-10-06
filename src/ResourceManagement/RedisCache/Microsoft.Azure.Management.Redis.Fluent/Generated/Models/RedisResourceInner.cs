@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent.Models
     /// A single redis item in List or Get Operation.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class RedisResourceInner : Microsoft.Rest.Azure.Resource
+    public partial class RedisResourceInner : Microsoft.Azure.Management.Resource.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the RedisResourceInner class.

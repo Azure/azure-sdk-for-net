@@ -18,7 +18,7 @@ namespace Microsoft.Azure.Management.Storage.Fluent
         GroupableResource<
             IStorageAccount,
             StorageAccountInner,
-            Rest.Azure.Resource,
+            Microsoft.Azure.Management.Resource.Fluent.Resource,
             StorageAccountImpl,
             IStorageManager,
             IWithGroup,

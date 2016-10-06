@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
     /// configurations.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class VirtualMachineScaleSetNetworkConfigurationInner : Microsoft.Rest.Azure.SubResource
+    public partial class VirtualMachineScaleSetNetworkConfigurationInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the

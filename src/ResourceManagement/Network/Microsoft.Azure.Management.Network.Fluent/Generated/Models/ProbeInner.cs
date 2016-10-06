@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// Load balancer Probe
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class ProbeInner : Microsoft.Rest.Azure.SubResource
+    public partial class ProbeInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the ProbeInner class.
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public ProbeInner(string protocol, int port, string id = default(string), System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource> loadBalancingRules = default(System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource>), int? intervalInSeconds = default(int?), int? numberOfProbes = default(int?), string requestPath = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public ProbeInner(string protocol, int port, string id = default(string), System.Collections.Generic.IList<Microsoft.Azure.Management.Resource.Fluent.SubResource> loadBalancingRules = default(System.Collections.Generic.IList<Microsoft.Azure.Management.Resource.Fluent.SubResource>), int? intervalInSeconds = default(int?), int? numberOfProbes = default(int?), string requestPath = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             LoadBalancingRules = loadBalancingRules;
@@ -74,7 +74,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// Gets Load balancer rules that use this probe
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.loadBalancingRules")]
-        public System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource> LoadBalancingRules { get; private set; }
+        public System.Collections.Generic.IList<Microsoft.Azure.Management.Resource.Fluent.SubResource> LoadBalancingRules { get; private set; }
 
         /// <summary>
         /// Gets or sets the protocol of the end point. Possible values are

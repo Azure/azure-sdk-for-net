@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
     /// Resource Id.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class VirtualMachineCaptureResultInner : Microsoft.Rest.Azure.SubResource
+    public partial class VirtualMachineCaptureResultInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the VirtualMachineCaptureResultInner

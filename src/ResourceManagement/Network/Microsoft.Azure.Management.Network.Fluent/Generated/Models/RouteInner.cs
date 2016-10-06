@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// Route resource
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class RouteInner : Microsoft.Rest.Azure.SubResource
+    public partial class RouteInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the RouteInner class.

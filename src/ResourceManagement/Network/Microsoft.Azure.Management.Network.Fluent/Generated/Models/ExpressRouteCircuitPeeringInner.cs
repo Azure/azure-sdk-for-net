@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// Peering in a ExpressRouteCircuit resource
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class ExpressRouteCircuitPeeringInner : Microsoft.Rest.Azure.SubResource
+    public partial class ExpressRouteCircuitPeeringInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the ExpressRouteCircuitPeeringInner

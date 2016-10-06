@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent.Models
     /// Parameters supplied to the Create Redis operation.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class RedisCreateParametersInner : Microsoft.Rest.Azure.Resource
+    public partial class RedisCreateParametersInner : Microsoft.Azure.Management.Resource.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the RedisCreateParametersInner class.

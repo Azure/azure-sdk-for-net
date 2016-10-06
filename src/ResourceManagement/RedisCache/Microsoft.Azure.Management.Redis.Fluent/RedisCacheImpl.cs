@@ -16,7 +16,7 @@ namespace Microsoft.Azure.Management.Redis.Fluent
     /// Implementation for Redis Cache and its parent interfaces.
     /// </summary>
     internal partial class RedisCacheImpl  :
-        GroupableResource<IRedisCache, RedisResourceInner, Rest.Azure.Resource, RedisCacheImpl, IRedisManager,
+        GroupableResource<IRedisCache, RedisResourceInner, Microsoft.Azure.Management.Resource.Fluent.Resource, RedisCacheImpl, IRedisManager,
             RedisCache.Definition.IWithGroup,
             RedisCache.Definition.IWithSku,
             RedisCache.Definition.IWithCreate,

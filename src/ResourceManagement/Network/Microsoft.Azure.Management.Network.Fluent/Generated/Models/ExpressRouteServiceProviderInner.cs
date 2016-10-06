@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// ExpressRouteResourceProvider object
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class ExpressRouteServiceProviderInner : Microsoft.Rest.Azure.Resource
+    public partial class ExpressRouteServiceProviderInner : Microsoft.Azure.Management.Resource.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the ExpressRouteServiceProviderInner

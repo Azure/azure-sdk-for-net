@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
     /// Create or update Availability Set parameters.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class AvailabilitySetInner : Microsoft.Rest.Azure.Resource
+    public partial class AvailabilitySetInner : Microsoft.Azure.Management.Resource.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the AvailabilitySetInner class.
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
         /// <param name="virtualMachines">a list containing reference to all
         /// Virtual Machines created under this Availability Set.</param>
         /// <param name="statuses">the resource status information.</param>
-        public AvailabilitySetInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), int? platformUpdateDomainCount = default(int?), int? platformFaultDomainCount = default(int?), System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource> virtualMachines = default(System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource>), System.Collections.Generic.IList<InstanceViewStatus> statuses = default(System.Collections.Generic.IList<InstanceViewStatus>))
+        public AvailabilitySetInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), int? platformUpdateDomainCount = default(int?), int? platformFaultDomainCount = default(int?), System.Collections.Generic.IList<Microsoft.Azure.Management.Resource.Fluent.SubResource> virtualMachines = default(System.Collections.Generic.IList<Microsoft.Azure.Management.Resource.Fluent.SubResource>), System.Collections.Generic.IList<InstanceViewStatus> statuses = default(System.Collections.Generic.IList<InstanceViewStatus>))
             : base(location, id, name, type, tags)
         {
             PlatformUpdateDomainCount = platformUpdateDomainCount;
@@ -56,7 +56,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
         /// created under this Availability Set.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.virtualMachines")]
-        public System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource> VirtualMachines { get; set; }
+        public System.Collections.Generic.IList<Microsoft.Azure.Management.Resource.Fluent.SubResource> VirtualMachines { get; set; }
 
         /// <summary>
         /// Gets or sets the resource status information.

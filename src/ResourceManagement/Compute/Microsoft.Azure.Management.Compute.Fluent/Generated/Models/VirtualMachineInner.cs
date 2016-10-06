@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
     /// Describes a Virtual Machine.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class VirtualMachineInner : Microsoft.Rest.Azure.Resource
+    public partial class VirtualMachineInner : Microsoft.Azure.Management.Resource.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the VirtualMachineInner class.
@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
         /// <param name="vmId">the virtual machine unique id.</param>
         /// <param name="resources">the virtual machine child extension
         /// resources.</param>
-        public VirtualMachineInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), Microsoft.Rest.Azure.SubResource availabilitySet = default(Microsoft.Rest.Azure.SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), System.Collections.Generic.IList<VirtualMachineExtensionInner> resources = default(System.Collections.Generic.IList<VirtualMachineExtensionInner>))
+        public VirtualMachineInner(string location = default(string), string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), Plan plan = default(Plan), HardwareProfile hardwareProfile = default(HardwareProfile), StorageProfile storageProfile = default(StorageProfile), OSProfile osProfile = default(OSProfile), NetworkProfile networkProfile = default(NetworkProfile), DiagnosticsProfile diagnosticsProfile = default(DiagnosticsProfile), Microsoft.Azure.Management.Resource.Fluent.SubResource availabilitySet = default(Microsoft.Azure.Management.Resource.Fluent.SubResource), string provisioningState = default(string), VirtualMachineInstanceView instanceView = default(VirtualMachineInstanceView), string licenseType = default(string), string vmId = default(string), System.Collections.Generic.IList<VirtualMachineExtensionInner> resources = default(System.Collections.Generic.IList<VirtualMachineExtensionInner>))
             : base(location, id, name, type, tags)
         {
             Plan = plan;
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
         /// this virtual machine belongs.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.availabilitySet")]
-        public Microsoft.Rest.Azure.SubResource AvailabilitySet { get; set; }
+        public Microsoft.Azure.Management.Resource.Fluent.SubResource AvailabilitySet { get; set; }
 
         /// <summary>
         /// Gets the provisioning state, which only appears in the response.

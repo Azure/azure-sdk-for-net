@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// Peerings in a VirtualNework resource
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class VirtualNetworkPeeringInner : Microsoft.Rest.Azure.SubResource
+    public partial class VirtualNetworkPeeringInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the VirtualNetworkPeeringInner class.
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// the resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public VirtualNetworkPeeringInner(string id = default(string), bool? allowVirtualNetworkAccess = default(bool?), bool? allowForwardedTraffic = default(bool?), bool? allowGatewayTransit = default(bool?), bool? useRemoteGateways = default(bool?), Microsoft.Rest.Azure.SubResource remoteVirtualNetwork = default(Microsoft.Rest.Azure.SubResource), string peeringState = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public VirtualNetworkPeeringInner(string id = default(string), bool? allowVirtualNetworkAccess = default(bool?), bool? allowForwardedTraffic = default(bool?), bool? allowGatewayTransit = default(bool?), bool? useRemoteGateways = default(bool?), Microsoft.Azure.Management.Resource.Fluent.SubResource remoteVirtualNetwork = default(Microsoft.Azure.Management.Resource.Fluent.SubResource), string peeringState = default(string), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             AllowVirtualNetworkAccess = allowVirtualNetworkAccess;
@@ -101,7 +101,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// Gets or sets the reference of the remote virtual network
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.remoteVirtualNetwork")]
-        public Microsoft.Rest.Azure.SubResource RemoteVirtualNetwork { get; set; }
+        public Microsoft.Azure.Management.Resource.Fluent.SubResource RemoteVirtualNetwork { get; set; }
 
         /// <summary>
         /// Gets the status of the virtual network peering. Possible values

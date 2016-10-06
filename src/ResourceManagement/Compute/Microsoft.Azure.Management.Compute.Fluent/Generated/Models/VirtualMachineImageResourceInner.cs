@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
     /// <summary>
     /// Virtual machine image resource information.
     /// </summary>
-    public partial class VirtualMachineImageResourceInner : Microsoft.Rest.Azure.SubResource
+    public partial class VirtualMachineImageResourceInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the VirtualMachineImageResourceInner

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// Http listener of application gateway
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class ApplicationGatewayHttpListenerInner : Microsoft.Rest.Azure.SubResource
+    public partial class ApplicationGatewayHttpListenerInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public ApplicationGatewayHttpListenerInner(string id = default(string), Microsoft.Rest.Azure.SubResource frontendIPConfiguration = default(Microsoft.Rest.Azure.SubResource), Microsoft.Rest.Azure.SubResource frontendPort = default(Microsoft.Rest.Azure.SubResource), string protocol = default(string), string hostName = default(string), Microsoft.Rest.Azure.SubResource sslCertificate = default(Microsoft.Rest.Azure.SubResource), bool? requireServerNameIndication = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public ApplicationGatewayHttpListenerInner(string id = default(string), Microsoft.Azure.Management.Resource.Fluent.SubResource frontendIPConfiguration = default(Microsoft.Azure.Management.Resource.Fluent.SubResource), Microsoft.Azure.Management.Resource.Fluent.SubResource frontendPort = default(Microsoft.Azure.Management.Resource.Fluent.SubResource), string protocol = default(string), string hostName = default(string), Microsoft.Azure.Management.Resource.Fluent.SubResource sslCertificate = default(Microsoft.Azure.Management.Resource.Fluent.SubResource), bool? requireServerNameIndication = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             FrontendIPConfiguration = frontendIPConfiguration;
@@ -64,13 +64,13 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// gateway
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.frontendIPConfiguration")]
-        public Microsoft.Rest.Azure.SubResource FrontendIPConfiguration { get; set; }
+        public Microsoft.Azure.Management.Resource.Fluent.SubResource FrontendIPConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets frontend port resource of application gateway
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.frontendPort")]
-        public Microsoft.Rest.Azure.SubResource FrontendPort { get; set; }
+        public Microsoft.Azure.Management.Resource.Fluent.SubResource FrontendPort { get; set; }
 
         /// <summary>
         /// Gets or sets protocol. Possible values include: 'Http', 'Https'
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// Gets or sets ssl certificate resource of application gateway
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.sslCertificate")]
-        public Microsoft.Rest.Azure.SubResource SslCertificate { get; set; }
+        public Microsoft.Azure.Management.Resource.Fluent.SubResource SslCertificate { get; set; }
 
         /// <summary>
         /// Gets or sets requireServerNameIndication of http listener

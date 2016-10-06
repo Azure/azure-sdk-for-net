@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// UrlPathMap of application gateway
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class ApplicationGatewayUrlPathMapInner : Microsoft.Rest.Azure.SubResource
+    public partial class ApplicationGatewayUrlPathMapInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -38,7 +38,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public ApplicationGatewayUrlPathMapInner(string id = default(string), Microsoft.Rest.Azure.SubResource defaultBackendAddressPool = default(Microsoft.Rest.Azure.SubResource), Microsoft.Rest.Azure.SubResource defaultBackendHttpSettings = default(Microsoft.Rest.Azure.SubResource), System.Collections.Generic.IList<ApplicationGatewayPathRuleInner> pathRules = default(System.Collections.Generic.IList<ApplicationGatewayPathRuleInner>), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public ApplicationGatewayUrlPathMapInner(string id = default(string), Microsoft.Azure.Management.Resource.Fluent.SubResource defaultBackendAddressPool = default(Microsoft.Azure.Management.Resource.Fluent.SubResource), Microsoft.Azure.Management.Resource.Fluent.SubResource defaultBackendHttpSettings = default(Microsoft.Azure.Management.Resource.Fluent.SubResource), System.Collections.Generic.IList<ApplicationGatewayPathRuleInner> pathRules = default(System.Collections.Generic.IList<ApplicationGatewayPathRuleInner>), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             DefaultBackendAddressPool = defaultBackendAddressPool;
@@ -53,14 +53,14 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// Gets or sets default backend address pool resource of URL path map
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.defaultBackendAddressPool")]
-        public Microsoft.Rest.Azure.SubResource DefaultBackendAddressPool { get; set; }
+        public Microsoft.Azure.Management.Resource.Fluent.SubResource DefaultBackendAddressPool { get; set; }
 
         /// <summary>
         /// Gets or sets default backend http settings resource of URL path
         /// map
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.defaultBackendHttpSettings")]
-        public Microsoft.Rest.Azure.SubResource DefaultBackendHttpSettings { get; set; }
+        public Microsoft.Azure.Management.Resource.Fluent.SubResource DefaultBackendHttpSettings { get; set; }
 
         /// <summary>
         /// Gets or sets path rule of URL path map resource

@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// Inbound NAT rule of the loadbalancer
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class InboundNatRuleInner : Microsoft.Rest.Azure.SubResource
+    public partial class InboundNatRuleInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the InboundNatRuleInner class.
@@ -62,7 +62,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public InboundNatRuleInner(string id = default(string), Microsoft.Rest.Azure.SubResource frontendIPConfiguration = default(Microsoft.Rest.Azure.SubResource), NetworkInterfaceIPConfigurationInner backendIPConfiguration = default(NetworkInterfaceIPConfigurationInner), string protocol = default(string), int? frontendPort = default(int?), int? backendPort = default(int?), int? idleTimeoutInMinutes = default(int?), bool? enableFloatingIP = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public InboundNatRuleInner(string id = default(string), Microsoft.Azure.Management.Resource.Fluent.SubResource frontendIPConfiguration = default(Microsoft.Azure.Management.Resource.Fluent.SubResource), NetworkInterfaceIPConfigurationInner backendIPConfiguration = default(NetworkInterfaceIPConfigurationInner), string protocol = default(string), int? frontendPort = default(int?), int? backendPort = default(int?), int? idleTimeoutInMinutes = default(int?), bool? enableFloatingIP = default(bool?), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             FrontendIPConfiguration = frontendIPConfiguration;
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// Gets or sets a reference to frontend IP Addresses
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.frontendIPConfiguration")]
-        public Microsoft.Rest.Azure.SubResource FrontendIPConfiguration { get; set; }
+        public Microsoft.Azure.Management.Resource.Fluent.SubResource FrontendIPConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets a reference to a private ip address defined on a

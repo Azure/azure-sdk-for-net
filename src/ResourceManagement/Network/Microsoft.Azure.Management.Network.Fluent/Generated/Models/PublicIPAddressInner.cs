@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// PublicIPAddress resource
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class PublicIPAddressInner : Microsoft.Rest.Azure.Resource
+    public partial class PublicIPAddressInner : Microsoft.Azure.Management.Resource.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the PublicIPAddressInner class.

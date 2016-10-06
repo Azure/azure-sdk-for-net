@@ -3,6 +3,7 @@
 namespace Microsoft.Azure.Management.Network.Fluent
 {
     using Management.Network.Fluent.Models;
+    using Resource.Fluent;
     using Resource.Fluent.Core;
     using Resource.Fluent.Core.ChildResourceActions;
     using Rest.Azure;

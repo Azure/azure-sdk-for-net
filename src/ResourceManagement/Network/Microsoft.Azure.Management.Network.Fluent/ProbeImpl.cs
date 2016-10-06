@@ -7,6 +7,7 @@ namespace Microsoft.Azure.Management.Network.Fluent
     using System.Collections.Generic;
     using Resource.Fluent.Core.ChildResourceActions;
     using Rest.Azure;
+    using Resource.Fluent;
 
     public partial class ProbeImpl  :
         ChildResource<ProbeInner, LoadBalancerImpl, ILoadBalancer>,

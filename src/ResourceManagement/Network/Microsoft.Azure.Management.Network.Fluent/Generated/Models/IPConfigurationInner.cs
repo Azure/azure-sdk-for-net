@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// IPConfiguration
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class IPConfigurationInner : Microsoft.Rest.Azure.SubResource
+    public partial class IPConfigurationInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the IPConfigurationInner class.

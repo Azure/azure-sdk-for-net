@@ -15,7 +15,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
     /// configuration.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class VirtualMachineScaleSetIPConfigurationInner : Microsoft.Rest.Azure.SubResource
+    public partial class VirtualMachineScaleSetIPConfigurationInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
         /// backend address pools.</param>
         /// <param name="loadBalancerInboundNatPools">the load balancer
         /// inbound nat pools.</param>
-        public VirtualMachineScaleSetIPConfigurationInner(string name, ApiEntityReference subnet, string id = default(string), System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource> applicationGatewayBackendAddressPools = default(System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource>), System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource> loadBalancerBackendAddressPools = default(System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource>), System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource> loadBalancerInboundNatPools = default(System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource>))
+        public VirtualMachineScaleSetIPConfigurationInner(string name, ApiEntityReference subnet, string id = default(string), System.Collections.Generic.IList<Microsoft.Azure.Management.Resource.Fluent.SubResource> applicationGatewayBackendAddressPools = default(System.Collections.Generic.IList<Microsoft.Azure.Management.Resource.Fluent.SubResource>), System.Collections.Generic.IList<Microsoft.Azure.Management.Resource.Fluent.SubResource> loadBalancerBackendAddressPools = default(System.Collections.Generic.IList<Microsoft.Azure.Management.Resource.Fluent.SubResource>), System.Collections.Generic.IList<Microsoft.Azure.Management.Resource.Fluent.SubResource> loadBalancerInboundNatPools = default(System.Collections.Generic.IList<Microsoft.Azure.Management.Resource.Fluent.SubResource>))
             : base(id)
         {
             Name = name;
@@ -61,19 +61,19 @@ namespace Microsoft.Azure.Management.Compute.Fluent.Models
         /// Gets or sets the application gateway backend address pools.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.applicationGatewayBackendAddressPools")]
-        public System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource> ApplicationGatewayBackendAddressPools { get; set; }
+        public System.Collections.Generic.IList<Microsoft.Azure.Management.Resource.Fluent.SubResource> ApplicationGatewayBackendAddressPools { get; set; }
 
         /// <summary>
         /// Gets or sets the load balancer backend address pools.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.loadBalancerBackendAddressPools")]
-        public System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource> LoadBalancerBackendAddressPools { get; set; }
+        public System.Collections.Generic.IList<Microsoft.Azure.Management.Resource.Fluent.SubResource> LoadBalancerBackendAddressPools { get; set; }
 
         /// <summary>
         /// Gets or sets the load balancer inbound nat pools.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.loadBalancerInboundNatPools")]
-        public System.Collections.Generic.IList<Microsoft.Rest.Azure.SubResource> LoadBalancerInboundNatPools { get; set; }
+        public System.Collections.Generic.IList<Microsoft.Azure.Management.Resource.Fluent.SubResource> LoadBalancerInboundNatPools { get; set; }
 
         /// <summary>
         /// Validate the object.

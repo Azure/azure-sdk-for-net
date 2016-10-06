@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// Request routing rule of application gateway
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class ApplicationGatewayRequestRoutingRuleInner : Microsoft.Rest.Azure.SubResource
+    public partial class ApplicationGatewayRequestRoutingRuleInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public ApplicationGatewayRequestRoutingRuleInner(string id = default(string), string ruleType = default(string), Microsoft.Rest.Azure.SubResource backendAddressPool = default(Microsoft.Rest.Azure.SubResource), Microsoft.Rest.Azure.SubResource backendHttpSettings = default(Microsoft.Rest.Azure.SubResource), Microsoft.Rest.Azure.SubResource httpListener = default(Microsoft.Rest.Azure.SubResource), Microsoft.Rest.Azure.SubResource urlPathMap = default(Microsoft.Rest.Azure.SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public ApplicationGatewayRequestRoutingRuleInner(string id = default(string), string ruleType = default(string), Microsoft.Azure.Management.Resource.Fluent.SubResource backendAddressPool = default(Microsoft.Azure.Management.Resource.Fluent.SubResource), Microsoft.Azure.Management.Resource.Fluent.SubResource backendHttpSettings = default(Microsoft.Azure.Management.Resource.Fluent.SubResource), Microsoft.Azure.Management.Resource.Fluent.SubResource httpListener = default(Microsoft.Azure.Management.Resource.Fluent.SubResource), Microsoft.Azure.Management.Resource.Fluent.SubResource urlPathMap = default(Microsoft.Azure.Management.Resource.Fluent.SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             RuleType = ruleType;
@@ -67,25 +67,25 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// Gets or sets backend address pool resource of application gateway
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.backendAddressPool")]
-        public Microsoft.Rest.Azure.SubResource BackendAddressPool { get; set; }
+        public Microsoft.Azure.Management.Resource.Fluent.SubResource BackendAddressPool { get; set; }
 
         /// <summary>
         /// Gets or sets frontend port resource of application gateway
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.backendHttpSettings")]
-        public Microsoft.Rest.Azure.SubResource BackendHttpSettings { get; set; }
+        public Microsoft.Azure.Management.Resource.Fluent.SubResource BackendHttpSettings { get; set; }
 
         /// <summary>
         /// Gets or sets http listener resource of application gateway
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.httpListener")]
-        public Microsoft.Rest.Azure.SubResource HttpListener { get; set; }
+        public Microsoft.Azure.Management.Resource.Fluent.SubResource HttpListener { get; set; }
 
         /// <summary>
         /// Gets or sets url path map resource of application gateway
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.urlPathMap")]
-        public Microsoft.Rest.Azure.SubResource UrlPathMap { get; set; }
+        public Microsoft.Azure.Management.Resource.Fluent.SubResource UrlPathMap { get; set; }
 
         /// <summary>
         /// Gets or sets provisioning state of the request routing rule

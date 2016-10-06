@@ -28,7 +28,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// <param name="subnet">Gets the id of subnet if assigned</param>
         /// <param name="networkInterface">Gets the id of network interface if
         /// assigned</param>
-        public EffectiveNetworkSecurityGroupAssociation(Microsoft.Rest.Azure.SubResource subnet = default(Microsoft.Rest.Azure.SubResource), Microsoft.Rest.Azure.SubResource networkInterface = default(Microsoft.Rest.Azure.SubResource))
+        public EffectiveNetworkSecurityGroupAssociation(Microsoft.Azure.Management.Resource.Fluent.SubResource subnet = default(Microsoft.Azure.Management.Resource.Fluent.SubResource), Microsoft.Azure.Management.Resource.Fluent.SubResource networkInterface = default(Microsoft.Azure.Management.Resource.Fluent.SubResource))
         {
             Subnet = subnet;
             NetworkInterface = networkInterface;
@@ -38,13 +38,13 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// Gets the id of subnet if assigned
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "subnet")]
-        public Microsoft.Rest.Azure.SubResource Subnet { get; set; }
+        public Microsoft.Azure.Management.Resource.Fluent.SubResource Subnet { get; set; }
 
         /// <summary>
         /// Gets the id of network interface if assigned
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "networkInterface")]
-        public Microsoft.Rest.Azure.SubResource NetworkInterface { get; set; }
+        public Microsoft.Azure.Management.Resource.Fluent.SubResource NetworkInterface { get; set; }
 
     }
 }

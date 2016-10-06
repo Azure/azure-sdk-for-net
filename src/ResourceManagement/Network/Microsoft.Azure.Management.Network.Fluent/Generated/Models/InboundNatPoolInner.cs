@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// Inbound NAT pool of the loadbalancer
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class InboundNatPoolInner : Microsoft.Rest.Azure.SubResource
+    public partial class InboundNatPoolInner : Microsoft.Azure.Management.Resource.Fluent.SubResource
     {
         /// <summary>
         /// Initializes a new instance of the InboundNatPoolInner class.
@@ -55,7 +55,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// resource</param>
         /// <param name="etag">A unique read-only string that changes whenever
         /// the resource is updated</param>
-        public InboundNatPoolInner(string protocol, int frontendPortRangeStart, int frontendPortRangeEnd, int backendPort, string id = default(string), Microsoft.Rest.Azure.SubResource frontendIPConfiguration = default(Microsoft.Rest.Azure.SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public InboundNatPoolInner(string protocol, int frontendPortRangeStart, int frontendPortRangeEnd, int backendPort, string id = default(string), Microsoft.Azure.Management.Resource.Fluent.SubResource frontendIPConfiguration = default(Microsoft.Azure.Management.Resource.Fluent.SubResource), string provisioningState = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             FrontendIPConfiguration = frontendIPConfiguration;
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
         /// Gets or sets a reference to frontend IP Addresses
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.frontendIPConfiguration")]
-        public Microsoft.Rest.Azure.SubResource FrontendIPConfiguration { get; set; }
+        public Microsoft.Azure.Management.Resource.Fluent.SubResource FrontendIPConfiguration { get; set; }
 
         /// <summary>
         /// Gets or sets the transport potocol for the endpoint. Possible

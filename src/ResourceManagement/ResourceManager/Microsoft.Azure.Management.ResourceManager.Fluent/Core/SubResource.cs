@@ -1,13 +1,13 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
-namespace Microsoft.Rest.Azure
+namespace Microsoft.Azure.Management.Resource.Fluent
 {
     using Newtonsoft.Json;
 
     /// <summary>
     /// </summary>
-    public partial class SubResource : IResource
+    public partial class SubResource : Rest.Azure.IResource
     {
         /// <summary>
         /// Initializes a new instance of the SubResource class.

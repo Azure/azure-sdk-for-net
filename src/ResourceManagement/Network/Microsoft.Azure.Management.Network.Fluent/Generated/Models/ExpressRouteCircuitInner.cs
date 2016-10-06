@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Network.Fluent.Models
     /// ExpressRouteCircuit resource
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class ExpressRouteCircuitInner : Microsoft.Rest.Azure.Resource
+    public partial class ExpressRouteCircuitInner : Microsoft.Azure.Management.Resource.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the ExpressRouteCircuitInner class.

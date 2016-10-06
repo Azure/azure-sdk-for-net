@@ -13,7 +13,7 @@ namespace Microsoft.Azure.Management.Resource.Fluent.Models
     /// <summary>
     /// Resource information.
     /// </summary>
-    public partial class GenericResourceInner : Microsoft.Rest.Azure.Resource
+    public partial class GenericResourceInner : Microsoft.Azure.Management.Resource.Fluent.Resource
     {
         /// <summary>
         /// Initializes a new instance of the GenericResourceInner class.
