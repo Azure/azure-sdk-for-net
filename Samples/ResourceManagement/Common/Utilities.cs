@@ -8,6 +8,7 @@ using Microsoft.Azure.Management.Network.Fluent;
 using Microsoft.Azure.Management.Storage.Fluent;
 using Microsoft.Azure.Management.Storage.Fluent.Models;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 
@@ -234,8 +235,8 @@ namespace Microsoft.Azure.Management.Samples.Common
                     .Append("\n\tResource group: ").Append(network.ResourceGroupName)
                     .Append("\n\tRegion: ").Append(network.Region)
                     .Append("\n\tTags: ").Append(GetPrintableStringForDictionary(network.Tags))
-                    .Append("\n\tAddress spaces: ").Append(GetPrintableStringForList(network.AddressSpaces))
-                    .Append("\n\tDNS server IPs: ").Append(GetPrintableStringForList(network.DnsServerIps));
+                    .Append("\n\tAddress spaces: ").Append(FormatCollection(network.AddressSpaces))
+                    .Append("\n\tDNS server IPs: ").Append(FormatCollection(network.DnsServerIps));
 
             // Output subnets
             foreach (var subnet in network.Subnets.Values)
@@ -280,7 +281,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                     .Append("\n\tInternal FQDN: ").Append(resource.InternalFqdn)
                     .Append("\n\tInternal domain name suffix: ").Append(resource.InternalDomainNameSuffix)
                     .Append("\n\tNetwork security group: ").Append(resource.NetworkSecurityGroupId)
-                    .Append("\n\tApplied DNS servers: ").Append(GetPrintableStringForList(resource.AppliedDnsServers))
+                    .Append("\n\tApplied DNS servers: ").Append(FormatCollection(resource.AppliedDnsServers))
                     .Append("\n\tDNS server IPs: ");
 
             // Output dns servers
@@ -307,7 +308,7 @@ namespace Microsoft.Azure.Management.Samples.Common
                     .Append("\n\tResource group: ").Append(loadBalancer.ResourceGroupName)
                     .Append("\n\tRegion: ").Append(loadBalancer.Region)
                     .Append("\n\tTags: ").Append(GetPrintableStringForDictionary(loadBalancer.Tags))
-                    .Append("\n\tBackends: ").Append(loadBalancer.Backends.Keys);
+                    .Append("\n\tBackends: ").Append(FormatCollection(loadBalancer.Backends.Keys));
 
             // Show public IP addresses
             info.Append("\n\tPublic IP address IDs: ")
@@ -507,7 +508,7 @@ namespace Microsoft.Azure.Management.Samples.Common
 
                 // Show assigned load balancing rules
                 info.Append("\n\t\t\tReferenced load balancing rules: ")
-                        .Append(GetPrintableStringForList(new List<string>(backend.LoadBalancingRules.Keys)));
+                        .Append(FormatCollection(backend.LoadBalancingRules.Keys));
             }
 
             Console.WriteLine(info.ToString());
@@ -525,8 +526,8 @@ namespace Microsoft.Azure.Management.Samples.Common
             foreach (var accessPolicy in vault.AccessPolicies)
             {
                 info.Append("\n\t\tIdentity:").Append(accessPolicy.ObjectId)
-                        .Append("\n\t\tKey permissions: ").Append(string.Join(", ", accessPolicy.Permissions.Keys))
-                        .Append("\n\t\tSecret permissions: ").Append(string.Join(", ", accessPolicy.Permissions.Secrets));
+                        .Append("\n\t\tKey permissions: ").Append(FormatCollection(accessPolicy.Permissions.Keys))
+                        .Append("\n\t\tSecret permissions: ").Append(FormatCollection(accessPolicy.Permissions.Secrets));
             }
 
             Console.WriteLine(info.ToString());
@@ -544,9 +545,9 @@ namespace Microsoft.Azure.Management.Samples.Common
             return outputString.ToString();
         }
 
-        private static string GetPrintableStringForList(IList<string> addressSpaces)
+        private static string FormatCollection(IEnumerable<string> collection)
         {
-            return string.Join(",", addressSpaces);
+            return string.Join(", ", collection);
         }
     }
 }
