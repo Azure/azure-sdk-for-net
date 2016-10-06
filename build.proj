@@ -122,9 +122,10 @@
              Targets="Build" />
     
     <!-- Restoring everyting from the root folder wipes out Storage nuget references and adds Storage project reference to all projects. -->
-    <Exec Command="dotnet restore" WorkingDirectory="%(NetCore_AutoRestLibraries.Library)" Condition=" @(NetCore_AutoRestLibraries) != '' "/>
+    <!-- <Exec Command="dotnet restore" WorkingDirectory="%(NetCore_AutoRestLibraries.Library)" Condition=" @(NetCore_AutoRestLibraries) != '' "/> 
     <Exec Command="dotnet restore" WorkingDirectory="%(NetCore_AutoRestLibraries.Test)" Condition=" @(NetCore_AutoRestLibraries) != '' and '%(NetCore_AutoRestLibraries.Test)' != '' and '$(Configuration)' != 'Release' "/>
-    <Exec Command="dotnet restore" WorkingDirectory="$(SamplesFolder)" Condition=" '$(Configuration)' != 'Release' "/>
+    <Exec Command="dotnet restore" WorkingDirectory="$(SamplesFolder)" Condition=" '$(Configuration)' != 'Release' "/> -->
+    <Exec Command="dotnet restore" WorkingDirectory="$(LibraryRoot)" />
     
 
     <CallTarget Targets="BuildNetCoreLibraries" Condition=" @(NetCore_AutoRestLibraries) != '' " />
