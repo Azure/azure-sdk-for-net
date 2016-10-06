@@ -10,12 +10,12 @@ namespace Microsoft.Azure.Management.ServerManagement.Models
 {
 
     /// <summary>
-    /// Defines values for PowerShellExpandOption.
+    /// Defines values for CredentialDataFormat.
     /// </summary>
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-    public enum PowerShellExpandOption
+    public enum CredentialDataFormat
     {
-        [System.Runtime.Serialization.EnumMember(Value = "output")]
-        Output
+        [System.Runtime.Serialization.EnumMember(Value = "RsaEncrypted")]
+        RsaEncrypted
     }
 }

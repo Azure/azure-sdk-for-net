@@ -1,0 +1,135 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourceGroups/sdktest/providers/Microsoft.ServerManagement/nodes?api-version=2016-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTAxZmJhYjgtMTcxNC00Zjk0LThiNjctNDBkNzgyN2E1ZWZkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5TZXJ2ZXJNYW5hZ2VtZW50L25vZGVzP2FwaS12ZXJzaW9uPTIwMTYtMDctMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "7a9d02d2-341b-4de5-a27b-69d217a2bc09"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.ServerManagement.ServerManagementClient/1.0.7"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": []\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 23 Sep 2016 21:33:16 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14986"
+        ],
+        "x-ms-request-id": [
+          "b4bb3427-a02e-40a6-aa28-9fa37f71175d"
+        ],
+        "x-ms-correlation-request-id": [
+          "b4bb3427-a02e-40a6-aa28-9fa37f71175d"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160923T213317Z:b4bb3427-a02e-40a6-aa28-9fa37f71175d"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ]
+      },
+      "StatusCode": 200
+    },
+    {
+      "RequestUri": "/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourceGroups/sdktest/providers/Microsoft.ServerManagement/gateways?api-version=2016-07-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvYTAxZmJhYjgtMTcxNC00Zjk0LThiNjctNDBkNzgyN2E1ZWZkL3Jlc291cmNlR3JvdXBzL3Nka3Rlc3QvcHJvdmlkZXJzL01pY3Jvc29mdC5TZXJ2ZXJNYW5hZ2VtZW50L2dhdGV3YXlzP2FwaS12ZXJzaW9uPTIwMTYtMDctMDEtcHJldmlldw==",
+      "RequestMethod": "GET",
+      "RequestBody": "",
+      "RequestHeaders": {
+        "x-ms-client-request-id": [
+          "9709251c-907a-4b6e-afe9-f60207661145"
+        ],
+        "accept-language": [
+          "en-US"
+        ],
+        "User-Agent": [
+          "Microsoft.Azure.Management.ServerManagement.ServerManagementClient/1.0.7"
+        ]
+      },
+      "ResponseBody": "{\r\n  \"value\": [\r\n    {\r\n      \"id\": \"/subscriptions/a01fbab8-1714-4f94-8b67-40d7827a5efd/resourcegroups/sdktest/providers/microsoft.servermanagement/gateways/rameshr12\",\r\n      \"name\": \"rameshr12\",\r\n      \"type\": \"microsoft.servermanagement/gateways\",\r\n      \"location\": \"centralus\",\r\n      \"etag\": \"W/\\\"datetime'2016-09-22T19%3A48%3A35.9490958Z'\\\"\",\r\n      \"properties\": {\r\n        \"created\": \"2016-09-22T19:32:15.1387289Z\",\r\n        \"updated\": \"2016-09-22T19:48:34.2572838Z\",\r\n        \"autoUpgrade\": \"On\",\r\n        \"upgradeMode\": \"Automatic\",\r\n        \"desiredVersion\": null,\r\n        \"minimumVersion\": \"1.0.1547.0\"\r\n      }\r\n    }\r\n  ]\r\n}",
+      "ResponseHeaders": {
+        "Content-Type": [
+          "application/json; charset=utf-8"
+        ],
+        "Expires": [
+          "-1"
+        ],
+        "Cache-Control": [
+          "no-cache"
+        ],
+        "Date": [
+          "Fri, 23 Sep 2016 21:33:16 GMT"
+        ],
+        "Pragma": [
+          "no-cache"
+        ],
+        "Transfer-Encoding": [
+          "chunked"
+        ],
+        "Server": [
+          "Microsoft-IIS/8.5"
+        ],
+        "Vary": [
+          "Accept-Encoding"
+        ],
+        "x-ms-request-id": [
+          "ff019bc3-b65a-4767-9176-6019a9fdd849"
+        ],
+        "x-managementservice-fileversion": [
+          "1.0.1684.0"
+        ],
+        "X-Content-Type-Options": [
+          "nosniff"
+        ],
+        "Strict-Transport-Security": [
+          "max-age=31536000; includeSubDomains"
+        ],
+        "X-AspNet-Version": [
+          "4.0.30319"
+        ],
+        "X-Powered-By": [
+          "ASP.NET"
+        ],
+        "x-ms-ratelimit-remaining-subscription-reads": [
+          "14985"
+        ],
+        "x-ms-correlation-request-id": [
+          "ff019bc3-b65a-4767-9176-6019a9fdd849"
+        ],
+        "x-ms-routing-request-id": [
+          "CENTRALUS:20160923T213317Z:ff019bc3-b65a-4767-9176-6019a9fdd849"
+        ]
+      },
+      "StatusCode": 200
+    }
+  ],
+  "Names": {},
+  "Variables": {
+    "SubscriptionId": "a01fbab8-1714-4f94-8b67-40d7827a5efd",
+    "SMT_GATEWAY_2": "RAMESHR12"
+  }
+}

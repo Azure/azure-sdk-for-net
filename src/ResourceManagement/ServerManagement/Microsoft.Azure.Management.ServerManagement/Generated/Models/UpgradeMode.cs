@@ -10,12 +10,14 @@ namespace Microsoft.Azure.Management.ServerManagement.Models
 {
 
     /// <summary>
-    /// Defines values for PowerShellExpandOption.
+    /// Defines values for UpgradeMode.
     /// </summary>
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-    public enum PowerShellExpandOption
+    public enum UpgradeMode
     {
-        [System.Runtime.Serialization.EnumMember(Value = "output")]
-        Output
+        [System.Runtime.Serialization.EnumMember(Value = "Manual")]
+        Manual,
+        [System.Runtime.Serialization.EnumMember(Value = "Automatic")]
+        Automatic
     }
 }
