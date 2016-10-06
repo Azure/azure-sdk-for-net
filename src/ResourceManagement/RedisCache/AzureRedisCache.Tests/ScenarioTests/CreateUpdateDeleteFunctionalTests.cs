@@ -44,7 +44,7 @@ namespace AzureRedisCache.Tests
             { 
                 var _client = RedisCacheManagementTestUtilities.GetRedisManagementClient(this, context);
 
-                RedisResourceWithAccessKey responseCreate = _client.Redis.CreateOrUpdate(resourceGroupName: fixture.ResourceGroupName, name: fixture.RedisCacheName,
+                var responseCreate = _client.Redis.CreateOrUpdate(resourceGroupName: fixture.ResourceGroupName, name: fixture.RedisCacheName,
                                         parameters: new RedisCreateOrUpdateParameters
                                         {
                                             Location = fixture.Location,
@@ -83,7 +83,7 @@ namespace AzureRedisCache.Tests
                     Assert.False(i == 60, "Cache is not in succeeded state even after 30 min.");
                 }
 
-                RedisResourceWithAccessKey responseUpdate = _client.Redis.CreateOrUpdate(resourceGroupName: fixture.ResourceGroupName, name: fixture.RedisCacheName,
+                var responseUpdate = _client.Redis.CreateOrUpdate(resourceGroupName: fixture.ResourceGroupName, name: fixture.RedisCacheName,
                                         parameters: new RedisCreateOrUpdateParameters
                                         {
                                             Location = fixture.Location,

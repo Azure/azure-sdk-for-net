@@ -71,7 +71,7 @@ namespace AzureRedisCache.Tests
         public void TryCreatingCache(string resourceGroupName, string cacheName, string location)
         {
             var redisClient = RedisCacheManagementTestUtilities.GetRedisManagementClient(_testBase, _context);
-            RedisResourceWithAccessKey createResponse = redisClient.Redis.CreateOrUpdate(resourceGroupName: resourceGroupName, name: cacheName,
+            var createResponse = redisClient.Redis.CreateOrUpdate(resourceGroupName: resourceGroupName, name: cacheName,
                                     parameters: new RedisCreateOrUpdateParameters
                                     {
                                         Location = location,

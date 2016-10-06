@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Redis.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Parameters for redis export operation.
@@ -29,6 +23,9 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// <summary>
         /// Initializes a new instance of the ExportRDBParameters class.
         /// </summary>
+        /// <param name="prefix">Prefix to use for exported files.</param>
+        /// <param name="container">Container name to export to.</param>
+        /// <param name="format">File format.</param>
         public ExportRDBParameters(string prefix, string container, string format = default(string))
         {
             Format = format;
@@ -39,33 +36,36 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// <summary>
         /// Gets or sets file format.
         /// </summary>
-        [JsonProperty(PropertyName = "format")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "format")]
         public string Format { get; set; }
 
         /// <summary>
-        /// Gets or sets prifix to use for exported files.
+        /// Gets or sets prefix to use for exported files.
         /// </summary>
-        [JsonProperty(PropertyName = "prefix")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "prefix")]
         public string Prefix { get; set; }
 
         /// <summary>
         /// Gets or sets container name to export to.
         /// </summary>
-        [JsonProperty(PropertyName = "container")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "container")]
         public string Container { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public virtual void Validate()
         {
             if (Prefix == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Prefix");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Prefix");
             }
             if (Container == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Container");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Container");
             }
         }
     }
