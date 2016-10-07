@@ -110,6 +110,7 @@
   <Target Name="PackageClientRuntimeProjects">
     <ItemGroup>
       <ClientRuntimeProjectJsons Include="$(LibrarySourceFolder)/$(Scope)/**/project.json"/>
+      <ClientRuntimeProjectJsons Include="$(LibrarySourceFolder)/$(Scope)/project.json"/>
     </ItemGroup>
     <Message Text="Packaging ClientRuntime project %(ClientRuntimeProjectJsons.RelativeDir)" Importance="High"/>
     <Exec Command="dotnet pack --configuration $(Configuration)" WorkingDirectory="%(ClientRuntimeProjectJsons.RootDir)/%(ClientRuntimeProjectJsons.Directory)"/>
