@@ -179,7 +179,7 @@ You can find plenty of sample code that illustrates management scenarios in Azur
   <tr>
     <td>Batch</td>
     <td><ul style="list-style-type:circle">
-<li><a href="https://github.com/Azure-Samples/batch-java-dotnet-batch-accounts">Manage batch accounts</a></li>
+<li><a href="https://github.com/Azure-Samples/batch-dotnet-manage-batch-accounts">Manage batch accounts</a></li>
 </ul></td>
   </tr>
 </table>
