@@ -107,6 +107,14 @@
       <Exec Command='$(WindowsSDK_ExecutablePath_x64)\sn.exe -Vx *' Condition="$(isadmin) == 0"/>
   </Target>
 
+  <Target Name="PackageClientRuntimeProjects">
+    <ItemGroup>
+      <ClientRuntimeProjectJsons Include="$(LibrarySourceFolder)/$(Scope)/**/project.json"/>
+    </ItemGroup>
+    <Message Text="Packaging ClientRuntime project %(ClientRuntimeProjectJsons.RelativeDir)" Importance="High"/>
+    <Exec Command="dotnet pack --configuration $(Configuration)" WorkingDirectory="%(ClientRuntimeProjectJsons.RootDir)/%(ClientRuntimeProjectJsons.Directory)"/>
+  </Target>
+
   <!--
   CI build related
   -->
@@ -139,6 +147,7 @@
     <Exec
       Command="$(LibraryToolsFolder)\AzCopy\AzCopy.exe /Source:https://azuresdktools.blob.core.windows.net/7-zip  /S /Dest:$(ZipExeFolder) /Y"
       Condition="!Exists('$(ZipExe)')" />
+    <CallTarget Targets="PackageClientRuntimeProjects" Condition="$(Scope)=='All' OR $(Scope.Contains('ClientRuntime'))"/>
   </Target>
   
   <Target Name="Build" DependsOnTargets="BuildClientRuntime;BuildMsBuildTask;PrepareForAutoRestLibraries;RestoreNugetPackages">
