@@ -66,7 +66,7 @@ namespace Microsoft.Azure.KeyVault
         /// </summary>
         /// <param name="vaultBaseUrl"> The vault base URL</param>
         /// <param name="collection">The object collection e.g. 'keys', 'secrets' and 'certificates'.</param>
-        /// <param name="identifier">The key vault object identifier.</param>
+        /// <param name="name">The object name.</param>
         /// <param name="version"> the version of the object.</param>
         protected ObjectIdentifier(string vaultBaseUrl, string collection, string name, string version = "")
         {
