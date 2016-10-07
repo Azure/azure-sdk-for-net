@@ -4,6 +4,10 @@
     <id>Microsoft.Azure.Management.HDInsight.Job</id>
     <title>Microsoft Azure HDInsight Job Management Library</title>
     <releaseNotes><![CDATA[
+3.0.0
+
+   * Added support for azure data lake store as default file system.
+   
 2.0.3
 
   * Added new API WaitForJobCompletion(string jobId, TimeSpan duration, TimeSpan waitInterval) to wait for completion of a job.
@@ -82,7 +86,10 @@ The methods “GetJobOutput”(+Async) and “GetJobErrorLogsAsync”(+Async) no
     <copyright>Copyright © Microsoft Corporation</copyright>
     <tags>Microsoft "Microsoft Azure" Azure cloud management "resource management" REST HTTP client core common azureofficial windowsazureofficial</tags>
     <references>
-      <group targetFramework="net40">
+      <group targetFramework="net45">
+        <reference file="Microsoft.Azure.Management.HDInsight.Job.dll" />
+      </group>
+      <group targetFramework="portable">
         <reference file="Microsoft.Azure.Management.HDInsight.Job.dll" />
       </group>
     </references>
@@ -93,8 +100,8 @@ The methods “GetJobOutput”(+Async) and “GetJobErrorLogsAsync”(+Async) no
   </metadata>
   <files>
     <file src="ResourceManagement\HDInsightJob\HDInsightJob\**\*.cs" target="src" />
-    <file src="..\binaries\net40\Microsoft.Azure.Management.HDInsight.Job.dll" target="lib\net40" />
-    <file src="..\binaries\net40\Microsoft.Azure.Management.HDInsight.Job.pdb" target="lib\net40" />
-    <file src="..\binaries\net40\Microsoft.Azure.Management.HDInsight.Job.xml" target="lib\net40" />
+    <file src="..\binaries\net45\Microsoft.Azure.Management.HDInsight.Job.dll" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.Management.HDInsight.Job.pdb" target="lib\net45" />
+    <file src="..\binaries\net45\Microsoft.Azure.Management.HDInsight.Job.xml" target="lib\net45" />
   </files>
 </package>

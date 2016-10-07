@@ -16,27 +16,36 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Net;
 using System.IO;
+using System.Net;
+using System.Net.Http;
+using System.Threading;
 using Hyak.Common;
+using Microsoft.Azure.Management.DataLake.Store;
 using Microsoft.Azure.Management.HDInsight.Job;
 using Microsoft.Azure.Management.HDInsight.Job.Models;
 using Microsoft.Azure.Test;
 using Microsoft.Azure.Test.HttpRecorder;
+using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using Microsoft.Rest;
 using Xunit;
-using System.Threading;
-using System.Net.Http;
+using System.Security.Cryptography.X509Certificates;
 
 namespace HDInsightJob.Tests
 {
     public class SubmitJobTests
     {
+        private DataLakeStoreFileSystemManagementClient dataLakeClient;
+
         public SubmitJobTests()
         {
             if (HttpMockServer.GetCurrentMode() != HttpRecorderMode.Record)
             {
                 MockSupport.RunningMocked = true;
             }
+
+            var _credentials = GetAccessTokenUsingHDIADLServicePrincipal();
+            dataLakeClient = new DataLakeStoreFileSystemManagementClient(_credentials);
         }
 
         [Fact]
@@ -502,7 +511,7 @@ namespace HDInsightJob.Tests
         {
             return new PigJobSubmissionParameters()
             {
-                Query = "LOGS = LOAD 'wasb:///example/data/sample.log';" +
+                Query = "LOGS = LOAD '/example/data/sample.log';" +
                                 "LEVELS = foreach LOGS generate REGEX_EXTRACT($0, '(TRACE|DEBUG|INFO|WARN|ERROR|FATAL)', 1)  as LOGLEVEL;" +
                                 "FILTEREDLEVELS = FILTER LEVELS by LOGLEVEL is not null;" +
                                 "GROUPEDLEVELS = GROUP FILTEREDLEVELS by LOGLEVEL;" +
@@ -677,7 +686,6 @@ namespace HDInsightJob.Tests
                 {
                     var output = client.JobManagement.GetJobErrorLogs(jobId, storageAccess);
                     Assert.NotNull(output);
-                    Assert.True(output.Length > 0);
                     string errorTextOutput = Convert(output);
                     Assert.True(!string.IsNullOrEmpty(errorTextOutput));
                 }
@@ -693,9 +701,47 @@ namespace HDInsightJob.Tests
 
         private IStorageAccess GetStorageAccessObject(bool IsWindowsCluster = false)
         {
+            if (TestUtils.AdlCluster && !IsWindowsCluster)
+            {
+                return new AzureDataLakeStoreAccess(dataLakeClient, TestUtils.AdlAccountName, TestUtils.DefaultStorageRoot);
+            }
+
             return new AzureStorageAccess(IsWindowsCluster ? TestUtils.WinStorageAccountName : TestUtils.StorageAccountName,
                                     IsWindowsCluster ? TestUtils.WinStorageAccountKey : TestUtils.StorageAccountKey,
                                     IsWindowsCluster ? TestUtils.WinDefaultContainer : TestUtils.DefaultContainer);
+        }
+
+        // Gets access token to access Azure data Lake Storage.
+        private static TokenCredentials GetAccessTokenUsingHDIADLServicePrincipal()
+        {
+            string aadTenantId = "https://login.windows.net/microsoft.onmicrosoft.com";
+            string applicationId = TestUtils.ApplicationId;
+
+            byte[] certBytesToEncrypt = System.IO.File.ReadAllBytes(TestUtils.AdlCertificatePath);
+            string clientCertificatePassword = TestUtils.AdlCertificatePassword;
+
+            // The AAD application is authorized to access this "resource".
+            string resource = "https://KonaCompute.net/";
+
+            X509Certificate2 clientCertificate = new X509Certificate2();
+            clientCertificate.Import(certBytesToEncrypt, clientCertificatePassword,
+                X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet | X509KeyStorageFlags.Exportable);
+            ClientAssertionCertificate certCred = new ClientAssertionCertificate(applicationId, clientCertificate);
+
+            // Think of the AAD-tenant as the authenticating authority
+            var authContext = new AuthenticationContext(aadTenantId);
+
+            // Check if the credentials is authorized to access "resource" and return an access token
+            var authenticationResult = authContext.AcquireTokenAsync(resource, certCred).Result;
+            Console.WriteLine("Got access token:" + authenticationResult.AccessToken);
+
+            // return access token that will be used by the ADLFileSystemClient to access ADL-Storage.
+            return new TokenCredentials(authenticationResult.AccessToken);
+        }
+
+        ~SubmitJobTests()
+        {
+            dataLakeClient.Dispose();
         }
     }
 }
