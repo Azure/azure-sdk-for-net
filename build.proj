@@ -109,8 +109,8 @@
 
   <Target Name="PackageClientRuntimeProjects">
     <ItemGroup>
-      <ClientRuntimeProjectJsons Include="$(LibrarySourceFolder)/$(Scope)/**/project.json"/>
-      <ClientRuntimeProjectJsons Include="$(LibrarySourceFolder)/$(Scope)/project.json"/>
+      <ClientRuntimeProjectJsons Include="$(LibrarySourceFolder)/$(Scope)/**/project.json" Condition=" '$(Scope)' == 'all' " />
+      <ClientRuntimeProjectJsons Include="$(LibrarySourceFolder)/$(Scope)/project.json" Condition=" '$(Scope)' != 'all' " />
     </ItemGroup>
     <Message Text="Packaging ClientRuntime project %(ClientRuntimeProjectJsons.RelativeDir)" Importance="High"/>
     <Message Text="Running dotnet pack --configuration $(Configuration) from %(ClientRuntimeProjectJsons.RootDir)/%(ClientRuntimeProjectJsons.Directory)" Importance="High"/>
