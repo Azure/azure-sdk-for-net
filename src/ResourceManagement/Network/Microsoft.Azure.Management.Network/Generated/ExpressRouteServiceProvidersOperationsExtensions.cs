@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Network
     public static partial class ExpressRouteServiceProvidersOperationsExtensions
     {
             /// <summary>
-            /// The List ExpressRouteServiceProvider opertion retrieves all the available
+            /// The List ExpressRouteServiceProvider operation retrieves all the available
             /// ExpressRouteServiceProviders.
             /// </summary>
             /// <param name='operations'>
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List ExpressRouteServiceProvider opertion retrieves all the available
+            /// The List ExpressRouteServiceProvider operation retrieves all the available
             /// ExpressRouteServiceProviders.
             /// </summary>
             /// <param name='operations'>
@@ -53,7 +53,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List ExpressRouteServiceProvider opertion retrieves all the available
+            /// The List ExpressRouteServiceProvider operation retrieves all the available
             /// ExpressRouteServiceProviders.
             /// </summary>
             /// <param name='operations'>
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List ExpressRouteServiceProvider opertion retrieves all the available
+            /// The List ExpressRouteServiceProvider operation retrieves all the available
             /// ExpressRouteServiceProviders.
             /// </summary>
             /// <param name='operations'>

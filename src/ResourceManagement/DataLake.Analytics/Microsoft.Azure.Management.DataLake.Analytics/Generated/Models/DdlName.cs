@@ -29,6 +29,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the DdlName class.
         /// </summary>
+        /// <param name="firstPart">the name of the table associated with this
+        /// database and schema.</param>
+        /// <param name="secondPart">the name of the table associated with
+        /// this database and schema.</param>
+        /// <param name="thirdPart">the name of the table associated with this
+        /// database and schema.</param>
+        /// <param name="server">the name of the table associated with this
+        /// database and schema.</param>
         public DdlName(string firstPart = default(string), string secondPart = default(string), string thirdPart = default(string), string server = default(string))
         {
             FirstPart = firstPart;

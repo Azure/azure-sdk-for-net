@@ -38,13 +38,13 @@ namespace Microsoft.Azure.Management.Network.Models
         }
 
         /// <summary>
-        /// Gets or sets the dns name
+        /// Dns name
         /// </summary>
         [JsonProperty(PropertyName = "fqdn")]
         public string Fqdn { get; set; }
 
         /// <summary>
-        /// Gets or sets the ip address
+        /// Ip address
         /// </summary>
         [JsonProperty(PropertyName = "ipAddress")]
         public string IpAddress { get; set; }

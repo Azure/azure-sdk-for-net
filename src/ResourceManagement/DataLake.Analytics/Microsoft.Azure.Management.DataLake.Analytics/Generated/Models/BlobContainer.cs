@@ -29,6 +29,12 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the BlobContainer class.
         /// </summary>
+        /// <param name="name">the name of the blob container.</param>
+        /// <param name="id">the unique identifier of the blob
+        /// container.</param>
+        /// <param name="type">the type of the blob container.</param>
+        /// <param name="properties">the properties of the blob
+        /// container.</param>
         public BlobContainer(string name = default(string), string id = default(string), string type = default(string), BlobContainerProperties properties = default(BlobContainerProperties))
         {
             Name = name;

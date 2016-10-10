@@ -29,6 +29,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlTableColumn class.
         /// </summary>
+        /// <param name="name">the name of the column in the table.</param>
+        /// <param name="type">the object type of the specified column (such
+        /// as System.String).</param>
         public USqlTableColumn(string name = default(string), string type = default(string))
         {
             Name = name;

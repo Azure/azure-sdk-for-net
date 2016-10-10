@@ -17,6 +17,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
+    /// The deployment export result.
     /// </summary>
     public partial class DeploymentExportResult
     {
@@ -34,7 +35,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets the template content.
+        /// The template content.
         /// </summary>
         [JsonProperty(PropertyName = "template")]
         public object Template { get; set; }

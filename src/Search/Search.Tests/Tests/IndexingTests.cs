@@ -381,11 +381,10 @@ namespace Microsoft.Azure.Search.Tests
 
                 var batch = IndexBatch.Upload(new[] { new Document() });
 
-                CloudException e = Assert.Throws<CloudException>(() => client.Documents.Index(batch));
-                Assert.Equal(HttpStatusCode.BadRequest, e.Response.StatusCode);
-                Assert.Contains(
-                    "The request is invalid. Details: actions : 0: Document key cannot be missing or empty.",
-                    e.Message);
+                SearchAssert.ThrowsCloudException(
+                    () => client.Documents.Index(batch),
+                    HttpStatusCode.BadRequest,
+                    "The request is invalid. Details: actions : 0: Document key cannot be missing or empty.");
             });
         }
 
@@ -464,14 +463,14 @@ namespace Microsoft.Azure.Search.Tests
 
                 Document actualDoc = client.Documents.Get("1");
 
-                SearchAssert.DocumentsEqual(expectedDoc, actualDoc);
+                Assert.Equal(expectedDoc, actualDoc);
 
                 client.Documents.Index(IndexBatch.MergeOrUpload(new[] { originalDoc }));
                 SearchTestUtilities.WaitForIndexing();
 
                 actualDoc = client.Documents.Get("1");
 
-                SearchAssert.DocumentsEqual(originalDoc, actualDoc);
+                Assert.Equal(originalDoc, actualDoc);
             });
         }
 
@@ -840,7 +839,7 @@ namespace Microsoft.Azure.Search.Tests
             Assert.Equal((HttpStatusCode)207, e.Response.StatusCode);
 
             IEnumerable<string> actualFailedKeys = e.IndexingResults.Where(r => !r.Succeeded).Select(r => r.Key);
-            SearchAssert.SequenceEqual(expectedFailedKeys, actualFailedKeys);
+            Assert.Equal(expectedFailedKeys, actualFailedKeys);
         }
 
         private static void AssertIndexActionFailed(

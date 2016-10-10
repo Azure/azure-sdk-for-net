@@ -5,13 +5,12 @@
 using System.Reflection;
 using System.Resources;
 using System.Runtime.CompilerServices;
-using Microsoft.Azure.Search;
 
 [assembly: AssemblyTitle("Microsoft Azure Search Library")]
 [assembly: AssemblyDescription("Makes it easy to develop a .NET application that uses Azure Search.")]
 
 [assembly: AssemblyVersion("2.0.0.0")]
-[assembly: AssemblyFileVersion("2.0.0.0")]
+[assembly: AssemblyFileVersion("2.0.4.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]

@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Network
     public partial interface IVirtualNetworksOperations
     {
         /// <summary>
-        /// The Delete VirtualNetwork operation deletes the specifed virtual
+        /// The Delete VirtualNetwork operation deletes the specified virtual
         /// network
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The Delete VirtualNetwork operation deletes the specifed virtual
+        /// The Delete VirtualNetwork operation deletes the specified virtual
         /// network
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -141,6 +141,25 @@ namespace Microsoft.Azure.Management.Network
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<IPage<VirtualNetwork>>> ListWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Checks whether a private Ip address is available for use.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='virtualNetworkName'>
+        /// The name of the virtual network.
+        /// </param>
+        /// <param name='ipAddress'>
+        /// The private IP address to be verified.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPAddressAvailabilityResult>> CheckIPAddressAvailabilityWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, string ipAddress = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The list VirtualNetwork returns all Virtual Networks in a
         /// subscription

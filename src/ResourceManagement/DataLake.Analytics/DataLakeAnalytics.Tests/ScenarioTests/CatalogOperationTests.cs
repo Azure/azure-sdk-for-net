@@ -166,6 +166,7 @@ namespace DataLakeAnalytics.Tests
         [Fact]
         public void SecretAndCredentialCRUDTest()
         {
+            // NOTE: This is deprecated and will be removed in a future release
             using (var context = MockContext.Start(this.GetType().FullName))
             {
                 commonData = new CommonTestFixture(context);
@@ -271,7 +272,6 @@ namespace DataLakeAnalytics.Tests
                             commonData.SecondDataLakeAnalyticsAccountName,
                             commonData.DatabaseName, secondSecretName));
                     }
-
                 }
             }
         }

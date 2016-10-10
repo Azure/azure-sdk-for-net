@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.Network
     public static partial class RouteTablesOperationsExtensions
     {
             /// <summary>
-            /// The Delete RouteTable operation deletes the specifed Route Table
+            /// The Delete RouteTable operation deletes the specified Route Table
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -40,7 +40,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Delete RouteTable operation deletes the specifed Route Table
+            /// The Delete RouteTable operation deletes the specified Route Table
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -60,7 +60,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Delete RouteTable operation deletes the specifed Route Table
+            /// The Delete RouteTable operation deletes the specified Route Table
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -77,7 +77,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Delete RouteTable operation deletes the specifed Route Table
+            /// The Delete RouteTable operation deletes the specified Route Table
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -145,8 +145,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Put RouteTable operation creates/updates a route tablein the specified
-            /// resource group.
+            /// The Put RouteTable operation creates/updates a route table in the
+            /// specified resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -166,8 +166,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Put RouteTable operation creates/updates a route tablein the specified
-            /// resource group.
+            /// The Put RouteTable operation creates/updates a route table in the
+            /// specified resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -193,8 +193,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Put RouteTable operation creates/updates a route tablein the specified
-            /// resource group.
+            /// The Put RouteTable operation creates/updates a route table in the
+            /// specified resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -214,8 +214,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Put RouteTable operation creates/updates a route tablein the specified
-            /// resource group.
+            /// The Put RouteTable operation creates/updates a route table in the
+            /// specified resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

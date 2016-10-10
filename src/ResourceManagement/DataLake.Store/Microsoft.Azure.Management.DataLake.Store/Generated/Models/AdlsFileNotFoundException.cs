@@ -31,6 +31,12 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <summary>
         /// Initializes a new instance of the AdlsFileNotFoundException class.
         /// </summary>
+        /// <param name="javaClassName">the full class package name for the
+        /// exception thrown, such as
+        /// 'java.lang.IllegalArgumentException'.</param>
+        /// <param name="message">the message associated with the exception
+        /// that was thrown, such as 'Invalid value for webhdfs parameter
+        /// "permission":...'.</param>
         public AdlsFileNotFoundException(string javaClassName = default(string), string message = default(string))
             : base(javaClassName, message)
         {

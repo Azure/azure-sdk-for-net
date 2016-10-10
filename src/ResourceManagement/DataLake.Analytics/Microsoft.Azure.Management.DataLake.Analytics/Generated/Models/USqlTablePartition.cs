@@ -29,6 +29,19 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlTablePartition class.
         /// </summary>
+        /// <param name="computeAccountName">the name of the Data Lake
+        /// Analytics account.</param>
+        /// <param name="version">the version of the catalog item.</param>
+        /// <param name="databaseName">the name of the database.</param>
+        /// <param name="schemaName">the name of the schema associated with
+        /// this table partition and database.</param>
+        /// <param name="name">the name of the table partition.</param>
+        /// <param name="parentName">the Ddl object of the partition's
+        /// parent.</param>
+        /// <param name="indexId">the index ID for this partition.</param>
+        /// <param name="label">the list of labels associated with this
+        /// partition.</param>
+        /// <param name="createDate">the creation time of the partition</param>
         public USqlTablePartition(string computeAccountName = default(string), Guid? version = default(Guid?), string databaseName = default(string), string schemaName = default(string), string name = default(string), DdlName parentName = default(DdlName), int? indexId = default(int?), IList<string> label = default(IList<string>), DateTimeOffset? createDate = default(DateTimeOffset?))
             : base(computeAccountName, version)
         {

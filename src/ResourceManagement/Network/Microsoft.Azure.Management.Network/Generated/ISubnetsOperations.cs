@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, string subnetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The Get subnet operation retreives information about the specified
+        /// The Get subnet operation retrieves information about the specified
         /// subnet.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -84,7 +84,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<Subnet>> GetWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, string subnetName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The Put Subnet operation creates/updates a subnet in thespecified
+        /// The Put Subnet operation creates/updates a subnet in the specified
         /// virtual network
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -107,7 +107,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<Subnet>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, string subnetName, Subnet subnetParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The Put Subnet operation creates/updates a subnet in thespecified
+        /// The Put Subnet operation creates/updates a subnet in the specified
         /// virtual network
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<Subnet>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, string subnetName, Subnet subnetParameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The List subnets opertion retrieves all the subnets in a virtual
+        /// The List subnets operation retrieves all the subnets in a virtual
         /// network.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<IPage<Subnet>>> ListWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The List subnets opertion retrieves all the subnets in a virtual
+        /// The List subnets operation retrieves all the subnets in a virtual
         /// network.
         /// </summary>
         /// <param name='nextPageLink'>

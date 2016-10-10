@@ -23,14 +23,14 @@ namespace Microsoft.Azure.Management.Network
     public partial interface IApplicationGatewaysOperations
     {
         /// <summary>
-        /// The delete applicationgateway operation deletes the specified
-        /// applicationgateway.
+        /// The delete ApplicationGateway operation deletes the specified
+        /// application gateway.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='applicationGatewayName'>
-        /// The name of the applicationgateway.
+        /// The name of the application gateway.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -40,14 +40,14 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string applicationGatewayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The delete applicationgateway operation deletes the specified
-        /// applicationgateway.
+        /// The delete ApplicationGateway operation deletes the specified
+        /// application gateway.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='applicationGatewayName'>
-        /// The name of the applicationgateway.
+        /// The name of the application gateway.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -57,14 +57,14 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string applicationGatewayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The Get applicationgateway operation retreives information about
-        /// the specified applicationgateway.
+        /// The Get ApplicationGateway operation retrieves information about
+        /// the specified application gateway.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
         /// </param>
         /// <param name='applicationGatewayName'>
-        /// The name of the applicationgateway.
+        /// The name of the application gateway.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -116,8 +116,8 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<ApplicationGateway>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string applicationGatewayName, ApplicationGateway parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The List ApplicationGateway opertion retrieves all the
-        /// applicationgateways in a resource group.
+        /// The List ApplicationGateway operation retrieves all the
+        /// application gateways in a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -130,8 +130,8 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<IPage<ApplicationGateway>>> ListWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The List applicationgateway opertion retrieves all the
-        /// applicationgateways in a subscription.
+        /// The List ApplicationGateway operation retrieves all the
+        /// application gateways in a subscription.
         /// </summary>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -141,9 +141,8 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<IPage<ApplicationGateway>>> ListAllWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The Start ApplicationGateway operation starts application
-        /// gatewayin the specified resource group through Network resource
-        /// provider.
+        /// The Start ApplicationGateway operation starts application gateway
+        /// in the specified resource group through Network resource provider.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -159,9 +158,8 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse> StartWithHttpMessagesAsync(string resourceGroupName, string applicationGatewayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The Start ApplicationGateway operation starts application
-        /// gatewayin the specified resource group through Network resource
-        /// provider.
+        /// The Start ApplicationGateway operation starts application gateway
+        /// in the specified resource group through Network resource provider.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -177,7 +175,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse> BeginStartWithHttpMessagesAsync(string resourceGroupName, string applicationGatewayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The STOP ApplicationGateway operation stops application gatewayin
+        /// The STOP ApplicationGateway operation stops application gateway in
         /// the specified resource group through Network resource provider.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -194,7 +192,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse> StopWithHttpMessagesAsync(string resourceGroupName, string applicationGatewayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The STOP ApplicationGateway operation stops application gatewayin
+        /// The STOP ApplicationGateway operation stops application gateway in
         /// the specified resource group through Network resource provider.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -211,8 +209,52 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse> BeginStopWithHttpMessagesAsync(string resourceGroupName, string applicationGatewayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The List ApplicationGateway opertion retrieves all the
-        /// applicationgateways in a resource group.
+        /// The BackendHealth operation gets the backend health of application
+        /// gateway in the specified resource group through Network resource
+        /// provider.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='applicationGatewayName'>
+        /// The name of the application gateway.
+        /// </param>
+        /// <param name='expand'>
+        /// Expands BackendAddressPool and BackendHttpSettings referenced in
+        /// backend health.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<ApplicationGatewayBackendHealth>> BackendHealthWithHttpMessagesAsync(string resourceGroupName, string applicationGatewayName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// The BackendHealth operation gets the backend health of application
+        /// gateway in the specified resource group through Network resource
+        /// provider.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='applicationGatewayName'>
+        /// The name of the application gateway.
+        /// </param>
+        /// <param name='expand'>
+        /// Expands BackendAddressPool and BackendHttpSettings referenced in
+        /// backend health.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<ApplicationGatewayBackendHealth>> BeginBackendHealthWithHttpMessagesAsync(string resourceGroupName, string applicationGatewayName, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// The List ApplicationGateway operation retrieves all the
+        /// application gateways in a resource group.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -225,8 +267,8 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<IPage<ApplicationGateway>>> ListNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The List applicationgateway opertion retrieves all the
-        /// applicationgateways in a subscription.
+        /// The List ApplicationGateway operation retrieves all the
+        /// application gateways in a subscription.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.

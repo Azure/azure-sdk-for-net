@@ -29,6 +29,21 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlTable class.
         /// </summary>
+        /// <param name="computeAccountName">the name of the Data Lake
+        /// Analytics account.</param>
+        /// <param name="version">the version of the catalog item.</param>
+        /// <param name="databaseName">the name of the database.</param>
+        /// <param name="schemaName">the name of the schema associated with
+        /// this table and database.</param>
+        /// <param name="name">the name of the table.</param>
+        /// <param name="columnList">the list of columns in this table</param>
+        /// <param name="indexList">the list of indices in this table</param>
+        /// <param name="partitionKeyList">the list of partition keys in the
+        /// table</param>
+        /// <param name="externalTable">the external table associated with the
+        /// table.</param>
+        /// <param name="distributionInfo">the distributions info of the
+        /// table</param>
         public USqlTable(string computeAccountName = default(string), Guid? version = default(Guid?), string databaseName = default(string), string schemaName = default(string), string name = default(string), IList<USqlTableColumn> columnList = default(IList<USqlTableColumn>), IList<USqlIndex> indexList = default(IList<USqlIndex>), IList<string> partitionKeyList = default(IList<string>), ExternalTable externalTable = default(ExternalTable), USqlDistributionInfo distributionInfo = default(USqlDistributionInfo))
             : base(computeAccountName, version)
         {

@@ -236,7 +236,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The Get route operation retreives information about the specified route
+        /// The Get route operation retrieves information about the specified route
         /// from the route table.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -441,7 +441,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the route.
         /// </param>
         /// <param name='routeParameters'>
-        /// Parameters supplied to the create/update routeoperation
+        /// Parameters supplied to the create/update route operation
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -473,7 +473,7 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the route.
         /// </param>
         /// <param name='routeParameters'>
-        /// Parameters supplied to the create/update routeoperation
+        /// Parameters supplied to the create/update route operation
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -688,7 +688,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The List network security rule opertion retrieves all the routes in a
+        /// The List network security rule operation retrieves all the routes in a
         /// route table.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -871,7 +871,7 @@ namespace Microsoft.Azure.Management.Network
         }
 
         /// <summary>
-        /// The List network security rule opertion retrieves all the routes in a
+        /// The List network security rule operation retrieves all the routes in a
         /// route table.
         /// </summary>
         /// <param name='nextPageLink'>

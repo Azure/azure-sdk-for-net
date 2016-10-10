@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Initializes a new instance of the ExpressRouteCircuitPeering class.
         /// </summary>
-        public ExpressRouteCircuitPeering(string id = default(string), string peeringType = default(string), string state = default(string), int? azureASN = default(int?), int? peerASN = default(int?), string primaryPeerAddressPrefix = default(string), string secondaryPeerAddressPrefix = default(string), string primaryAzurePort = default(string), string secondaryAzurePort = default(string), string sharedKey = default(string), int? vlanId = default(int?), ExpressRouteCircuitPeeringConfig microsoftPeeringConfig = default(ExpressRouteCircuitPeeringConfig), ExpressRouteCircuitStats stats = default(ExpressRouteCircuitStats), string provisioningState = default(string), string name = default(string), string etag = default(string))
+        public ExpressRouteCircuitPeering(string id = default(string), string peeringType = default(string), string state = default(string), int? azureASN = default(int?), int? peerASN = default(int?), string primaryPeerAddressPrefix = default(string), string secondaryPeerAddressPrefix = default(string), string primaryAzurePort = default(string), string secondaryAzurePort = default(string), string sharedKey = default(string), int? vlanId = default(int?), ExpressRouteCircuitPeeringConfig microsoftPeeringConfig = default(ExpressRouteCircuitPeeringConfig), ExpressRouteCircuitStats stats = default(ExpressRouteCircuitStats), string provisioningState = default(string), string gatewayManagerEtag = default(string), string lastModifiedBy = default(string), string name = default(string), string etag = default(string))
             : base(id)
         {
             PeeringType = peeringType;
@@ -46,6 +46,8 @@ namespace Microsoft.Azure.Management.Network.Models
             MicrosoftPeeringConfig = microsoftPeeringConfig;
             Stats = stats;
             ProvisioningState = provisioningState;
+            GatewayManagerEtag = gatewayManagerEtag;
+            LastModifiedBy = lastModifiedBy;
             Name = name;
             Etag = etag;
         }
@@ -130,6 +132,18 @@ namespace Microsoft.Azure.Management.Network.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
+
+        /// <summary>
+        /// Gets or sets the GatewayManager Etag
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.gatewayManagerEtag")]
+        public string GatewayManagerEtag { get; set; }
+
+        /// <summary>
+        /// Gets whether the provider or the customer last modified the peering
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.lastModifiedBy")]
+        public string LastModifiedBy { get; set; }
 
         /// <summary>
         /// Gets name of the resource that is unique within a resource group.

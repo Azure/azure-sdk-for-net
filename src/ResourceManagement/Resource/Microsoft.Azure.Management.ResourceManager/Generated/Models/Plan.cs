@@ -38,25 +38,25 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets the plan ID.
+        /// The plan ID.
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets the publisher ID.
+        /// The publisher ID.
         /// </summary>
         [JsonProperty(PropertyName = "publisher")]
         public string Publisher { get; set; }
 
         /// <summary>
-        /// Gets or sets the offer ID.
+        /// The offer ID.
         /// </summary>
         [JsonProperty(PropertyName = "product")]
         public string Product { get; set; }
 
         /// <summary>
-        /// Gets or sets the promotion code.
+        /// The promotion code.
         /// </summary>
         [JsonProperty(PropertyName = "promotionCode")]
         public string PromotionCode { get; set; }

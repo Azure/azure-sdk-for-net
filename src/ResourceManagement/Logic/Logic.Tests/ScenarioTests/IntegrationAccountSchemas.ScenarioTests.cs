@@ -137,12 +137,10 @@ namespace Test.Azure.Management.Logic
                         Location = Constants.DefaultLocation,
                         Name = integrationAccountSchemaName,
                         SchemaType = SchemaType.Xml,
-                        TargetNamespace = "http://Inbound_EDI.OrderFile2",
                         Content = this.SchemaContent
                     });
 
                 Assert.Equal(updatedSchema.Name, integrationAccountSchemaName);
-                Assert.Equal(updatedSchema.TargetNamespace, "http://Inbound_EDI.OrderFile2");
                 Assert.NotNull(updatedSchema.ContentLink.Uri);
 
                 client.IntegrationAccounts.Delete(Constants.DefaultResourceGroup, integrationAccountName);

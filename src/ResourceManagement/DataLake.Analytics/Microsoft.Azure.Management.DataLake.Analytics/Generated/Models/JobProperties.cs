@@ -29,6 +29,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the JobProperties class.
         /// </summary>
+        /// <param name="script">the script to run</param>
+        /// <param name="runtimeVersion">the runtime version of the Data Lake
+        /// Analytics engine to use for the specific type of job being
+        /// run.</param>
         public JobProperties(string script, string runtimeVersion = default(string))
         {
             RuntimeVersion = runtimeVersion;

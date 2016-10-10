@@ -19,9 +19,15 @@ namespace Networks.Tests
     using SubResource = Microsoft.Azure.Management.Network.Models.SubResource;
     using System.IO;
     using System.Security.Cryptography.X509Certificates;
+    using Microsoft.Azure.Test.HttpRecorder;
 
     public class GatewayOperationsTests
     {
+        public GatewayOperationsTests()
+        {
+            HttpMockServer.RecordsDirectory = "SessionRecords";
+        }
+
         // Tests Resource:-VirtualNetworkGateway 6 APIs:-
         [Fact]
         public void VirtualNetworkGatewayOperationsApisTest()
@@ -969,5 +975,147 @@ namespace Networks.Tests
             }
         }
 
+
+        // Tests Resource:-VirtualNetworkGateway ActiveActive Feature Test:-
+        [Fact]
+        public void VirtualNetworkGatewayActiveActiveFeatureTest()
+        {
+            var handler1 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+            var handler2 = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
+
+            using (MockContext context = MockContext.Start(this.GetType().FullName))
+            {
+
+                var resourcesClient = ResourcesManagementTestUtilities.GetResourceManagementClientWithHandler(context, handler1);
+                var networkManagementClient = NetworkManagementTestUtilities.GetNetworkManagementClientWithHandler(context, handler2);
+
+                var location = NetworkManagementTestUtilities.GetResourceLocation(resourcesClient, "Microsoft.Network/virtualnetworkgateways");
+
+                string resourceGroupName = TestUtilities.GenerateName("csmrg");
+                resourcesClient.ResourceGroups.CreateOrUpdate(resourceGroupName,
+                    new ResourceGroup
+                    {
+                        Location = location
+                    });
+
+                // 1. Create Active-Active VirtualNetworkGateway
+
+                // A. Prerequisite:- Create PublicIPAddress(Gateway Ip) using Put PublicIPAddress API
+                string publicIpName1 = TestUtilities.GenerateName();
+                string domainNameLabel1 = TestUtilities.GenerateName();
+
+                var nic1publicIp1 = TestHelper.CreateDefaultPublicIpAddress(publicIpName1, resourceGroupName, domainNameLabel1, location, networkManagementClient);
+                Console.WriteLine("PublicIPAddress(Gateway Ip) :{0}", nic1publicIp1.Id);
+
+                string publicIpName2 = TestUtilities.GenerateName();
+                string domainNameLabel2 = TestUtilities.GenerateName();
+
+                var nic1publicIp2 = TestHelper.CreateDefaultPublicIpAddress(publicIpName2, resourceGroupName, domainNameLabel2, location, networkManagementClient);
+                Console.WriteLine("PublicIPAddress(Gateway Ip) :{0}", nic1publicIp2.Id);
+
+                //B.Prerequisite:-Create Virtual Network using Put VirtualNetwork API
+
+                string vnetName = TestUtilities.GenerateName();
+                string subnetName = "GatewaySubnet";
+
+                var virtualNetwork = TestHelper.CreateVirtualNetwork(vnetName, subnetName, resourceGroupName, location, networkManagementClient);
+
+                var getSubnetResponse = networkManagementClient.Subnets.Get(resourceGroupName, vnetName, subnetName);
+                Console.WriteLine("Virtual Network GatewaySubnet Id: {0}", getSubnetResponse.Id);
+
+                // C. CreateVirtualNetworkGateway API
+                string virtualNetworkGatewayName = TestUtilities.GenerateName();
+                string ipConfigName1 = TestUtilities.GenerateName();
+                VirtualNetworkGatewayIPConfiguration ipconfig1 = new VirtualNetworkGatewayIPConfiguration()
+                {
+                    Name = ipConfigName1,
+                    PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                    PublicIPAddress = new SubResource()
+                    {
+                        Id = nic1publicIp1.Id
+                    },
+                    Subnet = new SubResource()
+                    {
+                        Id = getSubnetResponse.Id
+                    }
+                };
+
+                string ipConfigName2 = TestUtilities.GenerateName();
+                VirtualNetworkGatewayIPConfiguration ipconfig2 = new VirtualNetworkGatewayIPConfiguration()
+                {
+                    Name = ipConfigName2,
+                    PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
+                    PublicIPAddress = new SubResource()
+                    {
+                        Id = nic1publicIp2.Id
+                    },
+                    Subnet = new SubResource()
+                    {
+                        Id = getSubnetResponse.Id
+                    }
+                };
+
+                var virtualNetworkGateway = new VirtualNetworkGateway()
+                {
+                    Location = location,
+                    Tags = new Dictionary<string, string>()
+                        {
+                           {"key","value"}
+                        },
+                    EnableBgp = false,
+                    ActiveActive = true,
+                    GatewayDefaultSite = null,
+                    GatewayType = VirtualNetworkGatewayType.Vpn,
+                    VpnType = VpnType.RouteBased,
+                    IpConfigurations = new List<VirtualNetworkGatewayIPConfiguration>()
+                    {
+                        ipconfig1,
+                        ipconfig2
+                    },
+                    Sku = new VirtualNetworkGatewaySku()
+                    {
+                        Name = VirtualNetworkGatewaySkuName.HighPerformance,
+                        Tier = VirtualNetworkGatewaySkuTier.HighPerformance
+                    }
+                };
+
+                var putVirtualNetworkGatewayResponse = networkManagementClient.VirtualNetworkGateways.CreateOrUpdate(resourceGroupName, virtualNetworkGatewayName, virtualNetworkGateway);
+                Assert.Equal("Succeeded", putVirtualNetworkGatewayResponse.ProvisioningState);
+
+                // 2. GetVirtualNetworkGateway API
+                var getVirtualNetworkGatewayResponse = networkManagementClient.VirtualNetworkGateways.Get(resourceGroupName, virtualNetworkGatewayName);
+                Console.WriteLine("Gateway details:- GatewayLocation:{0}, GatewayId:{1}, GatewayName:{2}, GatewayType:{3}, VpnType={4} GatewaySku: name-{5} Tier-{6} ActiveActive enabled-{7}",
+                    getVirtualNetworkGatewayResponse.Location,
+                    getVirtualNetworkGatewayResponse.Id, getVirtualNetworkGatewayResponse.Name,
+                    getVirtualNetworkGatewayResponse.GatewayType, getVirtualNetworkGatewayResponse.VpnType,
+                    getVirtualNetworkGatewayResponse.Sku.Name, getVirtualNetworkGatewayResponse.Sku.Tier,
+                    getVirtualNetworkGatewayResponse.ActiveActive);
+                Assert.Equal(VirtualNetworkGatewayType.Vpn, getVirtualNetworkGatewayResponse.GatewayType);
+                Assert.Equal(VpnType.RouteBased, getVirtualNetworkGatewayResponse.VpnType);
+                Assert.Equal(VirtualNetworkGatewaySkuTier.HighPerformance, getVirtualNetworkGatewayResponse.Sku.Tier);
+                Assert.Equal(2, getVirtualNetworkGatewayResponse.IpConfigurations.Count);
+                Assert.Equal(true, getVirtualNetworkGatewayResponse.ActiveActive);
+
+                // 3. Update ActiveActive VirtualNetworkGateway to ActiveStandby
+                getVirtualNetworkGatewayResponse.ActiveActive = false;
+                getVirtualNetworkGatewayResponse.IpConfigurations.Remove(getVirtualNetworkGatewayResponse.IpConfigurations.First(config => config.Name.Equals(ipconfig2.Name)));
+                putVirtualNetworkGatewayResponse = networkManagementClient.VirtualNetworkGateways.CreateOrUpdate(resourceGroupName, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse);
+                Assert.Equal("Succeeded", putVirtualNetworkGatewayResponse.ProvisioningState);
+
+                getVirtualNetworkGatewayResponse = networkManagementClient.VirtualNetworkGateways.Get(resourceGroupName, virtualNetworkGatewayName);
+                Assert.Equal(false, getVirtualNetworkGatewayResponse.ActiveActive);
+                Assert.Equal(1, getVirtualNetworkGatewayResponse.IpConfigurations.Count);
+
+                // 4. Update ActiveStandby VirtualNetworkGateway to ActiveActive again
+                getVirtualNetworkGatewayResponse.ActiveActive = true;
+                getVirtualNetworkGatewayResponse.IpConfigurations.Add(ipconfig2);
+                putVirtualNetworkGatewayResponse = networkManagementClient.VirtualNetworkGateways.CreateOrUpdate(resourceGroupName, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse);
+                Assert.Equal("Succeeded", putVirtualNetworkGatewayResponse.ProvisioningState);
+
+                getVirtualNetworkGatewayResponse = networkManagementClient.VirtualNetworkGateways.Get(resourceGroupName, virtualNetworkGatewayName);
+                Assert.Equal(true, getVirtualNetworkGatewayResponse.ActiveActive);
+                Assert.Equal(2, getVirtualNetworkGatewayResponse.IpConfigurations.Count);
+            }
+        }
     }
 }

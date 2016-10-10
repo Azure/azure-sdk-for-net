@@ -374,7 +374,21 @@ namespace Compute.Tests
             return putVnetResponse;
         }
 
-        protected NetworkInterface CreateNIC(string rgName, Subnet subnet, string publicIPaddress, string nicname = null)
+        protected NetworkSecurityGroup CreateNsg(string rgName, string nsgName = null)
+        {
+            nsgName = nsgName ?? ComputeManagementTestUtilities.GenerateName("nsg");
+            var nsgParameters = new NetworkSecurityGroup()
+            {
+                Location = m_location
+            };
+
+            var putNSgResponse = m_NrpClient.NetworkSecurityGroups.CreateOrUpdate(rgName, nsgName, nsgParameters);
+            var getNsgResponse = m_NrpClient.NetworkSecurityGroups.Get(rgName, nsgName);
+
+            return getNsgResponse;
+        }
+
+        protected NetworkInterface CreateNIC(string rgName, Subnet subnet, string publicIPaddress, string nicname = null, NetworkSecurityGroup nsg = null)
         {
             // Create Nic
             nicname = nicname ?? ComputeManagementTestUtilities.GenerateName("nic");
@@ -395,7 +409,8 @@ namespace Compute.Tests
                         PrivateIPAllocationMethod = IPAllocationMethod.Dynamic,
                         Subnet = subnet,
                     }
-                }
+                },
+                NetworkSecurityGroup = nsg
             };
 
             if (publicIPaddress != null)

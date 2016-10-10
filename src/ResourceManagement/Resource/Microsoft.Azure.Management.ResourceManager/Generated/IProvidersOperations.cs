@@ -54,26 +54,34 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <param name='top'>
         /// Query parameters. If null is passed returns all deployments.
         /// </param>
+        /// <param name='expand'>
+        /// The $expand query parameter. e.g. To include property aliases in
+        /// response, use $expand=resourceTypes/aliases.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<Provider>>> ListWithHttpMessagesAsync(int? top = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<Provider>>> ListWithHttpMessagesAsync(int? top = default(int?), string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a resource provider.
         /// </summary>
         /// <param name='resourceProviderNamespace'>
         /// Namespace of the resource provider.
         /// </param>
+        /// <param name='expand'>
+        /// The $expand query parameter. e.g. To include property aliases in
+        /// response, use $expand=resourceTypes/aliases.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<Provider>> GetWithHttpMessagesAsync(string resourceProviderNamespace, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<Provider>> GetWithHttpMessagesAsync(string resourceProviderNamespace, string expand = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a list of resource providers.
         /// </summary>

@@ -47,52 +47,51 @@ namespace Microsoft.Azure.Management.Network.Models
         }
 
         /// <summary>
-        /// Gets or sets frontend IP configuration resource of application
-        /// gateway
+        /// Frontend IP configuration resource of application gateway
         /// </summary>
         [JsonProperty(PropertyName = "properties.frontendIPConfiguration")]
         public SubResource FrontendIPConfiguration { get; set; }
 
         /// <summary>
-        /// Gets or sets frontend port resource of application gateway
+        /// Frontend port resource of application gateway
         /// </summary>
         [JsonProperty(PropertyName = "properties.frontendPort")]
         public SubResource FrontendPort { get; set; }
 
         /// <summary>
-        /// Gets or sets the protocol. Possible values include: 'Http', 'Https'
+        /// Protocol. Possible values include: 'Http', 'Https'
         /// </summary>
         [JsonProperty(PropertyName = "properties.protocol")]
         public string Protocol { get; set; }
 
         /// <summary>
-        /// Gets or sets the host name of http listener
+        /// Host name of http listener
         /// </summary>
         [JsonProperty(PropertyName = "properties.hostName")]
         public string HostName { get; set; }
 
         /// <summary>
-        /// Gets or sets ssl certificate resource of application gateway
+        /// Ssl certificate resource of application gateway
         /// </summary>
         [JsonProperty(PropertyName = "properties.sslCertificate")]
         public SubResource SslCertificate { get; set; }
 
         /// <summary>
-        /// Gets or sets the requireServerNameIndication of http listener
+        /// RequireServerNameIndication of http listener
         /// </summary>
         [JsonProperty(PropertyName = "properties.requireServerNameIndication")]
         public bool? RequireServerNameIndication { get; set; }
 
         /// <summary>
-        /// Gets or sets Provisioning state of the http listener resource
+        /// Provisioning state of the http listener resource
         /// Updating/Deleting/Failed
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
-        /// Gets name of the resource that is unique within a resource group.
-        /// This name can be used to access the resource
+        /// Name of the resource that is unique within a resource group. This
+        /// name can be used to access the resource
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

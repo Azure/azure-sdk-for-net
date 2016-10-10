@@ -44,33 +44,33 @@ namespace Microsoft.Azure.Management.Network.Models
         }
 
         /// <summary>
-        /// Gets or sets the certificate data
+        /// SSL Certificate data
         /// </summary>
         [JsonProperty(PropertyName = "properties.data")]
         public string Data { get; set; }
 
         /// <summary>
-        /// Gets or sets the certificate password
+        /// SSL Certificate password
         /// </summary>
         [JsonProperty(PropertyName = "properties.password")]
         public string Password { get; set; }
 
         /// <summary>
-        /// Gets or sets the certificate public data
+        /// SSL Certificate public data
         /// </summary>
         [JsonProperty(PropertyName = "properties.publicCertData")]
         public string PublicCertData { get; set; }
 
         /// <summary>
-        /// Gets or sets Provisioning state of the ssl certificate resource
+        /// Provisioning state of the ssl certificate resource
         /// Updating/Deleting/Failed
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
-        /// Gets name of the resource that is unique within a resource group.
-        /// This name can be used to access the resource
+        /// Name of the resource that is unique within a resource group. This
+        /// name can be used to access the resource
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }

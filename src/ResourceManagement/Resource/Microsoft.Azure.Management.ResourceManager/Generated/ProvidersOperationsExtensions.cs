@@ -96,9 +96,13 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='top'>
             /// Query parameters. If null is passed returns all deployments.
             /// </param>
-            public static IPage<Provider> List(this IProvidersOperations operations, int? top = default(int?))
+            /// <param name='expand'>
+            /// The $expand query parameter. e.g. To include property aliases in response,
+            /// use $expand=resourceTypes/aliases.
+            /// </param>
+            public static IPage<Provider> List(this IProvidersOperations operations, int? top = default(int?), string expand = default(string))
             {
-                return Task.Factory.StartNew(s => ((IProvidersOperations)s).ListAsync(top), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IProvidersOperations)s).ListAsync(top, expand), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -110,12 +114,16 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='top'>
             /// Query parameters. If null is passed returns all deployments.
             /// </param>
+            /// <param name='expand'>
+            /// The $expand query parameter. e.g. To include property aliases in response,
+            /// use $expand=resourceTypes/aliases.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<Provider>> ListAsync( this IProvidersOperations operations, int? top = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<Provider>> ListAsync( this IProvidersOperations operations, int? top = default(int?), string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(top, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(top, expand, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -130,9 +138,13 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='resourceProviderNamespace'>
             /// Namespace of the resource provider.
             /// </param>
-            public static Provider Get(this IProvidersOperations operations, string resourceProviderNamespace)
+            /// <param name='expand'>
+            /// The $expand query parameter. e.g. To include property aliases in response,
+            /// use $expand=resourceTypes/aliases.
+            /// </param>
+            public static Provider Get(this IProvidersOperations operations, string resourceProviderNamespace, string expand = default(string))
             {
-                return Task.Factory.StartNew(s => ((IProvidersOperations)s).GetAsync(resourceProviderNamespace), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IProvidersOperations)s).GetAsync(resourceProviderNamespace, expand), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -144,12 +156,16 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='resourceProviderNamespace'>
             /// Namespace of the resource provider.
             /// </param>
+            /// <param name='expand'>
+            /// The $expand query parameter. e.g. To include property aliases in response,
+            /// use $expand=resourceTypes/aliases.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Provider> GetAsync( this IProvidersOperations operations, string resourceProviderNamespace, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Provider> GetAsync( this IProvidersOperations operations, string resourceProviderNamespace, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(resourceProviderNamespace, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceProviderNamespace, expand, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

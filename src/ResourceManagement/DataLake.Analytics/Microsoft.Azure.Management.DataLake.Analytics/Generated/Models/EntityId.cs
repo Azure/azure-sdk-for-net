@@ -29,6 +29,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the EntityId class.
         /// </summary>
+        /// <param name="name">the name of the external table associated with
+        /// this database, schema and table.</param>
+        /// <param name="version">the version of the external data
+        /// source.</param>
         public EntityId(DdlName name = default(DdlName), Guid? version = default(Guid?))
         {
             Name = name;

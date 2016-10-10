@@ -44,49 +44,49 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets the state of the provisioning.
+        /// The state of the provisioning.
         /// </summary>
         [JsonProperty(PropertyName = "provisioningState")]
         public string ProvisioningState { get; set; }
 
         /// <summary>
-        /// Gets or sets the date and time of the operation.
+        /// The date and time of the operation.
         /// </summary>
         [JsonProperty(PropertyName = "timestamp")]
         public DateTime? Timestamp { get; set; }
 
         /// <summary>
-        /// Gets or sets deployment operation service request id.
+        /// Deployment operation service request id.
         /// </summary>
         [JsonProperty(PropertyName = "serviceRequestId")]
         public string ServiceRequestId { get; set; }
 
         /// <summary>
-        /// Gets or sets operation status code.
+        /// Operation status code.
         /// </summary>
         [JsonProperty(PropertyName = "statusCode")]
         public string StatusCode { get; set; }
 
         /// <summary>
-        /// Gets or sets operation status message.
+        /// Operation status message.
         /// </summary>
         [JsonProperty(PropertyName = "statusMessage")]
         public object StatusMessage { get; set; }
 
         /// <summary>
-        /// Gets or sets the target resource.
+        /// The target resource.
         /// </summary>
         [JsonProperty(PropertyName = "targetResource")]
         public TargetResource TargetResource { get; set; }
 
         /// <summary>
-        /// Gets or sets the HTTP request message.
+        /// The HTTP request message.
         /// </summary>
         [JsonProperty(PropertyName = "request")]
         public HttpMessage Request { get; set; }
 
         /// <summary>
-        /// Gets or sets the HTTP response message.
+        /// The HTTP response message.
         /// </summary>
         [JsonProperty(PropertyName = "response")]
         public HttpMessage Response { get; set; }

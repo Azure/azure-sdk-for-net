@@ -14,9 +14,9 @@ namespace Microsoft.Azure.Search
     internal partial class IndexesOperations
     {
         /// <inheritdoc />
-        public Task<AzureOperationResponse<Index>> CreateOrUpdateWithHttpMessagesAsync(Index index, SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public Task<AzureOperationResponse<Index>> CreateOrUpdateWithHttpMessagesAsync(Index index, bool? allowIndexDowntime = default(bool?), SearchRequestOptions searchRequestOptions = default(SearchRequestOptions), AccessCondition accessCondition = default(AccessCondition), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            return CreateOrUpdateWithHttpMessagesAsync(index != null ? index.Name : null, index, searchRequestOptions, customHeaders, cancellationToken);
+            return CreateOrUpdateWithHttpMessagesAsync(index != null ? index.Name : null, index, allowIndexDowntime, searchRequestOptions, accessCondition, customHeaders, cancellationToken);
         }
         
         /// <inheritdoc />
@@ -31,7 +31,7 @@ namespace Microsoft.Azure.Search
         }
 
         /// <inheritdoc />
-        public SearchIndexClient GetClient(string indexName)
+        public ISearchIndexClient GetClient(string indexName)
         {
             // Argument checking is done by the SearchIndexClient constructor. Note that HttpClient can't be shared in
             // case it has already been used (SearchIndexClient will attempt to set the Timeout property on it).

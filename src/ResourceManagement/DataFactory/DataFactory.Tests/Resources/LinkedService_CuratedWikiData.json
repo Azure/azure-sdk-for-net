@@ -1,8 +1,0 @@
-{
-    name: "LinkedService-CuratedWikiData",
-    properties:
-    {
-        type: "AzureStorageLinkedService",
-        connectionString: "$EncryptedString$BlobEncryptedConnectionString"
-    }
-}

@@ -15,12 +15,6 @@ namespace Microsoft.Azure.Search.Models
     /// </summary>
     public class Field
     {
-        [JsonProperty("type")]
-        private string rawType;
-
-        [JsonProperty("analyzer")]
-        private string rawAnalyzerName;
-
         /// <summary>
         /// Initializes a new instance of the Field class.
         /// </summary>
@@ -68,6 +62,7 @@ namespace Microsoft.Azure.Search.Models
 
         /// <summary>
         /// Gets or sets the name of the field.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn857353.aspx" />
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
@@ -75,14 +70,39 @@ namespace Microsoft.Azure.Search.Models
         /// <summary>
         /// Gets or sets the data type of the field.
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "type")]
         public DataType Type { get; set; }
 
         /// <summary>
-        /// Name of the text analyzer to use.
+        /// Gets or sets the name of the analyzer to use for the field at search time and 
+        /// indexing time. This option can be used only with searchable fields
+        /// and it can't be set together with either SearchAnalyzer or
+        /// IndexAnalyzer. Once the analyzer is chosen, it cannot be changed
+        /// for the field.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn879793.aspx" /> 
         /// </summary>
-        [JsonIgnore]
+        [JsonProperty(PropertyName = "analyzer")]
         public AnalyzerName Analyzer { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the analyzer used at search time for the field. This
+        /// option can be used only with searchable fields. It must be set together
+        /// with IndexAnalyzer and it cannot be set together with the Analyzer
+        /// option. This analyzer can be updated on an existing field.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn879793.aspx" /> 
+        /// </summary>
+        [JsonProperty(PropertyName = "searchAnalyzer")]
+        public AnalyzerName SearchAnalyzer { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name of the analyzer used at indexing time for the field. This
+        /// option can be used only with searchable fields. It must be set together
+        /// with SearchAnalyzer and it cannot be set together with the Analyzer
+        /// option. Once the analyzer is chosen, it cannot be changed for the field.
+        /// <see href="https://msdn.microsoft.com/library/azure/dn879793.aspx" /> 
+        /// </summary>
+        [JsonProperty(PropertyName = "indexAnalyzer")]
+        public AnalyzerName IndexAnalyzer { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the field is the key of
@@ -142,20 +162,6 @@ namespace Microsoft.Azure.Search.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Type");
             }
-        }
-
-        [OnSerializing]
-        public void OnSerializing(StreamingContext context)
-        {
-            this.rawType = this.Type;
-            this.rawAnalyzerName = this.Analyzer;
-        }
-
-        [OnDeserialized]
-        public void OnDeserialized(StreamingContext context)
-        {
-            this.Type = DataType.Create(this.rawType);  // Type cannot be null, but Analyzer can be.
-            this.Analyzer = this.rawAnalyzerName != null ? AnalyzerName.Create(this.rawAnalyzerName) : null;
         }
     }
 }

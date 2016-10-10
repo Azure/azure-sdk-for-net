@@ -38,25 +38,25 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets the tag ID.
+        /// The tag ID.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the tag name.
+        /// The tag name.
         /// </summary>
         [JsonProperty(PropertyName = "tagName")]
         public string TagName { get; set; }
 
         /// <summary>
-        /// Gets or sets the tag count.
+        /// The tag count.
         /// </summary>
         [JsonProperty(PropertyName = "count")]
         public TagCount Count { get; set; }
 
         /// <summary>
-        /// Gets or sets the list of tag values.
+        /// The list of tag values.
         /// </summary>
         [JsonProperty(PropertyName = "values")]
         public IList<TagValue> Values { get; set; }

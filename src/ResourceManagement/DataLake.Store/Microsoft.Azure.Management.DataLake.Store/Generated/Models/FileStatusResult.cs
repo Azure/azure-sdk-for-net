@@ -29,6 +29,8 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <summary>
         /// Initializes a new instance of the FileStatusResult class.
         /// </summary>
+        /// <param name="fileStatus">the file status object associated with
+        /// the specified path.</param>
         public FileStatusResult(FileStatusProperties fileStatus = default(FileStatusProperties))
         {
             FileStatus = fileStatus;

@@ -29,6 +29,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the StorageAccountProperties class.
         /// </summary>
+        /// <param name="accessKey">the access key associated with this Azure
+        /// Storage account that will be used to connect to it.</param>
+        /// <param name="suffix">the optional suffix for the Data Lake
+        /// account.</param>
         public StorageAccountProperties(string accessKey, string suffix = default(string))
         {
             AccessKey = accessKey;

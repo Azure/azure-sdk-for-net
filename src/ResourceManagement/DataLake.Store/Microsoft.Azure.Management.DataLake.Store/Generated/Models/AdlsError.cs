@@ -30,6 +30,8 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <summary>
         /// Initializes a new instance of the AdlsError class.
         /// </summary>
+        /// <param name="remoteException">the object representing the actual
+        /// WebHDFS exception being returned.</param>
         public AdlsError(AdlsRemoteException remoteException = default(AdlsRemoteException))
         {
             RemoteException = remoteException;

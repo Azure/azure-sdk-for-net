@@ -1,0 +1,76 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.KeyVault", "Microsoft.Azure.KeyVault\Microsoft.Azure.KeyVault.xproj", "{F0FBD614-4B4B-445B-B562-235CDB3844B7}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.KeyVault.Tests", "Microsoft.Azure.KeyVault.Tests\Microsoft.Azure.KeyVault.Tests.xproj", "{6F5823CD-D1D7-4DF4-BE61-F07FD8134400}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.KeyVault.Core", "Microsoft.Azure.KeyVault.Core\Microsoft.Azure.KeyVault.Core.xproj", "{BE53CF33-9A3D-4101-9DFD-62AC09CADADA}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.KeyVault.Cryptography", "Microsoft.Azure.KeyVault.Cryptography\Microsoft.Azure.KeyVault.Cryptography.xproj", "{9021F320-DE06-433B-ADBC-25A5BC0AA43B}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.KeyVault.Cryptography.Tests", "Microsoft.Azure.KeyVault.Cryptography.Tests\Microsoft.Azure.KeyVault.Cryptography.Tests.xproj", "{E01674C0-B8D7-4598-971C-48B0180E273F}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.KeyVault.Extensions", "Microsoft.Azure.KeyVault.Extensions\Microsoft.Azure.KeyVault.Extensions.xproj", "{9021F320-DE06-433B-ADBC-25A5BC0AA43C}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.KeyVault.Extensions.Tests", "Microsoft.Azure.KeyVault.Extensions.Tests\Microsoft.Azure.KeyVault.Extensions.Tests.xproj", "{E01674C0-B8D7-4598-971C-48B0180E274A}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.KeyVault.TestFramework", "Microsoft.Azure.KeyVault.TestFramework\Microsoft.Azure.KeyVault.TestFramework.xproj", "{6F5823CD-D1D7-4DF4-BE61-F07FD8134433}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.KeyVault.WebKey", "Microsoft.Azure.KeyVault.WebKey\Microsoft.Azure.KeyVault.WebKey.xproj", "{643372AD-2DBC-4395-95B9-61183D3F2904}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.KeyVault.WebKey.Tests", "Microsoft.Azure.KeyVault.WebKey.Tests\Microsoft.Azure.KeyVault.WebKey.Tests.xproj", "{6F5823CD-D1D7-4DF4-BE61-F07FD813440A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F0FBD614-4B4B-445B-B562-235CDB3844B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0FBD614-4B4B-445B-B562-235CDB3844B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0FBD614-4B4B-445B-B562-235CDB3844B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0FBD614-4B4B-445B-B562-235CDB3844B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F5823CD-D1D7-4DF4-BE61-F07FD8134400}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F5823CD-D1D7-4DF4-BE61-F07FD8134400}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F5823CD-D1D7-4DF4-BE61-F07FD8134400}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F5823CD-D1D7-4DF4-BE61-F07FD8134400}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE53CF33-9A3D-4101-9DFD-62AC09CADADA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE53CF33-9A3D-4101-9DFD-62AC09CADADA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE53CF33-9A3D-4101-9DFD-62AC09CADADA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE53CF33-9A3D-4101-9DFD-62AC09CADADA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9021F320-DE06-433B-ADBC-25A5BC0AA43B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9021F320-DE06-433B-ADBC-25A5BC0AA43B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9021F320-DE06-433B-ADBC-25A5BC0AA43B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9021F320-DE06-433B-ADBC-25A5BC0AA43B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E273F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E273F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E273F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E273F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9021F320-DE06-433B-ADBC-25A5BC0AA43C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9021F320-DE06-433B-ADBC-25A5BC0AA43C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9021F320-DE06-433B-ADBC-25A5BC0AA43C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9021F320-DE06-433B-ADBC-25A5BC0AA43C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E274A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E274A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E274A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E01674C0-B8D7-4598-971C-48B0180E274A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F5823CD-D1D7-4DF4-BE61-F07FD8134433}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F5823CD-D1D7-4DF4-BE61-F07FD8134433}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F5823CD-D1D7-4DF4-BE61-F07FD8134433}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F5823CD-D1D7-4DF4-BE61-F07FD8134433}.Release|Any CPU.Build.0 = Release|Any CPU
+		{643372AD-2DBC-4395-95B9-61183D3F2904}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{643372AD-2DBC-4395-95B9-61183D3F2904}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{643372AD-2DBC-4395-95B9-61183D3F2904}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{643372AD-2DBC-4395-95B9-61183D3F2904}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F5823CD-D1D7-4DF4-BE61-F07FD813440A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F5823CD-D1D7-4DF4-BE61-F07FD813440A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F5823CD-D1D7-4DF4-BE61-F07FD813440A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F5823CD-D1D7-4DF4-BE61-F07FD813440A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

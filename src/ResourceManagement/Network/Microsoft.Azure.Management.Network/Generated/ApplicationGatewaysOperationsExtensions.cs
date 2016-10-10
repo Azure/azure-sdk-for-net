@@ -23,8 +23,8 @@ namespace Microsoft.Azure.Management.Network
     public static partial class ApplicationGatewaysOperationsExtensions
     {
             /// <summary>
-            /// The delete applicationgateway operation deletes the specified
-            /// applicationgateway.
+            /// The delete ApplicationGateway operation deletes the specified application
+            /// gateway.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the resource group.
             /// </param>
             /// <param name='applicationGatewayName'>
-            /// The name of the applicationgateway.
+            /// The name of the application gateway.
             /// </param>
             public static void Delete(this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName)
             {
@@ -41,8 +41,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The delete applicationgateway operation deletes the specified
-            /// applicationgateway.
+            /// The delete ApplicationGateway operation deletes the specified application
+            /// gateway.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -51,7 +51,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the resource group.
             /// </param>
             /// <param name='applicationGatewayName'>
-            /// The name of the applicationgateway.
+            /// The name of the application gateway.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -62,8 +62,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The delete applicationgateway operation deletes the specified
-            /// applicationgateway.
+            /// The delete ApplicationGateway operation deletes the specified application
+            /// gateway.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -72,7 +72,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the resource group.
             /// </param>
             /// <param name='applicationGatewayName'>
-            /// The name of the applicationgateway.
+            /// The name of the application gateway.
             /// </param>
             public static void BeginDelete(this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName)
             {
@@ -80,8 +80,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The delete applicationgateway operation deletes the specified
-            /// applicationgateway.
+            /// The delete ApplicationGateway operation deletes the specified application
+            /// gateway.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -90,7 +90,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the resource group.
             /// </param>
             /// <param name='applicationGatewayName'>
-            /// The name of the applicationgateway.
+            /// The name of the application gateway.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -101,8 +101,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Get applicationgateway operation retreives information about the
-            /// specified applicationgateway.
+            /// The Get ApplicationGateway operation retrieves information about the
+            /// specified application gateway.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the resource group.
             /// </param>
             /// <param name='applicationGatewayName'>
-            /// The name of the applicationgateway.
+            /// The name of the application gateway.
             /// </param>
             public static ApplicationGateway Get(this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName)
             {
@@ -119,8 +119,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Get applicationgateway operation retreives information about the
-            /// specified applicationgateway.
+            /// The Get ApplicationGateway operation retrieves information about the
+            /// specified application gateway.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -129,7 +129,7 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the resource group.
             /// </param>
             /// <param name='applicationGatewayName'>
-            /// The name of the applicationgateway.
+            /// The name of the application gateway.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -235,8 +235,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List ApplicationGateway opertion retrieves all the applicationgateways
-            /// in a resource group.
+            /// The List ApplicationGateway operation retrieves all the application
+            /// gateways in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -250,8 +250,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List ApplicationGateway opertion retrieves all the applicationgateways
-            /// in a resource group.
+            /// The List ApplicationGateway operation retrieves all the application
+            /// gateways in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -271,8 +271,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List applicationgateway opertion retrieves all the applicationgateways
-            /// in a subscription.
+            /// The List ApplicationGateway operation retrieves all the application
+            /// gateways in a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -283,8 +283,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List applicationgateway opertion retrieves all the applicationgateways
-            /// in a subscription.
+            /// The List ApplicationGateway operation retrieves all the application
+            /// gateways in a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -301,7 +301,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Start ApplicationGateway operation starts application gatewayin the
+            /// The Start ApplicationGateway operation starts application gateway in the
             /// specified resource group through Network resource provider.
             /// </summary>
             /// <param name='operations'>
@@ -319,7 +319,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Start ApplicationGateway operation starts application gatewayin the
+            /// The Start ApplicationGateway operation starts application gateway in the
             /// specified resource group through Network resource provider.
             /// </summary>
             /// <param name='operations'>
@@ -340,7 +340,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Start ApplicationGateway operation starts application gatewayin the
+            /// The Start ApplicationGateway operation starts application gateway in the
             /// specified resource group through Network resource provider.
             /// </summary>
             /// <param name='operations'>
@@ -358,7 +358,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The Start ApplicationGateway operation starts application gatewayin the
+            /// The Start ApplicationGateway operation starts application gateway in the
             /// specified resource group through Network resource provider.
             /// </summary>
             /// <param name='operations'>
@@ -379,7 +379,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The STOP ApplicationGateway operation stops application gatewayin the
+            /// The STOP ApplicationGateway operation stops application gateway in the
             /// specified resource group through Network resource provider.
             /// </summary>
             /// <param name='operations'>
@@ -397,7 +397,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The STOP ApplicationGateway operation stops application gatewayin the
+            /// The STOP ApplicationGateway operation stops application gateway in the
             /// specified resource group through Network resource provider.
             /// </summary>
             /// <param name='operations'>
@@ -418,7 +418,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The STOP ApplicationGateway operation stops application gatewayin the
+            /// The STOP ApplicationGateway operation stops application gateway in the
             /// specified resource group through Network resource provider.
             /// </summary>
             /// <param name='operations'>
@@ -436,7 +436,7 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The STOP ApplicationGateway operation stops application gatewayin the
+            /// The STOP ApplicationGateway operation stops application gateway in the
             /// specified resource group through Network resource provider.
             /// </summary>
             /// <param name='operations'>
@@ -457,8 +457,108 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List ApplicationGateway opertion retrieves all the applicationgateways
-            /// in a resource group.
+            /// The BackendHealth operation gets the backend health of application gateway
+            /// in the specified resource group through Network resource provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='applicationGatewayName'>
+            /// The name of the application gateway.
+            /// </param>
+            /// <param name='expand'>
+            /// Expands BackendAddressPool and BackendHttpSettings referenced in backend
+            /// health.
+            /// </param>
+            public static ApplicationGatewayBackendHealth BackendHealth(this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, string expand = default(string))
+            {
+                return Task.Factory.StartNew(s => ((IApplicationGatewaysOperations)s).BackendHealthAsync(resourceGroupName, applicationGatewayName, expand), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The BackendHealth operation gets the backend health of application gateway
+            /// in the specified resource group through Network resource provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='applicationGatewayName'>
+            /// The name of the application gateway.
+            /// </param>
+            /// <param name='expand'>
+            /// Expands BackendAddressPool and BackendHttpSettings referenced in backend
+            /// health.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ApplicationGatewayBackendHealth> BackendHealthAsync(this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BackendHealthWithHttpMessagesAsync(resourceGroupName, applicationGatewayName, expand, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// The BackendHealth operation gets the backend health of application gateway
+            /// in the specified resource group through Network resource provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='applicationGatewayName'>
+            /// The name of the application gateway.
+            /// </param>
+            /// <param name='expand'>
+            /// Expands BackendAddressPool and BackendHttpSettings referenced in backend
+            /// health.
+            /// </param>
+            public static ApplicationGatewayBackendHealth BeginBackendHealth(this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, string expand = default(string))
+            {
+                return Task.Factory.StartNew(s => ((IApplicationGatewaysOperations)s).BeginBackendHealthAsync(resourceGroupName, applicationGatewayName, expand), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// The BackendHealth operation gets the backend health of application gateway
+            /// in the specified resource group through Network resource provider.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='applicationGatewayName'>
+            /// The name of the application gateway.
+            /// </param>
+            /// <param name='expand'>
+            /// Expands BackendAddressPool and BackendHttpSettings referenced in backend
+            /// health.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ApplicationGatewayBackendHealth> BeginBackendHealthAsync(this IApplicationGatewaysOperations operations, string resourceGroupName, string applicationGatewayName, string expand = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.BeginBackendHealthWithHttpMessagesAsync(resourceGroupName, applicationGatewayName, expand, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// The List ApplicationGateway operation retrieves all the application
+            /// gateways in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -472,8 +572,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List ApplicationGateway opertion retrieves all the applicationgateways
-            /// in a resource group.
+            /// The List ApplicationGateway operation retrieves all the application
+            /// gateways in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -493,8 +593,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List applicationgateway opertion retrieves all the applicationgateways
-            /// in a subscription.
+            /// The List ApplicationGateway operation retrieves all the application
+            /// gateways in a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -508,8 +608,8 @@ namespace Microsoft.Azure.Management.Network
             }
 
             /// <summary>
-            /// The List applicationgateway opertion retrieves all the applicationgateways
-            /// in a subscription.
+            /// The List ApplicationGateway operation retrieves all the application
+            /// gateways in a subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

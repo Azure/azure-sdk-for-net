@@ -29,6 +29,10 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlDatabase class.
         /// </summary>
+        /// <param name="computeAccountName">the name of the Data Lake
+        /// Analytics account.</param>
+        /// <param name="version">the version of the catalog item.</param>
+        /// <param name="name">the name of the database.</param>
         public USqlDatabase(string computeAccountName = default(string), Guid? version = default(Guid?), string name = default(string))
             : base(computeAccountName, version)
         {

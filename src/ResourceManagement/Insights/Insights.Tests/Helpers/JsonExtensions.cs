@@ -15,14 +15,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Globalization;
-using System.Linq;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
 using System.Xml;
-using Insights.Tests.InMemoryTests;
 using Microsoft.Azure.Management.Insights.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -45,9 +40,7 @@ namespace Insights.Tests.Helpers
                 new IsoDateTimeConverter {DateTimeStyles = DateTimeStyles.AssumeUniversal},
                 new PolymorphicTypeConverter<RuleDataSource>(),
                 new PolymorphicTypeConverter<RuleCondition>(),
-                new PolymorphicTypeConverter<RuleAction>(),
-                new PolymorphicTypeConverter<PublicConfiguration>(),
-                new PolymorphicTypeConverter<DirectoryPath>(),
+                new PolymorphicTypeConverter<RuleAction>()
             },
             ContractResolver = new CamelCasePropertyNamesContractResolver()
         };
@@ -161,7 +154,7 @@ namespace Insights.Tests.Helpers
 
                     // This assumes that the concrete classes are in the same assembly as the parent class (we can optimize this later by caching the possible types in the constructor
                     // If the type from the user is invalid, null object will be created which will be detected by the Create method
-                    return base.ReadJson(jsonObject.CreateReader(), typeof(T).Assembly.GetType(incomingTypeString), existingValue, serializer);
+                    return base.ReadJson(jsonObject.CreateReader(), typeof(T).GetTypeInfo().Assembly.GetType(incomingTypeString), existingValue, serializer);
                 }
 
                 return null;

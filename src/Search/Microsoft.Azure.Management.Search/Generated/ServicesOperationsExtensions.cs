@@ -26,6 +26,7 @@ namespace Microsoft.Azure.Management.Search
             /// Creates or updates a Search service in the given resource group. If the
             /// Search service already exists, all properties will be updated with the
             /// given values.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn832687.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -48,6 +49,7 @@ namespace Microsoft.Azure.Management.Search
             /// Creates or updates a Search service in the given resource group. If the
             /// Search service already exists, all properties will be updated with the
             /// given values.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn832687.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -75,6 +77,7 @@ namespace Microsoft.Azure.Management.Search
             /// <summary>
             /// Deletes a Search service in the given resource group, along with its
             /// associated resources.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn832692.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -93,6 +96,7 @@ namespace Microsoft.Azure.Management.Search
             /// <summary>
             /// Deletes a Search service in the given resource group, along with its
             /// associated resources.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn832692.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -113,6 +117,7 @@ namespace Microsoft.Azure.Management.Search
 
             /// <summary>
             /// Returns a list of all Search services in the given resource group.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn832688.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -127,6 +132,7 @@ namespace Microsoft.Azure.Management.Search
 
             /// <summary>
             /// Returns a list of all Search services in the given resource group.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn832688.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

@@ -29,6 +29,11 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the USqlSchema class.
         /// </summary>
+        /// <param name="computeAccountName">the name of the Data Lake
+        /// Analytics account.</param>
+        /// <param name="version">the version of the catalog item.</param>
+        /// <param name="databaseName">the name of the database.</param>
+        /// <param name="name">the name of the schema.</param>
         public USqlSchema(string computeAccountName = default(string), Guid? version = default(Guid?), string databaseName = default(string), string name = default(string))
             : base(computeAccountName, version)
         {

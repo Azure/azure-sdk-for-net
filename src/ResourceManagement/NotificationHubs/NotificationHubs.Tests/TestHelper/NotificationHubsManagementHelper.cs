@@ -31,7 +31,7 @@ namespace NotificationHubs.Tests.TestHelper
     public static class NotificationHubsManagementHelper
     {
         internal const string DefaultLocation = "South Central US";
-        internal const string ResourceGroupPrefix = "NotificationHub-RG";
+        internal const string ResourceGroupPrefix = "TestRg-NH";
         internal const string NamespacePrefix = "HydraNH-Namespace";
         internal const string NotificationHubPrefix = "HydraNH-NotificationHub";
         internal const string AuthorizationRulesPrefix = "HydraNH-Authrules";
@@ -86,7 +86,12 @@ namespace NotificationHubs.Tests.TestHelper
         {
             resourceManagementClient.ResourceGroups.CreateOrUpdate(resourceGroupName, new ResourceGroup(location));
         }
-        
+
+        public static void TryDeleteResourceGroup(this ResourceManagementClient resourceManagementClient, string resourceGroupName)
+        {
+            resourceManagementClient.ResourceGroups.Delete(resourceGroupName);
+        }
+
         public static void TryCreateNamespace(
             this NotificationHubsManagementClient client,
             string resourceGroupName,
@@ -97,15 +102,12 @@ namespace NotificationHubs.Tests.TestHelper
             var namespaceParameter = new NamespaceCreateOrUpdateParameters()
             {
                 Location = location,
-                Properties = new NamespaceProperties
-                {
-                    NamespaceType = NamespaceType.NotificationHub
-                }
+                NamespaceType = NamespaceType.NotificationHub
             };
 
             if (!string.IsNullOrEmpty(scaleUnit))
             {
-                namespaceParameter.Properties.ScaleUnit = scaleUnit;
+                namespaceParameter.ScaleUnit = scaleUnit;
             }
 
             client.Namespaces.CreateOrUpdate(
@@ -152,6 +154,5 @@ namespace NotificationHubs.Tests.TestHelper
             },
             ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
         };
-
     }
 }

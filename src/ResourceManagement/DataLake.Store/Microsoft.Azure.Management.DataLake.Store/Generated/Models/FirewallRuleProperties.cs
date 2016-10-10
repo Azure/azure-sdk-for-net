@@ -29,6 +29,10 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <summary>
         /// Initializes a new instance of the FirewallRuleProperties class.
         /// </summary>
+        /// <param name="startIpAddress">the start IP address for the firewall
+        /// rule.</param>
+        /// <param name="endIpAddress">the end IP address for the firewall
+        /// rule.</param>
         public FirewallRuleProperties(string startIpAddress = default(string), string endIpAddress = default(string))
         {
             StartIpAddress = startIpAddress;

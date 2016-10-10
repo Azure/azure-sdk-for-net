@@ -37,19 +37,19 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets the ID of the resource.
+        /// The ID of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
-        /// Gets or sets the name of the resource.
+        /// The name of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "resourceName")]
         public string ResourceName { get; set; }
 
         /// <summary>
-        /// Gets or sets the type of the resource.
+        /// The type of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "resourceType")]
         public string ResourceType { get; set; }

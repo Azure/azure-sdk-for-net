@@ -84,6 +84,75 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
 
             /// <summary>
+            /// Sets or removes the expiration time on the specified file. This operation
+            /// can only be executed against files. Folders are not supported.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Store account to execute filesystem operations on.
+            /// </param>
+            /// <param name='filePath'>
+            /// The Data Lake Store path (starting with '/') of the file on which to set
+            /// or remove the expiration time.
+            /// </param>
+            /// <param name='expiryOption'>
+            /// Indicates the type of expiration to use for the file: 1. NeverExpire:
+            /// ExpireTime is ignored. 2. RelativeToNow: ExpireTime is an integer in
+            /// milliseconds representing the expiration date relative to when file
+            /// expiration is updated. 3. RelativeToCreationDate: ExpireTime is an
+            /// integer in milliseconds representing the expiration date relative to file
+            /// creation. 4. Absolute: ExpireTime is an integer in milliseconds, as a
+            /// Unix timestamp relative to 1/1/1970 00:00:00. Possible values include:
+            /// 'NeverExpire', 'RelativeToNow', 'RelativeToCreationDate', 'Absolute'
+            /// </param>
+            /// <param name='expireTime'>
+            /// The time that the file will expire, corresponding to the ExpiryOption that
+            /// was set.
+            /// </param>
+            public static void SetFileExpiry(this IFileSystemOperations operations, string accountName, string filePath, ExpiryOptionType expiryOption, long? expireTime = default(long?))
+            {
+                Task.Factory.StartNew(s => ((IFileSystemOperations)s).SetFileExpiryAsync(accountName, filePath, expiryOption, expireTime), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Sets or removes the expiration time on the specified file. This operation
+            /// can only be executed against files. Folders are not supported.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Store account to execute filesystem operations on.
+            /// </param>
+            /// <param name='filePath'>
+            /// The Data Lake Store path (starting with '/') of the file on which to set
+            /// or remove the expiration time.
+            /// </param>
+            /// <param name='expiryOption'>
+            /// Indicates the type of expiration to use for the file: 1. NeverExpire:
+            /// ExpireTime is ignored. 2. RelativeToNow: ExpireTime is an integer in
+            /// milliseconds representing the expiration date relative to when file
+            /// expiration is updated. 3. RelativeToCreationDate: ExpireTime is an
+            /// integer in milliseconds representing the expiration date relative to file
+            /// creation. 4. Absolute: ExpireTime is an integer in milliseconds, as a
+            /// Unix timestamp relative to 1/1/1970 00:00:00. Possible values include:
+            /// 'NeverExpire', 'RelativeToNow', 'RelativeToCreationDate', 'Absolute'
+            /// </param>
+            /// <param name='expireTime'>
+            /// The time that the file will expire, corresponding to the ExpiryOption that
+            /// was set.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task SetFileExpiryAsync(this IFileSystemOperations operations, string accountName, string filePath, ExpiryOptionType expiryOption, long? expireTime = default(long?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.SetFileExpiryWithHttpMessagesAsync(accountName, filePath, expiryOption, expireTime, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
             /// Checks if the specified access is available at the given path.
             /// </summary>
             /// <param name='operations'>
@@ -467,9 +536,13 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='streamContents'>
             /// The file contents to include when appending to the file.
             /// </param>
-            public static void Append(this IFileSystemOperations operations, string accountName, string directFilePath, System.IO.Stream streamContents)
+            /// <param name='offset'>
+            /// The optional offset in the stream to begin the append operation. Default
+            /// is to append at the end of the stream.
+            /// </param>
+            public static void Append(this IFileSystemOperations operations, string accountName, string directFilePath, System.IO.Stream streamContents, long? offset = default(long?))
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).AppendAsync(accountName, directFilePath, streamContents), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IFileSystemOperations)s).AppendAsync(accountName, directFilePath, streamContents, offset), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -493,12 +566,16 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='streamContents'>
             /// The file contents to include when appending to the file.
             /// </param>
+            /// <param name='offset'>
+            /// The optional offset in the stream to begin the append operation. Default
+            /// is to append at the end of the stream.
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task AppendAsync(this IFileSystemOperations operations, string accountName, string directFilePath, System.IO.Stream streamContents, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task AppendAsync(this IFileSystemOperations operations, string accountName, string directFilePath, System.IO.Stream streamContents, long? offset = default(long?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.AppendWithHttpMessagesAsync(accountName, directFilePath, streamContents, null, cancellationToken).ConfigureAwait(false);
+                await operations.AppendWithHttpMessagesAsync(accountName, directFilePath, streamContents, offset, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -738,6 +815,88 @@ namespace Microsoft.Azure.Management.DataLake.Store
             public static async Task RemoveAclEntriesAsync(this IFileSystemOperations operations, string accountName, string removeAclFilePath, string aclspec, CancellationToken cancellationToken = default(CancellationToken))
             {
                 await operations.RemoveAclEntriesWithHttpMessagesAsync(accountName, removeAclFilePath, aclspec, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Removes the existing Default Access Control List (ACL) of the specified
+            /// directory.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Store account to execute filesystem operations on.
+            /// </param>
+            /// <param name='defaultAclFilePath'>
+            /// The Data Lake Store path (starting with '/') of the directory with the
+            /// default ACL being removed.
+            /// </param>
+            public static void RemoveDefaultAcl(this IFileSystemOperations operations, string accountName, string defaultAclFilePath)
+            {
+                Task.Factory.StartNew(s => ((IFileSystemOperations)s).RemoveDefaultAclAsync(accountName, defaultAclFilePath), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Removes the existing Default Access Control List (ACL) of the specified
+            /// directory.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Store account to execute filesystem operations on.
+            /// </param>
+            /// <param name='defaultAclFilePath'>
+            /// The Data Lake Store path (starting with '/') of the directory with the
+            /// default ACL being removed.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RemoveDefaultAclAsync(this IFileSystemOperations operations, string accountName, string defaultAclFilePath, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.RemoveDefaultAclWithHttpMessagesAsync(accountName, defaultAclFilePath, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Removes the existing Access Control List (ACL) of the specified file or
+            /// directory.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Store account to execute filesystem operations on.
+            /// </param>
+            /// <param name='aclFilePath'>
+            /// The Data Lake Store path (starting with '/') of the file or directory with
+            /// the ACL being removed.
+            /// </param>
+            public static void RemoveAcl(this IFileSystemOperations operations, string accountName, string aclFilePath)
+            {
+                Task.Factory.StartNew(s => ((IFileSystemOperations)s).RemoveAclAsync(accountName, aclFilePath), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Removes the existing Access Control List (ACL) of the specified file or
+            /// directory.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Store account to execute filesystem operations on.
+            /// </param>
+            /// <param name='aclFilePath'>
+            /// The Data Lake Store path (starting with '/') of the file or directory with
+            /// the ACL being removed.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RemoveAclAsync(this IFileSystemOperations operations, string accountName, string aclFilePath, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                await operations.RemoveAclWithHttpMessagesAsync(accountName, aclFilePath, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>

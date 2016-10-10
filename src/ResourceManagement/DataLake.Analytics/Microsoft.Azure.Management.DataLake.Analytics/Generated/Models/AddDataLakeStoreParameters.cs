@@ -29,6 +29,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the AddDataLakeStoreParameters class.
         /// </summary>
+        /// <param name="properties">the properties for the Data Lake Store
+        /// account being added.</param>
         public AddDataLakeStoreParameters(DataLakeStoreAccountInfoProperties properties)
         {
             Properties = properties;

@@ -29,6 +29,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Initializes a new instance of the Error class.
         /// </summary>
+        /// <param name="code">the HTTP status code or error code associated
+        /// with this error</param>
+        /// <param name="message">the error message to display.</param>
+        /// <param name="target">the target of the error.</param>
+        /// <param name="details">the list of error details</param>
+        /// <param name="innerError">the inner exceptions or errors, if
+        /// any</param>
         public Error(string code = default(string), string message = default(string), string target = default(string), IList<ErrorDetails> details = default(IList<ErrorDetails>), InnerError innerError = default(InnerError))
         {
             Code = code;

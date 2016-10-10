@@ -32,6 +32,28 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Initializes a new instance of the
         /// DataLakeAnalyticsAccountProperties class.
         /// </summary>
+        /// <param name="provisioningState">the provisioning status of the
+        /// Data Lake Analytics account. Possible values include: 'Failed',
+        /// 'Creating', 'Running', 'Succeeded', 'Patching', 'Suspending',
+        /// 'Resuming', 'Deleting', 'Deleted'</param>
+        /// <param name="state">the state of the Data Lake Analytics account.
+        /// Possible values include: 'active', 'suspended'</param>
+        /// <param name="defaultDataLakeStoreAccount">the default data lake
+        /// storage account associated with this Data Lake Analytics
+        /// account.</param>
+        /// <param name="maxDegreeOfParallelism">the maximum supported degree
+        /// of parallelism for this account.</param>
+        /// <param name="maxJobCount">the maximum supported jobs running under
+        /// the account at the same time.</param>
+        /// <param name="dataLakeStoreAccounts">the list of Data Lake storage
+        /// accounts associated with this account.</param>
+        /// <param name="storageAccounts">the list of Azure Blob storage
+        /// accounts associated with this account.</param>
+        /// <param name="creationTime">the account creation time.</param>
+        /// <param name="lastModifiedTime">the account last modified
+        /// time.</param>
+        /// <param name="endpoint">the full CName endpoint for this
+        /// account.</param>
         public DataLakeAnalyticsAccountProperties(DataLakeAnalyticsAccountStatus? provisioningState = default(DataLakeAnalyticsAccountStatus?), DataLakeAnalyticsAccountState? state = default(DataLakeAnalyticsAccountState?), string defaultDataLakeStoreAccount = default(string), int? maxDegreeOfParallelism = default(int?), int? maxJobCount = default(int?), IList<DataLakeStoreAccountInfo> dataLakeStoreAccounts = default(IList<DataLakeStoreAccountInfo>), IList<StorageAccountInfo> storageAccounts = default(IList<StorageAccountInfo>), DateTime? creationTime = default(DateTime?), DateTime? lastModifiedTime = default(DateTime?), string endpoint = default(string))
         {
             ProvisioningState = provisioningState;
@@ -71,7 +93,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 
         /// <summary>
         /// Gets or sets the maximum supported degree of parallelism for this
-        /// acocunt.
+        /// account.
         /// </summary>
         [JsonProperty(PropertyName = "maxDegreeOfParallelism")]
         public int? MaxDegreeOfParallelism { get; set; }

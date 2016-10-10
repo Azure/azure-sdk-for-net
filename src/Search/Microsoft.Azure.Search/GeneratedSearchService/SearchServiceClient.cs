@@ -47,7 +47,7 @@ namespace Microsoft.Azure.Search
         public JsonSerializerSettings DeserializationSettings { get; private set; }        
 
         /// <summary>
-        /// Gets Azure subscription credentials.
+        /// Credentials needed for the client to connect to Azure.
         /// </summary>
         public ServiceClientCredentials Credentials { get; private set; }
 
@@ -122,6 +122,9 @@ namespace Microsoft.Azure.Search
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         protected SearchServiceClient(Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
@@ -143,6 +146,9 @@ namespace Microsoft.Azure.Search
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         protected SearchServiceClient(Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
@@ -156,11 +162,14 @@ namespace Microsoft.Azure.Search
         /// Initializes a new instance of the SearchServiceClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Gets Azure subscription credentials.
+        /// Required. Credentials needed for the client to connect to Azure.
         /// </param>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         public SearchServiceClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (credentials == null)
@@ -178,7 +187,7 @@ namespace Microsoft.Azure.Search
         /// Initializes a new instance of the SearchServiceClient class.
         /// </summary>
         /// <param name='credentials'>
-        /// Required. Gets Azure subscription credentials.
+        /// Required. Credentials needed for the client to connect to Azure.
         /// </param>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -186,6 +195,9 @@ namespace Microsoft.Azure.Search
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         public SearchServiceClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (credentials == null)
@@ -206,11 +218,14 @@ namespace Microsoft.Azure.Search
         /// Optional. The base URI of the service.
         /// </param>
         /// <param name='credentials'>
-        /// Required. Gets Azure subscription credentials.
+        /// Required. Credentials needed for the client to connect to Azure.
         /// </param>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         public SearchServiceClient(Uri baseUri, ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
@@ -236,7 +251,7 @@ namespace Microsoft.Azure.Search
         /// Optional. The base URI of the service.
         /// </param>
         /// <param name='credentials'>
-        /// Required. Gets Azure subscription credentials.
+        /// Required. Credentials needed for the client to connect to Azure.
         /// </param>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -244,6 +259,9 @@ namespace Microsoft.Azure.Search
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
+        /// <exception cref="ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         public SearchServiceClient(Uri baseUri, ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
@@ -262,6 +280,10 @@ namespace Microsoft.Azure.Search
             }
         }
 
+        /// <summary>
+        /// An optional partial-method to perform custom initialization.
+        /// </summary>
+        partial void CustomInitialize();
         /// <summary>
         /// Initializes client properties.
         /// </summary>
@@ -300,12 +322,21 @@ namespace Microsoft.Azure.Search
                         new Iso8601TimeSpanConverter()
                     }
             };
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Analyzer>("@odata.type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Analyzer>("@odata.type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Tokenizer>("@odata.type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Tokenizer>("@odata.type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<TokenFilter>("@odata.type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<TokenFilter>("@odata.type"));
+            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<CharFilter>("@odata.type"));
+            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<CharFilter>("@odata.type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DataChangeDetectionPolicy>("@odata.type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DataChangeDetectionPolicy>("@odata.type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<DataDeletionDetectionPolicy>("@odata.type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<DataDeletionDetectionPolicy>("@odata.type"));
             SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<ScoringFunction>("type"));
             DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<ScoringFunction>("type"));
+            CustomInitialize();
             DeserializationSettings.Converters.Add(new CloudErrorJsonConverter()); 
         }    
     }

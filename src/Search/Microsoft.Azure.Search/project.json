@@ -1,5 +1,5 @@
 {
-  "version": "2.0.0-preview",
+  "version": "2.0.4-preview",
   "title": "Microsoft Azure Search Library",
   "description": "Makes it easy to develop a .NET application that uses Azure Search.",
   "authors": [ "Microsoft" ],
@@ -11,27 +11,22 @@
     "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
     "tags": [ "Microsoft Azure Search", "REST HTTP client", "search", "azureofficial", "windowsazureofficial" ],
     "requireLicenseAcceptance":  true,
-    "releaseNotes": "This is a preview release of the Azure Search .NET SDK, based on version 2015-02-28-Preview of the Azure Search REST API.",
+    "releaseNotes": "This is a preview release of the Azure Search .NET SDK, based on version 2015-02-28-Preview of the Azure Search REST API. It includes support for indexing Azure Blob and Table storage, indexer field mappings, custom analyzers, and ETags. See this article for help on migrating to the latest version: http://aka.ms/search-sdk-upgrade."
   },
 
   "buildOptions": {
     "delaySign": true,
     "publicSign": false,
-    "keyFile": "../../../tools/MSSharedLibKey.snk"
+    "keyFile": "../../../tools/MSSharedLibKey.snk",
+    "xmlDoc": true,
+    "nowarn": [ "1591" ]
   },
   "dependencies": {
-    "Microsoft.Spatial": "[6.15.0,7.0)"
+    "Microsoft.Spatial": "6.15.0"
   },
 
   "frameworks": {
     "net45": {
-      "frameworkAssemblies": {
-        "System.Collections": "",
-        "System.Linq.Expressions": "",
-        "System.Runtime": "",
-        "System.Runtime.Serialization": "",
-        "System.Threading.Tasks": "",
-      },
       "dependencies": {
         "Microsoft.Rest.ClientRuntime.Azure": "[3.1.0,4.0.0)"
       }

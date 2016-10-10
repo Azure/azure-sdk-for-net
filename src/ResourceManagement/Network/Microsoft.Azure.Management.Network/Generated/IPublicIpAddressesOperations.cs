@@ -57,7 +57,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string publicIpAddressName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The Get publicIpAddress operation retreives information about the
+        /// The Get publicIpAddress operation retrieves information about the
         /// specified pubicIpAddress
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -117,7 +117,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<PublicIPAddress>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string publicIpAddressName, PublicIPAddress parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The List publicIpAddress opertion retrieves all the
+        /// The List publicIpAddress operation retrieves all the
         /// publicIpAddresses in a subscription.
         /// </summary>
         /// <param name='customHeaders'>
@@ -128,7 +128,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<IPage<PublicIPAddress>>> ListAllWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The List publicIpAddress opertion retrieves all the
+        /// The List publicIpAddress operation retrieves all the
         /// publicIpAddresses in a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -142,7 +142,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<IPage<PublicIPAddress>>> ListWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The List publicIpAddress opertion retrieves all the
+        /// The List publicIpAddress operation retrieves all the
         /// publicIpAddresses in a subscription.
         /// </summary>
         /// <param name='nextPageLink'>
@@ -156,7 +156,7 @@ namespace Microsoft.Azure.Management.Network
         /// </param>
         Task<AzureOperationResponse<IPage<PublicIPAddress>>> ListAllNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// The List publicIpAddress opertion retrieves all the
+        /// The List publicIpAddress operation retrieves all the
         /// publicIpAddresses in a resource group.
         /// </summary>
         /// <param name='nextPageLink'>

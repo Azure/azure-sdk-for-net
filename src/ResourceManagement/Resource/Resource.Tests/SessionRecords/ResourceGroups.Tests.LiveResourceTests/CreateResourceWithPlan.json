@@ -1,21 +1,22 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/providers/SuccessBricks.ClearDB?api-version=2016-02-01",
+      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/providers/SuccessBricks.ClearDB?api-version=2016-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODllYzRkMWQtZGNjNy00YTNmLWE3MDEtMGE1ZDA3NGM4NTA1L3Byb3ZpZGVycy9TdWNjZXNzQnJpY2tzLkNsZWFyREI/YXBpLXZlcnNpb249MjAxNi0wNy0wMQ==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "b2dac905-22c1-4baf-8064-9d9bf42f3f0f"
+          "2f6beb12-7b56-4168-9d65-2d7bdc9a3ec8"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.0.0.0"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.1.4-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/providers/successbricks.cleardb\",\r\n  \"namespace\": \"successbricks.cleardb\",\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"databases\",\r\n      \"locations\": [\r\n        \"Brazil South\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"West Europe\",\r\n        \"West US\",\r\n        \"South Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2014-04-01\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"clusters\",\r\n      \"locations\": [\r\n        \"Brazil South\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"West Europe\",\r\n        \"West US\",\r\n        \"South Central US\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2014-04-01\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/providers/SuccessBricks.ClearDB\",\r\n  \"namespace\": \"SuccessBricks.ClearDB\",\r\n  \"resourceTypes\": [\r\n    {\r\n      \"resourceType\": \"databases\",\r\n      \"locations\": [\r\n        \"Brazil South\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"West Europe\",\r\n        \"West US\",\r\n        \"South Central US\",\r\n        \"Canada Central\",\r\n        \"Canada East\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2014-04-01\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    },\r\n    {\r\n      \"resourceType\": \"clusters\",\r\n      \"locations\": [\r\n        \"Brazil South\",\r\n        \"Central US\",\r\n        \"East Asia\",\r\n        \"East US\",\r\n        \"East US 2\",\r\n        \"Japan East\",\r\n        \"Japan West\",\r\n        \"North Central US\",\r\n        \"North Europe\",\r\n        \"Southeast Asia\",\r\n        \"West Europe\",\r\n        \"West US\",\r\n        \"South Central US\",\r\n        \"Canada Central\",\r\n        \"Canada East\"\r\n      ],\r\n      \"apiVersions\": [\r\n        \"2014-04-01\"\r\n      ],\r\n      \"capabilities\": \"CrossResourceGroupResourceMove, CrossSubscriptionResourceMove\"\r\n    }\r\n  ],\r\n  \"registrationState\": \"Registered\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -27,7 +28,7 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 26 Jan 2016 22:30:06 GMT"
+          "Wed, 27 Jul 2016 01:11:25 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -36,16 +37,16 @@
           "Accept-Encoding"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14999"
+          "14995"
         ],
         "x-ms-request-id": [
-          "ebaaf08b-0df8-45c4-91f9-cbc756d0659e"
+          "3b5246e4-6305-4a89-9552-efec3d05b52c"
         ],
         "x-ms-correlation-request-id": [
-          "ebaaf08b-0df8-45c4-91f9-cbc756d0659e"
+          "3b5246e4-6305-4a89-9552-efec3d05b52c"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20160126T223006Z:ebaaf08b-0df8-45c4-91f9-cbc756d0659e"
+          "CENTRALUS:20160727T011125Z:3b5246e4-6305-4a89-9552-efec3d05b52c"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -54,7 +55,8 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg6657?api-version=2016-02-01",
+      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourcegroups/csmrg6499?api-version=2016-07-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODllYzRkMWQtZGNjNy00YTNmLWE3MDEtMGE1ZDA3NGM4NTA1L3Jlc291cmNlZ3JvdXBzL2NzbXJnNjQ5OT9hcGktdmVyc2lvbj0yMDE2LTA3LTAx",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"South Central US\"\r\n}",
       "RequestHeaders": {
@@ -65,16 +67,16 @@
           "38"
         ],
         "x-ms-client-request-id": [
-          "a464b2d4-bd63-4655-9daa-2a49bd53bca6"
+          "884c013f-80f3-4e5f-9d10-78c8e7ea7263"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.0.0.0"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.1.4-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg6657\",\r\n  \"name\": \"csmrg6657\",\r\n  \"location\": \"southcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourceGroups/csmrg6499\",\r\n  \"name\": \"csmrg6499\",\r\n  \"location\": \"southcentralus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "179"
@@ -89,22 +91,22 @@
           "no-cache"
         ],
         "Date": [
-          "Tue, 26 Jan 2016 22:30:06 GMT"
+          "Wed, 27 Jul 2016 01:11:25 GMT"
         ],
         "Pragma": [
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1196"
         ],
         "x-ms-request-id": [
-          "46b5576c-7314-4999-9a62-4e9070de662f"
+          "a988aaa9-3f1d-42e7-9549-687aa5563cce"
         ],
         "x-ms-correlation-request-id": [
-          "46b5576c-7314-4999-9a62-4e9070de662f"
+          "a988aaa9-3f1d-42e7-9549-687aa5563cce"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20160126T223007Z:46b5576c-7314-4999-9a62-4e9070de662f"
+          "CENTRALUS:20160727T011126Z:a988aaa9-3f1d-42e7-9549-687aa5563cce"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -113,27 +115,28 @@
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg6657/providers/SuccessBricks.ClearDB//databases/csmr9107?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourcegroups/csmrg6499/providers/SuccessBricks.ClearDB//databases/csmr8260?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODllYzRkMWQtZGNjNy00YTNmLWE3MDEtMGE1ZDA3NGM4NTA1L3Jlc291cmNlZ3JvdXBzL2NzbXJnNjQ5OS9wcm92aWRlcnMvU3VjY2Vzc0JyaWNrcy5DbGVhckRCLy9kYXRhYmFzZXMvY3NtcjgyNjA/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"plan\": {\r\n    \"name\": \"Free\"\r\n  },\r\n  \"location\": \"South Central US\",\r\n  \"tags\": {\r\n    \"provision_source\": \"RMS\"\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"plan\": {\r\n    \"name\": \"Free\"\r\n  },\r\n  \"location\": \"Canada East\",\r\n  \"tags\": {\r\n    \"provision_source\": \"RMS\"\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
         ],
         "Content-Length": [
-          "127"
+          "122"
         ],
         "x-ms-client-request-id": [
-          "e08167a7-6180-4380-b338-ce1bfa325630"
+          "8bc20b41-67cb-417b-ac2f-e1a3c079c367"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.0.0.0"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.1.4-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"name\": \"csmr9107\",\r\n  \"location\": \"South Central US\",\r\n  \"plan\": {\r\n    \"name\": \"Mercury\"\r\n  },\r\n  \"properties\": {\r\n    \"status\": \"Started\",\r\n    \"hostname\": \"us-cdbr-azure-southcentral-e.cloudapp.net\",\r\n    \"username\": \"b47cad68b36607\",\r\n    \"password\": \"fe5f283b\",\r\n    \"name\": \"csmr9107\",\r\n    \"connectionString\": \"Database=csmr9107;Data Source=us-cdbr-azure-southcentral-e.cloudapp.net;User Id=b47cad68b36607;Password=fe5f283b\",\r\n    \"connectionUrl\": \"mysql://b47cad68b36607:fe5f283b@us-cdbr-azure-southcentral-e.cloudapp.net/csmr9107\"\r\n  },\r\n  \"tags\": {\r\n    \"provision_source\": \"RMS\"\r\n  },\r\n  \"resourceGroup\": \"csmrg6657\"\r\n}",
+      "ResponseBody": "{\r\n  \"name\": \"csmr8260\",\r\n  \"location\": \"Canada East\",\r\n  \"plan\": {\r\n    \"name\": \"Free\"\r\n  },\r\n  \"properties\": {\r\n    \"status\": \"Started\",\r\n    \"hostname\": \"ca-cdbr-azure-east-a.cloudapp.net\",\r\n    \"username\": \"bdac44e8c052f3\",\r\n    \"password\": \"a01c591d\",\r\n    \"name\": \"csmr8260\",\r\n    \"connectionString\": \"Database=csmr8260;Data Source=ca-cdbr-azure-east-a.cloudapp.net;User Id=bdac44e8c052f3;Password=a01c591d\",\r\n    \"connectionUrl\": \"mysql://bdac44e8c052f3:a01c591d@ca-cdbr-azure-east-a.cloudapp.net/csmr8260\"\r\n  },\r\n  \"tags\": {\r\n    \"provision_source\": \"RMS\"\r\n  },\r\n  \"resourceGroup\": \"csmrg6499\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -148,7 +151,7 @@
           "close"
         ],
         "Date": [
-          "Tue, 26 Jan 2016 22:30:47 GMT"
+          "Wed, 27 Jul 2016 01:12:08 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -167,16 +170,16 @@
           "PHP/5.3.10"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1195"
         ],
         "x-ms-request-id": [
-          "735bbdf5-9550-4fd0-a5fd-3f46c5d25397"
+          "029eb374-d964-43c7-897d-7d25b2a828aa"
         ],
         "x-ms-correlation-request-id": [
-          "735bbdf5-9550-4fd0-a5fd-3f46c5d25397"
+          "029eb374-d964-43c7-897d-7d25b2a828aa"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20160126T223047Z:735bbdf5-9550-4fd0-a5fd-3f46c5d25397"
+          "CENTRALUS:20160727T011208Z:029eb374-d964-43c7-897d-7d25b2a828aa"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -185,21 +188,22 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourcegroups/csmrg6657/providers/SuccessBricks.ClearDB//databases/csmr9107?api-version=2014-04-01-preview",
+      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourcegroups/csmrg6499/providers/SuccessBricks.ClearDB//databases/csmr8260?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvODllYzRkMWQtZGNjNy00YTNmLWE3MDEtMGE1ZDA3NGM4NTA1L3Jlc291cmNlZ3JvdXBzL2NzbXJnNjQ5OS9wcm92aWRlcnMvU3VjY2Vzc0JyaWNrcy5DbGVhckRCLy9kYXRhYmFzZXMvY3NtcjgyNjA/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "045c1ec9-56c7-49e7-a8ec-d4720d20c673"
+          "4b1a2a2c-b027-4ab7-98d1-290b9729a511"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Resources.ResourceManagementClient/3.0.0.0"
+          "Microsoft.Azure.Management.ResourceManager.ResourceManagementClient/1.1.4-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/3ca49042-782a-4cc9-89b5-ee1b487fe115/resourceGroups/csmrg6657/providers/SuccessBricks.ClearDB/databases/csmr9107\",\r\n  \"name\": \"csmr9107\",\r\n  \"type\": \"SuccessBricks.ClearDB/database\",\r\n  \"location\": \"South Central US\",\r\n  \"plan\": {\r\n    \"name\": \"Mercury\"\r\n  },\r\n  \"properties\": {\r\n    \"hostname\": \"us-cdbr-azure-southcentral-e.cloudapp.net\",\r\n    \"name\": \"csmr9107\",\r\n    \"id\": \"453B5B074A3F7E98A40CC1C7DD49E456\",\r\n    \"size_mb\": 0,\r\n    \"max_size_mb\": \"20\",\r\n    \"port\": 3306,\r\n    \"status\": {\r\n      \"name\": \"Healthy\",\r\n      \"message\": \"Database is healthy and ready for use.\",\r\n      \"level\": \"Info\"\r\n    }\r\n  },\r\n  \"tags\": {}\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourceGroups/csmrg6499/providers/SuccessBricks.ClearDB/databases/csmr8260\",\r\n  \"name\": \"csmr8260\",\r\n  \"type\": \"SuccessBricks.ClearDB/database\",\r\n  \"location\": \"Canada East\",\r\n  \"plan\": {\r\n    \"name\": \"Free\"\r\n  },\r\n  \"properties\": {\r\n    \"hostname\": \"ca-cdbr-azure-east-a.cloudapp.net\",\r\n    \"name\": \"csmr8260\",\r\n    \"id\": \"E2C1C2C26E87612E66994745ED401E0C\",\r\n    \"size_mb\": 0,\r\n    \"max_size_mb\": \"20\",\r\n    \"port\": 3306,\r\n    \"status\": {\r\n      \"name\": \"Healthy\",\r\n      \"message\": \"Database is healthy and ready for use.\",\r\n      \"level\": \"Info\"\r\n    }\r\n  },\r\n  \"tags\": {}\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json"
@@ -214,7 +218,7 @@
           "close"
         ],
         "Date": [
-          "Tue, 26 Jan 2016 22:30:48 GMT"
+          "Wed, 27 Jul 2016 01:12:10 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -236,16 +240,16 @@
           "PHP/5.3.10"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14999"
+          "14988"
         ],
         "x-ms-request-id": [
-          "94415ed7-ec6a-42f8-b918-0bbe8b04e930"
+          "2f6f4233-1c04-4a51-8d00-dad28e0d16d5"
         ],
         "x-ms-correlation-request-id": [
-          "94415ed7-ec6a-42f8-b918-0bbe8b04e930"
+          "2f6f4233-1c04-4a51-8d00-dad28e0d16d5"
         ],
         "x-ms-routing-request-id": [
-          "WESTUS:20160126T223049Z:94415ed7-ec6a-42f8-b918-0bbe8b04e930"
+          "CENTRALUS:20160727T011210Z:2f6f4233-1c04-4a51-8d00-dad28e0d16d5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -256,11 +260,11 @@
   ],
   "Names": {
     "CreateResourceWithPlan": [
-      "csmrg6657",
-      "csmr9107"
+      "csmrg6499",
+      "csmr8260"
     ]
   },
   "Variables": {
-    "SubscriptionId": "3ca49042-782a-4cc9-89b5-ee1b487fe115"
+    "SubscriptionId": "89ec4d1d-dcc7-4a3f-a701-0a5d074c8505"
   }
 }

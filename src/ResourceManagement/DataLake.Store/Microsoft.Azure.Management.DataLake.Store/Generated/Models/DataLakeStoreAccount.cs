@@ -29,12 +29,22 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <summary>
         /// Initializes a new instance of the DataLakeStoreAccount class.
         /// </summary>
-        public DataLakeStoreAccount(string location = default(string), string name = default(string), string type = default(string), string id = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DataLakeStoreAccountProperties properties = default(DataLakeStoreAccountProperties))
+        /// <param name="location">the account regional location.</param>
+        /// <param name="name">the account name.</param>
+        /// <param name="type">the namespace and type of the account.</param>
+        /// <param name="id">the account subscription ID.</param>
+        /// <param name="identity">The Key vault encryption identity, if
+        /// any.</param>
+        /// <param name="tags">the value of custom properties.</param>
+        /// <param name="properties">the Data Lake Store account
+        /// properties.</param>
+        public DataLakeStoreAccount(string location = default(string), string name = default(string), string type = default(string), string id = default(string), EncryptionIdentity identity = default(EncryptionIdentity), IDictionary<string, string> tags = default(IDictionary<string, string>), DataLakeStoreAccountProperties properties = default(DataLakeStoreAccountProperties))
         {
             Location = location;
             Name = name;
             Type = type;
             Id = id;
+            Identity = identity;
             Tags = tags;
             Properties = properties;
         }
@@ -62,6 +72,12 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
+
+        /// <summary>
+        /// Gets or sets the Key vault encryption identity, if any.
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public EncryptionIdentity Identity { get; set; }
 
         /// <summary>
         /// Gets or sets the value of custom properties.

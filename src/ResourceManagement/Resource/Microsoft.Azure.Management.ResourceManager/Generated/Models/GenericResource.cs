@@ -41,37 +41,37 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets the plan of the resource.
+        /// The plan of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "plan")]
         public Plan Plan { get; set; }
 
         /// <summary>
-        /// Gets or sets the resource properties.
+        /// The resource properties.
         /// </summary>
         [JsonProperty(PropertyName = "properties")]
         public object Properties { get; set; }
 
         /// <summary>
-        /// Gets or sets the kind of the resource.
+        /// The kind of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "kind")]
         public string Kind { get; set; }
 
         /// <summary>
-        /// Gets or sets the managedBy property of the resource.
+        /// Id of the resource that manages this resource.
         /// </summary>
         [JsonProperty(PropertyName = "managedBy")]
         public string ManagedBy { get; set; }
 
         /// <summary>
-        /// Gets or sets the sku of the resource.
+        /// The sku of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "sku")]
         public Sku Sku { get; set; }
 
         /// <summary>
-        /// Gets or sets the identity of the resource.
+        /// The identity of the resource.
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
         public Identity Identity { get; set; }

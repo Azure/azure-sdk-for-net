@@ -35,11 +35,11 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
             {
                 var client = GetGraphClient(context);
 
-                var users = client.User.List();
+                var users = client.Users.List();
                 Assert.NotNull(users);
                 Assert.NotEmpty(users);
 
-                var user = client.User.Get(users.ElementAt(1).UserPrincipalName);
+                var user = client.Users.Get(users.ElementAt(1).ObjectId);
 
                 Assert.NotNull(user);
                 Assert.NotNull(user.ObjectId);
@@ -48,28 +48,27 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
                 Assert.NotNull(user.UserPrincipalName);
 
 
-                var groupMembers = client.User.GetMemberGroups(user.ObjectId, new UserGetMemberGroupsParameters()
+                var groupMembers = client.Users.GetMemberGroups(user.ObjectId, new UserGetMemberGroupsParameters()
                 {
                     SecurityEnabledOnly = false
                 });
 
                 Assert.NotNull(groupMembers);
-                Assert.NotEmpty(groupMembers);
             }
         }
 
-        [Fact(Skip = "TODO: Fix test")]
+        [Fact]
         public void FilteredListUsersTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetGraphClient(context);
                 
-                var usersNoFilter = client.User.List(null);
+                var usersNoFilter = client.Users.List(null);
                 Assert.NotNull(usersNoFilter);
                 Assert.NotEmpty(usersNoFilter);
 
-                var usersByName = client.User.List(new ODataQuery<User>(f => f.DisplayName.StartsWith(usersNoFilter.ElementAt(1).DisplayName)));
+                var usersByName = client.Users.List(new ODataQuery<User>(f => f.DisplayName.StartsWith(usersNoFilter.ElementAt(1).DisplayName)));
                 Assert.NotNull(usersByName);
                 Assert.NotEmpty(usersByName);
                 Assert.Equal(1, usersByName.Count());
@@ -88,12 +87,16 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
 
                 // Add this user through management portal before recording mocks
                 string testLiveId  = "auxtm596@live.com";
-                var usersByLiveId = client.User.List(new ODataQuery<User>(f=>f.SignInName == testLiveId));
+
+                // UPN for this user will be a wierd ext string e.g. auxtm596_live.com#EXT#@rbacCliTest.onmicrosoft.com
+
+                string upn = "auxtm596_live.com#EXT#@" + GetTenantAndDomain().Domain;
+                var usersByLiveId = client.Users.List(new ODataQuery<User>(f=>f.UserPrincipalName == upn));
                 Assert.NotNull(usersByLiveId);
                 Assert.Equal(1, usersByLiveId.Count());
 
                 string testOrgId = "test2@" + GetTenantAndDomain().Domain;
-                var usersByOrgId = client.User.List(new ODataQuery<User>(f => f.SignInName == testOrgId));
+                var usersByOrgId = client.Users.List(new ODataQuery<User>(f => f.UserPrincipalName == testOrgId));
                 Assert.NotNull(usersByOrgId);
                 Assert.Equal(1, usersByOrgId.Count());
             }
@@ -106,7 +109,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
             {
                 var client = GetGraphClient(context);
 
-                var users = client.User.List();
+                var users = client.Users.List();
                 Assert.NotNull(users);
                 Assert.NotEmpty(users);
 
@@ -133,12 +136,12 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
                 }
                 try
                 {
-                    var firstPage = client.User.List();
+                    var firstPage = client.Users.List();
                     Assert.NotNull(firstPage);
                     Assert.NotEmpty(firstPage);
                     Assert.NotNull(firstPage.NextPageLink);
 
-                    var nextPage = client.User.ListNext(firstPage.NextPageLink);
+                    var nextPage = client.Users.ListNext(firstPage.NextPageLink);
 
                     Assert.NotNull(nextPage);
                     Assert.NotEmpty(nextPage);
@@ -167,14 +170,14 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
             {
                 var client = GetGraphClient(context);
 
-                var groups = client.Group.List();
-                var group = client.Group.Get(groups.ElementAt(2).ObjectId);
+                var groups = client.Groups.List();
+                var group = client.Groups.Get(groups.ElementAt(1).ObjectId);
                 Assert.NotNull(group);
                 Assert.NotNull(group.ObjectId);
                 Assert.NotNull(group.DisplayName);
                 Assert.NotNull(group.ObjectType);
 
-                var groupsMembers = client.Group.GetMemberGroups(group.ObjectId, new GroupGetMemberGroupsParameters()
+                var groupsMembers = client.Groups.GetMemberGroups(group.ObjectId, new GroupGetMemberGroupsParameters()
                 {
                     SecurityEnabledOnly = false
                 });
@@ -183,18 +186,18 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
             }
         }
 
-        [Fact (Skip = "TODO: Fix test")]
+        [Fact]
         public void FilteredListGroupsTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetGraphClient(context);
 
-                var groupsNoFilter = client.Group.List();
+                var groupsNoFilter = client.Groups.List();
                 Assert.NotNull(groupsNoFilter);
                 Assert.NotEmpty(groupsNoFilter);
 
-                var groupsByName = client.Group.List(new ODataQuery<ADGroup>(f => f.DisplayName.StartsWith(groupsNoFilter.ElementAt(1).DisplayName)));
+                var groupsByName = client.Groups.List(new ODataQuery<ADGroup>(f => f.DisplayName.StartsWith(groupsNoFilter.ElementAt(1).DisplayName)));
                 Assert.NotNull(groupsByName);
                 Assert.Equal(1, groupsByName.Count());
                 
@@ -211,7 +214,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
             {
                 var client = GetGraphClient(context);
 
-                var groups = client.Group.List();
+                var groups = client.Groups.List();
                 Assert.NotNull(groups);
                 Assert.NotEmpty(groups);
 
@@ -240,11 +243,11 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
                 try
                 {
 
-                    var firstPage = client.Group.List();
+                    var firstPage = client.Groups.List();
                     Assert.NotNull(firstPage);
                     Assert.NotNull(firstPage.NextPageLink);
 
-                    var nextPage = client.Group.ListNext(firstPage.NextPageLink);
+                    var nextPage = client.Groups.ListNext(firstPage.NextPageLink);
 
                     Assert.NotNull(nextPage);
                     Assert.NotEmpty(nextPage);
@@ -272,11 +275,11 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
             {
                 var client = GetGraphClient(context);
 
-                var groups = client.Group.List();
+                var groups = client.Groups.List();
                 Assert.NotNull(groups);
 
                 // Mock recorded for group members of "EUROPE-Winweb-WinFTE-8" which has more than 100 users
-                var firstPage = client.Group.GetGroupMembers(groups.ElementAt(0).ObjectId);
+                var firstPage = client.Groups.GetGroupMembers(groups.ElementAt(0).ObjectId);
 
                 Assert.NotEmpty(firstPage);
 
@@ -289,7 +292,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
                 // if there are several pages of users in the group 
                 if (firstPage.NextPageLink != null)
                 {
-                    var nextPage = client.Group.GetGroupMembersNext(firstPage.NextPageLink);
+                    var nextPage = client.Groups.GetGroupMembersNext(firstPage.NextPageLink);
 
                     Assert.NotNull(nextPage);
                     Assert.NotEqual(0, nextPage.Count());
@@ -303,7 +306,7 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
             }
         }
 
-        [Fact(Skip = "TODO: Fix test")]
+        [Fact]
         public void QueryServicePrincipalTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
@@ -311,57 +314,58 @@ namespace Microsoft.Azure.Graph.RBAC.Tests
                 var client = GetGraphClient(context);
 
                 //test general 'list'
-                var servicePrincipals = client.ServicePrincipal.List(null);
+                var servicePrincipals = client.ServicePrincipals.List(null);
                 Assert.NotNull(servicePrincipals);
 
                 string testServicePrincipalName = servicePrincipals.ElementAt(0).ServicePrincipalNames[0];
-                string testObjcetId = servicePrincipals.ElementAt(0).ObjectId;
+                string testObjectId = servicePrincipals.ElementAt(0).ObjectId;
+                string testDisplayName = servicePrincipals.ElementAt(0).DisplayName;
 
                 //test query by 'service principal name'
-                var listResult = client.ServicePrincipal.List(new ODataQuery<ServicePrincipal>(f=> f.DisplayName == testServicePrincipalName));
+                var listResult = client.ServicePrincipals.List(new ODataQuery<ServicePrincipal>(f=> f.ServicePrincipalNames.Contains(testServicePrincipalName)));
                 ServicePrincipal servicePrincipal = listResult.First();
 
                 Assert.Equal(1, listResult.Count());
                 Assert.NotNull(servicePrincipal);
-                Assert.True(servicePrincipal.ObjectId == testObjcetId);
-                Assert.NotNull(servicePrincipal.DisplayName);
+                Assert.True(servicePrincipal.ObjectId == testObjectId);
+                Assert.Equal(testDisplayName, servicePrincipal.DisplayName);
                 Assert.NotNull(servicePrincipal.ObjectType);
                 Assert.True(servicePrincipal.ServicePrincipalNames.Contains(testServicePrincipalName));
 
                 //test query by 'object id'
-                var getResult = client.ServicePrincipal.Get(testObjcetId);
+                var getResult = client.ServicePrincipals.Get(testObjectId);
                 servicePrincipal = getResult;
 
                 Assert.NotNull(getResult);
                 Assert.NotNull(getResult);
-                Assert.True(servicePrincipal.ObjectId == testObjcetId);
-                Assert.NotNull(servicePrincipal.DisplayName);
+                Assert.True(servicePrincipal.ObjectId == testObjectId);
+                Assert.Equal(testDisplayName, servicePrincipal.DisplayName);
                 Assert.NotNull(servicePrincipal.ObjectType);
                 Assert.True(servicePrincipal.ServicePrincipalNames.Contains(testServicePrincipalName));
 
                 //test query by 'displayName'
-                listResult = client.ServicePrincipal.List(new ODataQuery<ServicePrincipal>(f => f.DisplayName == servicePrincipal.DisplayName));
+                listResult = client.ServicePrincipals.List(new ODataQuery<ServicePrincipal>(f => f.DisplayName == servicePrincipal.DisplayName));
                 servicePrincipal = listResult.First();
 
                 Assert.NotNull(listResult);
-                Assert.True(servicePrincipal.ObjectId == testObjcetId);
-                Assert.NotNull(servicePrincipal.DisplayName);
+                Assert.True(servicePrincipal.ObjectId == testObjectId);
+                Assert.Equal(testDisplayName, servicePrincipal.DisplayName);
                 Assert.NotNull(servicePrincipal.ObjectType);
                 Assert.True(servicePrincipal.ServicePrincipalNames.Contains(testServicePrincipalName));
             }
         }
 
-        [Fact(Skip = "TODO: Fix test")]
+        [Fact]
         public void ObjectsByObjectIdsTest()
         {
             using (MockContext context = MockContext.Start(this.GetType().FullName))
             {
                 var client = GetGraphClient(context);
                 
-                var groups = client.Group.List();
+                var groups = client.Groups.List();
                 Assert.NotNull(groups);
 
-                var users = client.User.List();
+                var users = client.Users.List();
                 Assert.NotNull(users);
 
                 var objectByObject = client.Objects.GetObjectsByObjectIds(

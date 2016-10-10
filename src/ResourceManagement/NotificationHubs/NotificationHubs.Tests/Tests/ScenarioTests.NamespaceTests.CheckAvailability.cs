@@ -34,12 +34,13 @@ namespace NotificationHubs.Tests.ScenarioTests
                 InitializeClients(context);
 
                 var validNamespaceName = TestUtilities.GenerateName(NotificationHubsManagementHelper.NamespacePrefix);
-                var response = NotificationHubsManagementClient.Namespaces.CheckAvailability(new CheckAvailabilityParameters(validNamespaceName));
+                //var validNamespaceName = "amol-" + Guid.NewGuid().ToString();
+                var response = NotificationHubsManagementClient.Namespaces.CheckAvailability(new CheckAvailabilityParameters(validNamespaceName, NotificationHubsManagementHelper.DefaultLocation));
                 Assert.NotNull(response);
                 Assert.True(response.IsAvailiable);
 
                 const string invalidNamespaceName = "hydraNhNamespace-invalid@!!#%$#";
-                response = NotificationHubsManagementClient.Namespaces.CheckAvailability(new CheckAvailabilityParameters(invalidNamespaceName));
+                response = NotificationHubsManagementClient.Namespaces.CheckAvailability(new CheckAvailabilityParameters(invalidNamespaceName,NotificationHubsManagementHelper.DefaultLocation));
                 Assert.NotNull(response);
                 Assert.False(response.IsAvailiable);
 
@@ -54,16 +55,13 @@ namespace NotificationHubs.Tests.ScenarioTests
 
                 var createResponse = NotificationHubsManagementClient.Namespaces.CreateOrUpdate(resourceGroup, validNamespaceName,
                     new NamespaceCreateOrUpdateParameters(
-                    location,
-                    new NamespaceProperties
-                    {
-                        NamespaceType = NamespaceType.NotificationHub,
-                    }));
+                    location
+                   ));
 
                 Assert.NotNull(createResponse);
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(30));
-                response = NotificationHubsManagementClient.Namespaces.CheckAvailability(new CheckAvailabilityParameters(validNamespaceName));
+                response = NotificationHubsManagementClient.Namespaces.CheckAvailability(new CheckAvailabilityParameters(validNamespaceName, NotificationHubsManagementHelper.DefaultLocation));
                 Assert.NotNull(response);
                 Assert.False(response.IsAvailiable);
                                

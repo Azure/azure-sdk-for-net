@@ -31,6 +31,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Initializes a new instance of the
         /// DataLakeStoreAccountInfoProperties class.
         /// </summary>
+        /// <param name="suffix">the optional suffix for the Data Lake Store
+        /// account.</param>
         public DataLakeStoreAccountInfoProperties(string suffix = default(string))
         {
             Suffix = suffix;

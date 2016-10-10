@@ -4,34 +4,23 @@
 
 namespace Microsoft.Azure.Search.Tests
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
     using Microsoft.Azure.Search.Models;
     using Microsoft.Azure.Search.Tests.Utilities;
     using Microsoft.Rest.Azure;
-    using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
     using Xunit;
 
     public sealed class DataSourceTests : SearchTestBase<SearchServiceFixture>
     {
+        private const string FakeDescription = "Some data source";
+
         [Fact]
         public void CreateDataSourceReturnsCorrectDefinition()
         {
-            Run(() =>
-            {
-                SearchServiceClient searchClient = Data.GetSearchServiceClient();
-
-                CreateAndValidateDataSource(searchClient, CreateTestDataSource());
-
-                CreateAndValidateDataSource(
-                    searchClient,
-                    CreateTestDocDbDataSource(
-                        new HighWaterMarkChangeDetectionPolicy("_ts"),
-                        new SoftDeleteColumnDeletionDetectionPolicy("isDeleted", "1")));
-
-                CreateAndValidateDataSource(searchClient, CreateTestSqlDataSource());
-            });
+            Run(() => TestAllDataSourceTypes(CreateAndValidateDataSource));
         }
 
         [Fact]
@@ -42,31 +31,19 @@ namespace Microsoft.Azure.Search.Tests
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
 
                 DataSource dataSource = CreateTestDataSource();
-                dataSource.Type = "thistypedoesnotexist";
+                dataSource.Type = DataSourceType.Create("thistypedoesnotexist");
 
-                CloudException e = Assert.Throws<CloudException>(() => searchClient.DataSources.Create(dataSource));
-                Assert.Equal(HttpStatusCode.BadRequest, e.Response.StatusCode);
-                Assert.Equal("Unsupported data source type 'thistypedoesnotexist'", e.Body.Message);
+                SearchAssert.ThrowsCloudException(
+                    () => searchClient.DataSources.Create(dataSource),
+                    HttpStatusCode.BadRequest,
+                    "Unsupported data source type 'thistypedoesnotexist'");
             });
         }
 
         [Fact]
         public void GetDataSourceReturnsCorrectDefinition()
         {
-            Run(() =>
-            {
-                SearchServiceClient searchClient = Data.GetSearchServiceClient();
-
-                CreateAndGetDataSource(searchClient, CreateTestDataSource());
-
-                CreateAndGetDataSource(
-                    searchClient,
-                    CreateTestDocDbDataSource(
-                        new HighWaterMarkChangeDetectionPolicy("_ts"),
-                        new SoftDeleteColumnDeletionDetectionPolicy("isDeleted", "1")));
-
-                CreateAndGetDataSource(searchClient, CreateTestSqlDataSource());
-            });
+            Run(() => TestAllDataSourceTypes(CreateAndGetDataSource));
         }
 
         [Fact]
@@ -76,8 +53,9 @@ namespace Microsoft.Azure.Search.Tests
             {
                 SearchServiceClient searchClient = Data.GetSearchServiceClient();
 
-                CloudException e = Assert.Throws<CloudException>(() => searchClient.DataSources.Get("thisdatasourcedoesnotexist"));
-                Assert.Equal(HttpStatusCode.NotFound, e.Response.StatusCode);
+                SearchAssert.ThrowsCloudException(
+                    () => searchClient.DataSources.Get("thisdatasourcedoesnotexist"),
+                    HttpStatusCode.NotFound);
             });
         }
 
@@ -114,9 +92,112 @@ namespace Microsoft.Azure.Search.Tests
 
                 DataSource dataSource = CreateTestDataSource();
 
-                AzureOperationResponse<DataSource> response = 
+                AzureOperationResponse<DataSource> response =
                     searchClient.DataSources.CreateOrUpdateWithHttpMessagesAsync(dataSource).Result;
                 Assert.Equal(HttpStatusCode.Created, response.Response.StatusCode);
+            });
+        }
+
+        [Fact]
+        public void CreateOrUpdateDataSourceIfNotExistsFailsOnExistingResource()
+        {
+            Run(() =>
+            {
+                AccessConditionTests.CreateOrUpdateIfNotExistsFailsOnExistingResource(
+                    Data.GetSearchServiceClient().DataSources.CreateOrUpdate,
+                    CreateTestDataSource,
+                    MutateDataSource);
+            });
+        }
+
+        [Fact]
+        public void CreateOrUpdateDataSourceIfNotExistsSucceedsOnNoResource()
+        {
+            Run(() =>
+            {
+                AccessConditionTests.CreateOrUpdateIfNotExistsSucceedsOnNoResource(
+                    Data.GetSearchServiceClient().DataSources.CreateOrUpdate,
+                    CreateTestDataSource);
+            });
+        }
+
+        [Fact]
+        public void UpdateDataSourceIfExistsSucceedsOnExistingResource()
+        {
+            Run(() =>
+            {
+                AccessConditionTests.UpdateIfExistsSucceedsOnExistingResource(
+                    Data.GetSearchServiceClient().DataSources.CreateOrUpdate,
+                    CreateTestDataSource,
+                    MutateDataSource);
+            });
+        }
+
+        [Fact]
+        public void UpdateDataSourceIfExistsFailsOnNoResource()
+        {
+            Run(() =>
+            {
+                AccessConditionTests.UpdateIfExistsFailsOnNoResource(
+                    Data.GetSearchServiceClient().DataSources.CreateOrUpdate,
+                    CreateTestDataSource);
+            });
+        }
+
+        [Fact]
+        public void UpdateDataSourceIfNotChangedSucceedsWhenResourceUnchanged()
+        {
+            Run(() =>
+            {
+                AccessConditionTests.UpdateIfNotChangedSucceedsWhenResourceUnchanged(
+                    Data.GetSearchServiceClient().DataSources.CreateOrUpdate,
+                    CreateTestDataSource,
+                    MutateDataSource);
+            });
+        }
+
+        [Fact]
+        public void UpdateDataSourceIfNotChangedFailsWhenResourceChanged()
+        {
+            Run(() =>
+            {
+                AccessConditionTests.UpdateIfNotChangedFailsWhenResourceChanged(
+                    Data.GetSearchServiceClient().DataSources.CreateOrUpdate,
+                    CreateTestDataSource,
+                    MutateDataSource);
+            });
+        }
+
+        [Fact]
+        public void DeleteDataSourceIfNotChangedWorksOnlyOnCurrentResource()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+
+                DataSource dataSource = CreateTestDataSource();
+
+                AccessConditionTests.DeleteIfNotChangedWorksOnlyOnCurrentResource(
+                    searchClient.DataSources.Delete,
+                    () => searchClient.DataSources.CreateOrUpdate(dataSource),
+                    x => searchClient.DataSources.CreateOrUpdate(MutateDataSource(x)),
+                    dataSource.Name);
+            });
+        }
+
+        [Fact]
+        public void DeleteDataSourceIfExistsWorksOnlyWhenResourceExists()
+        {
+            Run(() =>
+            {
+                SearchServiceClient searchClient = Data.GetSearchServiceClient();
+
+                DataSource dataSource = CreateTestDataSource();
+
+                AccessConditionTests.DeleteIfExistsWorksOnlyWhenResourceExists(
+                    searchClient.DataSources.Delete,
+                    () => searchClient.DataSources.CreateOrUpdate(dataSource),
+                    dataSource.Name);
             });
         }
 
@@ -130,7 +211,7 @@ namespace Microsoft.Azure.Search.Tests
                 DataSource dataSource = CreateTestDataSource();
 
                 // Try delete before the datasource even exists.
-                AzureOperationResponse deleteResponse = 
+                AzureOperationResponse deleteResponse =
                     searchClient.DataSources.DeleteWithHttpMessagesAsync(dataSource.Name).Result;
                 Assert.Equal(HttpStatusCode.NotFound, deleteResponse.Response.StatusCode);
 
@@ -191,108 +272,76 @@ namespace Microsoft.Azure.Search.Tests
             });
         }
 
+        private void TestAllDataSourceTypes(Action<SearchServiceClient, DataSource> testMethod)
+        {
+            SearchServiceClient searchClient = Data.GetSearchServiceClient();
+
+            var deletionDetectionPolicy = new SoftDeleteColumnDeletionDetectionPolicy("isDeleted", "1");
+            var changeDetectionPolicy = new HighWaterMarkChangeDetectionPolicy("fakecolumn");
+
+            // Test all combinations of data source types and configurations.
+
+            // AzureSql
+            testMethod(searchClient, CreateTestSqlDataSource());
+            testMethod(searchClient, CreateTestSqlDataSource(deletionDetectionPolicy));
+            testMethod(searchClient, CreateTestSqlDataSource(new SqlIntegratedChangeTrackingPolicy()));
+            testMethod(searchClient, CreateTestSqlDataSource(changeDetectionPolicy, deletionDetectionPolicy));
+
+            // SQL on VM
+            testMethod(searchClient, CreateTestSqlDataSource(useSqlVm: true));
+            testMethod(searchClient, CreateTestSqlDataSource(deletionDetectionPolicy, useSqlVm: true));
+            testMethod(searchClient, CreateTestSqlDataSource(new SqlIntegratedChangeTrackingPolicy(), useSqlVm: true));
+            testMethod(searchClient, CreateTestSqlDataSource(changeDetectionPolicy, deletionDetectionPolicy, useSqlVm: true));
+
+            // DocumentDB
+            testMethod(searchClient, CreateTestDocDbDataSource());
+            testMethod(searchClient, CreateTestDocDbDataSource(useChangeDetection: true));
+            testMethod(searchClient, CreateTestDocDbDataSource(deletionDetectionPolicy));
+            testMethod(searchClient, CreateTestDocDbDataSource(deletionDetectionPolicy, useChangeDetection: true));
+
+            // Azure Blob Storage
+            testMethod(searchClient, CreateTestBlobDataSource());
+            testMethod(searchClient, CreateTestBlobDataSource(deletionDetectionPolicy));
+
+            // Azure Table Storage
+            testMethod(searchClient, CreateTestTableDataSource());
+            testMethod(searchClient, CreateTestTableDataSource(deletionDetectionPolicy));
+        }
+
         private void CreateAndValidateDataSource(SearchServiceClient searchClient, DataSource expectedDataSource)
         {
             DataSource actualDataSource = searchClient.DataSources.Create(expectedDataSource);
-            AssertDataSourcesEqual(expectedDataSource, actualDataSource);
+
+            try
+            {
+                AssertDataSourcesEqual(expectedDataSource, actualDataSource);
+            }
+            finally
+            {
+                searchClient.DataSources.Delete(expectedDataSource.Name);
+            }
         }
 
         private void CreateAndGetDataSource(SearchServiceClient searchClient, DataSource expectedDataSource)
         {
             searchClient.DataSources.Create(expectedDataSource);
-            DataSource actualDataSource = searchClient.DataSources.Get(expectedDataSource.Name);
 
-            AssertDataSourcesEqual(expectedDataSource, actualDataSource, isGet: true);
-        }
-
-        private static void AssertDataSourcesEqual(DataSource expected, DataSource actual, bool isGet = false)
-        {
-            Assert.NotNull(expected);
-            Assert.NotNull(actual);
-
-            Assert.Equal(expected.Name, actual.Name);
-            Assert.Equal(expected.Description, actual.Description);
-            Assert.Equal(expected.Type, actual.Type);
-            AssertCredentialsEqual(expected.Credentials, actual.Credentials, isGet);
-            AssertDataContainersEqual(expected.Container, actual.Container);
-            AssertDataChangeDetectionPoliciesEqual(expected.DataChangeDetectionPolicy, actual.DataChangeDetectionPolicy);
-            AssertDataDeletionDetectionPoliciesEqual(expected.DataDeletionDetectionPolicy, actual.DataDeletionDetectionPolicy);
-        }
-
-        private static void AssertDataChangeDetectionPoliciesEqual(DataChangeDetectionPolicy expected, DataChangeDetectionPolicy actual)
-        {
-            if (expected == null)
+            try
             {
-                Assert.Null(actual);
-                return;
+                DataSource actualDataSource = searchClient.DataSources.Get(expectedDataSource.Name);
+
+                expectedDataSource.Credentials.ConnectionString = null; // Get doesn't return connection strings.
+                AssertDataSourcesEqual(expectedDataSource, actualDataSource);
             }
-
-            Assert.NotNull(actual);
-
-            HighWaterMarkChangeDetectionPolicy expectedHwm = expected as HighWaterMarkChangeDetectionPolicy;
-            if (expectedHwm != null)
+            finally
             {
-                HighWaterMarkChangeDetectionPolicy actualHwm = Assert.IsType<HighWaterMarkChangeDetectionPolicy>(actual);
-                Assert.Equal(expectedHwm.HighWaterMarkColumnName, actualHwm.HighWaterMarkColumnName);
-                return;
-            }
-
-            SqlIntegratedChangeTrackingPolicy expectedIct = expected as SqlIntegratedChangeTrackingPolicy;
-            if (expectedIct != null)
-            {
-                Assert.IsType<SqlIntegratedChangeTrackingPolicy>(actual);
-                return;
-            }
-
-            Assert.False(true, "Unexpected type of change detection policy (did you forget to add support for a new policy type to test code?):" + expected.GetType().Name);
-        }
-
-        private static void AssertDataDeletionDetectionPoliciesEqual(DataDeletionDetectionPolicy expected, DataDeletionDetectionPolicy actual)
-        {
-            if (expected == null)
-            {
-                Assert.Null(actual);
-                return;
-            }
-
-            Assert.NotNull(actual);
-
-            SoftDeleteColumnDeletionDetectionPolicy expectedSoftDelete = expected as SoftDeleteColumnDeletionDetectionPolicy;
-            if (expectedSoftDelete != null)
-            {
-                SoftDeleteColumnDeletionDetectionPolicy actualSoftDelete = Assert.IsType<SoftDeleteColumnDeletionDetectionPolicy>(actual);
-                Assert.Equal(expectedSoftDelete.SoftDeleteColumnName, actualSoftDelete.SoftDeleteColumnName);
-                Assert.Equal(expectedSoftDelete.SoftDeleteMarkerValue, actualSoftDelete.SoftDeleteMarkerValue);
-                return;
-            }
-
-            Assert.False(true, "Unexpected type of deletion detection policy (did you forget to add support for a new policy type to test code?):" + expected.GetType().Name);
-        }
-
-        private static void AssertCredentialsEqual(DataSourceCredentials expected, DataSourceCredentials actual, bool isGet)
-        {
-            if (expected == null)
-            {
-                Assert.Null(actual);
-            }
-            else if (isGet)
-            {
-                // Get doesn't return the connection string
-                Assert.Null(actual.ConnectionString);
-            }
-            else
-            {
-                Assert.NotNull(actual);
-                Assert.Equal(expected.ConnectionString, actual.ConnectionString);
+                searchClient.DataSources.Delete(expectedDataSource.Name);
             }
         }
 
-        private static void AssertDataContainersEqual(DataContainer expected, DataContainer actual)
+        private static void AssertDataSourcesEqual(DataSource expected, DataSource actual)
         {
-            Assert.NotNull(expected);
-            Assert.NotNull(actual);
-            Assert.Equal(expected.Name, actual.Name);
-            Assert.Equal(expected.Query, actual.Query);
+            Assert.Equal(expected, actual, new ModelComparer<DataSource>());
         }
 
         private static DataSource CreateTestDataSource()
@@ -300,37 +349,120 @@ namespace Microsoft.Azure.Search.Tests
             return CreateTestSqlDataSource();
         }
 
-        private static DataSource CreateTestSqlDataSource()
+        private static DataSource MutateDataSource(DataSource dataSource)
         {
-            const string FakeConnectionString =
-                "Server=tcp:fake,1433;Database=fake;User ID=fake;Password=fake;Trusted_Connection=False;" +
-                "Encrypt=True;Connection Timeout=30;";
+            dataSource.Description = "Mutated DataSource";
+            return dataSource;
+        }
 
-            return
-                new DataSource(
-                    SearchTestUtilities.GenerateName(),
-                    DataSourceType.AzureSql,
-                    new DataSourceCredentials(FakeConnectionString),
-                    new DataContainer("faketable"))
-                {
-                    DataChangeDetectionPolicy = new HighWaterMarkChangeDetectionPolicy("fakecolumn")
-                };
+        private static DataSource CreateTestSqlDataSource(DataChangeDetectionPolicy changeDetectionPolicy, bool useSqlVm = false)
+        {
+            // Test different overloads based on the given parameters.
+            if (useSqlVm)
+            {
+                return DataSource.SqlServerOnAzureVM(
+                    name: SearchTestUtilities.GenerateName(),
+                    sqlConnectionString: IndexerFixture.AzureSqlReadOnlyConnectionString,
+                    tableOrViewName: IndexerFixture.AzureSqlTestTableName,
+                    changeDetectionPolicy: changeDetectionPolicy,
+                    description: FakeDescription);
+            }
+            else
+            {
+                return DataSource.AzureSql(
+                    name: SearchTestUtilities.GenerateName(),
+                    sqlConnectionString: IndexerFixture.AzureSqlReadOnlyConnectionString,
+                    tableOrViewName: IndexerFixture.AzureSqlTestTableName,
+                    changeDetectionPolicy: changeDetectionPolicy,
+                    description: FakeDescription);
+            }
+        }
+
+        private static DataSource CreateTestSqlDataSource(
+            HighWaterMarkChangeDetectionPolicy changeDetectionPolicy,
+            DataDeletionDetectionPolicy deletionDetectionPolicy,
+            bool useSqlVm = false)
+        {
+            // Test different overloads based on the given parameters.
+            if (useSqlVm)
+            {
+                return DataSource.SqlServerOnAzureVM(
+                    name: SearchTestUtilities.GenerateName(),
+                    sqlConnectionString: IndexerFixture.AzureSqlReadOnlyConnectionString,
+                    tableOrViewName: IndexerFixture.AzureSqlTestTableName,
+                    changeDetectionPolicy: changeDetectionPolicy,
+                    deletionDetectionPolicy: deletionDetectionPolicy,
+                    description: FakeDescription);
+            }
+            else
+            {
+                return DataSource.AzureSql(
+                    name: SearchTestUtilities.GenerateName(),
+                    sqlConnectionString: IndexerFixture.AzureSqlReadOnlyConnectionString,
+                    tableOrViewName: IndexerFixture.AzureSqlTestTableName,
+                    changeDetectionPolicy: changeDetectionPolicy,
+                    deletionDetectionPolicy: deletionDetectionPolicy,
+                    description: FakeDescription);
+            }
+        }
+
+        private static DataSource CreateTestSqlDataSource(DataDeletionDetectionPolicy deletionDetectionPolicy = null, bool useSqlVm = false)
+        {
+            // Test different overloads based on the given parameters.
+            if (useSqlVm)
+            {
+                return DataSource.SqlServerOnAzureVM(
+                    name: SearchTestUtilities.GenerateName(),
+                    sqlConnectionString: IndexerFixture.AzureSqlReadOnlyConnectionString,
+                    tableOrViewName: IndexerFixture.AzureSqlTestTableName,
+                    deletionDetectionPolicy: deletionDetectionPolicy,
+                    description: FakeDescription);
+            }
+            else
+            {
+                return DataSource.AzureSql(
+                    name: SearchTestUtilities.GenerateName(),
+                    sqlConnectionString: IndexerFixture.AzureSqlReadOnlyConnectionString,
+                    tableOrViewName: IndexerFixture.AzureSqlTestTableName,
+                    deletionDetectionPolicy: deletionDetectionPolicy,
+                    description: FakeDescription);
+            }
         }
 
         private static DataSource CreateTestDocDbDataSource(
-            DataChangeDetectionPolicy changeDetectionPolicy = null,
-            DataDeletionDetectionPolicy deletionDetectionPolicy = null)
+            DataDeletionDetectionPolicy deletionDetectionPolicy = null,
+            bool useChangeDetection = false)
         {
-            return
-                new DataSource(
-                    SearchTestUtilities.GenerateName(),
-                    DataSourceType.DocumentDb,
-                    new DataSourceCredentials(connectionString: "fake"),
-                    new DataContainer("faketable"))
-                {
-                    DataChangeDetectionPolicy = changeDetectionPolicy,
-                    DataDeletionDetectionPolicy = deletionDetectionPolicy,
-                };
+            return DataSource.DocumentDb(
+                name: SearchTestUtilities.GenerateName(),
+                documentDbConnectionString: "fake",
+                collectionName: "faketable",
+                query: "fake query",
+                useChangeDetection: useChangeDetection,
+                deletionDetectionPolicy: deletionDetectionPolicy,
+                description: FakeDescription);
+        }
+
+        private static DataSource CreateTestBlobDataSource(DataDeletionDetectionPolicy deletionDetectionPolicy = null)
+        {
+            return DataSource.AzureBlobStorage(
+                name: SearchTestUtilities.GenerateName(),
+                storageConnectionString: "fake",
+                containerName: "fakecontainer",
+                pathPrefix: "/fakefolder/",
+                deletionDetectionPolicy: deletionDetectionPolicy,
+                description: FakeDescription);
+        }
+
+        private static DataSource CreateTestTableDataSource(DataDeletionDetectionPolicy deletionDetectionPolicy = null)
+        {
+            return DataSource.AzureTableStorage(
+                name: SearchTestUtilities.GenerateName(),
+                storageConnectionString: "fake",
+                tableName: "faketable",
+                query: "fake query",
+                deletionDetectionPolicy: deletionDetectionPolicy,
+                description: FakeDescription);
         }
     }
 }
