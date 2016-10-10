@@ -64,7 +64,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Tests
                 Assert.True( encryptor.Tag.SequenceEqual( T ), "T did not match test vector" );
             }
 
-            using ( var decryptor = kw.CreateDecryptor( K, IV, A ) as IAuthenticatedCryptoTransform )
+            using ( var decryptor = kw.CreateDecryptor( K, IV, A, T ) as IAuthenticatedCryptoTransform )
             {
                 var decrypted = decryptor.TransformFinalBlock( E, 0, E.Length );
 
@@ -120,7 +120,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Tests
                 Assert.True( encryptor.Tag.SequenceEqual( T ), "T did not match test vector" );
             }
 
-            using ( var decryptor = kw.CreateDecryptor( K, IV, A ) as IAuthenticatedCryptoTransform )
+            using ( var decryptor = kw.CreateDecryptor( K, IV, A, T ) as IAuthenticatedCryptoTransform )
             {
                 var decrypted = decryptor.TransformFinalBlock( E, 0, E.Length );
 
@@ -177,7 +177,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Tests
                 Assert.True( encryptor.Tag.SequenceEqual( T ), "T did not match test vector" );
             }
 
-            using ( var decryptor = kw.CreateDecryptor( K, IV, A ) as IAuthenticatedCryptoTransform )
+            using ( var decryptor = kw.CreateDecryptor( K, IV, A, T ) as IAuthenticatedCryptoTransform )
             {
                 var decrypted = decryptor.TransformFinalBlock( E, 0, E.Length );
 
