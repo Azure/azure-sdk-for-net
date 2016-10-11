@@ -160,33 +160,7 @@ namespace AnalysisServices.Tests.Helpers
 #endif
             return Handler;
         }
-
-        public static string CreateResourceGroup(ResourceManagementClient resourcesClient)
-        {
-            const string testPrefix = "res";
-            var rgname = TestUtilities.GenerateName(testPrefix);
-
-            //if (!IsTestTenant)
-            //{
-            //    var resourceGroup = resourcesClient.ResourceGroups.CreateOrUpdate(
-            //        rgname,
-            //        new ResourceGroup
-            //        {
-            //            Location = DefaultLocation
-            //        });
-            //}
-
-            return rgname;
-        }
-
-        public static void DeleteResourceGroup(ResourceManagementClient resourcesClient, string resourceGroupName)
-        {
-            //if (!IsTestTenant)
-            //{
-            //    resourcesClient.ResourceGroups.Delete(resourceGroupName);
-            //}
-        }
-
+        
         public static void WaitIfNotInPlaybackMode()
         {
             if (Environment.GetEnvironmentVariable("AZURE_TEST_MODE") != null &&
