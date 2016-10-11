@@ -4,7 +4,6 @@
 namespace Microsoft.Azure.Messaging
 {
     using System;
-
     static class Constants
     {
         // String used for versioning

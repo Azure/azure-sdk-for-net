@@ -4,7 +4,6 @@
 namespace Microsoft.Azure.Messaging.UnitTests
 {
     using System;
-    using Microsoft.Azure.Messaging;
     using System.Diagnostics;
     using System.Threading.Tasks;
     using Xunit;

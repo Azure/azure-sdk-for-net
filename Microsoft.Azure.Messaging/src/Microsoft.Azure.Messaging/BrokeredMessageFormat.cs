@@ -5,8 +5,8 @@ namespace Microsoft.Azure.Messaging
 {
     enum BrokeredMessageFormat : byte
     {
-        //Sbmp = 0,
-        Amqp = 0,
+        Sbmp = 0,
+        Amqp = 1,
         PassthroughAmqp = 2,
         AmqpEventData = 3,
     }
