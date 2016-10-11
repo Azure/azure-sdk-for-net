@@ -101,5 +101,12 @@ namespace Microsoft.Azure.Search.Models
 
             return new RegexFlags(String.Format("{0}|{1}", lhs, rhs));
         }
+
+        /// <summary>
+        /// Defines implicit conversion from string to RegexFlags.
+        /// </summary>
+        /// <param name="name">string to convert.</param>
+        /// <returns>The string as a RegexFlags.</returns>
+        public static implicit operator RegexFlags(string name) => Create(name);
     }
 }
