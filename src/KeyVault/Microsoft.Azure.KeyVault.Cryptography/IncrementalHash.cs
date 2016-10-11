@@ -4,7 +4,7 @@
 // license information.
 //
 
-#if !PORTABLE
+#if NET45
 
 using System;
 using System.Security.Cryptography;

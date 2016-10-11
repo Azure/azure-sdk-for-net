@@ -17,16 +17,20 @@
     "publicSign": false,
     "keyFile": "../../../tools/MSSharedLibKey.snk"
   },
+
   "dependencies": {
-    "Microsoft.Azure.KeyVault": "2.0.2-preview",
-    "Microsoft.Azure.KeyVault.Core": "2.0.0-preview",
-    "Microsoft.Azure.KeyVault.Cryptography": "2.0.1-preview",
-    "Microsoft.Azure.KeyVault.WebKey": "2.0.1-preview"
+    "Microsoft.Azure.KeyVault": "[2.0.2-preview, 3.0)",
+    "Microsoft.Azure.KeyVault.Core": "[2.0.1-preview, 3.0)",
+    "Microsoft.Azure.KeyVault.Cryptography": "[2.0.1-preview, 3.0)",
+    "Microsoft.Azure.KeyVault.WebKey": "[2.0.1-preview, 3.0)"
   },
+
   "frameworks": {
     "netstandard1.5": {
-      "buildOptions": { "define": [ "PORTABLE" ] },
-      "imports": [ "dnxcore50" ],
+      "buildOptions": {
+        "debugType": "portable",
+        "define": [ "NETSTANDARD", "NETSTANDARD15" ]
+      },
       "dependencies": {
         "Microsoft.NETCore.Platforms": "1.0.1",
         "System.Threading.Thread": "4.0.0",
@@ -45,6 +49,10 @@
       }
     },
     "net45": {
+      "buildOptions": {
+        "debugType": "portable",
+        "define": [ "NET45" ]
+      },
       "frameworkAssemblies": {
         "System": { "type": "build" },
         "System.Security": { "type": "default" }
