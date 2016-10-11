@@ -1,5 +1,5 @@
 {
-  "version": "2.0.0-preview",
+  "version": "2.0.1-preview",
   "title": "Microsoft Azure Key Vault Cryptography",
   "description": "Microsoft Azure Key Vault Cryptography Class Library",
   "authors": [ "Microsoft" ],
