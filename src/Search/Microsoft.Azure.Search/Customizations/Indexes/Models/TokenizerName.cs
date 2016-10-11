@@ -101,5 +101,12 @@ namespace Microsoft.Azure.Search.Models
             // Tokenizer names are purposefully open-ended. If we get one we don't recognize, just create a new object.
             return Lookup(name) ?? new TokenizerName(name);
         }
+
+        /// <summary>
+        /// Defines implicit conversion from string to TokenizerName.
+        /// </summary>
+        /// <param name="name">string to convert.</param>
+        /// <returns>The string as a TokenizerName.</returns>
+        public static implicit operator TokenizerName(string name) => Create(name);
     }
 }

@@ -237,9 +237,9 @@ namespace Microsoft.Azure.Search.Tests
             Run(() =>
             {
                 // Declare some custom component names to use with CustomAnalyzer. All other names will be randomly generated.
-                var customTokenizerName = TokenizerName.Create("my_tokenizer");
-                var customTokenFilterName = TokenFilterName.Create("my_tokenfilter");
-                var customCharFilterName = CharFilterName.Create("my_charfilter");
+                const string customTokenizerName = "my_tokenizer";
+                const string customTokenFilterName = "my_tokenfilter";
+                const string customCharFilterName = "my_charfilter";
 
                 Index index = CreateTestIndex();
                 index.Analyzers = new Analyzer[]
@@ -247,8 +247,8 @@ namespace Microsoft.Azure.Search.Tests
                     new CustomAnalyzer(
                         SearchTestUtilities.GenerateName(), 
                         customTokenizerName, 
-                        new[] { customTokenFilterName }, 
-                        new[] { customCharFilterName }),
+                        new TokenFilterName[] { customTokenFilterName }, 
+                        new CharFilterName[] { customCharFilterName }),
                     new CustomAnalyzer(
                         SearchTestUtilities.GenerateName(),
                         TokenizerName.EdgeNGram),
