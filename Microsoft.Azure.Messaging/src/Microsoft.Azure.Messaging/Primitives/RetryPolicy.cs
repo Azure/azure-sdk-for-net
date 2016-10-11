@@ -7,7 +7,6 @@ namespace Microsoft.Azure.Messaging
 
     public abstract class RetryPolicy
     {
-        public static readonly RetryPolicy NoRetry = new RetryExponential(TimeSpan.Zero, TimeSpan.Zero, 0);
         static readonly TimeSpan DefaultRetryMinBackoff = TimeSpan.Zero;
         static readonly TimeSpan DefaultRetryMaxBackoff = TimeSpan.FromSeconds(30);
         const int DefaultRetryMaxCount = 10;

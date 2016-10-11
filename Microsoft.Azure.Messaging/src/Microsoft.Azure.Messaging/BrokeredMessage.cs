@@ -96,9 +96,10 @@ namespace Microsoft.Azure.Messaging
         readonly bool arePropertiesModifiedByBroker;
 
         /// <summary>Initializes a new instance of the <see cref="BrokeredMessage" /> class.</summary>
-        public BrokeredMessage() :
-            this(BrokeredMessage.NewMessageId())
+        public BrokeredMessage() 
         {
+            this.InternalBrokeredMessageState = BrokeredMessageState.Active;
+            this.version = BrokeredMessage.MessageVersion;
         }
 
         /// <summary>Initializes a new instance of the 
@@ -120,7 +121,7 @@ namespace Microsoft.Azure.Messaging
         /// TODO: 
         /// with a non-null serializableObject</exception>
         public BrokeredMessage(object serializableObject, XmlObjectSerializer serializer)
-            : this(BrokeredMessage.NewMessageId())
+            : this()
         {
             if (serializableObject != null)
             {
@@ -152,7 +153,7 @@ namespace Microsoft.Azure.Messaging
         /// <param name="ownsStream">true to indicate that the stream will be closed when the message is 
         /// closed; false to indicate that the stream will not be closed when the message is closed.</param> 
         public BrokeredMessage(Stream messageBodyStream, bool ownsStream)
-            : this(BrokeredMessage.NewMessageId())
+            : this()
         {
             this.ownsBodyStream = ownsStream;
             this.BodyStream = messageBodyStream;
@@ -165,14 +166,6 @@ namespace Microsoft.Azure.Messaging
             this.bodyObjectDecoded = true;
             this.bodyStream = bodyStream;
             this.ownsBodyStream = true;
-        }
-
-        BrokeredMessage(string messageId)
-        {
-            BrokeredMessage.ValidateMessageId(messageId);
-            this.MessageId = messageId;
-            this.InternalBrokeredMessageState = BrokeredMessageState.Active;
-            this.version = BrokeredMessage.MessageVersion;
         }
 
         BrokeredMessage(BrokeredMessage originalMessage, bool clientSideCloning)
