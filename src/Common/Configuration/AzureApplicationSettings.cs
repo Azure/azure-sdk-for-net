@@ -111,6 +111,34 @@ namespace Microsoft.Azure
 
         /// <summary>
         /// Gets a setting with the given name.
+        /// Setting throwIfNotFound to true will result in blow up the app if it can't find the setting
+        /// </summary>
+        /// <param name="name">Setting name.</param>
+        /// <param name="outputResultsToTrace"></param>
+        /// /// <param name="throwIfNotFoundInRuntime"></param>
+        /// <returns>Setting value or null if such setting does not exist.</returns>
+        internal string GetSetting(string name, bool outputResultsToTrace, bool throwIfNotFoundInRuntime)
+        {
+            Debug.Assert(!string.IsNullOrEmpty(name));
+
+            string value = null;
+
+            value = GetValue("ServiceRuntime", name, GetServiceRuntimeSetting, outputResultsToTrace);
+            if (value == null)
+            {
+                if (throwIfNotFoundInRuntime)
+                {
+                    throw new SettingsPropertyNotFoundException($"Setting: {name} was not found in the ServiceRuntime.");
+                }
+
+                value = GetValue("ConfigurationManager", name, n => ConfigurationManager.AppSettings[n], outputResultsToTrace);
+            }
+
+            return value;
+        }
+
+        /// <summary>
+        /// Gets a setting with the given name.
         /// </summary>
         /// <param name="name">Setting name.</param>
         /// <param name="outputResultsToTrace"></param>

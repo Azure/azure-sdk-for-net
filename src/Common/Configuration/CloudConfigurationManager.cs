@@ -32,6 +32,28 @@ namespace Microsoft.Azure
         /// </summary>
         /// <param name="name">Setting name.</param>
         /// <param name="outputResultsToTrace">If true, this will write that a setting was retrieved to Trace. If false, this will not write anything to Trace.</param>
+        /// <param name="throwIfNotFoundInRuntime">If true, method will throw exception if setting not found in ServiceRuntime.</param>
+        /// <returns>Setting value or null if not found.</returns>
+        public static string GetSetting(string name, bool outputResultsToTrace, bool throwIfNotFoundInRuntime)
+        {
+            if (name == null)
+            {
+                throw new ArgumentNullException("name");
+            }
+            else if (name.Length == 0)
+            {
+                string message = string.Format(CultureInfo.CurrentUICulture, Resources.ErrorArgumentEmptyString, "name");
+                throw new ArgumentException(message);
+            }
+
+            return AppSettings.GetSetting(name, outputResultsToTrace, throwIfNotFoundInRuntime);
+        }
+
+        /// <summary>
+        /// Gets a setting with the given name.
+        /// </summary>
+        /// <param name="name">Setting name.</param>
+        /// <param name="outputResultsToTrace">If true, this will write that a setting was retrieved to Trace. If false, this will not write anything to Trace.</param>
         /// <returns>Setting value or null if not found.</returns>
         public static string GetSetting(string name, bool outputResultsToTrace)
         {
