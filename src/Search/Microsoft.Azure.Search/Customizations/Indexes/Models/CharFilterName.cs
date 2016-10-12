@@ -34,11 +34,7 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         /// <param name="name">Name of the character filter.</param>
         /// <returns>A CharFilterName instance with the given name.</returns>
-        public static CharFilterName Create(string name)
-        {
-            // Character filter names are purposefully open-ended. If we get one we don't recognize, just create a new object.
-            return Lookup(name) ?? new CharFilterName(name);
-        }
+        public static CharFilterName Create(string name) => Lookup(name) ?? new CharFilterName(name);
 
         /// <summary>
         /// Defines implicit conversion from string to CharFilterName.
