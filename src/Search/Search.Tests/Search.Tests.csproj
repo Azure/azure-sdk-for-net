@@ -42,6 +42,7 @@
     <Compile Include="Tests\SearchServiceClientTests.cs" />
     <Compile Include="Tests\SearchTests.cs" />
     <Compile Include="Tests\Serialization\DateTimeConverterTests.cs" />
+    <Compile Include="Tests\Serialization\DocumentConverterTests.cs" />
     <Compile Include="Tests\Serialization\GeographyPointConverterTests.cs" />
     <Compile Include="Tests\Serialization\SearchContinuationTokenConverterTests.cs" />
     <Compile Include="Tests\Serialization\SearchParametersTests.cs" />
