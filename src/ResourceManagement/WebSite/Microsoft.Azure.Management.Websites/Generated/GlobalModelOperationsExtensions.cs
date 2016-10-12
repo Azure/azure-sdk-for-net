@@ -330,40 +330,6 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='name'>
             /// Hosting environment name
             /// </param>
-            public static object IsHostingEnvironmentNameAvailable(this IGlobalModelOperations operations, string name)
-            {
-                return Task.Factory.StartNew(s => ((IGlobalModelOperations)s).IsHostingEnvironmentNameAvailableAsync(name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Whether hosting environment name is available
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='name'>
-            /// Hosting environment name
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> IsHostingEnvironmentNameAvailableAsync( this IGlobalModelOperations operations, string name, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.IsHostingEnvironmentNameAvailableWithHttpMessagesAsync(name, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Whether hosting environment name is available
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='name'>
-            /// Hosting environment name
-            /// </param>
             public static object IsHostingEnvironmentWithLegacyNameAvailable(this IGlobalModelOperations operations, string name)
             {
                 return Task.Factory.StartNew(s => ((IGlobalModelOperations)s).IsHostingEnvironmentWithLegacyNameAvailableAsync(name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
@@ -384,6 +350,40 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<object> IsHostingEnvironmentWithLegacyNameAvailableAsync( this IGlobalModelOperations operations, string name, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.IsHostingEnvironmentWithLegacyNameAvailableWithHttpMessagesAsync(name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Whether hosting environment name is available
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='name'>
+            /// Hosting environment name
+            /// </param>
+            public static object IsHostingEnvironmentNameAvailable(this IGlobalModelOperations operations, string name)
+            {
+                return Task.Factory.StartNew(s => ((IGlobalModelOperations)s).IsHostingEnvironmentNameAvailableAsync(name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Whether hosting environment name is available
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='name'>
+            /// Hosting environment name
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> IsHostingEnvironmentNameAvailableAsync( this IGlobalModelOperations operations, string name, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.IsHostingEnvironmentNameAvailableWithHttpMessagesAsync(name, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -418,6 +418,70 @@ namespace Microsoft.Azure.Management.WebSites
             public static async Task<ResourceNameAvailability> CheckNameAvailabilityAsync( this IGlobalModelOperations operations, ResourceNameAvailabilityRequest request, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(request, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Validates if a resource can be created
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// </param>
+            /// <param name='validateRequest'>
+            /// </param>
+            public static ValidateResponse Validate(this IGlobalModelOperations operations, string resourceGroupName, ValidateRequest validateRequest)
+            {
+                return Task.Factory.StartNew(s => ((IGlobalModelOperations)s).ValidateAsync(resourceGroupName, validateRequest), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Validates if a resource can be created
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// </param>
+            /// <param name='validateRequest'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<ValidateResponse> ValidateAsync( this IGlobalModelOperations operations, string resourceGroupName, ValidateRequest validateRequest, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ValidateWithHttpMessagesAsync(resourceGroupName, validateRequest, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Get skus
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static object GetSubscriptionSkus(this IGlobalModelOperations operations)
+            {
+                return Task.Factory.StartNew(s => ((IGlobalModelOperations)s).GetSubscriptionSkusAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Get skus
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetSubscriptionSkusAsync( this IGlobalModelOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSubscriptionSkusWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

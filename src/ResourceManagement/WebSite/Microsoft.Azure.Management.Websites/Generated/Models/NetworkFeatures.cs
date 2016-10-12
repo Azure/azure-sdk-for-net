@@ -31,12 +31,13 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the NetworkFeatures class.
         /// </summary>
-        public NetworkFeatures(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string virtualNetworkName = default(string), VnetInfo virtualNetworkConnection = default(VnetInfo), IList<RelayServiceConnectionEntity> hybridConnections = default(IList<RelayServiceConnectionEntity>))
-            : base(location, id, name, type, tags)
+        public NetworkFeatures(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string virtualNetworkName = default(string), VnetInfo virtualNetworkConnection = default(VnetInfo), IList<RelayServiceConnectionEntity> hybridConnections = default(IList<RelayServiceConnectionEntity>), IList<HybridConnection> hybridConnectionsV2 = default(IList<HybridConnection>))
+            : base(location, id, name, kind, type, tags)
         {
             VirtualNetworkName = virtualNetworkName;
             VirtualNetworkConnection = virtualNetworkConnection;
             HybridConnections = hybridConnections;
+            HybridConnectionsV2 = hybridConnectionsV2;
         }
 
         /// <summary>
@@ -58,6 +59,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         public IList<RelayServiceConnectionEntity> HybridConnections { get; set; }
 
         /// <summary>
+        /// The Hybrid Connection V2 (service bus) view
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.hybridConnectionsV2")]
+        public IList<HybridConnection> HybridConnectionsV2 { get; set; }
+
+        /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.
         /// </summary>
         public override void Validate()
@@ -74,6 +81,16 @@ namespace Microsoft.Azure.Management.WebSites.Models
                     if (element != null)
                     {
                         element.Validate();
+                    }
+                }
+            }
+            if (this.HybridConnectionsV2 != null)
+            {
+                foreach (var element1 in this.HybridConnectionsV2)
+                {
+                    if (element1 != null)
+                    {
+                        element1.Validate();
                     }
                 }
             }

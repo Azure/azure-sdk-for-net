@@ -213,26 +213,103 @@ namespace WebSites.Tests.ScenarioTests
 
                     #region Get/Set Connection strings
 
-                    const string connectionStringName = "ConnectionString 1",
-                        connectionStringValue = "ConnectionString Value 1";
-                    var connStringValueTypePair = new ConnStringValueTypePair
-                    {
-                        Value = connectionStringValue,
-                        Type = DatabaseServerType.MySql
-                    };
+                    const string mySqlConnStrName = "ConnectionString 1",
+                        mySqlConnStrValue = "ConnectionString Value 1",
+                        sqlServerConnStrName = "SqlServer ConnectionString",
+                        sqlServerConnStrValue = "SqlServer Value",
+                        sqlAzureConnStrName = "SqlAzure ConnectionString",
+                        sqlAzureConnStrValue = "SqlAzure Value",
+                        customConnStrName = "Custom ConnectionString",
+                        customConnStrValue = "Custom Value",
+                        notificationHubConnStrName = "NotificationHub ConnectionString",
+                        notificationHubConnStrValue = "NotificationHub Value",
+                        serviceBusConnStrName = "ServiceBus ConnectionString",
+                        serviceBusConnStrValue = "ServiceBus Value",
+                        eventHubConnStrName = "EventHub ConnectionString",
+                        eventHubConnStrValue = "EventHub Value",
+                        apiHubConnStrName = "ApiHub ConnectionString",
+                        apiHubConnStrValue = "ApiHub Value",
+                        docDbConnStrName = "DocDb ConnectionString",
+                        docDbConnStrValue = "DocDb Value",
+                        redisCacheConnStrName = "RedisCache ConnectionString",
+                        redisCacheConnStrValue = "RedisCache Value";
 
+                    ConnStringValueTypePair mySqlConnStringValueTypePair = new ConnStringValueTypePair
+                        {
+                            Value = mySqlConnStrValue,
+                            Type = ConnectionStringType.MySql
+                        },
+                        sqlServerConnStringValueTypePair = new ConnStringValueTypePair
+                        {
+                            Value = sqlServerConnStrValue,
+                            Type = ConnectionStringType.SQLServer
+                        },
+                        sqlAzureConnStringValueTypePair = new ConnStringValueTypePair
+                        {
+                            Value = sqlAzureConnStrValue,
+                            Type = ConnectionStringType.SQLAzure
+                        },
+                        customConnStringValueTypePair = new ConnStringValueTypePair
+                        {
+                            Value = customConnStrValue,
+                            Type = ConnectionStringType.Custom
+                        },
+                        notificationHubConnStringValueTypePair = new ConnStringValueTypePair
+                        {
+                            Value = notificationHubConnStrValue,
+                            Type = ConnectionStringType.NotificationHub
+                        },
+                        serviceBusConnStringValueTypePair = new ConnStringValueTypePair
+                        {
+                            Value = serviceBusConnStrValue,
+                            Type = ConnectionStringType.ServiceBus
+                        },
+                        eventHubConnStringValueTypePair = new ConnStringValueTypePair
+                        {
+                            Value = eventHubConnStrValue,
+                            Type = ConnectionStringType.EventHub
+                        },
+                        apiHubConnStringValueTypePair = new ConnStringValueTypePair
+                        {
+                            Value = apiHubConnStrValue,
+                            Type = ConnectionStringType.ApiHub
+                        },
+                        docDbConnStringValueTypePair = new ConnStringValueTypePair
+                        {
+                            Value = docDbConnStrValue,
+                            Type = ConnectionStringType.DocDb
+                        },
+                        redisCacheConnStringValueTypePair = new ConnStringValueTypePair
+                        {
+                            Value = redisCacheConnStrValue,
+                            Type = ConnectionStringType.RedisCache
+                        };
+
+                    var kvpList = new List<KeyValuePair<string, ConnStringValueTypePair>>()
+                    {
+                        new KeyValuePair<string, ConnStringValueTypePair>(mySqlConnStrName, mySqlConnStringValueTypePair),
+                        new KeyValuePair<string, ConnStringValueTypePair>(sqlServerConnStrName, sqlServerConnStringValueTypePair),
+                        new KeyValuePair<string, ConnStringValueTypePair>(sqlAzureConnStrName, sqlAzureConnStringValueTypePair),
+                        new KeyValuePair<string, ConnStringValueTypePair>(customConnStrName, customConnStringValueTypePair),
+                        new KeyValuePair<string, ConnStringValueTypePair>(notificationHubConnStrName, notificationHubConnStringValueTypePair),
+                        new KeyValuePair<string, ConnStringValueTypePair>(serviceBusConnStrName, serviceBusConnStringValueTypePair),
+                        new KeyValuePair<string, ConnStringValueTypePair>(eventHubConnStrName, eventHubConnStringValueTypePair),
+                        new KeyValuePair<string, ConnStringValueTypePair>(apiHubConnStrName, apiHubConnStringValueTypePair),
+                        new KeyValuePair<string, ConnStringValueTypePair>(docDbConnStrName, docDbConnStringValueTypePair),
+                        new KeyValuePair<string, ConnStringValueTypePair>(redisCacheConnStrName, redisCacheConnStringValueTypePair)
+                    };
                     var connectionStringResponse = webSitesClient.Sites.UpdateSiteConnectionStrings(
                         resourceGroupName,
                         siteName,
-                        new ConnectionStringDictionary { Location = locationName, Properties = new Dictionary<string, ConnStringValueTypePair> { { connectionStringName, connStringValueTypePair } } });
+                        new ConnectionStringDictionary { Location = locationName, Properties = kvpList.ToDictionary(pair => pair.Key, pair => pair.Value) });
 
                     Assert.NotNull(connectionStringResponse);
-                    Assert.True(connectionStringResponse.Properties.Contains(new KeyValuePair<string, ConnStringValueTypePair>(connectionStringName, connStringValueTypePair), new ConnectionStringComparer()));
+                    kvpList.ForEach(pair => Assert.True(connectionStringResponse.Properties.Contains(pair, new ConnectionStringComparer()), string.Format("Response does not contain {0}", pair.Key)));
 
                     connectionStringResponse = webSitesClient.Sites.ListSiteConnectionStrings(resourceGroupName, siteName);
 
                     Assert.NotNull(connectionStringResponse);
-                    Assert.True(connectionStringResponse.Properties.Contains(new KeyValuePair<string, ConnStringValueTypePair>(connectionStringName, connStringValueTypePair), new ConnectionStringComparer()));
+                    kvpList.ForEach(pair => Assert.True(connectionStringResponse.Properties.Contains(pair, new ConnectionStringComparer()), string.Format("Response does not contain {0}", pair.Key)));
 
                     #endregion Get/Set Connection strings
 

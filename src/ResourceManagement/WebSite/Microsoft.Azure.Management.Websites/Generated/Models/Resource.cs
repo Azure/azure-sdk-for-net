@@ -28,10 +28,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the Resource class.
         /// </summary>
-        public Resource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
+        public Resource(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>))
         {
             Id = id;
             Name = name;
+            Kind = kind;
             Location = location;
             Type = type;
             Tags = tags;
@@ -48,6 +49,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Kind of resource
+        /// </summary>
+        [JsonProperty(PropertyName = "kind")]
+        public string Kind { get; set; }
 
         /// <summary>
         /// Resource Location

@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the ManagedHostingEnvironment class.
         /// </summary>
-        public ManagedHostingEnvironment(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedHostingEnvironmentName = default(string), string managedHostingEnvironmentLocation = default(string), ManagedHostingEnvironmentStatus? status = default(ManagedHostingEnvironmentStatus?), VirtualNetworkProfile virtualNetwork = default(VirtualNetworkProfile), int? ipsslAddressCount = default(int?), string dnsSuffix = default(string), string subscriptionId = default(string), string resourceGroup = default(string), bool? environmentIsHealthy = default(bool?), string environmentStatus = default(string), bool? suspended = default(bool?), string apiManagementAccount = default(string))
-            : base(location, id, name, type, tags)
+        public ManagedHostingEnvironment(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string managedHostingEnvironmentName = default(string), string managedHostingEnvironmentLocation = default(string), ManagedHostingEnvironmentStatus? status = default(ManagedHostingEnvironmentStatus?), VirtualNetworkProfile virtualNetwork = default(VirtualNetworkProfile), int? ipsslAddressCount = default(int?), string dnsSuffix = default(string), string subscriptionId = default(string), string resourceGroup = default(string), bool? environmentIsHealthy = default(bool?), string environmentStatus = default(string), bool? suspended = default(bool?), string apiManagementAccount = default(string))
+            : base(location, id, name, kind, type, tags)
         {
             ManagedHostingEnvironmentName = managedHostingEnvironmentName;
             ManagedHostingEnvironmentLocation = managedHostingEnvironmentLocation;

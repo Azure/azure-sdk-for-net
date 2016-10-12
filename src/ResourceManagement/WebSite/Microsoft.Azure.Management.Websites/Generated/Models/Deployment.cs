@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the Deployment class.
         /// </summary>
-        public Deployment(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string deploymentId = default(string), int? status = default(int?), string message = default(string), string author = default(string), string deployer = default(string), string authorEmail = default(string), DateTime? startTime = default(DateTime?), DateTime? endTime = default(DateTime?), bool? active = default(bool?), string details = default(string))
-            : base(location, id, name, type, tags)
+        public Deployment(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string deploymentId = default(string), int? status = default(int?), string message = default(string), string author = default(string), string deployer = default(string), string authorEmail = default(string), DateTime? startTime = default(DateTime?), DateTime? endTime = default(DateTime?), bool? active = default(bool?), string details = default(string))
+            : base(location, id, name, kind, type, tags)
         {
             DeploymentId = deploymentId;
             Status = status;

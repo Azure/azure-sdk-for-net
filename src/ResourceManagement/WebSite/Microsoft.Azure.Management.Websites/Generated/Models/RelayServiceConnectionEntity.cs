@@ -31,8 +31,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// Initializes a new instance of the RelayServiceConnectionEntity
         /// class.
         /// </summary>
-        public RelayServiceConnectionEntity(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string entityName = default(string), string entityConnectionString = default(string), string resourceType = default(string), string resourceConnectionString = default(string), string hostname = default(string), int? port = default(int?), string biztalkUri = default(string))
-            : base(location, id, name, type, tags)
+        public RelayServiceConnectionEntity(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string entityName = default(string), string entityConnectionString = default(string), string resourceType = default(string), string resourceConnectionString = default(string), string hostname = default(string), int? port = default(int?), string biztalkUri = default(string))
+            : base(location, id, name, kind, type, tags)
         {
             EntityName = entityName;
             EntityConnectionString = entityConnectionString;

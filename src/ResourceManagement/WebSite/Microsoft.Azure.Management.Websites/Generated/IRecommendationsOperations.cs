@@ -56,13 +56,17 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Recommendation rule name
         /// </param>
+        /// <param name='updateSeen'>
+        /// If true, the backend updates the last seen timestamp of the
+        /// recommendation object.
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<RecommendationRule>> GetRuleDetailsBySiteNameWithHttpMessagesAsync(string resourceGroupName, string siteName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<RecommendationRule>> GetRuleDetailsBySiteNameWithHttpMessagesAsync(string resourceGroupName, string siteName, string name, bool? updateSeen = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a list of recommendations associated with the specified web
         /// site.
@@ -84,13 +88,17 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='numSlots'>
         /// The number of site slots associated to the site
         /// </param>
+        /// <param name='liveHours'>
+        /// If greater than zero, this API scans the last active live site
+        /// symptoms, dynamically generate on-the-fly recommendations
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IList<Recommendation>>> GetRecommendedRulesForSiteWithHttpMessagesAsync(string resourceGroupName, string siteName, bool? featured = default(bool?), string siteSku = default(string), int? numSlots = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IList<Recommendation>>> GetRecommendedRulesForSiteWithHttpMessagesAsync(string resourceGroupName, string siteName, bool? featured = default(bool?), string siteSku = default(string), int? numSlots = default(int?), int? liveHours = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets the list of past recommendations optionally specified by the
         /// time range.

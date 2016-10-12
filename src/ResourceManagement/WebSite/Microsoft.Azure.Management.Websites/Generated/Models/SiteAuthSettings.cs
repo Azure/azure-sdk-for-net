@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the SiteAuthSettings class.
         /// </summary>
-        public SiteAuthSettings(bool? enabled = default(bool?), string httpApiPrefixPath = default(string), UnauthenticatedClientAction? unauthenticatedClientAction = default(UnauthenticatedClientAction?), bool? tokenStoreEnabled = default(bool?), IList<string> allowedExternalRedirectUrls = default(IList<string>), BuiltInAuthenticationProvider? defaultProvider = default(BuiltInAuthenticationProvider?), string clientId = default(string), string clientSecret = default(string), string issuer = default(string), IList<string> allowedAudiences = default(IList<string>), IList<string> additionalLoginParams = default(IList<string>), string aadClientId = default(string), string openIdIssuer = default(string), string googleClientId = default(string), string googleClientSecret = default(string), IList<string> googleOAuthScopes = default(IList<string>), string facebookAppId = default(string), string facebookAppSecret = default(string), IList<string> facebookOAuthScopes = default(IList<string>), string twitterConsumerKey = default(string), string twitterConsumerSecret = default(string), string microsoftAccountClientId = default(string), string microsoftAccountClientSecret = default(string), IList<string> microsoftAccountOAuthScopes = default(IList<string>))
+        public SiteAuthSettings(bool? enabled = default(bool?), string httpApiPrefixPath = default(string), UnauthenticatedClientAction? unauthenticatedClientAction = default(UnauthenticatedClientAction?), bool? tokenStoreEnabled = default(bool?), IList<string> allowedExternalRedirectUrls = default(IList<string>), BuiltInAuthenticationProvider? defaultProvider = default(BuiltInAuthenticationProvider?), double? tokenRefreshExtensionHours = default(double?), string clientId = default(string), string clientSecret = default(string), string issuer = default(string), IList<string> allowedAudiences = default(IList<string>), IList<string> additionalLoginParams = default(IList<string>), string aadClientId = default(string), string openIdIssuer = default(string), string googleClientId = default(string), string googleClientSecret = default(string), IList<string> googleOAuthScopes = default(IList<string>), string facebookAppId = default(string), string facebookAppSecret = default(string), IList<string> facebookOAuthScopes = default(IList<string>), string twitterConsumerKey = default(string), string twitterConsumerSecret = default(string), string microsoftAccountClientId = default(string), string microsoftAccountClientSecret = default(string), IList<string> microsoftAccountOAuthScopes = default(IList<string>))
         {
             Enabled = enabled;
             HttpApiPrefixPath = httpApiPrefixPath;
@@ -38,6 +38,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
             TokenStoreEnabled = tokenStoreEnabled;
             AllowedExternalRedirectUrls = allowedExternalRedirectUrls;
             DefaultProvider = defaultProvider;
+            TokenRefreshExtensionHours = tokenRefreshExtensionHours;
             ClientId = clientId;
             ClientSecret = clientSecret;
             Issuer = issuer;
@@ -114,6 +115,14 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "defaultProvider")]
         public BuiltInAuthenticationProvider? DefaultProvider { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number of hours after session token expiration
+        /// that a session token can be used to
+        /// call the token refresh API. The default is 72 hours.
+        /// </summary>
+        [JsonProperty(PropertyName = "tokenRefreshExtensionHours")]
+        public double? TokenRefreshExtensionHours { get; set; }
 
         /// <summary>
         /// Gets or sets the Client ID of this relying party application,

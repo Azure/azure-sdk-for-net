@@ -26,9 +26,9 @@ namespace Microsoft.Azure.Management.WebSites
             /// </param>
             /// <param name='moveResourceEnvelope'>
             /// </param>
-            public static void MoveResources(this IGlobalResourceGroupsOperations operations, string resourceGroupName, CsmMoveResourceEnvelope moveResourceEnvelope)
+            public static object MoveResources(this IGlobalResourceGroupsOperations operations, string resourceGroupName, CsmMoveResourceEnvelope moveResourceEnvelope)
             {
-                Task.Factory.StartNew(s => ((IGlobalResourceGroupsOperations)s).MoveResourcesAsync(resourceGroupName, moveResourceEnvelope), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IGlobalResourceGroupsOperations)s).MoveResourcesAsync(resourceGroupName, moveResourceEnvelope), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -41,9 +41,42 @@ namespace Microsoft.Azure.Management.WebSites
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task MoveResourcesAsync( this IGlobalResourceGroupsOperations operations, string resourceGroupName, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> MoveResourcesAsync( this IGlobalResourceGroupsOperations operations, string resourceGroupName, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.MoveResourcesWithHttpMessagesAsync(resourceGroupName, moveResourceEnvelope, null, cancellationToken).ConfigureAwait(false);
+                using (var _result = await operations.MoveResourcesWithHttpMessagesAsync(resourceGroupName, moveResourceEnvelope, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// </param>
+            /// <param name='moveResourceEnvelope'>
+            /// </param>
+            public static object ValidateMoveResources(this IGlobalResourceGroupsOperations operations, string resourceGroupName, CsmMoveResourceEnvelope moveResourceEnvelope)
+            {
+                return Task.Factory.StartNew(s => ((IGlobalResourceGroupsOperations)s).ValidateMoveResourcesAsync(resourceGroupName, moveResourceEnvelope), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// </param>
+            /// <param name='moveResourceEnvelope'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> ValidateMoveResourcesAsync( this IGlobalResourceGroupsOperations operations, string resourceGroupName, CsmMoveResourceEnvelope moveResourceEnvelope, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ValidateMoveResourcesWithHttpMessagesAsync(resourceGroupName, moveResourceEnvelope, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
     }

@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the BackupRequest class.
         /// </summary>
-        public BackupRequest(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string backupRequestName = default(string), bool? enabled = default(bool?), string storageAccountUrl = default(string), BackupSchedule backupSchedule = default(BackupSchedule), IList<DatabaseBackupSetting> databases = default(IList<DatabaseBackupSetting>), BackupRestoreOperationType? backupRequestType = default(BackupRestoreOperationType?))
-            : base(location, id, name, type, tags)
+        public BackupRequest(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string backupRequestName = default(string), bool? enabled = default(bool?), string storageAccountUrl = default(string), BackupSchedule backupSchedule = default(BackupSchedule), IList<DatabaseBackupSetting> databases = default(IList<DatabaseBackupSetting>), BackupRestoreOperationType? backupRequestType = default(BackupRestoreOperationType?))
+            : base(location, id, name, kind, type, tags)
         {
             BackupRequestName = backupRequestName;
             Enabled = enabled;

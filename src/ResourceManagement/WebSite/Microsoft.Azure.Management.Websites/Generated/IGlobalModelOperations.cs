@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<object>> IsHostingEnvironmentNameAvailableWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<object>> IsHostingEnvironmentWithLegacyNameAvailableWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Whether hosting environment name is available
         /// </summary>
@@ -160,7 +160,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<object>> IsHostingEnvironmentWithLegacyNameAvailableWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<object>> IsHostingEnvironmentNameAvailableWithHttpMessagesAsync(string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Check if resource name is available
         /// </summary>
@@ -174,5 +174,29 @@ namespace Microsoft.Azure.Management.WebSites
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<ResourceNameAvailability>> CheckNameAvailabilityWithHttpMessagesAsync(ResourceNameAvailabilityRequest request, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Validates if a resource can be created
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// </param>
+        /// <param name='validateRequest'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<ValidateResponse>> ValidateWithHttpMessagesAsync(string resourceGroupName, ValidateRequest validateRequest, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Get skus
+        /// </summary>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<object>> GetSubscriptionSkusWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

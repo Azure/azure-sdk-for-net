@@ -50,6 +50,4020 @@ namespace Microsoft.Azure.Management.WebSites
         public WebSiteManagementClient Client { get; private set; }
 
         /// <summary>
+        /// Retrieves a Biztalk Hybrid Connection identified by its entity name.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='entityName'>
+        /// The name by which the Hybrid Connection is identified
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<RelayServiceConnectionEntity>> GetSiteRelayServiceConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string entityName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (entityName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "entityName");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("entityName", entityName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetSiteRelayServiceConnection", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{entityName}", Uri.EscapeDataString(entityName));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<RelayServiceConnectionEntity>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<RelayServiceConnectionEntity>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Creates a new association to a Biztalk Hybrid Connection, or updates an
+        /// existing one.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='entityName'>
+        /// The name by which the Hybrid Connection is identified
+        /// </param>
+        /// <param name='connectionEnvelope'>
+        /// The details of the Hybrid Connection
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<RelayServiceConnectionEntity>> CreateOrUpdateSiteRelayServiceConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string entityName, RelayServiceConnectionEntity connectionEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (entityName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "entityName");
+            }
+            if (connectionEnvelope == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "connectionEnvelope");
+            }
+            if (connectionEnvelope != null)
+            {
+                connectionEnvelope.Validate();
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("entityName", entityName);
+                tracingParameters.Add("connectionEnvelope", connectionEnvelope);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdateSiteRelayServiceConnection", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{entityName}", Uri.EscapeDataString(entityName));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            _requestContent = SafeJsonConvert.SerializeObject(connectionEnvelope, this.Client.SerializationSettings);
+            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
+            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<RelayServiceConnectionEntity>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<RelayServiceConnectionEntity>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Removes the association to a Biztalk Hybrid Connection, identified by its
+        /// entity name.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='entityName'>
+        /// The name by which the Hybrid Connection is identified
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<object>> DeleteSiteRelayServiceConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string entityName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (entityName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "entityName");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("entityName", entityName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "DeleteSiteRelayServiceConnection", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{entityName}", Uri.EscapeDataString(entityName));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("DELETE");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<object>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Creates a new association to a Biztalk Hybrid Connection, or updates an
+        /// existing one.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='entityName'>
+        /// The name by which the Hybrid Connection is identified
+        /// </param>
+        /// <param name='connectionEnvelope'>
+        /// The details of the Hybrid Connection
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<RelayServiceConnectionEntity>> UpdateSiteRelayServiceConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string entityName, RelayServiceConnectionEntity connectionEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (entityName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "entityName");
+            }
+            if (connectionEnvelope == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "connectionEnvelope");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("entityName", entityName);
+                tracingParameters.Add("connectionEnvelope", connectionEnvelope);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "UpdateSiteRelayServiceConnection", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{entityName}", Uri.EscapeDataString(entityName));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("PATCH");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            _requestContent = SafeJsonConvert.SerializeObject(connectionEnvelope, this.Client.SerializationSettings);
+            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
+            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<RelayServiceConnectionEntity>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<RelayServiceConnectionEntity>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Retrieves a Biztalk Hybrid Connection identified by its entity name.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='entityName'>
+        /// The name by which the Hybrid Connection is identified
+        /// </param>
+        /// <param name='slot'>
+        /// The name of the slot for the web app.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<RelayServiceConnectionEntity>> GetSiteRelayServiceConnectionSlotWithHttpMessagesAsync(string resourceGroupName, string name, string entityName, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (entityName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "entityName");
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("entityName", entityName);
+                tracingParameters.Add("slot", slot);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetSiteRelayServiceConnectionSlot", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{entityName}", Uri.EscapeDataString(entityName));
+            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<RelayServiceConnectionEntity>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<RelayServiceConnectionEntity>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Creates a new association to a Biztalk Hybrid Connection, or updates an
+        /// existing one.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='entityName'>
+        /// The name by which the Hybrid Connection is identified
+        /// </param>
+        /// <param name='connectionEnvelope'>
+        /// The details of the Hybrid Connection
+        /// </param>
+        /// <param name='slot'>
+        /// The name of the slot for the web app.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<RelayServiceConnectionEntity>> CreateOrUpdateSiteRelayServiceConnectionSlotWithHttpMessagesAsync(string resourceGroupName, string name, string entityName, RelayServiceConnectionEntity connectionEnvelope, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (entityName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "entityName");
+            }
+            if (connectionEnvelope == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "connectionEnvelope");
+            }
+            if (connectionEnvelope != null)
+            {
+                connectionEnvelope.Validate();
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("entityName", entityName);
+                tracingParameters.Add("connectionEnvelope", connectionEnvelope);
+                tracingParameters.Add("slot", slot);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdateSiteRelayServiceConnectionSlot", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{entityName}", Uri.EscapeDataString(entityName));
+            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            _requestContent = SafeJsonConvert.SerializeObject(connectionEnvelope, this.Client.SerializationSettings);
+            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
+            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<RelayServiceConnectionEntity>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<RelayServiceConnectionEntity>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Removes the association to a Biztalk Hybrid Connection, identified by its
+        /// entity name.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='entityName'>
+        /// The name by which the Hybrid Connection is identified
+        /// </param>
+        /// <param name='slot'>
+        /// The name of the slot for the web app.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<object>> DeleteSiteRelayServiceConnectionSlotWithHttpMessagesAsync(string resourceGroupName, string name, string entityName, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (entityName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "entityName");
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("entityName", entityName);
+                tracingParameters.Add("slot", slot);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "DeleteSiteRelayServiceConnectionSlot", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{entityName}", Uri.EscapeDataString(entityName));
+            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("DELETE");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<object>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Creates a new association to a Biztalk Hybrid Connection, or updates an
+        /// existing one.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='entityName'>
+        /// The name by which the Hybrid Connection is identified
+        /// </param>
+        /// <param name='connectionEnvelope'>
+        /// The details of the Hybrid Connection
+        /// </param>
+        /// <param name='slot'>
+        /// The name of the slot for the web app.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<RelayServiceConnectionEntity>> UpdateSiteRelayServiceConnectionSlotWithHttpMessagesAsync(string resourceGroupName, string name, string entityName, RelayServiceConnectionEntity connectionEnvelope, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (entityName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "entityName");
+            }
+            if (connectionEnvelope == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "connectionEnvelope");
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("entityName", entityName);
+                tracingParameters.Add("connectionEnvelope", connectionEnvelope);
+                tracingParameters.Add("slot", slot);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "UpdateSiteRelayServiceConnectionSlot", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{entityName}", Uri.EscapeDataString(entityName));
+            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("PATCH");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            _requestContent = SafeJsonConvert.SerializeObject(connectionEnvelope, this.Client.SerializationSettings);
+            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
+            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<RelayServiceConnectionEntity>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<RelayServiceConnectionEntity>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Retrieves all Biztalk Hybrid Connections associated with this web app.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<RelayServiceConnectionEntity>> ListSiteRelayServiceConnectionsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "ListSiteRelayServiceConnections", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<RelayServiceConnectionEntity>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<RelayServiceConnectionEntity>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Retrieves all Biztalk Hybrid Connections associated with this web app.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='slot'>
+        /// The name of the slot for the web app.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<RelayServiceConnectionEntity>> ListSiteRelayServiceConnectionsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("slot", slot);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "ListSiteRelayServiceConnectionsSlot", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<RelayServiceConnectionEntity>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<RelayServiceConnectionEntity>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Retrieves a Virtual Network connection gateway associated with this web
+        /// app and virtual network.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='vnetName'>
+        /// The name of the Virtual Network
+        /// </param>
+        /// <param name='gatewayName'>
+        /// The name of the gateway. The only gateway that exists presently is
+        /// "primary"
+        /// </param>
+        /// <param name='slot'>
+        /// The name of the slot for this web app.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<object>> GetSiteVnetGatewaySlotWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string gatewayName, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (vnetName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "vnetName");
+            }
+            if (gatewayName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "gatewayName");
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("vnetName", vnetName);
+                tracingParameters.Add("gatewayName", gatewayName);
+                tracingParameters.Add("slot", slot);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetSiteVnetGatewaySlot", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{vnetName}", Uri.EscapeDataString(vnetName));
+            _url = _url.Replace("{gatewayName}", Uri.EscapeDataString(gatewayName));
+            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200 && (int)_statusCode != 404)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<object>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Updates the Virtual Network Gateway.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='vnetName'>
+        /// The name of the Virtual Network
+        /// </param>
+        /// <param name='gatewayName'>
+        /// The name of the gateway. The only gateway that exists presently is
+        /// "primary"
+        /// </param>
+        /// <param name='connectionEnvelope'>
+        /// The properties to update this gateway with.
+        /// </param>
+        /// <param name='slot'>
+        /// The name of the slot for this web app.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<VnetGateway>> CreateOrUpdateSiteVNETConnectionGatewaySlotWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string gatewayName, VnetGateway connectionEnvelope, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (vnetName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "vnetName");
+            }
+            if (gatewayName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "gatewayName");
+            }
+            if (connectionEnvelope == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "connectionEnvelope");
+            }
+            if (connectionEnvelope != null)
+            {
+                connectionEnvelope.Validate();
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("vnetName", vnetName);
+                tracingParameters.Add("gatewayName", gatewayName);
+                tracingParameters.Add("connectionEnvelope", connectionEnvelope);
+                tracingParameters.Add("slot", slot);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdateSiteVNETConnectionGatewaySlot", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{vnetName}", Uri.EscapeDataString(vnetName));
+            _url = _url.Replace("{gatewayName}", Uri.EscapeDataString(gatewayName));
+            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            _requestContent = SafeJsonConvert.SerializeObject(connectionEnvelope, this.Client.SerializationSettings);
+            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
+            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<VnetGateway>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<VnetGateway>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Updates the Virtual Network Gateway.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='vnetName'>
+        /// The name of the Virtual Network
+        /// </param>
+        /// <param name='gatewayName'>
+        /// The name of the gateway. The only gateway that exists presently is
+        /// "primary"
+        /// </param>
+        /// <param name='connectionEnvelope'>
+        /// The properties to update this gateway with.
+        /// </param>
+        /// <param name='slot'>
+        /// The name of the slot for this web app.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<VnetGateway>> UpdateSiteVNETConnectionGatewaySlotWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string gatewayName, VnetGateway connectionEnvelope, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (vnetName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "vnetName");
+            }
+            if (gatewayName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "gatewayName");
+            }
+            if (connectionEnvelope == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "connectionEnvelope");
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("vnetName", vnetName);
+                tracingParameters.Add("gatewayName", gatewayName);
+                tracingParameters.Add("connectionEnvelope", connectionEnvelope);
+                tracingParameters.Add("slot", slot);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "UpdateSiteVNETConnectionGatewaySlot", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{vnetName}", Uri.EscapeDataString(vnetName));
+            _url = _url.Replace("{gatewayName}", Uri.EscapeDataString(gatewayName));
+            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("PATCH");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            _requestContent = SafeJsonConvert.SerializeObject(connectionEnvelope, this.Client.SerializationSettings);
+            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
+            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<VnetGateway>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<VnetGateway>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Retrieves a Virtual Network connection gateway associated with this web
+        /// app and virtual network.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='vnetName'>
+        /// The name of the Virtual Network
+        /// </param>
+        /// <param name='gatewayName'>
+        /// The name of the gateway. The only gateway that exists presently is
+        /// "primary"
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<object>> GetSiteVnetGatewayWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string gatewayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (vnetName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "vnetName");
+            }
+            if (gatewayName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "gatewayName");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("vnetName", vnetName);
+                tracingParameters.Add("gatewayName", gatewayName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetSiteVnetGateway", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{vnetName}", Uri.EscapeDataString(vnetName));
+            _url = _url.Replace("{gatewayName}", Uri.EscapeDataString(gatewayName));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200 && (int)_statusCode != 404)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<object>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Updates the Virtual Network Gateway.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='vnetName'>
+        /// The name of the Virtual Network
+        /// </param>
+        /// <param name='gatewayName'>
+        /// The name of the gateway. The only gateway that exists presently is
+        /// "primary"
+        /// </param>
+        /// <param name='connectionEnvelope'>
+        /// The properties to update this gateway with.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<VnetGateway>> CreateOrUpdateSiteVNETConnectionGatewayWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string gatewayName, VnetGateway connectionEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (vnetName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "vnetName");
+            }
+            if (gatewayName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "gatewayName");
+            }
+            if (connectionEnvelope == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "connectionEnvelope");
+            }
+            if (connectionEnvelope != null)
+            {
+                connectionEnvelope.Validate();
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("vnetName", vnetName);
+                tracingParameters.Add("gatewayName", gatewayName);
+                tracingParameters.Add("connectionEnvelope", connectionEnvelope);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdateSiteVNETConnectionGateway", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{vnetName}", Uri.EscapeDataString(vnetName));
+            _url = _url.Replace("{gatewayName}", Uri.EscapeDataString(gatewayName));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            _requestContent = SafeJsonConvert.SerializeObject(connectionEnvelope, this.Client.SerializationSettings);
+            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
+            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<VnetGateway>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<VnetGateway>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Updates the Virtual Network Gateway.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='vnetName'>
+        /// The name of the Virtual Network
+        /// </param>
+        /// <param name='gatewayName'>
+        /// The name of the gateway. The only gateway that exists presently is
+        /// "primary"
+        /// </param>
+        /// <param name='connectionEnvelope'>
+        /// The properties to update this gateway with.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<VnetGateway>> UpdateSiteVNETConnectionGatewayWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string gatewayName, VnetGateway connectionEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (vnetName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "vnetName");
+            }
+            if (gatewayName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "gatewayName");
+            }
+            if (connectionEnvelope == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "connectionEnvelope");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("vnetName", vnetName);
+                tracingParameters.Add("gatewayName", gatewayName);
+                tracingParameters.Add("connectionEnvelope", connectionEnvelope);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "UpdateSiteVNETConnectionGateway", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{vnetName}", Uri.EscapeDataString(vnetName));
+            _url = _url.Replace("{gatewayName}", Uri.EscapeDataString(gatewayName));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("PATCH");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            _requestContent = SafeJsonConvert.SerializeObject(connectionEnvelope, this.Client.SerializationSettings);
+            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
+            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<VnetGateway>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<VnetGateway>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Retrieves a specific Virtual Network Connection associated with this web
+        /// app.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='vnetName'>
+        /// The name of the Virtual Network
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<VnetInfo>> GetSiteVNETConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (vnetName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "vnetName");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("vnetName", vnetName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetSiteVNETConnection", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{vnetName}", Uri.EscapeDataString(vnetName));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<VnetInfo>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<VnetInfo>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Adds a Virtual Network Connection or updates it's properties.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='vnetName'>
+        /// The name of the Virtual Network
+        /// </param>
+        /// <param name='connectionEnvelope'>
+        /// The properties of this Virtual Network Connection
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<VnetInfo>> CreateOrUpdateSiteVNETConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, VnetInfo connectionEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (vnetName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "vnetName");
+            }
+            if (connectionEnvelope == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "connectionEnvelope");
+            }
+            if (connectionEnvelope != null)
+            {
+                connectionEnvelope.Validate();
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("vnetName", vnetName);
+                tracingParameters.Add("connectionEnvelope", connectionEnvelope);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdateSiteVNETConnection", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{vnetName}", Uri.EscapeDataString(vnetName));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            _requestContent = SafeJsonConvert.SerializeObject(connectionEnvelope, this.Client.SerializationSettings);
+            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
+            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<VnetInfo>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<VnetInfo>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Removes the specified Virtual Network Connection association from this web
+        /// app.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='vnetName'>
+        /// The name of the Virtual Network
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<object>> DeleteSiteVNETConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (vnetName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "vnetName");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("vnetName", vnetName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "DeleteSiteVNETConnection", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{vnetName}", Uri.EscapeDataString(vnetName));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("DELETE");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<object>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Adds a Virtual Network Connection or updates it's properties.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='vnetName'>
+        /// The name of the Virtual Network
+        /// </param>
+        /// <param name='connectionEnvelope'>
+        /// The properties of this Virtual Network Connection
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<VnetInfo>> UpdateSiteVNETConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, VnetInfo connectionEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (vnetName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "vnetName");
+            }
+            if (connectionEnvelope == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "connectionEnvelope");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("vnetName", vnetName);
+                tracingParameters.Add("connectionEnvelope", connectionEnvelope);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "UpdateSiteVNETConnection", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{vnetName}", Uri.EscapeDataString(vnetName));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("PATCH");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            _requestContent = SafeJsonConvert.SerializeObject(connectionEnvelope, this.Client.SerializationSettings);
+            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
+            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<VnetInfo>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<VnetInfo>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
         /// Retrieves a specific Virtual Network Connection associated with this web
         /// app.
         /// </summary>
@@ -866,8 +4880,8 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
-        /// Retrieves a specific Virtual Network Connection associated with this web
-        /// app.
+        /// Retrieves a list of all Virtual Network Connections associated with this
+        /// web app.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name
@@ -875,8 +4889,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// The name of the web app
         /// </param>
-        /// <param name='vnetName'>
-        /// The name of the Virtual Network
+        /// <param name='slot'>
+        /// The name of the slot for this web app.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -884,7 +4898,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VnetInfo>> GetSiteVNETConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IList<VnetInfo>>> GetSiteVNETConnectionsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -894,9 +4908,9 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
             }
-            if (vnetName == null)
+            if (slot == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vnetName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -915,16 +4929,16 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
-                tracingParameters.Add("vnetName", vnetName);
+                tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetSiteVNETConnection", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetSiteVNETConnectionsSlot", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{vnetName}", Uri.EscapeDataString(vnetName));
+            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -1022,7 +5036,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<VnetInfo>();
+            var _result = new AzureOperationResponse<IList<VnetInfo>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1035,7 +5049,7 @@ namespace Microsoft.Azure.Management.WebSites
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<VnetInfo>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<IList<VnetInfo>>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1055,7 +5069,8 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
-        /// Adds a Virtual Network Connection or updates it's properties.
+        /// Retrieves a list of all Virtual Network Connections associated with this
+        /// web app.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name
@@ -1063,19 +5078,13 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// The name of the web app
         /// </param>
-        /// <param name='vnetName'>
-        /// The name of the Virtual Network
-        /// </param>
-        /// <param name='connectionEnvelope'>
-        /// The properties of this Virtual Network Connection
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VnetInfo>> CreateOrUpdateSiteVNETConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, VnetInfo connectionEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IList<VnetInfo>>> GetSiteVNETConnectionsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1084,18 +5093,6 @@ namespace Microsoft.Azure.Management.WebSites
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (vnetName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vnetName");
-            }
-            if (connectionEnvelope == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "connectionEnvelope");
-            }
-            if (connectionEnvelope != null)
-            {
-                connectionEnvelope.Validate();
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -1114,17 +5111,14 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
-                tracingParameters.Add("vnetName", vnetName);
-                tracingParameters.Add("connectionEnvelope", connectionEnvelope);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdateSiteVNETConnection", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetSiteVNETConnections", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{vnetName}", Uri.EscapeDataString(vnetName));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -1138,199 +5132,7 @@ namespace Microsoft.Azure.Management.WebSites
             // Create HTTP transport objects
             HttpRequestMessage _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PUT");
-            _httpRequest.RequestUri = new Uri(_url);
-            // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            _requestContent = SafeJsonConvert.SerializeObject(connectionEnvelope, this.Client.SerializationSettings);
-            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
-            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<VnetInfo>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<VnetInfo>(_responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Removes the specified Virtual Network Connection association from this web
-        /// app.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name
-        /// </param>
-        /// <param name='name'>
-        /// The name of the web app
-        /// </param>
-        /// <param name='vnetName'>
-        /// The name of the Virtual Network
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<object>> DeleteSiteVNETConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (vnetName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vnetName");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("vnetName", vnetName);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "DeleteSiteVNETConnection", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}").ToString();
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{vnetName}", Uri.EscapeDataString(vnetName));
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("DELETE");
+            _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
@@ -1414,7 +5216,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<object>();
+            var _result = new AzureOperationResponse<IList<VnetInfo>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1427,7 +5229,7 @@ namespace Microsoft.Azure.Management.WebSites
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<IList<VnetInfo>>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1447,7 +5249,7 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
-        /// Adds a Virtual Network Connection or updates it's properties.
+        /// Retrieves a view of all network features in use on this web app.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name
@@ -1455,11 +5257,8 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// The name of the web app
         /// </param>
-        /// <param name='vnetName'>
-        /// The name of the Virtual Network
-        /// </param>
-        /// <param name='connectionEnvelope'>
-        /// The properties of this Virtual Network Connection
+        /// <param name='view'>
+        /// The type of view. This can either be "summary" or "detailed".
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1467,7 +5266,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VnetInfo>> UpdateSiteVNETConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, VnetInfo connectionEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<NetworkFeatures>> GetSiteNetworkFeaturesWithHttpMessagesAsync(string resourceGroupName, string name, string view, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1477,13 +5276,9 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
             }
-            if (vnetName == null)
+            if (view == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vnetName");
-            }
-            if (connectionEnvelope == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "connectionEnvelope");
+                throw new ValidationException(ValidationRules.CannotBeNull, "view");
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -1502,17 +5297,16 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
-                tracingParameters.Add("vnetName", vnetName);
-                tracingParameters.Add("connectionEnvelope", connectionEnvelope);
+                tracingParameters.Add("view", view);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "UpdateSiteVNETConnection", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetSiteNetworkFeatures", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkFeatures/{view}").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{vnetName}", Uri.EscapeDataString(vnetName));
+            _url = _url.Replace("{view}", Uri.EscapeDataString(view));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -1526,7 +5320,7 @@ namespace Microsoft.Azure.Management.WebSites
             // Create HTTP transport objects
             HttpRequestMessage _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PATCH");
+            _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
@@ -1555,9 +5349,6 @@ namespace Microsoft.Azure.Management.WebSites
 
             // Serialize Request
             string _requestContent = null;
-            _requestContent = SafeJsonConvert.SerializeObject(connectionEnvelope, this.Client.SerializationSettings);
-            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
-            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Set Credentials
             if (this.Client.Credentials != null)
             {
@@ -1578,7 +5369,7 @@ namespace Microsoft.Azure.Management.WebSites
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200)
+            if ((int)_statusCode != 200 && (int)_statusCode != 404)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -1613,7 +5404,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<VnetInfo>();
+            var _result = new AzureOperationResponse<NetworkFeatures>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1626,7 +5417,7 @@ namespace Microsoft.Azure.Management.WebSites
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<VnetInfo>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<NetworkFeatures>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1843,16 +5634,16 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
-        /// Retrieves a view of all network features in use on this web app.
+        /// Gets the operation for a web app
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The resource group name
+        /// Name of resource group
         /// </param>
         /// <param name='name'>
-        /// The name of the web app
+        /// Name of web app
         /// </param>
-        /// <param name='view'>
-        /// The type of view. This can either be "summary" or "detailed".
+        /// <param name='operationId'>
+        /// Id of an operation
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1860,7 +5651,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<NetworkFeatures>> GetSiteNetworkFeaturesWithHttpMessagesAsync(string resourceGroupName, string name, string view, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object>> GetSiteOperationWithHttpMessagesAsync(string resourceGroupName, string name, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1870,9 +5661,9 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
             }
-            if (view == null)
+            if (operationId == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "view");
+                throw new ValidationException(ValidationRules.CannotBeNull, "operationId");
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -1891,16 +5682,16 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
-                tracingParameters.Add("view", view);
+                tracingParameters.Add("operationId", operationId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetSiteNetworkFeatures", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetSiteOperation", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/networkFeatures/{view}").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/operationresults/{operationId}").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{view}", Uri.EscapeDataString(view));
+            _url = _url.Replace("{operationId}", Uri.EscapeDataString(operationId));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -1963,7 +5754,7 @@ namespace Microsoft.Azure.Management.WebSites
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 404)
+            if ((int)_statusCode != 200)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -1998,7 +5789,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<NetworkFeatures>();
+            var _result = new AzureOperationResponse<object>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -2011,7 +5802,7 @@ namespace Microsoft.Azure.Management.WebSites
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<NetworkFeatures>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -2229,194 +6020,6 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
-        /// Gets the operation for a web app
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of resource group
-        /// </param>
-        /// <param name='name'>
-        /// Name of web app
-        /// </param>
-        /// <param name='operationId'>
-        /// Id of an operation
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<object>> GetSiteOperationWithHttpMessagesAsync(string resourceGroupName, string name, string operationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (operationId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "operationId");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("operationId", operationId);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetSiteOperation", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/operationresults/{operationId}").ToString();
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{operationId}", Uri.EscapeDataString(operationId));
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new Uri(_url);
-            // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<object>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
         /// Swaps web app slots
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -2428,17 +6031,20 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='slotSwapEntity'>
         /// Request body that contains the target slot name
         /// </param>
+        /// <param name='slot'>
+        /// Name of source slot for the swap
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<object>> SwapSlotWithProductionWithHttpMessagesAsync(string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object>> SwapSlotsSlotWithHttpMessagesAsync(string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse<object> _response = await BeginSwapSlotWithProductionWithHttpMessagesAsync(
-                resourceGroupName, name, slotSwapEntity, customHeaders, cancellationToken);
+            AzureOperationResponse<object> _response = await BeginSwapSlotsSlotWithHttpMessagesAsync(
+                resourceGroupName, name, slotSwapEntity, slot, customHeaders, cancellationToken);
             return await this.Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken);
         }
 
@@ -2454,13 +6060,16 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='slotSwapEntity'>
         /// Request body that contains the target slot name
         /// </param>
+        /// <param name='slot'>
+        /// Name of source slot for the swap
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<object>> BeginSwapSlotWithProductionWithHttpMessagesAsync(string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object>> BeginSwapSlotsSlotWithHttpMessagesAsync(string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -2473,6 +6082,10 @@ namespace Microsoft.Azure.Management.WebSites
             if (slotSwapEntity == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "slotSwapEntity");
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -2492,14 +6105,16 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("slotSwapEntity", slotSwapEntity);
+                tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginSwapSlotWithProduction", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginSwapSlotsSlot", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slotsswap").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/slotsswap").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -2662,20 +6277,17 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='slotSwapEntity'>
         /// Request body that contains the target slot name
         /// </param>
-        /// <param name='slot'>
-        /// Name of source slot for the swap
-        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<object>> SwapSlotsSlotWithHttpMessagesAsync(string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object>> SwapSlotWithProductionWithHttpMessagesAsync(string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse<object> _response = await BeginSwapSlotsSlotWithHttpMessagesAsync(
-                resourceGroupName, name, slotSwapEntity, slot, customHeaders, cancellationToken);
+            AzureOperationResponse<object> _response = await BeginSwapSlotWithProductionWithHttpMessagesAsync(
+                resourceGroupName, name, slotSwapEntity, customHeaders, cancellationToken);
             return await this.Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken);
         }
 
@@ -2691,16 +6303,13 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='slotSwapEntity'>
         /// Request body that contains the target slot name
         /// </param>
-        /// <param name='slot'>
-        /// Name of source slot for the swap
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<object>> BeginSwapSlotsSlotWithHttpMessagesAsync(string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object>> BeginSwapSlotWithProductionWithHttpMessagesAsync(string resourceGroupName, string name, CsmSlotEntity slotSwapEntity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -2713,10 +6322,6 @@ namespace Microsoft.Azure.Management.WebSites
             if (slotSwapEntity == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "slotSwapEntity");
-            }
-            if (slot == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -2736,16 +6341,14 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("slotSwapEntity", slotSwapEntity);
-                tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginSwapSlotsSlot", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginSwapSlotWithProduction", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/slotsswap").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slotsswap").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -3689,13 +7292,17 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of web app
         /// </param>
+        /// <param name='slot'>
+        /// Name of web app slot. If not specified then will default to production
+        /// slot.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<object>> ResetProductionSlotConfigWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object>> ResetSlotConfigSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -3704,6 +7311,10 @@ namespace Microsoft.Azure.Management.WebSites
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -3722,14 +7333,16 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
+                tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ResetProductionSlotConfig", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ResetSlotConfigSlot", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/resetSlotConfig").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/resetSlotConfig").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -3869,17 +7482,13 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of web app
         /// </param>
-        /// <param name='slot'>
-        /// Name of web app slot. If not specified then will default to production
-        /// slot.
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<object>> ResetSlotConfigSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object>> ResetProductionSlotConfigWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -3888,10 +7497,6 @@ namespace Microsoft.Azure.Management.WebSites
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (slot == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -3910,16 +7515,14 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
-                tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ResetSlotConfigSlot", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ResetProductionSlotConfig", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/resetSlotConfig").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/resetSlotConfig").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -6605,10 +10208,10 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Site>> RecoverSiteWithHttpMessagesAsync(string resourceGroupName, string name, CsmSiteRecoveryEntity recoveryEntity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RecoverResponse>> RecoverSiteWithHttpMessagesAsync(string resourceGroupName, string name, CsmSiteRecoveryEntity recoveryEntity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse<Site> _response = await BeginRecoverSiteWithHttpMessagesAsync(
+            AzureOperationResponse<RecoverResponse> _response = await BeginRecoverSiteWithHttpMessagesAsync(
                 resourceGroupName, name, recoveryEntity, customHeaders, cancellationToken);
             return await this.Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken);
         }
@@ -6632,7 +10235,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Site>> BeginRecoverSiteWithHttpMessagesAsync(string resourceGroupName, string name, CsmSiteRecoveryEntity recoveryEntity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RecoverResponse>> BeginRecoverSiteWithHttpMessagesAsync(string resourceGroupName, string name, CsmSiteRecoveryEntity recoveryEntity, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -6737,7 +10340,7 @@ namespace Microsoft.Azure.Management.WebSites
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 202 && (int)_statusCode != 404)
+            if ((int)_statusCode != 200)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 try
@@ -6772,7 +10375,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<Site>();
+            var _result = new AzureOperationResponse<RecoverResponse>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -6780,12 +10383,12 @@ namespace Microsoft.Azure.Management.WebSites
                 _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
             }
             // Deserialize Response
-            if ((int)_statusCode == 202)
+            if ((int)_statusCode == 200)
             {
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<Site>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<RecoverResponse>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -6827,10 +10430,10 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Site>> RecoverSiteSlotWithHttpMessagesAsync(string resourceGroupName, string name, CsmSiteRecoveryEntity recoveryEntity, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RecoverResponse>> RecoverSiteSlotWithHttpMessagesAsync(string resourceGroupName, string name, CsmSiteRecoveryEntity recoveryEntity, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
-            AzureOperationResponse<Site> _response = await BeginRecoverSiteSlotWithHttpMessagesAsync(
+            AzureOperationResponse<RecoverResponse> _response = await BeginRecoverSiteSlotWithHttpMessagesAsync(
                 resourceGroupName, name, recoveryEntity, slot, customHeaders, cancellationToken);
             return await this.Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken);
         }
@@ -6858,7 +10461,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<Site>> BeginRecoverSiteSlotWithHttpMessagesAsync(string resourceGroupName, string name, CsmSiteRecoveryEntity recoveryEntity, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RecoverResponse>> BeginRecoverSiteSlotWithHttpMessagesAsync(string resourceGroupName, string name, CsmSiteRecoveryEntity recoveryEntity, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -6969,185 +10572,6 @@ namespace Microsoft.Azure.Management.WebSites
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 202 && (int)_statusCode != 404)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<Site>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 202)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<Site>(_responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Returns all Snapshots to the user.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Webspace
-        /// </param>
-        /// <param name='name'>
-        /// Website Name
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<object>> GetSiteSnapshotsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetSiteSnapshots", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/snapshots").ToString();
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PUT");
-            _httpRequest.RequestUri = new Uri(_url);
-            // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
             if ((int)_statusCode != 200)
             {
                 var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
@@ -7183,7 +10607,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<object>();
+            var _result = new AzureOperationResponse<RecoverResponse>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -7196,7 +10620,7 @@ namespace Microsoft.Azure.Management.WebSites
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<RecoverResponse>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -7219,7 +10643,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// Returns all Snapshots to the user.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Webspace
+        /// Resource group
         /// </param>
         /// <param name='name'>
         /// Website Name
@@ -7233,7 +10657,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<object>> GetSiteSnapshotsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SnapshotCollection>> GetSiteSnapshotsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -7287,7 +10711,7 @@ namespace Microsoft.Azure.Management.WebSites
             // Create HTTP transport objects
             HttpRequestMessage _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
@@ -7371,7 +10795,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<object>();
+            var _result = new AzureOperationResponse<SnapshotCollection>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -7384,7 +10808,186 @@ namespace Microsoft.Azure.Management.WebSites
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<SnapshotCollection>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Returns all Snapshots to the user.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Resource group
+        /// </param>
+        /// <param name='name'>
+        /// Website Name
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<SnapshotCollection>> GetSiteSnapshotsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetSiteSnapshots", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/snapshots").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<SnapshotCollection>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<SnapshotCollection>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -8325,612 +11928,6 @@ namespace Microsoft.Azure.Management.WebSites
                 try
                 {
                     _result.Body = SafeJsonConvert.DeserializeObject<DeploymentCollection>(_responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Get the deployment
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of resource group
-        /// </param>
-        /// <param name='name'>
-        /// Name of web app
-        /// </param>
-        /// <param name='id'>
-        /// Id of the deployment
-        /// </param>
-        /// <param name='instanceId'>
-        /// Id of web app instance
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<Deployment>> GetInstanceDeploymentWithHttpMessagesAsync(string resourceGroupName, string name, string id, string instanceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (id == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "id");
-            }
-            if (instanceId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "instanceId");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("id", id);
-                tracingParameters.Add("instanceId", instanceId);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetInstanceDeployment", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/deployments/{id}").ToString();
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{id}", Uri.EscapeDataString(id));
-            _url = _url.Replace("{instanceId}", Uri.EscapeDataString(instanceId));
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new Uri(_url);
-            // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<Deployment>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<Deployment>(_responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Create a deployment
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of resource group
-        /// </param>
-        /// <param name='name'>
-        /// Name of web app
-        /// </param>
-        /// <param name='id'>
-        /// Id of the deployment
-        /// </param>
-        /// <param name='instanceId'>
-        /// Id of web app instance
-        /// </param>
-        /// <param name='deployment'>
-        /// Details of deployment
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<Deployment>> CreateInstanceDeploymentWithHttpMessagesAsync(string resourceGroupName, string name, string id, string instanceId, Deployment deployment, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (id == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "id");
-            }
-            if (instanceId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "instanceId");
-            }
-            if (deployment == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "deployment");
-            }
-            if (deployment != null)
-            {
-                deployment.Validate();
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("id", id);
-                tracingParameters.Add("instanceId", instanceId);
-                tracingParameters.Add("deployment", deployment);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "CreateInstanceDeployment", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/deployments/{id}").ToString();
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{id}", Uri.EscapeDataString(id));
-            _url = _url.Replace("{instanceId}", Uri.EscapeDataString(instanceId));
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PUT");
-            _httpRequest.RequestUri = new Uri(_url);
-            // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            _requestContent = SafeJsonConvert.SerializeObject(deployment, this.Client.SerializationSettings);
-            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
-            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<Deployment>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<Deployment>(_responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Delete the deployment
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of resource group
-        /// </param>
-        /// <param name='name'>
-        /// Name of web app
-        /// </param>
-        /// <param name='id'>
-        /// Id of the deployment
-        /// </param>
-        /// <param name='instanceId'>
-        /// Id of web app instance
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<object>> DeleteInstanceDeploymentWithHttpMessagesAsync(string resourceGroupName, string name, string id, string instanceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (id == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "id");
-            }
-            if (instanceId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "instanceId");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("id", id);
-                tracingParameters.Add("instanceId", instanceId);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "DeleteInstanceDeployment", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/deployments/{id}").ToString();
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{id}", Uri.EscapeDataString(id));
-            _url = _url.Replace("{instanceId}", Uri.EscapeDataString(instanceId));
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("DELETE");
-            _httpRequest.RequestUri = new Uri(_url);
-            // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<object>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -10149,6 +13146,612 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='id'>
         /// Id of the deployment
         /// </param>
+        /// <param name='instanceId'>
+        /// Id of web app instance
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<Deployment>> GetInstanceDeploymentWithHttpMessagesAsync(string resourceGroupName, string name, string id, string instanceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (id == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "id");
+            }
+            if (instanceId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "instanceId");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("id", id);
+                tracingParameters.Add("instanceId", instanceId);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetInstanceDeployment", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/deployments/{id}").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{id}", Uri.EscapeDataString(id));
+            _url = _url.Replace("{instanceId}", Uri.EscapeDataString(instanceId));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<Deployment>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<Deployment>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Create a deployment
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of web app
+        /// </param>
+        /// <param name='id'>
+        /// Id of the deployment
+        /// </param>
+        /// <param name='instanceId'>
+        /// Id of web app instance
+        /// </param>
+        /// <param name='deployment'>
+        /// Details of deployment
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<Deployment>> CreateInstanceDeploymentWithHttpMessagesAsync(string resourceGroupName, string name, string id, string instanceId, Deployment deployment, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (id == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "id");
+            }
+            if (instanceId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "instanceId");
+            }
+            if (deployment == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "deployment");
+            }
+            if (deployment != null)
+            {
+                deployment.Validate();
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("id", id);
+                tracingParameters.Add("instanceId", instanceId);
+                tracingParameters.Add("deployment", deployment);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "CreateInstanceDeployment", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/deployments/{id}").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{id}", Uri.EscapeDataString(id));
+            _url = _url.Replace("{instanceId}", Uri.EscapeDataString(instanceId));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            _requestContent = SafeJsonConvert.SerializeObject(deployment, this.Client.SerializationSettings);
+            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
+            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<Deployment>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<Deployment>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Delete the deployment
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of web app
+        /// </param>
+        /// <param name='id'>
+        /// Id of the deployment
+        /// </param>
+        /// <param name='instanceId'>
+        /// Id of web app instance
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<object>> DeleteInstanceDeploymentWithHttpMessagesAsync(string resourceGroupName, string name, string id, string instanceId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (id == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "id");
+            }
+            if (instanceId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "instanceId");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("id", id);
+                tracingParameters.Add("instanceId", instanceId);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "DeleteInstanceDeployment", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/instances/{instanceId}/deployments/{id}").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{id}", Uri.EscapeDataString(id));
+            _url = _url.Replace("{instanceId}", Uri.EscapeDataString(instanceId));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("DELETE");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<object>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Get the deployment
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of web app
+        /// </param>
+        /// <param name='id'>
+        /// Id of the deployment
+        /// </param>
         /// <param name='slot'>
         /// Name of web app slot. If not specified then will default to production
         /// slot.
@@ -11150,13 +14753,17 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of web app
         /// </param>
+        /// <param name='slot'>
+        /// Name of web app slot. If not specified then will default to production
+        /// slot.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<HostNameBindingCollection>> GetSiteHostNameBindingsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<HostNameBindingCollection>> GetSiteHostNameBindingsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -11165,6 +14772,10 @@ namespace Microsoft.Azure.Management.WebSites
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -11183,14 +14794,16 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
+                tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetSiteHostNameBindings", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetSiteHostNameBindingsSlot", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostNameBindings").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hostNameBindings").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -11329,17 +14942,13 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of web app
         /// </param>
-        /// <param name='slot'>
-        /// Name of web app slot. If not specified then will default to production
-        /// slot.
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<HostNameBindingCollection>> GetSiteHostNameBindingsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<HostNameBindingCollection>> GetSiteHostNameBindingsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -11348,10 +14957,6 @@ namespace Microsoft.Azure.Management.WebSites
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (slot == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -11370,16 +14975,14 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
-                tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetSiteHostNameBindingsSlot", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetSiteHostNameBindings", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hostNameBindings").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hostNameBindings").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -15386,17 +18989,13 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of web app
         /// </param>
-        /// <param name='slot'>
-        /// Name of web app slot. If not specified then will default to production
-        /// slot.
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<StringDictionary>> ListSiteAppSettingsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<StringDictionary>> ListSiteAppSettingsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -15405,10 +19004,6 @@ namespace Microsoft.Azure.Management.WebSites
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (slot == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -15427,16 +19022,14 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
-                tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListSiteAppSettingsSlot", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListSiteAppSettings", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/appsettings/list").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/appsettings/list").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -15575,13 +19168,17 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of web app
         /// </param>
+        /// <param name='slot'>
+        /// Name of web app slot. If not specified then will default to production
+        /// slot.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<StringDictionary>> ListSiteAppSettingsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<StringDictionary>> ListSiteAppSettingsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -15590,6 +19187,10 @@ namespace Microsoft.Azure.Management.WebSites
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -15608,14 +19209,16 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
+                tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListSiteAppSettings", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListSiteAppSettingsSlot", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/appsettings/list").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/appsettings/list").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -16152,185 +19755,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of web app
         /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<ConnectionStringDictionary>> ListSiteConnectionStringsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListSiteConnectionStrings", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/connectionstrings/list").ToString();
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
-            _httpRequest.RequestUri = new Uri(_url);
-            // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<ConnectionStringDictionary>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<ConnectionStringDictionary>(_responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Gets the connection strings associated with web app
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of resource group
-        /// </param>
-        /// <param name='name'>
-        /// Name of web app
-        /// </param>
         /// <param name='slot'>
         /// Name of web app slot. If not specified then will default to production
         /// slot.
@@ -16512,7 +19936,7 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
-        /// Updates the connection strings associated with web app
+        /// Gets the connection strings associated with web app
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -16520,16 +19944,13 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of web app
         /// </param>
-        /// <param name='connectionStrings'>
-        /// Connection strings associated with web app
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<ConnectionStringDictionary>> UpdateSiteConnectionStringsWithHttpMessagesAsync(string resourceGroupName, string name, ConnectionStringDictionary connectionStrings, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ConnectionStringDictionary>> ListSiteConnectionStringsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -16538,14 +19959,6 @@ namespace Microsoft.Azure.Management.WebSites
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (connectionStrings == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "connectionStrings");
-            }
-            if (connectionStrings != null)
-            {
-                connectionStrings.Validate();
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -16564,13 +19977,12 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
-                tracingParameters.Add("connectionStrings", connectionStrings);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "UpdateSiteConnectionStrings", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListSiteConnectionStrings", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/connectionstrings").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/connectionstrings/list").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{name}", Uri.EscapeDataString(name));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
@@ -16586,7 +19998,7 @@ namespace Microsoft.Azure.Management.WebSites
             // Create HTTP transport objects
             HttpRequestMessage _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
@@ -16615,9 +20027,6 @@ namespace Microsoft.Azure.Management.WebSites
 
             // Serialize Request
             string _requestContent = null;
-            _requestContent = SafeJsonConvert.SerializeObject(connectionStrings, this.Client.SerializationSettings);
-            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
-            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Set Credentials
             if (this.Client.Credentials != null)
             {
@@ -16777,6 +20186,200 @@ namespace Microsoft.Azure.Management.WebSites
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{name}", Uri.EscapeDataString(name));
             _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            _requestContent = SafeJsonConvert.SerializeObject(connectionStrings, this.Client.SerializationSettings);
+            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
+            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<ConnectionStringDictionary>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<ConnectionStringDictionary>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Updates the connection strings associated with web app
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of web app
+        /// </param>
+        /// <param name='connectionStrings'>
+        /// Connection strings associated with web app
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<ConnectionStringDictionary>> UpdateSiteConnectionStringsWithHttpMessagesAsync(string resourceGroupName, string name, ConnectionStringDictionary connectionStrings, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (connectionStrings == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "connectionStrings");
+            }
+            if (connectionStrings != null)
+            {
+                connectionStrings.Validate();
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("connectionStrings", connectionStrings);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "UpdateSiteConnectionStrings", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/connectionstrings").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -19979,562 +23582,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// </param>
         /// <param name='premierAddOnName'>
         /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<object>> GetSitePremierAddOnWithHttpMessagesAsync(string resourceGroupName, string name, string premierAddOnName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (premierAddOnName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "premierAddOnName");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("premierAddOnName", premierAddOnName);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetSitePremierAddOn", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}").ToString();
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{premierAddOnName}", Uri.EscapeDataString(premierAddOnName));
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new Uri(_url);
-            // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<object>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <param name='resourceGroupName'>
-        /// </param>
-        /// <param name='name'>
-        /// </param>
-        /// <param name='premierAddOnName'>
-        /// </param>
-        /// <param name='premierAddOn'>
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<object>> AddSitePremierAddOnWithHttpMessagesAsync(string resourceGroupName, string name, string premierAddOnName, PremierAddOnRequest premierAddOn, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (premierAddOnName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "premierAddOnName");
-            }
-            if (premierAddOn == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "premierAddOn");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("premierAddOnName", premierAddOnName);
-                tracingParameters.Add("premierAddOn", premierAddOn);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "AddSitePremierAddOn", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}").ToString();
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{premierAddOnName}", Uri.EscapeDataString(premierAddOnName));
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PUT");
-            _httpRequest.RequestUri = new Uri(_url);
-            // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            _requestContent = SafeJsonConvert.SerializeObject(premierAddOn, this.Client.SerializationSettings);
-            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
-            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<object>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <param name='resourceGroupName'>
-        /// </param>
-        /// <param name='name'>
-        /// </param>
-        /// <param name='premierAddOnName'>
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<object>> DeleteSitePremierAddOnWithHttpMessagesAsync(string resourceGroupName, string name, string premierAddOnName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (premierAddOnName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "premierAddOnName");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("premierAddOnName", premierAddOnName);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "DeleteSitePremierAddOn", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}").ToString();
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{premierAddOnName}", Uri.EscapeDataString(premierAddOnName));
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("DELETE");
-            _httpRequest.RequestUri = new Uri(_url);
-            // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<object>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <param name='resourceGroupName'>
-        /// </param>
-        /// <param name='name'>
-        /// </param>
-        /// <param name='premierAddOnName'>
-        /// </param>
         /// <param name='slot'>
         /// </param>
         /// <param name='customHeaders'>
@@ -21109,14 +24156,11 @@ namespace Microsoft.Azure.Management.WebSites
             return _result;
         }
 
-        /// <summary>
-        /// Gets the backup configuration for a web app
-        /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of resource group
         /// </param>
         /// <param name='name'>
-        /// Name of web app
+        /// </param>
+        /// <param name='premierAddOnName'>
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -21124,7 +24168,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<BackupRequest>> GetSiteBackupConfigurationWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object>> GetSitePremierAddOnWithHttpMessagesAsync(string resourceGroupName, string name, string premierAddOnName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -21133,6 +24177,10 @@ namespace Microsoft.Azure.Management.WebSites
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (premierAddOnName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "premierAddOnName");
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -21151,14 +24199,16 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
+                tracingParameters.Add("premierAddOnName", premierAddOnName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetSiteBackupConfiguration", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetSitePremierAddOn", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/backup/list").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{premierAddOnName}", Uri.EscapeDataString(premierAddOnName));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -21172,7 +24222,7 @@ namespace Microsoft.Azure.Management.WebSites
             // Create HTTP transport objects
             HttpRequestMessage _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
@@ -21256,7 +24306,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<BackupRequest>();
+            var _result = new AzureOperationResponse<object>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -21269,7 +24319,381 @@ namespace Microsoft.Azure.Management.WebSites
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<BackupRequest>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <param name='resourceGroupName'>
+        /// </param>
+        /// <param name='name'>
+        /// </param>
+        /// <param name='premierAddOnName'>
+        /// </param>
+        /// <param name='premierAddOn'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<object>> AddSitePremierAddOnWithHttpMessagesAsync(string resourceGroupName, string name, string premierAddOnName, PremierAddOnRequest premierAddOn, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (premierAddOnName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "premierAddOnName");
+            }
+            if (premierAddOn == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "premierAddOn");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("premierAddOnName", premierAddOnName);
+                tracingParameters.Add("premierAddOn", premierAddOn);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "AddSitePremierAddOn", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{premierAddOnName}", Uri.EscapeDataString(premierAddOnName));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            _requestContent = SafeJsonConvert.SerializeObject(premierAddOn, this.Client.SerializationSettings);
+            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
+            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<object>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <param name='resourceGroupName'>
+        /// </param>
+        /// <param name='name'>
+        /// </param>
+        /// <param name='premierAddOnName'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<object>> DeleteSitePremierAddOnWithHttpMessagesAsync(string resourceGroupName, string name, string premierAddOnName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (premierAddOnName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "premierAddOnName");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("premierAddOnName", premierAddOnName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "DeleteSitePremierAddOn", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/premieraddons/{premierAddOnName}").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{premierAddOnName}", Uri.EscapeDataString(premierAddOnName));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("DELETE");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<object>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -21478,7 +24902,7 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
-        /// Updates backup configuration of web app
+        /// Gets the backup configuration for a web app
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -21486,16 +24910,13 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of web app
         /// </param>
-        /// <param name='request'>
-        /// Information on backup request
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<BackupRequest>> UpdateSiteBackupConfigurationWithHttpMessagesAsync(string resourceGroupName, string name, BackupRequest request, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<BackupRequest>> GetSiteBackupConfigurationWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -21504,14 +24925,6 @@ namespace Microsoft.Azure.Management.WebSites
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (request == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "request");
-            }
-            if (request != null)
-            {
-                request.Validate();
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -21530,13 +24943,12 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
-                tracingParameters.Add("request", request);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "UpdateSiteBackupConfiguration", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetSiteBackupConfiguration", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/backup").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/backup/list").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{name}", Uri.EscapeDataString(name));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
@@ -21552,7 +24964,7 @@ namespace Microsoft.Azure.Management.WebSites
             // Create HTTP transport objects
             HttpRequestMessage _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
@@ -21581,9 +24993,6 @@ namespace Microsoft.Azure.Management.WebSites
 
             // Serialize Request
             string _requestContent = null;
-            _requestContent = SafeJsonConvert.SerializeObject(request, this.Client.SerializationSettings);
-            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
-            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             // Set Credentials
             if (this.Client.Credentials != null)
             {
@@ -21876,7 +25285,196 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
-        /// Creates web app backup
+        /// Removes the backup configuration for a web app
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of web app
+        /// </param>
+        /// <param name='slot'>
+        /// Name of web app slot. If not specified then will default to production
+        /// slot.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<object>> DeleteSiteBackupConfigurationSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("slot", slot);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "DeleteSiteBackupConfigurationSlot", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/config/backup").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("DELETE");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<object>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Updates backup configuration of web app
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -21893,7 +25491,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<BackupItem>> BackupSiteWithHttpMessagesAsync(string resourceGroupName, string name, BackupRequest request, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<BackupRequest>> UpdateSiteBackupConfigurationWithHttpMessagesAsync(string resourceGroupName, string name, BackupRequest request, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -21930,13 +25528,396 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("request", request);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BackupSite", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "UpdateSiteBackupConfiguration", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backup").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/backup").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            _requestContent = SafeJsonConvert.SerializeObject(request, this.Client.SerializationSettings);
+            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
+            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<BackupRequest>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<BackupRequest>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Removes the backup configuration for a web app
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of web app
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<object>> DeleteSiteBackupConfigurationWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "DeleteSiteBackupConfiguration", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/config/backup").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("DELETE");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<object>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Creates web app backup
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of web app
+        /// </param>
+        /// <param name='request'>
+        /// Information on backup request
+        /// </param>
+        /// <param name='slot'>
+        /// Name of web app slot. If not specified then will default to production
+        /// slot.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<BackupItem>> BackupSiteSlotWithHttpMessagesAsync(string resourceGroupName, string name, BackupRequest request, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (request == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "request");
+            }
+            if (request != null)
+            {
+                request.Validate();
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("request", request);
+                tracingParameters.Add("slot", slot);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "BackupSiteSlot", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/backup").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -22081,17 +26062,13 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='request'>
         /// Information on backup request
         /// </param>
-        /// <param name='slot'>
-        /// Name of web app slot. If not specified then will default to production
-        /// slot.
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<BackupItem>> BackupSiteSlotWithHttpMessagesAsync(string resourceGroupName, string name, BackupRequest request, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<BackupItem>> BackupSiteWithHttpMessagesAsync(string resourceGroupName, string name, BackupRequest request, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -22108,10 +26085,6 @@ namespace Microsoft.Azure.Management.WebSites
             if (request != null)
             {
                 request.Validate();
-            }
-            if (slot == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -22131,16 +26104,14 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("request", request);
-                tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BackupSiteSlot", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "BackupSite", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/backup").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backup").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -23051,382 +27022,6 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='backupId'>
         /// Id of backup
         /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<BackupItem>> GetSiteBackupStatusWithHttpMessagesAsync(string resourceGroupName, string name, string backupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (backupId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "backupId");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("backupId", backupId);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetSiteBackupStatus", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}").ToString();
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{backupId}", Uri.EscapeDataString(backupId));
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new Uri(_url);
-            // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<BackupItem>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<BackupItem>(_responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Deletes a backup from Azure Storage
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of resource group
-        /// </param>
-        /// <param name='name'>
-        /// Name of web app
-        /// </param>
-        /// <param name='backupId'>
-        /// Id of backup
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<BackupItem>> DeleteBackupWithHttpMessagesAsync(string resourceGroupName, string name, string backupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (backupId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "backupId");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("backupId", backupId);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "DeleteBackup", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}").ToString();
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{backupId}", Uri.EscapeDataString(backupId));
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("DELETE");
-            _httpRequest.RequestUri = new Uri(_url);
-            // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<BackupItem>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<BackupItem>(_responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Gets status of a web app backup that may be in progress.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of resource group
-        /// </param>
-        /// <param name='name'>
-        /// Name of web app
-        /// </param>
-        /// <param name='backupId'>
-        /// Id of backup
-        /// </param>
         /// <param name='slot'>
         /// Name of web app slot. If not specified then will default to production
         /// slot.
@@ -23812,10 +27407,7 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
-        /// Gets status of a web app backup that may be in progress, including secrets
-        /// associated with the backup, such as the Azure Storage SAS URL. Also can
-        /// be used to update the SAS URL for the backup if a new URL is passed in
-        /// the request body.
+        /// Gets status of a web app backup that may be in progress.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -23826,20 +27418,13 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='backupId'>
         /// Id of backup
         /// </param>
-        /// <param name='request'>
-        /// Information on backup request
-        /// </param>
-        /// <param name='slot'>
-        /// Name of web app slot. If not specified then will default to production
-        /// slot.
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<BackupItem>> GetSiteBackupStatusSecretsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string backupId, BackupRequest request, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<BackupItem>> GetSiteBackupStatusWithHttpMessagesAsync(string resourceGroupName, string name, string backupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -23852,18 +27437,6 @@ namespace Microsoft.Azure.Management.WebSites
             if (backupId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "backupId");
-            }
-            if (request == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "request");
-            }
-            if (request != null)
-            {
-                request.Validate();
-            }
-            if (slot == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -23883,18 +27456,15 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("backupId", backupId);
-                tracingParameters.Add("request", request);
-                tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetSiteBackupStatusSecretsSlot", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetSiteBackupStatus", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/backups/{backupId}/list").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{name}", Uri.EscapeDataString(name));
             _url = _url.Replace("{backupId}", Uri.EscapeDataString(backupId));
-            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -23908,7 +27478,7 @@ namespace Microsoft.Azure.Management.WebSites
             // Create HTTP transport objects
             HttpRequestMessage _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.Method = new HttpMethod("GET");
             _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
@@ -23937,9 +27507,194 @@ namespace Microsoft.Azure.Management.WebSites
 
             // Serialize Request
             string _requestContent = null;
-            _requestContent = SafeJsonConvert.SerializeObject(request, this.Client.SerializationSettings);
-            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
-            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<BackupItem>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<BackupItem>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Deletes a backup from Azure Storage
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of web app
+        /// </param>
+        /// <param name='backupId'>
+        /// Id of backup
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<BackupItem>> DeleteBackupWithHttpMessagesAsync(string resourceGroupName, string name, string backupId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (backupId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "backupId");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("backupId", backupId);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "DeleteBackup", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{backupId}", Uri.EscapeDataString(backupId));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("DELETE");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
             // Set Credentials
             if (this.Client.Credentials != null)
             {
@@ -24234,7 +27989,10 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
-        /// Restores a web app
+        /// Gets status of a web app backup that may be in progress, including secrets
+        /// associated with the backup, such as the Azure Storage SAS URL. Also can
+        /// be used to update the SAS URL for the backup if a new URL is passed in
+        /// the request body.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Name of resource group
@@ -24243,39 +28001,14 @@ namespace Microsoft.Azure.Management.WebSites
         /// Name of web app
         /// </param>
         /// <param name='backupId'>
-        /// Id of backup to restore
+        /// Id of backup
         /// </param>
         /// <param name='request'>
-        /// Information on restore request
+        /// Information on backup request
         /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<RestoreResponse>> RestoreSiteWithHttpMessagesAsync(string resourceGroupName, string name, string backupId, RestoreRequest request, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Send request
-            AzureOperationResponse<RestoreResponse> _response = await BeginRestoreSiteWithHttpMessagesAsync(
-                resourceGroupName, name, backupId, request, customHeaders, cancellationToken);
-            return await this.Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken);
-        }
-
-        /// <summary>
-        /// Restores a web app
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of resource group
-        /// </param>
-        /// <param name='name'>
-        /// Name of web app
-        /// </param>
-        /// <param name='backupId'>
-        /// Id of backup to restore
-        /// </param>
-        /// <param name='request'>
-        /// Information on restore request
+        /// <param name='slot'>
+        /// Name of web app slot. If not specified then will default to production
+        /// slot.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -24283,7 +28016,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<RestoreResponse>> BeginRestoreSiteWithHttpMessagesAsync(string resourceGroupName, string name, string backupId, RestoreRequest request, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<BackupItem>> GetSiteBackupStatusSecretsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string backupId, BackupRequest request, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -24305,6 +28038,10 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 request.Validate();
             }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
+            }
             if (this.Client.SubscriptionId == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
@@ -24324,15 +28061,17 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("backupId", backupId);
                 tracingParameters.Add("request", request);
+                tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "BeginRestoreSite", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetSiteBackupStatusSecretsSlot", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}/restore").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/backups/{backupId}/list").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{name}", Uri.EscapeDataString(name));
             _url = _url.Replace("{backupId}", Uri.EscapeDataString(backupId));
+            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -24433,7 +28172,7 @@ namespace Microsoft.Azure.Management.WebSites
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<RestoreResponse>();
+            var _result = new AzureOperationResponse<BackupItem>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -24446,7 +28185,7 @@ namespace Microsoft.Azure.Management.WebSites
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<RestoreResponse>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<BackupItem>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -24693,6 +28432,475 @@ namespace Microsoft.Azure.Management.WebSites
                 try
                 {
                     _result.Body = SafeJsonConvert.DeserializeObject<RestoreResponse>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Restores a web app
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of web app
+        /// </param>
+        /// <param name='backupId'>
+        /// Id of backup to restore
+        /// </param>
+        /// <param name='request'>
+        /// Information on restore request
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<RestoreResponse>> RestoreSiteWithHttpMessagesAsync(string resourceGroupName, string name, string backupId, RestoreRequest request, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send request
+            AzureOperationResponse<RestoreResponse> _response = await BeginRestoreSiteWithHttpMessagesAsync(
+                resourceGroupName, name, backupId, request, customHeaders, cancellationToken);
+            return await this.Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken);
+        }
+
+        /// <summary>
+        /// Restores a web app
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of web app
+        /// </param>
+        /// <param name='backupId'>
+        /// Id of backup to restore
+        /// </param>
+        /// <param name='request'>
+        /// Information on restore request
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<RestoreResponse>> BeginRestoreSiteWithHttpMessagesAsync(string resourceGroupName, string name, string backupId, RestoreRequest request, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (backupId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "backupId");
+            }
+            if (request == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "request");
+            }
+            if (request != null)
+            {
+                request.Validate();
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("backupId", backupId);
+                tracingParameters.Add("request", request);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginRestoreSite", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/backups/{backupId}/restore").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{backupId}", Uri.EscapeDataString(backupId));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            _requestContent = SafeJsonConvert.SerializeObject(request, this.Client.SerializationSettings);
+            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
+            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<RestoreResponse>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<RestoreResponse>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Restores a web app
+        /// </summary>
+        /// <param name='subscriptionName'>
+        /// Azure subscription
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of web app
+        /// </param>
+        /// <param name='options'>
+        /// Migration options
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<StorageMigrationResponse>> MigrateSiteStorageWithHttpMessagesAsync(string subscriptionName, string resourceGroupName, string name, StorageMigrationOptions options, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            // Send Request
+            AzureOperationResponse<StorageMigrationResponse> _response = await BeginMigrateSiteStorageWithHttpMessagesAsync(
+                subscriptionName, resourceGroupName, name, options, customHeaders, cancellationToken);
+            return await this.Client.GetPutOrPatchOperationResultAsync(_response,
+                customHeaders,
+                cancellationToken);
+        }
+
+        /// <summary>
+        /// Restores a web app
+        /// </summary>
+        /// <param name='subscriptionName'>
+        /// Azure subscription
+        /// </param>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of web app
+        /// </param>
+        /// <param name='options'>
+        /// Migration options
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<StorageMigrationResponse>> BeginMigrateSiteStorageWithHttpMessagesAsync(string subscriptionName, string resourceGroupName, string name, StorageMigrationOptions options, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (subscriptionName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionName");
+            }
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (options == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "options");
+            }
+            if (options != null)
+            {
+                options.Validate();
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("subscriptionName", subscriptionName);
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("options", options);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "BeginMigrateSiteStorage", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/migrate").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (subscriptionName != null)
+            {
+                _queryParameters.Add(string.Format("subscriptionName={0}", Uri.EscapeDataString(subscriptionName)));
+            }
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            _requestContent = SafeJsonConvert.SerializeObject(options, this.Client.SerializationSettings);
+            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
+            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<StorageMigrationResponse>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<StorageMigrationResponse>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -25876,6 +30084,396 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
+        /// Gets perfmon counters for web app
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of web app
+        /// </param>
+        /// <param name='slot'>
+        /// Name of web app slot. If not specified then will default to production
+        /// slot. **** CURRENTLY UNUSED *****
+        /// </param>
+        /// <param name='filter'>
+        /// Return only usages/metrics specified in the filter. Filter conforms to
+        /// odata syntax. Example: $filter=(startTime eq '2014-01-01T00:00:00Z' and
+        /// endTime eq '2014-12-31T23:59:59Z' and timeGrain eq
+        /// duration'[Hour|Minute|Day]'.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<PerfMonCounterCollection>> GetPerfMonCountersSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("slot", slot);
+                tracingParameters.Add("filter", filter);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetPerfMonCountersSlot", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/perfcounters").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (filter != null)
+            {
+                _queryParameters.Add(string.Format("$filter={0}", Uri.EscapeDataString(filter)));
+            }
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<PerfMonCounterCollection>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<PerfMonCounterCollection>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Gets perfmon counters for web app
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of web app
+        /// </param>
+        /// <param name='filter'>
+        /// Return only usages/metrics specified in the filter. Filter conforms to
+        /// odata syntax. Example: $filter=(startTime eq '2014-01-01T00:00:00Z' and
+        /// endTime eq '2014-12-31T23:59:59Z' and timeGrain eq
+        /// duration'[Hour|Minute|Day]'.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<PerfMonCounterCollection>> GetPerfMonCountersWithHttpMessagesAsync(string resourceGroupName, string name, string filter = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("filter", filter);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetPerfMonCounters", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/perfcounters").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (filter != null)
+            {
+                _queryParameters.Add(string.Format("$filter={0}", Uri.EscapeDataString(filter)));
+            }
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<PerfMonCounterCollection>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<PerfMonCounterCollection>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
         /// Gets the publishing profile for web app
         /// </summary>
         /// <param name='resourceGroupName'>
@@ -25888,13 +30486,17 @@ namespace Microsoft.Azure.Management.WebSites
         /// Specifies options for publishing profile. Pass
         /// CsmPublishingProfileOptions.Format=FileZilla3 for FileZilla FTP format.
         /// </param>
+        /// <param name='slot'>
+        /// Name of web app slot. If not specified then will default to production
+        /// slot.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<System.IO.Stream>> ListSitePublishingProfileXmlWithHttpMessagesAsync(string resourceGroupName, string name, CsmPublishingProfileOptions options, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<System.IO.Stream>> ListSitePublishingProfileXmlSlotWithHttpMessagesAsync(string resourceGroupName, string name, CsmPublishingProfileOptions options, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -25907,6 +30509,10 @@ namespace Microsoft.Azure.Management.WebSites
             if (options == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "options");
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -25926,14 +30532,16 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("options", options);
+                tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListSitePublishingProfileXml", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListSitePublishingProfileXmlSlot", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/publishxml").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/publishxml").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -26066,17 +30674,13 @@ namespace Microsoft.Azure.Management.WebSites
         /// Specifies options for publishing profile. Pass
         /// CsmPublishingProfileOptions.Format=FileZilla3 for FileZilla FTP format.
         /// </param>
-        /// <param name='slot'>
-        /// Name of web app slot. If not specified then will default to production
-        /// slot.
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<System.IO.Stream>> ListSitePublishingProfileXmlSlotWithHttpMessagesAsync(string resourceGroupName, string name, CsmPublishingProfileOptions options, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<System.IO.Stream>> ListSitePublishingProfileXmlWithHttpMessagesAsync(string resourceGroupName, string name, CsmPublishingProfileOptions options, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -26089,10 +30693,6 @@ namespace Microsoft.Azure.Management.WebSites
             if (options == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "options");
-            }
-            if (slot == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -26112,16 +30712,14 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("options", options);
-                tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListSitePublishingProfileXmlSlot", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListSitePublishingProfileXml", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/publishxml").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/publishxml").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -27744,6 +32342,185 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// Name of web app
         /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<object>> GenerateNewSitePublishingPasswordWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GenerateNewSitePublishingPassword", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/newpassword").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("POST");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<object>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Generates new random app publishing password
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of resource group
+        /// </param>
+        /// <param name='name'>
+        /// Name of web app
+        /// </param>
         /// <param name='slot'>
         /// Name of web app slot. If not specified then will default to production
         /// slot.
@@ -27924,14 +32701,11 @@ namespace Microsoft.Azure.Management.WebSites
             return _result;
         }
 
-        /// <summary>
-        /// Generates new random app publishing password
-        /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of resource group
         /// </param>
         /// <param name='name'>
-        /// Name of web app
+        /// </param>
+        /// <param name='hostName'>
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -27939,7 +32713,568 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<object>> GenerateNewSitePublishingPasswordWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<CustomHostnameAnalysisResult>> AnalyzeCustomHostnameWithHttpMessagesAsync(string resourceGroupName, string name, string hostName = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("hostName", hostName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "AnalyzeCustomHostname", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/analyzeCustomHostname").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (hostName != null)
+            {
+                _queryParameters.Add(string.Format("hostName={0}", Uri.EscapeDataString(hostName)));
+            }
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<CustomHostnameAnalysisResult>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<CustomHostnameAnalysisResult>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <param name='resourceGroupName'>
+        /// </param>
+        /// <param name='name'>
+        /// </param>
+        /// <param name='slot'>
+        /// </param>
+        /// <param name='hostName'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<CustomHostnameAnalysisResult>> AnalyzeCustomHostnameSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, string hostName = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("slot", slot);
+                tracingParameters.Add("hostName", hostName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "AnalyzeCustomHostnameSlot", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/analyzeCustomHostname").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (hostName != null)
+            {
+                _queryParameters.Add(string.Format("hostName={0}", Uri.EscapeDataString(hostName)));
+            }
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<CustomHostnameAnalysisResult>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<CustomHostnameAnalysisResult>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Retrieves all Service Bus Hybrid Connections used by this Web App.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='slot'>
+        /// The name of the slot for the web app.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<HybridConnection>> GetHybridConnectionsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("slot", slot);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetHybridConnectionsSlot", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridConnectionRelays").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<HybridConnection>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<HybridConnection>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Retrieves all Service Bus Hybrid Connections used by this Web App.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<HybridConnection>> GetHybridConnectionsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -27967,13 +33302,1874 @@ namespace Microsoft.Azure.Management.WebSites
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GenerateNewSitePublishingPassword", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetHybridConnections", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/newpassword").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionRelays").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<HybridConnection>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<HybridConnection>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Retrieves a specific Service Bus Hybrid Connection used by this Web App.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace for this hybrid connection
+        /// </param>
+        /// <param name='relayName'>
+        /// The relay name for this hybrid connection
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<HybridConnection>> GetHybridConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string namespaceName, string relayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (namespaceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
+            }
+            if (relayName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "relayName");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("namespaceName", namespaceName);
+                tracingParameters.Add("relayName", relayName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetHybridConnection", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{namespaceName}", Uri.EscapeDataString(namespaceName));
+            _url = _url.Replace("{relayName}", Uri.EscapeDataString(relayName));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<HybridConnection>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<HybridConnection>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Creates a new Hybrid Connection using a Service Bus relay
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace for this hybrid connection
+        /// </param>
+        /// <param name='relayName'>
+        /// The relay name for this hybrid connection
+        /// </param>
+        /// <param name='connectionEnvelope'>
+        /// The details of the hybrid connection
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<HybridConnection>> CreateOrUpdateHybridConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string namespaceName, string relayName, HybridConnection connectionEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (namespaceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
+            }
+            if (relayName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "relayName");
+            }
+            if (connectionEnvelope == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "connectionEnvelope");
+            }
+            if (connectionEnvelope != null)
+            {
+                connectionEnvelope.Validate();
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("namespaceName", namespaceName);
+                tracingParameters.Add("relayName", relayName);
+                tracingParameters.Add("connectionEnvelope", connectionEnvelope);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdateHybridConnection", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{namespaceName}", Uri.EscapeDataString(namespaceName));
+            _url = _url.Replace("{relayName}", Uri.EscapeDataString(relayName));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            _requestContent = SafeJsonConvert.SerializeObject(connectionEnvelope, this.Client.SerializationSettings);
+            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
+            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<HybridConnection>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<HybridConnection>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Removes a Hybrid Connection from this site.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace for this hybrid connection
+        /// </param>
+        /// <param name='relayName'>
+        /// The relay name for this hybrid connection
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<object>> DeleteHybridConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string namespaceName, string relayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (namespaceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
+            }
+            if (relayName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "relayName");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("namespaceName", namespaceName);
+                tracingParameters.Add("relayName", relayName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "DeleteHybridConnection", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{namespaceName}", Uri.EscapeDataString(namespaceName));
+            _url = _url.Replace("{relayName}", Uri.EscapeDataString(relayName));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("DELETE");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<object>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Creates a new Hybrid Connection using a Service Bus relay
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace for this hybrid connection
+        /// </param>
+        /// <param name='relayName'>
+        /// The relay name for this hybrid connection
+        /// </param>
+        /// <param name='connectionEnvelope'>
+        /// The details of the hybrid connection
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<HybridConnection>> UpdateHybridConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string namespaceName, string relayName, HybridConnection connectionEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (namespaceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
+            }
+            if (relayName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "relayName");
+            }
+            if (connectionEnvelope == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "connectionEnvelope");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("namespaceName", namespaceName);
+                tracingParameters.Add("relayName", relayName);
+                tracingParameters.Add("connectionEnvelope", connectionEnvelope);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "UpdateHybridConnection", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{namespaceName}", Uri.EscapeDataString(namespaceName));
+            _url = _url.Replace("{relayName}", Uri.EscapeDataString(relayName));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("PATCH");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            _requestContent = SafeJsonConvert.SerializeObject(connectionEnvelope, this.Client.SerializationSettings);
+            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
+            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<HybridConnection>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<HybridConnection>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Retrieves a specific Service Bus Hybrid Connection used by this Web App.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace for this hybrid connection
+        /// </param>
+        /// <param name='relayName'>
+        /// The relay name for this hybrid connection
+        /// </param>
+        /// <param name='slot'>
+        /// The name of the slot for the web app.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<HybridConnection>> GetHybridConnectionSlotWithHttpMessagesAsync(string resourceGroupName, string name, string namespaceName, string relayName, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (namespaceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
+            }
+            if (relayName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "relayName");
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("namespaceName", namespaceName);
+                tracingParameters.Add("relayName", relayName);
+                tracingParameters.Add("slot", slot);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetHybridConnectionSlot", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{namespaceName}", Uri.EscapeDataString(namespaceName));
+            _url = _url.Replace("{relayName}", Uri.EscapeDataString(relayName));
+            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<HybridConnection>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<HybridConnection>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Creates a new Hybrid Connection using a Service Bus relay
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace for this hybrid connection
+        /// </param>
+        /// <param name='relayName'>
+        /// The relay name for this hybrid connection
+        /// </param>
+        /// <param name='connectionEnvelope'>
+        /// The details of the hybrid connection
+        /// </param>
+        /// <param name='slot'>
+        /// The name of the slot for the web app.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<HybridConnection>> CreateOrUpdateHybridConnectionSlotWithHttpMessagesAsync(string resourceGroupName, string name, string namespaceName, string relayName, HybridConnection connectionEnvelope, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (namespaceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
+            }
+            if (relayName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "relayName");
+            }
+            if (connectionEnvelope == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "connectionEnvelope");
+            }
+            if (connectionEnvelope != null)
+            {
+                connectionEnvelope.Validate();
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("namespaceName", namespaceName);
+                tracingParameters.Add("relayName", relayName);
+                tracingParameters.Add("connectionEnvelope", connectionEnvelope);
+                tracingParameters.Add("slot", slot);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdateHybridConnectionSlot", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{namespaceName}", Uri.EscapeDataString(namespaceName));
+            _url = _url.Replace("{relayName}", Uri.EscapeDataString(relayName));
+            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("PUT");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            _requestContent = SafeJsonConvert.SerializeObject(connectionEnvelope, this.Client.SerializationSettings);
+            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
+            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<HybridConnection>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<HybridConnection>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Removes a Hybrid Connection from this site.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace for this hybrid connection
+        /// </param>
+        /// <param name='relayName'>
+        /// The relay name for this hybrid connection
+        /// </param>
+        /// <param name='slot'>
+        /// The name of the slot for the web app.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<object>> DeleteHybridConnectionSlotWithHttpMessagesAsync(string resourceGroupName, string name, string namespaceName, string relayName, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (namespaceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
+            }
+            if (relayName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "relayName");
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("namespaceName", namespaceName);
+                tracingParameters.Add("relayName", relayName);
+                tracingParameters.Add("slot", slot);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "DeleteHybridConnectionSlot", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{namespaceName}", Uri.EscapeDataString(namespaceName));
+            _url = _url.Replace("{relayName}", Uri.EscapeDataString(relayName));
+            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("DELETE");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<object>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Creates a new Hybrid Connection using a Service Bus relay
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace for this hybrid connection
+        /// </param>
+        /// <param name='relayName'>
+        /// The relay name for this hybrid connection
+        /// </param>
+        /// <param name='connectionEnvelope'>
+        /// The details of the hybrid connection
+        /// </param>
+        /// <param name='slot'>
+        /// The name of the slot for the web app.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<HybridConnection>> UpdateHybridConnectionSlotWithHttpMessagesAsync(string resourceGroupName, string name, string namespaceName, string relayName, HybridConnection connectionEnvelope, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (namespaceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
+            }
+            if (relayName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "relayName");
+            }
+            if (connectionEnvelope == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "connectionEnvelope");
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("namespaceName", namespaceName);
+                tracingParameters.Add("relayName", relayName);
+                tracingParameters.Add("connectionEnvelope", connectionEnvelope);
+                tracingParameters.Add("slot", slot);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "UpdateHybridConnectionSlot", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{namespaceName}", Uri.EscapeDataString(namespaceName));
+            _url = _url.Replace("{relayName}", Uri.EscapeDataString(relayName));
+            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
+            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
+            List<string> _queryParameters = new List<string>();
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            HttpRequestMessage _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("PATCH");
+            _httpRequest.RequestUri = new Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            _requestContent = SafeJsonConvert.SerializeObject(connectionEnvelope, this.Client.SerializationSettings);
+            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
+            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex = new CloudException(_errorBody.Message);
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_httpResponse.Headers.Contains("x-ms-request-id"))
+                {
+                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                }
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new AzureOperationResponse<HybridConnection>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<HybridConnection>(_responseContent, this.Client.DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Gets the send key name and value for a Hybrid Connection
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The resource group name
+        /// </param>
+        /// <param name='name'>
+        /// The name of the web app
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace for this hybrid connection
+        /// </param>
+        /// <param name='relayName'>
+        /// The relay name for this hybrid connection
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async Task<AzureOperationResponse<object>> ListHybridConnectionKeysWithHttpMessagesAsync(string resourceGroupName, string name, string namespaceName, string relayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (resourceGroupName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "name");
+            }
+            if (namespaceName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
+            }
+            if (relayName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "relayName");
+            }
+            if (this.Client.SubscriptionId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("name", name);
+                tracingParameters.Add("namespaceName", namespaceName);
+                tracingParameters.Add("relayName", relayName);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "ListHybridConnectionKeys", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}/listKeys").ToString();
+            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
+            _url = _url.Replace("{namespaceName}", Uri.EscapeDataString(namespaceName));
+            _url = _url.Replace("{relayName}", Uri.EscapeDataString(relayName));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -28104,7 +35300,7 @@ namespace Microsoft.Azure.Management.WebSites
         }
 
         /// <summary>
-        /// Retrieves a Biztalk Hybrid Connection identified by its entity name.
+        /// Gets the send key name and value for a Hybrid Connection
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The resource group name
@@ -28112,8 +35308,14 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='name'>
         /// The name of the web app
         /// </param>
-        /// <param name='entityName'>
-        /// The name by which the Hybrid Connection is identified
+        /// <param name='namespaceName'>
+        /// The namespace for this hybrid connection
+        /// </param>
+        /// <param name='relayName'>
+        /// The relay name for this hybrid connection
+        /// </param>
+        /// <param name='slot'>
+        /// The name of the slot for the web app.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -28121,7 +35323,7 @@ namespace Microsoft.Azure.Management.WebSites
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<RelayServiceConnectionEntity>> GetSiteRelayServiceConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string entityName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<object>> ListHybridConnectionKeysSlotWithHttpMessagesAsync(string resourceGroupName, string name, string namespaceName, string relayName, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -28131,9 +35333,17 @@ namespace Microsoft.Azure.Management.WebSites
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
             }
-            if (entityName == null)
+            if (namespaceName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "entityName");
+                throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
+            }
+            if (relayName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "relayName");
+            }
+            if (slot == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -28152,16 +35362,20 @@ namespace Microsoft.Azure.Management.WebSites
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("name", name);
-                tracingParameters.Add("entityName", entityName);
+                tracingParameters.Add("namespaceName", namespaceName);
+                tracingParameters.Add("relayName", relayName);
+                tracingParameters.Add("slot", slot);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetSiteRelayServiceConnection", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListHybridConnectionKeysSlot", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridConnectionNamespaces/{namespaceName}/relays/{relayName}/listKeys").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{entityName}", Uri.EscapeDataString(entityName));
+            _url = _url.Replace("{namespaceName}", Uri.EscapeDataString(namespaceName));
+            _url = _url.Replace("{relayName}", Uri.EscapeDataString(relayName));
+            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -28175,400 +35389,7 @@ namespace Microsoft.Azure.Management.WebSites
             // Create HTTP transport objects
             HttpRequestMessage _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new Uri(_url);
-            // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<RelayServiceConnectionEntity>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<RelayServiceConnectionEntity>(_responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Creates a new association to a Biztalk Hybrid Connection, or updates an
-        /// existing one.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name
-        /// </param>
-        /// <param name='name'>
-        /// The name of the web app
-        /// </param>
-        /// <param name='entityName'>
-        /// The name by which the Hybrid Connection is identified
-        /// </param>
-        /// <param name='connectionEnvelope'>
-        /// The details of the Hybrid Connection
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<RelayServiceConnectionEntity>> CreateOrUpdateSiteRelayServiceConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string entityName, RelayServiceConnectionEntity connectionEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (entityName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "entityName");
-            }
-            if (connectionEnvelope == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "connectionEnvelope");
-            }
-            if (connectionEnvelope != null)
-            {
-                connectionEnvelope.Validate();
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("entityName", entityName);
-                tracingParameters.Add("connectionEnvelope", connectionEnvelope);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdateSiteRelayServiceConnection", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}").ToString();
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{entityName}", Uri.EscapeDataString(entityName));
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PUT");
-            _httpRequest.RequestUri = new Uri(_url);
-            // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            _requestContent = SafeJsonConvert.SerializeObject(connectionEnvelope, this.Client.SerializationSettings);
-            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
-            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<RelayServiceConnectionEntity>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<RelayServiceConnectionEntity>(_responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Removes the association to a Biztalk Hybrid Connection, identified by its
-        /// entity name.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name
-        /// </param>
-        /// <param name='name'>
-        /// The name of the web app
-        /// </param>
-        /// <param name='entityName'>
-        /// The name by which the Hybrid Connection is identified
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<object>> DeleteSiteRelayServiceConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string entityName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (entityName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "entityName");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("entityName", entityName);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "DeleteSiteRelayServiceConnection", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}").ToString();
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{entityName}", Uri.EscapeDataString(entityName));
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("DELETE");
+            _httpRequest.Method = new HttpMethod("POST");
             _httpRequest.RequestUri = new Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
@@ -28666,3028 +35487,6 @@ namespace Microsoft.Azure.Management.WebSites
                 try
                 {
                     _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Creates a new association to a Biztalk Hybrid Connection, or updates an
-        /// existing one.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name
-        /// </param>
-        /// <param name='name'>
-        /// The name of the web app
-        /// </param>
-        /// <param name='entityName'>
-        /// The name by which the Hybrid Connection is identified
-        /// </param>
-        /// <param name='connectionEnvelope'>
-        /// The details of the Hybrid Connection
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<RelayServiceConnectionEntity>> UpdateSiteRelayServiceConnectionWithHttpMessagesAsync(string resourceGroupName, string name, string entityName, RelayServiceConnectionEntity connectionEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (entityName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "entityName");
-            }
-            if (connectionEnvelope == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "connectionEnvelope");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("entityName", entityName);
-                tracingParameters.Add("connectionEnvelope", connectionEnvelope);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "UpdateSiteRelayServiceConnection", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection/{entityName}").ToString();
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{entityName}", Uri.EscapeDataString(entityName));
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PATCH");
-            _httpRequest.RequestUri = new Uri(_url);
-            // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            _requestContent = SafeJsonConvert.SerializeObject(connectionEnvelope, this.Client.SerializationSettings);
-            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
-            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<RelayServiceConnectionEntity>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<RelayServiceConnectionEntity>(_responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Retrieves a Biztalk Hybrid Connection identified by its entity name.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name
-        /// </param>
-        /// <param name='name'>
-        /// The name of the web app
-        /// </param>
-        /// <param name='entityName'>
-        /// The name by which the Hybrid Connection is identified
-        /// </param>
-        /// <param name='slot'>
-        /// The name of the slot for the web app.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<RelayServiceConnectionEntity>> GetSiteRelayServiceConnectionSlotWithHttpMessagesAsync(string resourceGroupName, string name, string entityName, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (entityName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "entityName");
-            }
-            if (slot == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("entityName", entityName);
-                tracingParameters.Add("slot", slot);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetSiteRelayServiceConnectionSlot", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}").ToString();
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{entityName}", Uri.EscapeDataString(entityName));
-            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new Uri(_url);
-            // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<RelayServiceConnectionEntity>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<RelayServiceConnectionEntity>(_responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Creates a new association to a Biztalk Hybrid Connection, or updates an
-        /// existing one.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name
-        /// </param>
-        /// <param name='name'>
-        /// The name of the web app
-        /// </param>
-        /// <param name='entityName'>
-        /// The name by which the Hybrid Connection is identified
-        /// </param>
-        /// <param name='connectionEnvelope'>
-        /// The details of the Hybrid Connection
-        /// </param>
-        /// <param name='slot'>
-        /// The name of the slot for the web app.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<RelayServiceConnectionEntity>> CreateOrUpdateSiteRelayServiceConnectionSlotWithHttpMessagesAsync(string resourceGroupName, string name, string entityName, RelayServiceConnectionEntity connectionEnvelope, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (entityName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "entityName");
-            }
-            if (connectionEnvelope == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "connectionEnvelope");
-            }
-            if (connectionEnvelope != null)
-            {
-                connectionEnvelope.Validate();
-            }
-            if (slot == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("entityName", entityName);
-                tracingParameters.Add("connectionEnvelope", connectionEnvelope);
-                tracingParameters.Add("slot", slot);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdateSiteRelayServiceConnectionSlot", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}").ToString();
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{entityName}", Uri.EscapeDataString(entityName));
-            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PUT");
-            _httpRequest.RequestUri = new Uri(_url);
-            // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            _requestContent = SafeJsonConvert.SerializeObject(connectionEnvelope, this.Client.SerializationSettings);
-            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
-            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<RelayServiceConnectionEntity>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<RelayServiceConnectionEntity>(_responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Removes the association to a Biztalk Hybrid Connection, identified by its
-        /// entity name.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name
-        /// </param>
-        /// <param name='name'>
-        /// The name of the web app
-        /// </param>
-        /// <param name='entityName'>
-        /// The name by which the Hybrid Connection is identified
-        /// </param>
-        /// <param name='slot'>
-        /// The name of the slot for the web app.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<object>> DeleteSiteRelayServiceConnectionSlotWithHttpMessagesAsync(string resourceGroupName, string name, string entityName, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (entityName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "entityName");
-            }
-            if (slot == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("entityName", entityName);
-                tracingParameters.Add("slot", slot);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "DeleteSiteRelayServiceConnectionSlot", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}").ToString();
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{entityName}", Uri.EscapeDataString(entityName));
-            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("DELETE");
-            _httpRequest.RequestUri = new Uri(_url);
-            // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<object>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Creates a new association to a Biztalk Hybrid Connection, or updates an
-        /// existing one.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name
-        /// </param>
-        /// <param name='name'>
-        /// The name of the web app
-        /// </param>
-        /// <param name='entityName'>
-        /// The name by which the Hybrid Connection is identified
-        /// </param>
-        /// <param name='connectionEnvelope'>
-        /// The details of the Hybrid Connection
-        /// </param>
-        /// <param name='slot'>
-        /// The name of the slot for the web app.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<RelayServiceConnectionEntity>> UpdateSiteRelayServiceConnectionSlotWithHttpMessagesAsync(string resourceGroupName, string name, string entityName, RelayServiceConnectionEntity connectionEnvelope, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (entityName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "entityName");
-            }
-            if (connectionEnvelope == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "connectionEnvelope");
-            }
-            if (slot == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("entityName", entityName);
-                tracingParameters.Add("connectionEnvelope", connectionEnvelope);
-                tracingParameters.Add("slot", slot);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "UpdateSiteRelayServiceConnectionSlot", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection/{entityName}").ToString();
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{entityName}", Uri.EscapeDataString(entityName));
-            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PATCH");
-            _httpRequest.RequestUri = new Uri(_url);
-            // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            _requestContent = SafeJsonConvert.SerializeObject(connectionEnvelope, this.Client.SerializationSettings);
-            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
-            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<RelayServiceConnectionEntity>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<RelayServiceConnectionEntity>(_responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Retrieves all Biztalk Hybrid Connections associated with this web app.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name
-        /// </param>
-        /// <param name='name'>
-        /// The name of the web app
-        /// </param>
-        /// <param name='slot'>
-        /// The name of the slot for the web app.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<RelayServiceConnectionEntity>> ListSiteRelayServiceConnectionsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (slot == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("slot", slot);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListSiteRelayServiceConnectionsSlot", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/hybridconnection").ToString();
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new Uri(_url);
-            // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<RelayServiceConnectionEntity>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<RelayServiceConnectionEntity>(_responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Retrieves all Biztalk Hybrid Connections associated with this web app.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name
-        /// </param>
-        /// <param name='name'>
-        /// The name of the web app
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<RelayServiceConnectionEntity>> ListSiteRelayServiceConnectionsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListSiteRelayServiceConnections", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/hybridconnection").ToString();
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new Uri(_url);
-            // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<RelayServiceConnectionEntity>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<RelayServiceConnectionEntity>(_responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Retrieves a Virtual Network connection gateway associated with this web
-        /// app and virtual network.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name
-        /// </param>
-        /// <param name='name'>
-        /// The name of the web app
-        /// </param>
-        /// <param name='vnetName'>
-        /// The name of the Virtual Network
-        /// </param>
-        /// <param name='gatewayName'>
-        /// The name of the gateway. The only gateway that exists presently is
-        /// "primary"
-        /// </param>
-        /// <param name='slot'>
-        /// The name of the slot for this web app.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<object>> GetSiteVnetGatewaySlotWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string gatewayName, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (vnetName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vnetName");
-            }
-            if (gatewayName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "gatewayName");
-            }
-            if (slot == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("vnetName", vnetName);
-                tracingParameters.Add("gatewayName", gatewayName);
-                tracingParameters.Add("slot", slot);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetSiteVnetGatewaySlot", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}").ToString();
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{vnetName}", Uri.EscapeDataString(vnetName));
-            _url = _url.Replace("{gatewayName}", Uri.EscapeDataString(gatewayName));
-            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new Uri(_url);
-            // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 404)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<object>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Updates the Virtual Network Gateway.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name
-        /// </param>
-        /// <param name='name'>
-        /// The name of the web app
-        /// </param>
-        /// <param name='vnetName'>
-        /// The name of the Virtual Network
-        /// </param>
-        /// <param name='gatewayName'>
-        /// The name of the gateway. The only gateway that exists presently is
-        /// "primary"
-        /// </param>
-        /// <param name='connectionEnvelope'>
-        /// The properties to update this gateway with.
-        /// </param>
-        /// <param name='slot'>
-        /// The name of the slot for this web app.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<VnetGateway>> CreateOrUpdateSiteVNETConnectionGatewaySlotWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string gatewayName, VnetGateway connectionEnvelope, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (vnetName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vnetName");
-            }
-            if (gatewayName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "gatewayName");
-            }
-            if (connectionEnvelope == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "connectionEnvelope");
-            }
-            if (connectionEnvelope != null)
-            {
-                connectionEnvelope.Validate();
-            }
-            if (slot == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("vnetName", vnetName);
-                tracingParameters.Add("gatewayName", gatewayName);
-                tracingParameters.Add("connectionEnvelope", connectionEnvelope);
-                tracingParameters.Add("slot", slot);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdateSiteVNETConnectionGatewaySlot", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}").ToString();
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{vnetName}", Uri.EscapeDataString(vnetName));
-            _url = _url.Replace("{gatewayName}", Uri.EscapeDataString(gatewayName));
-            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PUT");
-            _httpRequest.RequestUri = new Uri(_url);
-            // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            _requestContent = SafeJsonConvert.SerializeObject(connectionEnvelope, this.Client.SerializationSettings);
-            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
-            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<VnetGateway>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<VnetGateway>(_responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Updates the Virtual Network Gateway.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name
-        /// </param>
-        /// <param name='name'>
-        /// The name of the web app
-        /// </param>
-        /// <param name='vnetName'>
-        /// The name of the Virtual Network
-        /// </param>
-        /// <param name='gatewayName'>
-        /// The name of the gateway. The only gateway that exists presently is
-        /// "primary"
-        /// </param>
-        /// <param name='connectionEnvelope'>
-        /// The properties to update this gateway with.
-        /// </param>
-        /// <param name='slot'>
-        /// The name of the slot for this web app.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<VnetGateway>> UpdateSiteVNETConnectionGatewaySlotWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string gatewayName, VnetGateway connectionEnvelope, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (vnetName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vnetName");
-            }
-            if (gatewayName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "gatewayName");
-            }
-            if (connectionEnvelope == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "connectionEnvelope");
-            }
-            if (slot == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("vnetName", vnetName);
-                tracingParameters.Add("gatewayName", gatewayName);
-                tracingParameters.Add("connectionEnvelope", connectionEnvelope);
-                tracingParameters.Add("slot", slot);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "UpdateSiteVNETConnectionGatewaySlot", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}").ToString();
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{vnetName}", Uri.EscapeDataString(vnetName));
-            _url = _url.Replace("{gatewayName}", Uri.EscapeDataString(gatewayName));
-            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PATCH");
-            _httpRequest.RequestUri = new Uri(_url);
-            // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            _requestContent = SafeJsonConvert.SerializeObject(connectionEnvelope, this.Client.SerializationSettings);
-            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
-            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<VnetGateway>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<VnetGateway>(_responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Retrieves a Virtual Network connection gateway associated with this web
-        /// app and virtual network.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name
-        /// </param>
-        /// <param name='name'>
-        /// The name of the web app
-        /// </param>
-        /// <param name='vnetName'>
-        /// The name of the Virtual Network
-        /// </param>
-        /// <param name='gatewayName'>
-        /// The name of the gateway. The only gateway that exists presently is
-        /// "primary"
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<object>> GetSiteVnetGatewayWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string gatewayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (vnetName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vnetName");
-            }
-            if (gatewayName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "gatewayName");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("vnetName", vnetName);
-                tracingParameters.Add("gatewayName", gatewayName);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetSiteVnetGateway", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}").ToString();
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{vnetName}", Uri.EscapeDataString(vnetName));
-            _url = _url.Replace("{gatewayName}", Uri.EscapeDataString(gatewayName));
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new Uri(_url);
-            // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 404)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<object>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<object>(_responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Updates the Virtual Network Gateway.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name
-        /// </param>
-        /// <param name='name'>
-        /// The name of the web app
-        /// </param>
-        /// <param name='vnetName'>
-        /// The name of the Virtual Network
-        /// </param>
-        /// <param name='gatewayName'>
-        /// The name of the gateway. The only gateway that exists presently is
-        /// "primary"
-        /// </param>
-        /// <param name='connectionEnvelope'>
-        /// The properties to update this gateway with.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<VnetGateway>> CreateOrUpdateSiteVNETConnectionGatewayWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string gatewayName, VnetGateway connectionEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (vnetName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vnetName");
-            }
-            if (gatewayName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "gatewayName");
-            }
-            if (connectionEnvelope == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "connectionEnvelope");
-            }
-            if (connectionEnvelope != null)
-            {
-                connectionEnvelope.Validate();
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("vnetName", vnetName);
-                tracingParameters.Add("gatewayName", gatewayName);
-                tracingParameters.Add("connectionEnvelope", connectionEnvelope);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdateSiteVNETConnectionGateway", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}").ToString();
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{vnetName}", Uri.EscapeDataString(vnetName));
-            _url = _url.Replace("{gatewayName}", Uri.EscapeDataString(gatewayName));
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PUT");
-            _httpRequest.RequestUri = new Uri(_url);
-            // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            _requestContent = SafeJsonConvert.SerializeObject(connectionEnvelope, this.Client.SerializationSettings);
-            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
-            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<VnetGateway>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<VnetGateway>(_responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Updates the Virtual Network Gateway.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name
-        /// </param>
-        /// <param name='name'>
-        /// The name of the web app
-        /// </param>
-        /// <param name='vnetName'>
-        /// The name of the Virtual Network
-        /// </param>
-        /// <param name='gatewayName'>
-        /// The name of the gateway. The only gateway that exists presently is
-        /// "primary"
-        /// </param>
-        /// <param name='connectionEnvelope'>
-        /// The properties to update this gateway with.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<VnetGateway>> UpdateSiteVNETConnectionGatewayWithHttpMessagesAsync(string resourceGroupName, string name, string vnetName, string gatewayName, VnetGateway connectionEnvelope, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (vnetName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "vnetName");
-            }
-            if (gatewayName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "gatewayName");
-            }
-            if (connectionEnvelope == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "connectionEnvelope");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("vnetName", vnetName);
-                tracingParameters.Add("gatewayName", gatewayName);
-                tracingParameters.Add("connectionEnvelope", connectionEnvelope);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "UpdateSiteVNETConnectionGateway", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections/{vnetName}/gateways/{gatewayName}").ToString();
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{vnetName}", Uri.EscapeDataString(vnetName));
-            _url = _url.Replace("{gatewayName}", Uri.EscapeDataString(gatewayName));
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PATCH");
-            _httpRequest.RequestUri = new Uri(_url);
-            // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            _requestContent = SafeJsonConvert.SerializeObject(connectionEnvelope, this.Client.SerializationSettings);
-            _httpRequest.Content = new StringContent(_requestContent, Encoding.UTF8);
-            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<VnetGateway>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<VnetGateway>(_responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Retrieves a list of all Virtual Network Connections associated with this
-        /// web app.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name
-        /// </param>
-        /// <param name='name'>
-        /// The name of the web app
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<IList<VnetInfo>>> GetSiteVNETConnectionsWithHttpMessagesAsync(string resourceGroupName, string name, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetSiteVNETConnections", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/virtualNetworkConnections").ToString();
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new Uri(_url);
-            // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<IList<VnetInfo>>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<IList<VnetInfo>>(_responseContent, this.Client.DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
-        /// <summary>
-        /// Retrieves a list of all Virtual Network Connections associated with this
-        /// web app.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The resource group name
-        /// </param>
-        /// <param name='name'>
-        /// The name of the web app
-        /// </param>
-        /// <param name='slot'>
-        /// The name of the slot for this web app.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        public async Task<AzureOperationResponse<IList<VnetInfo>>> GetSiteVNETConnectionsSlotWithHttpMessagesAsync(string resourceGroupName, string name, string slot, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            if (resourceGroupName == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
-            }
-            if (name == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "name");
-            }
-            if (slot == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "slot");
-            }
-            if (this.Client.SubscriptionId == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.SubscriptionId");
-            }
-            if (this.Client.ApiVersion == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
-            }
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("resourceGroupName", resourceGroupName);
-                tracingParameters.Add("name", name);
-                tracingParameters.Add("slot", slot);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetSiteVNETConnectionsSlot", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/slots/{slot}/virtualNetworkConnections").ToString();
-            _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
-            _url = _url.Replace("{name}", Uri.EscapeDataString(name));
-            _url = _url.Replace("{slot}", Uri.EscapeDataString(slot));
-            _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
-            List<string> _queryParameters = new List<string>();
-            if (this.Client.ApiVersion != null)
-            {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
-            }
-            if (_queryParameters.Count > 0)
-            {
-                _url += "?" + string.Join("&", _queryParameters);
-            }
-            // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new Uri(_url);
-            // Set Headers
-            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
-            {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
-            }
-            if (this.Client.AcceptLanguage != null)
-            {
-                if (_httpRequest.Headers.Contains("accept-language"))
-                {
-                    _httpRequest.Headers.Remove("accept-language");
-                }
-                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
-            }
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Set Credentials
-            if (this.Client.Credentials != null)
-            {
-                cancellationToken.ThrowIfCancellationRequested();
-                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            }
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200)
-            {
-                var ex = new CloudException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                try
-                {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    CloudError _errorBody = SafeJsonConvert.DeserializeObject<CloudError>(_responseContent, this.Client.DeserializationSettings);
-                    if (_errorBody != null)
-                    {
-                        ex = new CloudException(_errorBody.Message);
-                        ex.Body = _errorBody;
-                    }
-                }
-                catch (JsonException)
-                {
-                    // Ignore the exception
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_httpResponse.Headers.Contains("x-ms-request-id"))
-                {
-                    ex.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-                }
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new AzureOperationResponse<IList<VnetInfo>>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            if (_httpResponse.Headers.Contains("x-ms-request-id"))
-            {
-                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<IList<VnetInfo>>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

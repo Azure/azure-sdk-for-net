@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the SiteSourceControl class.
         /// </summary>
-        public SiteSourceControl(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string repoUrl = default(string), string branch = default(string), bool? isManualIntegration = default(bool?), bool? deploymentRollbackEnabled = default(bool?), bool? isMercurial = default(bool?))
-            : base(location, id, name, type, tags)
+        public SiteSourceControl(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string repoUrl = default(string), string branch = default(string), bool? isManualIntegration = default(bool?), bool? deploymentRollbackEnabled = default(bool?), bool? isMercurial = default(bool?))
+            : base(location, id, name, kind, type, tags)
         {
             RepoUrl = repoUrl;
             Branch = branch;

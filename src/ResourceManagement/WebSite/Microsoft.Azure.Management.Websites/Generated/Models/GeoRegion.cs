@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the GeoRegion class.
         /// </summary>
-        public GeoRegion(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string geoRegionName = default(string), string description = default(string), string displayName = default(string))
-            : base(location, id, name, type, tags)
+        public GeoRegion(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string geoRegionName = default(string), string description = default(string), string displayName = default(string))
+            : base(location, id, name, kind, type, tags)
         {
             GeoRegionName = geoRegionName;
             Description = description;

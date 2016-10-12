@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the ConnectionStringDictionary class.
         /// </summary>
-        public ConnectionStringDictionary(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IDictionary<string, ConnStringValueTypePair> properties = default(IDictionary<string, ConnStringValueTypePair>))
-            : base(location, id, name, type, tags)
+        public ConnectionStringDictionary(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), IDictionary<string, ConnStringValueTypePair> properties = default(IDictionary<string, ConnStringValueTypePair>))
+            : base(location, id, name, kind, type, tags)
         {
             Properties = properties;
         }

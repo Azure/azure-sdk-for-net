@@ -13,18 +13,16 @@ namespace Microsoft.Azure.Management.WebSites.Models
     using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for DatabaseServerType.
+    /// Defines values for DnsVerificationTestResult.
     /// </summary>
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum DatabaseServerType
+    public enum DnsVerificationTestResult
     {
-        [EnumMember(Value = "MySql")]
-        MySql,
-        [EnumMember(Value = "SQLServer")]
-        SQLServer,
-        [EnumMember(Value = "SQLAzure")]
-        SQLAzure,
-        [EnumMember(Value = "Custom")]
-        Custom
+        [EnumMember(Value = "Passed")]
+        Passed,
+        [EnumMember(Value = "Failed")]
+        Failed,
+        [EnumMember(Value = "Skipped")]
+        Skipped
     }
 }

@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the ConnStringValueTypePair class.
         /// </summary>
-        public ConnStringValueTypePair(DatabaseServerType? type, string value = default(string))
+        public ConnStringValueTypePair(ConnectionStringType? type, string value = default(string))
         {
             Value = value;
             Type = type;
@@ -43,10 +43,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
 
         /// <summary>
         /// Type of database. Possible values for this property include:
-        /// 'MySql', 'SQLServer', 'SQLAzure', 'Custom'.
+        /// 'MySql', 'SQLServer', 'SQLAzure', 'Custom', 'NotificationHub',
+        /// 'ServiceBus', 'EventHub', 'ApiHub', 'DocDb', 'RedisCache'.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public DatabaseServerType? Type { get; set; }
+        public ConnectionStringType? Type { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.

@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the SiteLogsConfig class.
         /// </summary>
-        public SiteLogsConfig(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ApplicationLogsConfig applicationLogs = default(ApplicationLogsConfig), HttpLogsConfig httpLogs = default(HttpLogsConfig), EnabledConfig failedRequestsTracing = default(EnabledConfig), EnabledConfig detailedErrorMessages = default(EnabledConfig))
-            : base(location, id, name, type, tags)
+        public SiteLogsConfig(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), ApplicationLogsConfig applicationLogs = default(ApplicationLogsConfig), HttpLogsConfig httpLogs = default(HttpLogsConfig), EnabledConfig failedRequestsTracing = default(EnabledConfig), EnabledConfig detailedErrorMessages = default(EnabledConfig))
+            : base(location, id, name, kind, type, tags)
         {
             ApplicationLogs = applicationLogs;
             HttpLogs = httpLogs;

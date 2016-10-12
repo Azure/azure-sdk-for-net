@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the WorkerPool class.
         /// </summary>
-        public WorkerPool(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SkuDescription sku = default(SkuDescription), int? workerSizeId = default(int?), ComputeModeOptions? computeMode = default(ComputeModeOptions?), string workerSize = default(string), int? workerCount = default(int?), IList<string> instanceNames = default(IList<string>))
-            : base(location, id, name, type, tags)
+        public WorkerPool(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), SkuDescription sku = default(SkuDescription), int? workerSizeId = default(int?), ComputeModeOptions? computeMode = default(ComputeModeOptions?), string workerSize = default(string), int? workerCount = default(int?), IList<string> instanceNames = default(IList<string>))
+            : base(location, id, name, kind, type, tags)
         {
             Sku = sku;
             WorkerSizeId = workerSizeId;

@@ -29,7 +29,7 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the ConnStringInfo class.
         /// </summary>
-        public ConnStringInfo(DatabaseServerType? type, string name = default(string), string connectionString = default(string))
+        public ConnStringInfo(ConnectionStringType? type, string name = default(string), string connectionString = default(string))
         {
             Name = name;
             ConnectionString = connectionString;
@@ -50,10 +50,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
 
         /// <summary>
         /// Type of database. Possible values for this property include:
-        /// 'MySql', 'SQLServer', 'SQLAzure', 'Custom'.
+        /// 'MySql', 'SQLServer', 'SQLAzure', 'Custom', 'NotificationHub',
+        /// 'ServiceBus', 'EventHub', 'ApiHub', 'DocDb', 'RedisCache'.
         /// </summary>
         [JsonProperty(PropertyName = "type")]
-        public DatabaseServerType? Type { get; set; }
+        public ConnectionStringType? Type { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.

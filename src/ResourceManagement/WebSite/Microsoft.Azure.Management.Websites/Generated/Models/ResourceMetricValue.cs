@@ -29,21 +29,22 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the ResourceMetricValue class.
         /// </summary>
-        public ResourceMetricValue(string timeStamp = default(string), double? average = default(double?), double? minimum = default(double?), double? maximum = default(double?), double? total = default(double?), double? count = default(double?))
+        public ResourceMetricValue(string timestamp = default(string), double? average = default(double?), double? minimum = default(double?), double? maximum = default(double?), double? total = default(double?), double? count = default(double?), IList<KeyValuePairStringString> properties = default(IList<KeyValuePairStringString>))
         {
-            TimeStamp = timeStamp;
+            Timestamp = timestamp;
             Average = average;
             Minimum = minimum;
             Maximum = maximum;
             Total = total;
             Count = count;
+            Properties = properties;
         }
 
         /// <summary>
         /// Value timestamp
         /// </summary>
-        [JsonProperty(PropertyName = "timeStamp")]
-        public string TimeStamp { get; set; }
+        [JsonProperty(PropertyName = "timestamp")]
+        public string Timestamp { get; set; }
 
         /// <summary>
         /// Value average
@@ -74,6 +75,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "count")]
         public double? Count { get; set; }
+
+        /// <summary>
+        /// Properties
+        /// </summary>
+        [JsonProperty(PropertyName = "properties")]
+        public IList<KeyValuePairStringString> Properties { get; set; }
 
     }
 }

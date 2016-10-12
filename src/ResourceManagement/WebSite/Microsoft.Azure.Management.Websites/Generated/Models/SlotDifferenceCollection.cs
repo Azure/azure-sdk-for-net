@@ -29,10 +29,11 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the SlotDifferenceCollection class.
         /// </summary>
-        public SlotDifferenceCollection(IList<SlotDifference> value = default(IList<SlotDifference>), string nextLink = default(string))
+        public SlotDifferenceCollection(IList<SlotDifference> value = default(IList<SlotDifference>), string nextLink = default(string), string id = default(string))
         {
             Value = value;
             NextLink = nextLink;
+            Id = id;
         }
 
         /// <summary>
@@ -46,6 +47,12 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "nextLink")]
         public string NextLink { get; set; }
+
+        /// <summary>
+        /// Id of parent resource
+        /// </summary>
+        [JsonProperty(PropertyName = "id")]
+        public string Id { get; set; }
 
     }
 }

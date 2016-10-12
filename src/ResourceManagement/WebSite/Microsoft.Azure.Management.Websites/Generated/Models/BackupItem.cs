@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the BackupItem class.
         /// </summary>
-        public BackupItem(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), int? backupItemId = default(int?), string storageAccountUrl = default(string), string blobName = default(string), string backupItemName = default(string), BackupItemStatus? status = default(BackupItemStatus?), long? sizeInBytes = default(long?), DateTime? created = default(DateTime?), string log = default(string), IList<DatabaseBackupSetting> databases = default(IList<DatabaseBackupSetting>), bool? scheduled = default(bool?), DateTime? lastRestoreTimeStamp = default(DateTime?), DateTime? finishedTimeStamp = default(DateTime?), string correlationId = default(string), long? websiteSizeInBytes = default(long?))
-            : base(location, id, name, type, tags)
+        public BackupItem(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), int? backupItemId = default(int?), string storageAccountUrl = default(string), string blobName = default(string), string backupItemName = default(string), BackupItemStatus? status = default(BackupItemStatus?), long? sizeInBytes = default(long?), DateTime? created = default(DateTime?), string log = default(string), IList<DatabaseBackupSetting> databases = default(IList<DatabaseBackupSetting>), bool? scheduled = default(bool?), DateTime? lastRestoreTimeStamp = default(DateTime?), DateTime? finishedTimeStamp = default(DateTime?), string correlationId = default(string), long? websiteSizeInBytes = default(long?))
+            : base(location, id, name, kind, type, tags)
         {
             BackupItemId = backupItemId;
             StorageAccountUrl = storageAccountUrl;

@@ -29,12 +29,14 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the User class.
         /// </summary>
-        public User(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string userName = default(string), string publishingUserName = default(string), string publishingPassword = default(string))
-            : base(location, id, name, type, tags)
+        public User(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string userName = default(string), string publishingUserName = default(string), string publishingPassword = default(string), string publishingPasswordHash = default(string), string publishingPasswordHashSalt = default(string))
+            : base(location, id, name, kind, type, tags)
         {
             UserName = userName;
             PublishingUserName = publishingUserName;
             PublishingPassword = publishingPassword;
+            PublishingPasswordHash = publishingPasswordHash;
+            PublishingPasswordHashSalt = publishingPasswordHashSalt;
         }
 
         /// <summary>
@@ -54,6 +56,18 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// </summary>
         [JsonProperty(PropertyName = "properties.publishingPassword")]
         public string PublishingPassword { get; set; }
+
+        /// <summary>
+        /// PasswordHash used for publishing
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publishingPasswordHash")]
+        public string PublishingPasswordHash { get; set; }
+
+        /// <summary>
+        /// PasswordHashSalt used for publishing
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.publishingPasswordHashSalt")]
+        public string PublishingPasswordHashSalt { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.

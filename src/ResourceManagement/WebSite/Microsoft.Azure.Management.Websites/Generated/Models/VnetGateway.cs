@@ -30,8 +30,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the VnetGateway class.
         /// </summary>
-        public VnetGateway(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string vnetName = default(string), string vpnPackageUri = default(string))
-            : base(location, id, name, type, tags)
+        public VnetGateway(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string vnetName = default(string), string vpnPackageUri = default(string))
+            : base(location, id, name, kind, type, tags)
         {
             VnetName = vnetName;
             VpnPackageUri = vpnPackageUri;

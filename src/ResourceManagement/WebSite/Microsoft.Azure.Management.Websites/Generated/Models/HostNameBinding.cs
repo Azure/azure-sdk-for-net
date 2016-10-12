@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the HostNameBinding class.
         /// </summary>
-        public HostNameBinding(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string hostNameBindingName = default(string), string siteName = default(string), string domainId = default(string), string azureResourceName = default(string), AzureResourceType? azureResourceType = default(AzureResourceType?), CustomHostNameDnsRecordType? customHostNameDnsRecordType = default(CustomHostNameDnsRecordType?), HostNameType? hostNameType = default(HostNameType?))
-            : base(location, id, name, type, tags)
+        public HostNameBinding(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string hostNameBindingName = default(string), string siteName = default(string), string domainId = default(string), string azureResourceName = default(string), AzureResourceType? azureResourceType = default(AzureResourceType?), CustomHostNameDnsRecordType? customHostNameDnsRecordType = default(CustomHostNameDnsRecordType?), HostNameType? hostNameType = default(HostNameType?))
+            : base(location, id, name, kind, type, tags)
         {
             HostNameBindingName = hostNameBindingName;
             SiteName = siteName;

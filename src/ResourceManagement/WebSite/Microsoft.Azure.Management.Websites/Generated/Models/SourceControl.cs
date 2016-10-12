@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the SourceControl class.
         /// </summary>
-        public SourceControl(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string sourceControlName = default(string), string token = default(string), string tokenSecret = default(string), string refreshToken = default(string), DateTime? expirationTime = default(DateTime?))
-            : base(location, id, name, type, tags)
+        public SourceControl(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string sourceControlName = default(string), string token = default(string), string tokenSecret = default(string), string refreshToken = default(string), DateTime? expirationTime = default(DateTime?))
+            : base(location, id, name, kind, type, tags)
         {
             SourceControlName = sourceControlName;
             Token = token;

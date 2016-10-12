@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the VnetRoute class.
         /// </summary>
-        public VnetRoute(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string vnetRouteName = default(string), string startAddress = default(string), string endAddress = default(string), string routeType = default(string))
-            : base(location, id, name, type, tags)
+        public VnetRoute(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string vnetRouteName = default(string), string startAddress = default(string), string endAddress = default(string), string routeType = default(string))
+            : base(location, id, name, kind, type, tags)
         {
             VnetRouteName = vnetRouteName;
             StartAddress = startAddress;

@@ -29,8 +29,8 @@ namespace Microsoft.Azure.Management.WebSites.Models
         /// <summary>
         /// Initializes a new instance of the RestoreRequest class.
         /// </summary>
-        public RestoreRequest(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string storageAccountUrl = default(string), string blobName = default(string), bool? overwrite = default(bool?), string siteName = default(string), IList<DatabaseBackupSetting> databases = default(IList<DatabaseBackupSetting>), bool? ignoreConflictingHostNames = default(bool?), BackupRestoreOperationType? operationType = default(BackupRestoreOperationType?), bool? adjustConnectionStrings = default(bool?), string hostingEnvironment = default(string))
-            : base(location, id, name, type, tags)
+        public RestoreRequest(string location, string id = default(string), string name = default(string), string kind = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), string storageAccountUrl = default(string), string blobName = default(string), bool? overwrite = default(bool?), string siteName = default(string), IList<DatabaseBackupSetting> databases = default(IList<DatabaseBackupSetting>), bool? ignoreConflictingHostNames = default(bool?), BackupRestoreOperationType? operationType = default(BackupRestoreOperationType?), bool? adjustConnectionStrings = default(bool?), string hostingEnvironment = default(string))
+            : base(location, id, name, kind, type, tags)
         {
             StorageAccountUrl = storageAccountUrl;
             BlobName = blobName;
