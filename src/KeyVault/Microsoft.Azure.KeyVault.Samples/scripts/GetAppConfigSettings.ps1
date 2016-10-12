@@ -9,22 +9,10 @@ $vaultName           = 'MyVaultName'
 $resourceGroupName   = 'MyResourceGroupName'
 $applicationName     = 'MyAppName'
 
-
 # **********************************************************************************************
 # You MAY set the following values before running this script
 # **********************************************************************************************
 $location            = 'East US'                          # Get-AzureLocation
-
-# **********************************************************************************************
-# Generates a secure 32-byte symmetric key for authentication
-# **********************************************************************************************
-Function GenerateSymmetricKey()
-{
-    $key = New-Object byte[](32)
-    $rng = [System.Security.Cryptography.RNGCryptoServiceProvider]::Create()
-    $rng.GetBytes($key)
-    return [System.Convert]::ToBase64String($key)
-}
 
 # **********************************************************************************************
 # Should we bounce this script execution?
@@ -50,8 +38,8 @@ $certificateName = "$applicationName" + "cert"
 $myCertThumbprint = (New-SelfSignedCertificate -Type Custom -Subject "$certificateName"-KeyUsage DigitalSignature -KeyAlgorithm RSA -KeyLength 2048 -CertStoreLocation "Cert:\CurrentUser\My" -Provider "Microsoft Enhanced Cryptographic Provider v1.0" ).Thumbprint
 $x509 = (Get-ChildItem -Path cert:\CurrentUser\My\$myCertthumbprint)
 $password = Read-Host -Prompt "Please enter the certificate password." -AsSecureString
-Export-Certificate -cert $cert -FilePath ".\$certificateName.cer"
-Export-PfxCertificate -Cert $cert -FilePath ".\$certificateName.pfx" -Password $password
+Export-Certificate -cert $x509 -FilePath ".\$certificateName.cer"
+Export-PfxCertificate -Cert $x509 -FilePath ".\$certificateName.pfx" -Password $password
 
 
 

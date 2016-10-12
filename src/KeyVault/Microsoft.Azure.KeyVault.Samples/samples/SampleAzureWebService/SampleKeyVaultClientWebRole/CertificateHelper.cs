@@ -15,6 +15,7 @@
 // See the Apache License, Version 2.0 for the specific language
 // governing permissions and limitations under the License.
 
+using System;
 using System.Security.Cryptography.X509Certificates;
 
 namespace SampleKeyVaultClientWebRole
@@ -29,20 +30,25 @@ namespace SampleKeyVaultClientWebRole
             if (certificateThumbprint == null)
                 throw new System.ArgumentNullException("certificateThumbprint");
 
-            X509Store store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
-            try
+            foreach (StoreLocation storeLocation in (StoreLocation[])
+                Enum.GetValues(typeof(StoreLocation)))
             {
-                store.Open(OpenFlags.ReadOnly);
-                X509Certificate2Collection col = store.Certificates.Find(X509FindType.FindByThumbprint, certificateThumbprint, false); // Don't validate certs, since the test root isn't installed.
-                if (col == null || col.Count == 0)
-                    throw new System.Exception(
-                        string.Format("Could not find the certificate with thumbprint {0} in the Local Machine's Personal certificate store.", certificateThumbprint));
-                return col[0];
+                foreach (StoreName storeName in (StoreName[])
+                    Enum.GetValues(typeof(StoreName)))
+                {
+                    X509Store store = new X509Store(storeName, storeLocation);
+
+                    store.Open(OpenFlags.ReadOnly);
+                    X509Certificate2Collection col = store.Certificates.Find(X509FindType.FindByThumbprint, certificateThumbprint, false); // Don't validate certs, since the test root isn't installed.
+                    if (col != null && col.Count != 0)
+                    {
+                        store.Close();
+                        return col[0];
+                    }
+                }
             }
-            finally
-            {
-                store.Close();
-            }
+            throw new System.Exception(
+                    string.Format("Could not find the certificate with thumbprint {0} in any certificate store.", certificateThumbprint));
         }
     }
 }

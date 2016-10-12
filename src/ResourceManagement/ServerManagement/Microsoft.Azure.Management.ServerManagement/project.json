@@ -1,5 +1,5 @@
 {
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Allows programatic access to create SMT Gateways, Nodes, Sessions and remotely access PowerShell on a SMT Node.",
   "authors": [ "Microsoft" ],
   
@@ -23,6 +23,9 @@
 
   "frameworks": {
     "net45": {
+      "frameworkAssemblies": {
+      "System.Security": "4.0.0.0"
+      }
     },
     "netstandard1.5": {
       "imports": ["dnxcore50"],
@@ -33,13 +36,15 @@
         "System.Net.Http": "4.1.0",
         "System.Runtime.Serialization.Primitives": "4.1.1",
         "System.Threading.Tasks": "4.0.11",
+        "System.Security.Cryptography.Algorithms": "4.2.0"
       }
     },
     "netstandard1.1": {
       "imports": ["dnxcore50"],
       "buildOptions": { "define": [ "PORTABLE" ] },
       "dependencies": {
-        "System.Runtime.Serialization.Primitives": "4.1.1",
+       "System.Runtime.Serialization.Primitives": "4.1.1",
+      "System.Security.Cryptography.Algorithms": "4.2.0"
       }
     }
   }

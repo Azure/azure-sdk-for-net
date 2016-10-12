@@ -29,13 +29,15 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
         {
         }
 
-        public override ICryptoTransform CreateDecryptor( byte[] key, byte[] iv, byte[] authenticationData )
+        public override ICryptoTransform CreateDecryptor( byte[] key, byte[] iv, byte[] authenticationData, byte[] authenticationTag )
         {
             if ( key == null )
                 throw new CryptographicException( "No key material" );
 
             if ( iv == null )
                 throw new CryptographicException( "No initialization vector" );
+            
+            // Note that authenticationData and authenticationTag are ignored.
 
             // Create the AES provider
             using ( var aes = Create( key, iv ) )
@@ -74,7 +76,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
         {
         }
 
-        public override ICryptoTransform CreateDecryptor( byte[] key, byte[] iv, byte[] authenticationData )
+        public override ICryptoTransform CreateDecryptor( byte[] key, byte[] iv, byte[] authenticationData, byte[] authenticationTag )
         {
             if ( key == null )
                 throw new CryptographicException( "key" );
@@ -82,7 +84,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
             if ( key.Length < KeySizeInBytes )
                 throw new CryptographicException( "key", "key must be at least 128 bits" );
 
-            return base.CreateDecryptor( key.Take( KeySizeInBytes ), iv, authenticationData );
+            return base.CreateDecryptor( key.Take( KeySizeInBytes ), iv, authenticationData, authenticationTag );
         }
 
         public override ICryptoTransform CreateEncryptor( byte[] key, byte[] iv, byte[] authenticationData )
@@ -111,7 +113,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
         {
         }
 
-        public override ICryptoTransform CreateDecryptor( byte[] key, byte[] iv, byte[] authenticationData )
+        public override ICryptoTransform CreateDecryptor( byte[] key, byte[] iv, byte[] authenticationData, byte[] authenticationTag )
         {
             if ( key == null )
                 throw new CryptographicException( "key" );
@@ -119,7 +121,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
             if ( key.Length < KeySizeInBytes )
                 throw new CryptographicException( "key", "key must be at least 192 bits" );
 
-            return base.CreateDecryptor( key.Take( KeySizeInBytes ), iv, authenticationData );
+            return base.CreateDecryptor( key.Take( KeySizeInBytes ), iv, authenticationData, authenticationTag );
         }
 
         public override ICryptoTransform CreateEncryptor( byte[] key, byte[] iv, byte[] authenticationData )
@@ -148,7 +150,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
         {
         }
 
-        public override ICryptoTransform CreateDecryptor( byte[] key, byte[] iv, byte[] authenticationData )
+        public override ICryptoTransform CreateDecryptor( byte[] key, byte[] iv, byte[] authenticationData, byte[] authenticationTag )
         {
             if ( key == null )
                 throw new CryptographicException( "key" );
@@ -156,7 +158,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
             if ( key.Length < KeySizeInBytes )
                 throw new CryptographicException( "key", "key must be at least 256 bits" );
 
-            return base.CreateDecryptor( key.Take( KeySizeInBytes ), iv, authenticationData );
+            return base.CreateDecryptor( key.Take( KeySizeInBytes ), iv, authenticationData, authenticationTag );
         }
 
         public override ICryptoTransform CreateEncryptor( byte[] key, byte[] iv, byte[] authenticationData )

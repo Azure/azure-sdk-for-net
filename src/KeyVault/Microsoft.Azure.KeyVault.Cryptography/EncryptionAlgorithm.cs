@@ -1,6 +1,8 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+﻿//
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License. See License.txt in the project root for
 // license information.
+//
 
 using System.Security.Cryptography;
 
@@ -17,7 +19,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography
     }
 
     /// <summary>
-    /// Abstract Asymmetric Algorithm
+    /// Abstract Asymmetric Encryption Algorithm
     /// </summary>
     public abstract class AsymmetricEncryptionAlgorithm : EncryptionAlgorithm
     {
@@ -42,7 +44,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography
     }
 
     /// <summary>
-    /// Abstract Symmetric Algorithm
+    /// Abstract SymmetricEncryption Algorithm
     /// </summary>
     public abstract class SymmetricEncryptionAlgorithm : EncryptionAlgorithm
     {
@@ -54,19 +56,20 @@ namespace Microsoft.Azure.KeyVault.Cryptography
         /// <summary>
         /// Create an encryptor for the specified key
         /// </summary>
-        /// <param name="key">The key</param>
-        /// <param name="iv">The initialization vector</param>
-        /// <param name="authenticationData">Authentication data</param>
+        /// <param name="key">The key material to be used</param>
+        /// <param name="iv">The initialization vector to be used</param>
+        /// <param name="authenticationData">The authentication data to be used with authenticating encryption algorithms (ignored for non-authenticating algorithms)</param>
         /// <returns>An ICryptoTranform for encrypting data</returns>
         public abstract ICryptoTransform CreateEncryptor( byte[] key, byte[] iv, byte[] authenticationData );
 
         /// <summary>
-        /// Crea a decryptor for the specified key
+        /// Create a decryptor for the specified key
         /// </summary>
-        /// <param name="key">The key</param>
-        /// <param name="iv">The initialization vector</param>
-        /// <param name="authenticationData">Authentication data</param>
+        /// <param name="key">The key material to be used</param>
+        /// <param name="iv">The initialization vector to be used</param>
+        /// <param name="authenticationData">The authentication data to be used with authenticating encryption algorithms (ignored for non-authenticating algorithms)</param>
+        /// <param name="authenticationTag">The authentication tag to verify when using authenticating encryption algorithms (ignored for non-authenticating algorithms)</param>
         /// <returns>An ICryptoTransform for decrypting data</returns>
-        public abstract ICryptoTransform CreateDecryptor( byte[] key, byte[] iv, byte[] authenticationData );
+        public abstract ICryptoTransform CreateDecryptor( byte[] key, byte[] iv, byte[] authenticationData, byte[] authenticationTag );
     }
 }
