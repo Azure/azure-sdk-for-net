@@ -154,7 +154,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.12-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.3.0");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -345,7 +345,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.12-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.3.0");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -618,7 +618,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.12-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.3.0");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1519,7 +1519,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.12-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.3.0");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -1914,7 +1914,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.12-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.3.0");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -2546,7 +2546,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.12-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.3.0");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3153,7 +3153,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.12-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.3.0");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3527,7 +3527,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.12-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.3.0");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3698,7 +3698,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.12-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.3.0");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -3843,7 +3843,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.12-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.3.0");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -4424,7 +4424,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.12-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.3.0");
                 httpRequest.Headers.Add("x-ms-version", "2015-03-01-preview");
                 
                 // Set Credentials
@@ -4863,7 +4863,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.12-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.3.0");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
@@ -5477,7 +5477,7 @@ namespace Microsoft.Azure.Management.HDInsight
                 httpRequest.RequestUri = new Uri(url);
                 
                 // Set Headers
-                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.0.12-preview");
+                httpRequest.Headers.Add("User-Agent", "ARM SDK v1.3.0");
                 
                 // Set Credentials
                 cancellationToken.ThrowIfCancellationRequested();
