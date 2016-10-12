@@ -1,5 +1,5 @@
 {
-  "version": "2.0.4-preview",
+  "version": "2.0.5-preview",
   "title": "Microsoft Azure Search Library",
   "description": "Makes it easy to develop a .NET application that uses Azure Search.",
   "authors": [ "Microsoft" ],
