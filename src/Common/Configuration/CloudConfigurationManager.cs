@@ -15,7 +15,7 @@
 
 using System;
 using System.Globalization;
-using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.Properties;
 
 namespace Microsoft.Azure
 {

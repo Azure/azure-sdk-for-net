@@ -20,6 +20,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
+using Microsoft.WindowsAzure.Properties;
 
 [assembly: CLSCompliant(true)]
 namespace Microsoft.Azure
@@ -128,7 +129,8 @@ namespace Microsoft.Azure
             {
                 if (throwIfNotFoundInRuntime)
                 {
-                    throw new SettingsPropertyNotFoundException($"Setting: {name} was not found in the ServiceRuntime.");
+                    var errorMessage = string.Format(CultureInfo.InvariantCulture, Resources.ErrorSettingNotFoundInRuntimeString, name);
+                    throw new SettingsPropertyNotFoundException(errorMessage);
                 }
 
                 value = GetValue("ConfigurationManager", name, n => ConfigurationManager.AppSettings[n], outputResultsToTrace);
