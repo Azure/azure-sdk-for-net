@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A Data Lake Analytics DDL name item.
@@ -49,28 +43,28 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Gets or sets the name of the table associated with this database
         /// and schema.
         /// </summary>
-        [JsonProperty(PropertyName = "firstPart")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "firstPart")]
         public string FirstPart { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the table associated with this database
         /// and schema.
         /// </summary>
-        [JsonProperty(PropertyName = "secondPart")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "secondPart")]
         public string SecondPart { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the table associated with this database
         /// and schema.
         /// </summary>
-        [JsonProperty(PropertyName = "thirdPart")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "thirdPart")]
         public string ThirdPart { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the table associated with this database
         /// and schema.
         /// </summary>
-        [JsonProperty(PropertyName = "server")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "server")]
         public string Server { get; set; }
 
     }

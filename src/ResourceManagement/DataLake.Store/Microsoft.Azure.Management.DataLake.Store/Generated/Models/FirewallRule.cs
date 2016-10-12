@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Data Lake Store firewall rule information
@@ -49,31 +43,31 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <summary>
         /// Gets or sets the firewall rule's name.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets the namespace and type of the firewall Rule.
         /// </summary>
-        [JsonProperty(PropertyName = "type")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
 
         /// <summary>
         /// Gets or sets the firewall rule's subscription ID.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets the firewall rule's regional location.
         /// </summary>
-        [JsonProperty(PropertyName = "location")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "location")]
         public string Location { get; set; }
 
         /// <summary>
         /// Gets or sets the properties of the firewall rule.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties")]
         public FirewallRuleProperties Properties { get; set; }
 
     }

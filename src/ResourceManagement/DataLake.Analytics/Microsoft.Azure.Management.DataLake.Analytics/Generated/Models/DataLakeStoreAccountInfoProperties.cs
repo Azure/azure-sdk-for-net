@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Data Lake Store account properties information.
@@ -41,7 +35,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Gets or sets the optional suffix for the Data Lake Store account.
         /// </summary>
-        [JsonProperty(PropertyName = "suffix")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "suffix")]
         public string Suffix { get; set; }
 
     }

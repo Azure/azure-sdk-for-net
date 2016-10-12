@@ -8,20 +8,14 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A WebHDFS exception thrown indicating the append or read is from a bad
     /// offset. Thrown when a 400 error response code is returned for append
     /// and open operations (Bad request).
     /// </summary>
-    [JsonObject("BadOffsetException")]
+    [Newtonsoft.Json.JsonObject("BadOffsetException")]
     public partial class AdlsBadOffsetException : AdlsRemoteException
     {
         /// <summary>

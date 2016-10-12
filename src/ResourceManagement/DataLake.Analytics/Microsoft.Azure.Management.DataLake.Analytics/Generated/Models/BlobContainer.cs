@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Azure Storage blob container information.
@@ -46,25 +40,25 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Gets the name of the blob container.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
         /// Gets the unique identifier of the blob container.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
         /// Gets the type of the blob container.
         /// </summary>
-        [JsonProperty(PropertyName = "type")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
 
         /// <summary>
         /// Gets the properties of the blob container.
         /// </summary>
-        [JsonProperty(PropertyName = "properties")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties")]
         public BlobContainerProperties Properties { get; private set; }
 
     }

@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Data Lake Store filesystem error containing a specific WebHDFS
@@ -41,7 +35,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// Gets the object representing the actual WebHDFS exception being
         /// returned.
         /// </summary>
-        [JsonProperty(PropertyName = "RemoteException")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "RemoteException")]
         public AdlsRemoteException RemoteException { get; private set; }
 
     }

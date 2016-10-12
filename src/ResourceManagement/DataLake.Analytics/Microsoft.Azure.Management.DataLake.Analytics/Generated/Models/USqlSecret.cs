@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A Data Lake Analytics catalog U-SQL secret item.
@@ -41,7 +35,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <hostname>:<port></param>
         /// <param name="password">the password for the secret to pass
         /// in</param>
-        public USqlSecret(string computeAccountName = default(string), Guid? version = default(Guid?), string databaseName = default(string), string name = default(string), DateTimeOffset? creationTime = default(DateTimeOffset?), string uri = default(string), string password = default(string))
+        public USqlSecret(string computeAccountName = default(string), System.Guid? version = default(System.Guid?), string databaseName = default(string), string name = default(string), System.DateTimeOffset? creationTime = default(System.DateTimeOffset?), string uri = default(string), string password = default(string))
             : base(computeAccountName, version)
         {
             DatabaseName = databaseName;
@@ -54,33 +48,33 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Gets or sets the name of the database.
         /// </summary>
-        [JsonProperty(PropertyName = "databaseName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "databaseName")]
         public string DatabaseName { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the secret.
         /// </summary>
-        [JsonProperty(PropertyName = "secretName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "secretName")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the creation time of the credential object. This is
         /// the only information returned about a secret from a GET.
         /// </summary>
-        [JsonProperty(PropertyName = "creationTime")]
-        public DateTimeOffset? CreationTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "creationTime")]
+        public System.DateTimeOffset? CreationTime { get; set; }
 
         /// <summary>
         /// Gets or sets the URI identifier for the secret in the format
         /// &lt;hostname&gt;:&lt;port&gt;
         /// </summary>
-        [JsonProperty(PropertyName = "uri")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "uri")]
         public string Uri { get; set; }
 
         /// <summary>
         /// Gets or sets the password for the secret to pass in
         /// </summary>
-        [JsonProperty(PropertyName = "password")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "password")]
         public string Password { get; set; }
 
     }

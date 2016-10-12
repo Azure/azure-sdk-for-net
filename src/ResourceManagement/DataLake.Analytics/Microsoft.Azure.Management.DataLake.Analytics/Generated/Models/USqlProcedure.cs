@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A Data Lake Analytics catalog U-SQL procedure item.
@@ -38,7 +32,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <param name="name">the name of the procedure.</param>
         /// <param name="definition">the defined query of the
         /// procedure.</param>
-        public USqlProcedure(string computeAccountName = default(string), Guid? version = default(Guid?), string databaseName = default(string), string schemaName = default(string), string name = default(string), string definition = default(string))
+        public USqlProcedure(string computeAccountName = default(string), System.Guid? version = default(System.Guid?), string databaseName = default(string), string schemaName = default(string), string name = default(string), string definition = default(string))
             : base(computeAccountName, version)
         {
             DatabaseName = databaseName;
@@ -50,26 +44,26 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Gets or sets the name of the database.
         /// </summary>
-        [JsonProperty(PropertyName = "databaseName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "databaseName")]
         public string DatabaseName { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the schema associated with this procedure
         /// and database.
         /// </summary>
-        [JsonProperty(PropertyName = "schemaName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "schemaName")]
         public string SchemaName { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the procedure.
         /// </summary>
-        [JsonProperty(PropertyName = "procName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "procName")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the defined query of the procedure.
         /// </summary>
-        [JsonProperty(PropertyName = "definition")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "definition")]
         public string Definition { get; set; }
 
     }

@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     public partial class EncryptionIdentity
     {
@@ -33,7 +27,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// the encryption.</param>
         /// <param name="tenantId">The tenant identifier associated with the
         /// encryption.</param>
-        public EncryptionIdentity(EncryptionIdentityType? type = default(EncryptionIdentityType?), Guid? principalId = default(Guid?), Guid? tenantId = default(Guid?))
+        public EncryptionIdentity(EncryptionIdentityType? type = default(EncryptionIdentityType?), System.Guid? principalId = default(System.Guid?), System.Guid? tenantId = default(System.Guid?))
         {
             Type = type;
             PrincipalId = principalId;
@@ -45,20 +39,20 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// supported type is 'SystemAssigned'. Possible values include:
         /// 'SystemAssigned'
         /// </summary>
-        [JsonProperty(PropertyName = "type")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "type")]
         public EncryptionIdentityType? Type { get; set; }
 
         /// <summary>
         /// Gets the principal identifier associated with the encryption.
         /// </summary>
-        [JsonProperty(PropertyName = "principalId")]
-        public Guid? PrincipalId { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "principalId")]
+        public System.Guid? PrincipalId { get; private set; }
 
         /// <summary>
         /// Gets the tenant identifier associated with the encryption.
         /// </summary>
-        [JsonProperty(PropertyName = "tenantId")]
-        public Guid? TenantId { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "tenantId")]
+        public System.Guid? TenantId { get; private set; }
 
     }
 }

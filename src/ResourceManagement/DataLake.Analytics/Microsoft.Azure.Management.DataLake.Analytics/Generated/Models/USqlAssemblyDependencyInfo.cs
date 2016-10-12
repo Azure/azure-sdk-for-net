@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A Data Lake Analytics catalog U-SQL dependency information item.
@@ -38,7 +32,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Gets or sets the EntityId of the dependency.
         /// </summary>
-        [JsonProperty(PropertyName = "entityId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "entityId")]
         public EntityId EntityId { get; set; }
 
     }

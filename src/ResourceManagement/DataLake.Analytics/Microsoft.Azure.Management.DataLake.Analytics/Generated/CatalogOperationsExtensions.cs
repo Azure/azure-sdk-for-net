@@ -8,15 +8,9 @@
 
 namespace Microsoft.Azure.Management.DataLake.Analytics
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure.OData;
-    using Microsoft.Rest.Azure;
-    using Models;
+   using Microsoft.Rest.Azure;
+   using Models;
 
     /// <summary>
     /// Extension methods for CatalogOperations.
@@ -44,7 +38,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static USqlSecret CreateSecret(this ICatalogOperations operations, string accountName, string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).CreateSecretAsync(accountName, databaseName, secretName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).CreateSecretAsync(accountName, databaseName, secretName, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -69,7 +63,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlSecret> CreateSecretAsync(this ICatalogOperations operations, string accountName, string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<USqlSecret> CreateSecretAsync(this ICatalogOperations operations, string accountName, string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.CreateSecretWithHttpMessagesAsync(accountName, databaseName, secretName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -98,7 +92,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static USqlSecret UpdateSecret(this ICatalogOperations operations, string accountName, string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).UpdateSecretAsync(accountName, databaseName, secretName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).UpdateSecretAsync(accountName, databaseName, secretName, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -123,7 +117,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlSecret> UpdateSecretAsync(this ICatalogOperations operations, string accountName, string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<USqlSecret> UpdateSecretAsync(this ICatalogOperations operations, string accountName, string databaseName, string secretName, DataLakeAnalyticsCatalogSecretCreateOrUpdateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.UpdateSecretWithHttpMessagesAsync(accountName, databaseName, secretName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -148,7 +142,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static USqlSecret GetSecret(this ICatalogOperations operations, string accountName, string databaseName, string secretName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetSecretAsync(accountName, databaseName, secretName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).GetSecretAsync(accountName, databaseName, secretName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -169,7 +163,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlSecret> GetSecretAsync(this ICatalogOperations operations, string accountName, string databaseName, string secretName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<USqlSecret> GetSecretAsync(this ICatalogOperations operations, string accountName, string databaseName, string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetSecretWithHttpMessagesAsync(accountName, databaseName, secretName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -194,7 +188,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static void DeleteSecret(this ICatalogOperations operations, string accountName, string databaseName, string secretName)
             {
-                Task.Factory.StartNew(s => ((ICatalogOperations)s).DeleteSecretAsync(accountName, databaseName, secretName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).DeleteSecretAsync(accountName, databaseName, secretName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -215,7 +209,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteSecretAsync(this ICatalogOperations operations, string accountName, string databaseName, string secretName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task DeleteSecretAsync(this ICatalogOperations operations, string accountName, string databaseName, string secretName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.DeleteSecretWithHttpMessagesAsync(accountName, databaseName, secretName, null, cancellationToken).ConfigureAwait(false);
             }
@@ -234,7 +228,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static void DeleteAllSecrets(this ICatalogOperations operations, string accountName, string databaseName)
             {
-                Task.Factory.StartNew(s => ((ICatalogOperations)s).DeleteAllSecretsAsync(accountName, databaseName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).DeleteAllSecretsAsync(accountName, databaseName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -252,7 +246,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAllSecretsAsync(this ICatalogOperations operations, string accountName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task DeleteAllSecretsAsync(this ICatalogOperations operations, string accountName, string databaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.DeleteAllSecretsWithHttpMessagesAsync(accountName, databaseName, null, cancellationToken).ConfigureAwait(false);
             }
@@ -275,7 +269,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static USqlExternalDataSource GetExternalDataSource(this ICatalogOperations operations, string accountName, string databaseName, string externalDataSourceName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetExternalDataSourceAsync(accountName, databaseName, externalDataSourceName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).GetExternalDataSourceAsync(accountName, databaseName, externalDataSourceName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -297,7 +291,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlExternalDataSource> GetExternalDataSourceAsync(this ICatalogOperations operations, string accountName, string databaseName, string externalDataSourceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<USqlExternalDataSource> GetExternalDataSourceAsync(this ICatalogOperations operations, string accountName, string databaseName, string externalDataSourceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetExternalDataSourceWithHttpMessagesAsync(accountName, databaseName, externalDataSourceName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -330,9 +324,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<USqlExternalDataSource> ListExternalDataSources(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<USqlExternalDataSource> odataQuery = default(ODataQuery<USqlExternalDataSource>), string select = default(string), bool? count = default(bool?))
+            public static Microsoft.Rest.Azure.IPage<USqlExternalDataSource> ListExternalDataSources(this ICatalogOperations operations, string accountName, string databaseName, Microsoft.Rest.Azure.OData.ODataQuery<USqlExternalDataSource> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<USqlExternalDataSource>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListExternalDataSourcesAsync(accountName, databaseName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).ListExternalDataSourcesAsync(accountName, databaseName, odataQuery, select, count), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -363,7 +357,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlExternalDataSource>> ListExternalDataSourcesAsync(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<USqlExternalDataSource> odataQuery = default(ODataQuery<USqlExternalDataSource>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<USqlExternalDataSource>> ListExternalDataSourcesAsync(this ICatalogOperations operations, string accountName, string databaseName, Microsoft.Rest.Azure.OData.ODataQuery<USqlExternalDataSource> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<USqlExternalDataSource>), string select = default(string), bool? count = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListExternalDataSourcesWithHttpMessagesAsync(accountName, databaseName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -388,7 +382,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static USqlCredential GetCredential(this ICatalogOperations operations, string accountName, string databaseName, string credentialName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetCredentialAsync(accountName, databaseName, credentialName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).GetCredentialAsync(accountName, databaseName, credentialName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -409,7 +403,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlCredential> GetCredentialAsync(this ICatalogOperations operations, string accountName, string databaseName, string credentialName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<USqlCredential> GetCredentialAsync(this ICatalogOperations operations, string accountName, string databaseName, string credentialName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetCredentialWithHttpMessagesAsync(accountName, databaseName, credentialName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -441,9 +435,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<USqlCredential> ListCredentials(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<USqlCredential> odataQuery = default(ODataQuery<USqlCredential>), string select = default(string), bool? count = default(bool?))
+            public static Microsoft.Rest.Azure.IPage<USqlCredential> ListCredentials(this ICatalogOperations operations, string accountName, string databaseName, Microsoft.Rest.Azure.OData.ODataQuery<USqlCredential> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<USqlCredential>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListCredentialsAsync(accountName, databaseName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).ListCredentialsAsync(accountName, databaseName, odataQuery, select, count), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -473,7 +467,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlCredential>> ListCredentialsAsync(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<USqlCredential> odataQuery = default(ODataQuery<USqlCredential>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<USqlCredential>> ListCredentialsAsync(this ICatalogOperations operations, string accountName, string databaseName, Microsoft.Rest.Azure.OData.ODataQuery<USqlCredential> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<USqlCredential>), string select = default(string), bool? count = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListCredentialsWithHttpMessagesAsync(accountName, databaseName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -501,7 +495,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static USqlProcedure GetProcedure(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string procedureName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetProcedureAsync(accountName, databaseName, schemaName, procedureName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).GetProcedureAsync(accountName, databaseName, schemaName, procedureName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -525,7 +519,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlProcedure> GetProcedureAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string procedureName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<USqlProcedure> GetProcedureAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string procedureName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetProcedureWithHttpMessagesAsync(accountName, databaseName, schemaName, procedureName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -560,9 +554,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<USqlProcedure> ListProcedures(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, ODataQuery<USqlProcedure> odataQuery = default(ODataQuery<USqlProcedure>), string select = default(string), bool? count = default(bool?))
+            public static Microsoft.Rest.Azure.IPage<USqlProcedure> ListProcedures(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, Microsoft.Rest.Azure.OData.ODataQuery<USqlProcedure> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<USqlProcedure>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListProceduresAsync(accountName, databaseName, schemaName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).ListProceduresAsync(accountName, databaseName, schemaName, odataQuery, select, count), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -595,7 +589,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlProcedure>> ListProceduresAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, ODataQuery<USqlProcedure> odataQuery = default(ODataQuery<USqlProcedure>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<USqlProcedure>> ListProceduresAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, Microsoft.Rest.Azure.OData.ODataQuery<USqlProcedure> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<USqlProcedure>), string select = default(string), bool? count = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListProceduresWithHttpMessagesAsync(accountName, databaseName, schemaName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -623,7 +617,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static USqlTable GetTable(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetTableAsync(accountName, databaseName, schemaName, tableName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).GetTableAsync(accountName, databaseName, schemaName, tableName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -647,7 +641,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlTable> GetTableAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<USqlTable> GetTableAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetTableWithHttpMessagesAsync(accountName, databaseName, schemaName, tableName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -682,9 +676,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<USqlTable> ListTables(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, ODataQuery<USqlTable> odataQuery = default(ODataQuery<USqlTable>), string select = default(string), bool? count = default(bool?))
+            public static Microsoft.Rest.Azure.IPage<USqlTable> ListTables(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, Microsoft.Rest.Azure.OData.ODataQuery<USqlTable> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<USqlTable>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTablesAsync(accountName, databaseName, schemaName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTablesAsync(accountName, databaseName, schemaName, odataQuery, select, count), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -717,7 +711,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlTable>> ListTablesAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, ODataQuery<USqlTable> odataQuery = default(ODataQuery<USqlTable>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<USqlTable>> ListTablesAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, Microsoft.Rest.Azure.OData.ODataQuery<USqlTable> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<USqlTable>), string select = default(string), bool? count = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListTablesWithHttpMessagesAsync(accountName, databaseName, schemaName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -745,7 +739,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static USqlTableType GetTableType(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableTypeName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetTableTypeAsync(accountName, databaseName, schemaName, tableTypeName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).GetTableTypeAsync(accountName, databaseName, schemaName, tableTypeName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -769,7 +763,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlTableType> GetTableTypeAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableTypeName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<USqlTableType> GetTableTypeAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableTypeName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetTableTypeWithHttpMessagesAsync(accountName, databaseName, schemaName, tableTypeName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -804,9 +798,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<USqlTableType> ListTableTypes(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, ODataQuery<USqlTableType> odataQuery = default(ODataQuery<USqlTableType>), string select = default(string), bool? count = default(bool?))
+            public static Microsoft.Rest.Azure.IPage<USqlTableType> ListTableTypes(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, Microsoft.Rest.Azure.OData.ODataQuery<USqlTableType> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<USqlTableType>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTableTypesAsync(accountName, databaseName, schemaName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTableTypesAsync(accountName, databaseName, schemaName, odataQuery, select, count), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -839,7 +833,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlTableType>> ListTableTypesAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, ODataQuery<USqlTableType> odataQuery = default(ODataQuery<USqlTableType>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<USqlTableType>> ListTableTypesAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, Microsoft.Rest.Azure.OData.ODataQuery<USqlTableType> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<USqlTableType>), string select = default(string), bool? count = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListTableTypesWithHttpMessagesAsync(accountName, databaseName, schemaName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -867,7 +861,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static USqlView GetView(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string viewName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetViewAsync(accountName, databaseName, schemaName, viewName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).GetViewAsync(accountName, databaseName, schemaName, viewName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -891,7 +885,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlView> GetViewAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string viewName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<USqlView> GetViewAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string viewName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetViewWithHttpMessagesAsync(accountName, databaseName, schemaName, viewName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -926,9 +920,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<USqlView> ListViews(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, ODataQuery<USqlView> odataQuery = default(ODataQuery<USqlView>), string select = default(string), bool? count = default(bool?))
+            public static Microsoft.Rest.Azure.IPage<USqlView> ListViews(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, Microsoft.Rest.Azure.OData.ODataQuery<USqlView> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<USqlView>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListViewsAsync(accountName, databaseName, schemaName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).ListViewsAsync(accountName, databaseName, schemaName, odataQuery, select, count), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -961,7 +955,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlView>> ListViewsAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, ODataQuery<USqlView> odataQuery = default(ODataQuery<USqlView>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<USqlView>> ListViewsAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, Microsoft.Rest.Azure.OData.ODataQuery<USqlView> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<USqlView>), string select = default(string), bool? count = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListViewsWithHttpMessagesAsync(accountName, databaseName, schemaName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -993,7 +987,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static USqlTableStatistics GetTableStatistic(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, string statisticsName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetTableStatisticAsync(accountName, databaseName, schemaName, tableName, statisticsName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).GetTableStatisticAsync(accountName, databaseName, schemaName, tableName, statisticsName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1021,7 +1015,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlTableStatistics> GetTableStatisticAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, string statisticsName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<USqlTableStatistics> GetTableStatisticAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, string statisticsName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetTableStatisticWithHttpMessagesAsync(accountName, databaseName, schemaName, tableName, statisticsName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -1060,9 +1054,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<USqlTableStatistics> ListTableStatistics(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, ODataQuery<USqlTableStatistics> odataQuery = default(ODataQuery<USqlTableStatistics>), string select = default(string), bool? count = default(bool?))
+            public static Microsoft.Rest.Azure.IPage<USqlTableStatistics> ListTableStatistics(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, Microsoft.Rest.Azure.OData.ODataQuery<USqlTableStatistics> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<USqlTableStatistics>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTableStatisticsAsync(accountName, databaseName, schemaName, tableName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTableStatisticsAsync(accountName, databaseName, schemaName, tableName, odataQuery, select, count), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1099,7 +1093,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlTableStatistics>> ListTableStatisticsAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, ODataQuery<USqlTableStatistics> odataQuery = default(ODataQuery<USqlTableStatistics>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<USqlTableStatistics>> ListTableStatisticsAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, Microsoft.Rest.Azure.OData.ODataQuery<USqlTableStatistics> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<USqlTableStatistics>), string select = default(string), bool? count = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListTableStatisticsWithHttpMessagesAsync(accountName, databaseName, schemaName, tableName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -1131,7 +1125,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static USqlTablePartition GetTablePartition(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, string partitionName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetTablePartitionAsync(accountName, databaseName, schemaName, tableName, partitionName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).GetTablePartitionAsync(accountName, databaseName, schemaName, tableName, partitionName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1159,7 +1153,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlTablePartition> GetTablePartitionAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, string partitionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<USqlTablePartition> GetTablePartitionAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, string partitionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetTablePartitionWithHttpMessagesAsync(accountName, databaseName, schemaName, tableName, partitionName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -1198,9 +1192,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<USqlTablePartition> ListTablePartitions(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, ODataQuery<USqlTablePartition> odataQuery = default(ODataQuery<USqlTablePartition>), string select = default(string), bool? count = default(bool?))
+            public static Microsoft.Rest.Azure.IPage<USqlTablePartition> ListTablePartitions(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, Microsoft.Rest.Azure.OData.ODataQuery<USqlTablePartition> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<USqlTablePartition>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTablePartitionsAsync(accountName, databaseName, schemaName, tableName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTablePartitionsAsync(accountName, databaseName, schemaName, tableName, odataQuery, select, count), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1237,7 +1231,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlTablePartition>> ListTablePartitionsAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, ODataQuery<USqlTablePartition> odataQuery = default(ODataQuery<USqlTablePartition>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<USqlTablePartition>> ListTablePartitionsAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableName, Microsoft.Rest.Azure.OData.ODataQuery<USqlTablePartition> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<USqlTablePartition>), string select = default(string), bool? count = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListTablePartitionsWithHttpMessagesAsync(accountName, databaseName, schemaName, tableName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -1273,9 +1267,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<USqlType> ListTypes(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, ODataQuery<USqlType> odataQuery = default(ODataQuery<USqlType>), string select = default(string), bool? count = default(bool?))
+            public static Microsoft.Rest.Azure.IPage<USqlType> ListTypes(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, Microsoft.Rest.Azure.OData.ODataQuery<USqlType> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<USqlType>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTypesAsync(accountName, databaseName, schemaName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTypesAsync(accountName, databaseName, schemaName, odataQuery, select, count), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1309,7 +1303,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlType>> ListTypesAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, ODataQuery<USqlType> odataQuery = default(ODataQuery<USqlType>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<USqlType>> ListTypesAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, Microsoft.Rest.Azure.OData.ODataQuery<USqlType> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<USqlType>), string select = default(string), bool? count = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListTypesWithHttpMessagesAsync(accountName, databaseName, schemaName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -1338,7 +1332,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static USqlTableValuedFunction GetTableValuedFunction(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableValuedFunctionName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetTableValuedFunctionAsync(accountName, databaseName, schemaName, tableValuedFunctionName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).GetTableValuedFunctionAsync(accountName, databaseName, schemaName, tableValuedFunctionName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1363,7 +1357,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlTableValuedFunction> GetTableValuedFunctionAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableValuedFunctionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<USqlTableValuedFunction> GetTableValuedFunctionAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, string tableValuedFunctionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetTableValuedFunctionWithHttpMessagesAsync(accountName, databaseName, schemaName, tableValuedFunctionName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -1399,9 +1393,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<USqlTableValuedFunction> ListTableValuedFunctions(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, ODataQuery<USqlTableValuedFunction> odataQuery = default(ODataQuery<USqlTableValuedFunction>), string select = default(string), bool? count = default(bool?))
+            public static Microsoft.Rest.Azure.IPage<USqlTableValuedFunction> ListTableValuedFunctions(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, Microsoft.Rest.Azure.OData.ODataQuery<USqlTableValuedFunction> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<USqlTableValuedFunction>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTableValuedFunctionsAsync(accountName, databaseName, schemaName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTableValuedFunctionsAsync(accountName, databaseName, schemaName, odataQuery, select, count), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1435,7 +1429,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlTableValuedFunction>> ListTableValuedFunctionsAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, ODataQuery<USqlTableValuedFunction> odataQuery = default(ODataQuery<USqlTableValuedFunction>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<USqlTableValuedFunction>> ListTableValuedFunctionsAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, Microsoft.Rest.Azure.OData.ODataQuery<USqlTableValuedFunction> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<USqlTableValuedFunction>), string select = default(string), bool? count = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListTableValuedFunctionsWithHttpMessagesAsync(accountName, databaseName, schemaName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -1460,7 +1454,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static USqlAssembly GetAssembly(this ICatalogOperations operations, string accountName, string databaseName, string assemblyName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetAssemblyAsync(accountName, databaseName, assemblyName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).GetAssemblyAsync(accountName, databaseName, assemblyName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1481,7 +1475,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlAssembly> GetAssemblyAsync(this ICatalogOperations operations, string accountName, string databaseName, string assemblyName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<USqlAssembly> GetAssemblyAsync(this ICatalogOperations operations, string accountName, string databaseName, string assemblyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetAssemblyWithHttpMessagesAsync(accountName, databaseName, assemblyName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -1513,9 +1507,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<USqlAssemblyClr> ListAssemblies(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<USqlAssembly> odataQuery = default(ODataQuery<USqlAssembly>), string select = default(string), bool? count = default(bool?))
+            public static Microsoft.Rest.Azure.IPage<USqlAssemblyClr> ListAssemblies(this ICatalogOperations operations, string accountName, string databaseName, Microsoft.Rest.Azure.OData.ODataQuery<USqlAssembly> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<USqlAssembly>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListAssembliesAsync(accountName, databaseName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).ListAssembliesAsync(accountName, databaseName, odataQuery, select, count), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1545,7 +1539,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlAssemblyClr>> ListAssembliesAsync(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<USqlAssembly> odataQuery = default(ODataQuery<USqlAssembly>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<USqlAssemblyClr>> ListAssembliesAsync(this ICatalogOperations operations, string accountName, string databaseName, Microsoft.Rest.Azure.OData.ODataQuery<USqlAssembly> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<USqlAssembly>), string select = default(string), bool? count = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListAssembliesWithHttpMessagesAsync(accountName, databaseName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -1570,7 +1564,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static USqlSchema GetSchema(this ICatalogOperations operations, string accountName, string databaseName, string schemaName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetSchemaAsync(accountName, databaseName, schemaName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).GetSchemaAsync(accountName, databaseName, schemaName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1591,7 +1585,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlSchema> GetSchemaAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<USqlSchema> GetSchemaAsync(this ICatalogOperations operations, string accountName, string databaseName, string schemaName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetSchemaWithHttpMessagesAsync(accountName, databaseName, schemaName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -1623,9 +1617,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<USqlSchema> ListSchemas(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<USqlSchema> odataQuery = default(ODataQuery<USqlSchema>), string select = default(string), bool? count = default(bool?))
+            public static Microsoft.Rest.Azure.IPage<USqlSchema> ListSchemas(this ICatalogOperations operations, string accountName, string databaseName, Microsoft.Rest.Azure.OData.ODataQuery<USqlSchema> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<USqlSchema>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListSchemasAsync(accountName, databaseName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).ListSchemasAsync(accountName, databaseName, odataQuery, select, count), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1655,7 +1649,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlSchema>> ListSchemasAsync(this ICatalogOperations operations, string accountName, string databaseName, ODataQuery<USqlSchema> odataQuery = default(ODataQuery<USqlSchema>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<USqlSchema>> ListSchemasAsync(this ICatalogOperations operations, string accountName, string databaseName, Microsoft.Rest.Azure.OData.ODataQuery<USqlSchema> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<USqlSchema>), string select = default(string), bool? count = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListSchemasWithHttpMessagesAsync(accountName, databaseName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -1677,7 +1671,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static USqlDatabase GetDatabase(this ICatalogOperations operations, string accountName, string databaseName)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).GetDatabaseAsync(accountName, databaseName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).GetDatabaseAsync(accountName, databaseName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1695,7 +1689,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<USqlDatabase> GetDatabaseAsync(this ICatalogOperations operations, string accountName, string databaseName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<USqlDatabase> GetDatabaseAsync(this ICatalogOperations operations, string accountName, string databaseName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetDatabaseWithHttpMessagesAsync(accountName, databaseName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -1724,9 +1718,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// resources included with the resources in the response, e.g.
             /// Categories?$count=true. Optional.
             /// </param>
-            public static IPage<USqlDatabase> ListDatabases(this ICatalogOperations operations, string accountName, ODataQuery<USqlDatabase> odataQuery = default(ODataQuery<USqlDatabase>), string select = default(string), bool? count = default(bool?))
+            public static Microsoft.Rest.Azure.IPage<USqlDatabase> ListDatabases(this ICatalogOperations operations, string accountName, Microsoft.Rest.Azure.OData.ODataQuery<USqlDatabase> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<USqlDatabase>), string select = default(string), bool? count = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListDatabasesAsync(accountName, odataQuery, select, count), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).ListDatabasesAsync(accountName, odataQuery, select, count), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1753,7 +1747,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlDatabase>> ListDatabasesAsync(this ICatalogOperations operations, string accountName, ODataQuery<USqlDatabase> odataQuery = default(ODataQuery<USqlDatabase>), string select = default(string), bool? count = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<USqlDatabase>> ListDatabasesAsync(this ICatalogOperations operations, string accountName, Microsoft.Rest.Azure.OData.ODataQuery<USqlDatabase> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<USqlDatabase>), string select = default(string), bool? count = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListDatabasesWithHttpMessagesAsync(accountName, odataQuery, select, count, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -1771,9 +1765,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<USqlExternalDataSource> ListExternalDataSourcesNext(this ICatalogOperations operations, string nextPageLink)
+            public static Microsoft.Rest.Azure.IPage<USqlExternalDataSource> ListExternalDataSourcesNext(this ICatalogOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListExternalDataSourcesNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).ListExternalDataSourcesNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1789,7 +1783,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlExternalDataSource>> ListExternalDataSourcesNextAsync(this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<USqlExternalDataSource>> ListExternalDataSourcesNextAsync(this ICatalogOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListExternalDataSourcesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -1806,9 +1800,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<USqlCredential> ListCredentialsNext(this ICatalogOperations operations, string nextPageLink)
+            public static Microsoft.Rest.Azure.IPage<USqlCredential> ListCredentialsNext(this ICatalogOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListCredentialsNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).ListCredentialsNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1823,7 +1817,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlCredential>> ListCredentialsNextAsync(this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<USqlCredential>> ListCredentialsNextAsync(this ICatalogOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListCredentialsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -1840,9 +1834,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<USqlProcedure> ListProceduresNext(this ICatalogOperations operations, string nextPageLink)
+            public static Microsoft.Rest.Azure.IPage<USqlProcedure> ListProceduresNext(this ICatalogOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListProceduresNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).ListProceduresNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1857,7 +1851,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlProcedure>> ListProceduresNextAsync(this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<USqlProcedure>> ListProceduresNextAsync(this ICatalogOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListProceduresNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -1874,9 +1868,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<USqlTable> ListTablesNext(this ICatalogOperations operations, string nextPageLink)
+            public static Microsoft.Rest.Azure.IPage<USqlTable> ListTablesNext(this ICatalogOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTablesNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTablesNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1891,7 +1885,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlTable>> ListTablesNextAsync(this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<USqlTable>> ListTablesNextAsync(this ICatalogOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListTablesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -1908,9 +1902,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<USqlTableType> ListTableTypesNext(this ICatalogOperations operations, string nextPageLink)
+            public static Microsoft.Rest.Azure.IPage<USqlTableType> ListTableTypesNext(this ICatalogOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTableTypesNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTableTypesNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1925,7 +1919,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlTableType>> ListTableTypesNextAsync(this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<USqlTableType>> ListTableTypesNextAsync(this ICatalogOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListTableTypesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -1942,9 +1936,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<USqlView> ListViewsNext(this ICatalogOperations operations, string nextPageLink)
+            public static Microsoft.Rest.Azure.IPage<USqlView> ListViewsNext(this ICatalogOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListViewsNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).ListViewsNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1959,7 +1953,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlView>> ListViewsNextAsync(this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<USqlView>> ListViewsNextAsync(this ICatalogOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListViewsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -1977,9 +1971,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<USqlTableStatistics> ListTableStatisticsNext(this ICatalogOperations operations, string nextPageLink)
+            public static Microsoft.Rest.Azure.IPage<USqlTableStatistics> ListTableStatisticsNext(this ICatalogOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTableStatisticsNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTableStatisticsNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1995,7 +1989,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlTableStatistics>> ListTableStatisticsNextAsync(this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<USqlTableStatistics>> ListTableStatisticsNextAsync(this ICatalogOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListTableStatisticsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -2013,9 +2007,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<USqlTablePartition> ListTablePartitionsNext(this ICatalogOperations operations, string nextPageLink)
+            public static Microsoft.Rest.Azure.IPage<USqlTablePartition> ListTablePartitionsNext(this ICatalogOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTablePartitionsNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTablePartitionsNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2031,7 +2025,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlTablePartition>> ListTablePartitionsNextAsync(this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<USqlTablePartition>> ListTablePartitionsNextAsync(this ICatalogOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListTablePartitionsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -2049,9 +2043,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<USqlType> ListTypesNext(this ICatalogOperations operations, string nextPageLink)
+            public static Microsoft.Rest.Azure.IPage<USqlType> ListTypesNext(this ICatalogOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTypesNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTypesNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2067,7 +2061,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlType>> ListTypesNextAsync(this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<USqlType>> ListTypesNextAsync(this ICatalogOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListTypesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -2085,9 +2079,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<USqlTableValuedFunction> ListTableValuedFunctionsNext(this ICatalogOperations operations, string nextPageLink)
+            public static Microsoft.Rest.Azure.IPage<USqlTableValuedFunction> ListTableValuedFunctionsNext(this ICatalogOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTableValuedFunctionsNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).ListTableValuedFunctionsNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2103,7 +2097,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlTableValuedFunction>> ListTableValuedFunctionsNextAsync(this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<USqlTableValuedFunction>> ListTableValuedFunctionsNextAsync(this ICatalogOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListTableValuedFunctionsNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -2120,9 +2114,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<USqlAssemblyClr> ListAssembliesNext(this ICatalogOperations operations, string nextPageLink)
+            public static Microsoft.Rest.Azure.IPage<USqlAssemblyClr> ListAssembliesNext(this ICatalogOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListAssembliesNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).ListAssembliesNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2137,7 +2131,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlAssemblyClr>> ListAssembliesNextAsync(this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<USqlAssemblyClr>> ListAssembliesNextAsync(this ICatalogOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListAssembliesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -2154,9 +2148,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<USqlSchema> ListSchemasNext(this ICatalogOperations operations, string nextPageLink)
+            public static Microsoft.Rest.Azure.IPage<USqlSchema> ListSchemasNext(this ICatalogOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListSchemasNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).ListSchemasNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2171,7 +2165,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlSchema>> ListSchemasNextAsync(this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<USqlSchema>> ListSchemasNextAsync(this ICatalogOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListSchemasNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -2188,9 +2182,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<USqlDatabase> ListDatabasesNext(this ICatalogOperations operations, string nextPageLink)
+            public static Microsoft.Rest.Azure.IPage<USqlDatabase> ListDatabasesNext(this ICatalogOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ICatalogOperations)s).ListDatabasesNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICatalogOperations)s).ListDatabasesNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -2205,7 +2199,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<USqlDatabase>> ListDatabasesNextAsync(this ICatalogOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<USqlDatabase>> ListDatabasesNextAsync(this ICatalogOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListDatabasesNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

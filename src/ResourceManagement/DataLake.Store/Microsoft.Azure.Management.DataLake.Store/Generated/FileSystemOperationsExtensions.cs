@@ -8,14 +8,9 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
-    using Models;
+   using Microsoft.Rest.Azure;
+   using Models;
 
     /// <summary>
     /// Extension methods for FileSystemOperations.
@@ -24,9 +19,12 @@ namespace Microsoft.Azure.Management.DataLake.Store
     {
             /// <summary>
             /// Appends to the specified file. This method supports multiple concurrent
-            /// appends to the file. NOTE: Concurrent append and normal (serial) append
-            /// CANNOT be used interchangeably. Once a file has been appended to using
-            /// either append option, it can only be appended to using that append option.
+            /// appends to the file. NOTE: ConcurrentAppend and normal (serial) Append
+            /// CANNOT be used interchangeably; once a file has been appended to using
+            /// either of these append options, it can only be appended to using that
+            /// append option. ConcurrentAppend DOES NOT guarantee order and can result
+            /// in duplicated data landing in the target file. In order to close a file
+            /// after using ConcurrentAppend, call the Flush method.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -48,14 +46,17 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static void ConcurrentAppend(this IFileSystemOperations operations, string accountName, string filePath, System.IO.Stream streamContents, AppendModeType? appendMode = default(AppendModeType?))
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).ConcurrentAppendAsync(accountName, filePath, streamContents, appendMode), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IFileSystemOperations)s).ConcurrentAppendAsync(accountName, filePath, streamContents, appendMode), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
             /// Appends to the specified file. This method supports multiple concurrent
-            /// appends to the file. NOTE: Concurrent append and normal (serial) append
-            /// CANNOT be used interchangeably. Once a file has been appended to using
-            /// either append option, it can only be appended to using that append option.
+            /// appends to the file. NOTE: ConcurrentAppend and normal (serial) Append
+            /// CANNOT be used interchangeably; once a file has been appended to using
+            /// either of these append options, it can only be appended to using that
+            /// append option. ConcurrentAppend DOES NOT guarantee order and can result
+            /// in duplicated data landing in the target file. In order to close a file
+            /// after using ConcurrentAppend, call the Flush method.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -78,7 +79,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ConcurrentAppendAsync(this IFileSystemOperations operations, string accountName, string filePath, System.IO.Stream streamContents, AppendModeType? appendMode = default(AppendModeType?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task ConcurrentAppendAsync(this IFileSystemOperations operations, string accountName, string filePath, System.IO.Stream streamContents, AppendModeType? appendMode = default(AppendModeType?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.ConcurrentAppendWithHttpMessagesAsync(accountName, filePath, streamContents, appendMode, null, cancellationToken).ConfigureAwait(false);
             }
@@ -113,7 +114,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static void SetFileExpiry(this IFileSystemOperations operations, string accountName, string filePath, ExpiryOptionType expiryOption, long? expireTime = default(long?))
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).SetFileExpiryAsync(accountName, filePath, expiryOption, expireTime), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IFileSystemOperations)s).SetFileExpiryAsync(accountName, filePath, expiryOption, expireTime), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -147,7 +148,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task SetFileExpiryAsync(this IFileSystemOperations operations, string accountName, string filePath, ExpiryOptionType expiryOption, long? expireTime = default(long?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task SetFileExpiryAsync(this IFileSystemOperations operations, string accountName, string filePath, ExpiryOptionType expiryOption, long? expireTime = default(long?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.SetFileExpiryWithHttpMessagesAsync(accountName, filePath, expiryOption, expireTime, null, cancellationToken).ConfigureAwait(false);
             }
@@ -171,7 +172,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static void CheckAccess(this IFileSystemOperations operations, string accountName, string path, string fsaction = default(string))
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).CheckAccessAsync(accountName, path, fsaction), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IFileSystemOperations)s).CheckAccessAsync(accountName, path, fsaction), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -194,7 +195,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CheckAccessAsync(this IFileSystemOperations operations, string accountName, string path, string fsaction = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task CheckAccessAsync(this IFileSystemOperations operations, string accountName, string path, string fsaction = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.CheckAccessWithHttpMessagesAsync(accountName, path, fsaction, null, cancellationToken).ConfigureAwait(false);
             }
@@ -213,7 +214,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static FileOperationResult Mkdirs(this IFileSystemOperations operations, string accountName, string path)
             {
-                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).MkdirsAsync(accountName, path), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IFileSystemOperations)s).MkdirsAsync(accountName, path), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -231,7 +232,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FileOperationResult> MkdirsAsync(this IFileSystemOperations operations, string accountName, string path, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<FileOperationResult> MkdirsAsync(this IFileSystemOperations operations, string accountName, string path, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.MkdirsWithHttpMessagesAsync(accountName, path, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -257,9 +258,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// A list of comma seperated Data Lake Store paths (starting with '/') of the
             /// files to concatenate, in the order in which they should be concatenated.
             /// </param>
-            public static void Concat(this IFileSystemOperations operations, string accountName, string destinationPath, IList<string> sources)
+            public static void Concat(this IFileSystemOperations operations, string accountName, string destinationPath, System.Collections.Generic.IList<string> sources)
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).ConcatAsync(accountName, destinationPath, sources), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IFileSystemOperations)s).ConcatAsync(accountName, destinationPath, sources), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -283,7 +284,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ConcatAsync(this IFileSystemOperations operations, string accountName, string destinationPath, IList<string> sources, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task ConcatAsync(this IFileSystemOperations operations, string accountName, string destinationPath, System.Collections.Generic.IList<string> sources, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.ConcatWithHttpMessagesAsync(accountName, destinationPath, sources, null, cancellationToken).ConfigureAwait(false);
             }
@@ -319,7 +320,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static void MsConcat(this IFileSystemOperations operations, string accountName, string msConcatDestinationPath, System.IO.Stream streamContents, bool? deleteSourceDirectory = default(bool?))
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).MsConcatAsync(accountName, msConcatDestinationPath, streamContents, deleteSourceDirectory), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IFileSystemOperations)s).MsConcatAsync(accountName, msConcatDestinationPath, streamContents, deleteSourceDirectory), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -354,7 +355,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task MsConcatAsync(this IFileSystemOperations operations, string accountName, string msConcatDestinationPath, System.IO.Stream streamContents, bool? deleteSourceDirectory = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task MsConcatAsync(this IFileSystemOperations operations, string accountName, string msConcatDestinationPath, System.IO.Stream streamContents, bool? deleteSourceDirectory = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.MsConcatWithHttpMessagesAsync(accountName, msConcatDestinationPath, streamContents, deleteSourceDirectory, null, cancellationToken).ConfigureAwait(false);
             }
@@ -389,7 +390,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static FileStatusesResult ListFileStatus(this IFileSystemOperations operations, string accountName, string listFilePath, int? listSize = default(int?), string listAfter = default(string), string listBefore = default(string))
             {
-                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).ListFileStatusAsync(accountName, listFilePath, listSize, listAfter, listBefore), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IFileSystemOperations)s).ListFileStatusAsync(accountName, listFilePath, listSize, listAfter, listBefore), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -423,7 +424,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FileStatusesResult> ListFileStatusAsync(this IFileSystemOperations operations, string accountName, string listFilePath, int? listSize = default(int?), string listAfter = default(string), string listBefore = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<FileStatusesResult> ListFileStatusAsync(this IFileSystemOperations operations, string accountName, string listFilePath, int? listSize = default(int?), string listAfter = default(string), string listBefore = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListFileStatusWithHttpMessagesAsync(accountName, listFilePath, listSize, listAfter, listBefore, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -446,7 +447,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static ContentSummaryResult GetContentSummary(this IFileSystemOperations operations, string accountName, string getContentSummaryFilePath)
             {
-                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).GetContentSummaryAsync(accountName, getContentSummaryFilePath), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IFileSystemOperations)s).GetContentSummaryAsync(accountName, getContentSummaryFilePath), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -465,7 +466,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ContentSummaryResult> GetContentSummaryAsync(this IFileSystemOperations operations, string accountName, string getContentSummaryFilePath, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<ContentSummaryResult> GetContentSummaryAsync(this IFileSystemOperations operations, string accountName, string getContentSummaryFilePath, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetContentSummaryWithHttpMessagesAsync(accountName, getContentSummaryFilePath, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -488,7 +489,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static FileStatusResult GetFileStatus(this IFileSystemOperations operations, string accountName, string getFilePath)
             {
-                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).GetFileStatusAsync(accountName, getFilePath), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IFileSystemOperations)s).GetFileStatusAsync(accountName, getFilePath), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -507,12 +508,53 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FileStatusResult> GetFileStatusAsync(this IFileSystemOperations operations, string accountName, string getFilePath, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<FileStatusResult> GetFileStatusAsync(this IFileSystemOperations operations, string accountName, string getFilePath, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetFileStatusWithHttpMessagesAsync(accountName, getFilePath, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Flushes the specified file to the store. This forces an update to the
+            /// metadata of the file (returned from GetFileStatus), and is required by
+            /// ConcurrentAppend once the file is done to populate finalized metadata.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Store account to execute filesystem operations on.
+            /// </param>
+            /// <param name='flushFilePath'>
+            /// The Data Lake Store path (starting with '/') of the file to which to flush.
+            /// </param>
+            public static void Flush(this IFileSystemOperations operations, string accountName, string flushFilePath)
+            {
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IFileSystemOperations)s).FlushAsync(accountName, flushFilePath), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Flushes the specified file to the store. This forces an update to the
+            /// metadata of the file (returned from GetFileStatus), and is required by
+            /// ConcurrentAppend once the file is done to populate finalized metadata.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='accountName'>
+            /// The Azure Data Lake Store account to execute filesystem operations on.
+            /// </param>
+            /// <param name='flushFilePath'>
+            /// The Data Lake Store path (starting with '/') of the file to which to flush.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task FlushAsync(this IFileSystemOperations operations, string accountName, string flushFilePath, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                await operations.FlushWithHttpMessagesAsync(accountName, flushFilePath, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -542,7 +584,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static void Append(this IFileSystemOperations operations, string accountName, string directFilePath, System.IO.Stream streamContents, long? offset = default(long?))
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).AppendAsync(accountName, directFilePath, streamContents, offset), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IFileSystemOperations)s).AppendAsync(accountName, directFilePath, streamContents, offset), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -573,7 +615,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task AppendAsync(this IFileSystemOperations operations, string accountName, string directFilePath, System.IO.Stream streamContents, long? offset = default(long?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task AppendAsync(this IFileSystemOperations operations, string accountName, string directFilePath, System.IO.Stream streamContents, long? offset = default(long?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.AppendWithHttpMessagesAsync(accountName, directFilePath, streamContents, offset, null, cancellationToken).ConfigureAwait(false);
             }
@@ -599,7 +641,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static void Create(this IFileSystemOperations operations, string accountName, string directFilePath, System.IO.Stream streamContents = default(System.IO.Stream), bool? overwrite = default(bool?))
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).CreateAsync(accountName, directFilePath, streamContents, overwrite), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IFileSystemOperations)s).CreateAsync(accountName, directFilePath, streamContents, overwrite), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -624,7 +666,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CreateAsync(this IFileSystemOperations operations, string accountName, string directFilePath, System.IO.Stream streamContents = default(System.IO.Stream), bool? overwrite = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task CreateAsync(this IFileSystemOperations operations, string accountName, string directFilePath, System.IO.Stream streamContents = default(System.IO.Stream), bool? overwrite = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.CreateWithHttpMessagesAsync(accountName, directFilePath, streamContents, overwrite, null, cancellationToken).ConfigureAwait(false);
             }
@@ -647,7 +689,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static System.IO.Stream Open(this IFileSystemOperations operations, string accountName, string directFilePath, long? length = default(long?), long? offset = default(long?))
             {
-                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).OpenAsync(accountName, directFilePath, length, offset), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IFileSystemOperations)s).OpenAsync(accountName, directFilePath, length, offset), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -669,7 +711,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<System.IO.Stream> OpenAsync(this IFileSystemOperations operations, string accountName, string directFilePath, long? length = default(long?), long? offset = default(long?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<System.IO.Stream> OpenAsync(this IFileSystemOperations operations, string accountName, string directFilePath, long? length = default(long?), long? offset = default(long?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 var _result = await operations.OpenWithHttpMessagesAsync(accountName, directFilePath, length, offset, null, cancellationToken).ConfigureAwait(false);
                 _result.Request.Dispose();
@@ -695,7 +737,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static void SetAcl(this IFileSystemOperations operations, string accountName, string setAclFilePath, string aclspec)
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).SetAclAsync(accountName, setAclFilePath, aclspec), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IFileSystemOperations)s).SetAclAsync(accountName, setAclFilePath, aclspec), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -718,7 +760,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task SetAclAsync(this IFileSystemOperations operations, string accountName, string setAclFilePath, string aclspec, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task SetAclAsync(this IFileSystemOperations operations, string accountName, string setAclFilePath, string aclspec, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.SetAclWithHttpMessagesAsync(accountName, setAclFilePath, aclspec, null, cancellationToken).ConfigureAwait(false);
             }
@@ -742,7 +784,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static void ModifyAclEntries(this IFileSystemOperations operations, string accountName, string modifyAclFilePath, string aclspec)
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).ModifyAclEntriesAsync(accountName, modifyAclFilePath, aclspec), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IFileSystemOperations)s).ModifyAclEntriesAsync(accountName, modifyAclFilePath, aclspec), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -765,7 +807,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ModifyAclEntriesAsync(this IFileSystemOperations operations, string accountName, string modifyAclFilePath, string aclspec, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task ModifyAclEntriesAsync(this IFileSystemOperations operations, string accountName, string modifyAclFilePath, string aclspec, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.ModifyAclEntriesWithHttpMessagesAsync(accountName, modifyAclFilePath, aclspec, null, cancellationToken).ConfigureAwait(false);
             }
@@ -789,7 +831,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static void RemoveAclEntries(this IFileSystemOperations operations, string accountName, string removeAclFilePath, string aclspec)
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).RemoveAclEntriesAsync(accountName, removeAclFilePath, aclspec), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IFileSystemOperations)s).RemoveAclEntriesAsync(accountName, removeAclFilePath, aclspec), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -812,7 +854,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task RemoveAclEntriesAsync(this IFileSystemOperations operations, string accountName, string removeAclFilePath, string aclspec, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task RemoveAclEntriesAsync(this IFileSystemOperations operations, string accountName, string removeAclFilePath, string aclspec, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.RemoveAclEntriesWithHttpMessagesAsync(accountName, removeAclFilePath, aclspec, null, cancellationToken).ConfigureAwait(false);
             }
@@ -833,7 +875,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static void RemoveDefaultAcl(this IFileSystemOperations operations, string accountName, string defaultAclFilePath)
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).RemoveDefaultAclAsync(accountName, defaultAclFilePath), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IFileSystemOperations)s).RemoveDefaultAclAsync(accountName, defaultAclFilePath), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -853,7 +895,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task RemoveDefaultAclAsync(this IFileSystemOperations operations, string accountName, string defaultAclFilePath, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task RemoveDefaultAclAsync(this IFileSystemOperations operations, string accountName, string defaultAclFilePath, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.RemoveDefaultAclWithHttpMessagesAsync(accountName, defaultAclFilePath, null, cancellationToken).ConfigureAwait(false);
             }
@@ -874,7 +916,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static void RemoveAcl(this IFileSystemOperations operations, string accountName, string aclFilePath)
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).RemoveAclAsync(accountName, aclFilePath), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IFileSystemOperations)s).RemoveAclAsync(accountName, aclFilePath), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -894,7 +936,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task RemoveAclAsync(this IFileSystemOperations operations, string accountName, string aclFilePath, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task RemoveAclAsync(this IFileSystemOperations operations, string accountName, string aclFilePath, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.RemoveAclWithHttpMessagesAsync(accountName, aclFilePath, null, cancellationToken).ConfigureAwait(false);
             }
@@ -914,7 +956,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static AclStatusResult GetAclStatus(this IFileSystemOperations operations, string accountName, string aclFilePath)
             {
-                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).GetAclStatusAsync(accountName, aclFilePath), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IFileSystemOperations)s).GetAclStatusAsync(accountName, aclFilePath), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -933,7 +975,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AclStatusResult> GetAclStatusAsync(this IFileSystemOperations operations, string accountName, string aclFilePath, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<AclStatusResult> GetAclStatusAsync(this IFileSystemOperations operations, string accountName, string aclFilePath, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetAclStatusWithHttpMessagesAsync(accountName, aclFilePath, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -959,7 +1001,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static FileOperationResult Delete(this IFileSystemOperations operations, string accountName, string filePath, bool? recursive = default(bool?))
             {
-                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).DeleteAsync(accountName, filePath, recursive), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IFileSystemOperations)s).DeleteAsync(accountName, filePath, recursive), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -981,7 +1023,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FileOperationResult> DeleteAsync(this IFileSystemOperations operations, string accountName, string filePath, bool? recursive = default(bool?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<FileOperationResult> DeleteAsync(this IFileSystemOperations operations, string accountName, string filePath, bool? recursive = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.DeleteWithHttpMessagesAsync(accountName, filePath, recursive, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -1007,7 +1049,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static FileOperationResult Rename(this IFileSystemOperations operations, string accountName, string renameFilePath, string destination)
             {
-                return Task.Factory.StartNew(s => ((IFileSystemOperations)s).RenameAsync(accountName, renameFilePath, destination), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IFileSystemOperations)s).RenameAsync(accountName, renameFilePath, destination), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1029,7 +1071,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FileOperationResult> RenameAsync(this IFileSystemOperations operations, string accountName, string renameFilePath, string destination, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<FileOperationResult> RenameAsync(this IFileSystemOperations operations, string accountName, string renameFilePath, string destination, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.RenameWithHttpMessagesAsync(accountName, renameFilePath, destination, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -1060,7 +1102,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static void SetOwner(this IFileSystemOperations operations, string accountName, string setOwnerFilePath, string owner = default(string), string group = default(string))
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).SetOwnerAsync(accountName, setOwnerFilePath, owner, group), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IFileSystemOperations)s).SetOwnerAsync(accountName, setOwnerFilePath, owner, group), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1087,7 +1129,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task SetOwnerAsync(this IFileSystemOperations operations, string accountName, string setOwnerFilePath, string owner = default(string), string group = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task SetOwnerAsync(this IFileSystemOperations operations, string accountName, string setOwnerFilePath, string owner = default(string), string group = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.SetOwnerWithHttpMessagesAsync(accountName, setOwnerFilePath, owner, group, null, cancellationToken).ConfigureAwait(false);
             }
@@ -1111,7 +1153,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// </param>
             public static void SetPermission(this IFileSystemOperations operations, string accountName, string setPermissionFilePath, string permission = default(string))
             {
-                Task.Factory.StartNew(s => ((IFileSystemOperations)s).SetPermissionAsync(accountName, setPermissionFilePath, permission), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IFileSystemOperations)s).SetPermissionAsync(accountName, setPermissionFilePath, permission), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -1134,7 +1176,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task SetPermissionAsync(this IFileSystemOperations operations, string accountName, string setPermissionFilePath, string permission = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task SetPermissionAsync(this IFileSystemOperations operations, string accountName, string setPermissionFilePath, string permission = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.SetPermissionWithHttpMessagesAsync(accountName, setPermissionFilePath, permission, null, cancellationToken).ConfigureAwait(false);
             }

@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The Data Lake Analytics job state audit records for tracking the
@@ -36,7 +30,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <param name="requestedByUser">the user who requests the
         /// change.</param>
         /// <param name="details"> the details of the audit log.</param>
-        public JobStateAuditRecord(string newState = default(string), DateTimeOffset? timeStamp = default(DateTimeOffset?), string requestedByUser = default(string), string details = default(string))
+        public JobStateAuditRecord(string newState = default(string), System.DateTimeOffset? timeStamp = default(System.DateTimeOffset?), string requestedByUser = default(string), string details = default(string))
         {
             NewState = newState;
             TimeStamp = timeStamp;
@@ -47,25 +41,25 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Gets the new state the job is in.
         /// </summary>
-        [JsonProperty(PropertyName = "newState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "newState")]
         public string NewState { get; private set; }
 
         /// <summary>
         /// Gets the time stamp that the state change took place.
         /// </summary>
-        [JsonProperty(PropertyName = "timeStamp")]
-        public DateTimeOffset? TimeStamp { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "timeStamp")]
+        public System.DateTimeOffset? TimeStamp { get; private set; }
 
         /// <summary>
         /// Gets the user who requests the change.
         /// </summary>
-        [JsonProperty(PropertyName = "requestedByUser")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "requestedByUser")]
         public string RequestedByUser { get; private set; }
 
         /// <summary>
         /// Gets  the details of the audit log.
         /// </summary>
-        [JsonProperty(PropertyName = "details")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "details")]
         public string Details { get; private set; }
 
     }

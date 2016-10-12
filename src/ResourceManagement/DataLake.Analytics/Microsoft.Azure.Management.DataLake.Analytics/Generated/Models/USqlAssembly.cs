@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A Data Lake Analytics catalog U-SQL Assembly.
@@ -43,7 +37,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// assembly</param>
         /// <param name="dependencies">the list of dependencies associated
         /// with the assembly</param>
-        public USqlAssembly(string computeAccountName = default(string), Guid? version = default(Guid?), string databaseName = default(string), string name = default(string), string clrName = default(string), bool? isVisible = default(bool?), bool? isUserDefined = default(bool?), IList<USqlAssemblyFileInfo> files = default(IList<USqlAssemblyFileInfo>), IList<USqlAssemblyDependencyInfo> dependencies = default(IList<USqlAssemblyDependencyInfo>))
+        public USqlAssembly(string computeAccountName = default(string), System.Guid? version = default(System.Guid?), string databaseName = default(string), string name = default(string), string clrName = default(string), bool? isVisible = default(bool?), bool? isUserDefined = default(bool?), System.Collections.Generic.IList<USqlAssemblyFileInfo> files = default(System.Collections.Generic.IList<USqlAssemblyFileInfo>), System.Collections.Generic.IList<USqlAssemblyDependencyInfo> dependencies = default(System.Collections.Generic.IList<USqlAssemblyDependencyInfo>))
             : base(computeAccountName, version)
         {
             DatabaseName = databaseName;
@@ -58,46 +52,46 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Gets or sets the name of the database.
         /// </summary>
-        [JsonProperty(PropertyName = "databaseName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "databaseName")]
         public string DatabaseName { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the assembly.
         /// </summary>
-        [JsonProperty(PropertyName = "assemblyName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "assemblyName")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the CLR.
         /// </summary>
-        [JsonProperty(PropertyName = "clrName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "clrName")]
         public string ClrName { get; set; }
 
         /// <summary>
         /// Gets or sets the switch indicating if this assembly is visible or
         /// not.
         /// </summary>
-        [JsonProperty(PropertyName = "isVisible")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "isVisible")]
         public bool? IsVisible { get; set; }
 
         /// <summary>
         /// Gets or sets the switch indicating if this assembly is user
         /// defined or not.
         /// </summary>
-        [JsonProperty(PropertyName = "isUserDefined")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "isUserDefined")]
         public bool? IsUserDefined { get; set; }
 
         /// <summary>
         /// Gets or sets the list of files associated with the assembly
         /// </summary>
-        [JsonProperty(PropertyName = "files")]
-        public IList<USqlAssemblyFileInfo> Files { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "files")]
+        public System.Collections.Generic.IList<USqlAssemblyFileInfo> Files { get; set; }
 
         /// <summary>
         /// Gets or sets the list of dependencies associated with the assembly
         /// </summary>
-        [JsonProperty(PropertyName = "dependencies")]
-        public IList<USqlAssemblyDependencyInfo> Dependencies { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "dependencies")]
+        public System.Collections.Generic.IList<USqlAssemblyDependencyInfo> Dependencies { get; set; }
 
     }
 }

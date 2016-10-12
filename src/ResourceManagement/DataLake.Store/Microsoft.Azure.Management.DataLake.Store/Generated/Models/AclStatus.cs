@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Data Lake Store file or directory Access Control List information.
@@ -37,7 +31,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// user, mask and other permissions.</param>
         /// <param name="stickyBit">the indicator of whether the sticky bit is
         /// on or off.</param>
-        public AclStatus(IList<string> entries = default(IList<string>), string group = default(string), string owner = default(string), int? permission = default(int?), bool? stickyBit = default(bool?))
+        public AclStatus(System.Collections.Generic.IList<string> entries = default(System.Collections.Generic.IList<string>), string group = default(string), string owner = default(string), int? permission = default(int?), bool? stickyBit = default(bool?))
         {
             Entries = entries;
             Group = group;
@@ -49,32 +43,32 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <summary>
         /// Gets or sets the list of ACLSpec entries on a file or directory.
         /// </summary>
-        [JsonProperty(PropertyName = "entries")]
-        public IList<string> Entries { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "entries")]
+        public System.Collections.Generic.IList<string> Entries { get; set; }
 
         /// <summary>
         /// Gets or sets the group owner, an AAD Object ID.
         /// </summary>
-        [JsonProperty(PropertyName = "group")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "group")]
         public string Group { get; set; }
 
         /// <summary>
         /// Gets or sets the user owner, an AAD Object ID.
         /// </summary>
-        [JsonProperty(PropertyName = "owner")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "owner")]
         public string Owner { get; set; }
 
         /// <summary>
         /// Gets or sets the octal representation of the unnamed user, mask
         /// and other permissions.
         /// </summary>
-        [JsonProperty(PropertyName = "permission")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "permission")]
         public int? Permission { get; set; }
 
         /// <summary>
         /// Gets the indicator of whether the sticky bit is on or off.
         /// </summary>
-        [JsonProperty(PropertyName = "stickyBit")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "stickyBit")]
         public bool? StickyBit { get; private set; }
 
     }

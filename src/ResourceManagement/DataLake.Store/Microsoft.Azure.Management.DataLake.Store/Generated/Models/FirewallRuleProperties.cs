@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Data Lake Store firewall rule properties information
@@ -42,13 +36,13 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <summary>
         /// Gets or sets the start IP address for the firewall rule.
         /// </summary>
-        [JsonProperty(PropertyName = "startIpAddress")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "startIpAddress")]
         public string StartIpAddress { get; set; }
 
         /// <summary>
         /// Gets or sets the end IP address for the firewall rule.
         /// </summary>
-        [JsonProperty(PropertyName = "endIpAddress")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "endIpAddress")]
         public string EndIpAddress { get; set; }
 
     }

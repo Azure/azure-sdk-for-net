@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Data Lake Store filesystem content summary information response.
@@ -39,7 +33,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <summary>
         /// Gets the content summary for the specified path
         /// </summary>
-        [JsonProperty(PropertyName = "ContentSummary")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "ContentSummary")]
         public ContentSummary ContentSummary { get; private set; }
 
     }

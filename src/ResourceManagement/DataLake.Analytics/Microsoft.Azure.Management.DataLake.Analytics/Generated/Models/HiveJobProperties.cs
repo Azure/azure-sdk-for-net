@@ -8,15 +8,9 @@
 
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
-    [JsonObject("Hive")]
+    [Newtonsoft.Json.JsonObject("Hive")]
     public partial class HiveJobProperties : JobProperties
     {
         /// <summary>
@@ -50,33 +44,33 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Gets the Hive logs location
         /// </summary>
-        [JsonProperty(PropertyName = "logsLocation")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "logsLocation")]
         public string LogsLocation { get; private set; }
 
         /// <summary>
         /// Gets the location of Hive job output files (both execution output
         /// and results)
         /// </summary>
-        [JsonProperty(PropertyName = "outputLocation")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "outputLocation")]
         public string OutputLocation { get; private set; }
 
         /// <summary>
         /// Gets the number of statements that will be run based on the script
         /// </summary>
-        [JsonProperty(PropertyName = "statementCount")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "statementCount")]
         public int? StatementCount { get; private set; }
 
         /// <summary>
         /// Gets the number of statements that have been run based on the
         /// script
         /// </summary>
-        [JsonProperty(PropertyName = "executedStatementCount")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "executedStatementCount")]
         public int? ExecutedStatementCount { get; private set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public override void Validate()

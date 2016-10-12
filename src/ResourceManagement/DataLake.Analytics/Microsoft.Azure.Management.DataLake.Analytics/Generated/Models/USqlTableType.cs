@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A Data Lake Analytics catalog U-SQL table type item.
@@ -57,7 +51,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// is a complex type.</param>
         /// <param name="columns">the type field information associated with
         /// this table type.</param>
-        public USqlTableType(string computeAccountName = default(string), Guid? version = default(Guid?), string databaseName = default(string), string schemaName = default(string), string name = default(string), string typeFamily = default(string), string cSharpName = default(string), string fullCSharpName = default(string), int? systemTypeId = default(int?), int? userTypeId = default(int?), int? schemaId = default(int?), int? principalId = default(int?), bool? isNullable = default(bool?), bool? isUserDefined = default(bool?), bool? isAssemblyType = default(bool?), bool? isTableType = default(bool?), bool? isComplexType = default(bool?), IList<TypeFieldInfo> columns = default(IList<TypeFieldInfo>))
+        public USqlTableType(string computeAccountName = default(string), System.Guid? version = default(System.Guid?), string databaseName = default(string), string schemaName = default(string), string name = default(string), string typeFamily = default(string), string cSharpName = default(string), string fullCSharpName = default(string), int? systemTypeId = default(int?), int? userTypeId = default(int?), int? schemaId = default(int?), int? principalId = default(int?), bool? isNullable = default(bool?), bool? isUserDefined = default(bool?), bool? isAssemblyType = default(bool?), bool? isTableType = default(bool?), bool? isComplexType = default(bool?), System.Collections.Generic.IList<TypeFieldInfo> columns = default(System.Collections.Generic.IList<TypeFieldInfo>))
             : base(computeAccountName, version, databaseName, schemaName, name, typeFamily, cSharpName, fullCSharpName, systemTypeId, userTypeId, schemaId, principalId, isNullable, isUserDefined, isAssemblyType, isTableType, isComplexType)
         {
             Columns = columns;
@@ -66,8 +60,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Gets the type field information associated with this table type.
         /// </summary>
-        [JsonProperty(PropertyName = "columns")]
-        public IList<TypeFieldInfo> Columns { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "columns")]
+        public System.Collections.Generic.IList<TypeFieldInfo> Columns { get; private set; }
 
     }
 }

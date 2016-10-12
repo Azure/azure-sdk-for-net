@@ -8,19 +8,13 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A WebHDFS exception thrown indicating the file or folder could not be
     /// found. Thrown when a 404 error response code is returned (not found).
     /// </summary>
-    [JsonObject("FileNotFoundException")]
+    [Newtonsoft.Json.JsonObject("FileNotFoundException")]
     public partial class AdlsFileNotFoundException : AdlsRemoteException
     {
         /// <summary>

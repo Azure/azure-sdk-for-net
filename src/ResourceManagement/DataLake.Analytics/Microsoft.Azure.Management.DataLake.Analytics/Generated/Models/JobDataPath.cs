@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A Data Lake Analytics job data path item.
@@ -34,7 +28,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// to.</param>
         /// <param name="paths">the list of paths to all of the job
         /// data.</param>
-        public JobDataPath(Guid? jobId = default(Guid?), string command = default(string), IList<string> paths = default(IList<string>))
+        public JobDataPath(System.Guid? jobId = default(System.Guid?), string command = default(string), System.Collections.Generic.IList<string> paths = default(System.Collections.Generic.IList<string>))
         {
             JobId = jobId;
             Command = command;
@@ -44,20 +38,20 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Gets the id of the job this data is for.
         /// </summary>
-        [JsonProperty(PropertyName = "jobId")]
-        public Guid? JobId { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "jobId")]
+        public System.Guid? JobId { get; private set; }
 
         /// <summary>
         /// Gets the command that this job data relates to.
         /// </summary>
-        [JsonProperty(PropertyName = "command")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "command")]
         public string Command { get; private set; }
 
         /// <summary>
         /// Gets the list of paths to all of the job data.
         /// </summary>
-        [JsonProperty(PropertyName = "paths")]
-        public IList<string> Paths { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "paths")]
+        public System.Collections.Generic.IList<string> Paths { get; private set; }
 
     }
 }

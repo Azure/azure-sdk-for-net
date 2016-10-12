@@ -8,19 +8,13 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A WebHDFS exception thrown indicating that access is denied. Thrown
     /// when a 401 error response code is returned (Unauthorized).
     /// </summary>
-    [JsonObject("SecurityException")]
+    [Newtonsoft.Json.JsonObject("SecurityException")]
     public partial class AdlsSecurityException : AdlsRemoteException
     {
         /// <summary>

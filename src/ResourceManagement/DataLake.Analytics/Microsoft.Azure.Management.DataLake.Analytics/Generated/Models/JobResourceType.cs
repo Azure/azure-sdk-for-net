@@ -8,27 +8,24 @@
 
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for JobResourceType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum JobResourceType
     {
-        [EnumMember(Value = "VertexResource")]
+        [System.Runtime.Serialization.EnumMember(Value = "VertexResource")]
         VertexResource,
-        [EnumMember(Value = "JobManagerResource")]
+        [System.Runtime.Serialization.EnumMember(Value = "JobManagerResource")]
         JobManagerResource,
-        [EnumMember(Value = "StatisticsResource")]
+        [System.Runtime.Serialization.EnumMember(Value = "StatisticsResource")]
         StatisticsResource,
-        [EnumMember(Value = "VertexResourceInUserFolder")]
+        [System.Runtime.Serialization.EnumMember(Value = "VertexResourceInUserFolder")]
         VertexResourceInUserFolder,
-        [EnumMember(Value = "JobManagerResourceInUserFolder")]
+        [System.Runtime.Serialization.EnumMember(Value = "JobManagerResourceInUserFolder")]
         JobManagerResourceInUserFolder,
-        [EnumMember(Value = "StatisticsResourceInUserFolder")]
+        [System.Runtime.Serialization.EnumMember(Value = "StatisticsResourceInUserFolder")]
         StatisticsResourceInUserFolder
     }
 }

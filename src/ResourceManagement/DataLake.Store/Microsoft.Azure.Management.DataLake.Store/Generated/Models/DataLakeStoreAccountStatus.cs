@@ -8,33 +8,30 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for DataLakeStoreAccountStatus.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum DataLakeStoreAccountStatus
     {
-        [EnumMember(Value = "Failed")]
+        [System.Runtime.Serialization.EnumMember(Value = "Failed")]
         Failed,
-        [EnumMember(Value = "Creating")]
+        [System.Runtime.Serialization.EnumMember(Value = "Creating")]
         Creating,
-        [EnumMember(Value = "Running")]
+        [System.Runtime.Serialization.EnumMember(Value = "Running")]
         Running,
-        [EnumMember(Value = "Succeeded")]
+        [System.Runtime.Serialization.EnumMember(Value = "Succeeded")]
         Succeeded,
-        [EnumMember(Value = "Patching")]
+        [System.Runtime.Serialization.EnumMember(Value = "Patching")]
         Patching,
-        [EnumMember(Value = "Suspending")]
+        [System.Runtime.Serialization.EnumMember(Value = "Suspending")]
         Suspending,
-        [EnumMember(Value = "Resuming")]
+        [System.Runtime.Serialization.EnumMember(Value = "Resuming")]
         Resuming,
-        [EnumMember(Value = "Deleting")]
+        [System.Runtime.Serialization.EnumMember(Value = "Deleting")]
         Deleting,
-        [EnumMember(Value = "Deleted")]
+        [System.Runtime.Serialization.EnumMember(Value = "Deleted")]
         Deleted
     }
 }

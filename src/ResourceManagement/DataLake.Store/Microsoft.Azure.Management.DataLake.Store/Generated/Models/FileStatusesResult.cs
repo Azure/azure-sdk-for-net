@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Data Lake Store filesystem file status list information response.
@@ -39,7 +33,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <summary>
         /// Gets the object representing the list of file statuses.
         /// </summary>
-        [JsonProperty(PropertyName = "FileStatuses")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "FileStatuses")]
         public FileStatuses FileStatuses { get; private set; }
 
     }

@@ -8,19 +8,16 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for FileType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum FileType
     {
-        [EnumMember(Value = "FILE")]
+        [System.Runtime.Serialization.EnumMember(Value = "FILE")]
         FILE,
-        [EnumMember(Value = "DIRECTORY")]
+        [System.Runtime.Serialization.EnumMember(Value = "DIRECTORY")]
         DIRECTORY
     }
 }

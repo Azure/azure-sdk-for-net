@@ -8,21 +8,18 @@
 
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for OperationStatus.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum OperationStatus
     {
-        [EnumMember(Value = "InProgress")]
+        [System.Runtime.Serialization.EnumMember(Value = "InProgress")]
         InProgress,
-        [EnumMember(Value = "Succeeded")]
+        [System.Runtime.Serialization.EnumMember(Value = "Succeeded")]
         Succeeded,
-        [EnumMember(Value = "Failed")]
+        [System.Runtime.Serialization.EnumMember(Value = "Failed")]
         Failed
     }
 }

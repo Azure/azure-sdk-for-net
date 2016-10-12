@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     public partial class KeyVaultMetaInfo
     {
@@ -43,19 +37,19 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// Gets or sets the resource identifier for the user managed Key
         /// Vault being used to encrypt.
         /// </summary>
-        [JsonProperty(PropertyName = "keyVaultResourceId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "keyVaultResourceId")]
         public string KeyVaultResourceId { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the user managed encryption key.
         /// </summary>
-        [JsonProperty(PropertyName = "encryptionKeyName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "encryptionKeyName")]
         public string EncryptionKeyName { get; set; }
 
         /// <summary>
         /// Gets or sets the version of the user managed encryption key.
         /// </summary>
-        [JsonProperty(PropertyName = "encryptionKeyVersion")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "encryptionKeyVersion")]
         public string EncryptionKeyVersion { get; set; }
 
     }

@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Data Lake Store error details information
@@ -45,20 +39,20 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <summary>
         /// Gets the HTTP status code or error code associated with this error
         /// </summary>
-        [JsonProperty(PropertyName = "code")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "code")]
         public string Code { get; private set; }
 
         /// <summary>
         /// Gets the error message localized based on Accept-Language
         /// </summary>
-        [JsonProperty(PropertyName = "message")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "message")]
         public string Message { get; private set; }
 
         /// <summary>
         /// Gets the target of the particular error (for example, the name of
         /// the property in error).
         /// </summary>
-        [JsonProperty(PropertyName = "target")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "target")]
         public string Target { get; private set; }
 
     }

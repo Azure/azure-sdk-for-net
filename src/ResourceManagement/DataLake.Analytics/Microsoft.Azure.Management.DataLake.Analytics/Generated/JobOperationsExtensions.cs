@@ -8,15 +8,9 @@
 
 namespace Microsoft.Azure.Management.DataLake.Analytics
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure.OData;
-    using Microsoft.Rest.Azure;
-    using Models;
+   using Microsoft.Rest.Azure;
+   using Models;
 
     /// <summary>
     /// Extension methods for JobOperations.
@@ -35,9 +29,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='jobIdentity'>
             /// Job Information ID.
             /// </param>
-            public static JobStatistics GetStatistics(this IJobOperations operations, string accountName, Guid jobIdentity)
+            public static JobStatistics GetStatistics(this IJobOperations operations, string accountName, System.Guid jobIdentity)
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).GetStatisticsAsync(accountName, jobIdentity), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IJobOperations)s).GetStatisticsAsync(accountName, jobIdentity), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -55,7 +49,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobStatistics> GetStatisticsAsync(this IJobOperations operations, string accountName, Guid jobIdentity, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<JobStatistics> GetStatisticsAsync(this IJobOperations operations, string accountName, System.Guid jobIdentity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetStatisticsWithHttpMessagesAsync(accountName, jobIdentity, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -75,9 +69,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='jobIdentity'>
             /// JobInfo ID.
             /// </param>
-            public static JobDataPath GetDebugDataPath(this IJobOperations operations, string accountName, Guid jobIdentity)
+            public static JobDataPath GetDebugDataPath(this IJobOperations operations, string accountName, System.Guid jobIdentity)
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).GetDebugDataPathAsync(accountName, jobIdentity), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IJobOperations)s).GetDebugDataPathAsync(accountName, jobIdentity), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -95,7 +89,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobDataPath> GetDebugDataPathAsync(this IJobOperations operations, string accountName, Guid jobIdentity, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<JobDataPath> GetDebugDataPathAsync(this IJobOperations operations, string accountName, System.Guid jobIdentity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetDebugDataPathWithHttpMessagesAsync(accountName, jobIdentity, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -118,7 +112,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// </param>
             public static JobInformation Build(this IJobOperations operations, string accountName, JobInformation parameters)
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).BuildAsync(accountName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IJobOperations)s).BuildAsync(accountName, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -137,7 +131,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobInformation> BuildAsync(this IJobOperations operations, string accountName, JobInformation parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<JobInformation> BuildAsync(this IJobOperations operations, string accountName, JobInformation parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.BuildWithHttpMessagesAsync(accountName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -157,9 +151,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='jobIdentity'>
             /// JobInfo ID to cancel.
             /// </param>
-            public static void Cancel(this IJobOperations operations, string accountName, Guid jobIdentity)
+            public static void Cancel(this IJobOperations operations, string accountName, System.Guid jobIdentity)
             {
-                Task.Factory.StartNew(s => ((IJobOperations)s).CancelAsync(accountName, jobIdentity), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IJobOperations)s).CancelAsync(accountName, jobIdentity), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -177,7 +171,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CancelAsync(this IJobOperations operations, string accountName, Guid jobIdentity, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task CancelAsync(this IJobOperations operations, string accountName, System.Guid jobIdentity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.CancelWithHttpMessagesAsync(accountName, jobIdentity, null, cancellationToken).ConfigureAwait(false);
             }
@@ -194,9 +188,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='jobIdentity'>
             /// JobInfo ID.
             /// </param>
-            public static JobInformation Get(this IJobOperations operations, string accountName, Guid jobIdentity)
+            public static JobInformation Get(this IJobOperations operations, string accountName, System.Guid jobIdentity)
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).GetAsync(accountName, jobIdentity), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IJobOperations)s).GetAsync(accountName, jobIdentity), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -214,7 +208,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobInformation> GetAsync(this IJobOperations operations, string accountName, Guid jobIdentity, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<JobInformation> GetAsync(this IJobOperations operations, string accountName, System.Guid jobIdentity, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(accountName, jobIdentity, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -237,9 +231,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='parameters'>
             /// The parameters to submit a job.
             /// </param>
-            public static JobInformation Create(this IJobOperations operations, string accountName, Guid jobIdentity, JobInformation parameters)
+            public static JobInformation Create(this IJobOperations operations, string accountName, System.Guid jobIdentity, JobInformation parameters)
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).CreateAsync(accountName, jobIdentity, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IJobOperations)s).CreateAsync(accountName, jobIdentity, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -260,7 +254,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<JobInformation> CreateAsync(this IJobOperations operations, string accountName, Guid jobIdentity, JobInformation parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<JobInformation> CreateAsync(this IJobOperations operations, string accountName, System.Guid jobIdentity, JobInformation parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.CreateWithHttpMessagesAsync(accountName, jobIdentity, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -300,9 +294,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// access to request headers for standard content-type negotiation (e.g
             /// Orders?$format=json). Optional.
             /// </param>
-            public static IPage<JobInformation> List(this IJobOperations operations, string accountName, ODataQuery<JobInformation> odataQuery = default(ODataQuery<JobInformation>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string))
+            public static Microsoft.Rest.Azure.IPage<JobInformation> List(this IJobOperations operations, string accountName, Microsoft.Rest.Azure.OData.ODataQuery<JobInformation> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<JobInformation>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string))
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).ListAsync(accountName, odataQuery, select, count, search, format), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IJobOperations)s).ListAsync(accountName, odataQuery, select, count, search, format), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -340,7 +334,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<JobInformation>> ListAsync(this IJobOperations operations, string accountName, ODataQuery<JobInformation> odataQuery = default(ODataQuery<JobInformation>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<JobInformation>> ListAsync(this IJobOperations operations, string accountName, Microsoft.Rest.Azure.OData.ODataQuery<JobInformation> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<JobInformation>), string select = default(string), bool? count = default(bool?), string search = default(string), string format = default(string), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(accountName, odataQuery, select, count, search, format, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -358,9 +352,9 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<JobInformation> ListNext(this IJobOperations operations, string nextPageLink)
+            public static Microsoft.Rest.Azure.IPage<JobInformation> ListNext(this IJobOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IJobOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IJobOperations)s).ListNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -376,7 +370,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<JobInformation>> ListNextAsync(this IJobOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<JobInformation>> ListNextAsync(this IJobOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
