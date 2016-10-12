@@ -1074,6 +1074,30 @@ namespace Microsoft.Azure.Management.Analysis
         /// Name of the Analysis Services server
         /// </param>
         /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> SuspendWithHttpMessagesAsync(string resourceGroupName, string serverName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            // Send request
+            Microsoft.Rest.Azure.AzureOperationResponse _response = await BeginSuspendWithHttpMessagesAsync(
+                resourceGroupName, serverName, customHeaders, cancellationToken);
+            return await this.Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken);
+        }
+
+        /// <summary>
+        /// Supends the specified Analysis Services server instance
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the Azure Resource group which a given Analysis Services server is
+        /// part of.
+        /// </param>
+        /// <param name='serverName'>
+        /// Name of the Analysis Services server
+        /// </param>
+        /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
@@ -1088,7 +1112,7 @@ namespace Microsoft.Azure.Management.Analysis
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> SuspendWithHttpMessagesAsync(string resourceGroupName, string serverName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> BeginSuspendWithHttpMessagesAsync(string resourceGroupName, string serverName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1146,7 +1170,7 @@ namespace Microsoft.Azure.Management.Analysis
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "Suspend", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "BeginSuspend", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -1267,6 +1291,30 @@ namespace Microsoft.Azure.Management.Analysis
         /// Name of the Analysis Services server
         /// </param>
         /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> ResumeWithHttpMessagesAsync(string resourceGroupName, string serverName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            // Send request
+            Microsoft.Rest.Azure.AzureOperationResponse _response = await BeginResumeWithHttpMessagesAsync(
+                resourceGroupName, serverName, customHeaders, cancellationToken);
+            return await this.Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken);
+        }
+
+        /// <summary>
+        /// Resumes the specified Analysis Services server instance
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Name of the Azure Resource group which a given Analysis Services server is
+        /// part of.
+        /// </param>
+        /// <param name='serverName'>
+        /// Name of the Analysis Services server
+        /// </param>
+        /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
@@ -1281,7 +1329,7 @@ namespace Microsoft.Azure.Management.Analysis
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> ResumeWithHttpMessagesAsync(string resourceGroupName, string serverName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> BeginResumeWithHttpMessagesAsync(string resourceGroupName, string serverName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -1339,7 +1387,7 @@ namespace Microsoft.Azure.Management.Analysis
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("serverName", serverName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "Resume", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "BeginResume", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
