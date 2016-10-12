@@ -96,11 +96,7 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         /// <param name="name">Name of the tokenizer.</param>
         /// <returns>A TokenizerName instance with the given name.</returns>
-        public static TokenizerName Create(string name)
-        {
-            // Tokenizer names are purposefully open-ended. If we get one we don't recognize, just create a new object.
-            return Lookup(name) ?? new TokenizerName(name);
-        }
+        public static TokenizerName Create(string name) => Lookup(name) ?? new TokenizerName(name);
 
         /// <summary>
         /// Defines implicit conversion from string to TokenizerName.

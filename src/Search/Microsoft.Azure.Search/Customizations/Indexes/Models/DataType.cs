@@ -59,11 +59,7 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         /// <param name="name">Name of the data type.</param>
         /// <returns>A DataType instance with the given name.</returns>
-        public static DataType Create(string name)
-        {
-            // Data types are purposefully open-ended. If we get one we don't recognize, just create a new object.
-            return Lookup(name) ?? new DataType(name);
-        }
+        public static DataType Create(string name) => Lookup(name) ?? new DataType(name);
 
         /// <summary>
         /// Creates a DataType for a collection of the given type.
@@ -72,8 +68,15 @@ namespace Microsoft.Azure.Search.Models
         /// <returns>A new DataType for a collection.</returns>
         public static DataType Collection(DataType elementType)
         {
-            Throw.IfArgumentNull(elementType, "elementType");
-            return new DataType(System.String.Format("Collection({0})", elementType.ToString()));
+            Throw.IfArgumentNull(elementType, nameof(elementType));
+            return new DataType($"Collection({elementType})");
         }
+
+        /// <summary>
+        /// Defines implicit conversion from string to DataType.
+        /// </summary>
+        /// <param name="name">string to convert.</param>
+        /// <returns>The string as a DataType.</returns>
+        public static implicit operator DataType(string name) => Create(name);
     }
 }

@@ -244,11 +244,7 @@ namespace Microsoft.Azure.Search.Models
         /// </summary>
         /// <param name="name">Name of the token filter.</param>
         /// <returns>A TokenFilterName instance with the given name.</returns>
-        public static TokenFilterName Create(string name)
-        {
-            // Token filter names are purposefully open-ended. If we get one we don't recognize, just create a new object.
-            return Lookup(name) ?? new TokenFilterName(name);
-        }
+        public static TokenFilterName Create(string name) => Lookup(name) ?? new TokenFilterName(name);
 
         /// <summary>
         /// Defines implicit conversion from string to TokenFilterName.
