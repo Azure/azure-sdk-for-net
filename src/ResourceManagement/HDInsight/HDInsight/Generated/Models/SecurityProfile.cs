@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         private string _roleAdminGroupDN;
         
         /// <summary>
-        /// Optional. Gets or sets the Distinguished Name for role
+        /// Optional. Optional. Gets or sets the Distinguished Name for role
         /// admin group.
         /// </summary>
         public string RoleAdminGroupDN

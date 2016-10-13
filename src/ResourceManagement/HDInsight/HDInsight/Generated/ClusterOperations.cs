@@ -680,6 +680,21 @@ namespace Microsoft.Azure.Management.HDInsight
                             clusterDefinitionValue["kind"] = clusterCreateParameters.Properties.ClusterDefinition.ClusterType;
                         }
                         
+                        if (clusterCreateParameters.Properties.ClusterDefinition.ComponentVersion != null)
+                        {
+                            if (clusterCreateParameters.Properties.ClusterDefinition.ComponentVersion is ILazyCollection == false || ((ILazyCollection)clusterCreateParameters.Properties.ClusterDefinition.ComponentVersion).IsInitialized)
+                            {
+                                JObject componentVersionDictionary = new JObject();
+                                foreach (KeyValuePair<string, string> pair2 in clusterCreateParameters.Properties.ClusterDefinition.ComponentVersion)
+                                {
+                                    string componentVersionKey = pair2.Key;
+                                    string componentVersionValue = pair2.Value;
+                                    componentVersionDictionary[componentVersionKey] = componentVersionValue;
+                                }
+                                clusterDefinitionValue["componentVersion"] = componentVersionDictionary;
+                            }
+                        }
+                        
                         if (clusterCreateParameters.Properties.ClusterDefinition.Configurations != null)
                         {
                             clusterDefinitionValue["configurations"] = JObject.Parse(clusterCreateParameters.Properties.ClusterDefinition.Configurations);
@@ -1037,6 +1052,17 @@ namespace Microsoft.Azure.Management.HDInsight
                                     {
                                         string kindInstance = ((string)kindValue);
                                         clusterDefinitionInstance.ClusterType = kindInstance;
+                                    }
+                                    
+                                    JToken componentVersionSequenceElement = ((JToken)clusterDefinitionValue2["componentVersion"]);
+                                    if (componentVersionSequenceElement != null && componentVersionSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property2 in componentVersionSequenceElement)
+                                        {
+                                            string componentVersionKey2 = ((string)property2.Name);
+                                            string componentVersionValue2 = ((string)property2.Value);
+                                            clusterDefinitionInstance.ComponentVersion.Add(componentVersionKey2, componentVersionValue2);
+                                        }
                                     }
                                     
                                     JToken configurationsValue = clusterDefinitionValue2["configurations"];
@@ -2689,6 +2715,17 @@ namespace Microsoft.Azure.Management.HDInsight
                                         clusterDefinitionInstance.ClusterType = kindInstance;
                                     }
                                     
+                                    JToken componentVersionSequenceElement = ((JToken)clusterDefinitionValue["componentVersion"]);
+                                    if (componentVersionSequenceElement != null && componentVersionSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property2 in componentVersionSequenceElement)
+                                        {
+                                            string componentVersionKey = ((string)property2.Name);
+                                            string componentVersionValue = ((string)property2.Value);
+                                            clusterDefinitionInstance.ComponentVersion.Add(componentVersionKey, componentVersionValue);
+                                        }
+                                    }
+                                    
                                     JToken configurationsValue = clusterDefinitionValue["configurations"];
                                     if (configurationsValue != null && configurationsValue.Type != JTokenType.Null)
                                     {
@@ -3989,6 +4026,17 @@ namespace Microsoft.Azure.Management.HDInsight
                                         clusterDefinitionInstance.ClusterType = kindInstance;
                                     }
                                     
+                                    JToken componentVersionSequenceElement = ((JToken)clusterDefinitionValue["componentVersion"]);
+                                    if (componentVersionSequenceElement != null && componentVersionSequenceElement.Type != JTokenType.Null)
+                                    {
+                                        foreach (JProperty property2 in componentVersionSequenceElement)
+                                        {
+                                            string componentVersionKey = ((string)property2.Name);
+                                            string componentVersionValue = ((string)property2.Value);
+                                            clusterDefinitionInstance.ComponentVersion.Add(componentVersionKey, componentVersionValue);
+                                        }
+                                    }
+                                    
                                     JToken configurationsValue = clusterDefinitionValue["configurations"];
                                     if (configurationsValue != null && configurationsValue.Type != JTokenType.Null)
                                     {
@@ -5017,6 +5065,17 @@ namespace Microsoft.Azure.Management.HDInsight
                                                 clusterDefinitionInstance.ClusterType = kindInstance;
                                             }
                                             
+                                            JToken componentVersionSequenceElement = ((JToken)clusterDefinitionValue["componentVersion"]);
+                                            if (componentVersionSequenceElement != null && componentVersionSequenceElement.Type != JTokenType.Null)
+                                            {
+                                                foreach (JProperty property2 in componentVersionSequenceElement)
+                                                {
+                                                    string componentVersionKey = ((string)property2.Name);
+                                                    string componentVersionValue = ((string)property2.Value);
+                                                    clusterDefinitionInstance.ComponentVersion.Add(componentVersionKey, componentVersionValue);
+                                                }
+                                            }
+                                            
                                             JToken configurationsValue = clusterDefinitionValue["configurations"];
                                             if (configurationsValue != null && configurationsValue.Type != JTokenType.Null)
                                             {
@@ -5632,6 +5691,17 @@ namespace Microsoft.Azure.Management.HDInsight
                                             {
                                                 string kindInstance = ((string)kindValue);
                                                 clusterDefinitionInstance.ClusterType = kindInstance;
+                                            }
+                                            
+                                            JToken componentVersionSequenceElement = ((JToken)clusterDefinitionValue["componentVersion"]);
+                                            if (componentVersionSequenceElement != null && componentVersionSequenceElement.Type != JTokenType.Null)
+                                            {
+                                                foreach (JProperty property2 in componentVersionSequenceElement)
+                                                {
+                                                    string componentVersionKey = ((string)property2.Name);
+                                                    string componentVersionValue = ((string)property2.Value);
+                                                    clusterDefinitionInstance.ComponentVersion.Add(componentVersionKey, componentVersionValue);
+                                                }
                                             }
                                             
                                             JToken configurationsValue = clusterDefinitionValue["configurations"];

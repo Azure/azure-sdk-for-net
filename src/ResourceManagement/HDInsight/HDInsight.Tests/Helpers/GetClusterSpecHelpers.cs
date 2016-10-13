@@ -310,6 +310,15 @@ namespace HDInsight.Tests.Helpers
             return clusterparams;
         }
 
+        public static ClusterCreateParameters GetCustomCreateParametersSparkIaas()
+        {
+            var clusterparams = GetCustomCreateParametersIaas();
+            clusterparams.Version = "3.5";
+            clusterparams.ClusterType = "Spark";
+            clusterparams.ComponentVersion.Add("Spark", "1.6.2");
+            return clusterparams;
+        }
+
         public static ClusterCreateParametersExtended AddConfigurations(ClusterCreateParametersExtended cluster, string configurationKey, Dictionary<string, string> configs)
         {
             string configurations = cluster.Properties.ClusterDefinition.Configurations;
