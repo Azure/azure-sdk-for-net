@@ -31,6 +31,13 @@ namespace Microsoft.Rest.ClientRuntime.Tests.Resources
     }
 
     [JsonObject("siamese")]
+    public class Martian : Alien
+    {
+        [JsonProperty("robot")]
+        public string Robot { get; set; }
+    }
+
+    [JsonObject("siamese")]
     public class Siamese : Cat
     {
         [JsonProperty("color")]

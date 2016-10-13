@@ -23,7 +23,7 @@
     }, 
     "Microsoft.NETCore.Platforms": "1.0.1",
     "Microsoft.Rest.ClientRuntime.Azure": "[3.3.2,4.0.0)",
-    "Microsoft.Rest.ClientRuntime.Azure.Authentication": "[2.2.7-preview,3.0.0)",
+    "Microsoft.Rest.ClientRuntime.Azure.Authentication": "[2.2.8-preview,3.0.0)",
     "xunit": "2.2.0-beta2-build3300",
     "dotnet-test-xunit": "2.2.0-preview2-build1029"
   }

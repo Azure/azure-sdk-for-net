@@ -333,6 +333,65 @@ namespace Microsoft.Rest.ClientRuntime.Tests
             Assert.Contains("foo", json);
         }
 
+        [Fact]
+        public void PolymorphicDeserializationConsidersOnlyOwnDerivedTypes()
+        {
+            var deserializeSettings = new JsonSerializerSettings();
+            deserializeSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
+            deserializeSettings.NullValueHandling = NullValueHandling.Ignore;
+            deserializeSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<Animal>("dType"));
+
+            string zooWithPrivateSetHalf1 = @"{
+  ""Id"": 1,
+  ""Animals"": [
+    {
+      ""dType"": ""dog"",
+      ""likesDogfood"": true,
+      ""name"": ""Fido""
+    },
+    {
+      ""dType"": ""cat"",
+      ""likesMice"": false,
+      ""dislikes"": {
+        ""dType"": ""dog"",
+        ""likesDogfood"": true,
+        ""name"": ""Angry""
+      },
+      ""name"": ""Felix""
+    },
+    {
+      ""dType"": ""siamese"",
+      ""color"": ""grey"",
+      ""likesMice"": false,
+      ""name"": ""Felix""
+    }
+  ]";
+            string zooWithPrivateSetHalf2 = @"
+}";
+            string alienPart = @",
+  ""Alien"" : [
+    {
+      ""dType"": ""siamese"",
+      ""name"": ""martian""
+    }
+  ]";
+
+            string zooWithPrivateSet = zooWithPrivateSetHalf1 + alienPart + zooWithPrivateSetHalf2;
+
+            var zoo2 = JsonConvert.DeserializeObject<Zoo>(zooWithPrivateSet, deserializeSettings);
+
+            Assert.Equal("grey", ((Siamese)zoo2.Animals[2]).Color);
+
+            var serializeSettings = new JsonSerializerSettings();
+            serializeSettings.ReferenceLoopHandling = ReferenceLoopHandling.Serialize;
+            serializeSettings.NullValueHandling = NullValueHandling.Ignore;
+            serializeSettings.Formatting = Formatting.Indented;
+            serializeSettings.Converters.Add(new PolymorphicSerializeJsonConverter<Animal>("dType"));
+            var zooReserialized = JsonConvert.SerializeObject(zoo2, serializeSettings);
+
+            Assert.Equal(zooReserialized, zooWithPrivateSetHalf1 + zooWithPrivateSetHalf2);
+        }
+
         private static void TestWithBadJsonSerializerSettings(Action callback)
         {
             Func<JsonSerializerSettings> oldDefault = JsonConvert.DefaultSettings;

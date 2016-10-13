@@ -6,7 +6,7 @@
     "summary": "ClientRuntime Tests.",
     "tags": [ "Microsoft AutoRest ClientRuntime REST" ],
     "projectUrl": "https://github.com/Azure/AutoRest",
-    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE"
   },
 
   "testRunner": "xunit",
