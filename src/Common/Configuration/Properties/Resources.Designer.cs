@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Microsoft.WindowsAzure.Properties {
+namespace Microsoft.WindowsAzure {
     using System;
     
     
