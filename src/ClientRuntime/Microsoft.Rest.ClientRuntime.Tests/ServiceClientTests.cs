@@ -163,7 +163,7 @@ namespace Microsoft.Rest.ClientRuntime.Tests
                 Assert.Equal("Text", ex.Response.Content);
             }
         }
-    }
+
         [Fact]
         public void AddUserAgentInfoWithoutVersion()
         {
