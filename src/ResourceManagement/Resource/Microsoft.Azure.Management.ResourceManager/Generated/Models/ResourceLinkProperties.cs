@@ -29,10 +29,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the ResourceLinkProperties class.
         /// </summary>
-        /// <param name="sourceId">The fully qualified source resource Id. </param>
         /// <param name="targetId">The fully qualified target resource Id. For example, /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite.</param>
+        /// <param name="sourceId">The fully qualified source resource Id. </param>
         /// <param name="notes">The resource link notes.</param>
-        public ResourceLinkProperties(string sourceId = default(string), string targetId = default(string), string notes = default(string))
+        public ResourceLinkProperties(string targetId, string sourceId = default(string), string notes = default(string))
         {
             SourceId = sourceId;
             TargetId = targetId;
@@ -58,5 +58,18 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         [JsonProperty(PropertyName = "notes")]
         public string Notes { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (TargetId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "TargetId");
+            }
+        }
     }
 }

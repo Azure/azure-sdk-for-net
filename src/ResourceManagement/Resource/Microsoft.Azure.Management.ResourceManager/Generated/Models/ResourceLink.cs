@@ -55,5 +55,18 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         [JsonProperty(PropertyName = "properties")]
         public ResourceLinkProperties Properties { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (this.Properties != null)
+            {
+                this.Properties.Validate();
+            }
+        }
     }
 }

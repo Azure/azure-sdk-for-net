@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// Initializes a new instance of the ResourceLinkFilter class.
         /// </summary>
         /// <param name="targetId">The target Id of the resource.</param>
-        public ResourceLinkFilter(string targetId = default(string))
+        public ResourceLinkFilter(string targetId)
         {
             TargetId = targetId;
         }
@@ -41,5 +41,18 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         [JsonProperty(PropertyName = "targetId")]
         public string TargetId { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (TargetId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "TargetId");
+            }
+        }
     }
 }

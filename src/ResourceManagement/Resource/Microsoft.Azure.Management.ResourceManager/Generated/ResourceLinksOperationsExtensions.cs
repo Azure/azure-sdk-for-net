@@ -33,9 +33,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The fully qualified Id of the resource link. For example,
             /// /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink
             /// </param>
-            public static void DeleteById(this IResourceLinksOperations operations, string linkId)
+            public static void Delete(this IResourceLinksOperations operations, string linkId)
             {
-                Task.Factory.StartNew(s => ((IResourceLinksOperations)s).DeleteByIdAsync(linkId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                Task.Factory.StartNew(s => ((IResourceLinksOperations)s).DeleteAsync(linkId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -51,9 +51,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteByIdAsync(this IResourceLinksOperations operations, string linkId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task DeleteAsync(this IResourceLinksOperations operations, string linkId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                await operations.DeleteByIdWithHttpMessagesAsync(linkId, null, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteWithHttpMessagesAsync(linkId, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -69,9 +69,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='parameters'>
             /// Create or update resource link parameters.
             /// </param>
-            public static ResourceLink CreateOrUpdateById(this IResourceLinksOperations operations, string linkId, ResourceLink parameters)
+            public static ResourceLink CreateOrUpdate(this IResourceLinksOperations operations, string linkId, ResourceLink parameters)
             {
-                return Task.Factory.StartNew(s => ((IResourceLinksOperations)s).CreateOrUpdateByIdAsync(linkId, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IResourceLinksOperations)s).CreateOrUpdateAsync(linkId, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -90,9 +90,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ResourceLink> CreateOrUpdateByIdAsync(this IResourceLinksOperations operations, string linkId, ResourceLink parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ResourceLink> CreateOrUpdateAsync(this IResourceLinksOperations operations, string linkId, ResourceLink parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateByIdWithHttpMessagesAsync(linkId, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(linkId, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -108,9 +108,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// The fully qualified Id of the resource link. For example,
             /// /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite/Microsoft.Resources/links/myLink
             /// </param>
-            public static ResourceLink GetById(this IResourceLinksOperations operations, string linkId)
+            public static ResourceLink Get(this IResourceLinksOperations operations, string linkId)
             {
-                return Task.Factory.StartNew(s => ((IResourceLinksOperations)s).GetByIdAsync(linkId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IResourceLinksOperations)s).GetAsync(linkId), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -126,9 +126,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ResourceLink> GetByIdAsync(this IResourceLinksOperations operations, string linkId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ResourceLink> GetAsync(this IResourceLinksOperations operations, string linkId, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetByIdWithHttpMessagesAsync(linkId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(linkId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -42,7 +42,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse> DeleteByIdWithHttpMessagesAsync(string linkId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string linkId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Create a resource link.
         /// </summary>
@@ -68,7 +68,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ResourceLink>> CreateOrUpdateByIdWithHttpMessagesAsync(string linkId, ResourceLink parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ResourceLink>> CreateOrUpdateWithHttpMessagesAsync(string linkId, ResourceLink parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a resource link.
         /// </summary>
@@ -91,7 +91,7 @@ namespace Microsoft.Azure.Management.ResourceManager
         /// <exception cref="ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<ResourceLink>> GetByIdWithHttpMessagesAsync(string linkId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ResourceLink>> GetWithHttpMessagesAsync(string linkId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Gets a list of resource links under the subscription.
         /// </summary>
