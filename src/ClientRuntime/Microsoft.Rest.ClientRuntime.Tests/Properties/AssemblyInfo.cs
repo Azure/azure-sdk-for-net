@@ -8,6 +8,7 @@ using System.Resources;
 [assembly: AssemblyDescription("Tests for the Microsoft Rest Client Runtime.")]
 [assembly: AssemblyVersion("1.0.0.0")]
 [assembly: AssemblyFileVersion("1.4.2.0")]
+[assembly: AssemblyInformationalVersion("1.4.2.0")]
 
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Microsoft")]
