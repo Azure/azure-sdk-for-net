@@ -338,6 +338,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 
                     VerifyKeyAttributesAreEqual(updatedKey.Attributes, attributes);
                     VerifyKeyOperationsAreEqual(updatedKey.Key.KeyOps, operations);
+                    updatedKey.Key.KeyOps = JsonWebKeyOperation.AllOperations;
                     VerifyWebKeysAreEqual(updatedKey.Key, createdKey.Key);
 
                     // Create a new version of the key
@@ -354,6 +355,7 @@ namespace Microsoft.Azure.KeyVault.Tests
 
                     VerifyKeyAttributesAreEqual(updatedKey.Attributes, attributes);
                     VerifyKeyOperationsAreEqual(updatedKey.Key.KeyOps, operations);
+                    updatedKey.Key.KeyOps = JsonWebKeyOperation.AllOperations;
                     VerifyWebKeysAreEqual(updatedKey.Key, createdKey.Key);
                 }
                 finally
