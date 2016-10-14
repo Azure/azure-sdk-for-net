@@ -1,5 +1,5 @@
 {
-  "version": "2.0.1-preview",
+  "version": "2.0.2-preview",
   "title": "Microsoft Azure Key Vault Cryptography",
   "description": "Microsoft Azure Key Vault Cryptography Class Library",
   "authors": [ "Microsoft" ],
@@ -19,7 +19,7 @@
   },
 
   "dependencies": {
-    "Microsoft.Azure.KeyVault.Core": "2.0.1-preview"
+    "Microsoft.Azure.KeyVault.Core": "[2.0.2-preview, 3.0)"
   },
 
   "frameworks": {
