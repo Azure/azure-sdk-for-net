@@ -44,7 +44,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // Create a standard cdn profile
                 string profileName = TestUtilities.GenerateName("profile");
-                ProfileCreateParameters createParameters = new ProfileCreateParameters
+                var createParameters = new Profile
                 {
                     Location = "WestUs",
                     Sku = new Sku { Name = SkuName.StandardVerizon },
@@ -55,7 +55,7 @@ namespace Cdn.Tests.ScenarioTests
                         }
                 };
 
-                var profile = cdnMgmtClient.Profiles.Create(profileName, createParameters, resourceGroupName);
+                var profile = cdnMgmtClient.Profiles.Create(resourceGroupName, profileName, createParameters);
 
                 // Create a cdn endpoint one origin should succeed
                 string endpointName = TestUtilities.GenerateName("endpoint");

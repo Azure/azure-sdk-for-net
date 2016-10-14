@@ -42,7 +42,7 @@ namespace Cdn.Tests.ScenarioTests
                 string endpointName = TestUtilities.GenerateName("endpoint-unique");
                 
                 // CheckNameAvailability should return true
-                var output = cdnMgmtClient.NameAvailability.CheckNameAvailability(endpointName, ResourceType.MicrosoftCdnProfilesEndpoints);
+                var output = cdnMgmtClient.CheckNameAvailability(endpointName);
                 Assert.Equal(output.NameAvailable, true);
 
                 // Create endpoint with that name then CheckNameAvailability again
@@ -52,7 +52,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // Create a standard cdn profile
                 string profileName = TestUtilities.GenerateName("profile");
-                ProfileCreateParameters createParameters = new ProfileCreateParameters
+                var createParameters = new Profile
                 {
                     Location = "WestUs",
                     Sku = new Sku { Name = SkuName.StandardVerizon },
@@ -62,7 +62,7 @@ namespace Cdn.Tests.ScenarioTests
                             {"key2","value2"}
                         }
                 };
-                var profile = cdnMgmtClient.Profiles.Create(profileName, createParameters, resourceGroupName);
+                var profile = cdnMgmtClient.Profiles.Create(resourceGroupName, profileName, createParameters);
 
                 // Create endpoint with this name
                 var endpointCreateParameters = new EndpointCreateParameters
@@ -79,10 +79,10 @@ namespace Cdn.Tests.ScenarioTests
                         }
                     }
                 };
-                var endpoint = cdnMgmtClient.Endpoints.Create(endpointName, endpointCreateParameters, profileName, resourceGroupName);
+                var endpoint = cdnMgmtClient.Endpoints.Create(resourceGroupName, profileName, endpointName, endpointCreateParameters);
 
                 // CheckNameAvailability after endpoint was created should return false
-                output = cdnMgmtClient.NameAvailability.CheckNameAvailability(endpointName, ResourceType.MicrosoftCdnProfilesEndpoints);
+                output = cdnMgmtClient.CheckNameAvailability(endpointName);
                 Assert.Equal(output.NameAvailable, false);
 
                 // Delete resource group

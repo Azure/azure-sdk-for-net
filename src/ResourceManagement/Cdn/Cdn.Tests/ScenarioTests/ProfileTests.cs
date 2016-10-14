@@ -44,7 +44,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // Create a standard cdn profile
                 string profileName = TestUtilities.GenerateName("profile");
-                ProfileCreateParameters createParameters = new ProfileCreateParameters
+                var createProfile = new Profile
                 {
                     Location = "WestUs",
                     Sku = new Sku { Name = SkuName.StandardVerizon },
@@ -55,12 +55,12 @@ namespace Cdn.Tests.ScenarioTests
                         }
                 };
 
-                var profile = cdnMgmtClient.Profiles.Create(profileName, createParameters, resourceGroupName);
-                VerifyProfileCreated(profile, createParameters);
+                var profile = cdnMgmtClient.Profiles.Create(resourceGroupName, profileName, createProfile);
+                VerifyProfileCreated(profile, createProfile);
 
                 // Create a premium cdn profile
                 profileName = TestUtilities.GenerateName("profile");
-                createParameters = new ProfileCreateParameters
+                createProfile = new Profile
                 {
                     Location = "EastUs",
                     Sku = new Sku { Name = SkuName.PremiumVerizon },
@@ -71,11 +71,11 @@ namespace Cdn.Tests.ScenarioTests
                         }
                 };
 
-                profile = cdnMgmtClient.Profiles.Create(profileName, createParameters, resourceGroupName);
-                VerifyProfileCreated(profile, createParameters);
+                profile = cdnMgmtClient.Profiles.Create(resourceGroupName, profileName, createProfile);
+                VerifyProfileCreated(profile, createProfile);
 
                 // Create profile with same name but different params should fail
-                createParameters = new ProfileCreateParameters
+                createProfile = new Profile
                 {
                     Location = "WestUs",
                     Sku = new Sku { Name = SkuName.StandardVerizon },
@@ -83,7 +83,7 @@ namespace Cdn.Tests.ScenarioTests
                 };
 
                 Assert.ThrowsAny<ErrorResponseException>(() => {
-                    cdnMgmtClient.Profiles.Create(profileName, createParameters, resourceGroupName); });
+                    cdnMgmtClient.Profiles.Create(resourceGroupName, profileName, createProfile); });
 
                 // Delete resource group
                 CdnTestUtilities.DeleteResourceGroup(resourcesClient, resourceGroupName);
@@ -107,7 +107,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // Create a standard cdn profile
                 string profileName = TestUtilities.GenerateName("profile");
-                ProfileCreateParameters createParameters = new ProfileCreateParameters
+                var createParameters = new Profile
                 {
                     Location = "WestUs",
                     Sku = new Sku { Name = SkuName.StandardVerizon },
@@ -118,7 +118,7 @@ namespace Cdn.Tests.ScenarioTests
                         }
                 };
 
-                var profile = cdnMgmtClient.Profiles.Create(profileName, createParameters, resourceGroupName);
+                var profile = cdnMgmtClient.Profiles.Create(resourceGroupName, profileName, createParameters);
                 VerifyProfileCreated(profile, createParameters);
 
                 // Update profile with new tags
@@ -127,12 +127,12 @@ namespace Cdn.Tests.ScenarioTests
                     { "newkey1","newValue1"}
                 };
 
-                var updatedProfile = cdnMgmtClient.Profiles.Update(profileName, resourceGroupName, newTags);
+                var updatedProfile = cdnMgmtClient.Profiles.Update(resourceGroupName, profileName, newTags);
                 VerifyProfileUpdated(profile, updatedProfile, newTags);
 
                 // Create a standard cdn profile and don't wait for creation to finish
                 profileName = TestUtilities.GenerateName("profile");
-                createParameters = new ProfileCreateParameters
+                createParameters = new Profile
                 {
                     Location = "WestUs",
                     Sku = new Sku { Name = SkuName.StandardVerizon },
@@ -143,7 +143,10 @@ namespace Cdn.Tests.ScenarioTests
                         }
                 };
 
-                cdnMgmtClient.Profiles.BeginCreateAsync(profileName, createParameters, resourceGroupName).Wait(2000);
+                cdnMgmtClient.Profiles.BeginCreateAsync(resourceGroupName, profileName, createParameters)
+                    .ConfigureAwait(false)
+                    .GetAwaiter()
+                    .GetResult();
 
                 // Update profile in creating state should fail
                 var tags = new Dictionary<string, string>
@@ -152,14 +155,14 @@ namespace Cdn.Tests.ScenarioTests
                 };
 
                 Assert.ThrowsAny<ErrorResponseException>(() => {
-                    cdnMgmtClient.Profiles.Update(profileName, resourceGroupName, tags);
+                    cdnMgmtClient.Profiles.Update(resourceGroupName, profileName, tags);
                 });
 
                 // Wait for second profile to complete creation
                 CdnTestUtilities.WaitIfNotInPlaybackMode();
 
                 // Update profile now should succeed
-                cdnMgmtClient.Profiles.Update(profileName, resourceGroupName, tags);
+                cdnMgmtClient.Profiles.Update(resourceGroupName, profileName, tags);
 
                 // Delete resource group
                 CdnTestUtilities.DeleteResourceGroup(resourcesClient, resourceGroupName);
@@ -183,7 +186,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // Create a standard cdn profile
                 string profileName = TestUtilities.GenerateName("profile");
-                ProfileCreateParameters createParameters = new ProfileCreateParameters
+                var createParameters = new Profile
                 {
                     Location = "WestUs",
                     Sku = new Sku { Name = SkuName.StandardVerizon },
@@ -194,22 +197,22 @@ namespace Cdn.Tests.ScenarioTests
                         }
                 };
 
-                var profile = cdnMgmtClient.Profiles.Create(profileName, createParameters, resourceGroupName);
+                var profile = cdnMgmtClient.Profiles.Create(resourceGroupName, profileName, createParameters);
                 VerifyProfileCreated(profile, createParameters);
 
                 // Delete existing profile should succeed
-                cdnMgmtClient.Profiles.DeleteIfExists(profile.Name, resourceGroupName);
+                cdnMgmtClient.Profiles.Delete(resourceGroupName, profile.Name);
 
                 // List profiles should return none
                 var profiles = cdnMgmtClient.Profiles.ListByResourceGroup(resourceGroupName);
                 Assert.Equal(0, profiles.Count());
 
                 // Delete non-existing profile should succeed
-                cdnMgmtClient.Profiles.DeleteIfExists(profile.Name, resourceGroupName);
+                cdnMgmtClient.Profiles.Delete(resourceGroupName, profile.Name);
 
                 // Create a standard cdn profile and don't wait for creation to finish
                 profileName = TestUtilities.GenerateName("profile");
-                createParameters = new ProfileCreateParameters
+                createParameters = new Profile
                 {
                     Location = "WestUs",
                     Sku = new Sku { Name = SkuName.StandardVerizon },
@@ -220,17 +223,20 @@ namespace Cdn.Tests.ScenarioTests
                         }
                 };
 
-                cdnMgmtClient.Profiles.BeginCreateAsync(profileName, createParameters, resourceGroupName).Wait(2000);
+                cdnMgmtClient.Profiles.BeginCreateAsync(resourceGroupName, profileName, createParameters)
+                    .ConfigureAwait(false)
+                    .GetAwaiter()
+                    .GetResult();
 
                 // Delete profile in creating state should fail
                 Assert.ThrowsAny<ErrorResponseException>(() => {
-                    cdnMgmtClient.Profiles.DeleteIfExists(profileName, resourceGroupName); });
+                    cdnMgmtClient.Profiles.Delete(resourceGroupName, profileName); });
 
                 // Wait for second profile to complete creation
                 CdnTestUtilities.WaitIfNotInPlaybackMode();
-
+                
                 // Delete profile should succeed
-                cdnMgmtClient.Profiles.DeleteIfExists(profileName, resourceGroupName);
+                cdnMgmtClient.Profiles.Delete(resourceGroupName, profileName);
 
                 // List profiles should return none
                 profiles = cdnMgmtClient.Profiles.ListByResourceGroup(resourceGroupName);
@@ -262,7 +268,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // Create a standard cdn profile
                 string profileName = TestUtilities.GenerateName("profile");
-                ProfileCreateParameters createParameters = new ProfileCreateParameters
+                var createParameters = new Profile
                 {
                     Location = "WestUs",
                     Sku = new Sku { Name = SkuName.StandardVerizon },
@@ -273,11 +279,11 @@ namespace Cdn.Tests.ScenarioTests
                         }
                 };
 
-                var profile = cdnMgmtClient.Profiles.Create(profileName, createParameters, resourceGroupName);
+                var profile = cdnMgmtClient.Profiles.Create(resourceGroupName, profileName, createParameters);
                 VerifyProfileCreated(profile, createParameters);
 
                 // Get profile returns the created profile
-                var existingProfile = cdnMgmtClient.Profiles.Get(profileName, resourceGroupName);
+                var existingProfile = cdnMgmtClient.Profiles.Get(resourceGroupName, profileName);
                 VerifyProfilesEqual(profile, existingProfile);
 
                 // List profiles should return one profile
@@ -286,7 +292,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // Create a second cdn profile and don't wait for creation to finish
                 var profileName2 = TestUtilities.GenerateName("profile");
-                createParameters = new ProfileCreateParameters
+                createParameters = new Profile
                 {
                     Location = "WestUs",
                     Sku = new Sku { Name = SkuName.StandardVerizon },
@@ -297,18 +303,23 @@ namespace Cdn.Tests.ScenarioTests
                         }
                 };
 
-                cdnMgmtClient.Profiles.BeginCreateAsync(profileName2, createParameters, resourceGroupName).Wait(2000);
-                
+                cdnMgmtClient.Profiles.BeginCreateAsync(resourceGroupName, profileName2, createParameters)
+                    .ConfigureAwait(false)
+                    .GetAwaiter()
+                    .GetResult();
+
+                CdnTestUtilities.WaitIfNotInPlaybackMode(2);
+
                 // List profiles should return two profiles
                 profiles = cdnMgmtClient.Profiles.ListByResourceGroup(resourceGroupName);
                 Assert.Equal(2, profiles.Count());
 
                 // Delete first profile
-                cdnMgmtClient.Profiles.DeleteIfExists(profileName, resourceGroupName);
+                cdnMgmtClient.Profiles.Delete(resourceGroupName, profileName);
 
                 // Get deleted profile should fail
                 Assert.ThrowsAny<ErrorResponseException>(() => {
-                   cdnMgmtClient.Profiles.Get(profileName, resourceGroupName); });
+                   cdnMgmtClient.Profiles.Get(resourceGroupName, profileName); });
 
                 // List profiles should return only one profile
                 profiles = cdnMgmtClient.Profiles.ListByResourceGroup(resourceGroupName);
@@ -318,10 +329,13 @@ namespace Cdn.Tests.ScenarioTests
                 CdnTestUtilities.WaitIfNotInPlaybackMode();
 
                 // Delete second profile but don't wait for operation to complete
-                cdnMgmtClient.Profiles.BeginDeleteIfExistsAsync(profileName2, resourceGroupName).Wait(2000);
+                cdnMgmtClient.Profiles.BeginDeleteAsync(resourceGroupName, profileName2)
+                    .ConfigureAwait(false)
+                    .GetAwaiter()
+                    .GetResult();
 
                 // Get second profile returns profile in Deleting state
-                existingProfile = cdnMgmtClient.Profiles.Get(profileName2, resourceGroupName);
+                existingProfile = cdnMgmtClient.Profiles.Get(resourceGroupName, profileName2);
                 Assert.Equal(existingProfile.ResourceState, ProfileResourceState.Deleting);
 
                 // Wait for second profile to complete creation
@@ -349,7 +363,7 @@ namespace Cdn.Tests.ScenarioTests
                 var resourcesClient = CdnTestUtilities.GetResourceManagementClient(context, handler2);
 
                 // List profiles should return none
-                var profiles = cdnMgmtClient.Profiles.ListBySubscriptionId();
+                var profiles = cdnMgmtClient.Profiles.List();
                 Assert.Equal(0, profiles.Count());
 
                 // Create resource group
@@ -357,7 +371,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // Create a standard cdn profile
                 string profileName = TestUtilities.GenerateName("profile");
-                ProfileCreateParameters createParameters = new ProfileCreateParameters
+                var createParameters = new Profile
                 {
                     Location = "WestUs",
                     Sku = new Sku { Name = SkuName.StandardVerizon },
@@ -368,15 +382,15 @@ namespace Cdn.Tests.ScenarioTests
                         }
                 };
 
-                var profile = cdnMgmtClient.Profiles.Create(profileName, createParameters, resourceGroupName1);
+                var profile = cdnMgmtClient.Profiles.Create(resourceGroupName1, profileName, createParameters);
                 VerifyProfileCreated(profile, createParameters);
 
                 // Get profile returns the created profile
-                var existingProfile = cdnMgmtClient.Profiles.Get(profileName, resourceGroupName1);
+                var existingProfile = cdnMgmtClient.Profiles.Get(resourceGroupName1, profileName);
                 VerifyProfilesEqual(profile, existingProfile);
 
                 // List profiles should return one profile
-                profiles = cdnMgmtClient.Profiles.ListBySubscriptionId();
+                profiles = cdnMgmtClient.Profiles.List();
                 Assert.Equal(1, profiles.Count());
 
                 // Create another resource group
@@ -384,7 +398,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // Create a second cdn profile and don't wait for creation to finish
                 var profileName2 = TestUtilities.GenerateName("profile");
-                createParameters = new ProfileCreateParameters
+                createParameters = new Profile
                 {
                     Location = "WestUs",
                     Sku = new Sku { Name = SkuName.StandardVerizon },
@@ -395,25 +409,25 @@ namespace Cdn.Tests.ScenarioTests
                         }
                 };
 
-                profile = cdnMgmtClient.Profiles.Create(profileName2, createParameters, resourceGroupName2);
+                profile = cdnMgmtClient.Profiles.Create(resourceGroupName2, profileName2, createParameters);
                 VerifyProfileCreated(profile, createParameters);
 
                 // List profiles should return two profiles
-                profiles = cdnMgmtClient.Profiles.ListBySubscriptionId();
+                profiles = cdnMgmtClient.Profiles.List();
                 Assert.Equal(2, profiles.Count());
 
                 // Delete first profile
-                cdnMgmtClient.Profiles.DeleteIfExists(profileName, resourceGroupName1);
+                cdnMgmtClient.Profiles.Delete(resourceGroupName1, profileName);
 
                 // List profiles should return only one profile
-                profiles = cdnMgmtClient.Profiles.ListBySubscriptionId();
+                profiles = cdnMgmtClient.Profiles.List();
                 Assert.Equal(1, profiles.Count());
 
                 // Delete second profile
-                cdnMgmtClient.Profiles.DeleteIfExists(profileName2, resourceGroupName2);
+                cdnMgmtClient.Profiles.Delete(resourceGroupName2, profileName2);
 
                 // List profiles should none
-                profiles = cdnMgmtClient.Profiles.ListBySubscriptionId();
+                profiles = cdnMgmtClient.Profiles.List();
                 Assert.Equal(0, profiles.Count());
 
                 // Delete resource groups
@@ -439,7 +453,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // Create a standard cdn profile
                 string profileName = TestUtilities.GenerateName("profile");
-                ProfileCreateParameters createParameters = new ProfileCreateParameters
+                var createParameters = new Profile
                 {
                     Location = "WestUs",
                     Sku = new Sku { Name = SkuName.StandardVerizon },
@@ -450,17 +464,17 @@ namespace Cdn.Tests.ScenarioTests
                         }
                 };
 
-                var profile = cdnMgmtClient.Profiles.Create(profileName, createParameters, resourceGroupName);
+                var profile = cdnMgmtClient.Profiles.Create(resourceGroupName, profileName, createParameters);
                 VerifyProfileCreated(profile, createParameters);
 
                 // Generate Sso Uri on created profile should succeed
-                var ssoUri = cdnMgmtClient.Profiles.GenerateSsoUri(profileName, resourceGroupName);
+                var ssoUri = cdnMgmtClient.Profiles.GenerateSsoUri(resourceGroupName, profileName);
                 Assert.NotNull(ssoUri);
                 Assert.False(string.IsNullOrWhiteSpace(ssoUri.SsoUriValue));
 
                 // Create a cdn profile and don't wait for creation to finish
                 profileName = TestUtilities.GenerateName("profile");
-                createParameters = new ProfileCreateParameters
+                createParameters = new Profile
                 {
                     Location = "WestUs",
                     Sku = new Sku { Name = SkuName.StandardVerizon },
@@ -471,24 +485,27 @@ namespace Cdn.Tests.ScenarioTests
                         }
                 };
 
-                cdnMgmtClient.Profiles.BeginCreateAsync(profileName, createParameters, resourceGroupName).Wait(2000);
+                cdnMgmtClient.Profiles.BeginCreateAsync(resourceGroupName, profileName, createParameters)
+                    .ConfigureAwait(false)
+                    .GetAwaiter()
+                    .GetResult();
 
                 // Generate Sso Uri on creating profile should fail
                 Assert.ThrowsAny<ErrorResponseException>(() => {
-                    cdnMgmtClient.Profiles.GenerateSsoUri(profileName, resourceGroupName); });
+                    cdnMgmtClient.Profiles.GenerateSsoUri(resourceGroupName, profileName); });
 
                 // Delete resource group
                 CdnTestUtilities.DeleteResourceGroup(resourcesClient, resourceGroupName);
             }
         }
 
-        private static void VerifyProfileCreated(Profile profile, ProfileCreateParameters parameters)
+        private static void VerifyProfileCreated(Profile profile, Profile parameters)
         {
             Assert.Equal(profile.Location, parameters.Location);
             Assert.Equal(profile.Sku.Name, parameters.Sku.Name);
             Assert.Equal(profile.Tags.Count, parameters.Tags.Count);
             Assert.True(profile.Tags.SequenceEqual(parameters.Tags));
-            Assert.Equal(profile.ProvisioningState, ProvisioningState.Succeeded);
+            Assert.Equal(profile.ProvisioningState, "Succeeded");
             Assert.Equal(profile.ResourceState, ProfileResourceState.Active);
         }
 
