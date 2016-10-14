@@ -128,6 +128,7 @@
     <Compile Include="Generated\Models\ApiServiceLongRunningOperationResponse.cs" />
     <Compile Include="Generated\Models\ApiServiceManageDeploymentsParameters.cs" />
     <Compile Include="Generated\Models\ApiServiceManageVirtualNetworksParameters.cs" />
+    <Compile Include="Generated\Models\ApiServiceNameAvailabilityResponse.cs" />
     <Compile Include="Generated\Models\ApiServiceProperties.cs" />
     <Compile Include="Generated\Models\ApiServiceResource.cs" />
     <Compile Include="Generated\Models\ApiServiceSkuProperties.cs" />
@@ -139,8 +140,10 @@
     <Compile Include="Generated\Models\HostnameConfiguration.cs" />
     <Compile Include="Generated\Models\HostnameType.cs" />
     <Compile Include="Generated\Models\LongRunningOperationResponse.cs" />
+    <Compile Include="Generated\Models\NameAvailabilityReason.cs" />
     <Compile Include="Generated\Models\SkuType.cs" />
     <Compile Include="Generated\Models\VirtualNetworkConfiguration.cs" />
+    <Compile Include="Generated\Models\VirtualNetworkType.cs" />
     <Compile Include="Generated\OpenIdConnectProvidersOperations.cs" />
     <Compile Include="Generated\OpenIdConnectProvidersOperationsExtensions.cs" />
     <Compile Include="Generated\PolicySnippetsOperations.cs" />
@@ -173,6 +176,7 @@
     <Compile Include="Generated\SmapiModels\ApiListResponse.cs" />
     <Compile Include="Generated\SmapiModels\ApiPaged.cs" />
     <Compile Include="Generated\SmapiModels\ApiProtocolContract.cs" />
+    <Compile Include="Generated\SmapiModels\ApiTypeContract.cs" />
     <Compile Include="Generated\SmapiModels\AsyncOperationState.cs" />
     <Compile Include="Generated\SmapiModels\AuthenticationSettingsContract.cs" />
     <Compile Include="Generated\SmapiModels\AuthorizationServerCreateOrUpdateParameters.cs" />

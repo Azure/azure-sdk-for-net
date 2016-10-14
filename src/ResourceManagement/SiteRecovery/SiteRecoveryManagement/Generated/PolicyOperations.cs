@@ -359,6 +359,24 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                 providerSpecificInputValue["multiVmSyncStatus"] = derived6.MultiVmSyncStatus;
                             }
                         }
+                        if (input.Properties.ProviderSpecificInput is A2APolicyCreationInput)
+                        {
+                            providerSpecificInputValue["instanceType"] = "A2A";
+                            A2APolicyCreationInput derived7 = ((A2APolicyCreationInput)input.Properties.ProviderSpecificInput);
+                            
+                            providerSpecificInputValue["recoveryPointThresholdInMinutes"] = derived7.RecoveryPointThresholdInMinutes;
+                            
+                            providerSpecificInputValue["recoveryPointHistory"] = derived7.RecoveryPointHistory;
+                            
+                            providerSpecificInputValue["crashConsistentFrequencyInMinutes"] = derived7.CrashConsistentFrequencyInMinutes;
+                            
+                            providerSpecificInputValue["appConsistentFrequencyInMinutes"] = derived7.AppConsistentFrequencyInMinutes;
+                            
+                            if (derived7.MultiVmSyncStatus != null)
+                            {
+                                providerSpecificInputValue["multiVmSyncStatus"] = derived7.MultiVmSyncStatus;
+                            }
+                        }
                     }
                 }
                 
@@ -926,6 +944,24 @@ namespace Microsoft.Azure.Management.SiteRecovery
                         if (derived6.MultiVmSyncStatus != null)
                         {
                             replicationProviderSettingsValue["multiVmSyncStatus"] = derived6.MultiVmSyncStatus;
+                        }
+                    }
+                    if (input.Properties.ReplicationProviderSettings is A2APolicyCreationInput)
+                    {
+                        replicationProviderSettingsValue["instanceType"] = "A2A";
+                        A2APolicyCreationInput derived7 = ((A2APolicyCreationInput)input.Properties.ReplicationProviderSettings);
+                        
+                        replicationProviderSettingsValue["recoveryPointThresholdInMinutes"] = derived7.RecoveryPointThresholdInMinutes;
+                        
+                        replicationProviderSettingsValue["recoveryPointHistory"] = derived7.RecoveryPointHistory;
+                        
+                        replicationProviderSettingsValue["crashConsistentFrequencyInMinutes"] = derived7.CrashConsistentFrequencyInMinutes;
+                        
+                        replicationProviderSettingsValue["appConsistentFrequencyInMinutes"] = derived7.AppConsistentFrequencyInMinutes;
+                        
+                        if (derived7.MultiVmSyncStatus != null)
+                        {
+                            replicationProviderSettingsValue["multiVmSyncStatus"] = derived7.MultiVmSyncStatus;
                         }
                     }
                 }
@@ -1613,6 +1649,53 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         }
                                         propertiesInstance.ProviderSpecificDetails = inMagePolicyDetailsInstance;
                                     }
+                                    if (typeName == "A2A")
+                                    {
+                                        A2APolicyDetails a2APolicyDetailsInstance = new A2APolicyDetails();
+                                        
+                                        JToken recoveryPointThresholdInMinutesValue3 = providerSpecificDetailsValue["recoveryPointThresholdInMinutes"];
+                                        if (recoveryPointThresholdInMinutesValue3 != null && recoveryPointThresholdInMinutesValue3.Type != JTokenType.Null)
+                                        {
+                                            int recoveryPointThresholdInMinutesInstance3 = ((int)recoveryPointThresholdInMinutesValue3);
+                                            a2APolicyDetailsInstance.RecoveryPointThresholdInMinutes = recoveryPointThresholdInMinutesInstance3;
+                                        }
+                                        
+                                        JToken recoveryPointHistoryValue3 = providerSpecificDetailsValue["recoveryPointHistory"];
+                                        if (recoveryPointHistoryValue3 != null && recoveryPointHistoryValue3.Type != JTokenType.Null)
+                                        {
+                                            int recoveryPointHistoryInstance3 = ((int)recoveryPointHistoryValue3);
+                                            a2APolicyDetailsInstance.RecoveryPointHistory = recoveryPointHistoryInstance3;
+                                        }
+                                        
+                                        JToken crashConsistentFrequencyInMinutesValue2 = providerSpecificDetailsValue["crashConsistentFrequencyInMinutes"];
+                                        if (crashConsistentFrequencyInMinutesValue2 != null && crashConsistentFrequencyInMinutesValue2.Type != JTokenType.Null)
+                                        {
+                                            int crashConsistentFrequencyInMinutesInstance2 = ((int)crashConsistentFrequencyInMinutesValue2);
+                                            a2APolicyDetailsInstance.CrashConsistentFrequencyInMinutes = crashConsistentFrequencyInMinutesInstance2;
+                                        }
+                                        
+                                        JToken appConsistentFrequencyInMinutesValue3 = providerSpecificDetailsValue["appConsistentFrequencyInMinutes"];
+                                        if (appConsistentFrequencyInMinutesValue3 != null && appConsistentFrequencyInMinutesValue3.Type != JTokenType.Null)
+                                        {
+                                            int appConsistentFrequencyInMinutesInstance3 = ((int)appConsistentFrequencyInMinutesValue3);
+                                            a2APolicyDetailsInstance.AppConsistentFrequencyInMinutes = appConsistentFrequencyInMinutesInstance3;
+                                        }
+                                        
+                                        JToken multiVmSyncStatusValue3 = providerSpecificDetailsValue["multiVmSyncStatus"];
+                                        if (multiVmSyncStatusValue3 != null && multiVmSyncStatusValue3.Type != JTokenType.Null)
+                                        {
+                                            string multiVmSyncStatusInstance3 = ((string)multiVmSyncStatusValue3);
+                                            a2APolicyDetailsInstance.MultiVmSyncStatus = multiVmSyncStatusInstance3;
+                                        }
+                                        
+                                        JToken instanceTypeValue6 = providerSpecificDetailsValue["instanceType"];
+                                        if (instanceTypeValue6 != null && instanceTypeValue6.Type != JTokenType.Null)
+                                        {
+                                            string instanceTypeInstance6 = ((string)instanceTypeValue6);
+                                            a2APolicyDetailsInstance.InstanceType = instanceTypeInstance6;
+                                        }
+                                        propertiesInstance.ProviderSpecificDetails = a2APolicyDetailsInstance;
+                                    }
                                 }
                             }
                             
@@ -2158,6 +2241,53 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                             inMagePolicyDetailsInstance.InstanceType = instanceTypeInstance5;
                                         }
                                         propertiesInstance.ProviderSpecificDetails = inMagePolicyDetailsInstance;
+                                    }
+                                    if (typeName == "A2A")
+                                    {
+                                        A2APolicyDetails a2APolicyDetailsInstance = new A2APolicyDetails();
+                                        
+                                        JToken recoveryPointThresholdInMinutesValue3 = providerSpecificDetailsValue["recoveryPointThresholdInMinutes"];
+                                        if (recoveryPointThresholdInMinutesValue3 != null && recoveryPointThresholdInMinutesValue3.Type != JTokenType.Null)
+                                        {
+                                            int recoveryPointThresholdInMinutesInstance3 = ((int)recoveryPointThresholdInMinutesValue3);
+                                            a2APolicyDetailsInstance.RecoveryPointThresholdInMinutes = recoveryPointThresholdInMinutesInstance3;
+                                        }
+                                        
+                                        JToken recoveryPointHistoryValue3 = providerSpecificDetailsValue["recoveryPointHistory"];
+                                        if (recoveryPointHistoryValue3 != null && recoveryPointHistoryValue3.Type != JTokenType.Null)
+                                        {
+                                            int recoveryPointHistoryInstance3 = ((int)recoveryPointHistoryValue3);
+                                            a2APolicyDetailsInstance.RecoveryPointHistory = recoveryPointHistoryInstance3;
+                                        }
+                                        
+                                        JToken crashConsistentFrequencyInMinutesValue2 = providerSpecificDetailsValue["crashConsistentFrequencyInMinutes"];
+                                        if (crashConsistentFrequencyInMinutesValue2 != null && crashConsistentFrequencyInMinutesValue2.Type != JTokenType.Null)
+                                        {
+                                            int crashConsistentFrequencyInMinutesInstance2 = ((int)crashConsistentFrequencyInMinutesValue2);
+                                            a2APolicyDetailsInstance.CrashConsistentFrequencyInMinutes = crashConsistentFrequencyInMinutesInstance2;
+                                        }
+                                        
+                                        JToken appConsistentFrequencyInMinutesValue3 = providerSpecificDetailsValue["appConsistentFrequencyInMinutes"];
+                                        if (appConsistentFrequencyInMinutesValue3 != null && appConsistentFrequencyInMinutesValue3.Type != JTokenType.Null)
+                                        {
+                                            int appConsistentFrequencyInMinutesInstance3 = ((int)appConsistentFrequencyInMinutesValue3);
+                                            a2APolicyDetailsInstance.AppConsistentFrequencyInMinutes = appConsistentFrequencyInMinutesInstance3;
+                                        }
+                                        
+                                        JToken multiVmSyncStatusValue3 = providerSpecificDetailsValue["multiVmSyncStatus"];
+                                        if (multiVmSyncStatusValue3 != null && multiVmSyncStatusValue3.Type != JTokenType.Null)
+                                        {
+                                            string multiVmSyncStatusInstance3 = ((string)multiVmSyncStatusValue3);
+                                            a2APolicyDetailsInstance.MultiVmSyncStatus = multiVmSyncStatusInstance3;
+                                        }
+                                        
+                                        JToken instanceTypeValue6 = providerSpecificDetailsValue["instanceType"];
+                                        if (instanceTypeValue6 != null && instanceTypeValue6.Type != JTokenType.Null)
+                                        {
+                                            string instanceTypeInstance6 = ((string)instanceTypeValue6);
+                                            a2APolicyDetailsInstance.InstanceType = instanceTypeInstance6;
+                                        }
+                                        propertiesInstance.ProviderSpecificDetails = a2APolicyDetailsInstance;
                                     }
                                 }
                             }
@@ -2995,6 +3125,53 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                         }
                                         propertiesInstance.ProviderSpecificDetails = inMagePolicyDetailsInstance;
                                     }
+                                    if (typeName == "A2A")
+                                    {
+                                        A2APolicyDetails a2APolicyDetailsInstance = new A2APolicyDetails();
+                                        
+                                        JToken recoveryPointThresholdInMinutesValue3 = providerSpecificDetailsValue["recoveryPointThresholdInMinutes"];
+                                        if (recoveryPointThresholdInMinutesValue3 != null && recoveryPointThresholdInMinutesValue3.Type != JTokenType.Null)
+                                        {
+                                            int recoveryPointThresholdInMinutesInstance3 = ((int)recoveryPointThresholdInMinutesValue3);
+                                            a2APolicyDetailsInstance.RecoveryPointThresholdInMinutes = recoveryPointThresholdInMinutesInstance3;
+                                        }
+                                        
+                                        JToken recoveryPointHistoryValue3 = providerSpecificDetailsValue["recoveryPointHistory"];
+                                        if (recoveryPointHistoryValue3 != null && recoveryPointHistoryValue3.Type != JTokenType.Null)
+                                        {
+                                            int recoveryPointHistoryInstance3 = ((int)recoveryPointHistoryValue3);
+                                            a2APolicyDetailsInstance.RecoveryPointHistory = recoveryPointHistoryInstance3;
+                                        }
+                                        
+                                        JToken crashConsistentFrequencyInMinutesValue2 = providerSpecificDetailsValue["crashConsistentFrequencyInMinutes"];
+                                        if (crashConsistentFrequencyInMinutesValue2 != null && crashConsistentFrequencyInMinutesValue2.Type != JTokenType.Null)
+                                        {
+                                            int crashConsistentFrequencyInMinutesInstance2 = ((int)crashConsistentFrequencyInMinutesValue2);
+                                            a2APolicyDetailsInstance.CrashConsistentFrequencyInMinutes = crashConsistentFrequencyInMinutesInstance2;
+                                        }
+                                        
+                                        JToken appConsistentFrequencyInMinutesValue3 = providerSpecificDetailsValue["appConsistentFrequencyInMinutes"];
+                                        if (appConsistentFrequencyInMinutesValue3 != null && appConsistentFrequencyInMinutesValue3.Type != JTokenType.Null)
+                                        {
+                                            int appConsistentFrequencyInMinutesInstance3 = ((int)appConsistentFrequencyInMinutesValue3);
+                                            a2APolicyDetailsInstance.AppConsistentFrequencyInMinutes = appConsistentFrequencyInMinutesInstance3;
+                                        }
+                                        
+                                        JToken multiVmSyncStatusValue3 = providerSpecificDetailsValue["multiVmSyncStatus"];
+                                        if (multiVmSyncStatusValue3 != null && multiVmSyncStatusValue3.Type != JTokenType.Null)
+                                        {
+                                            string multiVmSyncStatusInstance3 = ((string)multiVmSyncStatusValue3);
+                                            a2APolicyDetailsInstance.MultiVmSyncStatus = multiVmSyncStatusInstance3;
+                                        }
+                                        
+                                        JToken instanceTypeValue6 = providerSpecificDetailsValue["instanceType"];
+                                        if (instanceTypeValue6 != null && instanceTypeValue6.Type != JTokenType.Null)
+                                        {
+                                            string instanceTypeInstance6 = ((string)instanceTypeValue6);
+                                            a2APolicyDetailsInstance.InstanceType = instanceTypeInstance6;
+                                        }
+                                        propertiesInstance.ProviderSpecificDetails = a2APolicyDetailsInstance;
+                                    }
                                 }
                             }
                             
@@ -3628,6 +3805,53 @@ namespace Microsoft.Azure.Management.SiteRecovery
                                                     inMagePolicyDetailsInstance.InstanceType = instanceTypeInstance5;
                                                 }
                                                 propertiesInstance.ProviderSpecificDetails = inMagePolicyDetailsInstance;
+                                            }
+                                            if (typeName == "A2A")
+                                            {
+                                                A2APolicyDetails a2APolicyDetailsInstance = new A2APolicyDetails();
+                                                
+                                                JToken recoveryPointThresholdInMinutesValue3 = providerSpecificDetailsValue["recoveryPointThresholdInMinutes"];
+                                                if (recoveryPointThresholdInMinutesValue3 != null && recoveryPointThresholdInMinutesValue3.Type != JTokenType.Null)
+                                                {
+                                                    int recoveryPointThresholdInMinutesInstance3 = ((int)recoveryPointThresholdInMinutesValue3);
+                                                    a2APolicyDetailsInstance.RecoveryPointThresholdInMinutes = recoveryPointThresholdInMinutesInstance3;
+                                                }
+                                                
+                                                JToken recoveryPointHistoryValue3 = providerSpecificDetailsValue["recoveryPointHistory"];
+                                                if (recoveryPointHistoryValue3 != null && recoveryPointHistoryValue3.Type != JTokenType.Null)
+                                                {
+                                                    int recoveryPointHistoryInstance3 = ((int)recoveryPointHistoryValue3);
+                                                    a2APolicyDetailsInstance.RecoveryPointHistory = recoveryPointHistoryInstance3;
+                                                }
+                                                
+                                                JToken crashConsistentFrequencyInMinutesValue2 = providerSpecificDetailsValue["crashConsistentFrequencyInMinutes"];
+                                                if (crashConsistentFrequencyInMinutesValue2 != null && crashConsistentFrequencyInMinutesValue2.Type != JTokenType.Null)
+                                                {
+                                                    int crashConsistentFrequencyInMinutesInstance2 = ((int)crashConsistentFrequencyInMinutesValue2);
+                                                    a2APolicyDetailsInstance.CrashConsistentFrequencyInMinutes = crashConsistentFrequencyInMinutesInstance2;
+                                                }
+                                                
+                                                JToken appConsistentFrequencyInMinutesValue3 = providerSpecificDetailsValue["appConsistentFrequencyInMinutes"];
+                                                if (appConsistentFrequencyInMinutesValue3 != null && appConsistentFrequencyInMinutesValue3.Type != JTokenType.Null)
+                                                {
+                                                    int appConsistentFrequencyInMinutesInstance3 = ((int)appConsistentFrequencyInMinutesValue3);
+                                                    a2APolicyDetailsInstance.AppConsistentFrequencyInMinutes = appConsistentFrequencyInMinutesInstance3;
+                                                }
+                                                
+                                                JToken multiVmSyncStatusValue3 = providerSpecificDetailsValue["multiVmSyncStatus"];
+                                                if (multiVmSyncStatusValue3 != null && multiVmSyncStatusValue3.Type != JTokenType.Null)
+                                                {
+                                                    string multiVmSyncStatusInstance3 = ((string)multiVmSyncStatusValue3);
+                                                    a2APolicyDetailsInstance.MultiVmSyncStatus = multiVmSyncStatusInstance3;
+                                                }
+                                                
+                                                JToken instanceTypeValue6 = providerSpecificDetailsValue["instanceType"];
+                                                if (instanceTypeValue6 != null && instanceTypeValue6.Type != JTokenType.Null)
+                                                {
+                                                    string instanceTypeInstance6 = ((string)instanceTypeValue6);
+                                                    a2APolicyDetailsInstance.InstanceType = instanceTypeInstance6;
+                                                }
+                                                propertiesInstance.ProviderSpecificDetails = a2APolicyDetailsInstance;
                                             }
                                         }
                                     }

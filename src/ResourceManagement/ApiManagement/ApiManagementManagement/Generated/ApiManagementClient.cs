@@ -450,7 +450,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             this._userIdentities = new UserIdentitiesOperations(this);
             this._users = new UsersOperations(this);
             this._userSubscriptions = new UserSubscriptionsOperations(this);
-            this._apiVersion = "2014-02-14";
+            this._apiVersion = "2016-07-07";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);
@@ -547,7 +547,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             this._userIdentities = new UserIdentitiesOperations(this);
             this._users = new UsersOperations(this);
             this._userSubscriptions = new UserSubscriptionsOperations(this);
-            this._apiVersion = "2014-02-14";
+            this._apiVersion = "2016-07-07";
             this._longRunningOperationInitialTimeout = -1;
             this._longRunningOperationRetryTimeout = -1;
             this.HttpClient.Timeout = TimeSpan.FromSeconds(300);

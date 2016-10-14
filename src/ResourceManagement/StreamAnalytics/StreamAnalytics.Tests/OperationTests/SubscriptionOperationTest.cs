@@ -47,7 +47,7 @@ namespace StreamAnalytics.Tests.OperationTests
 
                     SubscriptionQuotasGetResponse subscriptionQuotasGetResponse = client.Subscriptions.GetQuotas(serviceLocation);
                     Assert.Equal(HttpStatusCode.OK, subscriptionQuotasGetResponse.StatusCode);
-                    Assert.Equal(0, subscriptionQuotasGetResponse.Value.FirstOrDefault().Properties.CurrentCount);
+                    Assert.Equal(1, subscriptionQuotasGetResponse.Value.FirstOrDefault().Properties.CurrentCount);
                     Assert.Equal(50, subscriptionQuotasGetResponse.Value.FirstOrDefault().Properties.MaxCount);
                 }
                 finally

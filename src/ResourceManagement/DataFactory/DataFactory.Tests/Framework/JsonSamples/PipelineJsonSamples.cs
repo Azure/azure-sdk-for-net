@@ -598,6 +598,59 @@ namespace DataFactory.Tests.Framework.JsonSamples
 }
 ";
 
+        [JsonSample]
+        public const string AzureMLPipelineWithWebServiceInputs = @"
+{
+    name: ""My machine learning pipeline WebServiceInputs"",
+    properties: 
+    {
+        description : ""ML pipeline description"",
+        hubName : ""someHub"",
+        activities:
+        [
+            {
+                name: ""MLActivity"",
+                description: ""Test activity description"", 
+                type: ""AzureMLBatchExecution"",
+                typeProperties: {
+                    webServiceInputs: {
+                        ""webServiceInput1"": ""csvBlob1"",
+                        ""webServiceInput2"": ""csvBlob2""
+                    },
+                    webServiceOutputs: {
+                        ""webServiceOutput1"": ""sasCopyBlob""
+                    }
+                },
+                inputs: 
+                [ 
+                    {
+                        name: ""csvBlob1""
+                    },
+                    {   
+                        name: ""csvBLob2""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        name: ""sasCopyBlob""
+                    }
+                ],
+                linkedServiceName: ""mlLinkedService"",
+                policy:
+                {
+                    concurrency: 3,
+                    executionPriorityOrder: ""NewestFirst"",
+                    retry: 3,
+                        timeout: ""00:00:05"",
+                        delay: ""00:00:01""
+                }
+            }
+        ]
+    }
+}
+";
+
         [JsonSample(propertyBagKeys: new string[]
                     {
                         "properties.activities[0].typeProperties.webServiceParameters.oNe",
@@ -1468,6 +1521,45 @@ namespace DataFactory.Tests.Framework.JsonSamples
                         ""type"": ""CassandraSource"",
                         ""query"":""select * from table"",
                         ""consistencyLevel"":""TWO"",
+                    },
+                    ""sink"": {
+                        ""type"": ""AzureTableSink"",
+                        ""writeBatchSize"": 1000000,
+                        ""azureTableDefaultPartitionKeyValue"": ""defaultParitionKey""
+                    },
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
+        public const string MongoDbActivityPipeline = @"{
+    ""name"": ""Pipeline"",
+    ""properties"": {
+        ""hubName"": ""hdis-jsontest-hub"",
+        ""activities"": [
+            {
+                ""name"": ""blob-table"",
+                ""type"": ""Copy"",
+                ""inputs"": [
+                    {
+                        ""name"": ""Table-MongoDb""
+                    }
+                ],
+                ""outputs"": [
+                    {
+                        ""name"": ""Table-AzureTable""
+                    }
+                ],
+                ""policy"": {
+                    ""concurrency"": 1
+                },
+                ""typeProperties"": {
+                    ""source"": {
+                        ""type"": ""MongoDbSource"",
+                        ""query"":""fake query""
                     },
                     ""sink"": {
                         ""type"": ""AzureTableSink"",

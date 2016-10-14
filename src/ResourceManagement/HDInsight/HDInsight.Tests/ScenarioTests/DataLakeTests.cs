@@ -61,6 +61,8 @@ namespace HDInsight.Tests
                 var getresponse = client.Clusters.Get(resourceGroup, dnsname);
                 Assert.Equal(createresponse.Cluster.Properties.CreatedDate, getresponse.Cluster.Properties.CreatedDate);
                 Assert.Equal(createresponse.Cluster.Name, getresponse.Cluster.Name);
+
+                OperationResource result = client.Clusters.Delete(resourceGroup, dnsname);
             }
         }
 
@@ -102,6 +104,7 @@ namespace HDInsight.Tests
                 const string dnsname = "hdisdk-datalake5";
 
                 var spec = GetDataLakeClusterParameters();
+                spec.Version = "3.2";
 
                 var createresponse = client.Clusters.Create(resourceGroup, dnsname, spec);
 
@@ -109,6 +112,8 @@ namespace HDInsight.Tests
                 var getresponse = client.Clusters.Get(resourceGroup, dnsname);
                 Assert.Equal(createresponse.Cluster.Properties.CreatedDate, getresponse.Cluster.Properties.CreatedDate);
                 Assert.Equal(createresponse.Cluster.Name, getresponse.Cluster.Name);
+
+                OperationResource result = client.Clusters.Delete(resourceGroup, dnsname);
             }
         }
 

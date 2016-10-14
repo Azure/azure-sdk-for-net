@@ -104,7 +104,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </param>
         /// <param name='format'>
         /// Required. Format of the policy. Supported formats:
-        /// application/vnd.ms-azure-apim.policy+xml
+        /// application/vnd.ms-azure-apim.policy+xml,
+        /// application/vnd.ms-azure-apim.policy.raw+xml
         /// </param>
         /// <returns>
         /// The response model for the get policy output operation.
@@ -133,7 +134,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </param>
         /// <param name='format'>
         /// Required. Format of the policy. Supported formats:
-        /// application/vnd.ms-azure-apim.policy+xml
+        /// application/vnd.ms-azure-apim.policy+xml,
+        /// application/vnd.ms-azure-apim.policy.raw+xml
         /// </param>
         /// <returns>
         /// The response model for the get policy output operation.
@@ -158,7 +160,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </param>
         /// <param name='format'>
         /// Required. Format of the policy. Supported formats:
-        /// application/vnd.ms-azure-apim.policy+xml
+        /// application/vnd.ms-azure-apim.policy+xml,
+        /// application/vnd.ms-azure-apim.policy.raw+xml
         /// </param>
         /// <param name='policyStream'>
         /// Required. Policy stream.
@@ -194,7 +197,8 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// </param>
         /// <param name='format'>
         /// Required. Format of the policy. Supported formats:
-        /// application/vnd.ms-azure-apim.policy+xml
+        /// application/vnd.ms-azure-apim.policy+xml,
+        /// application/vnd.ms-azure-apim.policy.raw+xml
         /// </param>
         /// <param name='policyStream'>
         /// Required. Policy stream.

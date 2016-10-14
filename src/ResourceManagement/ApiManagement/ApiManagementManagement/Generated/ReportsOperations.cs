@@ -133,7 +133,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "/reports/";
             url = url + Uri.EscapeDataString(ApiManagementClient.ReportsAggregationToString(aggregation));
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             List<string> odataFilter = new List<string>();
             if (query != null && query.Filter != null)
             {

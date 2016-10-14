@@ -20,6 +20,7 @@
             {
                 undoContext.Start();
                 var customerExpressRouteClient = GetCustomerExpressRouteManagementClient();
+                var providerExpressRouteClient = GetProviderExpressRouteManagementClient();
                 var provider =
                     customerExpressRouteClient.DedicatedCircuitServiceProviders.List()
                                               .Single(
@@ -27,7 +28,7 @@
                                                   p.Name.Equals(GetProviderName(),
                                                                 StringComparison.CurrentCultureIgnoreCase));
                 var location = provider.DedicatedCircuitLocations.Split(',').First();
-                var bandwidth = provider.DedicatedCircuitBandwidths.First().Bandwidth;
+                var bandwidth = provider.DedicatedCircuitBandwidths[4].Bandwidth;
                 var circuitName = TestUtilities.GenerateName("circuit");
                 var newCircuitParams = new DedicatedCircuitNewParameters()
                     {
@@ -40,17 +41,20 @@
                 TestUtilities.ValidateOperationResponse(newResponse);
                 Guid serviceKey;
                 Assert.True(Guid.TryParse(newResponse.Data, out serviceKey));
-                var providerExpressRouteClient = GetProviderExpressRouteManagementClient();
+                
                 newResponse = providerExpressRouteClient.CrossConnections.New(serviceKey.ToString());
                 TestUtilities.ValidateOperationResponse(newResponse);
 
                 CrossConnectionGetResponse getResponse =
                     providerExpressRouteClient.CrossConnections.Get(serviceKey.ToString());
+                
                 TestUtilities.ValidateOperationResponse(getResponse);
                 Assert.Equal((uint) getResponse.CrossConnection.Bandwidth, bandwidth);
                 Assert.Equal(getResponse.CrossConnection.Status, DedicatedCircuitState.Enabled.ToString());
                 Assert.Equal(getResponse.CrossConnection.ProvisioningState,
                              ProviderProvisioningState.Provisioning.ToString());
+                CrossConnectionListResponse listResponse = providerExpressRouteClient.CrossConnections.List();
+                Assert.NotEmpty(listResponse.CrossConnections[0].ServiceKey);
 
                 var updateParams = new CrossConnectionUpdateParameters()
                     {
@@ -59,7 +63,8 @@
                     };
                 var updateResponse = providerExpressRouteClient.CrossConnections.Update(serviceKey.ToString(),
                                                                                         updateParams);
-                TestUtilities.ValidateOperationResponse(updateResponse);
+
+              
 
             }
         }

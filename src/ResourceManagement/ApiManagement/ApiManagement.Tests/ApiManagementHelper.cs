@@ -50,21 +50,7 @@ namespace ApiManagement.Tests
 
         public static void RefreshAccessToken(this ApiManagementClient apiManagementClient)
         {
-            //if (HttpMockServer.Mode == HttpRecorderMode.Playback)
-            //{
-            //    // if it's playback then do nothing
-            //    return;
-            //}
-
-            //var testEnvironment = new CSMTestEnvironmentFactory().GetTestEnvironment();
-            ////var context = TokenCloudCredentialsHelper.GetToken(testEnvironment.Endpoints.AADAuthUri.ToString(), testEnvironment.Tenant, testEnvironment.ClientId, (string)null, (string)null);
-            //var context = new AuthenticationContext(new Uri(testEnvironment.Endpoints.AADAuthUri, testEnvironment.Tenant).AbsoluteUri);
-
-            //var result = context.AcquireToken("https://management.core.windows.net/", testEnvironment.ClientId, new Uri("urn:ietf:wg:oauth:2.0:oob"), PromptBehavior.Auto);
-            //var newToken = context.AcquireTokenByRefreshToken(result.RefreshToken, testEnvironment.ClientId, "https://management.core.windows.net/");
-
-            ////context.TokenCache.ReadItems().Where(item => item.)
-            //((TokenCloudCredentials) apiManagementClient.Credentials).Token = newToken.AccessToken;
+            
         }
 
         private static void ThrowIfTrue(bool condition, string message)
@@ -158,14 +144,14 @@ namespace ApiManagement.Tests
                     Location = location,
                     Properties = new ApiServiceProperties
                     {
-                        SkuProperties = new ApiServiceSkuProperties
-                        {
-                            Capacity = 1,
-                            SkuType = skuType
-                        },
                         AddresserEmail = "foo@live.com",
                         PublisherEmail = "foo@live.com",
                         PublisherName = "apimgmt"
+                    },
+                    SkuProperties = new ApiServiceSkuProperties
+                    {
+                        Capacity = 1,
+                        SkuType = skuType
                     }
                 });
 

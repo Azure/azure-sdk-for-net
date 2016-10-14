@@ -70,19 +70,5 @@ namespace Microsoft.Azure.Management.Resources.Models
         public GenericResourceExtended()
         {
         }
-        
-        /// <summary>
-        /// Initializes a new instance of the GenericResourceExtended class
-        /// with required arguments.
-        /// </summary>
-        public GenericResourceExtended(string location)
-            : this()
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
-        }
     }
 }

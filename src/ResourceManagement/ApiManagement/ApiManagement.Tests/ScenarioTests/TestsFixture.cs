@@ -22,15 +22,6 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests
     {
         public TestsFixture()
         {
-            // place any initialization like environment settings here
-#if DEBUG
-            //Environment.SetEnvironmentVariable("AZURE_TEST_MODE", "Record");
-
-            //Environment.SetEnvironmentVariable(
-            //   "TEST_CSM_ORGID_AUTHENTICATION",
-            //   "SubscriptionId=;Environment=Prod");
-
-#endif
             TestUtilities.StartTest();
             try
             {

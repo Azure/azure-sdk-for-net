@@ -19,7 +19,7 @@
       <group targetFramework="portable-net45+wp8+wpa81+win">
         <reference file="Microsoft.Azure.Management.ApiManagement.dll" />
       </group>
-      <group targetFramework="net40">
+      <group targetFramework="net45">
         <reference file="Microsoft.Azure.Management.ApiManagement.dll" />
       </group>
     </references>
@@ -32,8 +32,8 @@
     <file src="..\binaries\portable\Microsoft.Azure.Management.ApiManagement.dll" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\portable\Microsoft.Azure.Management.ApiManagement.pdb" target="lib\portable-net45+wp8+wpa81+win" />
     <file src="..\binaries\portable\Microsoft.Azure.Management.ApiManagement.xml" target="lib\portable-net45+wp8+wpa81+win" />
-    <file src="..\binaries\net40\Microsoft.Azure.Management.ApiManagement.dll" target="lib\net40" />
-    <file src="..\binaries\net40\Microsoft.Azure.Management.ApiManagement.pdb" target="lib\net40" />
-    <file src="..\binaries\net40\Microsoft.Azure.Management.ApiManagement.xml" target="lib\net40" />
+    <file src="..\binaries\net40\Microsoft.Azure.Management.ApiManagement.dll" target="lib\net45" />
+    <file src="..\binaries\net40\Microsoft.Azure.Management.ApiManagement.pdb" target="lib\net45" />
+    <file src="..\binaries\net40\Microsoft.Azure.Management.ApiManagement.xml" target="lib\net45" />
   </files>
 </package>

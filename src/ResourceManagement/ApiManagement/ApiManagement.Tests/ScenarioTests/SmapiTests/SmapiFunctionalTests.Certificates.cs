@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.SmapiTest
                     certStream.Read(rawBytes, 0, rawBytes.Length);
                 }
 
-                string certificatePassword = "powershelltest";
+                string certificatePassword = "g0BdrCRORWI2ctk_g5Wdf5QpTsI9vxnw";
                 string certificateData = Convert.ToBase64String(rawBytes);
 
                 var cert = new X509Certificate2(rawBytes, certificatePassword);

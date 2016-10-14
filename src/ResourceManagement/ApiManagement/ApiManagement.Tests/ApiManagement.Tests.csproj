@@ -18,12 +18,11 @@
     <Compile Include="ApiManagementResourceProviderUndoHandler.cs" />
     <Compile Include="ApiManagementHelper.cs" />
     <Compile Include="ScenarioTests\ResourceProviderTests\ResourceProviderFunctionalTests.BackupRestore.cs" />
-    <Compile Include="ScenarioTests\ResourceProviderTests\ResourceProviderFunctionalTests.CheckServiceNameAvailability.cs" />
+    <Compile Include="ScenarioTests\ResourceProviderTests\ResourceProviderFunctionalTests.CheckNameAvailability.cs" />
     <Compile Include="ScenarioTests\ResourceProviderTests\ResourceProviderFunctionalTests.CreateListUpdateDelete.cs" />
     <Compile Include="ScenarioTests\ResourceProviderTests\ResourceProviderFunctionalTests.cs" />
     <Compile Include="ScenarioTests\ResourceProviderTests\ResourceProviderFunctionalTests.GetSsoToken.cs" />
     <Compile Include="ScenarioTests\ResourceProviderTests\ResourceProviderFunctionalTests.ManageDeployments.cs" />
-    <Compile Include="ScenarioTests\ResourceProviderTests\ResourceProviderFunctionalTests.ManageVirtualNetworks.cs" />
     <Compile Include="ScenarioTests\ResourceProviderTests\ResourceProviderFunctionalTests.UpdateHostname.cs" />
     <Compile Include="ScenarioTests\SmapiTestsFixture.cs" />
     <Compile Include="ScenarioTests\SmapiTests\SmapiFunctionalTests.ApiOperations.cs" />
@@ -58,6 +57,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\testcertificate.pfx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Weather.wsdl">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\wsdl11.xsd">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\Features.Tests.LiveFeatureTests\RegisterFeature.json">
@@ -180,7 +185,7 @@
     <None Include="SessionRecords\ResourceProviderFunctionalTests\BackupRestore.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\ResourceProviderFunctionalTests\CheckServiceNameAvailability.json">
+    <None Include="SessionRecords\ResourceProviderFunctionalTests\CheckNameAvailability.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\ResourceProviderFunctionalTests\CreateListUpdateDelete.json">
@@ -192,13 +197,22 @@
     <None Include="SessionRecords\ResourceProviderFunctionalTests\ManageDeployments.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\ResourceProviderFunctionalTests\ManageVirtualNetworks.json">
+    <None Include="SessionRecords\ResourceProviderFunctionalTests\ManageDeployments_SetupExternalVpnConfiguration.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\ResourceProviderFunctionalTests\ManageDeployments_SetupInternalVpnConfiguration.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\ResourceProviderFunctionalTests\UpdateHostname.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="SessionRecords\SmapiFunctionalTests\ApiImportExport.json">
+    <None Include="SessionRecords\SmapiFunctionalTests\ApiImportExport_Swagger.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\ApiImportExport_Wadl.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SmapiFunctionalTests\ApiImportExport_Wsdl.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\SmapiFunctionalTests\ApiOperationsCreateListUpdateDelete.json">
@@ -306,11 +320,14 @@
     <None Include="Resources\WADLYahoo.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\WADLYahooModified.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Resources\SwaggerPetStoreV2.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\SwaggerPetStoreV2Expected.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
-  <ItemGroup />
 </Project>

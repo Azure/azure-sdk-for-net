@@ -82,6 +82,14 @@ namespace Microsoft.Azure.Management.OperationalInsights
         }
         
         /// <summary>
+        /// Operations for managing Operational Insights linked services.
+        /// </summary>
+        ILinkedServiceOperations LinkedServices
+        {
+            get; 
+        }
+        
+        /// <summary>
         /// Operations for using Operational Insights search.
         /// </summary>
         ISearchOperations Search

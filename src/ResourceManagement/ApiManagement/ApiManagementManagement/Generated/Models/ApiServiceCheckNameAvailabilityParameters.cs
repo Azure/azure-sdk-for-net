@@ -25,7 +25,7 @@ using System.Linq;
 namespace Microsoft.Azure.Management.ApiManagement.Models
 {
     /// <summary>
-    /// Parameters supplied to the CheckServiceNameAvailability operation.
+    /// Parameters supplied to the CheckNameAvailability operation.
     /// </summary>
     public partial class ApiServiceCheckNameAvailabilityParameters
     {

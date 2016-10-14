@@ -192,11 +192,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.PreconditionFailed)
+                    if (statusCode == HttpStatusCode.Conflict)
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.Conflict)
+                    if (statusCode == HttpStatusCode.PreconditionFailed)
                     {
                         result.Status = OperationStatus.Failed;
                     }
@@ -204,11 +204,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.NoContent)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.NoContent)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
@@ -560,7 +560,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.NotFound)
+                    if (statusCode == HttpStatusCode.Conflict)
                     {
                         result.Status = OperationStatus.Failed;
                     }
@@ -568,7 +568,7 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                     {
                         result.Status = OperationStatus.Failed;
                     }
-                    if (statusCode == HttpStatusCode.Conflict)
+                    if (statusCode == HttpStatusCode.NotFound)
                     {
                         result.Status = OperationStatus.Failed;
                     }
@@ -793,6 +793,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                 if (parameters.Job.Properties.EventsOutOfOrderPolicy != null)
                 {
                     propertiesValue["eventsOutOfOrderPolicy"] = parameters.Job.Properties.EventsOutOfOrderPolicy;
+                }
+                
+                if (parameters.Job.Properties.OutputErrorPolicy != null)
+                {
+                    propertiesValue["outputErrorPolicy"] = parameters.Job.Properties.OutputErrorPolicy;
                 }
                 
                 if (parameters.Job.Properties.EventsOutOfOrderMaxDelayInSeconds != null)
@@ -2096,6 +2101,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                 {
                                     string eventsOutOfOrderPolicyInstance = ((string)eventsOutOfOrderPolicyValue);
                                     propertiesInstance.EventsOutOfOrderPolicy = eventsOutOfOrderPolicyInstance;
+                                }
+                                
+                                JToken outputErrorPolicyValue = propertiesValue26["outputErrorPolicy"];
+                                if (outputErrorPolicyValue != null && outputErrorPolicyValue.Type != JTokenType.Null)
+                                {
+                                    string outputErrorPolicyInstance = ((string)outputErrorPolicyValue);
+                                    propertiesInstance.OutputErrorPolicy = outputErrorPolicyInstance;
                                 }
                                 
                                 JToken eventsOutOfOrderMaxDelayInSecondsValue = propertiesValue26["eventsOutOfOrderMaxDelayInSeconds"];
@@ -3860,6 +3872,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                 {
                                     string eventsOutOfOrderPolicyInstance = ((string)eventsOutOfOrderPolicyValue);
                                     propertiesInstance.EventsOutOfOrderPolicy = eventsOutOfOrderPolicyInstance;
+                                }
+                                
+                                JToken outputErrorPolicyValue = propertiesValue["outputErrorPolicy"];
+                                if (outputErrorPolicyValue != null && outputErrorPolicyValue.Type != JTokenType.Null)
+                                {
+                                    string outputErrorPolicyInstance = ((string)outputErrorPolicyValue);
+                                    propertiesInstance.OutputErrorPolicy = outputErrorPolicyInstance;
                                 }
                                 
                                 JToken eventsOutOfOrderMaxDelayInSecondsValue = propertiesValue["eventsOutOfOrderMaxDelayInSeconds"];
@@ -5690,6 +5709,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                     propertiesInstance.EventsOutOfOrderPolicy = eventsOutOfOrderPolicyInstance;
                                 }
                                 
+                                JToken outputErrorPolicyValue = propertiesValue["outputErrorPolicy"];
+                                if (outputErrorPolicyValue != null && outputErrorPolicyValue.Type != JTokenType.Null)
+                                {
+                                    string outputErrorPolicyInstance = ((string)outputErrorPolicyValue);
+                                    propertiesInstance.OutputErrorPolicy = outputErrorPolicyInstance;
+                                }
+                                
                                 JToken eventsOutOfOrderMaxDelayInSecondsValue = propertiesValue["eventsOutOfOrderMaxDelayInSeconds"];
                                 if (eventsOutOfOrderMaxDelayInSecondsValue != null && eventsOutOfOrderMaxDelayInSecondsValue.Type != JTokenType.Null)
                                 {
@@ -7444,6 +7470,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                             propertiesInstance.EventsOutOfOrderPolicy = eventsOutOfOrderPolicyInstance;
                                         }
                                         
+                                        JToken outputErrorPolicyValue = propertiesValue["outputErrorPolicy"];
+                                        if (outputErrorPolicyValue != null && outputErrorPolicyValue.Type != JTokenType.Null)
+                                        {
+                                            string outputErrorPolicyInstance = ((string)outputErrorPolicyValue);
+                                            propertiesInstance.OutputErrorPolicy = outputErrorPolicyInstance;
+                                        }
+                                        
                                         JToken eventsOutOfOrderMaxDelayInSecondsValue = propertiesValue["eventsOutOfOrderMaxDelayInSeconds"];
                                         if (eventsOutOfOrderMaxDelayInSecondsValue != null && eventsOutOfOrderMaxDelayInSecondsValue.Type != JTokenType.Null)
                                         {
@@ -9193,6 +9226,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                             propertiesInstance.EventsOutOfOrderPolicy = eventsOutOfOrderPolicyInstance;
                                         }
                                         
+                                        JToken outputErrorPolicyValue = propertiesValue["outputErrorPolicy"];
+                                        if (outputErrorPolicyValue != null && outputErrorPolicyValue.Type != JTokenType.Null)
+                                        {
+                                            string outputErrorPolicyInstance = ((string)outputErrorPolicyValue);
+                                            propertiesInstance.OutputErrorPolicy = outputErrorPolicyInstance;
+                                        }
+                                        
                                         JToken eventsOutOfOrderMaxDelayInSecondsValue = propertiesValue["eventsOutOfOrderMaxDelayInSeconds"];
                                         if (eventsOutOfOrderMaxDelayInSecondsValue != null && eventsOutOfOrderMaxDelayInSecondsValue.Type != JTokenType.Null)
                                         {
@@ -10928,6 +10968,11 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                         propertiesValue["eventsOutOfOrderPolicy"] = parameters.JobPatchRequest.Properties.EventsOutOfOrderPolicy;
                     }
                     
+                    if (parameters.JobPatchRequest.Properties.OutputErrorPolicy != null)
+                    {
+                        propertiesValue["outputErrorPolicy"] = parameters.JobPatchRequest.Properties.OutputErrorPolicy;
+                    }
+                    
                     if (parameters.JobPatchRequest.Properties.EventsOutOfOrderMaxDelayInSeconds != null)
                     {
                         propertiesValue["eventsOutOfOrderMaxDelayInSeconds"] = parameters.JobPatchRequest.Properties.EventsOutOfOrderMaxDelayInSeconds.Value;
@@ -12230,6 +12275,13 @@ namespace Microsoft.Azure.Management.StreamAnalytics
                                 {
                                     string eventsOutOfOrderPolicyInstance = ((string)eventsOutOfOrderPolicyValue);
                                     propertiesInstance.EventsOutOfOrderPolicy = eventsOutOfOrderPolicyInstance;
+                                }
+                                
+                                JToken outputErrorPolicyValue = propertiesValue26["outputErrorPolicy"];
+                                if (outputErrorPolicyValue != null && outputErrorPolicyValue.Type != JTokenType.Null)
+                                {
+                                    string outputErrorPolicyInstance = ((string)outputErrorPolicyValue);
+                                    propertiesInstance.OutputErrorPolicy = outputErrorPolicyInstance;
                                 }
                                 
                                 JToken eventsOutOfOrderMaxDelayInSecondsValue = propertiesValue26["eventsOutOfOrderMaxDelayInSeconds"];
