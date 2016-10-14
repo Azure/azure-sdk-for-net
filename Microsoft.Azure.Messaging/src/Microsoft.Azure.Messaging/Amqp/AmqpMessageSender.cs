@@ -15,11 +15,14 @@ namespace Microsoft.Azure.Messaging.Amqp
         int deliveryCount;
 
         internal AmqpMessageSender(AmqpQueueClient queueClient)
-            : base(queueClient)
+            : base()
         {
-            this.Path = queueClient.QueueName;
+            this.QueueClient = queueClient;
+            this.Path = this.QueueClient.QueueName;
             this.SendLinkManager = new FaultTolerantAmqpObject<SendingAmqpLink>(this.CreateLinkAsync, this.CloseSession);
         }
+
+        QueueClient QueueClient { get; }
 
         string Path { get; }
 

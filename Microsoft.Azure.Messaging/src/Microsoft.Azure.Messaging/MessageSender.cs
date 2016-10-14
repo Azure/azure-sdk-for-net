@@ -9,13 +9,10 @@ namespace Microsoft.Azure.Messaging
 
     abstract class MessageSender : ClientEntity
     {
-        protected MessageSender(QueueClient queueClient)
+        protected MessageSender()
             : base(nameof(MessageSender) + StringUtility.GetRandomString())
         {
-            this.QueueClient = queueClient;
         }
-
-        protected QueueClient QueueClient { get; }
 
         public Task SendAsync(IEnumerable<BrokeredMessage> brokeredMessages)
         {

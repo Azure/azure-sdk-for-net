@@ -15,9 +15,10 @@ namespace Microsoft.Azure.Messaging.Amqp
         const int DefaultPrefetchCount = 300;
 
         public AmqpMessageReceiver(QueueClient queueClient) 
-            : base(queueClient)
+            : base()
         {
-            this.Path = queueClient.QueueName;
+            this.QueueClient = queueClient;
+            this.Path = this.QueueClient.QueueName;
             this.ReceiveLinkManager = new FaultTolerantAmqpObject<ReceivingAmqpLink>(this.CreateLinkAsync, this.CloseSession);
             this.PrefetchCount = DefaultPrefetchCount;
         }
@@ -27,6 +28,8 @@ namespace Microsoft.Azure.Messaging.Amqp
         /// </summary>
         /// <value>The upper limit of events this receiver will actively receive regardless of whether a receive operation is pending.</value>
         public int PrefetchCount { get; set; }
+
+        QueueClient QueueClient { get; }
 
         string Path { get; }
 
@@ -65,7 +68,7 @@ namespace Microsoft.Azure.Messaging.Amqp
                         }
 
                         receiveLink.DisposeDelivery(amqpMessage, true, AmqpConstants.AcceptedOutcome);
-                        brokeredMessages.Add(AmqpMessageConverter.AmqpMessageToBrokeredMessage(amqpMessage));
+                        brokeredMessages.Add(AmqpMessageConverter.ClientGetMessage(amqpMessage));
                     }
 
                     return brokeredMessages;

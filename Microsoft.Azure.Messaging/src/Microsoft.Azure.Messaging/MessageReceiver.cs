@@ -8,13 +8,10 @@ namespace Microsoft.Azure.Messaging
 
     abstract class MessageReceiver : ClientEntity
     {
-        protected MessageReceiver(QueueClient queueClient)
+        protected MessageReceiver()
             : base(nameof(MessageReceiver) + StringUtility.GetRandomString())
         {
-            this.QueueClient = queueClient;
         }
-
-        protected QueueClient QueueClient { get; }
 
         public Task<IList<BrokeredMessage>> ReceiveAsync(int maxMessageCount)
         {

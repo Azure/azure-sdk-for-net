@@ -12,33 +12,11 @@ namespace Microsoft.Azure.Messaging
     using System.Xml.Serialization;
     using Microsoft.Azure.Messaging.Primitives;
 
-    /// <summary>Represents the unit of communication between AppFabric ServiceBus clients.</summary>
+    /// <summary>Represents the unit of communication between ServiceBus clients and Service.</summary>
     [XmlRoot("BrokeredMessage", Namespace = Constants.Namespace)]
     public sealed class BrokeredMessage : IDisposable
     {
-        internal const string MessageIdHeaderName = "MessageId";
-        internal const string CorrelationIdHeaderName = "CorrelationId";
-        internal const string ToHeaderName = "To";
-        internal const string ReplyToHeaderName = "ReplyTo";
-        internal const string SessionIdHeaderName = "SessionId";
-        internal const string LabelHeaderName = "Label";
-        internal const string ContentTypeHeaderName = "ContentType";
-        internal const string ReplyToSessionIdHeaderName = "ReplyToSessionId";
-        internal const string TimeToLiveHeaderName = "TimeToLive";
-        internal const string ScheduledEnqueueTimeUtcHeaderName = "ScheduledEnqueueTimeUtc";
-        internal const string PartitionKeyHeaderName = "PartitionKey";
-        internal const string EnqueuedTimeUtcHeaderName = "EnqueuedTimeUtc";
-        internal const string SequenceNumberHeaderName = "SequenceNumber";
-        internal const string LockTokenHeaderName = "LockToken";
-        internal const string LockedUntilUtcHeaderName = "LockedUntilUtc";
-        internal const string DeliveryCountHeaderName = "DeliveryCount";
-        internal const string EnqueuedSequenceNumberHeaderName = "EnqueuedSequenceNumber";
-        internal const string ViaPartitionKeyHeaderName = "ViaPartitionKey";
-        internal const string DestinationHeaderName = "Destination";
-        internal const string ForcePersistenceHeaderName = "ForcePersistence";
-        internal const string PublisherHeaderName = "Publisher";
-
-       /// <summary> The message version </summary>
+        /// <summary> The message version </summary>
         internal static readonly int MessageVersion11 = 11;
         internal static int MessageVersion = MessageVersion11; // non-readonly for testing purposes
 
@@ -53,16 +31,12 @@ namespace Microsoft.Azure.Messaging
         string correlationId;
         bool   disposed;
         string deadLetterSource;
-        string destination;
         DateTime enqueuedTimeUtc;
-        bool forcePersistence;
         int getBodyCalled;
         long headerSize;
         MessageMembers initializedMembers;
         string label;
         int messageConsumed;
-        BrokeredMessageFormat messageFormat;
-        IBrokeredMessageEncoder messageEncoder;
         string messageId;
         short partitionId;
         string partitionKey;
@@ -84,21 +58,9 @@ namespace Microsoft.Azure.Messaging
         volatile List<IDisposable> attachedDisposables;
         readonly object disposablesSyncObject = new object();
 
-        //TODO: These members are only used in Broker. Check back to see if we can safely remove them from here without causing failures in Broker for transfer scenarios.
-        string transferSource;
-        string transferSessionId;
-        string transferDestination;
-        long transferDestinationResourceId;
-        long transferSequenceNumber;
-        int transferHopCount;
-        bool isBodyLoaded = true;
-        long persistedMessageSize; 
-        readonly bool arePropertiesModifiedByBroker;
-
         /// <summary>Initializes a new instance of the <see cref="BrokeredMessage" /> class.</summary>
         public BrokeredMessage() 
         {
-            this.InternalBrokeredMessageState = BrokeredMessageState.Active;
             this.version = BrokeredMessage.MessageVersion;
         }
 
@@ -171,9 +133,6 @@ namespace Microsoft.Azure.Messaging
         BrokeredMessage(BrokeredMessage originalMessage, bool clientSideCloning)
         {
             this.version = originalMessage.version;
-            this.messageFormat = originalMessage.messageFormat;
-            this.messageEncoder = originalMessage.messageEncoder;
-            this.arePropertiesModifiedByBroker = originalMessage.arePropertiesModifiedByBroker;
             this.CopyMessageHeaders(originalMessage, clientSideCloning);
 
             this.bodyObject = originalMessage.bodyObject;
@@ -186,14 +145,6 @@ namespace Microsoft.Azure.Messaging
             }
 
             this.AttachDisposables(BrokeredMessage.CloneDisposables(originalMessage.attachedDisposables));
-
-            this.InternalId = originalMessage.InternalId;
-            this.InternalBrokeredMessageState = originalMessage.InternalBrokeredMessageState;
-            this.SubqueueType = originalMessage.SubqueueType;
-            this.IsActivatingScheduledMessage = originalMessage.IsActivatingScheduledMessage;
-            this.IsBodyLoaded = originalMessage.isBodyLoaded;
-            this.persistedMessageSize = originalMessage.persistedMessageSize;
-            this.AllowOverflowOnPersist = originalMessage.AllowOverflowOnPersist;
         }
 
         internal static IEnumerable<IDisposable> CloneDisposables(IEnumerable<IDisposable> disposables)
@@ -262,8 +213,6 @@ namespace Microsoft.Azure.Messaging
             PartitionKey = 1 << 9,
             ReplyToSessionId = 1 << 10,
             ViaPartitionKey = 1 << 11,
-            Destination = 1 << 12,
-            ForcePersistence = 1 << 13,
 
             // public read-only members
             DeadLetterSource = 1 << 14,
@@ -277,20 +226,7 @@ namespace Microsoft.Azure.Messaging
             EnqueuedSequenceNumber = 1 << 22,
 
             // internal
-            PartitionId = 1 << 23,
-            TransferSessionId = 1 << 24,
-            PrefilteredHeaders = 1 << 25,
-            PrefilteredProperties = 1 << 26,
-            TransferDestination = 1 << 27,
-            TransferSource = 1 << 28,
-            TransferSequenceNumber = 1 << 29,
-            TransferHopCount = 1 << 30,
-            TransferDestinationEntityId = 1 << 31
-        }
-
-        static string NewMessageId()
-        {
-            return Guid.NewGuid().ToString("N");
+            PartitionId = 1 << 23
         }
 
         /// <summary>Gets or sets the identifier of the correlation.</summary>
@@ -462,11 +398,6 @@ namespace Microsoft.Azure.Messaging
             {
                 this.ThrowIfDisposed();
                 this.ThrowIfNotReceived();
-                if (this.RecordedExpiredAtUtc.HasValue)
-                {
-                    return this.RecordedExpiredAtUtc.Value;
-                }
-
                 if (this.TimeToLive >= DateTime.MaxValue.Subtract(this.enqueuedTimeUtc))
                 {
                     return DateTime.MaxValue;
@@ -475,15 +406,6 @@ namespace Microsoft.Azure.Messaging
                 return this.EnqueuedTimeUtc.Add(this.TimeToLive);
             }
         }
-
-        /// <summary>
-        /// This property is used on the Broker side only when we perform
-        /// a deep group search for sessionful messages. in those cases we
-        /// only do a partial message fetch, and so this property is used 
-        /// to store the ExpiredAtUtc in that scenario.
-        /// This property is also being set during Send to identify the effective message TTL
-        /// </summary>
-        internal DateTime? RecordedExpiredAtUtc { get; set; }
 
         /// <summary>Gets the date and time in UTC until which the message will be locked in the queue/subscription.</summary>
         /// <value>The date and time until which the message will be locked in the queue/subscription.</value>
@@ -704,32 +626,6 @@ namespace Microsoft.Azure.Messaging
                 else
                 {
                     this.initializedMembers |= MessageMembers.Label;
-                }
-            }
-        }
-
-        /// <summary> Gets or sets the destination. </summary>
-        /// <value> The destination. </value>
-        internal string Destination
-        {
-            get
-            {
-                this.ThrowIfDisposed();
-                return this.destination;
-            }
-
-            set
-            {
-                this.ThrowIfDisposed();
-                BrokeredMessage.ValidateDestination(value);
-                this.destination = value;
-                if (value == null)
-                {
-                    this.ClearInitializedMember(MessageMembers.Destination);
-                }
-                else
-                {
-                    this.initializedMembers |= MessageMembers.Destination;
                 }
             }
         }
@@ -993,35 +889,6 @@ namespace Microsoft.Azure.Messaging
             }
         }
 
-        /// <summary>Gets or sets a value that indicates whether the message is to be persisted to the database immediately, instead of being 
-        /// held in memory for a short time. This property is ignored if the message is sent to a non-express queue or topic.</summary> 
-        /// <value>true if the message is to be persisted to the database 
-        /// immediately, instead of being held in memory for a short time; otherwise, false.</value> 
-        public bool ForcePersistence
-        {
-            get
-            {
-                this.ThrowIfDisposed();
-                return this.forcePersistence;
-            }
-
-            set
-            {
-                this.ThrowIfDisposed();
-
-                this.initializedMembers |= MessageMembers.ForcePersistence;
-                this.forcePersistence = value;
-            }
-        }
-
-        /// <summary> Gets or sets the flag for whether the message is a scheduled message that's being activated. </summary>
-        /// <value> The boolean value </value>
-        internal bool IsActivatingScheduledMessage
-        {
-            get;
-            set;
-        }
-
         /// <summary> Gets or sets the body stream. </summary>
         /// <value> The message body stream. </value>
         /// <exception cref="ObjectDisposedException">Thrown if message is in disposed state</exception>
@@ -1043,45 +910,6 @@ namespace Microsoft.Azure.Messaging
                 }
 
                 this.bodyStream = value;
-            }
-        }
-
-        internal BrokeredMessageFormat MessageFormat
-        {
-            get
-            {
-                this.ThrowIfDisposed();
-                return this.messageFormat;
-            }
-
-            set
-            {
-                this.ThrowIfDisposed();
-                this.messageFormat = value;
-            }
-        }
-
-        internal IBrokeredMessageEncoder MessageEncoder
-        {
-            get
-            {
-                this.ThrowIfDisposed();
-                return this.messageEncoder;
-            }
-
-            set
-            {
-                this.ThrowIfDisposed();
-                this.messageEncoder = value;
-            }
-        }
-
-        internal bool ArePropertiesModifiedByBroker
-        {
-            get
-            {
-                this.ThrowIfDisposed();
-                return this.arePropertiesModifiedByBroker;
             }
         }
 
@@ -1110,22 +938,6 @@ namespace Microsoft.Azure.Messaging
             }
         }
 
-        /// <summary> Gets or sets a value indicating whether this object is body loaded. </summary>
-        /// <value> true if this object is body loaded, false if not. </value>
-        internal bool IsBodyLoaded
-        {
-            get
-            {
-                this.ThrowIfDisposed();
-                return this.isBodyLoaded;
-            }
-            set
-            {
-                this.ThrowIfDisposed();
-                this.isBodyLoaded = value;
-            }
-        }
-
         /// <summary> Gets the identifier of the body. </summary>
         /// <value> The identifier of the body. </value>
         internal long BodyId
@@ -1138,179 +950,6 @@ namespace Microsoft.Azure.Messaging
             set
             {
                 this.bodyId = value;
-            }
-        }
-
-        /// <summary> Gets or sets the InternalId. </summary>
-        /// <value> The InternalId. </value>
-        internal Guid InternalId
-        {
-            get;
-            set;
-        }
-
-        /// <summary> Gets or sets the state. </summary>
-        /// <value> The state. </value>
-        internal BrokeredMessageState InternalBrokeredMessageState
-        {
-            get;
-            set;
-        }
-
-        /// <summary> Gets or sets the subqueue type. </summary>
-        /// <value> The subqueue type. </value>
-        internal SubqueueType SubqueueType
-        {
-            get;
-            set;
-        }
-
-        internal string TransferDestination
-        {
-            get
-            {
-                this.ThrowIfDisposed();
-                return this.transferDestination;
-            }
-
-            set
-            {
-                this.ThrowIfDisposed();
-                this.transferDestination = value;
-
-                if (string.IsNullOrEmpty(value))
-                {
-                    this.ClearInitializedMember(MessageMembers.TransferDestination);
-                }
-                else
-                {
-                    this.initializedMembers |= MessageMembers.TransferDestination;
-                }
-            }
-        }
-
-        internal long TransferDestinationResourceId
-        {
-            get
-            {
-                this.ThrowIfDisposed();
-                return this.transferDestinationResourceId;
-            }
-
-            set
-            {
-                this.ThrowIfDisposed();
-                this.transferDestinationResourceId = value;
-
-                this.initializedMembers |= MessageMembers.TransferDestinationEntityId;
-            }
-        }
-
-        internal string TransferSessionId
-        {
-            get
-            {
-                this.ThrowIfDisposed();
-                return this.transferSessionId;
-            }
-
-            set
-            {
-                this.ThrowIfDisposed();
-                this.transferSessionId = value;
-
-                if (value == null)
-                {
-                    this.ClearInitializedMember(MessageMembers.TransferSessionId);
-                }
-                else
-                {
-                    this.initializedMembers |= MessageMembers.TransferSessionId;
-                }
-            }
-        }
-
-        internal string TransferSource
-        {
-            get
-            {
-                this.ThrowIfDisposed();
-                return this.transferSource;
-            }
-
-            set
-            {
-                this.ThrowIfDisposed();
-                this.transferSource = value;
-
-                if (string.IsNullOrEmpty(value))
-                {
-                    this.ClearInitializedMember(MessageMembers.TransferSource);
-                }
-                else
-                {
-                    this.initializedMembers |= MessageMembers.TransferSource;
-                }
-            }
-        }
-
-        internal long TransferSequenceNumber
-        {
-            get
-            {
-                this.ThrowIfDisposed();
-                return this.transferSequenceNumber;
-            }
-
-            set
-            {
-                this.ThrowIfDisposed();
-                this.transferSequenceNumber = value;
-                this.initializedMembers |= MessageMembers.TransferSequenceNumber;
-            }
-        }
-
-        internal int TransferHopCount
-        {
-            get
-            {
-                this.ThrowIfDisposed();
-                return this.transferHopCount;
-            }
-
-            set
-            {
-                if (value < 0)
-                {
-                    throw Fx.Exception.AsError(new ArgumentOutOfRangeException("TransferHopCount"));
-                }
-
-                this.ThrowIfDisposed();
-                this.transferHopCount = value;
-                if (value == 0)
-                {
-                    this.ClearInitializedMember(MessageMembers.TransferHopCount);
-                }
-                else
-                {
-                    this.initializedMembers |= MessageMembers.TransferHopCount;
-                }
-            }
-        }
-
-        /// <summary> Gets or sets a value indicating the persisted size of the message in the store </summary>
-        /// <value> the persisted message size </value>
-        /// <remarks> The header size of the message changes as it travels through the various layers which
-        /// can affect quota calculation. To avoid this we need a consistent message size property. </remarks>
-        internal long PersistedMessageSize
-        {
-            get
-            {
-                return this.persistedMessageSize;
-            }
-            set
-            {
-                this.persistedMessageSize = value;
             }
         }
 
@@ -1352,16 +991,6 @@ namespace Microsoft.Azure.Messaging
                 Interlocked.Exchange(ref this.messageConsumed, intValue);
             }
         }
-
-        internal bool IsTransferMessage
-        {
-            get
-            {
-                return !string.IsNullOrWhiteSpace(this.TransferDestination);
-            }
-        }
-
-        internal bool AllowOverflowOnPersist { get; set; }
 
         /// <summary> Creates the empty message. </summary>
         /// <returns> . </returns>
@@ -1459,11 +1088,6 @@ namespace Microsoft.Azure.Messaging
             return string.Format(CultureInfo.CurrentCulture, "{0}{{MessageId:{1}}}", base.ToString(), this.MessageId);
         }
 
-        internal bool HasHeader(MessageMembers headerMember)
-        {
-            return (this.initializedMembers & headerMember) != 0;
-        }
-
         /// <summary> Validate message identifier. </summary>
         /// <exception cref="ArgumentException">
         /// Thrown when messageId is null, or empty or greater than the maximum message length.
@@ -1499,15 +1123,6 @@ namespace Microsoft.Azure.Messaging
             {
                 //TODO: throw FxTrace.Exception.Argument(partitionKeyPropertyName, SRClient.PropertyOverMaxValue(partitionKeyPropertyName, Constants.MaxPartitionKeyLength));
                 throw new ArgumentException("PropertyValueOverMaxValue");
-            }
-        }
-
-        static void ValidateDestination(string destination)
-        {
-            if (destination != null && destination.Length > Constants.MaxDestinationLength)
-            {
-                //TODO: throw FxTrace.Exception.Argument("Destination", SRClient.PropertyOverMaxValue("Destination", Constants.MaxDestinationLength));
-                throw new ArgumentException("DestinationOverMaxValue");
             }
         }
 
@@ -1620,7 +1235,6 @@ namespace Microsoft.Azure.Messaging
         /// <param name="clientSideCloning"> specific if it is a client side initialized code path.</param>
         void CopyMessageHeaders(BrokeredMessage originalMessage, bool clientSideCloning = false)
         {
-            this.messageFormat = originalMessage.messageFormat;
             this.MessageId = originalMessage.MessageId;
             this.headerSize = originalMessage.HeaderSize;
 
@@ -1680,21 +1294,9 @@ namespace Microsoft.Azure.Messaging
                 this.ContentType = originalMessage.ContentType;
             }
 
-            if ((originalMessage.InitializedMembers & MessageMembers.ForcePersistence) != 0)
-            {
-                this.ForcePersistence = originalMessage.ForcePersistence;
-            }
-
             foreach (KeyValuePair<string, object> property in originalMessage.Properties)
             {
                 this.InternalProperties.Add(property);
-            }
-
-            // Destination property is intended to be made public eventually.
-            // So it gets cloned even in client side cloning.
-            if ((originalMessage.initializedMembers & MessageMembers.Destination) != 0)
-            {
-                this.Destination = originalMessage.Destination;
             }
 
             // Publisher property is intended to be made public eventually.
@@ -1727,36 +1329,6 @@ namespace Microsoft.Azure.Messaging
                 if ((originalMessage.initializedMembers & MessageMembers.DeadLetterSource) != 0)
                 {
                     this.DeadLetterSource = originalMessage.DeadLetterSource;
-                }
-
-                if ((originalMessage.initializedMembers & MessageMembers.TransferDestination) != 0)
-                {
-                    this.TransferDestination = originalMessage.TransferDestination;
-                }
-
-                if ((originalMessage.initializedMembers & MessageMembers.TransferDestinationEntityId) != 0)
-                {
-                    this.TransferDestinationResourceId = originalMessage.TransferDestinationResourceId;
-                }
-
-                if ((originalMessage.initializedMembers & MessageMembers.TransferSessionId) != 0)
-                {
-                    this.TransferSessionId = originalMessage.TransferSessionId;
-                }
-
-                if ((originalMessage.initializedMembers & MessageMembers.TransferSource) != 0)
-                {
-                    this.TransferSource = originalMessage.TransferSource;
-                }
-
-                if ((originalMessage.InitializedMembers & MessageMembers.TransferSequenceNumber) != 0)
-                {
-                    this.TransferSequenceNumber = originalMessage.TransferSequenceNumber;
-                }
-
-                if ((originalMessage.InitializedMembers & MessageMembers.TransferHopCount) != 0)
-                {
-                    this.TransferHopCount = originalMessage.TransferHopCount;
                 }
 
                 if ((originalMessage.InitializedMembers & MessageMembers.MessageState) != 0)

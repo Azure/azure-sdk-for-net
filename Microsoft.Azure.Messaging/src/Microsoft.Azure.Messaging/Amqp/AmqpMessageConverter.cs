@@ -28,12 +28,6 @@ namespace Microsoft.Azure.Messaging.Amqp
         public const string PrefilteredMessageHeadersName = "x-opt-prefiltered-headers";
         public const string PrefilteredMessagePropertiesName = "x-opt-prefiltered-properties";
         public const string DeadLetterSourceName = "x-opt-deadletter-source";
-        public const string TransferSourceName = "x-opt-transfer-source";
-        public const string TransferDestinationName = "x-opt-transfer-destination";
-        public const string TransferResourceName = "x-opt-transfer-resource";
-        public const string TransferSessionName = "x-opt-transfer-session";
-        public const string TransferSequenceNumberName = "x-opt-transfer-sn";
-        public const string TransferHopCountName = "x-opt-transfer-hop-count";
         public const string TimeSpanName = AmqpConstants.Vendor + ":timespan";
         public const string UriName = AmqpConstants.Vendor + ":uri";
         public const string DateTimeOffsetName = AmqpConstants.Vendor + ":datetime-offset";
@@ -85,175 +79,6 @@ namespace Microsoft.Azure.Messaging.Amqp
             return amqpMessage;
         }
 
-        public static BrokeredMessage AmqpMessageToBrokeredMessage(AmqpMessage amqpMessage)
-        {
-            if (amqpMessage == null)
-            {
-                throw Fx.Exception.ArgumentNull("amqpMessage");
-            }
-
-            BrokeredMessage message = new BrokeredMessage(StreamToBytes(amqpMessage.BodyStream));
-            UpdateBrokeredMessageHeaderAndProperties(amqpMessage, message);
-            return message;
-        }
-
-        public static void UpdateBrokeredMessageHeaderAndProperties(AmqpMessage amqpMessage, BrokeredMessage message)
-        {
-            SectionFlag sections = amqpMessage.Sections;
-            if ((sections & SectionFlag.Header) != 0)
-            {
-                if (amqpMessage.Header.Ttl != null)
-                {
-                    message.TimeToLive = TimeSpan.FromMilliseconds(amqpMessage.Header.Ttl.Value);
-                }
-            }
-
-            if ((sections & SectionFlag.Properties) != 0)
-            {
-                if (amqpMessage.Properties.MessageId != null)
-                {
-                    message.MessageId = amqpMessage.Properties.MessageId.ToString();
-                }
-
-                if (amqpMessage.Properties.CorrelationId != null)
-                {
-                    message.CorrelationId = amqpMessage.Properties.CorrelationId.ToString();
-                }
-
-                if (amqpMessage.Properties.ContentType.Value != null)
-                {
-                    message.ContentType = amqpMessage.Properties.ContentType.Value;
-                }
-
-                if (amqpMessage.Properties.Subject != null)
-                {
-                    message.Label = amqpMessage.Properties.Subject;
-                }
-
-                if (amqpMessage.Properties.To != null)
-                {
-                    message.To = amqpMessage.Properties.To.ToString();
-                }
-
-                if (amqpMessage.Properties.ReplyTo != null)
-                {
-                    message.ReplyTo = amqpMessage.Properties.ReplyTo.ToString();
-                }
-
-                if (amqpMessage.Properties.GroupId != null)
-                {
-                    message.CopySessionId(amqpMessage.Properties.GroupId);
-                }
-
-                if (amqpMessage.Properties.ReplyToGroupId != null)
-                {
-                    message.ReplyToSessionId = amqpMessage.Properties.ReplyToGroupId;
-                }
-            }
-
-            if ((sections & SectionFlag.MessageAnnotations) != 0)
-            {
-                DateTime scheduledEnqueueTime;
-                if (amqpMessage.MessageAnnotations.Map.TryGetValue<DateTime>(ScheduledEnqueueTimeUtcName, out scheduledEnqueueTime))
-                {
-                    message.ScheduledEnqueueTimeUtc = scheduledEnqueueTime;
-                }
-
-                string publisher;
-                if (amqpMessage.MessageAnnotations.Map.TryGetValue<string>(PublisherName, out publisher))
-                {
-                    message.Publisher = publisher;
-                }
-
-                string partitionKey;
-                if (amqpMessage.MessageAnnotations.Map.TryGetValue<string>(PartitionKeyName, out partitionKey))
-                {
-                    message.CopyPartitionKey(partitionKey);
-                }
-            }
-
-            if ((sections & SectionFlag.ApplicationProperties) != 0)
-            {
-                foreach (KeyValuePair<MapKey, object> pair in amqpMessage.ApplicationProperties.Map)
-                {
-                    object netObject = null;
-                    if (TryGetNetObjectFromAmqpObject(pair.Value, MappingType.ApplicationProperty, out netObject))
-                    {
-                        message.InternalProperties[pair.Key.ToString()] = netObject;
-                    }
-                }
-            }
-        }
-
-        public static void UpdateAmqpMessageHeadersAndProperties(AmqpMessage message, BrokeredMessage brokeredMessage, bool amqpClient, bool stampPartitionIdToSequenceNumber)
-        {
-            BrokeredMessage.MessageMembers messageMembers = brokeredMessage.InitializedMembers;
-            if ((messageMembers & BrokeredMessage.MessageMembers.DeliveryCount) != 0)
-            {
-                message.Header.DeliveryCount = (uint)(brokeredMessage.DeliveryCount - (amqpClient ? 1 : 0));
-            }
-
-            if ((messageMembers & BrokeredMessage.MessageMembers.TimeToLive) != 0 &&
-                brokeredMessage.TimeToLive != TimeSpan.MaxValue)
-            {
-                message.Header.Ttl = (uint)brokeredMessage.TimeToLive.TotalMilliseconds;
-            }
-
-            if ((messageMembers & BrokeredMessage.MessageMembers.EnqueuedTimeUtc) != 0)
-            {
-                message.MessageAnnotations.Map[EnqueuedTimeUtcName] = brokeredMessage.EnqueuedTimeUtc;
-            }
-
-            if ((messageMembers & BrokeredMessage.MessageMembers.SequenceNumber) != 0)
-            {
-                //TODO: message.MessageAnnotations.Map[SequenceNumberName] = stampPartitionIdToSequenceNumber ? ScaledEntityPartitionResolver.StampPartitionIntoSequenceNumber(brokeredMessage.PartitionId, brokeredMessage.SequenceNumber) : brokeredMessage.SequenceNumber;
-                message.MessageAnnotations.Map[SequenceNumberName] = brokeredMessage.SequenceNumber;
-            }
-
-            if ((messageMembers & BrokeredMessage.MessageMembers.PartitionId) != 0)
-            {
-                message.MessageAnnotations.Map[PartitionIdName] = brokeredMessage.PartitionId;
-            }
-
-            if ((messageMembers & BrokeredMessage.MessageMembers.PartitionKey) != 0)
-            {
-                // Only set partition key if session id is not set
-                message.MessageAnnotations.Map[PartitionKeyName] = brokeredMessage.PartitionKey;
-            }
-
-            if (amqpClient && (messageMembers & BrokeredMessage.MessageMembers.LockedUntilUtc) != 0)
-            {
-                message.MessageAnnotations.Map[LockedUntilName] = brokeredMessage.LockedUntilUtc;
-            }
-
-            if (amqpClient && (messageMembers & BrokeredMessage.MessageMembers.Publisher) != 0)
-            {
-                message.MessageAnnotations.Map[PublisherName] = brokeredMessage.Publisher;
-            }
-
-            if (amqpClient && (messageMembers & BrokeredMessage.MessageMembers.DeadLetterSource) != 0)
-            {
-                message.MessageAnnotations.Map[DeadLetterSourceName] = brokeredMessage.DeadLetterSource;
-            }
-
-            if (brokeredMessage.ArePropertiesModifiedByBroker && brokeredMessage.Properties.Count > 0)
-            {
-                if (message.ApplicationProperties == null)
-                {
-                    message.ApplicationProperties = new ApplicationProperties();
-                }
-
-                foreach (var pair in brokeredMessage.Properties)
-                {
-                    object amqpObject = null;
-                    if (TryGetAmqpObjectFromNetObject(pair.Value, MappingType.ApplicationProperty, out amqpObject))
-                    {
-                        message.ApplicationProperties.Map[pair.Key] = amqpObject;
-                    }
-                }
-            }
-        }
-
         // return from AMQP lib to client API for a received message
         // TODO: expose other AMQP sections in BrokeredMessage
         public static BrokeredMessage ClientGetMessage(AmqpMessage amqpMessage)
@@ -281,7 +106,6 @@ namespace Microsoft.Azure.Messaging.Amqp
                 brokeredMessage = new BrokeredMessage();
             }
 
-            brokeredMessage.MessageFormat = BrokeredMessageFormat.Amqp;
             SectionFlag sections = amqpMessage.Sections;
             if ((sections & SectionFlag.Header) != 0)
             {
@@ -526,14 +350,6 @@ namespace Microsoft.Azure.Messaging.Amqp
             return null;
         }
 
-        static void AddIfTrue(IDictionary<string, object> dictionary, Properties properties, Func<Properties, bool> condition, string key, Func<Properties, object> getValueFunc)
-        {
-            if (condition(properties))
-            {
-                dictionary.Add(key, getValueFunc(properties));
-            }
-        }
-
         public static bool TryGetAmqpObjectFromNetObject(object netObject, MappingType mappingType, out object amqpObject)
         {
             amqpObject = null;
@@ -708,16 +524,21 @@ namespace Microsoft.Azure.Messaging.Amqp
 
         public static ArraySegment<byte> StreamToBytes(Stream stream)
         {
-            MemoryStream memoryStream = new MemoryStream(512);
-            stream.CopyTo(memoryStream, 512);
+            MemoryStream memoryStream = new MemoryStream();
+            int bytesRead;
+            byte[] readBuffer = new byte[512];
+            while ((bytesRead = stream.Read(readBuffer, 0, readBuffer.Length)) > 0)
+            {
+                memoryStream.Write(readBuffer, 0, bytesRead);
+            }
 
-            // TryGetBuffer will always succeed unless we provide the byte[] when calling MemoryStream..ctor(byte[])
             ArraySegment<byte> buffer;
             if (!memoryStream.TryGetBuffer(out buffer))
             {
                 buffer = new ArraySegment<byte>(memoryStream.ToArray());
             }
 
+            memoryStream.Dispose();
             return buffer;
         }
     }
