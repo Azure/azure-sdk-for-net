@@ -20,6 +20,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Reflection;
+using Microsoft.WindowsAzure;
 
 [assembly: CLSCompliant(true)]
 namespace Microsoft.Azure
@@ -107,6 +108,35 @@ namespace Microsoft.Azure
 
             return object.ReferenceEquals(type, _roleEnvironmentExceptionType)
                 || type.IsSubclassOf(_roleEnvironmentExceptionType);
+        }
+
+        /// <summary>
+        /// Gets a setting with the given name.
+        /// Setting throwIfNotFound to true will result in blow up the app if it can't find the setting
+        /// </summary>
+        /// <param name="name">Setting name.</param>
+        /// <param name="outputResultsToTrace"></param>
+        /// /// <param name="throwIfNotFoundInRuntime"></param>
+        /// <returns>Setting value or null if such setting does not exist.</returns>
+        internal string GetSetting(string name, bool outputResultsToTrace, bool throwIfNotFoundInRuntime)
+        {
+            Debug.Assert(!string.IsNullOrEmpty(name));
+
+            string value = null;
+
+            value = GetValue("ServiceRuntime", name, GetServiceRuntimeSetting, outputResultsToTrace);
+            if (value == null)
+            {
+                if (throwIfNotFoundInRuntime)
+                {
+                    var errorMessage = string.Format(CultureInfo.InvariantCulture, Resources.ErrorSettingNotFoundInRuntimeString, name);
+                    throw new SettingsPropertyNotFoundException(errorMessage);
+                }
+
+                value = GetValue("ConfigurationManager", name, n => ConfigurationManager.AppSettings[n], outputResultsToTrace);
+            }
+
+            return value;
         }
 
         /// <summary>
