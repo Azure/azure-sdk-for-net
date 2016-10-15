@@ -13,14 +13,34 @@ using System.Threading;
 namespace Microsoft.Rest.Azure
 {
     /// Base class capturing the current Http state needed to communicate with Azure
-    public sealed class AzureContext : IAzureContext, IDisposable
+    public sealed class AzureContext : IAzureContext
     {
         private readonly bool _disposeInnerHandlers;
         private bool _credentialsInitialized = false;
-        private bool _disposed = false;
+        private int _disposed = 0;
         private HttpClientReference _httpClient;
         private HttpMessageHandler _handler;
         private IDictionary<Type, IDisposable> _clients = new ConcurrentDictionary<Type, IDisposable>();
+
+        /// <summary>
+        /// The default context for the Azure cloud
+        /// </summary>
+        public static IAzureContext Azure = new AzureContext(new Uri("https://management.azure.com/"));
+
+        /// <summary>
+        /// The default context for the Azure china cloud
+        /// </summary>
+        public static IAzureContext AzureChinaCloud = new AzureContext(new Uri("https://management.chinacloudapi.cn/"));
+
+        /// <summary>
+        /// The default context for the Azure German Cloud
+        /// </summary>
+        public static IAzureContext AzureGermanCloud = new AzureContext(new Uri("https://management.microsoftazure.de/"));
+
+        /// <summary>
+        /// The default context for the Azure German Cloud
+        /// </summary>
+        public static IAzureContext AzureUSGovernmentCloud = new AzureContext(new Uri("https://management.usgovcloudapi.net/"));
 
         /// <summary>
         /// The Azure subscription to target. The value should be in the form of a globally-unique identifier (GUID).
@@ -35,12 +55,12 @@ namespace Microsoft.Rest.Azure
         /// <summary>
         /// The credentials to use when authenticationg with Azure endpoints.
         /// </summary>
-        public ServiceClientCredentials Credentials { get; private set; }
+        public ServiceClientCredentials Credentials { get; set; }
 
         /// <summary>
         /// The HttpClient used for communicating with Azure.
         /// </summary>
-        public HttpClient HttpClient { get { return _httpClient.GetReference(); } }
+        public HttpClient HttpClient => _httpClient.GetReference();
 
         /// <summary>
         /// The maximum time to spend in retrying transient HTTP errors.
@@ -56,7 +76,7 @@ namespace Microsoft.Rest.Azure
         /// <summary>
         /// The message handler stack used in Http communication with Azure.
         /// </summary>
-        public HttpMessageHandler Handler { get { return _handler; } }
+        public HttpMessageHandler Handler => _handler;
 
         /// <summary>
         /// The HttpClientHandler used to communicate with Azure.
@@ -66,9 +86,13 @@ namespace Microsoft.Rest.Azure
         /// <summary>
         /// Extended properties to set on created clients.  Clients created from this context will have access to these properties.
         /// </summary>
-        public IDictionary<string, string> ExtendedProperties { get; private set; }
+        public IDictionary<string, object> ExtendedProperties { get; } = new ConcurrentDictionary<string, object>(StringComparer.OrdinalIgnoreCase);
 
-        private AzureContext()
+        /// <summary>
+        /// Create an AzureContext with the given baseUri and credentials.
+        /// </summary>
+        /// <param name="baseUri">The baseUri of the azure endpoints.</param>
+        public AzureContext(Uri baseUri) : this(baseUri, null)
         {
         }
 
@@ -77,7 +101,7 @@ namespace Microsoft.Rest.Azure
         /// </summary>
         /// <param name="baseUri">The baseUri of the azure endpoints.</param>
         /// <param name="credentials">The credentials to use when communicating with Azure</param>
-        public AzureContext(Uri baseUri, ServiceClientCredentials credentials): this(baseUri, credentials, null)
+        public AzureContext(Uri baseUri, ServiceClientCredentials credentials) : this(baseUri, credentials, null)
         {
         }
 
@@ -89,15 +113,10 @@ namespace Microsoft.Rest.Azure
         /// <param name="handler">The handler stack to use with the Http client</param>
         public AzureContext(Uri baseUri, ServiceClientCredentials credentials, HttpMessageHandler handler)
         {
-           _disposeInnerHandlers = false;
+            _disposeInnerHandlers = false;
             if (null == baseUri)
             {
                 throw new ArgumentNullException(nameof(baseUri));
-            }
-
-            if (null == credentials)
-            {
-                throw new ArgumentNullException(nameof(credentials));
             }
 
             if (null == handler)
@@ -106,7 +125,6 @@ namespace Microsoft.Rest.Azure
                 _disposeInnerHandlers = true;
             }
 
-            ExtendedProperties = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase); 
             Credentials = credentials;
             RootHandler = GetRootHandler(handler);
             _handler = GetDefaultDelegatingHandler(handler);
@@ -122,7 +140,7 @@ namespace Microsoft.Rest.Azure
 
         private static RetryDelegatingHandler GetDefaultDelegatingHandler(HttpMessageHandler innerHandler)
         {
-            var retry =  new RetryDelegatingHandler();
+            var retry = new RetryDelegatingHandler();
             retry.InnerHandler = innerHandler;
             return retry;
         }
@@ -132,9 +150,14 @@ namespace Microsoft.Rest.Azure
         /// </summary>
         public void Dispose()
         {
-            if (!_disposed)
+            if (Interlocked.Exchange(ref _disposed, 0) == 0)
             {
-                _disposed = true;
+                var disposableClients = Interlocked.Exchange(ref _clients, null);
+                foreach (var disposableClient in disposableClients.Values)
+                {
+                    disposableClient.Dispose();
+                }
+
                 var client = Interlocked.Exchange(ref _httpClient, null);
                 if (client != null)
                 {
@@ -146,11 +169,11 @@ namespace Microsoft.Rest.Azure
                 if (handler != null)
                 {
                     var delegatingHandler = handler as DelegatingHandler;
-                    if (!_disposeInnerHandlers && delegatingHandler != null )
+                    if (!_disposeInnerHandlers && delegatingHandler != null)
                     {
                         delegatingHandler.InnerHandler = null;
                     }
-                    
+
                     handler.Dispose();
                 }
             }
@@ -162,13 +185,13 @@ namespace Microsoft.Rest.Azure
         /// </summary>
         /// <typeparam name="T">The type of the client to initialize</typeparam>
         /// <param name="clientCreator">The client constructor.</param>
-        public T InitializeServiceClient<T>(Func<T> clientCreator ) where T : ServiceClient<T>
+        public T InitializeServiceClient<T>(Func<T> clientCreator) where T : ServiceClient<T>
         {
-            if (!_clients.ContainsKey(typeof (T)))
+            if (!_clients.ContainsKey(typeof(T)))
             {
 
                 var client = clientCreator();
-                _clients[typeof (T)] = client;
+                _clients[typeof(T)] = client;
                 if (!_credentialsInitialized && Credentials != null)
                 {
                     Credentials.InitializeServiceClient<T>(client);
@@ -200,9 +223,9 @@ namespace Microsoft.Rest.Azure
             return _clients[typeof(T)] as T;
         }
 
-        private static void TrySetProperty<T>(ServiceClient<T> client, string name, string value) where T : ServiceClient<T>
+        private static void TrySetProperty<T>(ServiceClient<T> client, string name, object value) where T : ServiceClient<T>
         {
-            var properties = typeof (T).GetProperties();
+            var properties = typeof(T).GetProperties();
             if (properties.Any(p => p.Name.Equals(name, StringComparison.OrdinalIgnoreCase)))
             {
                 try
@@ -235,6 +258,5 @@ namespace Microsoft.Rest.Azure
 
             return result;
         }
-
     }
 }
