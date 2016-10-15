@@ -1,5 +1,5 @@
 {
-  "version": "0.1.0.0-preview",
+  "version": "1.0.0.0",
   "title": "Microsoft Azure Analysis Services Management Library",
   "description": "Provides management capabilities for Azure Analysis Services accounts.",
   "authors": [ "Microsoft" ],
