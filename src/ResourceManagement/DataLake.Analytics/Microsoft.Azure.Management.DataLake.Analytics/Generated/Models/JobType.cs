@@ -8,19 +8,16 @@
 
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for JobType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum JobType
     {
-        [EnumMember(Value = "USql")]
+        [System.Runtime.Serialization.EnumMember(Value = "USql")]
         USql,
-        [EnumMember(Value = "Hive")]
+        [System.Runtime.Serialization.EnumMember(Value = "Hive")]
         Hive
     }
 }

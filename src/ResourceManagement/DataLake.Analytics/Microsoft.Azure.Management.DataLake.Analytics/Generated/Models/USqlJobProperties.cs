@@ -8,15 +8,9 @@
 
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
-    [JsonObject("USql")]
+    [Newtonsoft.Json.JsonObject("USql")]
     public partial class USqlJobProperties : JobProperties
     {
         /// <summary>
@@ -62,7 +56,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// be set by the user and will be ignored if it is.</param>
         /// <param name="compileMode">the compile mode for the job. Possible
         /// values include: 'Semantic', 'Full', 'SingleBox'</param>
-        public USqlJobProperties(string script, string runtimeVersion = default(string), IList<JobResource> resources = default(IList<JobResource>), JobStatistics statistics = default(JobStatistics), JobDataPath debugData = default(JobDataPath), IList<Diagnostics> diagnostics = default(IList<Diagnostics>), string algebraFilePath = default(string), TimeSpan? totalCompilationTime = default(TimeSpan?), TimeSpan? totalPauseTime = default(TimeSpan?), TimeSpan? totalQueuedTime = default(TimeSpan?), TimeSpan? totalRunningTime = default(TimeSpan?), string rootProcessNodeId = default(string), string yarnApplicationId = default(string), long? yarnApplicationTimeStamp = default(long?), CompileMode? compileMode = default(CompileMode?))
+        public USqlJobProperties(string script, string runtimeVersion = default(string), System.Collections.Generic.IList<JobResource> resources = default(System.Collections.Generic.IList<JobResource>), JobStatistics statistics = default(JobStatistics), JobDataPath debugData = default(JobDataPath), System.Collections.Generic.IList<Diagnostics> diagnostics = default(System.Collections.Generic.IList<Diagnostics>), string algebraFilePath = default(string), System.TimeSpan? totalCompilationTime = default(System.TimeSpan?), System.TimeSpan? totalPauseTime = default(System.TimeSpan?), System.TimeSpan? totalQueuedTime = default(System.TimeSpan?), System.TimeSpan? totalRunningTime = default(System.TimeSpan?), string rootProcessNodeId = default(string), string yarnApplicationId = default(string), long? yarnApplicationTimeStamp = default(long?), CompileMode? compileMode = default(CompileMode?))
             : base(script, runtimeVersion)
         {
             Resources = resources;
@@ -83,67 +77,67 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Gets or sets the list of resources that are required by the job
         /// </summary>
-        [JsonProperty(PropertyName = "resources")]
-        public IList<JobResource> Resources { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "resources")]
+        public System.Collections.Generic.IList<JobResource> Resources { get; set; }
 
         /// <summary>
         /// Gets or sets the job specific statistics.
         /// </summary>
-        [JsonProperty(PropertyName = "statistics")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "statistics")]
         public JobStatistics Statistics { get; set; }
 
         /// <summary>
         /// Gets or sets the job specific debug data locations.
         /// </summary>
-        [JsonProperty(PropertyName = "debugData")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "debugData")]
         public JobDataPath DebugData { get; set; }
 
         /// <summary>
         /// Gets or sets the diagnostics for the job.
         /// </summary>
-        [JsonProperty(PropertyName = "diagnostics")]
-        public IList<Diagnostics> Diagnostics { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "diagnostics")]
+        public System.Collections.Generic.IList<Diagnostics> Diagnostics { get; set; }
 
         /// <summary>
         /// Gets the algebra file path after the job has completed
         /// </summary>
-        [JsonProperty(PropertyName = "algebraFilePath")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "algebraFilePath")]
         public string AlgebraFilePath { get; private set; }
 
         /// <summary>
         /// Gets the total time this job spent compiling. This value should
         /// not be set by the user and will be ignored if it is.
         /// </summary>
-        [JsonProperty(PropertyName = "totalCompilationTime")]
-        public TimeSpan? TotalCompilationTime { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "totalCompilationTime")]
+        public System.TimeSpan? TotalCompilationTime { get; private set; }
 
         /// <summary>
         /// Gets the total time this job spent paused. This value should not
         /// be set by the user and will be ignored if it is.
         /// </summary>
-        [JsonProperty(PropertyName = "totalPauseTime")]
-        public TimeSpan? TotalPauseTime { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "totalPauseTime")]
+        public System.TimeSpan? TotalPauseTime { get; private set; }
 
         /// <summary>
         /// Gets the total time this job spent queued. This value should not
         /// be set by the user and will be ignored if it is.
         /// </summary>
-        [JsonProperty(PropertyName = "totalQueuedTime")]
-        public TimeSpan? TotalQueuedTime { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "totalQueuedTime")]
+        public System.TimeSpan? TotalQueuedTime { get; private set; }
 
         /// <summary>
         /// Gets the total time this job spent executing. This value should
         /// not be set by the user and will be ignored if it is.
         /// </summary>
-        [JsonProperty(PropertyName = "totalRunningTime")]
-        public TimeSpan? TotalRunningTime { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "totalRunningTime")]
+        public System.TimeSpan? TotalRunningTime { get; private set; }
 
         /// <summary>
         /// Gets the ID used to identify the job manager coordinating job
         /// execution. This value should not be set by the user and will be
         /// ignored if it is.
         /// </summary>
-        [JsonProperty(PropertyName = "rootProcessNodeId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "rootProcessNodeId")]
         public string RootProcessNodeId { get; private set; }
 
         /// <summary>
@@ -151,7 +145,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// job. This value should not be set by the user and will be ignored
         /// if it is.
         /// </summary>
-        [JsonProperty(PropertyName = "yarnApplicationId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "yarnApplicationId")]
         public string YarnApplicationId { get; private set; }
 
         /// <summary>
@@ -159,20 +153,20 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// the job. This value should not be set by the user and will be
         /// ignored if it is.
         /// </summary>
-        [JsonProperty(PropertyName = "yarnApplicationTimeStamp")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "yarnApplicationTimeStamp")]
         public long? YarnApplicationTimeStamp { get; private set; }
 
         /// <summary>
         /// Gets or sets the compile mode for the job. Possible values
         /// include: 'Semantic', 'Full', 'SingleBox'
         /// </summary>
-        [JsonProperty(PropertyName = "compileMode")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "compileMode")]
         public CompileMode? CompileMode { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public override void Validate()

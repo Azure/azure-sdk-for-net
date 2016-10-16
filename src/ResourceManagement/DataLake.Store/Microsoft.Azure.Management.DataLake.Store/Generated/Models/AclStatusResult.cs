@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Data Lake Store file or directory Access Control List information.
@@ -39,7 +33,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <summary>
         /// Gets or sets the AclStatus object for a given file or directory.
         /// </summary>
-        [JsonProperty(PropertyName = "AclStatus")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "AclStatus")]
         public AclStatus AclStatus { get; set; }
 
     }

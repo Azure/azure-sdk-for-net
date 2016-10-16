@@ -8,23 +8,20 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for ExpiryOptionType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum ExpiryOptionType
     {
-        [EnumMember(Value = "NeverExpire")]
+        [System.Runtime.Serialization.EnumMember(Value = "NeverExpire")]
         NeverExpire,
-        [EnumMember(Value = "RelativeToNow")]
+        [System.Runtime.Serialization.EnumMember(Value = "RelativeToNow")]
         RelativeToNow,
-        [EnumMember(Value = "RelativeToCreationDate")]
+        [System.Runtime.Serialization.EnumMember(Value = "RelativeToCreationDate")]
         RelativeToCreationDate,
-        [EnumMember(Value = "Absolute")]
+        [System.Runtime.Serialization.EnumMember(Value = "Absolute")]
         Absolute
     }
 }

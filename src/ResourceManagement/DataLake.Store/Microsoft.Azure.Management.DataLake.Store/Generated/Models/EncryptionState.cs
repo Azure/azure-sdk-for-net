@@ -8,19 +8,16 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for EncryptionState.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum EncryptionState
     {
-        [EnumMember(Value = "Enabled")]
+        [System.Runtime.Serialization.EnumMember(Value = "Enabled")]
         Enabled,
-        [EnumMember(Value = "Disabled")]
+        [System.Runtime.Serialization.EnumMember(Value = "Disabled")]
         Disabled
     }
 }

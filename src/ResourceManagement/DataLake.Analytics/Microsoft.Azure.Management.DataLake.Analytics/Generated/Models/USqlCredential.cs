@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A Data Lake Analytics catalog U-SQL credential item.
@@ -39,7 +33,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <param name="name">the name of the credential.</param>
         /// <param name="userName">the user name associated with the
         /// credential.</param>
-        public USqlCredential(string computeAccountName = default(string), Guid? version = default(Guid?), string databaseName = default(string), string identity = default(string), string name = default(string), string userName = default(string))
+        public USqlCredential(string computeAccountName = default(string), System.Guid? version = default(System.Guid?), string databaseName = default(string), string identity = default(string), string name = default(string), string userName = default(string))
             : base(computeAccountName, version)
         {
             DatabaseName = databaseName;
@@ -51,25 +45,25 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Gets or sets the name of the database the credential is in.
         /// </summary>
-        [JsonProperty(PropertyName = "databaseName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "databaseName")]
         public string DatabaseName { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the secret associated with the credential.
         /// </summary>
-        [JsonProperty(PropertyName = "identity")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "identity")]
         public string Identity { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the credential.
         /// </summary>
-        [JsonProperty(PropertyName = "credentialName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "credentialName")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the user name associated with the credential.
         /// </summary>
-        [JsonProperty(PropertyName = "userName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "userName")]
         public string UserName { get; set; }
 
     }

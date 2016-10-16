@@ -8,19 +8,13 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A WebHDFS exception thrown indicating there was an IO (read or write)
     /// error. Thrown when a 403 error response code is returned (forbidden).
     /// </summary>
-    [JsonObject("IOException")]
+    [Newtonsoft.Json.JsonObject("IOException")]
     public partial class AdlsIOException : AdlsRemoteException
     {
         /// <summary>

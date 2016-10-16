@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A Data Lake Analytics catalog U-SQL database item.
@@ -33,7 +27,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Analytics account.</param>
         /// <param name="version">the version of the catalog item.</param>
         /// <param name="name">the name of the database.</param>
-        public USqlDatabase(string computeAccountName = default(string), Guid? version = default(Guid?), string name = default(string))
+        public USqlDatabase(string computeAccountName = default(string), System.Guid? version = default(System.Guid?), string name = default(string))
             : base(computeAccountName, version)
         {
             Name = name;
@@ -42,7 +36,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Gets or sets the name of the database.
         /// </summary>
-        [JsonProperty(PropertyName = "databaseName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "databaseName")]
         public string Name { get; set; }
 
     }

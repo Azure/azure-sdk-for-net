@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Generic resource inner error information.
@@ -40,13 +34,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Gets the stack trace for the error
         /// </summary>
-        [JsonProperty(PropertyName = "trace")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "trace")]
         public string Trace { get; private set; }
 
         /// <summary>
         /// Gets the context for the error message
         /// </summary>
-        [JsonProperty(PropertyName = "context")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "context")]
         public string Context { get; private set; }
 
     }

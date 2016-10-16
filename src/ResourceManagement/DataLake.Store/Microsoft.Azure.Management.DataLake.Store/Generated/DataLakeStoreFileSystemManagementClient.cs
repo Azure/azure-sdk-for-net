@@ -8,27 +8,15 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Net;
-    using System.Net.Http;
-    using System.Net.Http.Headers;
-    using System.Text;
-    using System.Text.RegularExpressions;
-    using System.Threading;
-    using System.Threading.Tasks;
     using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Newtonsoft.Json;
     using Microsoft.Rest.Azure;
     using Models;
 
     /// <summary>
     /// Creates an Azure Data Lake Store filesystem client.
     /// </summary>
-    public partial class DataLakeStoreFileSystemManagementClient : ServiceClient<DataLakeStoreFileSystemManagementClient>, IDataLakeStoreFileSystemManagementClient, IAzureClient
+    public partial class DataLakeStoreFileSystemManagementClient : Microsoft.Rest.ServiceClient<DataLakeStoreFileSystemManagementClient>, IDataLakeStoreFileSystemManagementClient, IAzureClient
     {
         /// <summary>
         /// The base URI of the service.
@@ -38,17 +26,17 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <summary>
         /// Gets or sets json serialization settings.
         /// </summary>
-        public JsonSerializerSettings SerializationSettings { get; private set; }
+        public Newtonsoft.Json.JsonSerializerSettings SerializationSettings { get; private set; }
 
         /// <summary>
         /// Gets or sets json deserialization settings.
         /// </summary>
-        public JsonSerializerSettings DeserializationSettings { get; private set; }        
+        public Newtonsoft.Json.JsonSerializerSettings DeserializationSettings { get; private set; }
 
         /// <summary>
         /// Credentials needed for the client to connect to Azure.
         /// </summary>
-        public ServiceClientCredentials Credentials { get; private set; }
+        public Microsoft.Rest.ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
         /// Client Api Version.
@@ -88,7 +76,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected DataLakeStoreFileSystemManagementClient(params DelegatingHandler[] handlers) : base(handlers)
+        protected DataLakeStoreFileSystemManagementClient(params System.Net.Http.DelegatingHandler[] handlers) : base(handlers)
         {
             this.Initialize();
         }
@@ -102,7 +90,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        protected DataLakeStoreFileSystemManagementClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        protected DataLakeStoreFileSystemManagementClient(System.Net.Http.HttpClientHandler rootHandler, params System.Net.Http.DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             this.Initialize();
         }
@@ -116,14 +104,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        /// <exception cref="ArgumentNullException">
+        /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal DataLakeStoreFileSystemManagementClient(ServiceClientCredentials credentials, params DelegatingHandler[] handlers) : this(handlers)
+        internal DataLakeStoreFileSystemManagementClient(Microsoft.Rest.ServiceClientCredentials credentials, params System.Net.Http.DelegatingHandler[] handlers) : this(handlers)
         {
             if (credentials == null)
             {
-                throw new ArgumentNullException("credentials");
+                throw new System.ArgumentNullException("credentials");
             }
             this.Credentials = credentials;
             if (this.Credentials != null)
@@ -144,14 +132,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        /// <exception cref="ArgumentNullException">
+        /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        internal DataLakeStoreFileSystemManagementClient(ServiceClientCredentials credentials, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        internal DataLakeStoreFileSystemManagementClient(Microsoft.Rest.ServiceClientCredentials credentials, System.Net.Http.HttpClientHandler rootHandler, params System.Net.Http.DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (credentials == null)
             {
-                throw new ArgumentNullException("credentials");
+                throw new System.ArgumentNullException("credentials");
             }
             this.Credentials = credentials;
             if (this.Credentials != null)
@@ -176,35 +164,35 @@ namespace Microsoft.Azure.Management.DataLake.Store
             this.AcceptLanguage = "en-US";
             this.LongRunningOperationRetryTimeout = 30;
             this.GenerateClientRequestId = true;
-            SerializationSettings = new JsonSerializerSettings
+            SerializationSettings = new Newtonsoft.Json.JsonSerializerSettings
             {
-                Formatting = Formatting.Indented,
-                DateFormatHandling = DateFormatHandling.IsoDateFormat,
-                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
-                NullValueHandling = NullValueHandling.Ignore,
-                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
-                ContractResolver = new ReadOnlyJsonContractResolver(),
-                Converters = new List<JsonConverter>
+                Formatting = Newtonsoft.Json.Formatting.Indented,
+                DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat,
+                DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc,
+                NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore,
+                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize,
+                ContractResolver = new Microsoft.Rest.Serialization.ReadOnlyJsonContractResolver(),
+                Converters = new System.Collections.Generic.List<Newtonsoft.Json.JsonConverter>
                     {
-                        new Iso8601TimeSpanConverter()
+                        new Microsoft.Rest.Serialization.Iso8601TimeSpanConverter()
                     }
             };
-            DeserializationSettings = new JsonSerializerSettings
+            DeserializationSettings = new Newtonsoft.Json.JsonSerializerSettings
             {
-                DateFormatHandling = DateFormatHandling.IsoDateFormat,
-                DateTimeZoneHandling = DateTimeZoneHandling.Utc,
-                NullValueHandling = NullValueHandling.Ignore,
-                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
-                ContractResolver = new ReadOnlyJsonContractResolver(),
-                Converters = new List<JsonConverter>
+                DateFormatHandling = Newtonsoft.Json.DateFormatHandling.IsoDateFormat,
+                DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc,
+                NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore,
+                ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Serialize,
+                ContractResolver = new Microsoft.Rest.Serialization.ReadOnlyJsonContractResolver(),
+                Converters = new System.Collections.Generic.List<Newtonsoft.Json.JsonConverter>
                     {
-                        new Iso8601TimeSpanConverter()
+                        new Microsoft.Rest.Serialization.Iso8601TimeSpanConverter()
                     }
             };
-            SerializationSettings.Converters.Add(new PolymorphicSerializeJsonConverter<AdlsRemoteException>("exception"));
-            DeserializationSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<AdlsRemoteException>("exception"));
+            SerializationSettings.Converters.Add(new Microsoft.Rest.Serialization.PolymorphicSerializeJsonConverter<AdlsRemoteException>("exception"));
+            DeserializationSettings.Converters.Add(new Microsoft.Rest.Serialization.PolymorphicDeserializeJsonConverter<AdlsRemoteException>("exception"));
             CustomInitialize();
-            DeserializationSettings.Converters.Add(new CloudErrorJsonConverter()); 
+            DeserializationSettings.Converters.Add(new Microsoft.Rest.Azure.CloudErrorJsonConverter()); 
         }    
     }
 }

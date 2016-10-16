@@ -8,35 +8,32 @@
 
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for JobState.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum JobState
     {
-        [EnumMember(Value = "Accepted")]
+        [System.Runtime.Serialization.EnumMember(Value = "Accepted")]
         Accepted,
-        [EnumMember(Value = "Compiling")]
+        [System.Runtime.Serialization.EnumMember(Value = "Compiling")]
         Compiling,
-        [EnumMember(Value = "Ended")]
+        [System.Runtime.Serialization.EnumMember(Value = "Ended")]
         Ended,
-        [EnumMember(Value = "New")]
+        [System.Runtime.Serialization.EnumMember(Value = "New")]
         New,
-        [EnumMember(Value = "Queued")]
+        [System.Runtime.Serialization.EnumMember(Value = "Queued")]
         Queued,
-        [EnumMember(Value = "Running")]
+        [System.Runtime.Serialization.EnumMember(Value = "Running")]
         Running,
-        [EnumMember(Value = "Scheduling")]
+        [System.Runtime.Serialization.EnumMember(Value = "Scheduling")]
         Scheduling,
-        [EnumMember(Value = "Starting")]
+        [System.Runtime.Serialization.EnumMember(Value = "Starting")]
         Starting,
-        [EnumMember(Value = "Paused")]
+        [System.Runtime.Serialization.EnumMember(Value = "Paused")]
         Paused,
-        [EnumMember(Value = "WaitingForCapacity")]
+        [System.Runtime.Serialization.EnumMember(Value = "WaitingForCapacity")]
         WaitingForCapacity
     }
 }

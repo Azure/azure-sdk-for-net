@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Data Lake Store account properties information
@@ -52,7 +46,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <param name="endpoint">the gateway host.</param>
         /// <param name="defaultGroup">the default owner group for all new
         /// folders and files created in the Data Lake Store account.</param>
-        public DataLakeStoreAccountProperties(DataLakeStoreAccountStatus? provisioningState = default(DataLakeStoreAccountStatus?), DataLakeStoreAccountState? state = default(DataLakeStoreAccountState?), DateTime? creationTime = default(DateTime?), EncryptionState? encryptionState = default(EncryptionState?), EncryptionProvisioningState? encryptionProvisioningState = default(EncryptionProvisioningState?), EncryptionConfig encryptionConfig = default(EncryptionConfig), DateTime? lastModifiedTime = default(DateTime?), string endpoint = default(string), string defaultGroup = default(string))
+        public DataLakeStoreAccountProperties(DataLakeStoreAccountStatus? provisioningState = default(DataLakeStoreAccountStatus?), DataLakeStoreAccountState? state = default(DataLakeStoreAccountState?), System.DateTime? creationTime = default(System.DateTime?), EncryptionState? encryptionState = default(EncryptionState?), EncryptionProvisioningState? encryptionProvisioningState = default(EncryptionProvisioningState?), EncryptionConfig encryptionConfig = default(EncryptionConfig), System.DateTime? lastModifiedTime = default(System.DateTime?), string endpoint = default(string), string defaultGroup = default(string))
         {
             ProvisioningState = provisioningState;
             State = state;
@@ -71,27 +65,27 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// 'Running', 'Succeeded', 'Patching', 'Suspending', 'Resuming',
         /// 'Deleting', 'Deleted'
         /// </summary>
-        [JsonProperty(PropertyName = "provisioningState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "provisioningState")]
         public DataLakeStoreAccountStatus? ProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets the status of the Data Lake Store account after provisioning
         /// has completed. Possible values include: 'active', 'suspended'
         /// </summary>
-        [JsonProperty(PropertyName = "state")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "state")]
         public DataLakeStoreAccountState? State { get; private set; }
 
         /// <summary>
         /// Gets the account creation time.
         /// </summary>
-        [JsonProperty(PropertyName = "creationTime")]
-        public DateTime? CreationTime { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "creationTime")]
+        public System.DateTime? CreationTime { get; private set; }
 
         /// <summary>
         /// Gets or sets the current state of encryption for this Data Lake
         /// store account. Possible values include: 'Enabled', 'Disabled'
         /// </summary>
-        [JsonProperty(PropertyName = "encryptionState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "encryptionState")]
         public EncryptionState? EncryptionState { get; set; }
 
         /// <summary>
@@ -99,32 +93,32 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// Lake store account. Possible values include: 'Creating',
         /// 'Succeeded'
         /// </summary>
-        [JsonProperty(PropertyName = "encryptionProvisioningState")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "encryptionProvisioningState")]
         public EncryptionProvisioningState? EncryptionProvisioningState { get; private set; }
 
         /// <summary>
         /// Gets or sets the Key vault encryption configuration.
         /// </summary>
-        [JsonProperty(PropertyName = "encryptionConfig")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "encryptionConfig")]
         public EncryptionConfig EncryptionConfig { get; set; }
 
         /// <summary>
         /// Gets the account last modified time.
         /// </summary>
-        [JsonProperty(PropertyName = "lastModifiedTime")]
-        public DateTime? LastModifiedTime { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "lastModifiedTime")]
+        public System.DateTime? LastModifiedTime { get; private set; }
 
         /// <summary>
         /// Gets or sets the gateway host.
         /// </summary>
-        [JsonProperty(PropertyName = "endpoint")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "endpoint")]
         public string Endpoint { get; set; }
 
         /// <summary>
         /// Gets or sets the default owner group for all new folders and files
         /// created in the Data Lake Store account.
         /// </summary>
-        [JsonProperty(PropertyName = "defaultGroup")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "defaultGroup")]
         public string DefaultGroup { get; set; }
 
     }

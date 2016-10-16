@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Generic resource error information.
@@ -36,7 +30,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <param name="details">the list of error details</param>
         /// <param name="innerError">the inner exceptions or errors, if
         /// any</param>
-        public Error(string code = default(string), string message = default(string), string target = default(string), IList<ErrorDetails> details = default(IList<ErrorDetails>), InnerError innerError = default(InnerError))
+        public Error(string code = default(string), string message = default(string), string target = default(string), System.Collections.Generic.IList<ErrorDetails> details = default(System.Collections.Generic.IList<ErrorDetails>), InnerError innerError = default(InnerError))
         {
             Code = code;
             Message = message;
@@ -48,31 +42,31 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Gets the HTTP status code or error code associated with this error
         /// </summary>
-        [JsonProperty(PropertyName = "code")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "code")]
         public string Code { get; private set; }
 
         /// <summary>
         /// Gets the error message to display.
         /// </summary>
-        [JsonProperty(PropertyName = "message")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "message")]
         public string Message { get; private set; }
 
         /// <summary>
         /// Gets the target of the error.
         /// </summary>
-        [JsonProperty(PropertyName = "target")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "target")]
         public string Target { get; private set; }
 
         /// <summary>
         /// Gets the list of error details
         /// </summary>
-        [JsonProperty(PropertyName = "details")]
-        public IList<ErrorDetails> Details { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "details")]
+        public System.Collections.Generic.IList<ErrorDetails> Details { get; private set; }
 
         /// <summary>
         /// Gets the inner exceptions or errors, if any
         /// </summary>
-        [JsonProperty(PropertyName = "innerError")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "innerError")]
         public InnerError InnerError { get; private set; }
 
     }

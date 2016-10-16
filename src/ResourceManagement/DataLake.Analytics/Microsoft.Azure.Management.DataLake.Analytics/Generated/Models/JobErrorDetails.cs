@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The Data Lake Analytics job error details.
@@ -78,38 +72,38 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Gets the error message description
         /// </summary>
-        [JsonProperty(PropertyName = "description")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "description")]
         public string Description { get; private set; }
 
         /// <summary>
         /// Gets the details of the error message.
         /// </summary>
-        [JsonProperty(PropertyName = "details")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "details")]
         public string Details { get; private set; }
 
         /// <summary>
         /// Gets the end offset in the job where the error was found.
         /// </summary>
-        [JsonProperty(PropertyName = "endOffset")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "endOffset")]
         public int? EndOffset { get; private set; }
 
         /// <summary>
         /// Gets the specific identifier for the type of error encountered in
         /// the job.
         /// </summary>
-        [JsonProperty(PropertyName = "errorId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "errorId")]
         public string ErrorId { get; private set; }
 
         /// <summary>
         /// Gets the path to any supplemental error files, if any.
         /// </summary>
-        [JsonProperty(PropertyName = "filePath")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "filePath")]
         public string FilePath { get; private set; }
 
         /// <summary>
         /// Gets the link to MSDN or Azure help for this type of error, if any.
         /// </summary>
-        [JsonProperty(PropertyName = "helpLink")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "helpLink")]
         public string HelpLink { get; private set; }
 
         /// <summary>
@@ -117,51 +111,51 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// the job error details has sufficient permissions it will be
         /// retrieved, otherwise it will be empty.
         /// </summary>
-        [JsonProperty(PropertyName = "internalDiagnostics")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "internalDiagnostics")]
         public string InternalDiagnostics { get; private set; }
 
         /// <summary>
         /// Gets the specific line number in the job where the error occured.
         /// </summary>
-        [JsonProperty(PropertyName = "lineNumber")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "lineNumber")]
         public int? LineNumber { get; private set; }
 
         /// <summary>
         /// Gets the user friendly error message for the failure.
         /// </summary>
-        [JsonProperty(PropertyName = "message")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "message")]
         public string Message { get; private set; }
 
         /// <summary>
         /// Gets the recommended resolution for the failure, if any.
         /// </summary>
-        [JsonProperty(PropertyName = "resolution")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "resolution")]
         public string Resolution { get; private set; }
 
         /// <summary>
         /// Gets the inner error of this specific job error message, if any.
         /// </summary>
-        [JsonProperty(PropertyName = "innerError")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "innerError")]
         public JobInnerError InnerError { get; private set; }
 
         /// <summary>
         /// Gets the severity level of the failure. Possible values include:
         /// 'Warning', 'Error', 'Info'
         /// </summary>
-        [JsonProperty(PropertyName = "severity")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "severity")]
         public SeverityTypes? Severity { get; private set; }
 
         /// <summary>
         /// Gets the ultimate source of the failure (usually either SYSTEM or
         /// USER).
         /// </summary>
-        [JsonProperty(PropertyName = "source")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "source")]
         public string Source { get; private set; }
 
         /// <summary>
         /// Gets the start offset in the job where the error was found
         /// </summary>
-        [JsonProperty(PropertyName = "startOffset")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "startOffset")]
         public int? StartOffset { get; private set; }
 
     }

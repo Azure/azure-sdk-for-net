@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// DataLakeAnalytics DataLakeAnalyticsAccount information.
@@ -44,27 +38,27 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Gets or sets the password for the secret to pass in
         /// </summary>
-        [JsonProperty(PropertyName = "password")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "password")]
         public string Password { get; set; }
 
         /// <summary>
         /// Gets or sets the URI identifier for the secret in the format
         /// &lt;hostname&gt;:&lt;port&gt;
         /// </summary>
-        [JsonProperty(PropertyName = "uri")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "uri")]
         public string Uri { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (Password == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Password");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Password");
             }
         }
     }

@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     public partial class EncryptionConfig
     {
@@ -44,14 +38,14 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// 'ServiceManaged'. Possible values include: 'UserManaged',
         /// 'ServiceManaged'
         /// </summary>
-        [JsonProperty(PropertyName = "type")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "type")]
         public EncryptionConfigType? Type { get; set; }
 
         /// <summary>
         /// Gets or sets the Key vault information for connecting to user
         /// managed encryption keys.
         /// </summary>
-        [JsonProperty(PropertyName = "keyVaultMetaInfo")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "keyVaultMetaInfo")]
         public KeyVaultMetaInfo KeyVaultMetaInfo { get; set; }
 
     }

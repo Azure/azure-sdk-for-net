@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Azure Storage blob container properties information.
@@ -31,7 +25,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// </summary>
         /// <param name="lastModifiedTime">the last modified time of the blob
         /// container.</param>
-        public BlobContainerProperties(DateTime? lastModifiedTime = default(DateTime?))
+        public BlobContainerProperties(System.DateTime? lastModifiedTime = default(System.DateTime?))
         {
             LastModifiedTime = lastModifiedTime;
         }
@@ -39,8 +33,8 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Gets the last modified time of the blob container.
         /// </summary>
-        [JsonProperty(PropertyName = "lastModifiedTime")]
-        public DateTime? LastModifiedTime { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "lastModifiedTime")]
+        public System.DateTime? LastModifiedTime { get; private set; }
 
     }
 }

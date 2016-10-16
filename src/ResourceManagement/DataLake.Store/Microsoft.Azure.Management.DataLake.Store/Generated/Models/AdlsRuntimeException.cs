@@ -8,20 +8,14 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A WebHDFS exception thrown when an unexpected error occurs during an
     /// operation. Thrown when a 500 error response code is returned
     /// (Internal server error).
     /// </summary>
-    [JsonObject("RuntimeException")]
+    [Newtonsoft.Json.JsonObject("RuntimeException")]
     public partial class AdlsRuntimeException : AdlsRemoteException
     {
         /// <summary>

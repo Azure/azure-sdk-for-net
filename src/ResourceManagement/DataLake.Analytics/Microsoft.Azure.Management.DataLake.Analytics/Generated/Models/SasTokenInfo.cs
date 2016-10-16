@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// SAS token information.
@@ -39,7 +33,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Gets the access token for the associated Azure Storage Container.
         /// </summary>
-        [JsonProperty(PropertyName = "accessToken")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "accessToken")]
         public string AccessToken { get; private set; }
 
     }

@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The Data Lake Analytics job statistics vertex stage information.
@@ -68,7 +62,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// a percentage.</param>
         /// <param name="totalSucceededTime">the amount of time all successful
         /// vertices took in this stage.</param>
-        public JobStatisticsVertexStage(long? dataRead = default(long?), long? dataReadCrossPod = default(long?), long? dataReadIntraPod = default(long?), long? dataToRead = default(long?), long? dataWritten = default(long?), int? duplicateDiscardCount = default(int?), int? failedCount = default(int?), long? maxVertexDataRead = default(long?), long? minVertexDataRead = default(long?), int? readFailureCount = default(int?), int? revocationCount = default(int?), int? runningCount = default(int?), int? scheduledCount = default(int?), string stageName = default(string), int? succeededCount = default(int?), long? tempDataWritten = default(long?), int? totalCount = default(int?), TimeSpan? totalFailedTime = default(TimeSpan?), int? totalProgress = default(int?), TimeSpan? totalSucceededTime = default(TimeSpan?))
+        public JobStatisticsVertexStage(long? dataRead = default(long?), long? dataReadCrossPod = default(long?), long? dataReadIntraPod = default(long?), long? dataToRead = default(long?), long? dataWritten = default(long?), int? duplicateDiscardCount = default(int?), int? failedCount = default(int?), long? maxVertexDataRead = default(long?), long? minVertexDataRead = default(long?), int? readFailureCount = default(int?), int? revocationCount = default(int?), int? runningCount = default(int?), int? scheduledCount = default(int?), string stageName = default(string), int? succeededCount = default(int?), long? tempDataWritten = default(long?), int? totalCount = default(int?), System.TimeSpan? totalFailedTime = default(System.TimeSpan?), int? totalProgress = default(int?), System.TimeSpan? totalSucceededTime = default(System.TimeSpan?))
         {
             DataRead = dataRead;
             DataReadCrossPod = dataReadCrossPod;
@@ -95,122 +89,122 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Gets the amount of data read, in bytes.
         /// </summary>
-        [JsonProperty(PropertyName = "dataRead")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "dataRead")]
         public long? DataRead { get; private set; }
 
         /// <summary>
         /// Gets the amount of data read across multiple pods, in bytes.
         /// </summary>
-        [JsonProperty(PropertyName = "dataReadCrossPod")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "dataReadCrossPod")]
         public long? DataReadCrossPod { get; private set; }
 
         /// <summary>
         /// Gets the amount of data read in one pod, in bytes.
         /// </summary>
-        [JsonProperty(PropertyName = "dataReadIntraPod")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "dataReadIntraPod")]
         public long? DataReadIntraPod { get; private set; }
 
         /// <summary>
         /// Gets the amount of data remaining to be read, in bytes.
         /// </summary>
-        [JsonProperty(PropertyName = "dataToRead")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "dataToRead")]
         public long? DataToRead { get; private set; }
 
         /// <summary>
         /// Gets the amount of data written, in bytes.
         /// </summary>
-        [JsonProperty(PropertyName = "dataWritten")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "dataWritten")]
         public long? DataWritten { get; private set; }
 
         /// <summary>
         /// Gets the number of duplicates that were discarded.
         /// </summary>
-        [JsonProperty(PropertyName = "duplicateDiscardCount")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "duplicateDiscardCount")]
         public int? DuplicateDiscardCount { get; private set; }
 
         /// <summary>
         /// Gets the number of failures that occured in this stage.
         /// </summary>
-        [JsonProperty(PropertyName = "failedCount")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "failedCount")]
         public int? FailedCount { get; private set; }
 
         /// <summary>
         /// Gets the maximum amount of data read in a single vertex, in bytes.
         /// </summary>
-        [JsonProperty(PropertyName = "maxVertexDataRead")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "maxVertexDataRead")]
         public long? MaxVertexDataRead { get; private set; }
 
         /// <summary>
         /// Gets the minimum amount of data read in a single vertex, in bytes.
         /// </summary>
-        [JsonProperty(PropertyName = "minVertexDataRead")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "minVertexDataRead")]
         public long? MinVertexDataRead { get; private set; }
 
         /// <summary>
         /// Gets the number of read failures in this stage.
         /// </summary>
-        [JsonProperty(PropertyName = "readFailureCount")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "readFailureCount")]
         public int? ReadFailureCount { get; private set; }
 
         /// <summary>
         /// Gets the number of vertices that were revoked during this stage.
         /// </summary>
-        [JsonProperty(PropertyName = "revocationCount")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "revocationCount")]
         public int? RevocationCount { get; private set; }
 
         /// <summary>
         /// Gets the number of currently running vertices in this stage.
         /// </summary>
-        [JsonProperty(PropertyName = "runningCount")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "runningCount")]
         public int? RunningCount { get; private set; }
 
         /// <summary>
         /// Gets the number of currently scheduled vertices in this stage
         /// </summary>
-        [JsonProperty(PropertyName = "scheduledCount")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "scheduledCount")]
         public int? ScheduledCount { get; private set; }
 
         /// <summary>
         /// Gets the name of this stage in job execution.
         /// </summary>
-        [JsonProperty(PropertyName = "stageName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "stageName")]
         public string StageName { get; private set; }
 
         /// <summary>
         /// Gets the number of vertices that succeeded in this stage.
         /// </summary>
-        [JsonProperty(PropertyName = "succeededCount")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "succeededCount")]
         public int? SucceededCount { get; private set; }
 
         /// <summary>
         /// Gets the amount of temporary data written, in bytes.
         /// </summary>
-        [JsonProperty(PropertyName = "tempDataWritten")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "tempDataWritten")]
         public long? TempDataWritten { get; private set; }
 
         /// <summary>
         /// Gets the total vertex count for this stage.
         /// </summary>
-        [JsonProperty(PropertyName = "totalCount")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "totalCount")]
         public int? TotalCount { get; private set; }
 
         /// <summary>
         /// Gets the amount of time that failed vertices took up in this stage.
         /// </summary>
-        [JsonProperty(PropertyName = "totalFailedTime")]
-        public TimeSpan? TotalFailedTime { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "totalFailedTime")]
+        public System.TimeSpan? TotalFailedTime { get; private set; }
 
         /// <summary>
         /// Gets the current progress of this stage, as a percentage.
         /// </summary>
-        [JsonProperty(PropertyName = "totalProgress")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "totalProgress")]
         public int? TotalProgress { get; private set; }
 
         /// <summary>
         /// Gets the amount of time all successful vertices took in this stage.
         /// </summary>
-        [JsonProperty(PropertyName = "totalSucceededTime")]
-        public TimeSpan? TotalSucceededTime { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "totalSucceededTime")]
+        public System.TimeSpan? TotalSucceededTime { get; private set; }
 
     }
 }

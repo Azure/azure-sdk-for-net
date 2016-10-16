@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// The result of the request or operation.
@@ -39,7 +33,7 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// <summary>
         /// Gets the result of the operation or request.
         /// </summary>
-        [JsonProperty(PropertyName = "boolean")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "boolean")]
         public bool? OperationResult { get; private set; }
 
     }

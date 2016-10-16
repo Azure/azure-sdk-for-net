@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A Data Lake Analytics catalog entity identifier object.
@@ -33,7 +27,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// this database, schema and table.</param>
         /// <param name="version">the version of the external data
         /// source.</param>
-        public EntityId(DdlName name = default(DdlName), Guid? version = default(Guid?))
+        public EntityId(DdlName name = default(DdlName), System.Guid? version = default(System.Guid?))
         {
             Name = name;
             Version = version;
@@ -43,14 +37,14 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Gets or sets the name of the external table associated with this
         /// database, schema and table.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public DdlName Name { get; set; }
 
         /// <summary>
         /// Gets or sets the version of the external data source.
         /// </summary>
-        [JsonProperty(PropertyName = "version")]
-        public Guid? Version { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "version")]
+        public System.Guid? Version { get; set; }
 
     }
 }

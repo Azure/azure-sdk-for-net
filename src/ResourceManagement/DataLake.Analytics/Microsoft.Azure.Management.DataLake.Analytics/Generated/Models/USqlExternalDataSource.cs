@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A Data Lake Analytics catalog U-SQL external datasource item.
@@ -40,7 +34,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// the external data source.</param>
         /// <param name="pushdownTypes">the list of types to push down from
         /// the external data source.</param>
-        public USqlExternalDataSource(string computeAccountName = default(string), Guid? version = default(Guid?), string databaseName = default(string), string name = default(string), string provider = default(string), string providerString = default(string), IList<string> pushdownTypes = default(IList<string>))
+        public USqlExternalDataSource(string computeAccountName = default(string), System.Guid? version = default(System.Guid?), string databaseName = default(string), string name = default(string), string provider = default(string), string providerString = default(string), System.Collections.Generic.IList<string> pushdownTypes = default(System.Collections.Generic.IList<string>))
             : base(computeAccountName, version)
         {
             DatabaseName = databaseName;
@@ -53,34 +47,34 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Gets or sets the name of the database.
         /// </summary>
-        [JsonProperty(PropertyName = "databaseName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "databaseName")]
         public string DatabaseName { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the external data source.
         /// </summary>
-        [JsonProperty(PropertyName = "externalDataSourceName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "externalDataSourceName")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the provider for the external data source.
         /// </summary>
-        [JsonProperty(PropertyName = "provider")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "provider")]
         public string Provider { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the provider string for the external data
         /// source.
         /// </summary>
-        [JsonProperty(PropertyName = "providerString")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "providerString")]
         public string ProviderString { get; set; }
 
         /// <summary>
         /// Gets or sets the list of types to push down from the external data
         /// source.
         /// </summary>
-        [JsonProperty(PropertyName = "pushdownTypes")]
-        public IList<string> PushdownTypes { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "pushdownTypes")]
+        public System.Collections.Generic.IList<string> PushdownTypes { get; set; }
 
     }
 }

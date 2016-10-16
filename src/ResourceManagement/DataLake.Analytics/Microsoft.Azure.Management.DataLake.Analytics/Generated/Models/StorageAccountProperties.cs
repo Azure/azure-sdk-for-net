@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Azure Storage account properties information.
@@ -43,26 +37,26 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Gets or sets the access key associated with this Azure Storage
         /// account that will be used to connect to it.
         /// </summary>
-        [JsonProperty(PropertyName = "accessKey")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "accessKey")]
         public string AccessKey { get; set; }
 
         /// <summary>
         /// Gets or sets the optional suffix for the Data Lake account.
         /// </summary>
-        [JsonProperty(PropertyName = "suffix")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "suffix")]
         public string Suffix { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
             if (AccessKey == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "AccessKey");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "AccessKey");
             }
         }
     }

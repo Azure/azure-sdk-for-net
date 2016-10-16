@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A Data Lake Analytics catalog U-SQL table partition item.
@@ -42,7 +36,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <param name="label">the list of labels associated with this
         /// partition.</param>
         /// <param name="createDate">the creation time of the partition</param>
-        public USqlTablePartition(string computeAccountName = default(string), Guid? version = default(Guid?), string databaseName = default(string), string schemaName = default(string), string name = default(string), DdlName parentName = default(DdlName), int? indexId = default(int?), IList<string> label = default(IList<string>), DateTimeOffset? createDate = default(DateTimeOffset?))
+        public USqlTablePartition(string computeAccountName = default(string), System.Guid? version = default(System.Guid?), string databaseName = default(string), string schemaName = default(string), string name = default(string), DdlName parentName = default(DdlName), int? indexId = default(int?), System.Collections.Generic.IList<string> label = default(System.Collections.Generic.IList<string>), System.DateTimeOffset? createDate = default(System.DateTimeOffset?))
             : base(computeAccountName, version)
         {
             DatabaseName = databaseName;
@@ -57,45 +51,45 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Gets or sets the name of the database.
         /// </summary>
-        [JsonProperty(PropertyName = "databaseName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "databaseName")]
         public string DatabaseName { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the schema associated with this table
         /// partition and database.
         /// </summary>
-        [JsonProperty(PropertyName = "schemaName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "schemaName")]
         public string SchemaName { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the table partition.
         /// </summary>
-        [JsonProperty(PropertyName = "partitionName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "partitionName")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the Ddl object of the partition's parent.
         /// </summary>
-        [JsonProperty(PropertyName = "parentName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "parentName")]
         public DdlName ParentName { get; set; }
 
         /// <summary>
         /// Gets or sets the index ID for this partition.
         /// </summary>
-        [JsonProperty(PropertyName = "indexId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "indexId")]
         public int? IndexId { get; set; }
 
         /// <summary>
         /// Gets or sets the list of labels associated with this partition.
         /// </summary>
-        [JsonProperty(PropertyName = "label")]
-        public IList<string> Label { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "label")]
+        public System.Collections.Generic.IList<string> Label { get; set; }
 
         /// <summary>
         /// Gets or sets the creation time of the partition
         /// </summary>
-        [JsonProperty(PropertyName = "createDate")]
-        public DateTimeOffset? CreateDate { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "createDate")]
+        public System.DateTimeOffset? CreateDate { get; set; }
 
     }
 }

@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A Data Lake Analytics catalog U-SQL assembly file information item.
@@ -46,19 +40,19 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// Gets or sets the assembly file type. Possible values include:
         /// 'Assembly', 'Resource'
         /// </summary>
-        [JsonProperty(PropertyName = "type")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "type")]
         public FileType? Type { get; set; }
 
         /// <summary>
         /// Gets or sets the the original path to the assembly file.
         /// </summary>
-        [JsonProperty(PropertyName = "originalPath")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "originalPath")]
         public string OriginalPath { get; set; }
 
         /// <summary>
         /// Gets or sets the the content path to the assembly file.
         /// </summary>
-        [JsonProperty(PropertyName = "contentPath")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "contentPath")]
         public string ContentPath { get; set; }
 
     }

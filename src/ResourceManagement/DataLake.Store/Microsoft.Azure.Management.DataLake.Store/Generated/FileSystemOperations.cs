@@ -8,26 +8,15 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using System.Net;
-    using System.Net.Http;
-    using System.Net.Http.Headers;
-    using System.Text;
-    using System.Text.RegularExpressions;
-    using System.Threading;
-    using System.Threading.Tasks;
     using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Newtonsoft.Json;
     using Microsoft.Rest.Azure;
     using Models;
 
     /// <summary>
     /// FileSystemOperations operations.
     /// </summary>
-    internal partial class FileSystemOperations : IServiceOperations<DataLakeStoreFileSystemManagementClient>, IFileSystemOperations
+    internal partial class FileSystemOperations : Microsoft.Rest.IServiceOperations<DataLakeStoreFileSystemManagementClient>, IFileSystemOperations
     {
         /// <summary>
         /// Initializes a new instance of the FileSystemOperations class.
@@ -35,14 +24,14 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        /// <exception cref="ArgumentNullException">
+        /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
         internal FileSystemOperations(DataLakeStoreFileSystemManagementClient client)
         {
             if (client == null) 
             {
-                throw new ArgumentNullException("client");
+                throw new System.ArgumentNullException("client");
             }
             this.Client = client;
         }
@@ -54,9 +43,12 @@ namespace Microsoft.Azure.Management.DataLake.Store
 
         /// <summary>
         /// Appends to the specified file. This method supports multiple concurrent
-        /// appends to the file. NOTE: Concurrent append and normal (serial) append
-        /// CANNOT be used interchangeably. Once a file has been appended to using
-        /// either append option, it can only be appended to using that append option.
+        /// appends to the file. NOTE: ConcurrentAppend and normal (serial) Append
+        /// CANNOT be used interchangeably; once a file has been appended to using
+        /// either of these append options, it can only be appended to using that
+        /// append option. ConcurrentAppend DOES NOT guarantee order and can result
+        /// in duplicated data landing in the target file. In order to close a file
+        /// after using ConcurrentAppend, call the Flush method.
         /// </summary>
         /// <param name='accountName'>
         /// The Azure Data Lake Store account to execute filesystem operations on.
@@ -82,43 +74,43 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="AdlsErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> ConcurrentAppendWithHttpMessagesAsync(string accountName, string filePath, System.IO.Stream streamContents, AppendModeType? appendMode = default(AppendModeType?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> ConcurrentAppendWithHttpMessagesAsync(string accountName, string filePath, System.IO.Stream streamContents, AppendModeType? appendMode = default(AppendModeType?), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (accountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "accountName");
             }
             if (this.Client.AdlsFileSystemDnsSuffix == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
             }
             if (filePath == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "filePath");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "filePath");
             }
             if (streamContents == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "streamContents");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "streamContents");
             }
             if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string op = "CONCURRENTAPPEND";
             string transferEncoding = "chunked";
             // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
+                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("filePath", filePath);
                 tracingParameters.Add("streamContents", streamContents);
@@ -126,40 +118,40 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("transferEncoding", transferEncoding);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ConcurrentAppend", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "ConcurrentAppend", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "WebHdfsExt/{filePath}";
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
-            _url = _url.Replace("{filePath}", Uri.EscapeDataString(filePath));
-            List<string> _queryParameters = new List<string>();
+            _url = _url.Replace("{filePath}", System.Uri.EscapeDataString(filePath));
+            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (appendMode != null)
             {
-                _queryParameters.Add(string.Format("appendMode={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(appendMode, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("appendMode={0}", System.Uri.EscapeDataString(Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(appendMode, this.Client.SerializationSettings).Trim('"'))));
             }
             if (op != null)
             {
-                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", System.Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
-            _httpRequest.RequestUri = new Uri(_url);
+            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
             }
             if (transferEncoding != null)
             {
@@ -191,9 +183,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
 
             // Serialize Request
             string _requestContent = null;
-            StreamContent _fileStreamContent = new StreamContent(streamContents);
+             System.Net.Http.StreamContent _fileStreamContent = new System.Net.Http.StreamContent(streamContents);
             _httpRequest.Content = _fileStreamContent;
-            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
+            _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/octet-stream");
             // Set Credentials
             if (this.Client.Credentials != null)
             {
@@ -203,15 +195,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
             // Send Request
             if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
             _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
@@ -220,21 +212,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    AdlsError _errorBody = SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
+                    AdlsError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
                     }
                 }
-                catch (JsonException)
+                catch (Newtonsoft.Json.JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(_invocationId, ex);
+                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -244,7 +236,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -253,7 +245,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
             if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(_invocationId, _result);
+                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }
@@ -292,82 +284,82 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="AdlsErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> SetFileExpiryWithHttpMessagesAsync(string accountName, string filePath, ExpiryOptionType expiryOption, long? expireTime = default(long?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> SetFileExpiryWithHttpMessagesAsync(string accountName, string filePath, ExpiryOptionType expiryOption, long? expireTime = default(long?), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (accountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "accountName");
             }
             if (this.Client.AdlsFileSystemDnsSuffix == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
             }
             if (filePath == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "filePath");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "filePath");
             }
             if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string op = "SETEXPIRY";
             // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
+                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("filePath", filePath);
                 tracingParameters.Add("expiryOption", expiryOption);
                 tracingParameters.Add("expireTime", expireTime);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "SetFileExpiry", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "SetFileExpiry", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "WebHdfsExt/{filePath}";
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
-            _url = _url.Replace("{filePath}", Uri.EscapeDataString(filePath));
-            List<string> _queryParameters = new List<string>();
+            _url = _url.Replace("{filePath}", System.Uri.EscapeDataString(filePath));
+            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (expiryOption != null)
             {
-                _queryParameters.Add(string.Format("expiryOption={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(expiryOption, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("expiryOption={0}", System.Uri.EscapeDataString(Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expiryOption, this.Client.SerializationSettings).Trim('"'))));
             }
             if (expireTime != null)
             {
-                _queryParameters.Add(string.Format("expireTime={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(expireTime, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("expireTime={0}", System.Uri.EscapeDataString(Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(expireTime, this.Client.SerializationSettings).Trim('"'))));
             }
             if (op != null)
             {
-                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", System.Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PUT");
-            _httpRequest.RequestUri = new Uri(_url);
+            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("PUT");
+            _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -400,15 +392,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
             // Send Request
             if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
             _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
@@ -417,21 +409,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    AdlsError _errorBody = SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
+                    AdlsError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
                     }
                 }
-                catch (JsonException)
+                catch (Newtonsoft.Json.JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(_invocationId, ex);
+                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -441,7 +433,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -450,7 +442,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
             if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(_invocationId, _result);
+                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }
@@ -478,77 +470,77 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="AdlsErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> CheckAccessWithHttpMessagesAsync(string accountName, string path, string fsaction = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> CheckAccessWithHttpMessagesAsync(string accountName, string path, string fsaction = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (accountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "accountName");
             }
             if (this.Client.AdlsFileSystemDnsSuffix == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
             }
             if (path == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "path");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "path");
             }
             if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string op = "CHECKACCESS";
             // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
+                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("path", path);
                 tracingParameters.Add("fsaction", fsaction);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "CheckAccess", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "CheckAccess", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{path}";
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
-            _url = _url.Replace("{path}", Uri.EscapeDataString(path));
-            List<string> _queryParameters = new List<string>();
+            _url = _url.Replace("{path}", System.Uri.EscapeDataString(path));
+            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (fsaction != null)
             {
-                _queryParameters.Add(string.Format("fsaction={0}", Uri.EscapeDataString(fsaction)));
+                _queryParameters.Add(string.Format("fsaction={0}", System.Uri.EscapeDataString(fsaction)));
             }
             if (op != null)
             {
-                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", System.Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new Uri(_url);
+            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -581,15 +573,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
             // Send Request
             if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
             _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
@@ -598,21 +590,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    AdlsError _errorBody = SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
+                    AdlsError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
                     }
                 }
-                catch (JsonException)
+                catch (Newtonsoft.Json.JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(_invocationId, ex);
+                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -622,7 +614,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -631,7 +623,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
             if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(_invocationId, _result);
+                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }
@@ -654,75 +646,75 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="AdlsErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
+        /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<FileOperationResult>> MkdirsWithHttpMessagesAsync(string accountName, string path, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<FileOperationResult>> MkdirsWithHttpMessagesAsync(string accountName, string path, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (accountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "accountName");
             }
             if (this.Client.AdlsFileSystemDnsSuffix == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
             }
             if (path == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "path");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "path");
             }
             if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string op = "MKDIRS";
             // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
+                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("path", path);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Mkdirs", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "Mkdirs", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{path}";
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
-            _url = _url.Replace("{path}", Uri.EscapeDataString(path));
-            List<string> _queryParameters = new List<string>();
+            _url = _url.Replace("{path}", System.Uri.EscapeDataString(path));
+            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (op != null)
             {
-                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", System.Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PUT");
-            _httpRequest.RequestUri = new Uri(_url);
+            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("PUT");
+            _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -755,15 +747,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
             // Send Request
             if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
             _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
@@ -772,21 +764,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    AdlsError _errorBody = SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
+                    AdlsError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
                     }
                 }
-                catch (JsonException)
+                catch (Newtonsoft.Json.JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(_invocationId, ex);
+                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -796,7 +788,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<FileOperationResult>();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<FileOperationResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -809,21 +801,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<FileOperationResult>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<FileOperationResult>(_responseContent, this.Client.DeserializationSettings);
                 }
-                catch (JsonException ex)
+                catch (Newtonsoft.Json.JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)
                     {
                         _httpResponse.Dispose();
                     }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                    throw new Microsoft.Rest.SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
             if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(_invocationId, _result);
+                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }
@@ -852,81 +844,81 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="AdlsErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> ConcatWithHttpMessagesAsync(string accountName, string destinationPath, IList<string> sources, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> ConcatWithHttpMessagesAsync(string accountName, string destinationPath, System.Collections.Generic.IList<string> sources, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (accountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "accountName");
             }
             if (this.Client.AdlsFileSystemDnsSuffix == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
             }
             if (destinationPath == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "destinationPath");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "destinationPath");
             }
             if (sources == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "sources");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "sources");
             }
             if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string op = "CONCAT";
             // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
+                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("destinationPath", destinationPath);
                 tracingParameters.Add("sources", sources);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Concat", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "Concat", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{destinationPath}";
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
-            _url = _url.Replace("{destinationPath}", Uri.EscapeDataString(destinationPath));
-            List<string> _queryParameters = new List<string>();
+            _url = _url.Replace("{destinationPath}", System.Uri.EscapeDataString(destinationPath));
+            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (sources != null)
             {
-                _queryParameters.Add(string.Format("sources={0}", Uri.EscapeDataString(string.Join(",", sources))));
+                _queryParameters.Add(string.Format("sources={0}", System.Uri.EscapeDataString(string.Join(",", sources))));
             }
             if (op != null)
             {
-                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", System.Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
-            _httpRequest.RequestUri = new Uri(_url);
+            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -959,15 +951,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
             // Send Request
             if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
             _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
@@ -976,21 +968,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    AdlsError _errorBody = SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
+                    AdlsError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
                     }
                 }
-                catch (JsonException)
+                catch (Newtonsoft.Json.JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(_invocationId, ex);
+                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -1000,7 +992,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1009,7 +1001,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
             if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(_invocationId, _result);
+                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }
@@ -1049,82 +1041,82 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="AdlsErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> MsConcatWithHttpMessagesAsync(string accountName, string msConcatDestinationPath, System.IO.Stream streamContents, bool? deleteSourceDirectory = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> MsConcatWithHttpMessagesAsync(string accountName, string msConcatDestinationPath, System.IO.Stream streamContents, bool? deleteSourceDirectory = default(bool?), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (accountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "accountName");
             }
             if (this.Client.AdlsFileSystemDnsSuffix == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
             }
             if (msConcatDestinationPath == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "msConcatDestinationPath");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "msConcatDestinationPath");
             }
             if (streamContents == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "streamContents");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "streamContents");
             }
             if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string op = "MSCONCAT";
             // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
+                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("msConcatDestinationPath", msConcatDestinationPath);
                 tracingParameters.Add("deleteSourceDirectory", deleteSourceDirectory);
                 tracingParameters.Add("streamContents", streamContents);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "MsConcat", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "MsConcat", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{msConcatDestinationPath}";
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
-            _url = _url.Replace("{msConcatDestinationPath}", Uri.EscapeDataString(msConcatDestinationPath));
-            List<string> _queryParameters = new List<string>();
+            _url = _url.Replace("{msConcatDestinationPath}", System.Uri.EscapeDataString(msConcatDestinationPath));
+            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (deleteSourceDirectory != null)
             {
-                _queryParameters.Add(string.Format("deleteSourceDirectory={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(deleteSourceDirectory, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("deleteSourceDirectory={0}", System.Uri.EscapeDataString(Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(deleteSourceDirectory, this.Client.SerializationSettings).Trim('"'))));
             }
             if (op != null)
             {
-                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", System.Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
-            _httpRequest.RequestUri = new Uri(_url);
+            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -1148,9 +1140,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
 
             // Serialize Request
             string _requestContent = null;
-            StreamContent _fileStreamContent = new StreamContent(streamContents);
+             System.Net.Http.StreamContent _fileStreamContent = new System.Net.Http.StreamContent(streamContents);
             _httpRequest.Content = _fileStreamContent;
-            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
+            _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/octet-stream");
             // Set Credentials
             if (this.Client.Credentials != null)
             {
@@ -1160,15 +1152,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
             // Send Request
             if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
             _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
@@ -1177,21 +1169,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    AdlsError _errorBody = SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
+                    AdlsError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
                     }
                 }
-                catch (JsonException)
+                catch (Newtonsoft.Json.JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(_invocationId, ex);
+                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -1201,7 +1193,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1210,7 +1202,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
             if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(_invocationId, _result);
+                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }
@@ -1249,41 +1241,41 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="AdlsErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
+        /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<FileStatusesResult>> ListFileStatusWithHttpMessagesAsync(string accountName, string listFilePath, int? listSize = default(int?), string listAfter = default(string), string listBefore = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<FileStatusesResult>> ListFileStatusWithHttpMessagesAsync(string accountName, string listFilePath, int? listSize = default(int?), string listAfter = default(string), string listBefore = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (accountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "accountName");
             }
             if (this.Client.AdlsFileSystemDnsSuffix == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
             }
             if (listFilePath == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "listFilePath");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "listFilePath");
             }
             if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string op = "MSLISTSTATUS";
             // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
+                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("listFilePath", listFilePath);
                 tracingParameters.Add("listSize", listSize);
@@ -1291,48 +1283,48 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 tracingParameters.Add("listBefore", listBefore);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListFileStatus", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "ListFileStatus", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{listFilePath}";
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
-            _url = _url.Replace("{listFilePath}", Uri.EscapeDataString(listFilePath));
-            List<string> _queryParameters = new List<string>();
+            _url = _url.Replace("{listFilePath}", System.Uri.EscapeDataString(listFilePath));
+            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (listSize != null)
             {
-                _queryParameters.Add(string.Format("listSize={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(listSize, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("listSize={0}", System.Uri.EscapeDataString(Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(listSize, this.Client.SerializationSettings).Trim('"'))));
             }
             if (listAfter != null)
             {
-                _queryParameters.Add(string.Format("listAfter={0}", Uri.EscapeDataString(listAfter)));
+                _queryParameters.Add(string.Format("listAfter={0}", System.Uri.EscapeDataString(listAfter)));
             }
             if (listBefore != null)
             {
-                _queryParameters.Add(string.Format("listBefore={0}", Uri.EscapeDataString(listBefore)));
+                _queryParameters.Add(string.Format("listBefore={0}", System.Uri.EscapeDataString(listBefore)));
             }
             if (op != null)
             {
-                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", System.Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new Uri(_url);
+            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -1365,15 +1357,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
             // Send Request
             if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
             _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
@@ -1382,21 +1374,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    AdlsError _errorBody = SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
+                    AdlsError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
                     }
                 }
-                catch (JsonException)
+                catch (Newtonsoft.Json.JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(_invocationId, ex);
+                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -1406,7 +1398,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<FileStatusesResult>();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<FileStatusesResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1419,21 +1411,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<FileStatusesResult>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<FileStatusesResult>(_responseContent, this.Client.DeserializationSettings);
                 }
-                catch (JsonException ex)
+                catch (Newtonsoft.Json.JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)
                     {
                         _httpResponse.Dispose();
                     }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                    throw new Microsoft.Rest.SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
             if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(_invocationId, _result);
+                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }
@@ -1457,75 +1449,75 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="AdlsErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
+        /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ContentSummaryResult>> GetContentSummaryWithHttpMessagesAsync(string accountName, string getContentSummaryFilePath, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<ContentSummaryResult>> GetContentSummaryWithHttpMessagesAsync(string accountName, string getContentSummaryFilePath, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (accountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "accountName");
             }
             if (this.Client.AdlsFileSystemDnsSuffix == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
             }
             if (getContentSummaryFilePath == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "getContentSummaryFilePath");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "getContentSummaryFilePath");
             }
             if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string op = "GETCONTENTSUMMARY";
             // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
+                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("getContentSummaryFilePath", getContentSummaryFilePath);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetContentSummary", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "GetContentSummary", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/va/{getContentSummaryFilePath}";
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
-            _url = _url.Replace("{getContentSummaryFilePath}", Uri.EscapeDataString(getContentSummaryFilePath));
-            List<string> _queryParameters = new List<string>();
+            _url = _url.Replace("{getContentSummaryFilePath}", System.Uri.EscapeDataString(getContentSummaryFilePath));
+            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (op != null)
             {
-                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", System.Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new Uri(_url);
+            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -1558,15 +1550,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
             // Send Request
             if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
             _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
@@ -1575,21 +1567,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    AdlsError _errorBody = SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
+                    AdlsError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
                     }
                 }
-                catch (JsonException)
+                catch (Newtonsoft.Json.JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(_invocationId, ex);
+                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -1599,7 +1591,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<ContentSummaryResult>();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<ContentSummaryResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1612,21 +1604,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<ContentSummaryResult>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<ContentSummaryResult>(_responseContent, this.Client.DeserializationSettings);
                 }
-                catch (JsonException ex)
+                catch (Newtonsoft.Json.JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)
                     {
                         _httpResponse.Dispose();
                     }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                    throw new Microsoft.Rest.SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
             if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(_invocationId, _result);
+                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }
@@ -1650,75 +1642,75 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="AdlsErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
+        /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<FileStatusResult>> GetFileStatusWithHttpMessagesAsync(string accountName, string getFilePath, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<FileStatusResult>> GetFileStatusWithHttpMessagesAsync(string accountName, string getFilePath, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (accountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "accountName");
             }
             if (this.Client.AdlsFileSystemDnsSuffix == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
             }
             if (getFilePath == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "getFilePath");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "getFilePath");
             }
             if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string op = "MSGETFILESTATUS";
             // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
+                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("getFilePath", getFilePath);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetFileStatus", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "GetFileStatus", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{getFilePath}";
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
-            _url = _url.Replace("{getFilePath}", Uri.EscapeDataString(getFilePath));
-            List<string> _queryParameters = new List<string>();
+            _url = _url.Replace("{getFilePath}", System.Uri.EscapeDataString(getFilePath));
+            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (op != null)
             {
-                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", System.Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new Uri(_url);
+            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -1751,15 +1743,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
             // Send Request
             if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
             _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
@@ -1768,21 +1760,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    AdlsError _errorBody = SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
+                    AdlsError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
                     }
                 }
-                catch (JsonException)
+                catch (Newtonsoft.Json.JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(_invocationId, ex);
+                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -1792,7 +1784,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<FileStatusResult>();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<FileStatusResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -1805,21 +1797,206 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<FileStatusResult>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<FileStatusResult>(_responseContent, this.Client.DeserializationSettings);
                 }
-                catch (JsonException ex)
+                catch (Newtonsoft.Json.JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)
                     {
                         _httpResponse.Dispose();
                     }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                    throw new Microsoft.Rest.SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
             if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(_invocationId, _result);
+                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <summary>
+        /// Flushes the specified file to the store. This forces an update to the
+        /// metadata of the file (returned from GetFileStatus), and is required by
+        /// ConcurrentAppend once the file is done to populate finalized metadata.
+        /// </summary>
+        /// <param name='accountName'>
+        /// The Azure Data Lake Store account to execute filesystem operations on.
+        /// </param>
+        /// <param name='flushFilePath'>
+        /// The Data Lake Store path (starting with '/') of the file to which to flush.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="AdlsErrorException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> FlushWithHttpMessagesAsync(string accountName, string flushFilePath, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        {
+            if (accountName == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "accountName");
+            }
+            if (this.Client.AdlsFileSystemDnsSuffix == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+            }
+            if (flushFilePath == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "flushFilePath");
+            }
+            if (this.Client.ApiVersion == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+            }
+            string op = "APPEND";
+            string append = "true";
+            string flush = "true";
+            // Tracing
+            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
+                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
+                tracingParameters.Add("accountName", accountName);
+                tracingParameters.Add("flushFilePath", flushFilePath);
+                tracingParameters.Add("op", op);
+                tracingParameters.Add("append", append);
+                tracingParameters.Add("flush", flush);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "Flush", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = this.Client.BaseUri;
+            var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{flushFilePath}";
+            _url = _url.Replace("{accountName}", accountName);
+            _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
+            _url = _url.Replace("{flushFilePath}", System.Uri.EscapeDataString(flushFilePath));
+            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
+            if (op != null)
+            {
+                _queryParameters.Add(string.Format("op={0}", System.Uri.EscapeDataString(op)));
+            }
+            if (append != null)
+            {
+                _queryParameters.Add(string.Format("append={0}", System.Uri.EscapeDataString(append)));
+            }
+            if (flush != null)
+            {
+                _queryParameters.Add(string.Format("flush={0}", System.Uri.EscapeDataString(flush)));
+            }
+            if (this.Client.ApiVersion != null)
+            {
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(this.Client.ApiVersion)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
+            }
+            // Create HTTP transport objects
+            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+            if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
+            {
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
+            }
+            if (this.Client.AcceptLanguage != null)
+            {
+                if (_httpRequest.Headers.Contains("accept-language"))
+                {
+                    _httpRequest.Headers.Remove("accept-language");
+                }
+                _httpRequest.Headers.TryAddWithoutValidation("accept-language", this.Client.AcceptLanguage);
+            }
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Set Credentials
+            if (this.Client.Credentials != null)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            }
+            // Send Request
+            if (_shouldTrace)
+            {
+                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200)
+            {
+                var ex = new AdlsErrorException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                try
+                {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    AdlsError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
+                    if (_errorBody != null)
+                    {
+                        ex.Body = _errorBody;
+                    }
+                }
+                catch (Newtonsoft.Json.JsonException)
+                {
+                    // Ignore the exception
+                }
+                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            if (_httpResponse.Headers.Contains("x-ms-request-id"))
+            {
+                _result.RequestId = _httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+            }
+            if (_shouldTrace)
+            {
+                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }
@@ -1855,43 +2032,43 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="AdlsErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> AppendWithHttpMessagesAsync(string accountName, string directFilePath, System.IO.Stream streamContents, long? offset = default(long?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> AppendWithHttpMessagesAsync(string accountName, string directFilePath, System.IO.Stream streamContents, long? offset = default(long?), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (accountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "accountName");
             }
             if (this.Client.AdlsFileSystemDnsSuffix == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
             }
             if (directFilePath == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "directFilePath");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "directFilePath");
             }
             if (streamContents == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "streamContents");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "streamContents");
             }
             if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string op = "APPEND";
             string append = "true";
             // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
+                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("directFilePath", directFilePath);
                 tracingParameters.Add("streamContents", streamContents);
@@ -1899,44 +2076,44 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("append", append);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Append", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "Append", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{directFilePath}";
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
-            _url = _url.Replace("{directFilePath}", Uri.EscapeDataString(directFilePath));
-            List<string> _queryParameters = new List<string>();
+            _url = _url.Replace("{directFilePath}", System.Uri.EscapeDataString(directFilePath));
+            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (offset != null)
             {
-                _queryParameters.Add(string.Format("offset={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(offset, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("offset={0}", System.Uri.EscapeDataString(Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(offset, this.Client.SerializationSettings).Trim('"'))));
             }
             if (op != null)
             {
-                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", System.Uri.EscapeDataString(op)));
             }
             if (append != null)
             {
-                _queryParameters.Add(string.Format("append={0}", Uri.EscapeDataString(append)));
+                _queryParameters.Add(string.Format("append={0}", System.Uri.EscapeDataString(append)));
             }
             if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("POST");
-            _httpRequest.RequestUri = new Uri(_url);
+            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("POST");
+            _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -1960,9 +2137,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
 
             // Serialize Request
             string _requestContent = null;
-            StreamContent _fileStreamContent = new StreamContent(streamContents);
+             System.Net.Http.StreamContent _fileStreamContent = new System.Net.Http.StreamContent(streamContents);
             _httpRequest.Content = _fileStreamContent;
-            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
+            _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/octet-stream");
             // Set Credentials
             if (this.Client.Credentials != null)
             {
@@ -1972,15 +2149,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
             // Send Request
             if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
             _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
@@ -1989,21 +2166,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    AdlsError _errorBody = SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
+                    AdlsError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
                     }
                 }
-                catch (JsonException)
+                catch (Newtonsoft.Json.JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(_invocationId, ex);
+                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -2013,7 +2190,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -2022,7 +2199,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
             if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(_invocationId, _result);
+                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }
@@ -2052,39 +2229,39 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="AdlsErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> CreateWithHttpMessagesAsync(string accountName, string directFilePath, System.IO.Stream streamContents = default(System.IO.Stream), bool? overwrite = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> CreateWithHttpMessagesAsync(string accountName, string directFilePath, System.IO.Stream streamContents = default(System.IO.Stream), bool? overwrite = default(bool?), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (accountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "accountName");
             }
             if (this.Client.AdlsFileSystemDnsSuffix == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
             }
             if (directFilePath == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "directFilePath");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "directFilePath");
             }
             if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string op = "CREATE";
             string write = "true";
             // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
+                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("directFilePath", directFilePath);
                 tracingParameters.Add("streamContents", streamContents);
@@ -2092,44 +2269,44 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("write", write);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Create", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "Create", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{directFilePath}";
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
-            _url = _url.Replace("{directFilePath}", Uri.EscapeDataString(directFilePath));
-            List<string> _queryParameters = new List<string>();
+            _url = _url.Replace("{directFilePath}", System.Uri.EscapeDataString(directFilePath));
+            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (overwrite != null)
             {
-                _queryParameters.Add(string.Format("overwrite={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(overwrite, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("overwrite={0}", System.Uri.EscapeDataString(Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(overwrite, this.Client.SerializationSettings).Trim('"'))));
             }
             if (op != null)
             {
-                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", System.Uri.EscapeDataString(op)));
             }
             if (write != null)
             {
-                _queryParameters.Add(string.Format("write={0}", Uri.EscapeDataString(write)));
+                _queryParameters.Add(string.Format("write={0}", System.Uri.EscapeDataString(write)));
             }
             if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PUT");
-            _httpRequest.RequestUri = new Uri(_url);
+            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("PUT");
+            _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -2153,9 +2330,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
 
             // Serialize Request
             string _requestContent = null;
-            StreamContent _fileStreamContent = new StreamContent(streamContents);
+             System.Net.Http.StreamContent _fileStreamContent = new System.Net.Http.StreamContent(streamContents);
             _httpRequest.Content = _fileStreamContent;
-            _httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/octet-stream");
+            _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/octet-stream");
             // Set Credentials
             if (this.Client.Credentials != null)
             {
@@ -2165,15 +2342,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
             // Send Request
             if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
             _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 201)
@@ -2182,21 +2359,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    AdlsError _errorBody = SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
+                    AdlsError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
                     }
                 }
-                catch (JsonException)
+                catch (Newtonsoft.Json.JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(_invocationId, ex);
+                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -2206,7 +2383,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -2215,7 +2392,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
             if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(_invocationId, _result);
+                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }
@@ -2242,42 +2419,42 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="AdlsErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
+        /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<System.IO.Stream>> OpenWithHttpMessagesAsync(string accountName, string directFilePath, long? length = default(long?), long? offset = default(long?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<System.IO.Stream>> OpenWithHttpMessagesAsync(string accountName, string directFilePath, long? length = default(long?), long? offset = default(long?), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (accountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "accountName");
             }
             if (this.Client.AdlsFileSystemDnsSuffix == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
             }
             if (directFilePath == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "directFilePath");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "directFilePath");
             }
             if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string op = "OPEN";
             string read = "true";
             // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
+                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("directFilePath", directFilePath);
                 tracingParameters.Add("length", length);
@@ -2285,48 +2462,48 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("read", read);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Open", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "Open", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{directFilePath}";
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
-            _url = _url.Replace("{directFilePath}", Uri.EscapeDataString(directFilePath));
-            List<string> _queryParameters = new List<string>();
+            _url = _url.Replace("{directFilePath}", System.Uri.EscapeDataString(directFilePath));
+            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (length != null)
             {
-                _queryParameters.Add(string.Format("length={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(length, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("length={0}", System.Uri.EscapeDataString(Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(length, this.Client.SerializationSettings).Trim('"'))));
             }
             if (offset != null)
             {
-                _queryParameters.Add(string.Format("offset={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(offset, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("offset={0}", System.Uri.EscapeDataString(Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(offset, this.Client.SerializationSettings).Trim('"'))));
             }
             if (op != null)
             {
-                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", System.Uri.EscapeDataString(op)));
             }
             if (read != null)
             {
-                _queryParameters.Add(string.Format("read={0}", Uri.EscapeDataString(read)));
+                _queryParameters.Add(string.Format("read={0}", System.Uri.EscapeDataString(read)));
             }
             if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new Uri(_url);
+            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -2359,15 +2536,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
             // Send Request
             if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+            _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
@@ -2376,21 +2553,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    AdlsError _errorBody = SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
+                    AdlsError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
                     }
                 }
-                catch (JsonException)
+                catch (Newtonsoft.Json.JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(_invocationId, ex);
+                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -2400,7 +2577,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<System.IO.Stream>();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<System.IO.Stream>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -2414,7 +2591,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
             if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(_invocationId, _result);
+                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }
@@ -2442,81 +2619,81 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="AdlsErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> SetAclWithHttpMessagesAsync(string accountName, string setAclFilePath, string aclspec, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> SetAclWithHttpMessagesAsync(string accountName, string setAclFilePath, string aclspec, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (accountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "accountName");
             }
             if (this.Client.AdlsFileSystemDnsSuffix == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
             }
             if (setAclFilePath == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "setAclFilePath");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "setAclFilePath");
             }
             if (aclspec == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "aclspec");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "aclspec");
             }
             if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string op = "SETACL";
             // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
+                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("setAclFilePath", setAclFilePath);
                 tracingParameters.Add("aclspec", aclspec);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "SetAcl", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "SetAcl", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{setAclFilePath}";
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
-            _url = _url.Replace("{setAclFilePath}", Uri.EscapeDataString(setAclFilePath));
-            List<string> _queryParameters = new List<string>();
+            _url = _url.Replace("{setAclFilePath}", System.Uri.EscapeDataString(setAclFilePath));
+            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (aclspec != null)
             {
-                _queryParameters.Add(string.Format("aclspec={0}", Uri.EscapeDataString(aclspec)));
+                _queryParameters.Add(string.Format("aclspec={0}", System.Uri.EscapeDataString(aclspec)));
             }
             if (op != null)
             {
-                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", System.Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PUT");
-            _httpRequest.RequestUri = new Uri(_url);
+            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("PUT");
+            _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -2549,15 +2726,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
             // Send Request
             if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
             _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
@@ -2566,21 +2743,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    AdlsError _errorBody = SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
+                    AdlsError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
                     }
                 }
-                catch (JsonException)
+                catch (Newtonsoft.Json.JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(_invocationId, ex);
+                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -2590,7 +2767,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -2599,7 +2776,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
             if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(_invocationId, _result);
+                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }
@@ -2627,81 +2804,81 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="AdlsErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> ModifyAclEntriesWithHttpMessagesAsync(string accountName, string modifyAclFilePath, string aclspec, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> ModifyAclEntriesWithHttpMessagesAsync(string accountName, string modifyAclFilePath, string aclspec, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (accountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "accountName");
             }
             if (this.Client.AdlsFileSystemDnsSuffix == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
             }
             if (modifyAclFilePath == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "modifyAclFilePath");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "modifyAclFilePath");
             }
             if (aclspec == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "aclspec");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "aclspec");
             }
             if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string op = "MODIFYACLENTRIES";
             // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
+                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("modifyAclFilePath", modifyAclFilePath);
                 tracingParameters.Add("aclspec", aclspec);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ModifyAclEntries", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "ModifyAclEntries", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{modifyAclFilePath}";
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
-            _url = _url.Replace("{modifyAclFilePath}", Uri.EscapeDataString(modifyAclFilePath));
-            List<string> _queryParameters = new List<string>();
+            _url = _url.Replace("{modifyAclFilePath}", System.Uri.EscapeDataString(modifyAclFilePath));
+            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (aclspec != null)
             {
-                _queryParameters.Add(string.Format("aclspec={0}", Uri.EscapeDataString(aclspec)));
+                _queryParameters.Add(string.Format("aclspec={0}", System.Uri.EscapeDataString(aclspec)));
             }
             if (op != null)
             {
-                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", System.Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PUT");
-            _httpRequest.RequestUri = new Uri(_url);
+            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("PUT");
+            _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -2734,15 +2911,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
             // Send Request
             if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
             _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
@@ -2751,21 +2928,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    AdlsError _errorBody = SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
+                    AdlsError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
                     }
                 }
-                catch (JsonException)
+                catch (Newtonsoft.Json.JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(_invocationId, ex);
+                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -2775,7 +2952,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -2784,7 +2961,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
             if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(_invocationId, _result);
+                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }
@@ -2812,81 +2989,81 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="AdlsErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> RemoveAclEntriesWithHttpMessagesAsync(string accountName, string removeAclFilePath, string aclspec, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> RemoveAclEntriesWithHttpMessagesAsync(string accountName, string removeAclFilePath, string aclspec, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (accountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "accountName");
             }
             if (this.Client.AdlsFileSystemDnsSuffix == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
             }
             if (removeAclFilePath == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "removeAclFilePath");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "removeAclFilePath");
             }
             if (aclspec == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "aclspec");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "aclspec");
             }
             if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string op = "REMOVEACLENTRIES";
             // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
+                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("removeAclFilePath", removeAclFilePath);
                 tracingParameters.Add("aclspec", aclspec);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "RemoveAclEntries", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "RemoveAclEntries", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{removeAclFilePath}";
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
-            _url = _url.Replace("{removeAclFilePath}", Uri.EscapeDataString(removeAclFilePath));
-            List<string> _queryParameters = new List<string>();
+            _url = _url.Replace("{removeAclFilePath}", System.Uri.EscapeDataString(removeAclFilePath));
+            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (aclspec != null)
             {
-                _queryParameters.Add(string.Format("aclspec={0}", Uri.EscapeDataString(aclspec)));
+                _queryParameters.Add(string.Format("aclspec={0}", System.Uri.EscapeDataString(aclspec)));
             }
             if (op != null)
             {
-                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", System.Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PUT");
-            _httpRequest.RequestUri = new Uri(_url);
+            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("PUT");
+            _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -2919,15 +3096,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
             // Send Request
             if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
             _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
@@ -2936,21 +3113,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    AdlsError _errorBody = SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
+                    AdlsError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
                     }
                 }
-                catch (JsonException)
+                catch (Newtonsoft.Json.JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(_invocationId, ex);
+                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -2960,7 +3137,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -2969,7 +3146,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
             if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(_invocationId, _result);
+                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }
@@ -2994,72 +3171,72 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="AdlsErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> RemoveDefaultAclWithHttpMessagesAsync(string accountName, string defaultAclFilePath, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> RemoveDefaultAclWithHttpMessagesAsync(string accountName, string defaultAclFilePath, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (accountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "accountName");
             }
             if (this.Client.AdlsFileSystemDnsSuffix == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
             }
             if (defaultAclFilePath == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "defaultAclFilePath");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "defaultAclFilePath");
             }
             if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string op = "REMOVEDEFAULTACL";
             // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
+                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("defaultAclFilePath", defaultAclFilePath);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "RemoveDefaultAcl", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "RemoveDefaultAcl", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{defaultAclFilePath}";
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
-            _url = _url.Replace("{defaultAclFilePath}", Uri.EscapeDataString(defaultAclFilePath));
-            List<string> _queryParameters = new List<string>();
+            _url = _url.Replace("{defaultAclFilePath}", System.Uri.EscapeDataString(defaultAclFilePath));
+            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (op != null)
             {
-                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", System.Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PUT");
-            _httpRequest.RequestUri = new Uri(_url);
+            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("PUT");
+            _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -3092,15 +3269,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
             // Send Request
             if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
             _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
@@ -3109,21 +3286,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    AdlsError _errorBody = SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
+                    AdlsError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
                     }
                 }
-                catch (JsonException)
+                catch (Newtonsoft.Json.JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(_invocationId, ex);
+                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -3133,7 +3310,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -3142,7 +3319,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
             if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(_invocationId, _result);
+                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }
@@ -3167,72 +3344,72 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="AdlsErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> RemoveAclWithHttpMessagesAsync(string accountName, string aclFilePath, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> RemoveAclWithHttpMessagesAsync(string accountName, string aclFilePath, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (accountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "accountName");
             }
             if (this.Client.AdlsFileSystemDnsSuffix == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
             }
             if (aclFilePath == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "aclFilePath");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "aclFilePath");
             }
             if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string op = "REMOVEACL";
             // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
+                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("aclFilePath", aclFilePath);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "RemoveAcl", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "RemoveAcl", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{aclFilePath}";
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
-            _url = _url.Replace("{aclFilePath}", Uri.EscapeDataString(aclFilePath));
-            List<string> _queryParameters = new List<string>();
+            _url = _url.Replace("{aclFilePath}", System.Uri.EscapeDataString(aclFilePath));
+            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (op != null)
             {
-                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", System.Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PUT");
-            _httpRequest.RequestUri = new Uri(_url);
+            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("PUT");
+            _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -3265,15 +3442,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
             // Send Request
             if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
             _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
@@ -3282,21 +3459,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    AdlsError _errorBody = SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
+                    AdlsError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
                     }
                 }
-                catch (JsonException)
+                catch (Newtonsoft.Json.JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(_invocationId, ex);
+                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -3306,7 +3483,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -3315,7 +3492,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
             if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(_invocationId, _result);
+                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }
@@ -3339,75 +3516,75 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="AdlsErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
+        /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<AclStatusResult>> GetAclStatusWithHttpMessagesAsync(string accountName, string aclFilePath, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<AclStatusResult>> GetAclStatusWithHttpMessagesAsync(string accountName, string aclFilePath, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (accountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "accountName");
             }
             if (this.Client.AdlsFileSystemDnsSuffix == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
             }
             if (aclFilePath == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "aclFilePath");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "aclFilePath");
             }
             if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string op = "MSGETACLSTATUS";
             // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
+                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("aclFilePath", aclFilePath);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetAclStatus", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "GetAclStatus", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{aclFilePath}";
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
-            _url = _url.Replace("{aclFilePath}", Uri.EscapeDataString(aclFilePath));
-            List<string> _queryParameters = new List<string>();
+            _url = _url.Replace("{aclFilePath}", System.Uri.EscapeDataString(aclFilePath));
+            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (op != null)
             {
-                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", System.Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new Uri(_url);
+            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -3440,15 +3617,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
             // Send Request
             if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
             _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
@@ -3457,21 +3634,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    AdlsError _errorBody = SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
+                    AdlsError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
                     }
                 }
-                catch (JsonException)
+                catch (Newtonsoft.Json.JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(_invocationId, ex);
+                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -3481,7 +3658,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<AclStatusResult>();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<AclStatusResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -3494,21 +3671,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<AclStatusResult>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<AclStatusResult>(_responseContent, this.Client.DeserializationSettings);
                 }
-                catch (JsonException ex)
+                catch (Newtonsoft.Json.JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)
                     {
                         _httpResponse.Dispose();
                     }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                    throw new Microsoft.Rest.SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
             if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(_invocationId, _result);
+                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }
@@ -3535,80 +3712,80 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="AdlsErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
+        /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<FileOperationResult>> DeleteWithHttpMessagesAsync(string accountName, string filePath, bool? recursive = default(bool?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<FileOperationResult>> DeleteWithHttpMessagesAsync(string accountName, string filePath, bool? recursive = default(bool?), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (accountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "accountName");
             }
             if (this.Client.AdlsFileSystemDnsSuffix == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
             }
             if (filePath == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "filePath");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "filePath");
             }
             if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string op = "DELETE";
             // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
+                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("filePath", filePath);
                 tracingParameters.Add("recursive", recursive);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{filePath}";
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
-            _url = _url.Replace("{filePath}", Uri.EscapeDataString(filePath));
-            List<string> _queryParameters = new List<string>();
+            _url = _url.Replace("{filePath}", System.Uri.EscapeDataString(filePath));
+            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (recursive != null)
             {
-                _queryParameters.Add(string.Format("recursive={0}", Uri.EscapeDataString(SafeJsonConvert.SerializeObject(recursive, this.Client.SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("recursive={0}", System.Uri.EscapeDataString(Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(recursive, this.Client.SerializationSettings).Trim('"'))));
             }
             if (op != null)
             {
-                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", System.Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("DELETE");
-            _httpRequest.RequestUri = new Uri(_url);
+            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("DELETE");
+            _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -3641,15 +3818,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
             // Send Request
             if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
             _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
@@ -3658,21 +3835,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    AdlsError _errorBody = SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
+                    AdlsError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
                     }
                 }
-                catch (JsonException)
+                catch (Newtonsoft.Json.JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(_invocationId, ex);
+                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -3682,7 +3859,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<FileOperationResult>();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<FileOperationResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -3695,21 +3872,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<FileOperationResult>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<FileOperationResult>(_responseContent, this.Client.DeserializationSettings);
                 }
-                catch (JsonException ex)
+                catch (Newtonsoft.Json.JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)
                     {
                         _httpResponse.Dispose();
                     }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                    throw new Microsoft.Rest.SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
             if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(_invocationId, _result);
+                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }
@@ -3736,84 +3913,84 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="AdlsErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="SerializationException">
+        /// <exception cref="Microsoft.Rest.SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<FileOperationResult>> RenameWithHttpMessagesAsync(string accountName, string renameFilePath, string destination, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<FileOperationResult>> RenameWithHttpMessagesAsync(string accountName, string renameFilePath, string destination, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (accountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "accountName");
             }
             if (this.Client.AdlsFileSystemDnsSuffix == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
             }
             if (renameFilePath == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "renameFilePath");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "renameFilePath");
             }
             if (destination == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "destination");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "destination");
             }
             if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string op = "RENAME";
             // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
+                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("renameFilePath", renameFilePath);
                 tracingParameters.Add("destination", destination);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "Rename", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "Rename", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{renameFilePath}";
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
-            _url = _url.Replace("{renameFilePath}", Uri.EscapeDataString(renameFilePath));
-            List<string> _queryParameters = new List<string>();
+            _url = _url.Replace("{renameFilePath}", System.Uri.EscapeDataString(renameFilePath));
+            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (destination != null)
             {
-                _queryParameters.Add(string.Format("destination={0}", Uri.EscapeDataString(destination)));
+                _queryParameters.Add(string.Format("destination={0}", System.Uri.EscapeDataString(destination)));
             }
             if (op != null)
             {
-                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", System.Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PUT");
-            _httpRequest.RequestUri = new Uri(_url);
+            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("PUT");
+            _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -3846,15 +4023,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
             // Send Request
             if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
             _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
@@ -3863,21 +4040,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    AdlsError _errorBody = SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
+                    AdlsError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
                     }
                 }
-                catch (JsonException)
+                catch (Newtonsoft.Json.JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(_invocationId, ex);
+                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -3887,7 +4064,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<FileOperationResult>();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse<FileOperationResult>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -3900,21 +4077,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<FileOperationResult>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<FileOperationResult>(_responseContent, this.Client.DeserializationSettings);
                 }
-                catch (JsonException ex)
+                catch (Newtonsoft.Json.JsonException ex)
                 {
                     _httpRequest.Dispose();
                     if (_httpResponse != null)
                     {
                         _httpResponse.Dispose();
                     }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                    throw new Microsoft.Rest.SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
             if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(_invocationId, _result);
+                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }
@@ -3946,82 +4123,82 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="AdlsErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> SetOwnerWithHttpMessagesAsync(string accountName, string setOwnerFilePath, string owner = default(string), string group = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> SetOwnerWithHttpMessagesAsync(string accountName, string setOwnerFilePath, string owner = default(string), string group = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (accountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "accountName");
             }
             if (this.Client.AdlsFileSystemDnsSuffix == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
             }
             if (setOwnerFilePath == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "setOwnerFilePath");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "setOwnerFilePath");
             }
             if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string op = "SETOWNER";
             // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
+                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("setOwnerFilePath", setOwnerFilePath);
                 tracingParameters.Add("owner", owner);
                 tracingParameters.Add("group", group);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "SetOwner", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "SetOwner", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{setOwnerFilePath}";
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
-            _url = _url.Replace("{setOwnerFilePath}", Uri.EscapeDataString(setOwnerFilePath));
-            List<string> _queryParameters = new List<string>();
+            _url = _url.Replace("{setOwnerFilePath}", System.Uri.EscapeDataString(setOwnerFilePath));
+            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (owner != null)
             {
-                _queryParameters.Add(string.Format("owner={0}", Uri.EscapeDataString(owner)));
+                _queryParameters.Add(string.Format("owner={0}", System.Uri.EscapeDataString(owner)));
             }
             if (group != null)
             {
-                _queryParameters.Add(string.Format("group={0}", Uri.EscapeDataString(group)));
+                _queryParameters.Add(string.Format("group={0}", System.Uri.EscapeDataString(group)));
             }
             if (op != null)
             {
-                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", System.Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PUT");
-            _httpRequest.RequestUri = new Uri(_url);
+            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("PUT");
+            _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -4054,15 +4231,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
             // Send Request
             if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
             _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
@@ -4071,21 +4248,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    AdlsError _errorBody = SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
+                    AdlsError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
                     }
                 }
-                catch (JsonException)
+                catch (Newtonsoft.Json.JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(_invocationId, ex);
+                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -4095,7 +4272,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -4104,7 +4281,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
             if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(_invocationId, _result);
+                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }
@@ -4132,77 +4309,77 @@ namespace Microsoft.Azure.Management.DataLake.Store
         /// <exception cref="AdlsErrorException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> SetPermissionWithHttpMessagesAsync(string accountName, string setPermissionFilePath, string permission = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> SetPermissionWithHttpMessagesAsync(string accountName, string setPermissionFilePath, string permission = default(string), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (accountName == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "accountName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "accountName");
             }
             if (this.Client.AdlsFileSystemDnsSuffix == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.AdlsFileSystemDnsSuffix");
             }
             if (setPermissionFilePath == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "setPermissionFilePath");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "setPermissionFilePath");
             }
             if (this.Client.ApiVersion == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "this.Client.ApiVersion");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "this.Client.ApiVersion");
             }
             string op = "SETPERMISSION";
             // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            bool _shouldTrace = Microsoft.Rest.ServiceClientTracing.IsEnabled;
             string _invocationId = null;
             if (_shouldTrace)
             {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
+                System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
                 tracingParameters.Add("accountName", accountName);
                 tracingParameters.Add("setPermissionFilePath", setPermissionFilePath);
                 tracingParameters.Add("permission", permission);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "SetPermission", tracingParameters);
+                Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "SetPermission", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri;
             var _url = _baseUrl + (_baseUrl.EndsWith("/") ? "" : "/") + "webhdfs/v1/{setPermissionFilePath}";
             _url = _url.Replace("{accountName}", accountName);
             _url = _url.Replace("{adlsFileSystemDnsSuffix}", this.Client.AdlsFileSystemDnsSuffix);
-            _url = _url.Replace("{setPermissionFilePath}", Uri.EscapeDataString(setPermissionFilePath));
-            List<string> _queryParameters = new List<string>();
+            _url = _url.Replace("{setPermissionFilePath}", System.Uri.EscapeDataString(setPermissionFilePath));
+            System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (permission != null)
             {
-                _queryParameters.Add(string.Format("permission={0}", Uri.EscapeDataString(permission)));
+                _queryParameters.Add(string.Format("permission={0}", System.Uri.EscapeDataString(permission)));
             }
             if (op != null)
             {
-                _queryParameters.Add(string.Format("op={0}", Uri.EscapeDataString(op)));
+                _queryParameters.Add(string.Format("op={0}", System.Uri.EscapeDataString(op)));
             }
             if (this.Client.ApiVersion != null)
             {
-                _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
+                _queryParameters.Add(string.Format("api-version={0}", System.Uri.EscapeDataString(this.Client.ApiVersion)));
             }
             if (_queryParameters.Count > 0)
             {
-                _url += "?" + string.Join("&", _queryParameters);
+                _url += (_url.Contains("?") ? "&" : "?") + string.Join("&", _queryParameters);
             }
             // Create HTTP transport objects
-            HttpRequestMessage _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("PUT");
-            _httpRequest.RequestUri = new Uri(_url);
+            System.Net.Http.HttpRequestMessage _httpRequest = new System.Net.Http.HttpRequestMessage();
+            System.Net.Http.HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new System.Net.Http.HttpMethod("PUT");
+            _httpRequest.RequestUri = new System.Uri(_url);
             // Set Headers
             if (this.Client.GenerateClientRequestId != null && this.Client.GenerateClientRequestId.Value)
             {
-                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", Guid.NewGuid().ToString());
+                _httpRequest.Headers.TryAddWithoutValidation("x-ms-client-request-id", System.Guid.NewGuid().ToString());
             }
             if (this.Client.AcceptLanguage != null)
             {
@@ -4235,15 +4412,15 @@ namespace Microsoft.Azure.Management.DataLake.Store
             // Send Request
             if (_shouldTrace)
             {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+                Microsoft.Rest.ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
             cancellationToken.ThrowIfCancellationRequested();
             _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
             {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+                Microsoft.Rest.ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
             }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            System.Net.HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
             if ((int)_statusCode != 200)
@@ -4252,21 +4429,21 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 try
                 {
                     _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                    AdlsError _errorBody = SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
+                    AdlsError _errorBody =  Microsoft.Rest.Serialization.SafeJsonConvert.DeserializeObject<AdlsError>(_responseContent, this.Client.DeserializationSettings);
                     if (_errorBody != null)
                     {
                         ex.Body = _errorBody;
                     }
                 }
-                catch (JsonException)
+                catch (Newtonsoft.Json.JsonException)
                 {
                     // Ignore the exception
                 }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                ex.Request = new Microsoft.Rest.HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new Microsoft.Rest.HttpResponseMessageWrapper(_httpResponse, _responseContent);
                 if (_shouldTrace)
                 {
-                    ServiceClientTracing.Error(_invocationId, ex);
+                    Microsoft.Rest.ServiceClientTracing.Error(_invocationId, ex);
                 }
                 _httpRequest.Dispose();
                 if (_httpResponse != null)
@@ -4276,7 +4453,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse();
+            var _result = new Microsoft.Rest.Azure.AzureOperationResponse();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -4285,7 +4462,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
             if (_shouldTrace)
             {
-                ServiceClientTracing.Exit(_invocationId, _result);
+                Microsoft.Rest.ServiceClientTracing.Exit(_invocationId, _result);
             }
             return _result;
         }

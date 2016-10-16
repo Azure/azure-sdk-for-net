@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A Data Lake Analytics catalog U-SQL table statistics item.
@@ -53,7 +47,7 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// statistics.</param>
         /// <param name="colNames">the list of column names associated with
         /// these statistics.</param>
-        public USqlTableStatistics(string computeAccountName = default(string), Guid? version = default(Guid?), string databaseName = default(string), string schemaName = default(string), string tableName = default(string), string name = default(string), string userStatName = default(string), string statDataPath = default(string), DateTimeOffset? createTime = default(DateTimeOffset?), DateTimeOffset? updateTime = default(DateTimeOffset?), bool? isUserCreated = default(bool?), bool? isAutoCreated = default(bool?), bool? hasFilter = default(bool?), string filterDefinition = default(string), IList<string> colNames = default(IList<string>))
+        public USqlTableStatistics(string computeAccountName = default(string), System.Guid? version = default(System.Guid?), string databaseName = default(string), string schemaName = default(string), string tableName = default(string), string name = default(string), string userStatName = default(string), string statDataPath = default(string), System.DateTimeOffset? createTime = default(System.DateTimeOffset?), System.DateTimeOffset? updateTime = default(System.DateTimeOffset?), bool? isUserCreated = default(bool?), bool? isAutoCreated = default(bool?), bool? hasFilter = default(bool?), string filterDefinition = default(string), System.Collections.Generic.IList<string> colNames = default(System.Collections.Generic.IList<string>))
             : base(computeAccountName, version)
         {
             DatabaseName = databaseName;
@@ -74,85 +68,85 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Gets or sets the name of the database.
         /// </summary>
-        [JsonProperty(PropertyName = "databaseName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "databaseName")]
         public string DatabaseName { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the schema associated with this table and
         /// database.
         /// </summary>
-        [JsonProperty(PropertyName = "schemaName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "schemaName")]
         public string SchemaName { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the table.
         /// </summary>
-        [JsonProperty(PropertyName = "tableName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "tableName")]
         public string TableName { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the table statistics.
         /// </summary>
-        [JsonProperty(PropertyName = "statisticsName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "statisticsName")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the user statistics.
         /// </summary>
-        [JsonProperty(PropertyName = "userStatName")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "userStatName")]
         public string UserStatName { get; set; }
 
         /// <summary>
         /// Gets or sets the path to the statistics data.
         /// </summary>
-        [JsonProperty(PropertyName = "statDataPath")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "statDataPath")]
         public string StatDataPath { get; set; }
 
         /// <summary>
         /// Gets or sets the creation time of the statistics.
         /// </summary>
-        [JsonProperty(PropertyName = "createTime")]
-        public DateTimeOffset? CreateTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "createTime")]
+        public System.DateTimeOffset? CreateTime { get; set; }
 
         /// <summary>
         /// Gets or sets the last time the statistics were updated.
         /// </summary>
-        [JsonProperty(PropertyName = "updateTime")]
-        public DateTimeOffset? UpdateTime { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "updateTime")]
+        public System.DateTimeOffset? UpdateTime { get; set; }
 
         /// <summary>
         /// Gets or sets the switch indicating if these statistics are user
         /// created.
         /// </summary>
-        [JsonProperty(PropertyName = "isUserCreated")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "isUserCreated")]
         public bool? IsUserCreated { get; set; }
 
         /// <summary>
         /// Gets or sets the switch indicating if these statistics are
         /// automatically created.
         /// </summary>
-        [JsonProperty(PropertyName = "isAutoCreated")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "isAutoCreated")]
         public bool? IsAutoCreated { get; set; }
 
         /// <summary>
         /// Gets or sets the switch indicating if these statistics have a
         /// filter.
         /// </summary>
-        [JsonProperty(PropertyName = "hasFilter")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "hasFilter")]
         public bool? HasFilter { get; set; }
 
         /// <summary>
         /// Gets or sets the filter definition for the statistics.
         /// </summary>
-        [JsonProperty(PropertyName = "filterDefinition")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "filterDefinition")]
         public string FilterDefinition { get; set; }
 
         /// <summary>
         /// Gets or sets the list of column names associated with these
         /// statistics.
         /// </summary>
-        [JsonProperty(PropertyName = "colNames")]
-        public IList<string> ColNames { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "colNames")]
+        public System.Collections.Generic.IList<string> ColNames { get; set; }
 
     }
 }

@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.DataLake.Analytics.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// A Data Lake Analytics catalog item list.
@@ -41,13 +35,13 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <summary>
         /// Gets or sets the count of items in the list.
         /// </summary>
-        [JsonProperty(PropertyName = "count")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "count")]
         public int? Count { get; set; }
 
         /// <summary>
         /// Gets or sets the link to the next page of results.
         /// </summary>
-        [JsonProperty(PropertyName = "nextLink")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "nextLink")]
         public string NextLink { get; set; }
 
     }

@@ -8,17 +8,14 @@
 
 namespace Microsoft.Azure.Management.DataLake.Store.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for EncryptionIdentityType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum EncryptionIdentityType
     {
-        [EnumMember(Value = "SystemAssigned")]
+        [System.Runtime.Serialization.EnumMember(Value = "SystemAssigned")]
         SystemAssigned
     }
 }
