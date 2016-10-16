@@ -1,8 +1,8 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourcegroups/hdi4535?api-version=2014-04-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Jlc291cmNlZ3JvdXBzL2hkaTQ1MzU/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourcegroups/hdi8061?api-version=2014-04-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlZ3JvdXBzL2hkaTgwNjE/YXBpLXZlcnNpb249MjAxNC0wNC0wMS1wcmV2aWV3",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"West US\"\r\n}",
       "RequestHeaders": {
@@ -16,7 +16,7 @@
           "Microsoft.Azure.Management.Resources.ResourceManagementClient/2.0.0.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535\",\r\n  \"name\": \"hdi4535\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi8061\",\r\n  \"name\": \"hdi8061\",\r\n  \"location\": \"westus\",\r\n  \"properties\": {\r\n    \"provisioningState\": \"Succeeded\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "167"
@@ -31,16 +31,16 @@
           "no-cache"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1199"
+          "1197"
         ],
         "x-ms-request-id": [
-          "a89a75f0-5645-4b19-a526-cf1469f8c5d9"
+          "d2ed186a-89e9-41ae-8641-57a4c793481e"
         ],
         "x-ms-correlation-request-id": [
-          "a89a75f0-5645-4b19-a526-cf1469f8c5d9"
+          "d2ed186a-89e9-41ae-8641-57a4c793481e"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T062143Z:a89a75f0-5645-4b19-a526-cf1469f8c5d9"
+          "CENTRALUS:20161014T035648Z:d2ed186a-89e9-41ae-8641-57a4c793481e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -49,30 +49,30 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 25 Sep 2016 06:21:42 GMT"
+          "Fri, 14 Oct 2016 03:56:47 GMT"
         ]
       },
       "StatusCode": 201
     },
     {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Jlc291cmNlR3JvdXBzL2hkaTQ1MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi8061/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaTgwNjEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"East US\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1\",\r\n    \"osType\": \"Windows\",\r\n    \"tier\": \"Standard\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\",\r\n      \"configurations\": {\r\n        \"core-site\": {\r\n          \"fs.defaultFS\": \"wasb://riyersparksdk@riyerstorageeastus.blob.core.windows.net\",\r\n          \"fs.azure.account.key.riyerstorageeastus.blob.core.windows.net\": \"PB2XAT+IejCpSfkj59rHZpjo0bCtWvfHK4BIpGqOpGZI3XuF6FJ1EyUgLjwltP1MJEwa8z6vzZLp8Jv+5c7Z4Q==\"\r\n        },\r\n        \"gateway\": {\r\n          \"restAuthCredential.isEnabled\": \"true\",\r\n          \"restAuthCredential.username\": \"admin\",\r\n          \"restAuthCredential.password\": \"Password1!\"\r\n        }\r\n      }\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"password\": \"Password1!\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          },\r\n          \"scriptActions\": []\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"scriptActions\": []\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"West US\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1\",\r\n    \"osType\": \"Windows\",\r\n    \"tier\": \"Standard\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\",\r\n      \"configurations\": {\r\n        \"core-site\": {\r\n          \"fs.defaultFS\": \"wasb://giyertestcsmv2@giyerwestus1.blob.core.windows.net\",\r\n          \"fs.azure.account.key.giyerwestus1.blob.core.windows.net\": \"O9EQvp3A3AjXq/W27rst1GQfLllhp01qlJMJfSU1hVW2K42gUeiUUn2D8zX2lU3taiXSSfqkZlcPv+nQcYUxYw==\"\r\n        },\r\n        \"gateway\": {\r\n          \"restAuthCredential.isEnabled\": \"true\",\r\n          \"restAuthCredential.username\": \"hadoopuser\",\r\n          \"restAuthCredential.password\": \"Password1!\"\r\n        }\r\n      }\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"password\": \"Passw0rd!321\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          },\r\n          \"scriptActions\": []\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"scriptActions\": []\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json"
         ],
         "Content-Length": [
-          "1530"
+          "1526"
         ],
         "User-Agent": [
           "ARM",
           "SDK",
-          "v1.0.12-preview"
+          "v1.3.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe\",\r\n  \"name\": \"hdisdk-clusterdupe\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"cdeb0848-7b57-4534-b178-db21490bde4c\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1.4.1057\",\r\n    \"osType\": \"Windows\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HeadNode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"Accepted\",\r\n    \"createdDate\": \"2016-09-25T06:21:43.937\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 36\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.cloudapp.net\",\r\n        \"port\": 443\r\n      },\r\n      {\r\n        \"name\": \"RDP\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.cloudapp.net\",\r\n        \"port\": 3389\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi8061/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe\",\r\n  \"name\": \"hdisdk-clusterdupe\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"West US\",\r\n  \"etag\": \"f9c5c830-a4be-4e05-b56c-d085657f7342\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1.4.1080\",\r\n    \"osType\": \"Windows\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HeadNode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"Accepted\",\r\n    \"createdDate\": \"2016-10-14T03:56:49.627\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 36\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.cloudapp.net\",\r\n        \"port\": 443\r\n      },\r\n      {\r\n        \"name\": \"RDP\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.cloudapp.net\",\r\n        \"port\": 3389\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "1202"
@@ -87,22 +87,22 @@
           "no-cache"
         ],
         "x-ms-hdi-clusteruri": [
-          "https://management.azure.com/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview"
+          "https://management.azure.com/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi8061/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com:443/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe/azureasyncoperations/create?api-version=2015-03-01-preview"
+          "https://management.azure.com:443/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi8061/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe/azureasyncoperations/create?api-version=2015-03-01-preview"
         ],
         "x-ms-request-id": [
-          "978f37de-df1b-4afb-9f90-44454da982b5"
+          "996bbd2c-0fec-4eb1-948c-8f6335bffa31"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1198"
+          "1196"
         ],
         "x-ms-correlation-request-id": [
-          "f8f4c486-c13b-4731-abc5-69e4254eaf1a"
+          "79b680aa-5e3b-43e4-b811-517ee32955c5"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T062145Z:f8f4c486-c13b-4731-abc5-69e4254eaf1a"
+          "CENTRALUS:20161014T035650Z:79b680aa-5e3b-43e4-b811-517ee32955c5"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -111,10 +111,10 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 25 Sep 2016 06:21:44 GMT"
+          "Fri, 14 Oct 2016 03:56:49 GMT"
         ],
         "ETag": [
-          "\"cdeb0848-7b57-4534-b178-db21490bde4c\""
+          "\"f9c5c830-a4be-4e05-b56c-d085657f7342\""
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -126,27 +126,27 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Jlc291cmNlR3JvdXBzL2hkaTQ1MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi8061/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaTgwNjEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "PUT",
-      "RequestBody": "{\r\n  \"location\": \"East US\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1\",\r\n    \"osType\": \"Windows\",\r\n    \"tier\": \"Standard\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\",\r\n      \"configurations\": {\r\n        \"core-site\": {\r\n          \"fs.defaultFS\": \"wasb://riyersparksdk@riyerstorageeastus.blob.core.windows.net\",\r\n          \"fs.azure.account.key.riyerstorageeastus.blob.core.windows.net\": \"PB2XAT+IejCpSfkj59rHZpjo0bCtWvfHK4BIpGqOpGZI3XuF6FJ1EyUgLjwltP1MJEwa8z6vzZLp8Jv+5c7Z4Q==\"\r\n        },\r\n        \"gateway\": {\r\n          \"restAuthCredential.isEnabled\": \"true\",\r\n          \"restAuthCredential.username\": \"admin\",\r\n          \"restAuthCredential.password\": \"Password1!\"\r\n        }\r\n      }\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"password\": \"Password1!\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          },\r\n          \"scriptActions\": []\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"scriptActions\": []\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
+      "RequestBody": "{\r\n  \"location\": \"West US\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1\",\r\n    \"osType\": \"Windows\",\r\n    \"tier\": \"Standard\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\",\r\n      \"configurations\": {\r\n        \"core-site\": {\r\n          \"fs.defaultFS\": \"wasb://giyertestcsmv2@giyerwestus1.blob.core.windows.net\",\r\n          \"fs.azure.account.key.giyerwestus1.blob.core.windows.net\": \"O9EQvp3A3AjXq/W27rst1GQfLllhp01qlJMJfSU1hVW2K42gUeiUUn2D8zX2lU3taiXSSfqkZlcPv+nQcYUxYw==\"\r\n        },\r\n        \"gateway\": {\r\n          \"restAuthCredential.isEnabled\": \"true\",\r\n          \"restAuthCredential.username\": \"hadoopuser\",\r\n          \"restAuthCredential.password\": \"Password1!\"\r\n        }\r\n      }\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"headnode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"password\": \"Passw0rd!321\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          },\r\n          \"scriptActions\": []\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"scriptActions\": []\r\n        }\r\n      ]\r\n    }\r\n  }\r\n}",
       "RequestHeaders": {
         "Content-Type": [
           "application/json"
         ],
         "Content-Length": [
-          "1530"
+          "1526"
         ],
         "User-Agent": [
           "ARM",
           "SDK",
-          "v1.0.12-preview"
+          "v1.3.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe\",\r\n  \"name\": \"hdisdk-clusterdupe\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"cdeb0848-7b57-4534-b178-db21490bde4c\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1.4.1057\",\r\n    \"osType\": \"Windows\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HeadNode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterState\": \"Running\",\r\n    \"createdDate\": \"2016-09-25T06:21:43.937\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 36\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 443\r\n      },\r\n      {\r\n        \"name\": \"RDP\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 3389\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi8061/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe\",\r\n  \"name\": \"hdisdk-clusterdupe\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"West US\",\r\n  \"etag\": \"f9c5c830-a4be-4e05-b56c-d085657f7342\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1.4.1080\",\r\n    \"osType\": \"Windows\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HeadNode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"Failed\",\r\n    \"clusterState\": \"Error\",\r\n    \"createdDate\": \"2016-10-14T03:56:49.627\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 36\r\n    },\r\n    \"errors\": [\r\n      {\r\n        \"code\": \"PreClusterCreationValidationFailure\",\r\n        \"message\": \"Pre cluster creation validation failed for cluster hdisdk-clusterdupe due to user error. \\r\\n                        Validation Report: Invalid storage account name and key provided for account name giyerwestus1.blob.core.windows.net. Details: Error Code: AuthenticationFailed\\r\\nError Message: Server failed to authenticate the request. Make sure the value of Authorization header is formed correctly including the signature.\\nRequestId:cdfe89fc-0002-00c4-08cf-254fb0000000\\nTime:2016-10-14T03:58:34.3567642Z Exception: An exception has occurred: The remote server returned an error: (403) Forbidden.\\r\\n\\tStack trace:    at Microsoft.WindowsAzure.Storage.Table.CloudTableClient.EndListTablesSegmented(IAsyncResult asyncResult)\\r\\n   at Microsoft.WindowsAzure.Storage.Core.Util.AsyncExtensions.<>c__DisplayClass1`1.<CreateCallback>b__0(IAsyncResult ar)\\r\\n--- End of stack trace from previous location where exception was thrown ---\\r\\n   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)\\r\\n   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)\\r\\n   at Microsoft.ClusterServices.Core.Utils.AzureTableClientWrapper.<GetAnyTableAsync>d__0.MoveNext() in f:\\\\_Bld\\\\11359\\\\4093\\\\Sources\\\\src\\\\HadoopServices\\\\Common\\\\DeploymentService.Core\\\\Utils\\\\AzureTableClientWrapper.cs:line 45\\r\\n--- End of stack trace from previous location where exception was thrown ---\\r\\n   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)\\r\\n   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)\\r\\n   at Microsoft.HdInsight.Utils.TaskExtensions.ExecuteSynchronously(Task task, Boolean configureAwait) in f:\\\\_Bld\\\\11359\\\\4093\\\\Sources\\\\src\\\\common\\\\Microsoft.HdInsight.Utils\\\\Tasks\\\\TaskExtensions.cs:line 144\\r\\n   at Microsoft.ClusterServices.Core.Utils.UtilsHelper.<>c__DisplayClass12.<VerifyCloudTableEndpointAccessibility>b__11() in f:\\\\_Bld\\\\11359\\\\4093\\\\Sources\\\\src\\\\HadoopServices\\\\Common\\\\DeploymentService.Core\\\\Utils\\\\UtilsHelper.cs:line 709\\r\\n   at Microsoft.ClusterServices.Management.Storage.StoreManager.<>c__DisplayClass1.<AzureStorageRetryPolicy>b__0() in f:\\\\_Bld\\\\11359\\\\4093\\\\Sources\\\\src\\\\HadoopServices\\\\Management\\\\Microsoft.ClusterServices.Management\\\\storage\\\\StoreManager.cs:line 49\\r\\n   at Microsoft.ClusterServices.Management.Utils.RetryUtil.<ExecuteStorageCommandWithRetry>c__Binding`1.Invoke(Object& instance, Arguments arguments, Object aspectArgs) in f:\\\\_Bld\\\\11359\\\\4093\\\\Sources\\\\src\\\\common\\\\Microsoft.ClusterServices.Common\\\\Utils\\\\RetryUtil.cs:line 61\\r\\n   at PostSharp.Aspects.Internals.MethodInterceptionArgsImpl`1.Proceed()\\r\\n   at Microsoft.ClusterServices.Management.Utils.TransientErrorExponentialBackoffRetryAttributeBase.OnInvoke(MethodInterceptionArgs args) in f:\\\\_Bld\\\\11359\\\\4093\\\\Sources\\\\src\\\\common\\\\Microsoft.ClusterServices.Common\\\\Utils\\\\TransientErrorExponentialBackoffRetryAttributeBase.cs:line 85\\r\\n   at Microsoft.ClusterServices.Management.Utils.RetryUtil.ExecuteStorageCommandWithRetry[T](Func`1 func, IBaseLogger logger) in f:\\\\_Bld\\\\11359\\\\4093\\\\Sources\\\\src\\\\common\\\\Microsoft.ClusterServices.Common\\\\Utils\\\\RetryUtil.cs:line 61\\r\\n   at Microsoft.ClusterServices.DataAccess.Context.Extensions.ASVAccountExtensions.TryAccessAsvAccount(ASVAccount account) in f:\\\\_Bld\\\\11359\\\\4093\\\\Sources\\\\src\\\\HadoopServices\\\\Common\\\\DeploymentService.Core\\\\Models\\\\ASVAccountExtensions.cs:line 111\\r\\n   at Microsoft.ClusterServices.RDFEProvider.Worker.Workflow.Activities.Azure.PreClusterCreationValidationActivity.ValidateAsvAccountsAreAccessible(WorkflowExecutionContext context, ClusterDeployment deployment) in f:\\\\_Bld\\\\11359\\\\4093\\\\Sources\\\\src\\\\HadoopServices\\\\RDFE\\\\DeploymentWorkerService\\\\Workflow\\\\Activities\\\\Azure\\\\PreClusterCreationValidationActivity.cs:line 190\\r\\n\\tExtended error information: ExtendedErrorInformation - HttpStatusCode=403,HttpStatusMessage=Server failed to authenticate the request. Make sure the value of Authorization header is formed correctly including the signature.,ServiceRequestID=cdfe89fc-0002-00c4-08cf-254fb0000000,Etag=,RequestInfoExtendedExceptionName=StorageException,RequestInfoExtendedExceptionMessage=The remote server returned an error: (403) Forbidden.,ErrorCode=AuthenticationFailed,ErrorMessage=Server failed to authenticate the request. Make sure the value of Authorization header is formed correctly including the signature.\\nRequestId:cdfe89fc-0002-00c4-08cf-254fb0000000\\nTime:2016-10-14T03:58:34.3567642Z,\\r\\n\\r\\n\\tAn exception has occurred: The remote server returned an error: (403) Forbidden.\\r\\n\\t\\tStack trace:    at System.Net.HttpWebRequest.EndGetResponse(IAsyncResult asyncResult)\\r\\n   at Microsoft.WindowsAzure.Storage.Core.Executor.Executor.EndGetResponse[T](IAsyncResult getResponseResult)\\r\\n\\t\\tExtended error information: (N/A)\\r\\n\\r\\n\"\r\n      }\r\n    ],\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.cloudapp.net\",\r\n        \"port\": 443\r\n      },\r\n      {\r\n        \"name\": \"RDP\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.cloudapp.net\",\r\n        \"port\": 3389\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "1212"
+          "6161"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -158,22 +158,22 @@
           "no-cache"
         ],
         "x-ms-hdi-clusteruri": [
-          "https://management.azure.com/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview"
+          "https://management.azure.com/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi8061/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com:443/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe/azureasyncoperations/create?api-version=2015-03-01-preview"
+          "https://management.azure.com:443/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi8061/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe/azureasyncoperations/create?api-version=2015-03-01-preview"
         ],
         "x-ms-request-id": [
-          "7d65ca41-64c9-4715-a3a0-c683f1889137"
+          "2ae5c600-8449-48d0-9bb1-f397127841ab"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1197"
+          "1195"
         ],
         "x-ms-correlation-request-id": [
-          "b8cdb540-6618-4c4d-a5bc-bc61286fda87"
+          "d8f45d88-e214-48e7-804d-37167c4f2894"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T064458Z:b8cdb540-6618-4c4d-a5bc-bc61286fda87"
+          "CENTRALUS:20161014T035852Z:d8f45d88-e214-48e7-804d-37167c4f2894"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -182,10 +182,10 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 25 Sep 2016 06:44:57 GMT"
+          "Fri, 14 Oct 2016 03:58:52 GMT"
         ],
         "ETag": [
-          "\"cdeb0848-7b57-4534-b178-db21490bde4c\""
+          "\"f9c5c830-a4be-4e05-b56c-d085657f7342\""
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -197,18 +197,18 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Jlc291cmNlR3JvdXBzL2hkaTQ1MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi8061/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaTgwNjEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "ARM",
           "SDK",
-          "v1.0.12-preview"
+          "v1.3.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe\",\r\n  \"name\": \"hdisdk-clusterdupe\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"cdeb0848-7b57-4534-b178-db21490bde4c\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1.4.1057\",\r\n    \"osType\": \"Windows\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HeadNode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"Accepted\",\r\n    \"createdDate\": \"2016-09-25T06:21:43.937\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 36\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.cloudapp.net\",\r\n        \"port\": 443\r\n      },\r\n      {\r\n        \"name\": \"RDP\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.cloudapp.net\",\r\n        \"port\": 3389\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi8061/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe\",\r\n  \"name\": \"hdisdk-clusterdupe\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"West US\",\r\n  \"etag\": \"f9c5c830-a4be-4e05-b56c-d085657f7342\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1.4.1080\",\r\n    \"osType\": \"Windows\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HeadNode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"Accepted\",\r\n    \"createdDate\": \"2016-10-14T03:56:49.627\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 36\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.cloudapp.net\",\r\n        \"port\": 443\r\n      },\r\n      {\r\n        \"name\": \"RDP\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.cloudapp.net\",\r\n        \"port\": 3389\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "1202"
@@ -223,16 +223,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "72635604-2fa2-46ea-9efe-6df8e7e5e4cc"
+          "094cdbf2-c26f-4f13-9b20-7dc09d851a77"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14914"
+          "14950"
         ],
         "x-ms-correlation-request-id": [
-          "f097b4a1-6ffa-4527-9fc5-e32edf7ab50a"
+          "7c0663e7-1f71-4dd5-96d2-4bbeaf8416d2"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T062145Z:f097b4a1-6ffa-4527-9fc5-e32edf7ab50a"
+          "CENTRALUS:20161014T035650Z:7c0663e7-1f71-4dd5-96d2-4bbeaf8416d2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -241,7 +241,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 25 Sep 2016 06:21:44 GMT"
+          "Fri, 14 Oct 2016 03:56:49 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -253,18 +253,18 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Jlc291cmNlR3JvdXBzL2hkaTQ1MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi8061/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaTgwNjEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "ARM",
           "SDK",
-          "v1.0.12-preview"
+          "v1.3.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe\",\r\n  \"name\": \"hdisdk-clusterdupe\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"cdeb0848-7b57-4534-b178-db21490bde4c\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1.4.1057\",\r\n    \"osType\": \"Windows\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HeadNode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"Accepted\",\r\n    \"createdDate\": \"2016-09-25T06:21:43.937\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 36\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.cloudapp.net\",\r\n        \"port\": 443\r\n      },\r\n      {\r\n        \"name\": \"RDP\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.cloudapp.net\",\r\n        \"port\": 3389\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi8061/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe\",\r\n  \"name\": \"hdisdk-clusterdupe\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"West US\",\r\n  \"etag\": \"f9c5c830-a4be-4e05-b56c-d085657f7342\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1.4.1080\",\r\n    \"osType\": \"Windows\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HeadNode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"Accepted\",\r\n    \"createdDate\": \"2016-10-14T03:56:49.627\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 36\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.cloudapp.net\",\r\n        \"port\": 443\r\n      },\r\n      {\r\n        \"name\": \"RDP\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.cloudapp.net\",\r\n        \"port\": 3389\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
           "1202"
@@ -279,16 +279,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "108e9226-90f1-47bd-9eba-77cdb478dc36"
+          "d2b086f1-59db-4004-9b12-b185a54ef2e0"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14913"
+          "14949"
         ],
         "x-ms-correlation-request-id": [
-          "6753535e-7c2e-42c5-bcb2-f9f3e710c26d"
+          "841d6193-f0f7-4594-bc80-a880675b200e"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T062246Z:6753535e-7c2e-42c5-bcb2-f9f3e710c26d"
+          "CENTRALUS:20161014T035750Z:841d6193-f0f7-4594-bc80-a880675b200e"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -297,7 +297,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 25 Sep 2016 06:22:45 GMT"
+          "Fri, 14 Oct 2016 03:57:49 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -309,21 +309,21 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Jlc291cmNlR3JvdXBzL2hkaTQ1MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi8061/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaTgwNjEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "ARM",
           "SDK",
-          "v1.0.12-preview"
+          "v1.3.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe\",\r\n  \"name\": \"hdisdk-clusterdupe\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"cdeb0848-7b57-4534-b178-db21490bde4c\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1.4.1057\",\r\n    \"osType\": \"Windows\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HeadNode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"ClusterStorageProvisioned\",\r\n    \"createdDate\": \"2016-09-25T06:21:43.937\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 36\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 443\r\n      },\r\n      {\r\n        \"name\": \"RDP\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 3389\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi8061/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe\",\r\n  \"name\": \"hdisdk-clusterdupe\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"West US\",\r\n  \"etag\": \"f9c5c830-a4be-4e05-b56c-d085657f7342\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1.4.1080\",\r\n    \"osType\": \"Windows\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HeadNode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"Failed\",\r\n    \"clusterState\": \"Error\",\r\n    \"createdDate\": \"2016-10-14T03:56:49.627\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 36\r\n    },\r\n    \"errors\": [\r\n      {\r\n        \"code\": \"PreClusterCreationValidationFailure\",\r\n        \"message\": \"Pre cluster creation validation failed for cluster hdisdk-clusterdupe due to user error. \\r\\n                        Validation Report: Invalid storage account name and key provided for account name giyerwestus1.blob.core.windows.net. Details: Error Code: AuthenticationFailed\\r\\nError Message: Server failed to authenticate the request. Make sure the value of Authorization header is formed correctly including the signature.\\nRequestId:cdfe89fc-0002-00c4-08cf-254fb0000000\\nTime:2016-10-14T03:58:34.3567642Z Exception: An exception has occurred: The remote server returned an error: (403) Forbidden.\\r\\n\\tStack trace:    at Microsoft.WindowsAzure.Storage.Table.CloudTableClient.EndListTablesSegmented(IAsyncResult asyncResult)\\r\\n   at Microsoft.WindowsAzure.Storage.Core.Util.AsyncExtensions.<>c__DisplayClass1`1.<CreateCallback>b__0(IAsyncResult ar)\\r\\n--- End of stack trace from previous location where exception was thrown ---\\r\\n   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)\\r\\n   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)\\r\\n   at Microsoft.ClusterServices.Core.Utils.AzureTableClientWrapper.<GetAnyTableAsync>d__0.MoveNext() in f:\\\\_Bld\\\\11359\\\\4093\\\\Sources\\\\src\\\\HadoopServices\\\\Common\\\\DeploymentService.Core\\\\Utils\\\\AzureTableClientWrapper.cs:line 45\\r\\n--- End of stack trace from previous location where exception was thrown ---\\r\\n   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)\\r\\n   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)\\r\\n   at Microsoft.HdInsight.Utils.TaskExtensions.ExecuteSynchronously(Task task, Boolean configureAwait) in f:\\\\_Bld\\\\11359\\\\4093\\\\Sources\\\\src\\\\common\\\\Microsoft.HdInsight.Utils\\\\Tasks\\\\TaskExtensions.cs:line 144\\r\\n   at Microsoft.ClusterServices.Core.Utils.UtilsHelper.<>c__DisplayClass12.<VerifyCloudTableEndpointAccessibility>b__11() in f:\\\\_Bld\\\\11359\\\\4093\\\\Sources\\\\src\\\\HadoopServices\\\\Common\\\\DeploymentService.Core\\\\Utils\\\\UtilsHelper.cs:line 709\\r\\n   at Microsoft.ClusterServices.Management.Storage.StoreManager.<>c__DisplayClass1.<AzureStorageRetryPolicy>b__0() in f:\\\\_Bld\\\\11359\\\\4093\\\\Sources\\\\src\\\\HadoopServices\\\\Management\\\\Microsoft.ClusterServices.Management\\\\storage\\\\StoreManager.cs:line 49\\r\\n   at Microsoft.ClusterServices.Management.Utils.RetryUtil.<ExecuteStorageCommandWithRetry>c__Binding`1.Invoke(Object& instance, Arguments arguments, Object aspectArgs) in f:\\\\_Bld\\\\11359\\\\4093\\\\Sources\\\\src\\\\common\\\\Microsoft.ClusterServices.Common\\\\Utils\\\\RetryUtil.cs:line 61\\r\\n   at PostSharp.Aspects.Internals.MethodInterceptionArgsImpl`1.Proceed()\\r\\n   at Microsoft.ClusterServices.Management.Utils.TransientErrorExponentialBackoffRetryAttributeBase.OnInvoke(MethodInterceptionArgs args) in f:\\\\_Bld\\\\11359\\\\4093\\\\Sources\\\\src\\\\common\\\\Microsoft.ClusterServices.Common\\\\Utils\\\\TransientErrorExponentialBackoffRetryAttributeBase.cs:line 85\\r\\n   at Microsoft.ClusterServices.Management.Utils.RetryUtil.ExecuteStorageCommandWithRetry[T](Func`1 func, IBaseLogger logger) in f:\\\\_Bld\\\\11359\\\\4093\\\\Sources\\\\src\\\\common\\\\Microsoft.ClusterServices.Common\\\\Utils\\\\RetryUtil.cs:line 61\\r\\n   at Microsoft.ClusterServices.DataAccess.Context.Extensions.ASVAccountExtensions.TryAccessAsvAccount(ASVAccount account) in f:\\\\_Bld\\\\11359\\\\4093\\\\Sources\\\\src\\\\HadoopServices\\\\Common\\\\DeploymentService.Core\\\\Models\\\\ASVAccountExtensions.cs:line 111\\r\\n   at Microsoft.ClusterServices.RDFEProvider.Worker.Workflow.Activities.Azure.PreClusterCreationValidationActivity.ValidateAsvAccountsAreAccessible(WorkflowExecutionContext context, ClusterDeployment deployment) in f:\\\\_Bld\\\\11359\\\\4093\\\\Sources\\\\src\\\\HadoopServices\\\\RDFE\\\\DeploymentWorkerService\\\\Workflow\\\\Activities\\\\Azure\\\\PreClusterCreationValidationActivity.cs:line 190\\r\\n\\tExtended error information: ExtendedErrorInformation - HttpStatusCode=403,HttpStatusMessage=Server failed to authenticate the request. Make sure the value of Authorization header is formed correctly including the signature.,ServiceRequestID=cdfe89fc-0002-00c4-08cf-254fb0000000,Etag=,RequestInfoExtendedExceptionName=StorageException,RequestInfoExtendedExceptionMessage=The remote server returned an error: (403) Forbidden.,ErrorCode=AuthenticationFailed,ErrorMessage=Server failed to authenticate the request. Make sure the value of Authorization header is formed correctly including the signature.\\nRequestId:cdfe89fc-0002-00c4-08cf-254fb0000000\\nTime:2016-10-14T03:58:34.3567642Z,\\r\\n\\r\\n\\tAn exception has occurred: The remote server returned an error: (403) Forbidden.\\r\\n\\t\\tStack trace:    at System.Net.HttpWebRequest.EndGetResponse(IAsyncResult asyncResult)\\r\\n   at Microsoft.WindowsAzure.Storage.Core.Executor.Executor.EndGetResponse[T](IAsyncResult getResponseResult)\\r\\n\\t\\tExtended error information: (N/A)\\r\\n\\r\\n\"\r\n      }\r\n    ],\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.cloudapp.net\",\r\n        \"port\": 443\r\n      },\r\n      {\r\n        \"name\": \"RDP\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.cloudapp.net\",\r\n        \"port\": 3389\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "1231"
+          "6161"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -335,16 +335,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "6581eb6b-b8bc-4c90-bd1d-37b155ac3dc3"
+          "10f6ca93-8ac3-42a1-8d2f-5ac8d0452adc"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14911"
+          "14947"
         ],
         "x-ms-correlation-request-id": [
-          "b5132b60-d847-4d22-b096-5402ec0eba04"
+          "71ba4f41-0614-494b-9c50-a02d5b39cd8d"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T062346Z:b5132b60-d847-4d22-b096-5402ec0eba04"
+          "CENTRALUS:20161014T035851Z:71ba4f41-0614-494b-9c50-a02d5b39cd8d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -353,7 +353,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 25 Sep 2016 06:23:45 GMT"
+          "Fri, 14 Oct 2016 03:58:51 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -365,21 +365,21 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Jlc291cmNlR3JvdXBzL2hkaTQ1MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi8061/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaTgwNjEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "ARM",
           "SDK",
-          "v1.0.12-preview"
+          "v1.3.0"
         ]
       },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe\",\r\n  \"name\": \"hdisdk-clusterdupe\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"cdeb0848-7b57-4534-b178-db21490bde4c\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1.4.1057\",\r\n    \"osType\": \"Windows\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HeadNode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"ClusterStorageProvisioned\",\r\n    \"createdDate\": \"2016-09-25T06:21:43.937\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 36\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 443\r\n      },\r\n      {\r\n        \"name\": \"RDP\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 3389\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
+      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi8061/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe\",\r\n  \"name\": \"hdisdk-clusterdupe\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"West US\",\r\n  \"etag\": \"f9c5c830-a4be-4e05-b56c-d085657f7342\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1.4.1080\",\r\n    \"osType\": \"Windows\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HeadNode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"Failed\",\r\n    \"clusterState\": \"Error\",\r\n    \"createdDate\": \"2016-10-14T03:56:49.627\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 36\r\n    },\r\n    \"errors\": [\r\n      {\r\n        \"code\": \"PreClusterCreationValidationFailure\",\r\n        \"message\": \"Pre cluster creation validation failed for cluster hdisdk-clusterdupe due to user error. \\r\\n                        Validation Report: Invalid storage account name and key provided for account name giyerwestus1.blob.core.windows.net. Details: Error Code: AuthenticationFailed\\r\\nError Message: Server failed to authenticate the request. Make sure the value of Authorization header is formed correctly including the signature.\\nRequestId:cdfe89fc-0002-00c4-08cf-254fb0000000\\nTime:2016-10-14T03:58:34.3567642Z Exception: An exception has occurred: The remote server returned an error: (403) Forbidden.\\r\\n\\tStack trace:    at Microsoft.WindowsAzure.Storage.Table.CloudTableClient.EndListTablesSegmented(IAsyncResult asyncResult)\\r\\n   at Microsoft.WindowsAzure.Storage.Core.Util.AsyncExtensions.<>c__DisplayClass1`1.<CreateCallback>b__0(IAsyncResult ar)\\r\\n--- End of stack trace from previous location where exception was thrown ---\\r\\n   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)\\r\\n   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)\\r\\n   at Microsoft.ClusterServices.Core.Utils.AzureTableClientWrapper.<GetAnyTableAsync>d__0.MoveNext() in f:\\\\_Bld\\\\11359\\\\4093\\\\Sources\\\\src\\\\HadoopServices\\\\Common\\\\DeploymentService.Core\\\\Utils\\\\AzureTableClientWrapper.cs:line 45\\r\\n--- End of stack trace from previous location where exception was thrown ---\\r\\n   at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)\\r\\n   at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)\\r\\n   at Microsoft.HdInsight.Utils.TaskExtensions.ExecuteSynchronously(Task task, Boolean configureAwait) in f:\\\\_Bld\\\\11359\\\\4093\\\\Sources\\\\src\\\\common\\\\Microsoft.HdInsight.Utils\\\\Tasks\\\\TaskExtensions.cs:line 144\\r\\n   at Microsoft.ClusterServices.Core.Utils.UtilsHelper.<>c__DisplayClass12.<VerifyCloudTableEndpointAccessibility>b__11() in f:\\\\_Bld\\\\11359\\\\4093\\\\Sources\\\\src\\\\HadoopServices\\\\Common\\\\DeploymentService.Core\\\\Utils\\\\UtilsHelper.cs:line 709\\r\\n   at Microsoft.ClusterServices.Management.Storage.StoreManager.<>c__DisplayClass1.<AzureStorageRetryPolicy>b__0() in f:\\\\_Bld\\\\11359\\\\4093\\\\Sources\\\\src\\\\HadoopServices\\\\Management\\\\Microsoft.ClusterServices.Management\\\\storage\\\\StoreManager.cs:line 49\\r\\n   at Microsoft.ClusterServices.Management.Utils.RetryUtil.<ExecuteStorageCommandWithRetry>c__Binding`1.Invoke(Object& instance, Arguments arguments, Object aspectArgs) in f:\\\\_Bld\\\\11359\\\\4093\\\\Sources\\\\src\\\\common\\\\Microsoft.ClusterServices.Common\\\\Utils\\\\RetryUtil.cs:line 61\\r\\n   at PostSharp.Aspects.Internals.MethodInterceptionArgsImpl`1.Proceed()\\r\\n   at Microsoft.ClusterServices.Management.Utils.TransientErrorExponentialBackoffRetryAttributeBase.OnInvoke(MethodInterceptionArgs args) in f:\\\\_Bld\\\\11359\\\\4093\\\\Sources\\\\src\\\\common\\\\Microsoft.ClusterServices.Common\\\\Utils\\\\TransientErrorExponentialBackoffRetryAttributeBase.cs:line 85\\r\\n   at Microsoft.ClusterServices.Management.Utils.RetryUtil.ExecuteStorageCommandWithRetry[T](Func`1 func, IBaseLogger logger) in f:\\\\_Bld\\\\11359\\\\4093\\\\Sources\\\\src\\\\common\\\\Microsoft.ClusterServices.Common\\\\Utils\\\\RetryUtil.cs:line 61\\r\\n   at Microsoft.ClusterServices.DataAccess.Context.Extensions.ASVAccountExtensions.TryAccessAsvAccount(ASVAccount account) in f:\\\\_Bld\\\\11359\\\\4093\\\\Sources\\\\src\\\\HadoopServices\\\\Common\\\\DeploymentService.Core\\\\Models\\\\ASVAccountExtensions.cs:line 111\\r\\n   at Microsoft.ClusterServices.RDFEProvider.Worker.Workflow.Activities.Azure.PreClusterCreationValidationActivity.ValidateAsvAccountsAreAccessible(WorkflowExecutionContext context, ClusterDeployment deployment) in f:\\\\_Bld\\\\11359\\\\4093\\\\Sources\\\\src\\\\HadoopServices\\\\RDFE\\\\DeploymentWorkerService\\\\Workflow\\\\Activities\\\\Azure\\\\PreClusterCreationValidationActivity.cs:line 190\\r\\n\\tExtended error information: ExtendedErrorInformation - HttpStatusCode=403,HttpStatusMessage=Server failed to authenticate the request. Make sure the value of Authorization header is formed correctly including the signature.,ServiceRequestID=cdfe89fc-0002-00c4-08cf-254fb0000000,Etag=,RequestInfoExtendedExceptionName=StorageException,RequestInfoExtendedExceptionMessage=The remote server returned an error: (403) Forbidden.,ErrorCode=AuthenticationFailed,ErrorMessage=Server failed to authenticate the request. Make sure the value of Authorization header is formed correctly including the signature.\\nRequestId:cdfe89fc-0002-00c4-08cf-254fb0000000\\nTime:2016-10-14T03:58:34.3567642Z,\\r\\n\\r\\n\\tAn exception has occurred: The remote server returned an error: (403) Forbidden.\\r\\n\\t\\tStack trace:    at System.Net.HttpWebRequest.EndGetResponse(IAsyncResult asyncResult)\\r\\n   at Microsoft.WindowsAzure.Storage.Core.Executor.Executor.EndGetResponse[T](IAsyncResult getResponseResult)\\r\\n\\t\\tExtended error information: (N/A)\\r\\n\\r\\n\"\r\n      }\r\n    ],\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.cloudapp.net\",\r\n        \"port\": 443\r\n      },\r\n      {\r\n        \"name\": \"RDP\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.cloudapp.net\",\r\n        \"port\": 3389\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
       "ResponseHeaders": {
         "Content-Length": [
-          "1231"
+          "6161"
         ],
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -391,16 +391,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "4bf222ff-d42a-41bd-85b6-773757a3e29d"
+          "166eb044-b94b-4038-bffb-a898cd0b58bc"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14910"
+          "14946"
         ],
         "x-ms-correlation-request-id": [
-          "a3af5290-af93-4ca0-980b-30f0b1250c6d"
+          "70bf3f13-87c9-486a-9518-e211ab622ff7"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T062447Z:a3af5290-af93-4ca0-980b-30f0b1250c6d"
+          "CENTRALUS:20161014T035852Z:70bf3f13-87c9-486a-9518-e211ab622ff7"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -409,7 +409,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 25 Sep 2016 06:24:46 GMT"
+          "Fri, 14 Oct 2016 03:58:52 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -421,1191 +421,15 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Jlc291cmNlR3JvdXBzL2hkaTQ1MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "ARM",
-          "SDK",
-          "v1.0.12-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe\",\r\n  \"name\": \"hdisdk-clusterdupe\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"cdeb0848-7b57-4534-b178-db21490bde4c\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1.4.1057\",\r\n    \"osType\": \"Windows\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HeadNode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"ClusterStorageProvisioned\",\r\n    \"createdDate\": \"2016-09-25T06:21:43.937\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 36\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 443\r\n      },\r\n      {\r\n        \"name\": \"RDP\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 3389\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1231"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "6e610f93-d54a-4d82-8837-94a57ad37035"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14910"
-        ],
-        "x-ms-correlation-request-id": [
-          "f01a8121-3542-4f9e-bd08-6fa54c5d5485"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T062547Z:f01a8121-3542-4f9e-bd08-6fa54c5d5485"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 25 Sep 2016 06:25:47 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Jlc291cmNlR3JvdXBzL2hkaTQ1MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "ARM",
-          "SDK",
-          "v1.0.12-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe\",\r\n  \"name\": \"hdisdk-clusterdupe\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"cdeb0848-7b57-4534-b178-db21490bde4c\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1.4.1057\",\r\n    \"osType\": \"Windows\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HeadNode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"ClusterStorageProvisioned\",\r\n    \"createdDate\": \"2016-09-25T06:21:43.937\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 36\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 443\r\n      },\r\n      {\r\n        \"name\": \"RDP\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 3389\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1231"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "37653b77-3054-4f2e-a50e-084f145332dd"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14909"
-        ],
-        "x-ms-correlation-request-id": [
-          "a0e5d9b3-522a-43c2-b651-c5cd2239cf87"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T062648Z:a0e5d9b3-522a-43c2-b651-c5cd2239cf87"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 25 Sep 2016 06:26:47 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Jlc291cmNlR3JvdXBzL2hkaTQ1MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "ARM",
-          "SDK",
-          "v1.0.12-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe\",\r\n  \"name\": \"hdisdk-clusterdupe\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"cdeb0848-7b57-4534-b178-db21490bde4c\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1.4.1057\",\r\n    \"osType\": \"Windows\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HeadNode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"ClusterStorageProvisioned\",\r\n    \"createdDate\": \"2016-09-25T06:21:43.937\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 36\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 443\r\n      },\r\n      {\r\n        \"name\": \"RDP\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 3389\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1231"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "02f35e4f-3128-4eed-b759-cf081269baf6"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14908"
-        ],
-        "x-ms-correlation-request-id": [
-          "fac0acab-1a6f-4bb3-8652-0002f181b8f3"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T062748Z:fac0acab-1a6f-4bb3-8652-0002f181b8f3"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 25 Sep 2016 06:27:48 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Jlc291cmNlR3JvdXBzL2hkaTQ1MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "ARM",
-          "SDK",
-          "v1.0.12-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe\",\r\n  \"name\": \"hdisdk-clusterdupe\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"cdeb0848-7b57-4534-b178-db21490bde4c\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1.4.1057\",\r\n    \"osType\": \"Windows\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HeadNode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"AzureVMConfiguration\",\r\n    \"createdDate\": \"2016-09-25T06:21:43.937\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 36\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 443\r\n      },\r\n      {\r\n        \"name\": \"RDP\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 3389\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1226"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "36640ef1-6cb0-4bc9-a7f3-062c5a5a88c3"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14907"
-        ],
-        "x-ms-correlation-request-id": [
-          "eae1daa8-b991-4bdd-8a9e-a2a6b0733cba"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T062849Z:eae1daa8-b991-4bdd-8a9e-a2a6b0733cba"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 25 Sep 2016 06:28:49 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Jlc291cmNlR3JvdXBzL2hkaTQ1MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "ARM",
-          "SDK",
-          "v1.0.12-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe\",\r\n  \"name\": \"hdisdk-clusterdupe\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"cdeb0848-7b57-4534-b178-db21490bde4c\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1.4.1057\",\r\n    \"osType\": \"Windows\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HeadNode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"AzureVMConfiguration\",\r\n    \"createdDate\": \"2016-09-25T06:21:43.937\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 36\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 443\r\n      },\r\n      {\r\n        \"name\": \"RDP\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 3389\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1226"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "887f58c9-e183-4136-b8e0-2e731bd73fa5"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14905"
-        ],
-        "x-ms-correlation-request-id": [
-          "fc53ab66-0bec-4941-92cf-86b592d7a4af"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T062950Z:fc53ab66-0bec-4941-92cf-86b592d7a4af"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 25 Sep 2016 06:29:49 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Jlc291cmNlR3JvdXBzL2hkaTQ1MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "ARM",
-          "SDK",
-          "v1.0.12-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe\",\r\n  \"name\": \"hdisdk-clusterdupe\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"cdeb0848-7b57-4534-b178-db21490bde4c\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1.4.1057\",\r\n    \"osType\": \"Windows\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HeadNode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"AzureVMConfiguration\",\r\n    \"createdDate\": \"2016-09-25T06:21:43.937\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 36\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 443\r\n      },\r\n      {\r\n        \"name\": \"RDP\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 3389\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1226"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "aff9ce9e-825a-4328-9bff-aef8d323c94a"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14905"
-        ],
-        "x-ms-correlation-request-id": [
-          "51d60f4d-88fb-4c1d-8289-788200809435"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T063050Z:51d60f4d-88fb-4c1d-8289-788200809435"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 25 Sep 2016 06:30:50 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Jlc291cmNlR3JvdXBzL2hkaTQ1MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "ARM",
-          "SDK",
-          "v1.0.12-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe\",\r\n  \"name\": \"hdisdk-clusterdupe\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"cdeb0848-7b57-4534-b178-db21490bde4c\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1.4.1057\",\r\n    \"osType\": \"Windows\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HeadNode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"AzureVMConfiguration\",\r\n    \"createdDate\": \"2016-09-25T06:21:43.937\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 36\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 443\r\n      },\r\n      {\r\n        \"name\": \"RDP\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 3389\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1226"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "40e772d8-acbb-4778-be7e-03866c6f0777"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14902"
-        ],
-        "x-ms-correlation-request-id": [
-          "80b8d4fd-236f-4667-8685-312971342147"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T063151Z:80b8d4fd-236f-4667-8685-312971342147"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 25 Sep 2016 06:31:50 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Jlc291cmNlR3JvdXBzL2hkaTQ1MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "ARM",
-          "SDK",
-          "v1.0.12-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe\",\r\n  \"name\": \"hdisdk-clusterdupe\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"cdeb0848-7b57-4534-b178-db21490bde4c\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1.4.1057\",\r\n    \"osType\": \"Windows\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HeadNode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"AzureVMConfiguration\",\r\n    \"createdDate\": \"2016-09-25T06:21:43.937\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 36\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 443\r\n      },\r\n      {\r\n        \"name\": \"RDP\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 3389\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1226"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "b0754ee5-ba7d-4122-a5e3-3b22c556936a"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14895"
-        ],
-        "x-ms-correlation-request-id": [
-          "40070a9b-c314-4362-9bba-948c3989071d"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T063251Z:40070a9b-c314-4362-9bba-948c3989071d"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 25 Sep 2016 06:32:51 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Jlc291cmNlR3JvdXBzL2hkaTQ1MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "ARM",
-          "SDK",
-          "v1.0.12-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe\",\r\n  \"name\": \"hdisdk-clusterdupe\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"cdeb0848-7b57-4534-b178-db21490bde4c\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1.4.1057\",\r\n    \"osType\": \"Windows\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HeadNode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"AzureVMConfiguration\",\r\n    \"createdDate\": \"2016-09-25T06:21:43.937\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 36\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 443\r\n      },\r\n      {\r\n        \"name\": \"RDP\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 3389\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1226"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "787288fa-6761-41bc-a924-91a3eaa4ed60"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14894"
-        ],
-        "x-ms-correlation-request-id": [
-          "ce33a078-dca6-400e-b331-44ed9530ba2f"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T063352Z:ce33a078-dca6-400e-b331-44ed9530ba2f"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 25 Sep 2016 06:33:51 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Jlc291cmNlR3JvdXBzL2hkaTQ1MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "ARM",
-          "SDK",
-          "v1.0.12-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe\",\r\n  \"name\": \"hdisdk-clusterdupe\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"cdeb0848-7b57-4534-b178-db21490bde4c\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1.4.1057\",\r\n    \"osType\": \"Windows\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HeadNode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"AzureVMConfiguration\",\r\n    \"createdDate\": \"2016-09-25T06:21:43.937\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 36\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 443\r\n      },\r\n      {\r\n        \"name\": \"RDP\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 3389\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1226"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "27a84fd4-98c5-442b-ae60-e29beb7f1a32"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14892"
-        ],
-        "x-ms-correlation-request-id": [
-          "a751a598-d28a-4c52-8831-8f16a2313866"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T063453Z:a751a598-d28a-4c52-8831-8f16a2313866"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 25 Sep 2016 06:34:52 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Jlc291cmNlR3JvdXBzL2hkaTQ1MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "ARM",
-          "SDK",
-          "v1.0.12-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe\",\r\n  \"name\": \"hdisdk-clusterdupe\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"cdeb0848-7b57-4534-b178-db21490bde4c\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1.4.1057\",\r\n    \"osType\": \"Windows\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HeadNode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"AzureVMConfiguration\",\r\n    \"createdDate\": \"2016-09-25T06:21:43.937\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 36\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 443\r\n      },\r\n      {\r\n        \"name\": \"RDP\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 3389\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1226"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "2b8f5ba4-1b1e-45b6-803b-94b67721890e"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14899"
-        ],
-        "x-ms-correlation-request-id": [
-          "5224af3f-bc8a-4110-8e68-1548ea96592c"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T063553Z:5224af3f-bc8a-4110-8e68-1548ea96592c"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 25 Sep 2016 06:35:52 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Jlc291cmNlR3JvdXBzL2hkaTQ1MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "ARM",
-          "SDK",
-          "v1.0.12-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe\",\r\n  \"name\": \"hdisdk-clusterdupe\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"cdeb0848-7b57-4534-b178-db21490bde4c\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1.4.1057\",\r\n    \"osType\": \"Windows\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HeadNode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"AzureVMConfiguration\",\r\n    \"createdDate\": \"2016-09-25T06:21:43.937\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 36\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 443\r\n      },\r\n      {\r\n        \"name\": \"RDP\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 3389\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1226"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "c8f6db0c-bb82-4a3d-b2e9-07314dfc4a08"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14895"
-        ],
-        "x-ms-correlation-request-id": [
-          "6673dc31-1715-443b-ab34-3ab975c998c1"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T063654Z:6673dc31-1715-443b-ab34-3ab975c998c1"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 25 Sep 2016 06:36:53 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Jlc291cmNlR3JvdXBzL2hkaTQ1MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "ARM",
-          "SDK",
-          "v1.0.12-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe\",\r\n  \"name\": \"hdisdk-clusterdupe\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"cdeb0848-7b57-4534-b178-db21490bde4c\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1.4.1057\",\r\n    \"osType\": \"Windows\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HeadNode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"AzureVMConfiguration\",\r\n    \"createdDate\": \"2016-09-25T06:21:43.937\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 36\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 443\r\n      },\r\n      {\r\n        \"name\": \"RDP\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 3389\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1226"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "ebd788d3-3ed7-40c7-a7a8-2f1e9614f16c"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14891"
-        ],
-        "x-ms-correlation-request-id": [
-          "dd375231-001d-4d0c-961b-9032ec43c78e"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T063754Z:dd375231-001d-4d0c-961b-9032ec43c78e"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 25 Sep 2016 06:37:54 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Jlc291cmNlR3JvdXBzL2hkaTQ1MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "ARM",
-          "SDK",
-          "v1.0.12-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe\",\r\n  \"name\": \"hdisdk-clusterdupe\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"cdeb0848-7b57-4534-b178-db21490bde4c\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1.4.1057\",\r\n    \"osType\": \"Windows\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HeadNode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"AzureVMConfiguration\",\r\n    \"createdDate\": \"2016-09-25T06:21:43.937\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 36\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 443\r\n      },\r\n      {\r\n        \"name\": \"RDP\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 3389\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1226"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "e60a8a44-5a87-4434-9d4f-157827864b2e"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14888"
-        ],
-        "x-ms-correlation-request-id": [
-          "6a192b3a-08ba-44b7-876d-d928deed0cbd"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T063855Z:6a192b3a-08ba-44b7-876d-d928deed0cbd"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 25 Sep 2016 06:38:54 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Jlc291cmNlR3JvdXBzL2hkaTQ1MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "ARM",
-          "SDK",
-          "v1.0.12-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe\",\r\n  \"name\": \"hdisdk-clusterdupe\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"cdeb0848-7b57-4534-b178-db21490bde4c\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1.4.1057\",\r\n    \"osType\": \"Windows\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HeadNode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"AzureVMConfiguration\",\r\n    \"createdDate\": \"2016-09-25T06:21:43.937\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 36\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 443\r\n      },\r\n      {\r\n        \"name\": \"RDP\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 3389\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1226"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "b7f66056-51e5-435f-bdc3-390efe0828fd"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14885"
-        ],
-        "x-ms-correlation-request-id": [
-          "fc6c9762-10f0-46bf-9e9c-c3a3966bcb3d"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T063955Z:fc6c9762-10f0-46bf-9e9c-c3a3966bcb3d"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 25 Sep 2016 06:39:55 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Jlc291cmNlR3JvdXBzL2hkaTQ1MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "ARM",
-          "SDK",
-          "v1.0.12-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe\",\r\n  \"name\": \"hdisdk-clusterdupe\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"cdeb0848-7b57-4534-b178-db21490bde4c\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1.4.1057\",\r\n    \"osType\": \"Windows\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HeadNode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"AzureVMConfiguration\",\r\n    \"createdDate\": \"2016-09-25T06:21:43.937\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 36\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 443\r\n      },\r\n      {\r\n        \"name\": \"RDP\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 3389\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1226"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "4837764c-446b-43d6-8bad-1a2ee090e5a7"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14892"
-        ],
-        "x-ms-correlation-request-id": [
-          "537f20b6-7dee-42c5-91c5-9dd247efd235"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T064056Z:537f20b6-7dee-42c5-91c5-9dd247efd235"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 25 Sep 2016 06:40:56 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Jlc291cmNlR3JvdXBzL2hkaTQ1MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "ARM",
-          "SDK",
-          "v1.0.12-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe\",\r\n  \"name\": \"hdisdk-clusterdupe\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"cdeb0848-7b57-4534-b178-db21490bde4c\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1.4.1057\",\r\n    \"osType\": \"Windows\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HeadNode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"AzureVMConfiguration\",\r\n    \"createdDate\": \"2016-09-25T06:21:43.937\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 36\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 443\r\n      },\r\n      {\r\n        \"name\": \"RDP\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 3389\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1226"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "12dbb5de-f422-42cd-8de6-8f9534305aa7"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14887"
-        ],
-        "x-ms-correlation-request-id": [
-          "1096ef67-7341-4d5d-b8f4-31c031e58f76"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T064156Z:1096ef67-7341-4d5d-b8f4-31c031e58f76"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 25 Sep 2016 06:41:56 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Jlc291cmNlR3JvdXBzL2hkaTQ1MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "ARM",
-          "SDK",
-          "v1.0.12-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe\",\r\n  \"name\": \"hdisdk-clusterdupe\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"cdeb0848-7b57-4534-b178-db21490bde4c\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1.4.1057\",\r\n    \"osType\": \"Windows\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HeadNode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"AzureVMConfiguration\",\r\n    \"createdDate\": \"2016-09-25T06:21:43.937\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 36\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 443\r\n      },\r\n      {\r\n        \"name\": \"RDP\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 3389\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1226"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "38b626ef-9d54-43d4-a67a-bbe9062d8fb1"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14880"
-        ],
-        "x-ms-correlation-request-id": [
-          "6ea5083e-1b25-40b3-9ab8-6af779e83517"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T064257Z:6ea5083e-1b25-40b3-9ab8-6af779e83517"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 25 Sep 2016 06:42:56 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Jlc291cmNlR3JvdXBzL2hkaTQ1MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "ARM",
-          "SDK",
-          "v1.0.12-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe\",\r\n  \"name\": \"hdisdk-clusterdupe\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"cdeb0848-7b57-4534-b178-db21490bde4c\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1.4.1057\",\r\n    \"osType\": \"Windows\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HeadNode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"InProgress\",\r\n    \"clusterState\": \"AzureVMConfiguration\",\r\n    \"createdDate\": \"2016-09-25T06:21:43.937\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 36\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 443\r\n      },\r\n      {\r\n        \"name\": \"RDP\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 3389\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1226"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "88b47669-bede-45dc-b7c0-6362e34ff8fb"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14877"
-        ],
-        "x-ms-correlation-request-id": [
-          "10ce2d09-85bb-4675-974d-2b98054814a0"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T064357Z:10ce2d09-85bb-4675-974d-2b98054814a0"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 25 Sep 2016 06:43:57 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Jlc291cmNlR3JvdXBzL2hkaTQ1MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "ARM",
-          "SDK",
-          "v1.0.12-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe\",\r\n  \"name\": \"hdisdk-clusterdupe\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"cdeb0848-7b57-4534-b178-db21490bde4c\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1.4.1057\",\r\n    \"osType\": \"Windows\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HeadNode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterState\": \"Running\",\r\n    \"createdDate\": \"2016-09-25T06:21:43.937\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 36\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 443\r\n      },\r\n      {\r\n        \"name\": \"RDP\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 3389\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1212"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "c30a15b1-6d8d-4af3-87b4-b80fdf1a55b3"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14875"
-        ],
-        "x-ms-correlation-request-id": [
-          "e35474f7-bda8-438e-ba76-cdb94e254ae9"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T064458Z:e35474f7-bda8-438e-ba76-cdb94e254ae9"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 25 Sep 2016 06:44:57 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Jlc291cmNlR3JvdXBzL2hkaTQ1MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
-      "RequestMethod": "GET",
-      "RequestBody": "",
-      "RequestHeaders": {
-        "User-Agent": [
-          "ARM",
-          "SDK",
-          "v1.0.12-preview"
-        ]
-      },
-      "ResponseBody": "{\r\n  \"id\": \"/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe\",\r\n  \"name\": \"hdisdk-clusterdupe\",\r\n  \"type\": \"Microsoft.HDInsight/clusters\",\r\n  \"location\": \"East US\",\r\n  \"etag\": \"cdeb0848-7b57-4534-b178-db21490bde4c\",\r\n  \"tags\": {\r\n    \"tag1\": \"value1\",\r\n    \"tag2\": \"value2\"\r\n  },\r\n  \"properties\": {\r\n    \"clusterVersion\": \"3.1.4.1057\",\r\n    \"osType\": \"Windows\",\r\n    \"clusterDefinition\": {\r\n      \"kind\": \"Hadoop\"\r\n    },\r\n    \"computeProfile\": {\r\n      \"roles\": [\r\n        {\r\n          \"name\": \"HeadNode\",\r\n          \"targetInstanceCount\": 2,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"ExtraLarge\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        },\r\n        {\r\n          \"name\": \"workernode\",\r\n          \"targetInstanceCount\": 5,\r\n          \"hardwareProfile\": {\r\n            \"vmSize\": \"Large\"\r\n          },\r\n          \"osProfile\": {\r\n            \"windowsOperatingSystemProfile\": {\r\n              \"rdpSettings\": {\r\n                \"username\": \"hdirp\",\r\n                \"expiryDate\": \"2025-03-01T00:00:00\"\r\n              }\r\n            }\r\n          }\r\n        }\r\n      ]\r\n    },\r\n    \"provisioningState\": \"Succeeded\",\r\n    \"clusterState\": \"Running\",\r\n    \"createdDate\": \"2016-09-25T06:21:43.937\",\r\n    \"quotaInfo\": {\r\n      \"coresUsed\": 36\r\n    },\r\n    \"connectivityEndpoints\": [\r\n      {\r\n        \"name\": \"HTTPS\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 443\r\n      },\r\n      {\r\n        \"name\": \"RDP\",\r\n        \"protocol\": \"TCP\",\r\n        \"location\": \"hdisdk-clusterdupe.azurehdinsight.net\",\r\n        \"port\": 3389\r\n      }\r\n    ],\r\n    \"tier\": \"standard\"\r\n  }\r\n}",
-      "ResponseHeaders": {
-        "Content-Length": [
-          "1212"
-        ],
-        "Content-Type": [
-          "application/json; charset=utf-8"
-        ],
-        "Expires": [
-          "-1"
-        ],
-        "Pragma": [
-          "no-cache"
-        ],
-        "x-ms-request-id": [
-          "b2ef50d0-2a0f-44f9-891f-4767295a2149"
-        ],
-        "x-ms-ratelimit-remaining-subscription-reads": [
-          "14874"
-        ],
-        "x-ms-correlation-request-id": [
-          "8e60eeb2-fd76-40ed-96b7-b866e3ce0dd4"
-        ],
-        "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T064459Z:8e60eeb2-fd76-40ed-96b7-b866e3ce0dd4"
-        ],
-        "Strict-Transport-Security": [
-          "max-age=31536000; includeSubDomains"
-        ],
-        "Cache-Control": [
-          "no-cache"
-        ],
-        "Date": [
-          "Sun, 25 Sep 2016 06:44:58 GMT"
-        ],
-        "Server": [
-          "Microsoft-IIS/8.5"
-        ],
-        "X-Powered-By": [
-          "ASP.NET"
-        ]
-      },
-      "StatusCode": 200
-    },
-    {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/resourceGroups/hdi4535/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Jlc291cmNlR3JvdXBzL2hkaTQ1MzUvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/resourceGroups/hdi8061/providers/Microsoft.HDInsight/clusters/hdisdk-clusterdupe?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Jlc291cmNlR3JvdXBzL2hkaTgwNjEvcHJvdmlkZXJzL01pY3Jvc29mdC5IREluc2lnaHQvY2x1c3RlcnMvaGRpc2RrLWNsdXN0ZXJkdXBlP2FwaS12ZXJzaW9uPTIwMTUtMDMtMDEtcHJldmlldw==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "ARM",
           "SDK",
-          "v1.0.12-preview"
+          "v1.3.0"
         ]
       },
       "ResponseBody": "",
@@ -1623,19 +447,19 @@
           "60"
         ],
         "Azure-AsyncOperation": [
-          "https://management.azure.com:443/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/providers/Microsoft.HDInsight/locations/East US/azureasyncoperations/d6eb8eda-c0f9-4989-b2b9-e2919053c1f5-0?api-version=2015-03-01-preview"
+          "https://management.azure.com:443/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/providers/Microsoft.HDInsight/locations/West US/azureasyncoperations/21321ad7-6269-40aa-89b9-fb1613d82998-0?api-version=2015-03-01-preview"
         ],
         "x-ms-request-id": [
-          "279120b0-deb7-45c0-987c-508df1902e9b"
+          "18068537-3ecd-40b5-8258-35274071305e"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1196"
+          "1194"
         ],
         "x-ms-correlation-request-id": [
-          "fb8e5b8e-6444-4fd2-9be2-aca7dc2da901"
+          "9b4f655f-3d25-4ff8-8519-801b0c95e562"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T064500Z:fb8e5b8e-6444-4fd2-9be2-aca7dc2da901"
+          "CENTRALUS:20161014T035853Z:9b4f655f-3d25-4ff8-8519-801b0c95e562"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1644,10 +468,10 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 25 Sep 2016 06:44:59 GMT"
+          "Fri, 14 Oct 2016 03:58:53 GMT"
         ],
         "Location": [
-          "https://management.azure.com/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/providers/Microsoft.HDInsight/locations/East%20US/operationresults/d6eb8eda-c0f9-4989-b2b9-e2919053c1f5-0?api-version=2015-03-01-preview"
+          "https://management.azure.com/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/providers/Microsoft.HDInsight/locations/West%20US/operationresults/21321ad7-6269-40aa-89b9-fb1613d82998-0?api-version=2015-03-01-preview"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -1659,15 +483,15 @@
       "StatusCode": 202
     },
     {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/providers/Microsoft.HDInsight/locations/East%20US/azureasyncoperations/d6eb8eda-c0f9-4989-b2b9-e2919053c1f5-0?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSERJbnNpZ2h0L2xvY2F0aW9ucy9FYXN0JTIwVVMvYXp1cmVhc3luY29wZXJhdGlvbnMvZDZlYjhlZGEtYzBmOS00OTg5LWIyYjktZTI5MTkwNTNjMWY1LTA/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/providers/Microsoft.HDInsight/locations/West%20US/azureasyncoperations/21321ad7-6269-40aa-89b9-fb1613d82998-0?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Byb3ZpZGVycy9NaWNyb3NvZnQuSERJbnNpZ2h0L2xvY2F0aW9ucy9XZXN0JTIwVVMvYXp1cmVhc3luY29wZXJhdGlvbnMvMjEzMjFhZDctNjI2OS00MGFhLTg5YjktZmIxNjEzZDgyOTk4LTA/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "ARM",
           "SDK",
-          "v1.0.12-preview"
+          "v1.3.0"
         ],
         "x-ms-version": [
           "2015-03-01-preview"
@@ -1688,16 +512,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "d7a98d55-91ee-4b91-a46b-878dc370c78f"
+          "8cfa8402-f63a-4c3c-96da-ec67ba321ee2"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14883"
+          "14945"
         ],
         "x-ms-correlation-request-id": [
-          "b708ff7f-3d44-4e49-a602-30df9f3a847b"
+          "3285fa7b-f7a8-4a0f-b09f-eb9b8985612d"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T064500Z:b708ff7f-3d44-4e49-a602-30df9f3a847b"
+          "CENTRALUS:20161014T035853Z:3285fa7b-f7a8-4a0f-b09f-eb9b8985612d"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1706,7 +530,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 25 Sep 2016 06:44:59 GMT"
+          "Fri, 14 Oct 2016 03:58:53 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -1718,15 +542,15 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/providers/Microsoft.HDInsight/locations/East%20US/azureasyncoperations/d6eb8eda-c0f9-4989-b2b9-e2919053c1f5-0?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSERJbnNpZ2h0L2xvY2F0aW9ucy9FYXN0JTIwVVMvYXp1cmVhc3luY29wZXJhdGlvbnMvZDZlYjhlZGEtYzBmOS00OTg5LWIyYjktZTI5MTkwNTNjMWY1LTA/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/providers/Microsoft.HDInsight/locations/West%20US/azureasyncoperations/21321ad7-6269-40aa-89b9-fb1613d82998-0?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Byb3ZpZGVycy9NaWNyb3NvZnQuSERJbnNpZ2h0L2xvY2F0aW9ucy9XZXN0JTIwVVMvYXp1cmVhc3luY29wZXJhdGlvbnMvMjEzMjFhZDctNjI2OS00MGFhLTg5YjktZmIxNjEzZDgyOTk4LTA/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "ARM",
           "SDK",
-          "v1.0.12-preview"
+          "v1.3.0"
         ],
         "x-ms-version": [
           "2015-03-01-preview"
@@ -1747,16 +571,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "ca89f371-a9bb-4910-8557-670b1518b5cb"
+          "99427e12-4811-4648-9834-f279e7bce003"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14882"
+          "14944"
         ],
         "x-ms-correlation-request-id": [
-          "fc3fb991-937a-4349-88b6-bb8898ce6437"
+          "ffd81324-dd8d-48b4-8dc2-d87c3f88b076"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T064600Z:fc3fb991-937a-4349-88b6-bb8898ce6437"
+          "CENTRALUS:20161014T035954Z:ffd81324-dd8d-48b4-8dc2-d87c3f88b076"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1765,7 +589,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 25 Sep 2016 06:46:00 GMT"
+          "Fri, 14 Oct 2016 03:59:53 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -1777,15 +601,15 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/providers/Microsoft.HDInsight/locations/East%20US/azureasyncoperations/d6eb8eda-c0f9-4989-b2b9-e2919053c1f5-0?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSERJbnNpZ2h0L2xvY2F0aW9ucy9FYXN0JTIwVVMvYXp1cmVhc3luY29wZXJhdGlvbnMvZDZlYjhlZGEtYzBmOS00OTg5LWIyYjktZTI5MTkwNTNjMWY1LTA/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/providers/Microsoft.HDInsight/locations/West%20US/azureasyncoperations/21321ad7-6269-40aa-89b9-fb1613d82998-0?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Byb3ZpZGVycy9NaWNyb3NvZnQuSERJbnNpZ2h0L2xvY2F0aW9ucy9XZXN0JTIwVVMvYXp1cmVhc3luY29wZXJhdGlvbnMvMjEzMjFhZDctNjI2OS00MGFhLTg5YjktZmIxNjEzZDgyOTk4LTA/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "ARM",
           "SDK",
-          "v1.0.12-preview"
+          "v1.3.0"
         ],
         "x-ms-version": [
           "2015-03-01-preview"
@@ -1806,16 +630,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "7ce09a9f-c2af-4e74-8d29-232877665fe1"
+          "dc4d6f8c-e538-4131-9a87-1480566938e9"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14881"
+          "14948"
         ],
         "x-ms-correlation-request-id": [
-          "d0dc448e-1d94-41bf-bb6b-06ed98f016a4"
+          "613ad995-654c-4243-a0bc-6b5458d2f319"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T064701Z:d0dc448e-1d94-41bf-bb6b-06ed98f016a4"
+          "CENTRALUS:20161014T040054Z:613ad995-654c-4243-a0bc-6b5458d2f319"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1824,7 +648,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 25 Sep 2016 06:47:00 GMT"
+          "Fri, 14 Oct 2016 04:00:53 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -1836,15 +660,15 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/providers/Microsoft.HDInsight/locations/East%20US/azureasyncoperations/d6eb8eda-c0f9-4989-b2b9-e2919053c1f5-0?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSERJbnNpZ2h0L2xvY2F0aW9ucy9FYXN0JTIwVVMvYXp1cmVhc3luY29wZXJhdGlvbnMvZDZlYjhlZGEtYzBmOS00OTg5LWIyYjktZTI5MTkwNTNjMWY1LTA/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/providers/Microsoft.HDInsight/locations/West%20US/azureasyncoperations/21321ad7-6269-40aa-89b9-fb1613d82998-0?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Byb3ZpZGVycy9NaWNyb3NvZnQuSERJbnNpZ2h0L2xvY2F0aW9ucy9XZXN0JTIwVVMvYXp1cmVhc3luY29wZXJhdGlvbnMvMjEzMjFhZDctNjI2OS00MGFhLTg5YjktZmIxNjEzZDgyOTk4LTA/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "ARM",
           "SDK",
-          "v1.0.12-preview"
+          "v1.3.0"
         ],
         "x-ms-version": [
           "2015-03-01-preview"
@@ -1865,16 +689,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "b989184f-6bdb-4362-9253-261e0c55aceb"
+          "d3da6f4a-57a7-4b21-8aff-a0cadc7c9b16"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14879"
+          "14947"
         ],
         "x-ms-correlation-request-id": [
-          "5af25b86-f3d8-46ac-ba4b-520e41230408"
+          "767ffb6f-1bf5-402f-863c-98c70c6f87f2"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T064801Z:5af25b86-f3d8-46ac-ba4b-520e41230408"
+          "CENTRALUS:20161014T040155Z:767ffb6f-1bf5-402f-863c-98c70c6f87f2"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1883,7 +707,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 25 Sep 2016 06:48:00 GMT"
+          "Fri, 14 Oct 2016 04:01:54 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -1895,15 +719,15 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/providers/Microsoft.HDInsight/locations/East%20US/azureasyncoperations/d6eb8eda-c0f9-4989-b2b9-e2919053c1f5-0?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSERJbnNpZ2h0L2xvY2F0aW9ucy9FYXN0JTIwVVMvYXp1cmVhc3luY29wZXJhdGlvbnMvZDZlYjhlZGEtYzBmOS00OTg5LWIyYjktZTI5MTkwNTNjMWY1LTA/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/providers/Microsoft.HDInsight/locations/West%20US/azureasyncoperations/21321ad7-6269-40aa-89b9-fb1613d82998-0?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Byb3ZpZGVycy9NaWNyb3NvZnQuSERJbnNpZ2h0L2xvY2F0aW9ucy9XZXN0JTIwVVMvYXp1cmVhc3luY29wZXJhdGlvbnMvMjEzMjFhZDctNjI2OS00MGFhLTg5YjktZmIxNjEzZDgyOTk4LTA/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "ARM",
           "SDK",
-          "v1.0.12-preview"
+          "v1.3.0"
         ],
         "x-ms-version": [
           "2015-03-01-preview"
@@ -1924,16 +748,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "ff190de0-6b37-401f-9d3e-6632004f08fb"
+          "3c802e83-5d94-468c-a343-648be556468c"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14875"
+          "14946"
         ],
         "x-ms-correlation-request-id": [
-          "aadeb35a-bc45-4b95-bd25-955fc96d8391"
+          "c83ecd69-cb7e-45bc-a287-d1b867e7b738"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T064901Z:aadeb35a-bc45-4b95-bd25-955fc96d8391"
+          "CENTRALUS:20161014T040255Z:c83ecd69-cb7e-45bc-a287-d1b867e7b738"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -1942,7 +766,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 25 Sep 2016 06:49:00 GMT"
+          "Fri, 14 Oct 2016 04:02:55 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -1954,15 +778,15 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/providers/Microsoft.HDInsight/locations/East%20US/azureasyncoperations/d6eb8eda-c0f9-4989-b2b9-e2919053c1f5-0?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSERJbnNpZ2h0L2xvY2F0aW9ucy9FYXN0JTIwVVMvYXp1cmVhc3luY29wZXJhdGlvbnMvZDZlYjhlZGEtYzBmOS00OTg5LWIyYjktZTI5MTkwNTNjMWY1LTA/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/providers/Microsoft.HDInsight/locations/West%20US/azureasyncoperations/21321ad7-6269-40aa-89b9-fb1613d82998-0?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Byb3ZpZGVycy9NaWNyb3NvZnQuSERJbnNpZ2h0L2xvY2F0aW9ucy9XZXN0JTIwVVMvYXp1cmVhc3luY29wZXJhdGlvbnMvMjEzMjFhZDctNjI2OS00MGFhLTg5YjktZmIxNjEzZDgyOTk4LTA/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "ARM",
           "SDK",
-          "v1.0.12-preview"
+          "v1.3.0"
         ],
         "x-ms-version": [
           "2015-03-01-preview"
@@ -1983,16 +807,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "a1cdf10a-77a6-450a-aa7c-05d59649a5bc"
+          "499d62a7-c1b4-4f57-8a18-0a8f1a2429fd"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14880"
+          "14944"
         ],
         "x-ms-correlation-request-id": [
-          "de3b1714-c7a1-4488-a8cf-2606c7759204"
+          "adbab227-7d42-464e-bbc1-2a9de36d8028"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T065002Z:de3b1714-c7a1-4488-a8cf-2606c7759204"
+          "CENTRALUS:20161014T040355Z:adbab227-7d42-464e-bbc1-2a9de36d8028"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2001,7 +825,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 25 Sep 2016 06:50:01 GMT"
+          "Fri, 14 Oct 2016 04:03:55 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -2013,15 +837,15 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/26d6d535-5164-443d-82f6-4c695caf7688/providers/Microsoft.HDInsight/locations/East%20US/azureasyncoperations/d6eb8eda-c0f9-4989-b2b9-e2919053c1f5-0?api-version=2015-03-01-preview",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMjZkNmQ1MzUtNTE2NC00NDNkLTgyZjYtNGM2OTVjYWY3Njg4L3Byb3ZpZGVycy9NaWNyb3NvZnQuSERJbnNpZ2h0L2xvY2F0aW9ucy9FYXN0JTIwVVMvYXp1cmVhc3luY29wZXJhdGlvbnMvZDZlYjhlZGEtYzBmOS00OTg5LWIyYjktZTI5MTkwNTNjMWY1LTA/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
+      "RequestUri": "/subscriptions/964c10bb-8a6c-43bc-83d3-6b318c6c7305/providers/Microsoft.HDInsight/locations/West%20US/azureasyncoperations/21321ad7-6269-40aa-89b9-fb1613d82998-0?api-version=2015-03-01-preview",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvOTY0YzEwYmItOGE2Yy00M2JjLTgzZDMtNmIzMThjNmM3MzA1L3Byb3ZpZGVycy9NaWNyb3NvZnQuSERJbnNpZ2h0L2xvY2F0aW9ucy9XZXN0JTIwVVMvYXp1cmVhc3luY29wZXJhdGlvbnMvMjEzMjFhZDctNjI2OS00MGFhLTg5YjktZmIxNjEzZDgyOTk4LTA/YXBpLXZlcnNpb249MjAxNS0wMy0wMS1wcmV2aWV3",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
         "User-Agent": [
           "ARM",
           "SDK",
-          "v1.0.12-preview"
+          "v1.3.0"
         ],
         "x-ms-version": [
           "2015-03-01-preview"
@@ -2042,16 +866,16 @@
           "no-cache"
         ],
         "x-ms-request-id": [
-          "a267011d-a256-4ec1-bb30-1d71b47293f6"
+          "2023d39f-6995-489a-b85f-83d4623f8ff2"
         ],
         "x-ms-ratelimit-remaining-subscription-reads": [
-          "14878"
+          "14943"
         ],
         "x-ms-correlation-request-id": [
-          "21b16525-cae3-4834-9b96-50be2f1d5861"
+          "7bdd32b8-d31b-48e8-9afd-33571e04cb39"
         ],
         "x-ms-routing-request-id": [
-          "CENTRALUS:20160925T065102Z:21b16525-cae3-4834-9b96-50be2f1d5861"
+          "CENTRALUS:20161014T040456Z:7bdd32b8-d31b-48e8-9afd-33571e04cb39"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
@@ -2060,7 +884,7 @@
           "no-cache"
         ],
         "Date": [
-          "Sun, 25 Sep 2016 06:51:02 GMT"
+          "Fri, 14 Oct 2016 04:04:55 GMT"
         ],
         "Server": [
           "Microsoft-IIS/8.5"
@@ -2074,10 +898,10 @@
   ],
   "Names": {
     "CreateResourceGroup": [
-      "hdi4535"
+      "hdi8061"
     ]
   },
   "Variables": {
-    "SubscriptionId": "26d6d535-5164-443d-82f6-4c695caf7688"
+    "SubscriptionId": "964c10bb-8a6c-43bc-83d3-6b318c6c7305"
   }
 }

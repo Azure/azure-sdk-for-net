@@ -122,13 +122,15 @@ namespace HDInsight.Tests
                     cluster.Cluster.Properties.ConnectivityEndpoints.Any(
                         c => c.Name.Equals("RDP", StringComparison.OrdinalIgnoreCase)));
 
+                HDInsightManagementTestUtilities.WaitForClusterToMoveToRunning(resourceGroup, dnsname, client);
+
                 client.Clusters.DisableRdp(resourceGroup, dnsname);
                 cluster = client.Clusters.Get(resourceGroup, dnsname);
                 Assert.False(
                     cluster.Cluster.Properties.ConnectivityEndpoints.Any(
                         c => c.Name.Equals("RDP", StringComparison.OrdinalIgnoreCase)));
 
-                client.Clusters.EnableRdp(resourceGroup, dnsname, "rdpuser", "Password1!", new DateTime(2016, 10, 12));
+                client.Clusters.EnableRdp(resourceGroup, dnsname, "rdpuser", "Password1!", new DateTime(2018, 10, 12));
                 cluster = client.Clusters.Get(resourceGroup, dnsname);
                 Assert.True(
                     cluster.Cluster.Properties.ConnectivityEndpoints.Any(

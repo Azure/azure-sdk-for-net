@@ -25,7 +25,7 @@ namespace HDInsight.Tests.Helpers
         private const string DefaultContainer = "";
         private const string StorageAccountName = "";
         private const string StorageAccountKey = "";
-        private const string SshKey = "";
+		private const string SshKey = "";
         private const string SshUser = "";
         private const string SshPassword = "";
         private const string HttpUser = "";
@@ -146,7 +146,7 @@ namespace HDInsight.Tests.Helpers
         {
             var cluster = new ClusterCreateParametersExtended
             {
-                Location = "East US",
+                Location = "West US",
                 Properties = new ClusterCreateProperties
                 {
                     ClusterDefinition = new ClusterDefinition
@@ -233,7 +233,7 @@ namespace HDInsight.Tests.Helpers
                 UserName = HttpUser,
                 Password = HttpPassword,
                 DefaultStorageContainer = DefaultContainer,
-                Location =  "East US"
+                Location =  "West US"
             };
             var actions = new List<ScriptAction>();
             var action = new ScriptAction("action", new Uri("https://uri.com"), "params");
@@ -257,7 +257,7 @@ namespace HDInsight.Tests.Helpers
                 UserName = HttpUser,
                 Password = HttpPassword,
                 DefaultStorageContainer = DefaultContainer,
-                Location = "East US",
+                Location = "West US",
                 SshUserName = SshUser,
                 SshPassword = SshPassword,
                 Version = "3.2"
@@ -278,7 +278,7 @@ namespace HDInsight.Tests.Helpers
                 UserName = HttpUser,
                 Password = HttpPassword,
                 DefaultStorageContainer = DefaultContainer,
-                Location = "East US",
+                Location = "West US",
                 SshUserName = SshUser,
                 SshPassword = SshPassword,
                 Version = "3.2",
@@ -314,7 +314,7 @@ namespace HDInsight.Tests.Helpers
             var clusterparams = GetCustomCreateParametersIaas();
             clusterparams.Version = "3.5";
             clusterparams.ClusterType = "Spark";
-            clusterparams.ComponentVersion.Add("Spark", "1.6.2");
+            clusterparams.ComponentVersion.Add("Spark", "2.0");
             return clusterparams;
         }
 

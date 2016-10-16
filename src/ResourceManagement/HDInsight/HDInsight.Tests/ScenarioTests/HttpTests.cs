@@ -13,6 +13,8 @@
 // limitations under the License.
 //
 
+using System;
+using System.Linq;
 using System.Net;
 using HDInsight.Tests.Helpers;
 using Hyak.Common;
@@ -84,7 +86,7 @@ namespace HDInsight.Tests
                 var resourceManagementClient = HDInsightManagementTestUtilities.GetResourceManagementClient(handler);
 
                 var resourceGroup = HDInsightManagementTestUtilities.CreateResourceGroup(resourceManagementClient);
-                const string dnsname = "hdisdk-httptest2";
+                const string dnsname = "hdisdk-httptest3";
 
                 var spec = GetClusterSpecHelpers.GetPaasClusterSpec();
 
@@ -134,7 +136,16 @@ namespace HDInsight.Tests
 
                 var spec = GetClusterSpecHelpers.GetPaasClusterSpec();
 
-                client.Clusters.Create(resourceGroup, dnsname, spec);
+                var cluster = client.Clusters.Create(resourceGroup, dnsname, spec);
+
+                string errorMessage = cluster.Cluster.Properties.ErrorInfos.Any()
+                    ? cluster.Cluster.Properties.ErrorInfos[0].Message
+                    : String.Empty;
+
+                Assert.True(cluster.Cluster.Properties.ClusterState.Equals("Running", StringComparison.OrdinalIgnoreCase),
+                    String.Format("Cluster Creation Failed ErrorInfo: {0}", errorMessage));
+
+                HDInsightManagementTestUtilities.WaitForClusterToMoveToRunning(resourceGroup, dnsname, client);
 
                 var httpSettings = client.Clusters.GetConnectivitySettings(resourceGroup, dnsname);
                 Assert.True(httpSettings.HttpUserEnabled);
