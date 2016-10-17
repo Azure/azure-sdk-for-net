@@ -20,7 +20,7 @@
   },
 
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime": "[2.3.2,3.0)",
+    "Microsoft.Rest.ClientRuntime": "[2.3.3,3.0)",
     "log4net": "2.0.3"
   },
 
