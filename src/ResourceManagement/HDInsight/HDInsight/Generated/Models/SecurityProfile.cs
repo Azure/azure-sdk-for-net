@@ -29,39 +29,82 @@ namespace Microsoft.Azure.Management.HDInsight.Models
 {
     public partial class SecurityProfile
     {
-        private ActiveDirectoryConfiguration _activeDirectoryConfiguration;
+        private IList<string> _clusterUsersGroupDNs;
         
         /// <summary>
-        /// Optional. Gets or sets the active directory configuration.
+        /// Optional. Optional. Gets or sets the Distinguished Names for
+        /// cluster user groups
         /// </summary>
-        public ActiveDirectoryConfiguration ActiveDirectoryConfiguration
+        public IList<string> ClusterUsersGroupDNs
         {
-            get { return this._activeDirectoryConfiguration; }
-            set { this._activeDirectoryConfiguration = value; }
+            get { return this._clusterUsersGroupDNs; }
+            set { this._clusterUsersGroupDNs = value; }
         }
         
-        private string _roleAdminGroupDN;
+        private DirectoryType _directoryType;
         
         /// <summary>
-        /// Optional. Optional. Gets or sets the Distinguished Name for role
-        /// admin group.
+        /// Optional. Gets or sets the directory type.
         /// </summary>
-        public string RoleAdminGroupDN
+        public DirectoryType DirectoryType
         {
-            get { return this._roleAdminGroupDN; }
-            set { this._roleAdminGroupDN = value; }
+            get { return this._directoryType; }
+            set { this._directoryType = value; }
         }
         
-        private IList<string> _roleUsersGroupDNs;
+        private string _domain;
         
         /// <summary>
-        /// Optional. Optional. Gets or sets the Distinguished Names for user
-        /// groups
+        /// Optional. Gets or sets the domain.
         /// </summary>
-        public IList<string> RoleUsersGroupDNs
+        public string Domain
         {
-            get { return this._roleUsersGroupDNs; }
-            set { this._roleUsersGroupDNs = value; }
+            get { return this._domain; }
+            set { this._domain = value; }
+        }
+        
+        private string _domainUsername;
+        
+        /// <summary>
+        /// Optional. Gets or sets the domain admin user name.
+        /// </summary>
+        public string DomainUsername
+        {
+            get { return this._domainUsername; }
+            set { this._domainUsername = value; }
+        }
+        
+        private string _domainUserPassword;
+        
+        /// <summary>
+        /// Optional. Gets or sets the domain admin password.
+        /// </summary>
+        public string DomainUserPassword
+        {
+            get { return this._domainUserPassword; }
+            set { this._domainUserPassword = value; }
+        }
+        
+        private IList<string> _ldapsUrls;
+        
+        /// <summary>
+        /// Optional. Gets or sets the LDAP URLs.
+        /// </summary>
+        public IList<string> LdapsUrls
+        {
+            get { return this._ldapsUrls; }
+            set { this._ldapsUrls = value; }
+        }
+        
+        private string _organizationalUnitDN;
+        
+        /// <summary>
+        /// Optional. Gets or sets Distinguished Name for organizational unit.
+        /// </summary>
+        public string OrganizationalUnitDN
+        {
+            get { return this._organizationalUnitDN; }
+            set { this._organizationalUnitDN = value; }
         }
         
         /// <summary>
@@ -69,7 +112,8 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         public SecurityProfile()
         {
-            this.RoleUsersGroupDNs = new LazyList<string>();
+            this.ClusterUsersGroupDNs = new LazyList<string>();
+            this.LdapsUrls = new LazyList<string>();
         }
     }
 }

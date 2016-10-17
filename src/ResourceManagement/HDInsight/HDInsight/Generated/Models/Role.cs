@@ -76,17 +76,6 @@ namespace Microsoft.Azure.Management.HDInsight.Models
             set { this._scriptActions = value; }
         }
         
-        private SecurityProfile _securityProfile;
-        
-        /// <summary>
-        /// Optional. Gets or sets the security profile.
-        /// </summary>
-        public SecurityProfile SecurityProfile
-        {
-            get { return this._securityProfile; }
-            set { this._securityProfile = value; }
-        }
-        
         private int _targetInstanceCount;
         
         /// <summary>

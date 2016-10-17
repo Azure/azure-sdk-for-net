@@ -154,6 +154,17 @@ namespace Microsoft.Azure.Management.HDInsight.Models
             set { this._quotaInfo = value; }
         }
         
+        private SecurityProfile _securityProfile;
+        
+        /// <summary>
+        /// Optional. Gets or sets the security profile.
+        /// </summary>
+        public SecurityProfile SecurityProfile
+        {
+            get { return this._securityProfile; }
+            set { this._securityProfile = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the ClusterGetProperties class.
         /// </summary>
