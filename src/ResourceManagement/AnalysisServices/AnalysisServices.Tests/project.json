@@ -4,6 +4,7 @@
   "authors": [ "Microsoft Corporation" ],
 
   "packOptions": {
+    "summary": "AnalysisServices.Tests tests.",
     "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
     "tags": [ "" ],
     "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
