@@ -144,37 +144,6 @@ namespace Microsoft.Azure.Management.Cdn
         /// </exception>
         System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<CustomDomain>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string customDomainName, string hostName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
-        /// Updates an existing CDN custom domain within an endpoint.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
-        /// </param>
-        /// <param name='profileName'>
-        /// Name of the CDN profile within the resource group.
-        /// </param>
-        /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile.
-        /// </param>
-        /// <param name='customDomainName'>
-        /// Name of the custom domain within an endpoint.
-        /// </param>
-        /// <param name='hostName'>
-        /// The host name of the custom domain. Must be a domain name.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<ErrorResponse>> UpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string customDomainName, string hostName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        /// <summary>
         /// Deletes an existing CDN custom domain within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>

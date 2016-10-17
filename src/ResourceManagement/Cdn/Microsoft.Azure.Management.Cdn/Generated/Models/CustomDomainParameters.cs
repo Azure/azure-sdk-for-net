@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
     /// CustomDomain properties required for custom domain creation or update.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class CustomDomainParameters : Microsoft.Rest.Azure.IResource
+    public partial class CustomDomainParameters
     {
         /// <summary>
         /// Initializes a new instance of the CustomDomainParameters class.

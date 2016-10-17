@@ -232,64 +232,6 @@ namespace Microsoft.Azure.Management.Cdn
             }
 
             /// <summary>
-            /// Updates an existing CDN custom domain within an endpoint.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
-            /// </param>
-            /// <param name='customDomainName'>
-            /// Name of the custom domain within an endpoint.
-            /// </param>
-            /// <param name='hostName'>
-            /// The host name of the custom domain. Must be a domain name.
-            /// </param>
-            public static ErrorResponse Update(this ICustomDomainsOperations operations, string resourceGroupName, string profileName, string endpointName, string customDomainName, string hostName)
-            {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICustomDomainsOperations)s).UpdateAsync(resourceGroupName, profileName, endpointName, customDomainName, hostName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates an existing CDN custom domain within an endpoint.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
-            /// </param>
-            /// <param name='customDomainName'>
-            /// Name of the custom domain within an endpoint.
-            /// </param>
-            /// <param name='hostName'>
-            /// The host name of the custom domain. Must be a domain name.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task<ErrorResponse> UpdateAsync(this ICustomDomainsOperations operations, string resourceGroupName, string profileName, string endpointName, string customDomainName, string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, customDomainName, hostName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Deletes an existing CDN custom domain within an endpoint.
             /// </summary>
             /// <param name='operations'>

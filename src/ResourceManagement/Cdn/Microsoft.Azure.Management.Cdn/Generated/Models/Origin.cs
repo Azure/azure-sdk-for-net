@@ -41,7 +41,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <param name="resourceState">Resource status of the origin.
         /// Possible values include: 'Creating', 'Active', 'Deleting'</param>
         /// <param name="provisioningState">Provisioning status of the
-        /// endpoint.</param>
+        /// origin.</param>
         public Origin(string location, string hostName, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), int? httpPort = default(int?), int? httpsPort = default(int?), string resourceState = default(string), string provisioningState = default(string))
             : base(location, id, name, type, tags)
         {
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public string ResourceState { get; private set; }
 
         /// <summary>
-        /// Gets provisioning status of the endpoint.
+        /// Gets provisioning status of the origin.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; private set; }

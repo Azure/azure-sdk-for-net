@@ -36,9 +36,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <param name="resourceState">Resource status of the custom domain.
         /// Possible values include: 'Creating', 'Active', 'Deleting'</param>
         /// <param name="provisioningState">Provisioning status of the custom
-        /// domain. Possible values include: 'Creating', 'Succeeded',
-        /// 'Failed'</param>
-        public CustomDomain(string location, string hostName, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string resourceState = default(string), ProvisioningState? provisioningState = default(ProvisioningState?))
+        /// domain.</param>
+        public CustomDomain(string location, string hostName, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string resourceState = default(string), string provisioningState = default(string))
             : base(location, id, name, type, tags)
         {
             HostName = hostName;
@@ -61,11 +60,10 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public string ResourceState { get; private set; }
 
         /// <summary>
-        /// Gets or sets provisioning status of the custom domain. Possible
-        /// values include: 'Creating', 'Succeeded', 'Failed'
+        /// Gets provisioning status of the custom domain.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
-        public ProvisioningState? ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Validate the object.
