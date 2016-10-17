@@ -1,5 +1,5 @@
 {
-  "version": "1.4.3-preview",
+  "version": "1.4.4-preview",
   "description": "Provides resource group and resource management capabilities for Microsoft Azure.",
   "authors": [ "Microsoft" ],
 
@@ -24,8 +24,7 @@
   "frameworks": {
     "net45": {
       "dependencies": {
-        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.2,4.0.0)",
-        "Microsoft.Rest.ClientRuntime.Azure.Additions": "0.0.4-preview"
+        "Microsoft.Rest.ClientRuntime.Azure": "[3.4.0,4.0.0)"
       }
     },
     "netstandard1.5": {
@@ -44,16 +43,14 @@
         "System.Linq": "4.1.0",
         "System.Runtime": "4.1.0",
         "System.Net.Http": "4.1.0",
-        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.2,4.0.0)",
-        "Microsoft.Rest.ClientRuntime.Azure.Additions": "0.0.4-preview"
+        "Microsoft.Rest.ClientRuntime.Azure": "[3.4.0,4.0.0)"
       }
     },
     "netstandard1.1": {
       "imports": ["dnxcore50"],
       "dependencies": {
         "System.Runtime.Serialization.Primitives": "4.1.1",
-        "Microsoft.Rest.ClientRuntime.Azure": "[3.3.2,4.0.0)",
-        "Microsoft.Rest.ClientRuntime.Azure.Additions": "0.0.4-preview"
+        "Microsoft.Rest.ClientRuntime.Azure": "[3.4.0,4.0.0)"
       }
     }
   },

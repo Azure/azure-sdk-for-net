@@ -350,12 +350,12 @@ namespace Microsoft.Rest
                 else if (string.Equals(baseUri.Authority, AzureGermanCloudBaseUri.Authority,
                     StringComparison.OrdinalIgnoreCase))
                 {
-                    settings = ActiveDirectoryServiceSettingsConstants.AzureGermanCloud;
+                    settings = ActiveDirectoryServiceSettings.AzureGermanCloud;
                 }
                 else if (string.Equals(baseUri.Authority, AzureUSGovernmentCloudBaseUri.Authority,
                     StringComparison.OrdinalIgnoreCase))
                 {
-                    settings = ActiveDirectoryServiceSettingsConstants.AzureUSGovernmentCloud;
+                    settings = ActiveDirectoryServiceSettings.AzureUSGovernmentCloud;
                 }
             }
 
