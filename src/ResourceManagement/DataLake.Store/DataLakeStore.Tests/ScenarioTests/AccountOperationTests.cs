@@ -25,7 +25,7 @@ using Xunit;
 namespace DataLakeStore.Tests
 {
     public class AccountOperationTests : TestBase
-    {
+    {   
         private CommonTestFixture commonData;
 
         [Fact]
