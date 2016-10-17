@@ -12,14 +12,10 @@ namespace Microsoft.Azure.Management.Cdn.Models
     /// <summary>
     /// Defines values for OriginResourceState.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-    public enum OriginResourceState
+    public static class OriginResourceState
     {
-        [System.Runtime.Serialization.EnumMember(Value = "Creating")]
-        Creating,
-        [System.Runtime.Serialization.EnumMember(Value = "Active")]
-        Active,
-        [System.Runtime.Serialization.EnumMember(Value = "Deleting")]
-        Deleting
+        public const string Creating = "Creating";
+        public const string Active = "Active";
+        public const string Deleting = "Deleting";
     }
 }

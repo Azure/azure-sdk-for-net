@@ -40,9 +40,9 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// between 1 and 65535.</param>
         /// <param name="resourceState">Resource status of the origin.
         /// Possible values include: 'Creating', 'Active', 'Deleting'</param>
-        /// <param name="provisioningState">Provisioning status of the origin.
-        /// Possible values include: 'Creating', 'Succeeded', 'Failed'</param>
-        public Origin(string location, string hostName, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), int? httpPort = default(int?), int? httpsPort = default(int?), OriginResourceState? resourceState = default(OriginResourceState?), ProvisioningState? provisioningState = default(ProvisioningState?))
+        /// <param name="provisioningState">Provisioning status of the
+        /// endpoint.</param>
+        public Origin(string location, string hostName, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), int? httpPort = default(int?), int? httpsPort = default(int?), string resourceState = default(string), string provisioningState = default(string))
             : base(location, id, name, type, tags)
         {
             HostName = hostName;
@@ -78,14 +78,13 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// 'Creating', 'Active', 'Deleting'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.resourceState")]
-        public OriginResourceState? ResourceState { get; private set; }
+        public string ResourceState { get; private set; }
 
         /// <summary>
-        /// Gets or sets provisioning status of the origin. Possible values
-        /// include: 'Creating', 'Succeeded', 'Failed'
+        /// Gets provisioning status of the endpoint.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
-        public ProvisioningState? ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Validate the object.

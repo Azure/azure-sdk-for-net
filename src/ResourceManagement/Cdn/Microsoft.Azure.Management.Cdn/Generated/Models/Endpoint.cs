@@ -29,6 +29,9 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// Initializes a new instance of the Endpoint class.
         /// </summary>
         /// <param name="location">Resource location</param>
+        /// <param name="origins">The set of origins for the CDN endpoint.
+        /// When multiple origins exist, the first origin will be used as
+        /// primary and rest will be used as failover options.</param>
         /// <param name="id">Resource ID</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
@@ -56,18 +59,14 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <param name="queryStringCachingBehavior">Defines the query string
         /// caching behavior. Possible values include: 'IgnoreQueryString',
         /// 'BypassCaching', 'UseQueryString', 'NotSet'</param>
-        /// <param name="origins">The set of origins for the CDN endpoint.
-        /// When multiple origins exist, the first origin will be used as
-        /// primary and rest will be used as failover options.</param>
         /// <param name="geoFilters">The list of geo filters for the CDN
         /// endpoint.</param>
         /// <param name="resourceState">Resource status of the endpoint.
         /// Possible values include: 'Creating', 'Deleting', 'Running',
         /// 'Starting', 'Stopped', 'Stopping'</param>
         /// <param name="provisioningState">Provisioning status of the
-        /// endpoint. Possible values include: 'Creating', 'Succeeded',
-        /// 'Failed'</param>
-        public Endpoint(string location, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string hostName = default(string), string originHostHeader = default(string), string originPath = default(string), System.Collections.Generic.IList<string> contentTypesToCompress = default(System.Collections.Generic.IList<string>), bool? isCompressionEnabled = default(bool?), bool? isHttpAllowed = default(bool?), bool? isHttpsAllowed = default(bool?), QueryStringCachingBehavior? queryStringCachingBehavior = default(QueryStringCachingBehavior?), System.Collections.Generic.IList<DeepCreatedOrigin> origins = default(System.Collections.Generic.IList<DeepCreatedOrigin>), System.Collections.Generic.IList<GeoFilter> geoFilters = default(System.Collections.Generic.IList<GeoFilter>), EndpointResourceState? resourceState = default(EndpointResourceState?), ProvisioningState? provisioningState = default(ProvisioningState?))
+        /// endpoint.</param>
+        public Endpoint(string location, System.Collections.Generic.IList<DeepCreatedOrigin> origins, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string hostName = default(string), string originHostHeader = default(string), string originPath = default(string), System.Collections.Generic.IList<string> contentTypesToCompress = default(System.Collections.Generic.IList<string>), bool? isCompressionEnabled = default(bool?), bool? isHttpAllowed = default(bool?), bool? isHttpsAllowed = default(bool?), QueryStringCachingBehavior? queryStringCachingBehavior = default(QueryStringCachingBehavior?), System.Collections.Generic.IList<GeoFilter> geoFilters = default(System.Collections.Generic.IList<GeoFilter>), string resourceState = default(string), string provisioningState = default(string))
             : base(location, id, name, type, tags)
         {
             HostName = hostName;
@@ -165,14 +164,13 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// 'Stopping'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.resourceState")]
-        public EndpointResourceState? ResourceState { get; private set; }
+        public string ResourceState { get; private set; }
 
         /// <summary>
-        /// Gets or sets provisioning status of the endpoint. Possible values
-        /// include: 'Creating', 'Succeeded', 'Failed'
+        /// Gets provisioning status of the endpoint.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
-        public ProvisioningState? ProvisioningState { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// Validate the object.
@@ -183,6 +181,10 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public override void Validate()
         {
             base.Validate();
+            if (Origins == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Origins");
+            }
             if (this.Origins != null)
             {
                 foreach (var element in this.Origins)

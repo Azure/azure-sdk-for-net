@@ -59,7 +59,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // Create a cdn endpoint one origin should succeed
                 string endpointName = TestUtilities.GenerateName("endpoint");
-                var endpointCreateParameters = new EndpointCreateParameters
+                var endpointCreateParameters = new Endpoint
                 {
                     Location = "WestUs",
                     IsHttpAllowed = true,
@@ -74,25 +74,26 @@ namespace Cdn.Tests.ScenarioTests
                     }
                 };
 
-                var endpoint = cdnMgmtClient.Endpoints.Create(endpointName, endpointCreateParameters, profileName, resourceGroupName);
+                var endpoint = cdnMgmtClient.Endpoints.Create(resourceGroupName, profileName, endpointName, endpointCreateParameters);
 
                 // Create another origin on this endpoint should fail
                 string originName = TestUtilities.GenerateName("origin1");
-                var originParameters = new OriginParameters
+                var OriginUpdateParameters = new Origin
                 {
                     HostName = "host1.hello.com",
+                    Location = "WestUs",
                     HttpPort = 9874,
                     HttpsPort = 9090
                 };
 
                 Assert.ThrowsAny<ErrorResponseException>(() =>
                 {
-                    cdnMgmtClient.Origins.Create(originName, originParameters, endpointName, profileName, resourceGroupName);
+                    cdnMgmtClient.Origins.Create(resourceGroupName, profileName, originName, endpointName, OriginUpdateParameters);
                 });
 
                 // Create a cdn endpoint with invalid ports on origin should fail
                 endpointName = TestUtilities.GenerateName("endpoint");
-                endpointCreateParameters = new EndpointCreateParameters
+                endpointCreateParameters = new Endpoint
                 {
                     Location = "WestUs",
                     IsHttpAllowed = true,
@@ -111,7 +112,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 Assert.ThrowsAny<ErrorResponseException>(() =>
                 {
-                    cdnMgmtClient.Origins.Create(originName, originParameters, endpointName, profileName, resourceGroupName);
+                    cdnMgmtClient.Origins.Create(resourceGroupName, profileName, endpointName, originName, OriginUpdateParameters);
                 });
 
                 // Delete resource group
@@ -136,7 +137,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // Create a standard cdn profile
                 string profileName = TestUtilities.GenerateName("profile");
-                ProfileCreateParameters createParameters = new ProfileCreateParameters
+                var createParameters = new Profile
                 {
                     Location = "WestUs",
                     Sku = new Sku { Name = SkuName.StandardVerizon },
@@ -147,11 +148,11 @@ namespace Cdn.Tests.ScenarioTests
                         }
                 };
 
-                var profile = cdnMgmtClient.Profiles.Create(profileName, createParameters, resourceGroupName);
+                var profile = cdnMgmtClient.Profiles.Create(resourceGroupName, profileName, createParameters);
 
                 // Create a cdn endpoint with minimum requirements
                 string endpointName = TestUtilities.GenerateName("endpoint");
-                var endpointCreateParameters = new EndpointCreateParameters
+                var endpointCreateParameters = new Endpoint
                 {
                     Location = "WestUs",
                     IsHttpAllowed = true,
@@ -166,20 +167,20 @@ namespace Cdn.Tests.ScenarioTests
                     }
                 };
 
-                var endpoint = cdnMgmtClient.Endpoints.Create(endpointName, endpointCreateParameters, profileName, resourceGroupName);
+                var endpoint = cdnMgmtClient.Endpoints.Create(resourceGroupName, profileName, endpointName, endpointCreateParameters);
 
                 // Update origin on running endpoint should succeed
-                var originParameters = new OriginParameters
+                var OriginUpdateParameters = new OriginUpdateParameters
                 {
                     HostName = "www.bing.com",
                     HttpPort = 1234,
                     HttpsPort = 8081
                 };
 
-                cdnMgmtClient.Origins.Update("origin1", originParameters, endpointName, profileName, resourceGroupName);
+                cdnMgmtClient.Origins.Update(resourceGroupName, profileName, endpointName, "origin1", OriginUpdateParameters);
 
                 // Update origin with invalid hostname should fail
-                originParameters = new OriginParameters
+                OriginUpdateParameters = new OriginUpdateParameters
                 {
                     HostName = "invalid!Hostname&",
                     HttpPort = 1234,
@@ -188,23 +189,23 @@ namespace Cdn.Tests.ScenarioTests
 
                 Assert.ThrowsAny<ErrorResponseException>(() =>
                 {
-                    cdnMgmtClient.Origins.Update("origin1", originParameters, endpointName, profileName, resourceGroupName);
+                    cdnMgmtClient.Origins.Update(resourceGroupName, profileName, endpointName, "origin1", OriginUpdateParameters);
                 });
 
                 // Stop endpoint should succeed
-                cdnMgmtClient.Endpoints.Stop(endpointName, profileName, resourceGroupName);
+                cdnMgmtClient.Endpoints.Stop(resourceGroupName, profileName, endpointName);
 
                 // Update origin on stopped endpoint should succeed
-                originParameters = new OriginParameters
+                OriginUpdateParameters = new OriginUpdateParameters
                 {
                     HostName = "www.hello.com",
                     HttpPort = 1265
                 };
 
-                cdnMgmtClient.Origins.Update("origin1", originParameters, endpointName, profileName, resourceGroupName);
+                cdnMgmtClient.Origins.Update(resourceGroupName, profileName, endpointName, "origin1", OriginUpdateParameters);
 
                 // Update origin with invalid ports should fail
-                originParameters = new OriginParameters
+                OriginUpdateParameters = new OriginUpdateParameters
                 {
                     HttpPort = 99999,
                     HttpsPort = -2000
@@ -212,7 +213,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 Assert.ThrowsAny<ErrorResponseException>(() =>
                 {
-                    cdnMgmtClient.Origins.Update("origin1", originParameters, endpointName, profileName, resourceGroupName);
+                    cdnMgmtClient.Origins.Update(resourceGroupName, profileName, endpointName, "origin1", OriginUpdateParameters);
                 });
 
                 // Delete resource group
@@ -237,7 +238,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // Create a standard cdn profile
                 string profileName = TestUtilities.GenerateName("profile");
-                ProfileCreateParameters createParameters = new ProfileCreateParameters
+                var createParameters = new Profile
                 {
                     Location = "WestUs",
                     Sku = new Sku { Name = SkuName.StandardVerizon },
@@ -248,11 +249,11 @@ namespace Cdn.Tests.ScenarioTests
                         }
                 };
 
-                var profile = cdnMgmtClient.Profiles.Create(profileName, createParameters, resourceGroupName);
+                var profile = cdnMgmtClient.Profiles.Create(resourceGroupName, profileName, createParameters);
 
                 // Create a cdn endpoint with minimum requirements
                 string endpointName = TestUtilities.GenerateName("endpoint");
-                var endpointCreateParameters = new EndpointCreateParameters
+                var endpointCreateParameters = new Endpoint
                 {
                     Location = "WestUs",
                     IsHttpAllowed = true,
@@ -267,16 +268,16 @@ namespace Cdn.Tests.ScenarioTests
                     }
                 };
 
-                var endpoint = cdnMgmtClient.Endpoints.Create(endpointName, endpointCreateParameters, profileName, resourceGroupName);
+                var endpoint = cdnMgmtClient.Endpoints.Create(resourceGroupName, profileName, endpointName, endpointCreateParameters );
 
                 // Delete only origin on endpoint should fail
                 Assert.ThrowsAny<ErrorResponseException>(() =>
                 {
-                    cdnMgmtClient.Origins.DeleteIfExists("origin1", endpointName, profileName, resourceGroupName);
+                    cdnMgmtClient.Origins.Delete(resourceGroupName, profileName, endpointName, "origin1");
                 });
 
                 // Get origins on endpoint should return one
-                var origins = cdnMgmtClient.Origins.ListByEndpoint(endpointName, profileName, resourceGroupName);
+                var origins = cdnMgmtClient.Origins.ListByEndpoint(resourceGroupName, profileName, endpointName  );
                 Assert.Equal(1, origins.Count());
 
                 // Delete resource group
@@ -301,7 +302,7 @@ namespace Cdn.Tests.ScenarioTests
 
                 // Create a standard cdn profile
                 string profileName = TestUtilities.GenerateName("profile");
-                ProfileCreateParameters createParameters = new ProfileCreateParameters
+                var createParameters = new Profile
                 {
                     Location = "WestUs",
                     Sku = new Sku { Name = SkuName.StandardVerizon },
@@ -312,11 +313,11 @@ namespace Cdn.Tests.ScenarioTests
                         }
                 };
 
-                var profile = cdnMgmtClient.Profiles.Create(profileName, createParameters, resourceGroupName);
+                var profile = cdnMgmtClient.Profiles.Create(resourceGroupName, profileName, createParameters );
 
                 // Create a cdn endpoint with minimum requirements
                 string endpointName = TestUtilities.GenerateName("endpoint");
-                var endpointCreateParameters = new EndpointCreateParameters
+                var endpointCreateParameters = new Endpoint
                 {
                     Location = "WestUs",
                     IsHttpAllowed = true,
@@ -331,14 +332,14 @@ namespace Cdn.Tests.ScenarioTests
                     }
                 };
 
-                var endpoint = cdnMgmtClient.Endpoints.Create(endpointName, endpointCreateParameters, profileName, resourceGroupName);
+                var endpoint = cdnMgmtClient.Endpoints.Create(resourceGroupName, profileName, endpointName, endpointCreateParameters );
 
                 // Get origin on endpoint should return the deep created origin
-                var origin = cdnMgmtClient.Origins.Get("origin1", endpointName, profileName, resourceGroupName);
+                var origin = cdnMgmtClient.Origins.Get(resourceGroupName, profileName, endpointName, "origin1" );
                 Assert.NotNull(origin);
 
                 // Get origins on endpoint should return one
-                var origins = cdnMgmtClient.Origins.ListByEndpoint(endpointName, profileName, resourceGroupName);
+                var origins = cdnMgmtClient.Origins.ListByEndpoint(resourceGroupName, profileName, endpointName);
                 Assert.Equal(1, origins.Count());
 
                 // Delete resource group

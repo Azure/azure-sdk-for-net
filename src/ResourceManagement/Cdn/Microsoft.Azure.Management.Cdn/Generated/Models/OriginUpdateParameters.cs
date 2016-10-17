@@ -14,15 +14,15 @@ namespace Microsoft.Azure.Management.Cdn.Models
     /// Origin properties needed for origin creation or update.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class OriginParameters : Microsoft.Rest.Azure.IResource
+    public partial class OriginUpdateParameters : Microsoft.Rest.Azure.IResource
     {
         /// <summary>
-        /// Initializes a new instance of the OriginParameters class.
+        /// Initializes a new instance of the OriginUpdateParameters class.
         /// </summary>
-        public OriginParameters() { }
+        public OriginUpdateParameters() { }
 
         /// <summary>
-        /// Initializes a new instance of the OriginParameters class.
+        /// Initializes a new instance of the OriginUpdateParameters class.
         /// </summary>
         /// <param name="hostName">The address of the origin. Domain names,
         /// IPv4 addresses, and IPv6 addresses are supported.</param>
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// 1 and 65535.</param>
         /// <param name="httpsPort">The value of the HTTPS port. Must be
         /// between 1 and 65535.</param>
-        public OriginParameters(string hostName, int? httpPort = default(int?), int? httpsPort = default(int?))
+        public OriginUpdateParameters(string hostName = default(string), int? httpPort = default(int?), int? httpsPort = default(int?))
         {
             HostName = hostName;
             HttpPort = httpPort;
@@ -58,18 +58,5 @@ namespace Microsoft.Azure.Management.Cdn.Models
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.httpsPort")]
         public int? HttpsPort { get; set; }
 
-        /// <summary>
-        /// Validate the object.
-        /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown if validation fails
-        /// </exception>
-        public virtual void Validate()
-        {
-            if (HostName == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "HostName");
-            }
-        }
     }
 }

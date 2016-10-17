@@ -65,7 +65,7 @@ namespace Cdn.Tests.ScenarioTests
                 var profile = cdnMgmtClient.Profiles.Create(resourceGroupName, profileName, createParameters);
 
                 // Create endpoint with this name
-                var endpointCreateParameters = new EndpointCreateParameters
+                var endpointCreateParameters = new Endpoint
                 {
                     Location = "WestUs",
                     IsHttpAllowed = true,

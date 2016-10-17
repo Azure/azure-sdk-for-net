@@ -23,18 +23,18 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
             /// </param>
-            public static Microsoft.Rest.Azure.IPage<CustomDomain> ListByEndpoint(this ICustomDomainsOperations operations, string endpointName, string profileName, string resourceGroupName)
+            public static Microsoft.Rest.Azure.IPage<CustomDomain> ListByEndpoint(this ICustomDomainsOperations operations, string resourceGroupName, string profileName, string endpointName)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICustomDomainsOperations)s).ListByEndpointAsync(endpointName, profileName, resourceGroupName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICustomDomainsOperations)s).ListByEndpointAsync(resourceGroupName, profileName, endpointName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -43,21 +43,21 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Microsoft.Rest.Azure.IPage<CustomDomain>> ListByEndpointAsync(this ICustomDomainsOperations operations, string endpointName, string profileName, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<CustomDomain>> ListByEndpointAsync(this ICustomDomainsOperations operations, string resourceGroupName, string profileName, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.ListByEndpointWithHttpMessagesAsync(endpointName, profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByEndpointWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -69,21 +69,21 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='customDomainName'>
-            /// Name of the custom domain within an endpoint.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
             /// </param>
-            public static CustomDomain Get(this ICustomDomainsOperations operations, string customDomainName, string endpointName, string profileName, string resourceGroupName)
+            /// <param name='customDomainName'>
+            /// Name of the custom domain within an endpoint.
+            /// </param>
+            public static CustomDomain Get(this ICustomDomainsOperations operations, string resourceGroupName, string profileName, string endpointName, string customDomainName)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICustomDomainsOperations)s).GetAsync(customDomainName, endpointName, profileName, resourceGroupName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICustomDomainsOperations)s).GetAsync(resourceGroupName, profileName, endpointName, customDomainName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -92,24 +92,24 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='customDomainName'>
-            /// Name of the custom domain within an endpoint.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
+            /// </param>
+            /// <param name='customDomainName'>
+            /// Name of the custom domain within an endpoint.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<CustomDomain> GetAsync(this ICustomDomainsOperations operations, string customDomainName, string endpointName, string profileName, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<CustomDomain> GetAsync(this ICustomDomainsOperations operations, string resourceGroupName, string profileName, string endpointName, string customDomainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.GetWithHttpMessagesAsync(customDomainName, endpointName, profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, customDomainName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -121,24 +121,24 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='customDomainName'>
-            /// Name of the custom domain within an endpoint.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
+            /// </param>
+            /// <param name='customDomainName'>
+            /// Name of the custom domain within an endpoint.
             /// </param>
             /// <param name='hostName'>
             /// The host name of the custom domain. Must be a domain name.
             /// </param>
-            public static CustomDomain Create(this ICustomDomainsOperations operations, string customDomainName, string endpointName, string profileName, string resourceGroupName, string hostName)
+            public static CustomDomain Create(this ICustomDomainsOperations operations, string resourceGroupName, string profileName, string endpointName, string customDomainName, string hostName)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICustomDomainsOperations)s).CreateAsync(customDomainName, endpointName, profileName, resourceGroupName, hostName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICustomDomainsOperations)s).CreateAsync(resourceGroupName, profileName, endpointName, customDomainName, hostName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -147,17 +147,17 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='customDomainName'>
-            /// Name of the custom domain within an endpoint.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
+            /// </param>
+            /// <param name='customDomainName'>
+            /// Name of the custom domain within an endpoint.
             /// </param>
             /// <param name='hostName'>
             /// The host name of the custom domain. Must be a domain name.
@@ -165,9 +165,9 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<CustomDomain> CreateAsync(this ICustomDomainsOperations operations, string customDomainName, string endpointName, string profileName, string resourceGroupName, string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<CustomDomain> CreateAsync(this ICustomDomainsOperations operations, string resourceGroupName, string profileName, string endpointName, string customDomainName, string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(customDomainName, endpointName, profileName, resourceGroupName, hostName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, customDomainName, hostName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -179,24 +179,24 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='customDomainName'>
-            /// Name of the custom domain within an endpoint.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
+            /// </param>
+            /// <param name='customDomainName'>
+            /// Name of the custom domain within an endpoint.
             /// </param>
             /// <param name='hostName'>
             /// The host name of the custom domain. Must be a domain name.
             /// </param>
-            public static CustomDomain BeginCreate(this ICustomDomainsOperations operations, string customDomainName, string endpointName, string profileName, string resourceGroupName, string hostName)
+            public static CustomDomain BeginCreate(this ICustomDomainsOperations operations, string resourceGroupName, string profileName, string endpointName, string customDomainName, string hostName)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICustomDomainsOperations)s).BeginCreateAsync(customDomainName, endpointName, profileName, resourceGroupName, hostName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICustomDomainsOperations)s).BeginCreateAsync(resourceGroupName, profileName, endpointName, customDomainName, hostName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -205,17 +205,17 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='customDomainName'>
-            /// Name of the custom domain within an endpoint.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
+            /// </param>
+            /// <param name='customDomainName'>
+            /// Name of the custom domain within an endpoint.
             /// </param>
             /// <param name='hostName'>
             /// The host name of the custom domain. Must be a domain name.
@@ -223,9 +223,9 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<CustomDomain> BeginCreateAsync(this ICustomDomainsOperations operations, string customDomainName, string endpointName, string profileName, string resourceGroupName, string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<CustomDomain> BeginCreateAsync(this ICustomDomainsOperations operations, string resourceGroupName, string profileName, string endpointName, string customDomainName, string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(customDomainName, endpointName, profileName, resourceGroupName, hostName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, customDomainName, hostName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -237,24 +237,24 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='customDomainName'>
-            /// Name of the custom domain within an endpoint.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
+            /// </param>
+            /// <param name='customDomainName'>
+            /// Name of the custom domain within an endpoint.
             /// </param>
             /// <param name='hostName'>
             /// The host name of the custom domain. Must be a domain name.
             /// </param>
-            public static ErrorResponse Update(this ICustomDomainsOperations operations, string customDomainName, string endpointName, string profileName, string resourceGroupName, string hostName)
+            public static ErrorResponse Update(this ICustomDomainsOperations operations, string resourceGroupName, string profileName, string endpointName, string customDomainName, string hostName)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICustomDomainsOperations)s).UpdateAsync(customDomainName, endpointName, profileName, resourceGroupName, hostName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICustomDomainsOperations)s).UpdateAsync(resourceGroupName, profileName, endpointName, customDomainName, hostName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -263,17 +263,17 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='customDomainName'>
-            /// Name of the custom domain within an endpoint.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
+            /// </param>
+            /// <param name='customDomainName'>
+            /// Name of the custom domain within an endpoint.
             /// </param>
             /// <param name='hostName'>
             /// The host name of the custom domain. Must be a domain name.
@@ -281,9 +281,9 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<ErrorResponse> UpdateAsync(this ICustomDomainsOperations operations, string customDomainName, string endpointName, string profileName, string resourceGroupName, string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<ErrorResponse> UpdateAsync(this ICustomDomainsOperations operations, string resourceGroupName, string profileName, string endpointName, string customDomainName, string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(customDomainName, endpointName, profileName, resourceGroupName, hostName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, customDomainName, hostName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -295,21 +295,21 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='customDomainName'>
-            /// Name of the custom domain within an endpoint.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
             /// </param>
-            public static CustomDomain Delete(this ICustomDomainsOperations operations, string customDomainName, string endpointName, string profileName, string resourceGroupName)
+            /// <param name='customDomainName'>
+            /// Name of the custom domain within an endpoint.
+            /// </param>
+            public static CustomDomain Delete(this ICustomDomainsOperations operations, string resourceGroupName, string profileName, string endpointName, string customDomainName)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICustomDomainsOperations)s).DeleteAsync(customDomainName, endpointName, profileName, resourceGroupName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICustomDomainsOperations)s).DeleteAsync(resourceGroupName, profileName, endpointName, customDomainName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -318,24 +318,24 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='customDomainName'>
-            /// Name of the custom domain within an endpoint.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
+            /// </param>
+            /// <param name='customDomainName'>
+            /// Name of the custom domain within an endpoint.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<CustomDomain> DeleteAsync(this ICustomDomainsOperations operations, string customDomainName, string endpointName, string profileName, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<CustomDomain> DeleteAsync(this ICustomDomainsOperations operations, string resourceGroupName, string profileName, string endpointName, string customDomainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.DeleteWithHttpMessagesAsync(customDomainName, endpointName, profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, customDomainName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -347,21 +347,21 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='customDomainName'>
-            /// Name of the custom domain within an endpoint.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
             /// </param>
-            public static CustomDomain BeginDelete(this ICustomDomainsOperations operations, string customDomainName, string endpointName, string profileName, string resourceGroupName)
+            /// <param name='customDomainName'>
+            /// Name of the custom domain within an endpoint.
+            /// </param>
+            public static CustomDomain BeginDelete(this ICustomDomainsOperations operations, string resourceGroupName, string profileName, string endpointName, string customDomainName)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICustomDomainsOperations)s).BeginDeleteAsync(customDomainName, endpointName, profileName, resourceGroupName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((ICustomDomainsOperations)s).BeginDeleteAsync(resourceGroupName, profileName, endpointName, customDomainName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -370,24 +370,24 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='customDomainName'>
-            /// Name of the custom domain within an endpoint.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
+            /// </param>
+            /// <param name='customDomainName'>
+            /// Name of the custom domain within an endpoint.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<CustomDomain> BeginDeleteAsync(this ICustomDomainsOperations operations, string customDomainName, string endpointName, string profileName, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<CustomDomain> BeginDeleteAsync(this ICustomDomainsOperations operations, string resourceGroupName, string profileName, string endpointName, string customDomainName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.BeginDeleteWithHttpMessagesAsync(customDomainName, endpointName, profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, customDomainName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

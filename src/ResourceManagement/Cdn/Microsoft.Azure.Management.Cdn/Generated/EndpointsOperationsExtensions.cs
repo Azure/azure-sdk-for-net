@@ -121,7 +121,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='endpointProperties'>
             /// Endpoint properties
             /// </param>
-            public static Endpoint Create(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, EndpointCreateParameters endpointProperties)
+            public static Endpoint Create(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, Endpoint endpointProperties)
             {
                 return System.Threading.Tasks.Task.Factory.StartNew(s => ((IEndpointsOperations)s).CreateAsync(resourceGroupName, profileName, endpointName, endpointProperties), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<Endpoint> CreateAsync(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, EndpointCreateParameters endpointProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<Endpoint> CreateAsync(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, Endpoint endpointProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, endpointProperties, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -173,7 +173,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='endpointProperties'>
             /// Endpoint properties
             /// </param>
-            public static Endpoint BeginCreate(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, EndpointCreateParameters endpointProperties)
+            public static Endpoint BeginCreate(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, Endpoint endpointProperties)
             {
                 return System.Threading.Tasks.Task.Factory.StartNew(s => ((IEndpointsOperations)s).BeginCreateAsync(resourceGroupName, profileName, endpointName, endpointProperties), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -199,7 +199,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<Endpoint> BeginCreateAsync(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, EndpointCreateParameters endpointProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<Endpoint> BeginCreateAsync(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, Endpoint endpointProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, endpointProperties, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -216,21 +216,21 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
+            /// </param>
+            /// <param name='profileName'>
+            /// Name of the CDN profile within the resource group.
+            /// </param>
             /// <param name='endpointName'>
             /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='endpointProperties'>
             /// Endpoint properties
             /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
-            /// </param>
-            public static Endpoint Update(this IEndpointsOperations operations, string endpointName, EndpointUpdateParameters endpointProperties, string profileName, string resourceGroupName)
+            public static Endpoint Update(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, EndpointUpdateParameters endpointProperties)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IEndpointsOperations)s).UpdateAsync(endpointName, endpointProperties, profileName, resourceGroupName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IEndpointsOperations)s).UpdateAsync(resourceGroupName, profileName, endpointName, endpointProperties), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -242,24 +242,24 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
+            /// </param>
+            /// <param name='profileName'>
+            /// Name of the CDN profile within the resource group.
+            /// </param>
             /// <param name='endpointName'>
             /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='endpointProperties'>
             /// Endpoint properties
             /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<Endpoint> UpdateAsync(this IEndpointsOperations operations, string endpointName, EndpointUpdateParameters endpointProperties, string profileName, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<Endpoint> UpdateAsync(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, EndpointUpdateParameters endpointProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(endpointName, endpointProperties, profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, endpointProperties, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -274,21 +274,21 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
+            /// </param>
+            /// <param name='profileName'>
+            /// Name of the CDN profile within the resource group.
+            /// </param>
             /// <param name='endpointName'>
             /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='endpointProperties'>
             /// Endpoint properties
             /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
-            /// </param>
-            public static Endpoint BeginUpdate(this IEndpointsOperations operations, string endpointName, EndpointUpdateParameters endpointProperties, string profileName, string resourceGroupName)
+            public static Endpoint BeginUpdate(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, EndpointUpdateParameters endpointProperties)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IEndpointsOperations)s).BeginUpdateAsync(endpointName, endpointProperties, profileName, resourceGroupName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IEndpointsOperations)s).BeginUpdateAsync(resourceGroupName, profileName, endpointName, endpointProperties), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -300,24 +300,24 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
+            /// </param>
+            /// <param name='profileName'>
+            /// Name of the CDN profile within the resource group.
+            /// </param>
             /// <param name='endpointName'>
             /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='endpointProperties'>
             /// Endpoint properties
             /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<Endpoint> BeginUpdateAsync(this IEndpointsOperations operations, string endpointName, EndpointUpdateParameters endpointProperties, string profileName, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<Endpoint> BeginUpdateAsync(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, EndpointUpdateParameters endpointProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(endpointName, endpointProperties, profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, endpointProperties, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -329,18 +329,18 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
             /// </param>
-            public static void Delete(this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName)
+            public static void Delete(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName)
             {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IEndpointsOperations)s).DeleteAsync(endpointName, profileName, resourceGroupName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IEndpointsOperations)s).DeleteAsync(resourceGroupName, profileName, endpointName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -349,21 +349,21 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task DeleteAsync(this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task DeleteAsync(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                await operations.DeleteWithHttpMessagesAsync(endpointName, profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
+                await operations.DeleteWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -372,18 +372,18 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
             /// </param>
-            public static void BeginDelete(this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName)
+            public static void BeginDelete(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName)
             {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IEndpointsOperations)s).BeginDeleteAsync(endpointName, profileName, resourceGroupName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IEndpointsOperations)s).BeginDeleteAsync(resourceGroupName, profileName, endpointName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -392,21 +392,21 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task BeginDeleteAsync(this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task BeginDeleteAsync(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                await operations.BeginDeleteWithHttpMessagesAsync(endpointName, profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false);
+                await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -415,18 +415,18 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
             /// </param>
-            public static Endpoint Start(this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName)
+            public static Endpoint Start(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IEndpointsOperations)s).StartAsync(endpointName, profileName, resourceGroupName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IEndpointsOperations)s).StartAsync(resourceGroupName, profileName, endpointName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -435,21 +435,21 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<Endpoint> StartAsync(this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<Endpoint> StartAsync(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.StartWithHttpMessagesAsync(endpointName, profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.StartWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -461,18 +461,18 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
             /// </param>
-            public static Endpoint BeginStart(this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName)
+            public static Endpoint BeginStart(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IEndpointsOperations)s).BeginStartAsync(endpointName, profileName, resourceGroupName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IEndpointsOperations)s).BeginStartAsync(resourceGroupName, profileName, endpointName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -481,21 +481,21 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<Endpoint> BeginStartAsync(this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<Endpoint> BeginStartAsync(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.BeginStartWithHttpMessagesAsync(endpointName, profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginStartWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -507,18 +507,18 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
             /// </param>
-            public static Endpoint Stop(this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName)
+            public static Endpoint Stop(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IEndpointsOperations)s).StopAsync(endpointName, profileName, resourceGroupName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IEndpointsOperations)s).StopAsync(resourceGroupName, profileName, endpointName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -527,21 +527,21 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<Endpoint> StopAsync(this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<Endpoint> StopAsync(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.StopWithHttpMessagesAsync(endpointName, profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.StopWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -553,18 +553,18 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
             /// </param>
-            public static Endpoint BeginStop(this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName)
+            public static Endpoint BeginStop(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IEndpointsOperations)s).BeginStopAsync(endpointName, profileName, resourceGroupName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IEndpointsOperations)s).BeginStopAsync(resourceGroupName, profileName, endpointName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -573,21 +573,21 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<Endpoint> BeginStopAsync(this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<Endpoint> BeginStopAsync(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.BeginStopWithHttpMessagesAsync(endpointName, profileName, resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginStopWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -599,22 +599,22 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='contentPaths'>
             /// The path to the content to be purged. Can describe a file path or a wild
             /// card directory.
             /// </param>
-            public static void PurgeContent(this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName, System.Collections.Generic.IList<string> contentPaths)
+            public static void PurgeContent(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, System.Collections.Generic.IList<string> contentPaths)
             {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IEndpointsOperations)s).PurgeContentAsync(endpointName, profileName, resourceGroupName, contentPaths), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IEndpointsOperations)s).PurgeContentAsync(resourceGroupName, profileName, endpointName, contentPaths), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -623,14 +623,14 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='contentPaths'>
             /// The path to the content to be purged. Can describe a file path or a wild
@@ -639,9 +639,9 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task PurgeContentAsync(this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName, System.Collections.Generic.IList<string> contentPaths, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task PurgeContentAsync(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, System.Collections.Generic.IList<string> contentPaths, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                await operations.PurgeContentWithHttpMessagesAsync(endpointName, profileName, resourceGroupName, contentPaths, null, cancellationToken).ConfigureAwait(false);
+                await operations.PurgeContentWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, contentPaths, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -650,22 +650,22 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='contentPaths'>
             /// The path to the content to be purged. Can describe a file path or a wild
             /// card directory.
             /// </param>
-            public static void BeginPurgeContent(this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName, System.Collections.Generic.IList<string> contentPaths)
+            public static void BeginPurgeContent(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, System.Collections.Generic.IList<string> contentPaths)
             {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IEndpointsOperations)s).BeginPurgeContentAsync(endpointName, profileName, resourceGroupName, contentPaths), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IEndpointsOperations)s).BeginPurgeContentAsync(resourceGroupName, profileName, endpointName, contentPaths), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -674,14 +674,14 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='contentPaths'>
             /// The path to the content to be purged. Can describe a file path or a wild
@@ -690,9 +690,9 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task BeginPurgeContentAsync(this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName, System.Collections.Generic.IList<string> contentPaths, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task BeginPurgeContentAsync(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, System.Collections.Generic.IList<string> contentPaths, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                await operations.BeginPurgeContentWithHttpMessagesAsync(endpointName, profileName, resourceGroupName, contentPaths, null, cancellationToken).ConfigureAwait(false);
+                await operations.BeginPurgeContentWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, contentPaths, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -701,21 +701,21 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='contentPaths'>
             /// The path to the content to be loaded. Should describe a file path.
             /// </param>
-            public static void LoadContent(this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName, System.Collections.Generic.IList<string> contentPaths)
+            public static void LoadContent(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, System.Collections.Generic.IList<string> contentPaths)
             {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IEndpointsOperations)s).LoadContentAsync(endpointName, profileName, resourceGroupName, contentPaths), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IEndpointsOperations)s).LoadContentAsync(resourceGroupName, profileName, endpointName, contentPaths), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -724,63 +724,14 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
-            /// </param>
-            /// <param name='contentPaths'>
-            /// The path to the content to be loaded. Should describe a file path.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task LoadContentAsync(this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName, System.Collections.Generic.IList<string> contentPaths, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            {
-                await operations.LoadContentWithHttpMessagesAsync(endpointName, profileName, resourceGroupName, contentPaths, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <summary>
-            /// Forcibly pre-loads CDN endpoint content.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
             /// <param name='endpointName'>
             /// Name of the endpoint within the CDN profile.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
-            /// </param>
-            /// <param name='contentPaths'>
-            /// The path to the content to be loaded. Should describe a file path.
-            /// </param>
-            public static void BeginLoadContent(this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName, System.Collections.Generic.IList<string> contentPaths)
-            {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IEndpointsOperations)s).BeginLoadContentAsync(endpointName, profileName, resourceGroupName, contentPaths), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Forcibly pre-loads CDN endpoint content.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
-            /// </param>
-            /// <param name='profileName'>
-            /// Name of the CDN profile within the resource group.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='contentPaths'>
             /// The path to the content to be loaded. Should describe a file path.
@@ -788,9 +739,58 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task BeginLoadContentAsync(this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName, System.Collections.Generic.IList<string> contentPaths, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task LoadContentAsync(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, System.Collections.Generic.IList<string> contentPaths, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                await operations.BeginLoadContentWithHttpMessagesAsync(endpointName, profileName, resourceGroupName, contentPaths, null, cancellationToken).ConfigureAwait(false);
+                await operations.LoadContentWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, contentPaths, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Forcibly pre-loads CDN endpoint content.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
+            /// </param>
+            /// <param name='profileName'>
+            /// Name of the CDN profile within the resource group.
+            /// </param>
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
+            /// </param>
+            /// <param name='contentPaths'>
+            /// The path to the content to be loaded. Should describe a file path.
+            /// </param>
+            public static void BeginLoadContent(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, System.Collections.Generic.IList<string> contentPaths)
+            {
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IEndpointsOperations)s).BeginLoadContentAsync(resourceGroupName, profileName, endpointName, contentPaths), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Forcibly pre-loads CDN endpoint content.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
+            /// </param>
+            /// <param name='profileName'>
+            /// Name of the CDN profile within the resource group.
+            /// </param>
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
+            /// </param>
+            /// <param name='contentPaths'>
+            /// The path to the content to be loaded. Should describe a file path.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task BeginLoadContentAsync(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, System.Collections.Generic.IList<string> contentPaths, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                await operations.BeginLoadContentWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, contentPaths, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -800,21 +800,21 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='hostName'>
             /// The host name of the custom domain. Must be a domain name.
             /// </param>
-            public static ValidateCustomDomainOutput ValidateCustomDomain(this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName, string hostName)
+            public static ValidateCustomDomainOutput ValidateCustomDomain(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, string hostName)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IEndpointsOperations)s).ValidateCustomDomainAsync(endpointName, profileName, resourceGroupName, hostName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IEndpointsOperations)s).ValidateCustomDomainAsync(resourceGroupName, profileName, endpointName, hostName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -824,14 +824,14 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='endpointName'>
-            /// Name of the endpoint within the CDN profile.
+            /// <param name='resourceGroupName'>
+            /// Name of the resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// <param name='endpointName'>
+            /// Name of the endpoint within the CDN profile.
             /// </param>
             /// <param name='hostName'>
             /// The host name of the custom domain. Must be a domain name.
@@ -839,9 +839,9 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<ValidateCustomDomainOutput> ValidateCustomDomainAsync(this IEndpointsOperations operations, string endpointName, string profileName, string resourceGroupName, string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<ValidateCustomDomainOutput> ValidateCustomDomainAsync(this IEndpointsOperations operations, string resourceGroupName, string profileName, string endpointName, string hostName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.ValidateCustomDomainWithHttpMessagesAsync(endpointName, profileName, resourceGroupName, hostName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ValidateCustomDomainWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, hostName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

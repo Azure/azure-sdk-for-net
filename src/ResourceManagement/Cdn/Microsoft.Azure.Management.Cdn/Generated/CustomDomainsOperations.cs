@@ -44,14 +44,14 @@ namespace Microsoft.Azure.Management.Cdn
         /// <summary>
         /// Lists the existing CDN custom domains within an endpoint.
         /// </summary>
-        /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile.
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
         /// </param>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// <param name='endpointName'>
+        /// Name of the endpoint within the CDN profile.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -71,19 +71,19 @@ namespace Microsoft.Azure.Management.Cdn
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<CustomDomain>>> ListByEndpointWithHttpMessagesAsync(string endpointName, string profileName, string resourceGroupName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Microsoft.Rest.Azure.IPage<CustomDomain>>> ListByEndpointWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            if (endpointName == null)
+            if (resourceGroupName == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "endpointName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "resourceGroupName");
             }
             if (profileName == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "profileName");
             }
-            if (resourceGroupName == null)
+            if (endpointName == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "resourceGroupName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "endpointName");
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -100,18 +100,18 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
                 System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
-                tracingParameters.Add("endpointName", endpointName);
-                tracingParameters.Add("profileName", profileName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("profileName", profileName);
+                tracingParameters.Add("endpointName", endpointName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "ListByEndpoint", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/customDomains").ToString();
-            _url = _url.Replace("{endpointName}", System.Uri.EscapeDataString(endpointName));
-            _url = _url.Replace("{profileName}", System.Uri.EscapeDataString(profileName));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{profileName}", System.Uri.EscapeDataString(profileName));
+            _url = _url.Replace("{endpointName}", System.Uri.EscapeDataString(endpointName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(this.Client.SubscriptionId));
             System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (this.Client.ApiVersion != null)
@@ -239,17 +239,17 @@ namespace Microsoft.Azure.Management.Cdn
         /// <summary>
         /// Gets an existing CDN custom domain within an endpoint.
         /// </summary>
-        /// <param name='customDomainName'>
-        /// Name of the custom domain within an endpoint.
-        /// </param>
-        /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile.
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
         /// </param>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// <param name='endpointName'>
+        /// Name of the endpoint within the CDN profile.
+        /// </param>
+        /// <param name='customDomainName'>
+        /// Name of the custom domain within an endpoint.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -269,23 +269,23 @@ namespace Microsoft.Azure.Management.Cdn
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<CustomDomain>> GetWithHttpMessagesAsync(string customDomainName, string endpointName, string profileName, string resourceGroupName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<CustomDomain>> GetWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string customDomainName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            if (customDomainName == null)
+            if (resourceGroupName == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "customDomainName");
-            }
-            if (endpointName == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "endpointName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "resourceGroupName");
             }
             if (profileName == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "profileName");
             }
-            if (resourceGroupName == null)
+            if (endpointName == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "resourceGroupName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "endpointName");
+            }
+            if (customDomainName == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "customDomainName");
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -302,20 +302,20 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
                 System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
-                tracingParameters.Add("customDomainName", customDomainName);
-                tracingParameters.Add("endpointName", endpointName);
-                tracingParameters.Add("profileName", profileName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("profileName", profileName);
+                tracingParameters.Add("endpointName", endpointName);
+                tracingParameters.Add("customDomainName", customDomainName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/customDomains/{customDomainName}").ToString();
-            _url = _url.Replace("{customDomainName}", System.Uri.EscapeDataString(customDomainName));
-            _url = _url.Replace("{endpointName}", System.Uri.EscapeDataString(endpointName));
-            _url = _url.Replace("{profileName}", System.Uri.EscapeDataString(profileName));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{profileName}", System.Uri.EscapeDataString(profileName));
+            _url = _url.Replace("{endpointName}", System.Uri.EscapeDataString(endpointName));
+            _url = _url.Replace("{customDomainName}", System.Uri.EscapeDataString(customDomainName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(this.Client.SubscriptionId));
             System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (this.Client.ApiVersion != null)
@@ -443,17 +443,17 @@ namespace Microsoft.Azure.Management.Cdn
         /// <summary>
         /// Creates a new CDN custom domain within an endpoint.
         /// </summary>
-        /// <param name='customDomainName'>
-        /// Name of the custom domain within an endpoint.
-        /// </param>
-        /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile.
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
         /// </param>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// <param name='endpointName'>
+        /// Name of the endpoint within the CDN profile.
+        /// </param>
+        /// <param name='customDomainName'>
+        /// Name of the custom domain within an endpoint.
         /// </param>
         /// <param name='hostName'>
         /// The host name of the custom domain. Must be a domain name.
@@ -464,11 +464,11 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<CustomDomain>> CreateWithHttpMessagesAsync(string customDomainName, string endpointName, string profileName, string resourceGroupName, string hostName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<CustomDomain>> CreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string customDomainName, string hostName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Send Request
             Microsoft.Rest.Azure.AzureOperationResponse<CustomDomain> _response = await BeginCreateWithHttpMessagesAsync(
-                customDomainName, endpointName, profileName, resourceGroupName, hostName, customHeaders, cancellationToken);
+                resourceGroupName, profileName, endpointName, customDomainName, hostName, customHeaders, cancellationToken);
             return await this.Client.GetPutOrPatchOperationResultAsync(_response,
                 customHeaders,
                 cancellationToken);
@@ -477,17 +477,17 @@ namespace Microsoft.Azure.Management.Cdn
         /// <summary>
         /// Creates a new CDN custom domain within an endpoint.
         /// </summary>
-        /// <param name='customDomainName'>
-        /// Name of the custom domain within an endpoint.
-        /// </param>
-        /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile.
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
         /// </param>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// <param name='endpointName'>
+        /// Name of the endpoint within the CDN profile.
+        /// </param>
+        /// <param name='customDomainName'>
+        /// Name of the custom domain within an endpoint.
         /// </param>
         /// <param name='hostName'>
         /// The host name of the custom domain. Must be a domain name.
@@ -510,23 +510,23 @@ namespace Microsoft.Azure.Management.Cdn
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<CustomDomain>> BeginCreateWithHttpMessagesAsync(string customDomainName, string endpointName, string profileName, string resourceGroupName, string hostName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<CustomDomain>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string customDomainName, string hostName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            if (customDomainName == null)
+            if (resourceGroupName == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "customDomainName");
-            }
-            if (endpointName == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "endpointName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "resourceGroupName");
             }
             if (profileName == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "profileName");
             }
-            if (resourceGroupName == null)
+            if (endpointName == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "resourceGroupName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "endpointName");
+            }
+            if (customDomainName == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "customDomainName");
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -552,10 +552,10 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
                 System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
-                tracingParameters.Add("customDomainName", customDomainName);
-                tracingParameters.Add("endpointName", endpointName);
-                tracingParameters.Add("profileName", profileName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("profileName", profileName);
+                tracingParameters.Add("endpointName", endpointName);
+                tracingParameters.Add("customDomainName", customDomainName);
                 tracingParameters.Add("customDomainProperties", customDomainProperties);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "BeginCreate", tracingParameters);
@@ -563,10 +563,10 @@ namespace Microsoft.Azure.Management.Cdn
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/customDomains/{customDomainName}").ToString();
-            _url = _url.Replace("{customDomainName}", System.Uri.EscapeDataString(customDomainName));
-            _url = _url.Replace("{endpointName}", System.Uri.EscapeDataString(endpointName));
-            _url = _url.Replace("{profileName}", System.Uri.EscapeDataString(profileName));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{profileName}", System.Uri.EscapeDataString(profileName));
+            _url = _url.Replace("{endpointName}", System.Uri.EscapeDataString(endpointName));
+            _url = _url.Replace("{customDomainName}", System.Uri.EscapeDataString(customDomainName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(this.Client.SubscriptionId));
             System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (this.Client.ApiVersion != null)
@@ -736,17 +736,17 @@ namespace Microsoft.Azure.Management.Cdn
         /// <summary>
         /// Updates an existing CDN custom domain within an endpoint.
         /// </summary>
-        /// <param name='customDomainName'>
-        /// Name of the custom domain within an endpoint.
-        /// </param>
-        /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile.
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
         /// </param>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// <param name='endpointName'>
+        /// Name of the endpoint within the CDN profile.
+        /// </param>
+        /// <param name='customDomainName'>
+        /// Name of the custom domain within an endpoint.
         /// </param>
         /// <param name='hostName'>
         /// The host name of the custom domain. Must be a domain name.
@@ -766,23 +766,23 @@ namespace Microsoft.Azure.Management.Cdn
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<ErrorResponse>> UpdateWithHttpMessagesAsync(string customDomainName, string endpointName, string profileName, string resourceGroupName, string hostName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<ErrorResponse>> UpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string customDomainName, string hostName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            if (customDomainName == null)
+            if (resourceGroupName == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "customDomainName");
-            }
-            if (endpointName == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "endpointName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "resourceGroupName");
             }
             if (profileName == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "profileName");
             }
-            if (resourceGroupName == null)
+            if (endpointName == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "resourceGroupName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "endpointName");
+            }
+            if (customDomainName == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "customDomainName");
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -808,10 +808,10 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
                 System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
-                tracingParameters.Add("customDomainName", customDomainName);
-                tracingParameters.Add("endpointName", endpointName);
-                tracingParameters.Add("profileName", profileName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("profileName", profileName);
+                tracingParameters.Add("endpointName", endpointName);
+                tracingParameters.Add("customDomainName", customDomainName);
                 tracingParameters.Add("customDomainProperties", customDomainProperties);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "Update", tracingParameters);
@@ -819,10 +819,10 @@ namespace Microsoft.Azure.Management.Cdn
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/customDomains/{customDomainName}").ToString();
-            _url = _url.Replace("{customDomainName}", System.Uri.EscapeDataString(customDomainName));
-            _url = _url.Replace("{endpointName}", System.Uri.EscapeDataString(endpointName));
-            _url = _url.Replace("{profileName}", System.Uri.EscapeDataString(profileName));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{profileName}", System.Uri.EscapeDataString(profileName));
+            _url = _url.Replace("{endpointName}", System.Uri.EscapeDataString(endpointName));
+            _url = _url.Replace("{customDomainName}", System.Uri.EscapeDataString(customDomainName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(this.Client.SubscriptionId));
             System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (this.Client.ApiVersion != null)
@@ -952,17 +952,17 @@ namespace Microsoft.Azure.Management.Cdn
         /// <summary>
         /// Deletes an existing CDN custom domain within an endpoint.
         /// </summary>
-        /// <param name='customDomainName'>
-        /// Name of the custom domain within an endpoint.
-        /// </param>
-        /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile.
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
         /// </param>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// <param name='endpointName'>
+        /// Name of the endpoint within the CDN profile.
+        /// </param>
+        /// <param name='customDomainName'>
+        /// Name of the custom domain within an endpoint.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -970,28 +970,28 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<CustomDomain>> DeleteWithHttpMessagesAsync(string customDomainName, string endpointName, string profileName, string resourceGroupName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<CustomDomain>> DeleteWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string customDomainName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Send request
             Microsoft.Rest.Azure.AzureOperationResponse<CustomDomain> _response = await BeginDeleteWithHttpMessagesAsync(
-                customDomainName, endpointName, profileName, resourceGroupName, customHeaders, cancellationToken);
+                resourceGroupName, profileName, endpointName, customDomainName, customHeaders, cancellationToken);
             return await this.Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken);
         }
 
         /// <summary>
         /// Deletes an existing CDN custom domain within an endpoint.
         /// </summary>
-        /// <param name='customDomainName'>
-        /// Name of the custom domain within an endpoint.
-        /// </param>
-        /// <param name='endpointName'>
-        /// Name of the endpoint within the CDN profile.
+        /// <param name='resourceGroupName'>
+        /// Name of the resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
         /// </param>
-        /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// <param name='endpointName'>
+        /// Name of the endpoint within the CDN profile.
+        /// </param>
+        /// <param name='customDomainName'>
+        /// Name of the custom domain within an endpoint.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1011,23 +1011,23 @@ namespace Microsoft.Azure.Management.Cdn
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<CustomDomain>> BeginDeleteWithHttpMessagesAsync(string customDomainName, string endpointName, string profileName, string resourceGroupName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<CustomDomain>> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string customDomainName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
-            if (customDomainName == null)
+            if (resourceGroupName == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "customDomainName");
-            }
-            if (endpointName == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "endpointName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "resourceGroupName");
             }
             if (profileName == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "profileName");
             }
-            if (resourceGroupName == null)
+            if (endpointName == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "resourceGroupName");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "endpointName");
+            }
+            if (customDomainName == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "customDomainName");
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -1044,20 +1044,20 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 _invocationId = Microsoft.Rest.ServiceClientTracing.NextInvocationId.ToString();
                 System.Collections.Generic.Dictionary<string, object> tracingParameters = new System.Collections.Generic.Dictionary<string, object>();
-                tracingParameters.Add("customDomainName", customDomainName);
-                tracingParameters.Add("endpointName", endpointName);
-                tracingParameters.Add("profileName", profileName);
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("profileName", profileName);
+                tracingParameters.Add("endpointName", endpointName);
+                tracingParameters.Add("customDomainName", customDomainName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "BeginDelete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cdn/profiles/{profileName}/endpoints/{endpointName}/customDomains/{customDomainName}").ToString();
-            _url = _url.Replace("{customDomainName}", System.Uri.EscapeDataString(customDomainName));
-            _url = _url.Replace("{endpointName}", System.Uri.EscapeDataString(endpointName));
-            _url = _url.Replace("{profileName}", System.Uri.EscapeDataString(profileName));
             _url = _url.Replace("{resourceGroupName}", System.Uri.EscapeDataString(resourceGroupName));
+            _url = _url.Replace("{profileName}", System.Uri.EscapeDataString(profileName));
+            _url = _url.Replace("{endpointName}", System.Uri.EscapeDataString(endpointName));
+            _url = _url.Replace("{customDomainName}", System.Uri.EscapeDataString(customDomainName));
             _url = _url.Replace("{subscriptionId}", System.Uri.EscapeDataString(this.Client.SubscriptionId));
             System.Collections.Generic.List<string> _queryParameters = new System.Collections.Generic.List<string>();
             if (this.Client.ApiVersion != null)

@@ -12,14 +12,10 @@ namespace Microsoft.Azure.Management.Cdn.Models
     /// <summary>
     /// Defines values for CustomDomainResourceState.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-    public enum CustomDomainResourceState
+    public static class CustomDomainResourceState
     {
-        [System.Runtime.Serialization.EnumMember(Value = "Creating")]
-        Creating,
-        [System.Runtime.Serialization.EnumMember(Value = "Active")]
-        Active,
-        [System.Runtime.Serialization.EnumMember(Value = "Deleting")]
-        Deleting
+        public const string Creating = "Creating";
+        public const string Active = "Active";
+        public const string Deleting = "Deleting";
     }
 }

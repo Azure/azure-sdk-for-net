@@ -12,20 +12,13 @@ namespace Microsoft.Azure.Management.Cdn.Models
     /// <summary>
     /// Defines values for EndpointResourceState.
     /// </summary>
-    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-    public enum EndpointResourceState
+    public static class EndpointResourceState
     {
-        [System.Runtime.Serialization.EnumMember(Value = "Creating")]
-        Creating,
-        [System.Runtime.Serialization.EnumMember(Value = "Deleting")]
-        Deleting,
-        [System.Runtime.Serialization.EnumMember(Value = "Running")]
-        Running,
-        [System.Runtime.Serialization.EnumMember(Value = "Starting")]
-        Starting,
-        [System.Runtime.Serialization.EnumMember(Value = "Stopped")]
-        Stopped,
-        [System.Runtime.Serialization.EnumMember(Value = "Stopping")]
-        Stopping
+        public const string Creating = "Creating";
+        public const string Deleting = "Deleting";
+        public const string Running = "Running";
+        public const string Starting = "Starting";
+        public const string Stopped = "Stopped";
+        public const string Stopping = "Stopping";
     }
 }
