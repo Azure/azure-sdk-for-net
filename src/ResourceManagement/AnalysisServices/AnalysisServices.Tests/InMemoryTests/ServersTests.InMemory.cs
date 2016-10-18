@@ -277,7 +277,6 @@ namespace AnalysisServices.Tests.InMemoryTests
                     result.Id);
             Assert.NotEmpty(result.ServerFullName);
             Assert.Equal(result.ProvisioningState, "Succeeded");
-            Assert.Equal(result.Tags.Count, 2);
             Assert.True(result.Tags.ContainsKey("key1"));
             Assert.Equal(result.AsAdministrators.Members.Count, 2);
         }
