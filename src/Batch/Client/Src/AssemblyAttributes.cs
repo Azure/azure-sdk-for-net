@@ -20,8 +20,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Microsoft.Azure.Batch")]
 [assembly: AssemblyDescription("Client library for interacting with the Azure Batch service.")]
 
-[assembly: AssemblyVersion("5.1.1.0")]
-[assembly: AssemblyFileVersion("5.1.1.0")]
+[assembly: AssemblyVersion("5.1.2.0")]
+[assembly: AssemblyFileVersion("5.1.2.0")]
 [assembly: AssemblyCompany("Microsoft Corporation")]
 [assembly: AssemblyProduct("Microsoft Azure")]
 [assembly: AssemblyCopyright("Copyright (c) Microsoft Corporation. All rights reserved.")]

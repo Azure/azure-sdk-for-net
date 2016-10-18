@@ -29,6 +29,7 @@ using Microsoft.IdentityModel.Clients.ActiveDirectory;
 using Microsoft.Rest;
 using Microsoft.Rest.Serialization;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading;
 
 namespace Sample.Microsoft.HelloKeyVault
 {
@@ -43,7 +44,6 @@ namespace Sample.Microsoft.HelloKeyVault
             KeyBundle keyBundle = null; // The key specification and attributes
             SecretBundle secret = null;
             CertificateBundle certificateBundle = null;
-            CertificateOperation certificateOperation = null;
             string keyName = string.Empty;
             string secretName = string.Empty;
             string certificateName = string.Empty;
@@ -142,7 +142,7 @@ namespace Sample.Microsoft.HelloKeyVault
                             break;
 
                         case KeyOperationType.CREATE_CERTIFICATE:
-                            certificateOperation = CreateCertificate(out certificateCreateName);
+                            certificateBundle = CreateCertificate(out certificateCreateName);
                             break;
 
                         case KeyOperationType.IMPORT_CERTIFICATE:
@@ -205,7 +205,7 @@ namespace Sample.Microsoft.HelloKeyVault
 
             // Get key attribute to update
             var keyAttributes = inputValidator.GetUpdateKeyAttribute();
-            var updatedKey = keyVaultClient.UpdateKeyAsync(vaultAddress, keyName, attributes: keyAttributes).GetAwaiter().GetResult();
+            var updatedKey = Task.Run(() => keyVaultClient.UpdateKeyAsync(vaultAddress, keyName, attributes: keyAttributes)).ConfigureAwait(false).GetAwaiter().GetResult();
 
             Console.Out.WriteLine("Updated key:---------------");
             PrintoutKey(updatedKey);
@@ -226,7 +226,8 @@ namespace Sample.Microsoft.HelloKeyVault
 
             // Get key bundle which is needed for importing a key
             var keyBundle = inputValidator.GetImportKeyBundle();
-            var importedKey = keyVaultClient.ImportKeyAsync(vaultAddress, keyName, keyBundle, isHsm).GetAwaiter().GetResult();
+            var name = keyName;
+            var importedKey = Task.Run(() => keyVaultClient.ImportKeyAsync(vaultAddress, name, keyBundle, isHsm)).ConfigureAwait(false).GetAwaiter().GetResult();
 
             Console.Out.WriteLine("Imported key:---------------");
             PrintoutKey(importedKey);
@@ -251,11 +252,11 @@ namespace Sample.Microsoft.HelloKeyVault
                 if (keyVersion != string.Empty)
                 {
                     keyName = inputValidator.GetKeyName(true);
-                    retrievedKey = keyVaultClient.GetKeyAsync(vaultAddress, keyName, keyVersion).GetAwaiter().GetResult();
+                    retrievedKey = Task.Run(() => keyVaultClient.GetKeyAsync(vaultAddress, keyName, keyVersion)).ConfigureAwait(false).GetAwaiter().GetResult();
                 }
                 else
                 {
-                    retrievedKey = keyVaultClient.GetKeyAsync(vaultAddress, keyName).GetAwaiter().GetResult();
+                    retrievedKey = Task.Run(() => keyVaultClient.GetKeyAsync(vaultAddress, keyName)).ConfigureAwait(false).GetAwaiter().GetResult();
                 }
             }
             else
@@ -264,7 +265,7 @@ namespace Sample.Microsoft.HelloKeyVault
                 var keyId = (key != null) ? key.Key.Kid : inputValidator.GetKeyId();
 
                 // Get the key using its ID
-                retrievedKey = keyVaultClient.GetKeyAsync(keyId).GetAwaiter().GetResult();
+                retrievedKey = Task.Run(() => keyVaultClient.GetKeyAsync(keyId)).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             Console.Out.WriteLine("Retrived key:---------------");
@@ -288,7 +289,7 @@ namespace Sample.Microsoft.HelloKeyVault
 
             Console.Out.WriteLine("List key versions:---------------");
 
-            var results = keyVaultClient.GetKeyVersionsAsync(vaultAddress, keyName, maxResults).GetAwaiter().GetResult();
+            var results = Task.Run(() => keyVaultClient.GetKeyVersionsAsync(vaultAddress, keyName, maxResults)).ConfigureAwait(false).GetAwaiter().GetResult();
 
             if (results != null)
             {
@@ -299,7 +300,7 @@ namespace Sample.Microsoft.HelloKeyVault
 
             while (results != null && !string.IsNullOrWhiteSpace(results.NextPageLink))
             {
-                results = keyVaultClient.GetKeyVersionsNextAsync(results.NextPageLink).GetAwaiter().GetResult();
+                results = Task.Run(() => keyVaultClient.GetKeyVersionsNextAsync(results.NextPageLink)).ConfigureAwait(false).GetAwaiter().GetResult();
                 if (results != null)
                 {
                     numKeyVersions += results.Count();
@@ -325,8 +326,11 @@ namespace Sample.Microsoft.HelloKeyVault
 
             var tags = inputValidator.GetTags();
 
+            var name = keyName;
             // Create key in the KeyVault key vault
-            var createdKey = keyVaultClient.CreateKeyAsync(vaultAddress, keyName, keyBundle.Key.Kty, keyAttributes: keyBundle.Attributes, tags: tags).GetAwaiter().GetResult();
+            var createdKey = Task.Run(() => 
+                    keyVaultClient.CreateKeyAsync(vaultAddress, name, keyBundle.Key.Kty, keyAttributes: keyBundle.Attributes, tags: tags))
+                .ConfigureAwait(false).GetAwaiter().GetResult();
 
             Console.Out.WriteLine("Created key:---------------");
             PrintoutKey(createdKey);
@@ -349,7 +353,10 @@ namespace Sample.Microsoft.HelloKeyVault
 
             var contentType = inputValidator.GetSecretContentType();
 
-            var secret = keyVaultClient.SetSecretAsync(inputValidator.GetVaultAddress(), secretName, secretValue, tags, contentType, inputValidator.GetSecretAttributes()).GetAwaiter().GetResult();
+            var name = secretName;
+            var secret = Task.Run(() => 
+                    keyVaultClient.SetSecretAsync(inputValidator.GetVaultAddress(), name, secretValue, tags, contentType, inputValidator.GetSecretAttributes()))
+                .ConfigureAwait(false).GetAwaiter().GetResult();
 
             Console.Out.WriteLine("Created/Updated secret:---------------");
             PrintoutSecret(secret);
@@ -371,12 +378,12 @@ namespace Sample.Microsoft.HelloKeyVault
             {
                 var vaultAddress = inputValidator.GetVaultAddress();
                 string secretName = inputValidator.GetSecretName(true);
-                secret = keyVaultClient.GetSecretAsync(vaultAddress, secretName, secretVersion).GetAwaiter().GetResult();
+                secret = Task.Run(() => keyVaultClient.GetSecretAsync(vaultAddress, secretName, secretVersion)).ConfigureAwait(false).GetAwaiter().GetResult();
             }
             else
             {
                 secretId = secretId ?? inputValidator.GetSecretId();
-                secret = keyVaultClient.GetSecretAsync(secretId).GetAwaiter().GetResult();
+                secret = Task.Run(() => keyVaultClient.GetSecretAsync(secretId)).ConfigureAwait(false).GetAwaiter().GetResult();
             }
             Console.Out.WriteLine("Retrieved secret:---------------");
             PrintoutSecret(secret);
@@ -394,7 +401,7 @@ namespace Sample.Microsoft.HelloKeyVault
             var maxResults = 1;
 
             Console.Out.WriteLine("List secrets:---------------");
-            var results = keyVaultClient.GetSecretsAsync(vaultAddress, maxResults).GetAwaiter().GetResult();
+            var results = Task.Run(() => keyVaultClient.GetSecretsAsync(vaultAddress, maxResults)).ConfigureAwait(false).GetAwaiter().GetResult();
 
             if (results != null)
             {
@@ -405,7 +412,7 @@ namespace Sample.Microsoft.HelloKeyVault
 
             while (results != null && !string.IsNullOrWhiteSpace(results.NextPageLink))
             {
-                results = keyVaultClient.GetSecretsNextAsync(results.NextPageLink).GetAwaiter().GetResult();
+                results = Task.Run(() => keyVaultClient.GetSecretsNextAsync(results.NextPageLink)).ConfigureAwait(false).GetAwaiter().GetResult();
                 if (results != null)
                 {
                     numSecretsInVault += results.Count();
@@ -428,7 +435,7 @@ namespace Sample.Microsoft.HelloKeyVault
             var vaultAddress = inputValidator.GetVaultAddress();
             secretName = (secretName == string.Empty) ? inputValidator.GetSecretName() : secretName;
 
-            var secret = keyVaultClient.DeleteSecretAsync(vaultAddress, secretName).GetAwaiter().GetResult();
+            var secret = Task.Run(() => keyVaultClient.DeleteSecretAsync(vaultAddress, secretName)).ConfigureAwait(false).GetAwaiter().GetResult();
 
             Console.Out.WriteLine("Deleted secret:---------------");
             PrintoutSecret(secret);
@@ -447,7 +454,7 @@ namespace Sample.Microsoft.HelloKeyVault
             keyName = inputValidator.GetKeyName();
 
             // Get a backup of the key and cache its backup value
-            var backupKeyResult = keyVaultClient.BackupKeyAsync(vaultAddress, keyName).GetAwaiter().GetResult();
+            var backupKeyResult = Task.Run(() => keyVaultClient.BackupKeyAsync(vaultAddress, keyName)).ConfigureAwait(false).GetAwaiter().GetResult();
             Console.Out.WriteLine(string.Format(
                 "The backup key value contains {0} bytes.\nTo restore it into a key vault this value should be provided!", backupKeyResult.Value.Length));
 
@@ -455,10 +462,10 @@ namespace Sample.Microsoft.HelloKeyVault
             var newVaultAddress = inputValidator.GetVaultAddress();
 
             // Delete any existing key in that vault.
-            keyVaultClient.DeleteKeyAsync(vaultAddress, keyName).GetAwaiter().GetResult();
+            Task.Run(() => keyVaultClient.DeleteKeyAsync(vaultAddress, keyName)).ConfigureAwait(false).GetAwaiter().GetResult();
 
             // Restore the backed up value into the vault
-            var restoredKey = keyVaultClient.RestoreKeyAsync(newVaultAddress, backupKeyResult.Value).GetAwaiter().GetResult();
+            var restoredKey = Task.Run(() => keyVaultClient.RestoreKeyAsync(newVaultAddress, backupKeyResult.Value)).ConfigureAwait(false).GetAwaiter().GetResult();
 
             Console.Out.WriteLine("Restored key:---------------");
             PrintoutKey(restoredKey);
@@ -478,7 +485,7 @@ namespace Sample.Microsoft.HelloKeyVault
             keyName = (keyName == string.Empty) ? inputValidator.GetKeyName() : keyName;
 
             // Delete the key with the specified ID
-            var keyBundle = keyVaultClient.DeleteKeyAsync(vaultAddress, keyName).GetAwaiter().GetResult();
+            var keyBundle = Task.Run(() => keyVaultClient.DeleteKeyAsync(vaultAddress, keyName)).ConfigureAwait(false).GetAwaiter().GetResult();
             Console.Out.WriteLine(string.Format("Key {0} is deleted successfully!", keyBundle.Key.Kid));
         }
 
@@ -499,7 +506,7 @@ namespace Sample.Microsoft.HelloKeyVault
             {
                 var vaultAddress = inputValidator.GetVaultAddress();
                 string keyName = inputValidator.GetKeyName(true);
-                wrappedKey = keyVaultClient.WrapKeyAsync(vaultAddress, keyName, keyVersion, algorithm, symmetricKey).GetAwaiter().GetResult();
+                wrappedKey = Task.Run(() => keyVaultClient.WrapKeyAsync(vaultAddress, keyName, keyVersion, algorithm, symmetricKey)).ConfigureAwait(false).GetAwaiter().GetResult();
             }
             else
             {
@@ -507,13 +514,13 @@ namespace Sample.Microsoft.HelloKeyVault
                 var keyId = (key != null) ? key.Key.Kid : inputValidator.GetKeyId();
 
                 // Wrap the symmetric key
-                wrappedKey = keyVaultClient.WrapKeyAsync(keyId, algorithm, symmetricKey).GetAwaiter().GetResult();
+                wrappedKey = Task.Run(() => keyVaultClient.WrapKeyAsync(keyId, algorithm, symmetricKey)).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             Console.Out.WriteLine(string.Format("The symmetric key is wrapped using key id {0} and algorithm {1}", wrappedKey.Kid, algorithm));
 
             // Unwrap the symmetric key
-            var unwrappedKey = keyVaultClient.UnwrapKeyAsync(wrappedKey.Kid, algorithm, wrappedKey.Result).GetAwaiter().GetResult();
+            var unwrappedKey = Task.Run(() => keyVaultClient.UnwrapKeyAsync(wrappedKey.Kid, algorithm, wrappedKey.Result)).ConfigureAwait(false).GetAwaiter().GetResult();
             Console.Out.WriteLine(string.Format("The unwrapped key is{0}the same as the original key!",
                 symmetricKey.SequenceEqual(unwrappedKey.Result) ? " " : " not "));
         }
@@ -536,7 +543,7 @@ namespace Sample.Microsoft.HelloKeyVault
             Console.Out.WriteLine(string.Format("The text is encrypted using key id {0} and algorithm {1}", operationResult.Kid, algorithm));
 
             // Decrypt the encrypted data
-            var decryptedText = keyVaultClient.DecryptAsync(operationResult.Kid, algorithm, operationResult.Result).GetAwaiter().GetResult();
+            var decryptedText = Task.Run(() => keyVaultClient.DecryptAsync(operationResult.Kid, algorithm, operationResult.Result)).ConfigureAwait(false).GetAwaiter().GetResult();
 
             Console.Out.WriteLine(string.Format("The decrypted text is{0}the same as the original key!",
                 plainText.SequenceEqual(decryptedText.Result) ? " " : " not "));
@@ -554,14 +561,14 @@ namespace Sample.Microsoft.HelloKeyVault
                 string keyName = inputValidator.GetKeyName(true);
 
                 // Encrypt the input data using the specified algorithm
-                operationResult = keyVaultClient.EncryptAsync(vaultAddress, keyName, keyVersion, algorithm, plainText).GetAwaiter().GetResult();
+                operationResult = Task.Run(() => keyVaultClient.EncryptAsync(vaultAddress, keyName, keyVersion, algorithm, plainText)).ConfigureAwait(false).GetAwaiter().GetResult();
             }
             else
             {
                 // If the key is not initialized get the key id from args
                 var keyId = (key != null) ? key.Key.Kid : inputValidator.GetKeyId();
                 // Encrypt the input data using the specified algorithm
-                operationResult = keyVaultClient.EncryptAsync(keyId, algorithm, plainText).GetAwaiter().GetResult();
+                operationResult = Task.Run(() => keyVaultClient.EncryptAsync(keyId, algorithm, plainText)).ConfigureAwait(false).GetAwaiter().GetResult();
             }
 
             return operationResult;
@@ -604,7 +611,7 @@ namespace Sample.Microsoft.HelloKeyVault
             localKey = (key ?? GetKey(null));
 
             // Decrypt the encrypted data
-            operationResult = keyVaultClient.DecryptAsync(localKey.KeyIdentifier.ToString(), algorithm, cipherText).GetAwaiter().GetResult();
+            operationResult = Task.Run(() => keyVaultClient.DecryptAsync(localKey.KeyIdentifier.ToString(), algorithm, cipherText)).ConfigureAwait(false).GetAwaiter().GetResult();
 
             Console.Out.WriteLine(string.Format("The decrypted text is: {0}", Encoding.UTF8.GetString(operationResult.Result)));
         }
@@ -624,7 +631,7 @@ namespace Sample.Microsoft.HelloKeyVault
             {
                 var vaultAddress = inputValidator.GetVaultAddress();
                 string keyName = inputValidator.GetKeyName(true);
-                signature = keyVaultClient.SignAsync(vaultAddress, keyName, keyVersion, algorithm, digest).GetAwaiter().GetResult();
+                signature = Task.Run(() => keyVaultClient.SignAsync(vaultAddress, keyName, keyVersion, algorithm, digest)).ConfigureAwait(false).GetAwaiter().GetResult();
             }
             else
             {
@@ -632,12 +639,12 @@ namespace Sample.Microsoft.HelloKeyVault
                 var keyId = (key != null) ? key.Key.Kid : inputValidator.GetKeyId();
 
                 // Create a signature
-                signature = keyVaultClient.SignAsync(keyId, algorithm, digest).GetAwaiter().GetResult();
+                signature = Task.Run(() => keyVaultClient.SignAsync(keyId, algorithm, digest)).ConfigureAwait(false).GetAwaiter().GetResult();
             }
             Console.Out.WriteLine(string.Format("The signature is created using key id {0} and algorithm {1} ", signature.Kid, algorithm));
 
             // Verify the signature
-            bool isVerified = keyVaultClient.VerifyAsync(signature.Kid, algorithm, digest, signature.Result).GetAwaiter().GetResult();
+            bool isVerified = Task.Run(() => keyVaultClient.VerifyAsync(signature.Kid, algorithm, digest, signature.Result)).ConfigureAwait(false).GetAwaiter().GetResult();
             Console.Out.WriteLine(string.Format("The signature is {0} verified!", isVerified ? "" : "not "));
         }
 
@@ -646,7 +653,7 @@ namespace Sample.Microsoft.HelloKeyVault
         /// </summary>
         /// <param name="certificateName"> the name of the created certificate </param>
         /// <returns> The created certificate </returns>
-        private static CertificateOperation CreateCertificate(out string certificateName)
+        private static CertificateBundle CreateCertificate(out string certificateName)
         {
             var vaultAddress = inputValidator.GetVaultAddress();
             certificateName = inputValidator.GetCertificateName();
@@ -676,13 +683,46 @@ namespace Sample.Microsoft.HelloKeyVault
 
             var tags = inputValidator.GetTags();
 
-            var certificateOperation = keyVaultClient.CreateCertificateAsync(vaultAddress, certificateName, policy,
-                    new CertificateAttributes { Enabled = true }, tags).GetAwaiter().GetResult();
+            var name = certificateName;
+            var pendingCertificate = Task.Run(() => keyVaultClient.CreateCertificateAsync(vaultAddress, name, policy,
+                    new CertificateAttributes { Enabled = true }, tags)).ConfigureAwait(false).GetAwaiter().GetResult();
 
-            Console.Out.WriteLine("Created certificate:---------------");
-            PrintoutCertificateOperation(certificateOperation);
+            // Certificate request is created.
+            // Poll for certificate creation status until pending is complete.
+            var pendingPollCount = 0;
+            while (pendingPollCount < 11)
+            {
+                var pendingCertificateResponse = Task.Run(() => 
+                        keyVaultClient.GetCertificateOperationAsync(vaultAddress, pendingCertificate.CertificateOperationIdentifier.Name))
+                    .ConfigureAwait(false).GetAwaiter().GetResult();
 
-            return certificateOperation;
+                PrintoutCertificateOperation(pendingCertificateResponse);
+
+                if (0 == string.Compare(pendingCertificateResponse.Status, "InProgress", true))
+                {
+                    Console.Out.WriteLine("Waiting on the long running operation to complete creating the certificate...");
+                    Thread.Sleep(TimeSpan.FromSeconds(5));
+                    pendingPollCount++;
+                    continue;
+                }
+
+                if (0 == string.Compare(pendingCertificateResponse.Status, "Completed", true))
+                {
+                    var certBundle = Task.Run(() => keyVaultClient.GetCertificateAsync(pendingCertificateResponse.Target)).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                    Console.Out.WriteLine("Created certificate:---------------");
+                    PrintoutCertificate(certBundle);
+
+                    return certBundle;
+                }
+
+                throw new Exception(string.Format(
+                    "Polling on pending certificate returned an unexpected result. Error code = {0}, Error message = {1}",
+                    pendingCertificate.Error.Code,
+                    pendingCertificate.Error.Message));
+            }
+
+            throw new Exception(string.Format("Pending certificate processing delayed"));
         }
 
         /// <summary>
@@ -725,8 +765,10 @@ namespace Sample.Microsoft.HelloKeyVault
             {
                 base64X509 = "MIIJOwIBAzCCCPcGCSqGSIb3DQEHAaCCCOgEggjkMIII4DCCBgkGCSqGSIb3DQEHAaCCBfoEggX2MIIF8jCCBe4GCyqGSIb3DQEMCgECoIIE / jCCBPowHAYKKoZIhvcNAQwBAzAOBAj15YH9pOE58AICB9AEggTYLrI + SAru2dBZRQRlJY7XQ3LeLkah2FcRR3dATDshZ2h0IA2oBrkQIdsLyAAWZ32qYR1qkWxLHn9AqXgu27AEbOk35 + pITZaiy63YYBkkpR + pDdngZt19Z0PWrGwHEq5z6BHS2GLyyN8SSOCbdzCz7blj3 + 7IZYoMj4WOPgOm / tQ6U44SFWek46QwN2zeA4i97v7ftNNns27ms52jqfhOvTA9c / wyfZKAY4aKJfYYUmycKjnnRl012ldS2lOkASFt + lu4QCa72IY6ePtRudPCvmzRv2pkLYS6z3cI7omT8nHP3DymNOqLbFqr5O2M1ZYaLC63Q3xt3eVvbcPh3N08D1hHkhz / KDTvkRAQpvrW8ISKmgDdmzN55Pe55xHfSWGB7gPw8sZea57IxFzWHTK2yvTslooWoosmGxanYY2IG / no3EbPOWDKjPZ4ilYJe5JJ2immlxPz + 2e2EOCKpDI + 7fzQcRz3PTd3BK + budZ8aXX8aW / lOgKS8WmxZoKnOJBNWeTNWQFugmktXfdPHAdxMhjUXqeGQd8wTvZ4EzQNNafovwkI7IV / ZYoa++RGofVR3ZbRSiBNF6TDj / qXFt0wN / CQnsGAmQAGNiN + D4mY7i25dtTu / Jc7OxLdhAUFpHyJpyrYWLfvOiS5WYBeEDHkiPUa / 8eZSPA3MXWZR1RiuDvuNqMjct1SSwdXADTtF68l / US1ksU657 + XSC + 6ly1A / upz + X71 + C4Ho6W0751j5ZMT6xKjGh5pee7MVuduxIzXjWIy3YSd0fIT3U0A5NLEvJ9rfkx6JiHjRLx6V1tqsrtT6BsGtmCQR1UCJPLqsKVDvAINx3cPA / CGqr5OX2BGZlAihGmN6n7gv8w4O0k0LPTAe5YefgXN3m9pE867N31GtHVZaJ / UVgDNYS2jused4rw76ZWN41akx2QN0JSeMJqHXqVz6AKfz8ICS / dFnEGyBNpXiMRxrY / QPKi / wONwqsbDxRW7vZRVKs78pBkE0ksaShlZk5GkeayDWC / 7Hi / NqUFtIloK9XB3paLxo1DGu5qqaF34jZdktzkXp0uZqpp + FfKZaiovMjt8F7yHCPk + LYpRsU2Cyc9DVoDA6rIgf + uEP4jppgehsxyT0lJHax2t869R2jYdsXwYUXjgwHIV0voj7bJYPGFlFjXOp6ZW86scsHM5xfsGQoK2Fp838VT34SHE1ZXU / puM7rviREHYW72pfpgGZUILQMohuTPnd8tFtAkbrmjLDo + k9xx7HUvgoFTiNNWuq / cRjr70FKNguMMTIrid + HwfmbRoaxENWdLcOTNeascER2a + 37UQolKD5ksrPJG6RdNA7O2pzp3micDYRs / +s28cCIxO//J/d4nsgHp6RTuCu4+Jm9k0YTw2Xg75b2cWKrxGnDUgyIlvNPaZTB5QbMid4x44/lE0LLi9kcPQhRgrK07OnnrMgZvVGjt1CLGhKUv7KFc3xV1r1rwKkosxnoG99oCoTQtregcX5rIMjHgkc1IdflGJkZzaWMkYVFOJ4Weynz008i4ddkske5vabZs37Lb8iggUYNBYZyGzalruBgnQyK4fz38Fae4nWYjyildVfgyo/fCePR2ovOfphx9OQJi+M9BoFmPrAg+8ARDZ+R+5yzYuEc9ZoVX7nkp7LTGB3DANBgkrBgEEAYI3EQIxADATBgkqhkiG9w0BCRUxBgQEAQAAADBXBgkqhkiG9w0BCRQxSh5IAGEAOAAwAGQAZgBmADgANgAtAGUAOQA2AGUALQA0ADIAMgA0AC0AYQBhADEAMQAtAGIAZAAxADkANABkADUAYQA2AGIANwA3MF0GCSsGAQQBgjcRATFQHk4ATQBpAGMAcgBvAHMAbwBmAHQAIABTAHQAcgBvAG4AZwAgAEMAcgB5AHAAdABvAGcAcgBhAHAAaABpAGMAIABQAHIAbwB2AGkAZABlAHIwggLPBgkqhkiG9w0BBwagggLAMIICvAIBADCCArUGCSqGSIb3DQEHATAcBgoqhkiG9w0BDAEGMA4ECNX+VL2MxzzWAgIH0ICCAojmRBO+CPfVNUO0s+BVuwhOzikAGNBmQHNChmJ/pyzPbMUbx7tO63eIVSc67iERda2WCEmVwPigaVQkPaumsfp8+L6iV/BMf5RKlyRXcwh0vUdu2Qa7qadD+gFQ2kngf4Dk6vYo2/2HxayuIf6jpwe8vql4ca3ZtWXfuRix2fwgltM0bMz1g59d7x/glTfNqxNlsty0A/rWrPJjNbOPRU2XykLuc3AtlTtYsQ32Zsmu67A7UNBw6tVtkEXlFDqhavEhUEO3dvYqMY+QLxzpZhA0q44ZZ9/ex0X6QAFNK5wuWxCbupHWsgxRwKftrxyszMHsAvNoNcTlqcctee+ecNwTJQa1/MDbnhO6/qHA7cfG1qYDq8Th635vGNMW1w3sVS7l0uEvdayAsBHWTcOC2tlMa5bfHrhY8OEIqj5bN5H9RdFy8G/W239tjDu1OYjBDydiBqzBn8HG1DSj1Pjc0kd/82d4ZU0308KFTC3yGcRad0GnEH0Oi3iEJ9HbriUbfVMbXNHOF+MktWiDVqzndGMKmuJSdfTBKvGFvejAWVO5E4mgLvoaMmbchc3BO7sLeraHnJN5hvMBaLcQI38N86mUfTR8AP6AJ9c2k514KaDLclm4z6J8dMz60nUeo5D3YD09G6BavFHxSvJ8MF0Lu5zOFzEePDRFm9mH8W0N/sFlIaYfD/GWU/w44mQucjaBk95YtqOGRIj58tGDWr8iUdHwaYKGqU24zGeRae9DhFXPzZshV1ZGsBQFRaoYkyLAwdJWIXTi+c37YaC8FRSEnnNmS79Dou1Kc3BvK4EYKAD2KxjtUebrV174gD0Q+9YuJ0GXOTspBvCFd5VT2Rw5zDNrA/J3F5fMCk4wOzAfMAcGBSsOAwIaBBSxgh2xyF+88V4vAffBmZXv8Txt4AQU4O/NX4MjxSodbE7ApNAMIvrtREwCAgfQ";
             }
-            var certificate = keyVaultClient.ImportCertificateAsync(vaultAddress, certificateName, base64X509, pfxPassword,
-                    policy).GetAwaiter().GetResult();
+
+            var name = certificateName;
+            var certificate = Task.Run(() => keyVaultClient.ImportCertificateAsync(vaultAddress, name, base64X509, pfxPassword,
+                    policy)).ConfigureAwait(false).GetAwaiter().GetResult();
 
             Console.Out.WriteLine("Created certificate:---------------");
             PrintoutCertificate(certificate);
@@ -743,7 +785,7 @@ namespace Sample.Microsoft.HelloKeyVault
         {
             // The contents of a certificate can be obtained by using the secret referenced in the certificate bundle
             var certContentSecret =
-                keyVaultClient.GetSecretAsync(certificateBundle.SecretIdentifier.Identifier).GetAwaiter().GetResult();
+                Task.Run(() => keyVaultClient.GetSecretAsync(certificateBundle.SecretIdentifier.Identifier)).ConfigureAwait(false).GetAwaiter().GetResult();
 
             // Certificates can be exported in a mutiple formats (PFX, PEM).
             // Use the content type to determine how to strongly-type the certificate for the platform
@@ -768,7 +810,7 @@ namespace Sample.Microsoft.HelloKeyVault
             var maxResults = 1;
 
             Console.Out.WriteLine("List certificate:---------------");
-            var results = keyVaultClient.GetCertificatesAsync(vaultAddress, maxResults).GetAwaiter().GetResult();
+            var results = Task.Run(() => keyVaultClient.GetCertificatesAsync(vaultAddress, maxResults)).ConfigureAwait(false).GetAwaiter().GetResult();
 
             if (results != null)
             {
@@ -779,7 +821,7 @@ namespace Sample.Microsoft.HelloKeyVault
 
             while (results != null && !string.IsNullOrWhiteSpace(results.NextPageLink))
             {
-                results = keyVaultClient.GetCertificatesNextAsync(results.NextPageLink).GetAwaiter().GetResult();
+                results = Task.Run(() => keyVaultClient.GetCertificatesNextAsync(results.NextPageLink)).ConfigureAwait(false).GetAwaiter().GetResult();
                 if (results != null && results != null)
                 {
                     numSecretsInVault += results.Count();
@@ -805,7 +847,7 @@ namespace Sample.Microsoft.HelloKeyVault
 
             Console.Out.WriteLine("List certificate versions:---------------");
 
-            var results = keyVaultClient.GetCertificateVersionsAsync(vaultAddress, certificateName, maxResults).GetAwaiter().GetResult();
+            var results = Task.Run(() => keyVaultClient.GetCertificateVersionsAsync(vaultAddress, certificateName, maxResults)).ConfigureAwait(false).GetAwaiter().GetResult();
 
             if (results != null)
             {
@@ -816,7 +858,7 @@ namespace Sample.Microsoft.HelloKeyVault
 
             while (results != null && !string.IsNullOrWhiteSpace(results.NextPageLink))
             {
-                results = keyVaultClient.GetCertificateVersionsNextAsync(results.NextPageLink).GetAwaiter().GetResult();
+                results = Task.Run(() => keyVaultClient.GetCertificateVersionsNextAsync(results.NextPageLink)).ConfigureAwait(false).GetAwaiter().GetResult();
                 if (results != null && results != null)
                 {
                     numKeyVersions += results.Count();
@@ -839,7 +881,7 @@ namespace Sample.Microsoft.HelloKeyVault
             var vaultAddress = inputValidator.GetVaultAddress();
             certificateName = (certificateName == string.Empty) ? inputValidator.GetCertificateName() : certificateName;
 
-            var certificate = keyVaultClient.DeleteCertificateAsync(vaultAddress, certificateName).GetAwaiter().GetResult();
+            var certificate = Task.Run(() => keyVaultClient.DeleteCertificateAsync(vaultAddress, certificateName)).ConfigureAwait(false).GetAwaiter().GetResult();
 
             Console.Out.WriteLine("Deleted certificate:---------------");
             PrintoutCertificate(certificate);
@@ -954,7 +996,7 @@ namespace Sample.Microsoft.HelloKeyVault
         public static async Task<string> GetAccessToken(string authority, string resource, string scope, ClientAssertionCertificate assertionCert)
         {            
             var context = new AuthenticationContext(authority, TokenCache.DefaultShared);
-            var result = await context.AcquireTokenAsync(resource, assertionCert);
+            var result = await context.AcquireTokenAsync(resource, assertionCert).ConfigureAwait(false);
 
             return result.AccessToken;
         }
@@ -969,7 +1011,7 @@ namespace Sample.Microsoft.HelloKeyVault
             if (certificateThumbprint == null)
                 throw new System.ArgumentNullException("certificateThumbprint");
 
-            X509Store store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
+            X509Store store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
             try
             {
                 store.Open(OpenFlags.ReadOnly);

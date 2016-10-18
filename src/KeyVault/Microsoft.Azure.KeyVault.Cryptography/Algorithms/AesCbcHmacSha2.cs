@@ -30,7 +30,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
         {
         }
 
-        public override ICryptoTransform CreateDecryptor( byte[] key, byte[] iv, byte[] authenticationData )
+        public override ICryptoTransform CreateDecryptor( byte[] key, byte[] iv, byte[] authenticationData, byte[] authenticationTag )
         {
             if ( key == null )
                 throw new CryptographicException( "No key material" );
@@ -39,10 +39,13 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
                 throw new CryptographicException( "No initialization vector" );
 
             if ( authenticationData == null )
-                throw new CryptographicException( "No associated data" );
+                throw new CryptographicException( "No authentication data" );
+
+            if ( authenticationTag == null )
+                throw new CryptographicException( "No authentication tag" );
 
             // Create the Decryptor
-            return new AesCbcHmacSha2Decryptor( Name, key, iv, authenticationData );
+            return new AesCbcHmacSha2Decryptor( Name, key, iv, authenticationData, authenticationTag );
         }
 
         public override ICryptoTransform CreateEncryptor( byte[] key, byte[] iv, byte[] authenticationData )
@@ -54,7 +57,7 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
                 throw new CryptographicException( "No initialization vector" );
 
             if ( authenticationData == null )
-                throw new CryptographicException( "No associated data" );
+                throw new CryptographicException( "No authentication data" );
 
             // Create the Encryptor
             return new AesCbcHmacSha2Encryptor( Name, key, iv, authenticationData );
@@ -246,16 +249,18 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
             ICryptoTransform _inner;
             byte[]           _tag;
 
-            internal AesCbcHmacSha2Decryptor( string name, byte[] key, byte[] iv, byte[] associatedData )
+            internal AesCbcHmacSha2Decryptor( string name, byte[] key, byte[] iv, byte[] associatedData, byte[] authenticationTag )
             {
                 // Split the key to get the AES key, the HMAC key and the HMAC object
                 byte[] aesKey;
 
                 GetAlgorithmParameters( name, key, out aesKey, out _hmac_key, out _hmac );
 
-                // Create the AES provider
-                _aes = AesCbcHmacSha2.Create( aesKey, iv );
+                // Record the tag
+                _tag   = authenticationTag;
 
+                // Create the AES provider
+                _aes   = AesCbcHmacSha2.Create( aesKey, iv );
                 _inner = _aes.CreateDecryptor();
 
                 _associated_data_length = ConvertToBigEndian( associatedData.Length * 8 );
@@ -313,8 +318,12 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
                 // Add the associated_data_length bytes to the hash
                 _hmac.AppendData( _associated_data_length );
 
-                // Compute the tag
-                _tag = _hmac.GetHashAndReset().Take( _hmac_key.Length );
+                // Compute the tag, then compare it against the expected value
+                // perform transforming the final block
+                var tag = _hmac.GetHashAndReset().Take( _hmac_key.Length );
+
+                if ( !tag.SequenceEqualConstantTime( _tag ) )
+                    throw new CryptographicException( "Data is no authentic" );
 
                 return _inner.TransformFinalBlock( inputBuffer, inputOffset, inputCount );
             }

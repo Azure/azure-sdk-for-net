@@ -10,7 +10,7 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
     /// Parameters supplied to the Check Name Availability for Namespace and
     /// NotificationHubs.
     /// </summary>
-    public partial class CheckAvailabilityParameters : Resource
+    public partial class CheckAvailabilityParameters
     {
         /// <summary>
         /// Initializes a new instance of the CheckAvailabilityParameters
@@ -22,19 +22,61 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// Initializes a new instance of the CheckAvailabilityParameters
         /// class.
         /// </summary>
+        /// <param name="name">Resource name</param>
         /// <param name="location">Resource location</param>
         /// <param name="id">Resource Id</param>
-        /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
+        /// <param name="sku">The sku of the created namespace</param>
         /// <param name="isAvailiable">True if the name is available and can
         /// be used to create new Namespace/NotificationHub. Otherwise
         /// false.</param>
-        public CheckAvailabilityParameters(string location, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), bool? isAvailiable = default(bool?))
-            : base(location, id, name, type, tags)
+        public CheckAvailabilityParameters(string name, string location, string id = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), Sku sku = default(Sku), bool? isAvailiable = default(bool?))
         {
+            Id = id;
+            Name = name;
+            Type = type;
+            Location = location;
+            Tags = tags;
+            Sku = sku;
             IsAvailiable = isAvailiable;
         }
+
+        /// <summary>
+        /// Gets resource Id
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
+
+        /// <summary>
+        /// Gets or sets resource name
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Gets resource type
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "type")]
+        public string Type { get; private set; }
+
+        /// <summary>
+        /// Gets or sets resource location
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "location")]
+        public string Location { get; set; }
+
+        /// <summary>
+        /// Gets or sets resource tags
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "tags")]
+        public System.Collections.Generic.IDictionary<string, string> Tags { get; set; }
+
+        /// <summary>
+        /// Gets or sets the sku of the created namespace
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "sku")]
+        public Sku Sku { get; set; }
 
         /// <summary>
         /// Gets or sets true if the name is available and can be used to
@@ -49,9 +91,20 @@ namespace Microsoft.Azure.Management.NotificationHubs.Models
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
+            if (Name == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Name");
+            }
+            if (Location == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Location");
+            }
+            if (this.Sku != null)
+            {
+                this.Sku.Validate();
+            }
         }
     }
 }
