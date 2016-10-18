@@ -1,5 +1,5 @@
 {
-  "version": "2.3.2",
+  "version": "2.3.3",
   "copyright": "Copyright (c) Microsoft Corporation",
   "title": "Client Runtime Library for Microsoft AutoRest Generated Clients",
   "description": "Infrastructure for error handling, tracing, and HttpClient pipeline configuration. Required by client libraries generated using AutoRest. \nSupported Platforms:\n  -   Portable Class Libraries\n  -   .NET Framework 4.5\n  -   Windows 8\n  -   Windows Phone 8.1\n  -   DotNet Core",
