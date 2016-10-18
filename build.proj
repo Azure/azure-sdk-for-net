@@ -68,6 +68,8 @@
     <LibrariesToBuild Include="$(LibrarySourceFolder)\**\*.sln" Condition=" '$(Scope)' == 'all'  " />
     <LibraryFxTargetList Include="$(FxTargetList)" />
     <AutoRestLibraryFxTargetList Include="portable;net45" />
+    <ClientRuntimeProjects Include="$(LibrarySourceFolder)\ClientRuntime\**\*.xproj" />
+    <ClientRuntimeTests Include="$(LibrarySourceFolder)\ClientRuntime\*.Tests\*.xproj" />
   </ItemGroup>
   
   <PropertyGroup>
@@ -77,6 +79,34 @@
   <UsingTask TaskName="ValidateStrongNameSignatureTask" AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll"  />
   <UsingTask TaskName="FilterOutAutoRestLibraries" AssemblyFile="$(LibraryToolsFolder)\Microsoft.WindowsAzure.Build.Tasks.dll"  />
   
+  <!-- Building ClientRuntime projects -->
+  <Target Name="BuildClientRuntime">
+      <Exec Command="dotnet restore" WorkingDirectory="%(ClientRuntimeProjects.RootDir)\%(ClientRuntimeProjects.Directory)"/>
+      <Exec Command="dotnet build --configuration $(Configuration)" WorkingDirectory="%(ClientRuntimeProjects.RootDir)\%(ClientRuntimeProjects.Directory)"/>
+  </Target>
+
+  <Target Name="DisableSN" > 
+      <!-- Check for admin privs -->
+      <Exec Command="net session" IgnoreExitCode="true" StandardErrorImportance="Low">
+        <Output PropertyName="isadmin" TaskParameter="ExitCode" />
+      </Exec>
+  
+      <!-- Disable strong name checking -->  
+      <Exec Command='"C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools\sn.exe" -Vr *' Condition="$(isadmin) == 0"/>
+      <Exec Command='"C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools\x64\sn.exe" -Vr *' Condition="$(isadmin) == 0"/>
+    </Target>
+    
+    <Target Name="EnableSN" > 
+      <!-- Check for admin privs -->
+      <Exec Command="net session" IgnoreExitCode="true" StandardErrorImportance="Low">
+        <Output PropertyName="isadmin" TaskParameter="ExitCode" />
+      </Exec>
+  
+      <!-- Enable strong name checking -->  
+      <Exec Command='$(WindowsSDK_ExecutablePath_x86)\sn.exe -Vx *' Condition="$(isadmin) == 0"/>
+      <Exec Command='$(WindowsSDK_ExecutablePath_x64)\sn.exe -Vx *' Condition="$(isadmin) == 0"/>
+  </Target>
+
   <!--
   CI build related
   -->
@@ -109,13 +139,15 @@
     <Exec
       Command="$(LibraryToolsFolder)\AzCopy\AzCopy.exe /Source:https://azuresdktools.blob.core.windows.net/7-zip  /S /Dest:$(ZipExeFolder) /Y"
       Condition="!Exists('$(ZipExe)')" />
+    
   </Target>
   
-  <Target Name="Build" DependsOnTargets="BuildMsBuildTask;PrepareForAutoRestLibraries;RestoreNugetPackages">
+  <Target Name="Build" DependsOnTargets="BuildClientRuntime;BuildMsBuildTask;PrepareForAutoRestLibraries;RestoreNugetPackages">
     <PropertyGroup>
       <_ExtraPropertyList>CodeSign=$(CodeSign)</_ExtraPropertyList>
       <_TemporaryNetCoreFeeds>-s https://api.nuget.org/v3/index.json -s https://dotnet.myget.org/F/cli-deps/api/v3/index.json</_TemporaryNetCoreFeeds>
     </PropertyGroup>
+    <CallTarget Targets="DisableSN" Condition=" '$(OS)' == 'Windows_NT'"/> 
     <CallTarget Targets="BuildServerPreparation" Condition=" '$(CodeSign)' == 'true' " />
 
     <MSBuild Projects="@(NonAutoRestLibraries)"
@@ -167,11 +199,13 @@
     <Exec Command="$(LibraryNugetPackageFolder)\xunit.runner.console.2.0.0\tools\xunit.console.x86.exe &quot;%(TestDlls.Identity)&quot; -html &quot;$(MSBuildProjectDirectory)\TestResults\%(TestDlls.Filename).html&quot;"
       Condition=" '@(TestDlls)' != '' "  
       ContinueOnError="false"/>
-
+    
     <!--Based on https://github.com/xunit/xunit/issues/653, only xml is supported -->
     <Exec Command="dotnet test -xml &quot;$(MSBuildProjectDirectory)\TestResults\%(NetCore_AutoRestLibraries.Filename).xml&quot;" 
           WorkingDirectory="%(NetCore_AutoRestLibraries.Test)"
           Condition=" @(NetCore_AutoRestLibraries) != '' and '%(NetCore_AutoRestLibraries.Test)' != '' "/>
+    <Exec Command="dotnet test -xml &quot;$(MSBuildProjectDirectory)\TestResults\%(ClientRuntimeTests.Filename).xml&quot;" 
+          WorkingDirectory="%(ClientRuntimeTests.RootDir)\%(ClientRuntimeTests.Directory)"/>
   </Target>
   
   <PropertyGroup>
