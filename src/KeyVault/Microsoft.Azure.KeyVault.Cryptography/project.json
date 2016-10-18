@@ -29,12 +29,7 @@
         "debugType": "portable"
       },
       "frameworkAssemblies": {
-        "System": { "type": "build" },
-        "System.Collections": { "type": "build" },
-        "System.Diagnostics.Tools": { "type": "build" },
-        "System.Linq.Expressions": { "type": "build" },
-        "System.Security": { "type": "default" },
-        "System.Threading.Tasks": { "type": "build" }
+        "System.Diagnostics.Tools": "4.0.0.0"
       }
     },
     "netstandard1.5": {
@@ -43,12 +38,12 @@
         "debugType": "portable"
       },
       "dependencies": {
-        "System.Security.Cryptography.Primitives": "4.0.0",
-        "System.Security.Cryptography.Algorithms": "4.2.0",
         "System.Diagnostics.Tools": "4.0.1",
-        "System.Globalization": "4.0.11",
         "System.Linq": "4.1.0",
-        "System.Runtime.Extensions": "4.1.0"
+        "System.Globalization": "4.0.11",
+        "System.Runtime.Extensions": "4.1.0",
+        "System.Security.Cryptography.Primitives": "4.0.0",
+        "System.Security.Cryptography.Algorithms": "4.2.0"
       }
     }
   }

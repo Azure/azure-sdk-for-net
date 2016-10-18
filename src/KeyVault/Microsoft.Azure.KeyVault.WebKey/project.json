@@ -27,8 +27,6 @@
         "define": [ "NET45" ]
       },
       "frameworkAssemblies": {
-        "System": { "type": "build" },
-        "System.Security": { "type": "default" }
       },
       "dependencies": {
       }
@@ -42,12 +40,9 @@
         "Microsoft.NETCore.Platforms": "1.0.1",
         "System.Collections": "4.0.11",
         "System.Runtime": "4.1.0",
-        "Microsoft.CSharp": "4.0.1",
+        "System.Security.Cryptography.Algorithms": "4.2.0",
         "System.Collections.Concurrent": "4.0.12",
-        "System.Runtime.Serialization.Primitives": "4.1.1",
-        "System.Security.Cryptography.Csp": "4.0.0",
-        "System.Linq": "4.1.0",
-        "System.Runtime.Extensions": "4.1.0"
+        "System.Linq": "4.1.0"
       }
     }
   },
