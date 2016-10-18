@@ -194,6 +194,12 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                                 readStream.CopyTo(outputStream, (int)lengthToDownload);
                             }
 
+                            // we need to validate how many bytes have actually been copied to the read stream
+                            if (outputStream.Position - curOffset != lengthToDownload)
+                            {
+                                throw new UploadFailedException(string.Format("{4}: Did not download the expected amount of data in the request. Expected: {0}. Actual: {1}. From offset: {2} in remote file: {3}", lengthToDownload, outputStream.Position - curOffset, curOffset, _metadata.InputFilePath, DateTime.Now.ToString()));
+                            }
+
                             downloadCompleted = true;
                             lengthRemaining -= lengthToDownload;
                             curOffset += lengthToDownload;
@@ -217,6 +223,12 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                             }
                         }
                     }
+                }
+
+                // full validation of the segment.
+                if(outputStream.Position - _segmentMetadata.Offset != _segmentMetadata.Length)
+                {
+                    throw new UploadFailedException(string.Format("Post-download stream segment verification failed: target stream has a length of {0}, expected {1}", outputStream.Position - _segmentMetadata.Offset, _segmentMetadata.Length));
                 }
             }
         }

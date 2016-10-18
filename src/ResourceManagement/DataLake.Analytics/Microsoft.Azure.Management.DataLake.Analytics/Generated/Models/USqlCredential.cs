@@ -32,45 +32,18 @@ namespace Microsoft.Azure.Management.DataLake.Analytics.Models
         /// <param name="computeAccountName">the name of the Data Lake
         /// Analytics account.</param>
         /// <param name="version">the version of the catalog item.</param>
-        /// <param name="databaseName">the name of the database the credential
-        /// is in.</param>
-        /// <param name="identity">the name of the secret associated with the
-        /// credential.</param>
         /// <param name="name">the name of the credential.</param>
-        /// <param name="userName">the user name associated with the
-        /// credential.</param>
-        public USqlCredential(string computeAccountName = default(string), Guid? version = default(Guid?), string databaseName = default(string), string identity = default(string), string name = default(string), string userName = default(string))
+        public USqlCredential(string computeAccountName = default(string), Guid? version = default(Guid?), string name = default(string))
             : base(computeAccountName, version)
         {
-            DatabaseName = databaseName;
-            Identity = identity;
             Name = name;
-            UserName = userName;
         }
-
-        /// <summary>
-        /// Gets or sets the name of the database the credential is in.
-        /// </summary>
-        [JsonProperty(PropertyName = "databaseName")]
-        public string DatabaseName { get; set; }
-
-        /// <summary>
-        /// Gets or sets the name of the secret associated with the credential.
-        /// </summary>
-        [JsonProperty(PropertyName = "identity")]
-        public string Identity { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the credential.
         /// </summary>
         [JsonProperty(PropertyName = "credentialName")]
         public string Name { get; set; }
-
-        /// <summary>
-        /// Gets or sets the user name associated with the credential.
-        /// </summary>
-        [JsonProperty(PropertyName = "userName")]
-        public string UserName { get; set; }
 
     }
 }

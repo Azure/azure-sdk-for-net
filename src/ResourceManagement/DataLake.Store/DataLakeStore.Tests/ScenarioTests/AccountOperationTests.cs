@@ -16,6 +16,7 @@ using Microsoft.Azure;
 using Microsoft.Azure.Management.DataLake.Store;
 using Microsoft.Azure.Management.DataLake.Store.Models;
 using Microsoft.Azure.Test;
+using Microsoft.Rest.Azure;
 using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
 using System;
 using System.Collections.Generic;
@@ -158,6 +159,147 @@ namespace DataLakeStore.Tests
 
                 // test that the account is gone
                 Assert.False(clientToUse.Account.Exists(commonData.ResourceGroupName, newAccount.Name));
+            }
+        }
+        [Fact]
+        public void FirewallAndTrustedProviderTest()
+        {
+            using (var context = MockContext.Start(this.GetType().FullName))
+            {
+                commonData = new CommonTestFixture(context);
+                var clientToUse = this.GetDataLakeStoreAccountManagementClient(context);
+
+                // Create a an account with trusted ID provider and firewall rules.
+                var firewallStart = "127.0.0.1";
+                var firewallEnd = "127.0.0.2";
+                var firewallRuleName1 = TestUtilities.GenerateName("firerule1");
+
+                var trustedId = TestUtilities.GenerateGuid();
+                var trustedUrl = string.Format("https://sts.windows.net/{0}", trustedId.ToString());
+                var trustedIdName = TestUtilities.GenerateName("trustedrule1");
+
+                var adlsAccountName = TestUtilities.GenerateName("adlsacct");
+                
+                var responseCreate =
+                    clientToUse.Account.Create(resourceGroupName: commonData.ResourceGroupName, name: adlsAccountName,
+                        parameters: new DataLakeStoreAccount
+                        {
+                            Name = adlsAccountName,
+                            Location = commonData.Location,
+                            Properties = new DataLakeStoreAccountProperties(firewallRules: new List<FirewallRule>
+                            {
+                                new FirewallRule
+                                {
+                                    Name = firewallRuleName1,
+                                    Properties = new FirewallRuleProperties
+                                    {
+                                        StartIpAddress = firewallStart,
+                                        EndIpAddress = firewallEnd
+                                    }
+                                }
+                            },
+                            trustedIdProviders: new List<TrustedIdProvider>
+                            {
+                                new TrustedIdProvider
+                                {
+                                    Name = trustedIdName,
+                                    Properties = new TrustedIdProviderProperties
+                                    {
+                                        IdProvider = trustedUrl
+                                    }
+                                }
+                            })
+                            {
+                                FirewallState = FirewallState.Enabled,
+                                TrustedIdProviderState = TrustedIdProviderState.Enabled,
+                            }
+                        });
+
+                Assert.Equal(DataLakeStoreAccountStatus.Succeeded, responseCreate.Properties.ProvisioningState);
+
+                // get the account and ensure that all the values are properly set.
+                var responseGet = clientToUse.Account.Get(commonData.ResourceGroupName, adlsAccountName);
+
+                // validate the account creation process
+                Assert.Equal(DataLakeStoreAccountStatus.Succeeded, responseGet.Properties.ProvisioningState);
+                Assert.NotNull(responseCreate.Id);
+                Assert.NotNull(responseGet.Id);
+                Assert.Contains(adlsAccountName, responseGet.Id);
+                Assert.Contains(adlsAccountName, responseGet.Properties.Endpoint);
+                Assert.Equal(commonData.Location, responseGet.Location);
+                Assert.Equal(adlsAccountName, responseGet.Name);
+                Assert.Equal("Microsoft.DataLakeStore/accounts", responseGet.Type);
+
+                // validate firewall state
+                Assert.Equal(FirewallState.Enabled, responseGet.Properties.FirewallState);
+                Assert.Equal(1, responseGet.Properties.FirewallRules.Count());
+                Assert.Equal(firewallStart, responseGet.Properties.FirewallRules[0].Properties.StartIpAddress);
+                Assert.Equal(firewallEnd, responseGet.Properties.FirewallRules[0].Properties.EndIpAddress);
+                Assert.Equal(firewallRuleName1, responseGet.Properties.FirewallRules[0].Name);
+
+                // validate trusted identity provider state
+                Assert.Equal(TrustedIdProviderState.Enabled, responseGet.Properties.TrustedIdProviderState);
+                Assert.Equal(1, responseGet.Properties.TrustedIdProviders.Count());
+                Assert.Equal(trustedUrl, responseGet.Properties.TrustedIdProviders[0].Properties.IdProvider);
+                Assert.Equal(trustedIdName, responseGet.Properties.TrustedIdProviders[0].Name);
+
+                // Test getting the specific firewall rules
+                var firewallRule = clientToUse.Account.GetFirewallRule(commonData.ResourceGroupName, adlsAccountName, firewallRuleName1);
+                Assert.Equal(firewallStart, firewallRule.Properties.StartIpAddress);
+                Assert.Equal(firewallEnd, firewallRule.Properties.EndIpAddress);
+                Assert.Equal(firewallRuleName1, firewallRule.Name);
+
+
+                var updatedFirewallStart = "192.168.0.0";
+                var updatedFirewallEnd = "192.168.0.1";
+                firewallRule.Properties.StartIpAddress = updatedFirewallStart;
+                firewallRule.Properties.EndIpAddress = updatedFirewallEnd;
+
+                // Update the firewall rule to change the start/end ip addresses
+                firewallRule = clientToUse.Account.CreateOrUpdateFirewallRule(commonData.ResourceGroupName, adlsAccountName,firewallRuleName1, firewallRule);
+                Assert.Equal(updatedFirewallStart, firewallRule.Properties.StartIpAddress);
+                Assert.Equal(updatedFirewallEnd, firewallRule.Properties.EndIpAddress);
+                Assert.Equal(firewallRuleName1, firewallRule.Name);
+
+                // Remove the firewall rule and verify it is gone.
+                clientToUse.Account.DeleteFirewallRule(commonData.ResourceGroupName, adlsAccountName, firewallRuleName1);
+
+                try
+                {
+                    firewallRule = clientToUse.Account.GetFirewallRule(commonData.ResourceGroupName, adlsAccountName, firewallRuleName1);
+                    Assert.True(false, "Attempting to retrieve a deleted firewall rule did not throw.");
+                }
+                catch (CloudException e)
+                {
+                    Assert.Equal(HttpStatusCode.NotFound, e.Response.StatusCode);
+                }
+
+                // Test getting the specific trusted identity provider
+                var trustedIdProvider = clientToUse.Account.GetTrustedIdProvider(commonData.ResourceGroupName, adlsAccountName, trustedIdName);
+                Assert.Equal(trustedUrl, trustedIdProvider.Properties.IdProvider);
+                Assert.Equal(trustedIdName, trustedIdProvider.Name);
+
+
+                var updatedIdUrl = string.Format("https://sts.windows.net/{0}", TestUtilities.GenerateGuid().ToString());
+                trustedIdProvider.Properties.IdProvider = updatedIdUrl;
+
+                // Update the firewall rule to change the start/end ip addresses
+                trustedIdProvider = clientToUse.Account.CreateOrUpdateTrustedIdProvider(commonData.ResourceGroupName, adlsAccountName, trustedIdName, trustedIdProvider);
+                Assert.Equal(updatedIdUrl, trustedIdProvider.Properties.IdProvider);
+                Assert.Equal(trustedIdName, trustedIdProvider.Name);
+
+                // Remove the firewall rule and verify it is gone.
+                clientToUse.Account.DeleteTrustedIdProvider(commonData.ResourceGroupName, adlsAccountName, trustedIdName);
+
+                try
+                {
+                    trustedIdProvider = clientToUse.Account.GetTrustedIdProvider(commonData.ResourceGroupName, adlsAccountName, trustedIdName);
+                    Assert.True(false, "Attempting to retrieve a deleted trusted identity provider did not throw.");
+                }
+                catch (CloudException e)
+                {
+                    Assert.Equal(HttpStatusCode.NotFound, e.Response.StatusCode);
+                }
             }
         }
     }

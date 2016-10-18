@@ -47,12 +47,22 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// Possible values include: 'Creating', 'Succeeded'</param>
         /// <param name="encryptionConfig">The Key vault encryption
         /// configuration.</param>
+        /// <param name="firewallState">The current state of the IP address
+        /// firewall for this Data Lake store account. Possible values
+        /// include: 'Enabled', 'Disabled'</param>
+        /// <param name="firewallRules">The list of firewall rules associated
+        /// with this Data Lake store account.</param>
+        /// <param name="trustedIdProviderState">The current state of the
+        /// trusted identity provider feature for this Data Lake store
+        /// account. Possible values include: 'Enabled', 'Disabled'</param>
+        /// <param name="trustedIdProviders">The list of trusted identity
+        /// providers associated with this Data Lake store account.</param>
         /// <param name="lastModifiedTime">the account last modified
         /// time.</param>
         /// <param name="endpoint">the gateway host.</param>
         /// <param name="defaultGroup">the default owner group for all new
         /// folders and files created in the Data Lake Store account.</param>
-        public DataLakeStoreAccountProperties(DataLakeStoreAccountStatus? provisioningState = default(DataLakeStoreAccountStatus?), DataLakeStoreAccountState? state = default(DataLakeStoreAccountState?), DateTime? creationTime = default(DateTime?), EncryptionState? encryptionState = default(EncryptionState?), EncryptionProvisioningState? encryptionProvisioningState = default(EncryptionProvisioningState?), EncryptionConfig encryptionConfig = default(EncryptionConfig), DateTime? lastModifiedTime = default(DateTime?), string endpoint = default(string), string defaultGroup = default(string))
+        public DataLakeStoreAccountProperties(DataLakeStoreAccountStatus? provisioningState = default(DataLakeStoreAccountStatus?), DataLakeStoreAccountState? state = default(DataLakeStoreAccountState?), DateTime? creationTime = default(DateTime?), EncryptionState? encryptionState = default(EncryptionState?), EncryptionProvisioningState? encryptionProvisioningState = default(EncryptionProvisioningState?), EncryptionConfig encryptionConfig = default(EncryptionConfig), FirewallState? firewallState = default(FirewallState?), IList<FirewallRule> firewallRules = default(IList<FirewallRule>), TrustedIdProviderState? trustedIdProviderState = default(TrustedIdProviderState?), IList<TrustedIdProvider> trustedIdProviders = default(IList<TrustedIdProvider>), DateTime? lastModifiedTime = default(DateTime?), string endpoint = default(string), string defaultGroup = default(string))
         {
             ProvisioningState = provisioningState;
             State = state;
@@ -60,6 +70,10 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
             EncryptionState = encryptionState;
             EncryptionProvisioningState = encryptionProvisioningState;
             EncryptionConfig = encryptionConfig;
+            FirewallState = firewallState;
+            FirewallRules = firewallRules;
+            TrustedIdProviderState = trustedIdProviderState;
+            TrustedIdProviders = trustedIdProviders;
             LastModifiedTime = lastModifiedTime;
             Endpoint = endpoint;
             DefaultGroup = defaultGroup;
@@ -107,6 +121,36 @@ namespace Microsoft.Azure.Management.DataLake.Store.Models
         /// </summary>
         [JsonProperty(PropertyName = "encryptionConfig")]
         public EncryptionConfig EncryptionConfig { get; set; }
+
+        /// <summary>
+        /// Gets or sets the current state of the IP address firewall for this
+        /// Data Lake store account. Possible values include: 'Enabled',
+        /// 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "firewallState")]
+        public FirewallState? FirewallState { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of firewall rules associated with this Data
+        /// Lake store account.
+        /// </summary>
+        [JsonProperty(PropertyName = "firewallRules")]
+        public IList<FirewallRule> FirewallRules { get; set; }
+
+        /// <summary>
+        /// Gets or sets the current state of the trusted identity provider
+        /// feature for this Data Lake store account. Possible values
+        /// include: 'Enabled', 'Disabled'
+        /// </summary>
+        [JsonProperty(PropertyName = "trustedIdProviderState")]
+        public TrustedIdProviderState? TrustedIdProviderState { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of trusted identity providers associated
+        /// with this Data Lake store account.
+        /// </summary>
+        [JsonProperty(PropertyName = "trustedIdProviders")]
+        public IList<TrustedIdProvider> TrustedIdProviders { get; set; }
 
         /// <summary>
         /// Gets the account last modified time.

@@ -1873,7 +1873,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             }
             string op = "APPEND";
             string append = "true";
-            string flush = "true";
+            string syncFlag = "close";
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1885,7 +1885,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
                 tracingParameters.Add("flushFilePath", flushFilePath);
                 tracingParameters.Add("op", op);
                 tracingParameters.Add("append", append);
-                tracingParameters.Add("flush", flush);
+                tracingParameters.Add("syncFlag", syncFlag);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Flush", tracingParameters);
             }
@@ -1904,9 +1904,9 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 _queryParameters.Add(string.Format("append={0}", Uri.EscapeDataString(append)));
             }
-            if (flush != null)
+            if (syncFlag != null)
             {
-                _queryParameters.Add(string.Format("flush={0}", Uri.EscapeDataString(flush)));
+                _queryParameters.Add(string.Format("syncFlag={0}", Uri.EscapeDataString(syncFlag)));
             }
             if (this.Client.ApiVersion != null)
             {
@@ -2549,6 +2549,7 @@ namespace Microsoft.Azure.Management.DataLake.Store
             {
                 ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
             }
+
             cancellationToken.ThrowIfCancellationRequested();
             _httpResponse = await this.Client.HttpClient.SendAsync(_httpRequest, HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
             if (_shouldTrace)
