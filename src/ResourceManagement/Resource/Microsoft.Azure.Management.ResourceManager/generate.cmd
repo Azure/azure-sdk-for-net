@@ -5,7 +5,7 @@
 
 @echo off
 setlocal
-set autoRestVersion=0.17.0-Nightly20160629
+set autoRestVersion=0.17.0-Special-20161018
 set source=-Source https://www.myget.org/F/autorest/api/v2
 
 set resSpecFile="https://raw.githubusercontent.com/Azure/azure-rest-api-specs/master/arm-resources/resources/2016-09-01/swagger/resources.json"

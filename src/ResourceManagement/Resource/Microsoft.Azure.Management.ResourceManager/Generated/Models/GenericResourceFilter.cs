@@ -23,9 +23,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the GenericResourceFilter class.
         /// </summary>
-        /// <param name="resourceType">Gets or sets the resource type.</param>
-        /// <param name="tagname">Gets or sets the tag name.</param>
-        /// <param name="tagvalue">Gets or sets the tag value.</param>
+        /// <param name="resourceType">The resource type.</param>
+        /// <param name="tagname">The tag name.</param>
+        /// <param name="tagvalue">The tag value.</param>
         public GenericResourceFilter(string resourceType = default(string), string tagname = default(string), string tagvalue = default(string))
         {
             ResourceType = resourceType;

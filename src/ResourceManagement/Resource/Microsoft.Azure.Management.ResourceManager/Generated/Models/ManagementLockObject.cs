@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
     using System.Linq;
 
     /// <summary>
-    /// Management lock information.
+    /// The lock information.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
     public partial class ManagementLockObject : Microsoft.Rest.Azure.IResource
@@ -24,11 +24,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the ManagementLockObject class.
         /// </summary>
-        /// <param name="level">The lock level of the management lock.
-        /// Possible values include: 'NotSpecified', 'CanNotDelete',
-        /// 'ReadOnly'</param>
-        /// <param name="notes">The notes of the management lock.</param>
-        /// <param name="owners">The owners of the management lock.</param>
+        /// <param name="level">The lock level of the lock. Possible values
+        /// include: 'NotSpecified', 'CanNotDelete', 'ReadOnly'</param>
+        /// <param name="notes">The notes of the lock.</param>
+        /// <param name="owners">The owners of the lock.</param>
         /// <param name="id">The Id of the lock.</param>
         /// <param name="type">The type of the lock.</param>
         /// <param name="name">The name of the lock.</param>
@@ -43,20 +42,20 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets the lock level of the management lock. Possible
-        /// values include: 'NotSpecified', 'CanNotDelete', 'ReadOnly'
+        /// Gets or sets the lock level of the lock. Possible values include:
+        /// 'NotSpecified', 'CanNotDelete', 'ReadOnly'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.level")]
         public string Level { get; set; }
 
         /// <summary>
-        /// Gets or sets the notes of the management lock.
+        /// Gets or sets the notes of the lock.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.notes")]
         public string Notes { get; set; }
 
         /// <summary>
-        /// Gets or sets the owners of the management lock.
+        /// Gets or sets the owners of the lock.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.owners")]
         public System.Collections.Generic.IList<ManagementLockOwner> Owners { get; set; }

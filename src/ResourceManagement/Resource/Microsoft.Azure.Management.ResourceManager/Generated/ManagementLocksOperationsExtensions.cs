@@ -64,6 +64,83 @@ namespace Microsoft.Azure.Management.ResourceManager
             }
 
             /// <summary>
+            /// Deletes the management lock of a resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='lockName'>
+            /// The name of lock.
+            /// </param>
+            public static void DeleteAtResourceGroupLevel(this IManagementLocksOperations operations, string resourceGroupName, string lockName)
+            {
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IManagementLocksOperations)s).DeleteAtResourceGroupLevelAsync(resourceGroupName, lockName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes the management lock of a resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='lockName'>
+            /// The name of lock.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task DeleteAtResourceGroupLevelAsync(this IManagementLocksOperations operations, string resourceGroupName, string lockName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                await operations.DeleteAtResourceGroupLevelWithHttpMessagesAsync(resourceGroupName, lockName, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Gets a management lock at the resource group level.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='lockName'>
+            /// The lock name.
+            /// </param>
+            public static ManagementLockObject GetAtResourceGroupLevel(this IManagementLocksOperations operations, string resourceGroupName, string lockName)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IManagementLocksOperations)s).GetAtResourceGroupLevelAsync(resourceGroupName, lockName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Gets a management lock at the resource group level.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The resource group name.
+            /// </param>
+            /// <param name='lockName'>
+            /// The lock name.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<ManagementLockObject> GetAtResourceGroupLevelAsync(this IManagementLocksOperations operations, string resourceGroupName, string lockName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.GetAtResourceGroupLevelWithHttpMessagesAsync(resourceGroupName, lockName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
             /// Create or update a management lock at the resource level or any level
             /// below resource.
             /// </summary>
@@ -299,43 +376,6 @@ namespace Microsoft.Azure.Management.ResourceManager
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <summary>
-            /// Deletes the management lock of a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroup'>
-            /// The resource group names.
-            /// </param>
-            /// <param name='lockName'>
-            /// The name of lock.
-            /// </param>
-            public static void DeleteAtResourceGroupLevel(this IManagementLocksOperations operations, string resourceGroup, string lockName)
-            {
-                System.Threading.Tasks.Task.Factory.StartNew(s => ((IManagementLocksOperations)s).DeleteAtResourceGroupLevelAsync(resourceGroup, lockName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Deletes the management lock of a resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroup'>
-            /// The resource group names.
-            /// </param>
-            /// <param name='lockName'>
-            /// The name of lock.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task DeleteAtResourceGroupLevelAsync(this IManagementLocksOperations operations, string resourceGroup, string lockName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            {
-                await operations.DeleteAtResourceGroupLevelWithHttpMessagesAsync(resourceGroup, lockName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>

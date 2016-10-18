@@ -23,8 +23,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the ResourceGroupFilter class.
         /// </summary>
-        /// <param name="tagName">Gets or sets the tag name.</param>
-        /// <param name="tagValue">Gets or sets the tag value.</param>
+        /// <param name="tagName">The tag name.</param>
+        /// <param name="tagValue">The tag value.</param>
         public ResourceGroupFilter(string tagName = default(string), string tagValue = default(string))
         {
             TagName = tagName;

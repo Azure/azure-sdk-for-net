@@ -23,8 +23,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the DeploymentExtendedFilter class.
         /// </summary>
-        /// <param name="provisioningState">Gets or sets the provisioning
-        /// state.</param>
+        /// <param name="provisioningState">The provisioning state.</param>
         public DeploymentExtendedFilter(string provisioningState = default(string))
         {
             ProvisioningState = provisioningState;

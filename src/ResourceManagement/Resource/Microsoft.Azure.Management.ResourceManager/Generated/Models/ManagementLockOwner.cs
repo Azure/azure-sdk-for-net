@@ -20,15 +20,15 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the ManagementLockOwner class.
         /// </summary>
-        /// <param name="applicationId">The application Id of the management
-        /// lock owner.</param>
+        /// <param name="applicationId">The application Id of the lock
+        /// owner.</param>
         public ManagementLockOwner(string applicationId = default(string))
         {
             ApplicationId = applicationId;
         }
 
         /// <summary>
-        /// Gets or sets the application Id of the management lock owner.
+        /// Gets or sets the application Id of the lock owner.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "applicationId")]
         public string ApplicationId { get; set; }

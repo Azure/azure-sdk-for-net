@@ -24,12 +24,12 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// Initializes a new instance of the TagValue class.
         /// </summary>
         /// <param name="id">The tag ID.</param>
-        /// <param name="tagValue">The tag value.</param>
+        /// <param name="tagValueProperty">The tag value.</param>
         /// <param name="count">The tag value count.</param>
-        public TagValue(string id = default(string), string tagValue = default(string), TagCount count = default(TagCount))
+        public TagValue(string id = default(string), string tagValueProperty = default(string), TagCount count = default(TagCount))
         {
             Id = id;
-            TagValueProperty = tagValue;
+            TagValueProperty = tagValueProperty;
             Count = count;
         }
 

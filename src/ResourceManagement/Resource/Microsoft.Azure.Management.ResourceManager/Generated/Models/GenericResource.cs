@@ -23,10 +23,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the GenericResource class.
         /// </summary>
-        /// <param name="location">Resource location</param>
         /// <param name="id">Resource Id</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
+        /// <param name="location">Resource location</param>
         /// <param name="tags">Resource tags</param>
         /// <param name="plan">The plan of the resource.</param>
         /// <param name="properties">The resource properties.</param>
@@ -35,8 +35,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// resource.</param>
         /// <param name="sku">The sku of the resource.</param>
         /// <param name="identity">The identity of the resource.</param>
-        public GenericResource(string location, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), Plan plan = default(Plan), object properties = default(object), string kind = default(string), string managedBy = default(string), Sku sku = default(Sku), Identity identity = default(Identity))
-            : base(location, id, name, type, tags)
+        public GenericResource(string id = default(string), string name = default(string), string type = default(string), string location = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), Plan plan = default(Plan), object properties = default(object), string kind = default(string), string managedBy = default(string), Sku sku = default(Sku), Identity identity = default(Identity))
+            : base(id, name, type, location, tags)
         {
             Plan = plan;
             Properties = properties;
@@ -88,9 +88,8 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
-        public override void Validate()
+        public virtual void Validate()
         {
-            base.Validate();
             if (this.Kind != null)
             {
                 if (!System.Text.RegularExpressions.Regex.IsMatch(this.Kind, "^[-\\w\\._,\\(\\)]+$"))
