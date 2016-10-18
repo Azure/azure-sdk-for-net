@@ -14,37 +14,62 @@ namespace Microsoft.Rest.Azure.Authentication
     {
         private Uri _authenticationEndpoint;
 
-        private static readonly ActiveDirectoryServiceSettings AzureSettings = new ActiveDirectoryServiceSettings
-        {
-            AuthenticationEndpoint= new Uri("https://login.windows.net/"), 
-            TokenAudience = new Uri("https://management.core.windows.net/"),
-            ValidateAuthority = true
-        };
-
-        private static readonly ActiveDirectoryServiceSettings AzureChinaSettings = new ActiveDirectoryServiceSettings
-        {
-            AuthenticationEndpoint= new Uri("https://login.chinacloudapi.cn/"), 
-            TokenAudience = new Uri("https://management.core.chinacloudapi.cn/"),
-            ValidateAuthority = true
-        };
-
         /// <summary>
         /// Gets the serviceSettings for authentication with Azure
         /// </summary>
-        public static ActiveDirectoryServiceSettings Azure { get { return AzureSettings; } }
+        public static ActiveDirectoryServiceSettings Azure
+            =>
+                new ActiveDirectoryServiceSettings
+                {
+                    AuthenticationEndpoint = new Uri("https://login.windows.net/"),
+                    TokenAudience = new Uri("https://management.core.windows.net/"),
+                    ValidateAuthority = true
+                };
 
         /// <summary>
         /// Gets the serviceSettings for authentication with Azure China
         /// </summary>
-        public static ActiveDirectoryServiceSettings AzureChina { get { return AzureChinaSettings; } }
+        public static ActiveDirectoryServiceSettings AzureChina
+            =>
+                new ActiveDirectoryServiceSettings
+                {
+                    AuthenticationEndpoint = new Uri("https://login.chinacloudapi.cn/"),
+                    TokenAudience = new Uri("https://management.core.chinacloudapi.cn/"),
+                    ValidateAuthority = true
+                };
+
+        /// <summary>
+        /// Gets the serviceSettings for authentication with the Azure Germany Cloud
+        /// </summary>
+        public static ActiveDirectoryServiceSettings AzureGermanCloud
+            =>
+                new ActiveDirectoryServiceSettings
+                {
+                    AuthenticationEndpoint = new Uri("https://login.microsoftonline.de/"),
+                    ValidateAuthority = true,
+                    TokenAudience = new Uri("https://management.core.cloudapi.de/")
+                };
+
+        /// <summary>
+        /// Gets the serviceSettings for authentication with the Azure USGovernment Cloud
+        /// </summary>
+        public static ActiveDirectoryServiceSettings AzureUSGovernmentCloud
+            =>
+                new ActiveDirectoryServiceSettings
+                {
+                    AuthenticationEndpoint = new Uri("https://login-us.microsoftonline.com/"),
+                    ValidateAuthority = true,
+                    TokenAudience = new Uri("https://management.core.usgovcloudapi.net/")
+                };
+
 
         /// <summary>
         /// Gets or sets the ActiveDirectory Endpoint for the Azure Environment
         /// </summary>
-        public Uri AuthenticationEndpoint 
+        public Uri AuthenticationEndpoint
         {
             get { return _authenticationEndpoint; }
-            set { _authenticationEndpoint = EnsureTrailingSlash(value); } 
+            set { _authenticationEndpoint = EnsureTrailingSlash(value); }
         }
 
         /// <summary>
@@ -67,7 +92,7 @@ namespace Microsoft.Rest.Azure.Authentication
             UriBuilder builder = new UriBuilder(authenticationEndpoint);
             if (!string.IsNullOrEmpty(builder.Query))
             {
-                throw new ArgumentOutOfRangeException(nameof(authenticationEndpoint), 
+                throw new ArgumentOutOfRangeException(nameof(authenticationEndpoint),
                     Resources.AuthenticationEndpointContainsQuery);
             }
 

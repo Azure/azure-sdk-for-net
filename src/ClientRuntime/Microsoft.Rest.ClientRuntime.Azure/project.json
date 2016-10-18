@@ -1,5 +1,5 @@
 {
-  "version": "3.3.2",
+  "version": "3.4.0",
   "copyright": "Copyright (c) Microsoft Corporation",
   "title": "Client Runtime for Microsoft Azure Libraries",
   "description": "Provides common error handling, tracing, and HTTP/REST-based pipeline manipulation. \nSupported Platforms:\n  -   Portable Class Libraries\n  -   .NET Framework 4.5\n  -   Windows 8\n  -   Windows Phone 8.1\n  -   DotNet Core",
@@ -21,7 +21,7 @@
   },
 
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime": "[2.3.2,3.0)"
+    "Microsoft.Rest.ClientRuntime": "[2.4.0,3.0)"
   },
   
   "frameworks": {
@@ -41,6 +41,7 @@
       "dependencies": {
         "Microsoft.NETCore.Platforms": "1.0.1",
         "System.Collections": "4.0.11",
+        "System.Collections.Concurrent": "4.0.12",
         "System.Diagnostics.Debug": "4.0.11",
         "System.Diagnostics.Tools": "4.0.1",
         "System.Diagnostics.Tracing": "4.1.0",
@@ -49,12 +50,15 @@
         "System.Net.Http": "4.1.0",
         "System.Net.Primitives": "4.0.11",
         "System.ObjectModel": "4.0.12",
+        "System.Reflection": "4.1.0",
         "System.Reflection.Extensions": "4.0.1",
+        "System.Reflection.TypeExtensions": "4.1.0",
         "System.Resources.ResourceManager": "4.0.1",
         "System.Runtime.Extensions": "4.1.0",
         "System.Text.RegularExpressions": "4.1.0",
         "System.Threading": "4.0.11",
         "System.Xml.ReaderWriter": "4.0.11"
+
       }
     },
     "netstandard1.5": {
@@ -63,6 +67,7 @@
       "dependencies": {
         "Microsoft.NETCore.Platforms": "1.0.1",
         "System.Collections": "4.0.11",
+        "System.Collections.Concurrent": "4.0.12",
         "System.Diagnostics.Debug": "4.0.11",
         "System.Diagnostics.Tools": "4.0.1",
         "System.Diagnostics.Tracing": "4.1.0",
@@ -71,7 +76,9 @@
         "System.Net.Http": "4.1.0",
         "System.Net.Primitives": "4.0.11",
         "System.ObjectModel": "4.0.12",
+        "System.Reflection": "4.1.0",
         "System.Reflection.Extensions": "4.0.1",
+        "System.Reflection.TypeExtensions": "4.1.0",
         "System.Resources.ResourceManager": "4.0.1",
         "System.Runtime.Extensions": "4.1.0",
         "System.Text.RegularExpressions": "4.1.0",

@@ -1,5 +1,5 @@
 {
-  "version": "2.2.8-preview",
+  "version": "2.3.0-preview",
   "title": "Authentication for Azure Management Clients",
   "description": "Provides ADAL based authentication for Azure management client libraries \nSupported Platforms:\n  -   Portable Class Libraries\n  -   .NET Framework 4.5\n  -   Windows 8\n  -   Windows Phone 8.1\n  -   DotNet Core",
   "authors": [ "Microsoft" ],
@@ -21,7 +21,7 @@
   },
 
   "dependencies": {
-    "Microsoft.Rest.ClientRuntime": "[2.3.2,3.0)"
+    "Microsoft.Rest.ClientRuntime": "[2.4.0,3.0)"
   },
 
   "frameworks": {
@@ -34,14 +34,20 @@
       "buildOptions": { "define": [ "PORTABLE" ] },
       "imports": ["dnxcore50", "portable-net45+win8"],
       "dependencies": {
-        "Microsoft.IdentityModel.Clients.ActiveDirectory": "3.6.212041202-alpha"
+        "Microsoft.IdentityModel.Clients.ActiveDirectory": "3.6.212041202-alpha",
+        "System.Collections.Concurrent": "4.0.12",
+        "System.Reflection": "4.1.0",
+        "System.Console": "4.0.0"
       }
     },
     "netstandard1.5": {
       "buildOptions": { "define": [ "PORTABLE" ] },
       "imports": ["dnxcore50"],
       "dependencies": {
-        "Microsoft.IdentityModel.Clients.ActiveDirectory": "3.6.212041202-alpha"
+        "Microsoft.IdentityModel.Clients.ActiveDirectory": "3.6.212041202-alpha",
+        "System.Collections.Concurrent": "4.0.12",
+        "System.Reflection": "4.1.0",
+        "System.Console": "4.0.0"
       }
     }
   }
