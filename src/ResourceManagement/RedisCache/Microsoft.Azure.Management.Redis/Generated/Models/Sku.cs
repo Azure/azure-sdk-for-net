@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Redis.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Sku parameters supplied to the create redis operation.
@@ -29,6 +23,14 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// <summary>
         /// Initializes a new instance of the Sku class.
         /// </summary>
+        /// <param name="name">What type of redis cache to deploy. Valid
+        /// values: (Basic, Standard, Premium). Possible values include:
+        /// 'Basic', 'Standard', 'Premium'</param>
+        /// <param name="family">Which family to use. Valid values: (C, P).
+        /// Possible values include: 'C', 'P'</param>
+        /// <param name="capacity">What size of redis cache to deploy. Valid
+        /// values: for C family (0, 1, 2, 3, 4, 5, 6), for P family (1, 2,
+        /// 3, 4)</param>
         public Sku(string name, string family, int capacity)
         {
             Name = name;
@@ -41,35 +43,38 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// (Basic, Standard, Premium). Possible values include: 'Basic',
         /// 'Standard', 'Premium'
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets which family to use. Valid values: (C, P). Possible
         /// values include: 'C', 'P'
         /// </summary>
-        [JsonProperty(PropertyName = "family")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "family")]
         public string Family { get; set; }
 
         /// <summary>
         /// Gets or sets what size of redis cache to deploy. Valid values: for
         /// C family (0, 1, 2, 3, 4, 5, 6), for P family (1, 2, 3, 4)
         /// </summary>
-        [JsonProperty(PropertyName = "capacity")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "capacity")]
         public int Capacity { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public virtual void Validate()
         {
             if (Name == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Name");
             }
             if (Family == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Family");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Family");
             }
         }
     }

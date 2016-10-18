@@ -1,22 +1,23 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/19b520e4-39a7-4fac-b1da-d940f2d39a38/resourceGroups/hydra11029/providers/Microsoft.Cache/Redis/hydracache1/listKeys?api-version=2016-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTliNTIwZTQtMzlhNy00ZmFjLWIxZGEtZDk0MGYyZDM5YTM4L3Jlc291cmNlR3JvdXBzL2h5ZHJhMTEwMjkvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMS9saXN0S2V5cz9hcGktdmVyc2lvbj0yMDE2LTA0LTAx",
+      "RequestUri": "/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourceGroups/hydra13012/providers/Microsoft.Cache/Redis/hydracache1/listKeys?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGIxZjY0NzEtMWJmMC00ZGRhLWFlYzMtY2I5MjcyZjA5NTkwL3Jlc291cmNlR3JvdXBzL2h5ZHJhMTMwMTIvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMS9saXN0S2V5cz9hcGktdmVyc2lvbj0yMDE2LTA0LTAx",
       "RequestMethod": "POST",
       "RequestBody": "",
       "RequestHeaders": {
         "x-ms-client-request-id": [
-          "6bd8d79c-0afa-406d-9cf9-b3cea130dd89"
+          "b64aeb03-4b6f-4df8-8958-2e7989341307"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Redis.RedisManagementClient/2.0.0.0"
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/3.1.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"NRrgFIOUJrn6fRqbBtCK4gj7jFLe7eCJOAs6XIxcpD4=\",\r\n  \"secondaryKey\": \"cPRwBJ9guYIaw4xZDwrrnXnS9cMcC+KEUmUDCrq/JJY=\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"jJKb/dS6rDAFwDmMVH6NCDx9OdXXzikorbrgpJAQn38=\",\r\n  \"secondaryKey\": \"qDTqBnvT8izZ9j/bii51494VH9Y4jBjpVMhsjgJWlY4=\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -28,7 +29,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 18 May 2016 22:57:12 GMT"
+          "Tue, 18 Oct 2016 07:37:52 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -43,29 +44,29 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "065b8692-1ad2-478d-a568-40d8ebcd58b5"
+          "e3243219-283a-48c2-b1a0-108fad127a65"
         ],
         "x-rp-server-mvid": [
-          "bd1e4ace-5dbd-4224-976a-99df2f0c997c"
+          "a10738d6-1cb8-4b83-9fbf-9de75c3d37b0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1190"
+          "1199"
         ],
         "x-ms-correlation-request-id": [
-          "54ba56ab-524e-4069-988a-98c24092cc14"
+          "a08909bc-1fba-4647-8ce0-42a979ef3e6e"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20160518T225713Z:54ba56ab-524e-4069-988a-98c24092cc14"
+          "WESTUS2:20161018T073752Z:a08909bc-1fba-4647-8ce0-42a979ef3e6e"
         ]
       },
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/19b520e4-39a7-4fac-b1da-d940f2d39a38/resourceGroups/hydra11029/providers/Microsoft.Cache/Redis/hydracache1/regenerateKey?api-version=2016-04-01",
-      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMTliNTIwZTQtMzlhNy00ZmFjLWIxZGEtZDk0MGYyZDM5YTM4L3Jlc291cmNlR3JvdXBzL2h5ZHJhMTEwMjkvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMS9yZWdlbmVyYXRlS2V5P2FwaS12ZXJzaW9uPTIwMTYtMDQtMDE=",
+      "RequestUri": "/subscriptions/0b1f6471-1bf0-4dda-aec3-cb9272f09590/resourceGroups/hydra13012/providers/Microsoft.Cache/Redis/hydracache1/regenerateKey?api-version=2016-04-01",
+      "EncodedRequestUri": "L3N1YnNjcmlwdGlvbnMvMGIxZjY0NzEtMWJmMC00ZGRhLWFlYzMtY2I5MjcyZjA5NTkwL3Jlc291cmNlR3JvdXBzL2h5ZHJhMTMwMTIvcHJvdmlkZXJzL01pY3Jvc29mdC5DYWNoZS9SZWRpcy9oeWRyYWNhY2hlMS9yZWdlbmVyYXRlS2V5P2FwaS12ZXJzaW9uPTIwMTYtMDQtMDE=",
       "RequestMethod": "POST",
       "RequestBody": "{\r\n  \"keyType\": \"Primary\"\r\n}",
       "RequestHeaders": {
@@ -76,16 +77,17 @@
           "28"
         ],
         "x-ms-client-request-id": [
-          "74fbf755-4ffc-4904-b81e-bce8b02ef21a"
+          "308f4edf-793a-4389-a921-40dddaefc093"
         ],
         "accept-language": [
           "en-US"
         ],
         "User-Agent": [
-          "Microsoft.Azure.Management.Redis.RedisManagementClient/2.0.0.0"
+          "FxVersion/4.6.24214.01",
+          "Microsoft.Azure.Management.Redis.RedisManagementClient/3.1.1-preview"
         ]
       },
-      "ResponseBody": "{\r\n  \"primaryKey\": \"KB3eyuceFDvMSFLf33wnNTBw/25ZUUWde8VGlZxTc9o=\",\r\n  \"secondaryKey\": \"cPRwBJ9guYIaw4xZDwrrnXnS9cMcC+KEUmUDCrq/JJY=\"\r\n}",
+      "ResponseBody": "{\r\n  \"primaryKey\": \"KTT0Dv9QDXTQZQoAoHG9EmVF8x9pzdacDvkOdbKvS+U=\",\r\n  \"secondaryKey\": \"qDTqBnvT8izZ9j/bii51494VH9Y4jBjpVMhsjgJWlY4=\"\r\n}",
       "ResponseHeaders": {
         "Content-Type": [
           "application/json; charset=utf-8"
@@ -97,7 +99,7 @@
           "no-cache"
         ],
         "Date": [
-          "Wed, 18 May 2016 22:57:14 GMT"
+          "Tue, 18 Oct 2016 07:37:53 GMT"
         ],
         "Pragma": [
           "no-cache"
@@ -112,22 +114,22 @@
           "Accept-Encoding"
         ],
         "x-ms-request-id": [
-          "a13dc836-06c9-4e21-832a-3f607ac0d28a"
+          "da53749d-6996-4207-a11a-8d274bf027eb"
         ],
         "x-rp-server-mvid": [
-          "bd1e4ace-5dbd-4224-976a-99df2f0c997c"
+          "a10738d6-1cb8-4b83-9fbf-9de75c3d37b0"
         ],
         "Strict-Transport-Security": [
           "max-age=31536000; includeSubDomains"
         ],
         "x-ms-ratelimit-remaining-subscription-writes": [
-          "1189"
+          "1198"
         ],
         "x-ms-correlation-request-id": [
-          "6a090d79-871a-4389-ab84-5ce907c1fb13"
+          "b6c64a6c-2597-4aba-b28c-4bbbe24b44b2"
         ],
         "x-ms-routing-request-id": [
-          "NORTHEUROPE:20160518T225714Z:6a090d79-871a-4389-ab84-5ce907c1fb13"
+          "WESTUS2:20161018T073753Z:b6c64a6c-2597-4aba-b28c-4bbbe24b44b2"
         ]
       },
       "StatusCode": 200
@@ -135,6 +137,6 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "19b520e4-39a7-4fac-b1da-d940f2d39a38"
+    "SubscriptionId": "0b1f6471-1bf0-4dda-aec3-cb9272f09590"
   }
 }

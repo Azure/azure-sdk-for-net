@@ -8,19 +8,16 @@
 
 namespace Microsoft.Azure.Management.Redis.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
     /// Defines values for RedisKeyType.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
+    [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
     public enum RedisKeyType
     {
-        [EnumMember(Value = "Primary")]
+        [System.Runtime.Serialization.EnumMember(Value = "Primary")]
         Primary,
-        [EnumMember(Value = "Secondary")]
+        [System.Runtime.Serialization.EnumMember(Value = "Secondary")]
         Secondary
     }
 }
