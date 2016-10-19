@@ -251,37 +251,6 @@ namespace AnalysisServices.Tests.InMemoryTests
         }
 
         [Fact]
-        public void ServerGetDetailsValidateResponse()
-        {
-            var response = new HttpResponseMessage(HttpStatusCode.OK)
-            {
-                Content = new StringContent(AnalysisServicesTestUtilities.GetDefaultCreatedResponse("Active"))
-            };
-
-            response.Headers.Add("x-ms-request-id", "1");
-            var handler = new RecordedDelegatingHandler(response) { StatusCodeToReturn = HttpStatusCode.OK };
-            AnalysisServicesManagementClient client = AnalysisServicesTestUtilities.GetAnalysisServicesClient(handler);
-
-            var result = client.Servers.GetDetails(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
-
-            // Validate headers
-            Assert.Equal(HttpMethod.Get, handler.Method);
-            Assert.NotNull(handler.RequestHeaders.GetValues("User-Agent"));
-
-            // Validate result
-            Assert.Equal(AnalysisServicesTestUtilities.DefaultLocation, result.Location);
-            Assert.Equal(AnalysisServicesTestUtilities.DefaultServerName, result.Name);
-            Assert.Equal(
-                string.Format(
-                    "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/{0}/providers/Microsoft.AnalysisServices/servers/{1}", AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName), 
-                    result.Id);
-            Assert.NotEmpty(result.ServerFullName);
-            Assert.Equal(result.ProvisioningState, "Active");
-            Assert.True(result.Tags.ContainsKey("key1"));
-            Assert.Equal(result.AsAdministrators.Members.Count, 2);
-        }
-
-        [Fact]
         public void ServerGetDetailsThrowsExceptions()
         {
             var handler = new RecordedDelegatingHandler();
