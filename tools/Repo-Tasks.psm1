@@ -48,7 +48,7 @@ This cmdlet will only prompt you for Subscription and Tenant information, rest a
         [string]$TargetEnvironment='Prod'
     )
 
-    [string]$uris="https://management.azure.com/;AADAuthEndpoint=https://login.windows.net/;GraphUri=https://graph.windows.net/"
+    [string]$uris="https://management.azure.com/"
 
     $formattedConnStr = [string]::Format("SubscriptionId={0};HttpRecorderMode={1};Environment={2}", $SubscriptionId, $RecordMode, $TargetEnvironment)
 
@@ -150,7 +150,7 @@ Function Print-ConnectionString([string]$uid, [string]$pwd, [string]$subId, [str
     if([string]::IsNullOrEmpty($uris) -eq $false)
     {
         Write-Host "BaseUri=" -ForegroundColor Green -NoNewline
-        Write-Host $uris";" -NoNewline
+        Write-Host $uris -NoNewline
     }
 
     Write-Host ""
