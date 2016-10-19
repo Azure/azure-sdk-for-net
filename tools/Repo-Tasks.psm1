@@ -252,38 +252,34 @@ AzurePowerShell-TestProject
     }
 }
 
-Function Init()
+<#
+We allow users to include any helper powershell scripts they would like to include in the current session
+Currently we support two ways to include helper powershell scripts
+1) psuserspreferences environment variable
+2) $env:USERPROFILE\psFiles directory
+We will include all *.ps1 files from any of the above mentioned locations
+#>
+if([System.IO.Directory]::Exists($env:psuserpreferences))
 {
-    <#
-    We allow users to include any helper powershell scripts they would like to include in the current session
-    Currently we support two ways to include helper powershell scripts
-    1) psuserspreferences environment variable
-    2) $env:USERPROFILE\psFiles directory
-    We will include all *.ps1 files from any of the above mentioned locations
-    #>
-    if([System.IO.Directory]::Exists($env:psuserpreferences))
-    {
-        $userPsFileDir = $env:psuserpreferences
-    }
-    elseif([System.IO.Directory]::Exists("$env:USERPROFILE\psFiles"))
-    {
-        $userPsFileDir = "$env:USERPROFILE\psFiles"
-    }
-
-    if([string]::IsNullOrEmpty($userPsFileDir) -eq $false)
-    {
-        Get-ChildItem $userPsFileDir | WHERE {$_.Name -like "*.ps1"} | ForEach {
-        Write-Host "Including $_" -ForegroundColor Green
-        . $userPsFileDir\$_
-        }
-    }
-    else
-    {
-        Write-Host "Loading skipped. 'psuserpreferences' environment variable was not set to load user preferences." -ForegroundColor DarkYellow
-    }
+    $userPsFileDir = $env:psuserpreferences
+}
+elseif([System.IO.Directory]::Exists("$env:USERPROFILE\psFiles"))
+{
+    $userPsFileDir = "$env:USERPROFILE\psFiles"
 }
 
-Init
+if([string]::IsNullOrEmpty($userPsFileDir) -eq $false)
+{
+    Get-ChildItem $userPsFileDir | WHERE {$_.Name -like "*.ps1"} | ForEach {
+    Write-Host "Including $_" -ForegroundColor Green
+    . $userPsFileDir\$_
+    }
+}
+else
+{
+    Write-Host "Loading skipped. 'psuserpreferences' environment variable was not set to load user preferences." -ForegroundColor DarkYellow
+}
+
 
 export-modulemember -Function Set-TestEnvironment
 export-modulemember -Function Get-BuildScopes
