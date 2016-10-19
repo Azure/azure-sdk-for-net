@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Search.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Response containing the query API keys for a given Azure Search
@@ -30,16 +24,18 @@ namespace Microsoft.Azure.Management.Search.Models
         /// <summary>
         /// Initializes a new instance of the ListQueryKeysResult class.
         /// </summary>
-        public ListQueryKeysResult(IList<QueryKey> value = default(IList<QueryKey>))
+        /// <param name="queryKeys">The query keys for the Azure Search
+        /// service.</param>
+        public ListQueryKeysResult(System.Collections.Generic.IList<QueryKey> queryKeys = default(System.Collections.Generic.IList<QueryKey>))
         {
-            Value = value;
+            QueryKeys = queryKeys;
         }
 
         /// <summary>
         /// Gets the query keys for the Azure Search service.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<QueryKey> Value { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
+        public System.Collections.Generic.IList<QueryKey> QueryKeys { get; private set; }
 
     }
 }

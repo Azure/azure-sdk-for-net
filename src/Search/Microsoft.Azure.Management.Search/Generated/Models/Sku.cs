@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Search.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Defines the SKU of an Azure Search Service, which determines price
@@ -30,17 +24,20 @@ namespace Microsoft.Azure.Management.Search.Models
         /// <summary>
         /// Initializes a new instance of the Sku class.
         /// </summary>
-        public Sku(SkuType? name = default(SkuType?))
+        /// <param name="name">The SKU of the Search service. Possible values
+        /// include: 'free', 'basic', 'standard', 'standard2',
+        /// 'standard3'</param>
+        public Sku(SkuName? name = default(SkuName?))
         {
             Name = name;
         }
 
         /// <summary>
         /// Gets or sets the SKU of the Search service. Possible values
-        /// include: 'free', 'standard', 'standard2'
+        /// include: 'free', 'basic', 'standard', 'standard2', 'standard3'
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public SkuType? Name { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
+        public SkuName? Name { get; set; }
 
     }
 }

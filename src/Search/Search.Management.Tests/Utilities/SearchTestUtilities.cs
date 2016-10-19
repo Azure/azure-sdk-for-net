@@ -30,6 +30,11 @@ namespace Microsoft.Azure.Search.Tests.Utilities
             TestUtilities.Wait(TimeSpan.FromSeconds(2));
         }
 
+        public static void WaitForServiceProvisioning()
+        {
+            TestUtilities.Wait(TimeSpan.FromSeconds(10));
+        }
+
         public static bool WaitForSearchServiceDns(string searchServiceName, TimeSpan maxDelay)
         {
             if (HttpMockServer.Mode == HttpRecorderMode.Playback)

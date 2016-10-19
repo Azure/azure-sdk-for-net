@@ -10,16 +10,14 @@ namespace Microsoft.Azure.Management.Search.Models
 {
 
     /// <summary>
-    /// Defines values for ProvisioningState.
+    /// Defines values for HostingMode.
     /// </summary>
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-    public enum ProvisioningState
+    public enum HostingMode
     {
-        [System.Runtime.Serialization.EnumMember(Value = "succeeded")]
-        Succeeded,
-        [System.Runtime.Serialization.EnumMember(Value = "provisioning")]
-        Provisioning,
-        [System.Runtime.Serialization.EnumMember(Value = "failed")]
-        Failed
+        [System.Runtime.Serialization.EnumMember(Value = "default")]
+        Default,
+        [System.Runtime.Serialization.EnumMember(Value = "highDensity")]
+        HighDensity
     }
 }

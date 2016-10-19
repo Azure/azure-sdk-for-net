@@ -8,20 +8,65 @@
 
 namespace Microsoft.Azure.Management.Search
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
-    using Models;
+   using Microsoft.Rest.Azure;
+   using Models;
 
     /// <summary>
     /// Extension methods for QueryKeysOperations.
     /// </summary>
     public static partial class QueryKeysOperationsExtensions
     {
+            /// <summary>
+            /// Generates a new query key for the Search service. You can create up to 50
+            /// query keys per service.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn832690.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the current subscription.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Search service for which to list query keys.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the new query API key.
+            /// </param>
+            public static QueryKey Create(this IQueryKeysOperations operations, string resourceGroupName, string serviceName, string name)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IQueryKeysOperations)s).CreateAsync(resourceGroupName, serviceName, name), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Generates a new query key for the Search service. You can create up to 50
+            /// query keys per service.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn832690.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the current subscription.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Search service for which to list query keys.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the new query API key.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<QueryKey> CreateAsync(this IQueryKeysOperations operations, string resourceGroupName, string serviceName, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, serviceName, name, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
             /// <summary>
             /// Returns the list of query API keys for the given Azure Search service.
             /// <see href="https://msdn.microsoft.com/library/azure/dn832701.aspx" />
@@ -37,7 +82,7 @@ namespace Microsoft.Azure.Management.Search
             /// </param>
             public static ListQueryKeysResult List(this IQueryKeysOperations operations, string resourceGroupName, string serviceName)
             {
-                return Task.Factory.StartNew(s => ((IQueryKeysOperations)s).ListAsync(resourceGroupName, serviceName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IQueryKeysOperations)s).ListAsync(resourceGroupName, serviceName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -56,12 +101,61 @@ namespace Microsoft.Azure.Management.Search
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ListQueryKeysResult> ListAsync(this IQueryKeysOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<ListQueryKeysResult> ListAsync(this IQueryKeysOperations operations, string resourceGroupName, string serviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <summary>
+            /// Deletes the specified query key. Unlike admin keys, query keys are not
+            /// regenerated. The process for regenerating a query key is to delete and
+            /// then recreate it.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn832697.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the current subscription.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Search service for which to list query keys.
+            /// </param>
+            /// <param name='key'>
+            /// The query key to be deleted.
+            /// </param>
+            public static void Delete(this IQueryKeysOperations operations, string resourceGroupName, string serviceName, string key)
+            {
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IQueryKeysOperations)s).DeleteAsync(resourceGroupName, serviceName, key), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes the specified query key. Unlike admin keys, query keys are not
+            /// regenerated. The process for regenerating a query key is to delete and
+            /// then recreate it.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn832697.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the current subscription.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Search service for which to list query keys.
+            /// </param>
+            /// <param name='key'>
+            /// The query key to be deleted.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task DeleteAsync(this IQueryKeysOperations operations, string resourceGroupName, string serviceName, string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceName, key, null, cancellationToken).ConfigureAwait(false);
             }
 
     }

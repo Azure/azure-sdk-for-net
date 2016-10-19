@@ -10,16 +10,20 @@ namespace Microsoft.Azure.Management.Search.Models
 {
 
     /// <summary>
-    /// Defines values for ProvisioningState.
+    /// Defines values for SkuName.
     /// </summary>
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-    public enum ProvisioningState
+    public enum SkuName
     {
-        [System.Runtime.Serialization.EnumMember(Value = "succeeded")]
-        Succeeded,
-        [System.Runtime.Serialization.EnumMember(Value = "provisioning")]
-        Provisioning,
-        [System.Runtime.Serialization.EnumMember(Value = "failed")]
-        Failed
+        [System.Runtime.Serialization.EnumMember(Value = "free")]
+        Free,
+        [System.Runtime.Serialization.EnumMember(Value = "basic")]
+        Basic,
+        [System.Runtime.Serialization.EnumMember(Value = "standard")]
+        Standard,
+        [System.Runtime.Serialization.EnumMember(Value = "standard2")]
+        Standard2,
+        [System.Runtime.Serialization.EnumMember(Value = "standard3")]
+        Standard3
     }
 }

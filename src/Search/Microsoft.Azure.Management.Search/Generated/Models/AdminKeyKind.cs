@@ -10,16 +10,14 @@ namespace Microsoft.Azure.Management.Search.Models
 {
 
     /// <summary>
-    /// Defines values for ProvisioningState.
+    /// Defines values for AdminKeyKind.
     /// </summary>
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-    public enum ProvisioningState
+    public enum AdminKeyKind
     {
-        [System.Runtime.Serialization.EnumMember(Value = "succeeded")]
-        Succeeded,
-        [System.Runtime.Serialization.EnumMember(Value = "provisioning")]
-        Provisioning,
-        [System.Runtime.Serialization.EnumMember(Value = "failed")]
-        Failed
+        [System.Runtime.Serialization.EnumMember(Value = "primary")]
+        Primary,
+        [System.Runtime.Serialization.EnumMember(Value = "secondary")]
+        Secondary
     }
 }

@@ -8,14 +8,9 @@
 
 namespace Microsoft.Azure.Management.Search
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
-    using Models;
+   using Microsoft.Rest.Azure;
+   using Models;
 
     /// <summary>
     /// Extension methods for AdminKeysOperations.
@@ -38,7 +33,7 @@ namespace Microsoft.Azure.Management.Search
             /// </param>
             public static AdminKeyResult List(this IAdminKeysOperations operations, string resourceGroupName, string serviceName)
             {
-                return Task.Factory.StartNew(s => ((IAdminKeysOperations)s).ListAsync(resourceGroupName, serviceName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IAdminKeysOperations)s).ListAsync(resourceGroupName, serviceName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -58,9 +53,61 @@ namespace Microsoft.Azure.Management.Search
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<AdminKeyResult> ListAsync(this IAdminKeysOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<AdminKeyResult> ListAsync(this IAdminKeysOperations operations, string resourceGroupName, string serviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes and regenerates either the primary or secondary admin key. You can
+            /// only regenerate one key at a time.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn832700.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the current subscription.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Search service for which to list admin keys.
+            /// </param>
+            /// <param name='keyKind'>
+            /// Specifies which key to regenerate. Valid values include primary and
+            /// secondary. Possible values include: 'primary', 'secondary'
+            /// </param>
+            public static AdminKeyResult Regenerate(this IAdminKeysOperations operations, string resourceGroupName, string serviceName, AdminKeyKind keyKind)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IAdminKeysOperations)s).RegenerateAsync(resourceGroupName, serviceName, keyKind), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes and regenerates either the primary or secondary admin key. You can
+            /// only regenerate one key at a time.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn832700.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the current subscription.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Search service for which to list admin keys.
+            /// </param>
+            /// <param name='keyKind'>
+            /// Specifies which key to regenerate. Valid values include primary and
+            /// secondary. Possible values include: 'primary', 'secondary'
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<AdminKeyResult> RegenerateAsync(this IAdminKeysOperations operations, string resourceGroupName, string serviceName, AdminKeyKind keyKind, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.RegenerateWithHttpMessagesAsync(resourceGroupName, serviceName, keyKind, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

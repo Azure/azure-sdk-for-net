@@ -38,9 +38,9 @@ namespace Microsoft.Azure.Search.Tests.Utilities
 
             ListQueryKeysResult queryKeyResult = client.QueryKeys.List(ResourceGroupName, SearchServiceName);
             Assert.NotNull(queryKeyResult);
-            Assert.Equal(1, queryKeyResult.Value.Count);
+            Assert.Equal(1, queryKeyResult.QueryKeys.Count);
 
-            QueryApiKey = queryKeyResult.Value[0].Key;
+            QueryApiKey = queryKeyResult.QueryKeys[0].Key;
         }
 
         public override void Cleanup()
@@ -76,14 +76,15 @@ namespace Microsoft.Azure.Search.Tests.Utilities
             {
                 string searchServiceName = SearchTestUtilities.GenerateServiceName();
 
-                var createServiceParameters =
-                    new SearchServiceCreateOrUpdateParameters()
+                var service =
+                    new SearchService()
                     {
                         Location = Location,
-                        Properties = new SearchServiceProperties() { Sku = new Sku() { Name = SkuType.Free } }
+                        Sku = new Sku() { Name = SkuName.Free },
+                        ReplicaCount = 1    //***FIXME: Workaround until RP doesn't require properties
                     };
 
-                client.Services.CreateOrUpdate(ResourceGroupName, searchServiceName, createServiceParameters);
+                client.Services.CreateOrUpdate(ResourceGroupName, searchServiceName, service);
 
                 // In the common case, DNS propagation happens in less than 15 seconds. In the uncommon case, it can
                 // take many minutes. The timeout we use depends on the mock mode. If we're in Playback, the delay is

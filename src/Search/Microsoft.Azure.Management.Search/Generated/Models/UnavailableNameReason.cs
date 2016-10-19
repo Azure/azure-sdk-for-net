@@ -8,21 +8,13 @@
 
 namespace Microsoft.Azure.Management.Search.Models
 {
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Converters;
-    using System.Runtime.Serialization;
 
     /// <summary>
-    /// Defines values for SkuType.
+    /// Defines values for UnavailableNameReason.
     /// </summary>
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum SkuType
+    public static class UnavailableNameReason
     {
-        [EnumMember(Value = "free")]
-        Free,
-        [EnumMember(Value = "standard")]
-        Standard,
-        [EnumMember(Value = "standard2")]
-        Standard2
+        public const string Invalid = "Invalid";
+        public const string AlreadyExists = "AlreadyExists";
     }
 }

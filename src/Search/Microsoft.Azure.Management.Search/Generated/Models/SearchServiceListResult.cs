@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Search.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Response containing a list of Azure Search services for a given
@@ -30,16 +24,18 @@ namespace Microsoft.Azure.Management.Search.Models
         /// <summary>
         /// Initializes a new instance of the SearchServiceListResult class.
         /// </summary>
-        public SearchServiceListResult(IList<SearchServiceResource> value = default(IList<SearchServiceResource>))
+        /// <param name="services">The Search services in the resource
+        /// group.</param>
+        public SearchServiceListResult(System.Collections.Generic.IList<SearchService> services = default(System.Collections.Generic.IList<SearchService>))
         {
-            Value = value;
+            Services = services;
         }
 
         /// <summary>
         /// Gets the Search services in the resource group.
         /// </summary>
-        [JsonProperty(PropertyName = "value")]
-        public IList<SearchServiceResource> Value { get; private set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "value")]
+        public System.Collections.Generic.IList<SearchService> Services { get; private set; }
 
     }
 }

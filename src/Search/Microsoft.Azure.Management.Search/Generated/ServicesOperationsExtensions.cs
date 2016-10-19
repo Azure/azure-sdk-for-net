@@ -8,14 +8,9 @@
 
 namespace Microsoft.Azure.Management.Search
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
-    using Models;
+   using Microsoft.Rest.Azure;
+   using Models;
 
     /// <summary>
     /// Extension methods for ServicesOperations.
@@ -37,12 +32,12 @@ namespace Microsoft.Azure.Management.Search
             /// <param name='serviceName'>
             /// The name of the Search service to create or update.
             /// </param>
-            /// <param name='parameters'>
+            /// <param name='service'>
             /// The properties to set or update on the Search service.
             /// </param>
-            public static SearchServiceResource CreateOrUpdate(this IServicesOperations operations, string resourceGroupName, string serviceName, SearchServiceCreateOrUpdateParameters parameters)
+            public static SearchService CreateOrUpdate(this IServicesOperations operations, string resourceGroupName, string serviceName, SearchService service)
             {
-                return Task.Factory.StartNew(s => ((IServicesOperations)s).CreateOrUpdateAsync(resourceGroupName, serviceName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IServicesOperations)s).CreateOrUpdateAsync(resourceGroupName, serviceName, service), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -60,15 +55,57 @@ namespace Microsoft.Azure.Management.Search
             /// <param name='serviceName'>
             /// The name of the Search service to create or update.
             /// </param>
-            /// <param name='parameters'>
+            /// <param name='service'>
             /// The properties to set or update on the Search service.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SearchServiceResource> CreateOrUpdateAsync(this IServicesOperations operations, string resourceGroupName, string serviceName, SearchServiceCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<SearchService> CreateOrUpdateAsync(this IServicesOperations operations, string resourceGroupName, string serviceName, SearchService service, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, serviceName, service, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Returns the Search service with the given name in the given resource group.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn832694.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the current subscription.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Search service to retrieve.
+            /// </param>
+            public static SearchService Get(this IServicesOperations operations, string resourceGroupName, string serviceName)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IServicesOperations)s).GetAsync(resourceGroupName, serviceName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Returns the Search service with the given name in the given resource group.
+            /// <see href="https://msdn.microsoft.com/library/azure/dn832694.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group within the current subscription.
+            /// </param>
+            /// <param name='serviceName'>
+            /// The name of the Search service to retrieve.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<SearchService> GetAsync(this IServicesOperations operations, string resourceGroupName, string serviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -90,7 +127,7 @@ namespace Microsoft.Azure.Management.Search
             /// </param>
             public static void Delete(this IServicesOperations operations, string resourceGroupName, string serviceName)
             {
-                Task.Factory.StartNew(s => ((IServicesOperations)s).DeleteAsync(resourceGroupName, serviceName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IServicesOperations)s).DeleteAsync(resourceGroupName, serviceName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -110,7 +147,7 @@ namespace Microsoft.Azure.Management.Search
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IServicesOperations operations, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task DeleteAsync(this IServicesOperations operations, string resourceGroupName, string serviceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serviceName, null, cancellationToken).ConfigureAwait(false);
             }
@@ -127,7 +164,7 @@ namespace Microsoft.Azure.Management.Search
             /// </param>
             public static SearchServiceListResult List(this IServicesOperations operations, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((IServicesOperations)s).ListAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IServicesOperations)s).ListAsync(resourceGroupName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -143,9 +180,49 @@ namespace Microsoft.Azure.Management.Search
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SearchServiceListResult> ListAsync(this IServicesOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<SearchServiceListResult> ListAsync(this IServicesOperations operations, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Checks the availability of a resource name without creating the resource.
+            /// This is needed for resources where name is globally unique, such as an
+            /// Azure Search service.
+            /// <see href="https://msdn.microsoft.com/library/azure/mt574113.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='name'>
+            /// The resource name to validate.
+            /// </param>
+            public static CheckNameAvailabilityOutput CheckNameAvailability(this IServicesOperations operations, string name)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IServicesOperations)s).CheckNameAvailabilityAsync(name), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Checks the availability of a resource name without creating the resource.
+            /// This is needed for resources where name is globally unique, such as an
+            /// Azure Search service.
+            /// <see href="https://msdn.microsoft.com/library/azure/mt574113.aspx" />
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='name'>
+            /// The resource name to validate.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<CheckNameAvailabilityOutput> CheckNameAvailabilityAsync(this IServicesOperations operations, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.CheckNameAvailabilityWithHttpMessagesAsync(name, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
