@@ -172,9 +172,9 @@ namespace Microsoft.Azure.Management.Analysis
             /// <param name='serverName'>
             /// Name of the Analysis Services server
             /// </param>
-            public static AnalysisServicesServer Delete(this IServersOperations operations, string resourceGroupName, string serverName)
+            public static void Delete(this IServersOperations operations, string resourceGroupName, string serverName)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IServersOperations)s).DeleteAsync(resourceGroupName, serverName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IServersOperations)s).DeleteAsync(resourceGroupName, serverName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -193,12 +193,9 @@ namespace Microsoft.Azure.Management.Analysis
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<AnalysisServicesServer> DeleteAsync(this IServersOperations operations, string resourceGroupName, string serverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task DeleteAsync(this IServersOperations operations, string resourceGroupName, string serverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                await operations.DeleteWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -214,9 +211,9 @@ namespace Microsoft.Azure.Management.Analysis
             /// <param name='serverName'>
             /// Name of the Analysis Services server
             /// </param>
-            public static AnalysisServicesServer BeginDelete(this IServersOperations operations, string resourceGroupName, string serverName)
+            public static void BeginDelete(this IServersOperations operations, string resourceGroupName, string serverName)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IServersOperations)s).BeginDeleteAsync(resourceGroupName, serverName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IServersOperations)s).BeginDeleteAsync(resourceGroupName, serverName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -235,12 +232,9 @@ namespace Microsoft.Azure.Management.Analysis
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<AnalysisServicesServer> BeginDeleteAsync(this IServersOperations operations, string resourceGroupName, string serverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task BeginDeleteAsync(this IServersOperations operations, string resourceGroupName, string serverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, serverName, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>

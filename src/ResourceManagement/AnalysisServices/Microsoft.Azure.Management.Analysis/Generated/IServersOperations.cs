@@ -121,13 +121,10 @@ namespace Microsoft.Azure.Management.Analysis
         /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<AnalysisServicesServer>> DeleteWithHttpMessagesAsync(string resourceGroupName, string serverName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serverName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Deletes the specified Analysis Services server.
         /// </summary>
@@ -147,13 +144,10 @@ namespace Microsoft.Azure.Management.Analysis
         /// <exception cref="Microsoft.Rest.Azure.CloudException">
         /// Thrown when the operation returned an invalid status code
         /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<AnalysisServicesServer>> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string serverName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> BeginDeleteWithHttpMessagesAsync(string resourceGroupName, string serverName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Updates the current state of the specified Analysis Services server
         /// </summary>
