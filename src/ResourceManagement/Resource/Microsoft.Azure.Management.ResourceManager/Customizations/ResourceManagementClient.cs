@@ -9,20 +9,20 @@ namespace Microsoft.Azure.Management.ResourceManager
     public partial class ResourceManagementClient
     {
         /// <summary>
-        /// 
+        /// Create a ResourceManagement client for the given context.  This client provides operations that manage 
+        /// resources, respource groups, resource providers, and resource deployments.
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="handler"></param>
-        /// <returns></returns>
+        /// <param name="context">The context for the client to target.</param>
+        /// <returns>A resource manageemnt client targeting the given context.</returns>
         public static ResourceManagementClient CreateClient(IAzureContext context)
         {
-            return context.InitializeServiceClient<ResourceManagementClient>(() =>
+            return context.InitializeServiceClient((ctx) =>
                 new ResourceManagementClient
                 {
-                    HttpClient = context.HttpClient,
-                    FirstMessageHandler = context.Handler,
-                    HttpClientHandler = context.RootHandler,
-                    Credentials = context.Credentials
+                    HttpClient = ctx.HttpClient,
+                    FirstMessageHandler = ctx.Handler,
+                    HttpClientHandler = ctx.RootHandler,
+                    Credentials = ctx.Credentials
                 });
         }
     }

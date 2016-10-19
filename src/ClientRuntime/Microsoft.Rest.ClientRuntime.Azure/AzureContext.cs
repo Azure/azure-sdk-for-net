@@ -25,22 +25,22 @@ namespace Microsoft.Rest.Azure
         /// <summary>
         /// The default context for the Azure cloud
         /// </summary>
-        public static IAzureContext Azure = new AzureContext(new Uri("https://management.azure.com/"));
+        public static IAzureContext Default => new AzureContext(new Uri("https://management.azure.com/"));
 
         /// <summary>
-        /// The default context for the Azure china cloud
+        /// The default context for the Azure China cloud
         /// </summary>
-        public static IAzureContext AzureChinaCloud = new AzureContext(new Uri("https://management.chinacloudapi.cn/"));
-
-        /// <summary>
-        /// The default context for the Azure German Cloud
-        /// </summary>
-        public static IAzureContext AzureGermanCloud = new AzureContext(new Uri("https://management.microsoftazure.de/"));
+        public static IAzureContext ChinaCloud => new AzureContext(new Uri("https://management.chinacloudapi.cn/"));
 
         /// <summary>
         /// The default context for the Azure German Cloud
         /// </summary>
-        public static IAzureContext AzureUSGovernmentCloud = new AzureContext(new Uri("https://management.usgovcloudapi.net/"));
+        public static IAzureContext GermanCloud  => new AzureContext(new Uri("https://management.microsoftazure.de/"));
+
+        /// <summary>
+        /// The default context for the Azure German Cloud
+        /// </summary>
+        public static IAzureContext USGovernmentCloud = new AzureContext(new Uri("https://management.usgovcloudapi.net/"));
 
         /// <summary>
         /// The Azure subscription to target. The value should be in the form of a globally-unique identifier (GUID).
@@ -185,12 +185,12 @@ namespace Microsoft.Rest.Azure
         /// </summary>
         /// <typeparam name="T">The type of the client to initialize</typeparam>
         /// <param name="clientCreator">The client constructor.</param>
-        public T InitializeServiceClient<T>(Func<T> clientCreator) where T : ServiceClient<T>
+        public T InitializeServiceClient<T>(Func<IClientContext, T> clientCreator) where T : ServiceClient<T>
         {
             if (!_clients.ContainsKey(typeof(T)))
             {
 
-                var client = clientCreator();
+                var client = clientCreator(this);
                 _clients[typeof(T)] = client;
                 if (!_credentialsInitialized && Credentials != null)
                 {

@@ -9,19 +9,19 @@ namespace Microsoft.Azure.Management.ResourceManager
     public partial class SubscriptionClient
     {
         /// <summary>
-        /// Create a Subscription client using the provided azure context
+        /// Create a Subscription client targeting the provided azure context
         /// </summary>
         /// <param name="context">The context to use for service Http communication</param>
         /// <returns>A subscription client using the configuration values provided in the context</returns>
         public static SubscriptionClient CreateClient(IAzureContext context)
         {
-            return context.InitializeServiceClient<SubscriptionClient>(() =>
+            return context.InitializeServiceClient((ctx) =>
                 new SubscriptionClient
                 {
-                    HttpClient = context.HttpClient,
-                    FirstMessageHandler = context.Handler,
-                    HttpClientHandler = context.RootHandler,
-                    Credentials = context.Credentials
+                    HttpClient = ctx.HttpClient,
+                    FirstMessageHandler = ctx.Handler,
+                    HttpClientHandler = ctx.RootHandler,
+                    Credentials = ctx.Credentials
                 });
         }
     }

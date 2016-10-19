@@ -8,24 +8,27 @@ using System.Net.Http;
 
 namespace Microsoft.Rest
 {
+    /// <summary>
+    /// The configuration information for clients targeting a service endpoint.
+    /// </summary>
     public interface IClientContext : IDisposable
     {
         /// <summary>
-        /// The credentials to use when authenticationg with Azure endpoints.
+        /// The credentials to use when authenticationg with service endpoints.
         /// </summary>
         ServiceClientCredentials Credentials { get; set; }
 
         /// <summary>
-        /// The HttpClient used for communicating with Azure.
+        /// The HttpClient used for communicating with the service.
         /// </summary>
         HttpClient HttpClient { get; }
         /// <summary>
-        /// The message handler stack used in Http communication with Azure.
+        /// The message handler stack used in Http communication with the service.
         /// </summary>
         HttpMessageHandler Handler { get; }
 
         /// <summary>
-        /// The HttpClientHandler used to communicate with Azure.
+        /// The HttpClientHandler used to communicate with the service.
         /// </summary>
         HttpClientHandler RootHandler { get; }
 
@@ -35,11 +38,11 @@ namespace Microsoft.Rest
         IDictionary<string, object> ExtendedProperties { get; }
 
         /// <summary>
-        /// Initialize a ServiceClient with the properties of this context.  This will set the SubscriptionId, ClientId, 
+        /// Initialize a ServiceClient with the properties of this context.  This will set the Credentials, Http client infrastructure, 
         /// and any extended properties used by the client
         /// </summary>
         /// <typeparam name="T">The type of the client to initialize</typeparam>
         /// <param name="clientCreator">The client to initialize.</param>
-        T InitializeServiceClient<T>(Func<T> clientCreator) where T : ServiceClient<T>;
+        T InitializeServiceClient<T>(Func<IClientContext, T> clientCreator) where T : ServiceClient<T>;
     }
 }

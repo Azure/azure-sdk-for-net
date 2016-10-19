@@ -9,20 +9,20 @@ namespace Microsoft.Azure.Management.ResourceManager
     public partial class PolicyClient
     {
         /// <summary>
-        /// 
+        /// Create a Policy client in the given context.  This client provides operations that manage 
+        /// resource policies in the given context.
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="handler"></param>
-        /// <returns></returns>
+        /// <param name="context">The context for the client to target.</param>
+        /// <returns>A policy client targeting the given context.</returns>
         public static PolicyClient CreateClient(IAzureContext context)
         {
-            return context.InitializeServiceClient<PolicyClient>(() =>
+            return context.InitializeServiceClient((ctx) =>
                 new PolicyClient
                 {
-                    HttpClient = context.HttpClient,
-                    FirstMessageHandler = context.Handler,
-                    HttpClientHandler = context.RootHandler,
-                    Credentials = context.Credentials
+                    HttpClient = ctx.HttpClient,
+                    FirstMessageHandler = ctx.Handler,
+                    HttpClientHandler = ctx.RootHandler,
+                    Credentials = ctx.Credentials
                 });
         }
     }

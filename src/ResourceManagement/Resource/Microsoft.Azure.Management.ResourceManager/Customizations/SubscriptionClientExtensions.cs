@@ -11,16 +11,31 @@ namespace Microsoft.Rest.Azure
 {
     public static class SubscriptionClientExtensions
     {
-        public static ISubscriptionClient GetSubscriptionClient(this IAzureContext context)
+        /// <summary>
+        /// Get the client for managing subscriptions in the given context.
+        /// </summary>
+        /// <param name="context">The Azure context for the client to target.</param>
+        /// <returns>The client for managing subscriptions in the given context</returns>
+        private static ISubscriptionClient GetSubscriptionClient(this IAzureContext context)
         {
-           return SubscriptionClient.CreateClient(context);
+            return SubscriptionClient.CreateClient(context);
         }
 
+        /// <summary>
+        /// Get the operations for discovering subscriptions available in the given context.
+        /// </summary>
+        /// <param name="context">The context to target.</param>
+        /// <returns>The operations for discovering subscriptions in the current context.</returns>
         public static ISubscriptionsOperations GetSubscriptionOperations(this IAzureContext context)
         {
             return context.GetSubscriptionClient().Subscriptions;
         }
 
+        /// <summary>
+        /// Get the operations for discovering tenants available in the given context.
+        /// </summary>
+        /// <param name="context">The context to target.</param>
+        /// <returns>The operations for discovering tenants in the given context.</returns>
         public static ITenantsOperations GetTenantOperations(this IAzureContext context)
         {
             return context.GetSubscriptionClient().Tenants;
@@ -32,17 +47,12 @@ namespace Microsoft.Rest.Azure
         /// <param name="context">The context to use for clients.</param>
         /// <param name="subscriptionFilter">The subscription filter predicate to use to select a subscription.</param>
         /// <returns>True if a subscription met the filter criteria, or false if no subscriptions met it.</returns>
-        public static bool TrySetSubscription(this IAzureContext context, Func<Subscription, bool> subscriptionFilter)
+        public static void SetSubscription(this IAzureContext context, Func<Subscription, bool> subscriptionFilter)
         {
             var subscriptions = context.GetSubscriptionOperations();
-            var selection = subscriptions.List().FirstOrDefault(subscriptionFilter);
-            if (selection != null)
-            {
-                context.SubscriptionId = selection.SubscriptionId;
-                context.TenantId = selection.TenantId;
-            }
-
-            return selection != null;
+            var selection = subscriptions.List().First(subscriptionFilter);
+            context.SubscriptionId = selection.SubscriptionId;
+            context.TenantId = selection.TenantId;
         }
 
         /// <summary>
@@ -51,7 +61,7 @@ namespace Microsoft.Rest.Azure
         /// <param name="context">The context to use for clients.</param>
         /// <param name="subscription">The subscription name or id in azure for the subscription to be selected.</param>
         /// <returns>True if the subscription was successfully set, or false if no found subscriptiosn matched the given name.</returns>
-        public static bool TrySetSubscription(this IAzureContext context, string subscription)
+        public static void SetSubscription(this IAzureContext context, string subscription)
         {
             Guid id;
             Func<Subscription, bool> filter =
@@ -60,8 +70,6 @@ namespace Microsoft.Rest.Azure
             {
                 filter = (s) => s.SubscriptionId.Equals(subscription, StringComparison.OrdinalIgnoreCase);
             }
-
-            return context.TrySetSubscription(filter);
         }
     }
 }

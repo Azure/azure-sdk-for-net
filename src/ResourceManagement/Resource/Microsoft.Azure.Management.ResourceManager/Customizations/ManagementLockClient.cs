@@ -9,20 +9,20 @@ namespace Microsoft.Azure.Management.ResourceManager
     public partial class ManagementLockClient
     {
         /// <summary>
-        /// 
+        /// Create a ManagementLock client in the given context.  This client provides operations that manage 
+        /// resource locks in the given context.
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="handler"></param>
-        /// <returns></returns>
+        /// <param name="context">The context for the client to target.</param>
+        /// <returns>A management lock client targeting the given context.</returns>
         public static ManagementLockClient CreateClient(IAzureContext context)
         {
-            return context.InitializeServiceClient<ManagementLockClient>(() =>
+            return context.InitializeServiceClient((ctx) =>
                 new ManagementLockClient
                 {
-                    HttpClient = context.HttpClient,
-                    FirstMessageHandler = context.Handler,
-                    HttpClientHandler = context.RootHandler,
-                    Credentials = context.Credentials
+                    HttpClient = ctx.HttpClient,
+                    FirstMessageHandler = ctx.Handler,
+                    HttpClientHandler = ctx.RootHandler,
+                    Credentials = ctx.Credentials
                 });
         }
     }

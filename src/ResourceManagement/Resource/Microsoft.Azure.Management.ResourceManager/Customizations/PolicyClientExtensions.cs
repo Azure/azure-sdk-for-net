@@ -8,18 +8,15 @@ namespace Microsoft.Rest.Azure
 {
     public static class PolicyClientExtensions
     {
+        /// <summary>
+        /// Get the Policy client for the given context.  This client provides operations that manage 
+        /// resource policies in the given context.
+        /// </summary>
+        /// <param name="context">The context for the client to target.</param>
+        /// <returns>The policy client for the given context.</returns>
         public static IPolicyClient GetPolicyClient(this IAzureContext context)
         {
            return PolicyClient.CreateClient(context);
-        }
-
-        public static IPolicyAssignmentsOperations GetPolicyAssignmentOperations(this IAzureContext context)
-        {
-            return context.GetPolicyClient().PolicyAssignments;
-        }
-        public static IPolicyDefinitionsOperations GetPolicyDefinitionsOperations(this IAzureContext context)
-        {
-            return context.GetPolicyClient().PolicyDefinitions;
         }
     }
 }
