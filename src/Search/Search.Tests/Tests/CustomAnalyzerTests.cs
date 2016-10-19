@@ -265,7 +265,7 @@ namespace Microsoft.Azure.Search.Tests
 
                 index.Tokenizers = new Tokenizer[]
                 {
-                    new EdgeNGramTokenizer(customTokenizerName, minGram: 1, maxGram: 1),    // One custom tokenizer for CustomAnalyzer above.
+                    new EdgeNGramTokenizer(customTokenizerName, minGram: 1, maxGram: 2),    // One custom tokenizer for CustomAnalyzer above.
                     new EdgeNGramTokenizer(
                         SearchTestUtilities.GenerateName(), 
                         minGram: 2, 
@@ -469,7 +469,7 @@ namespace Microsoft.Azure.Search.Tests
                         minSubwordSize: 2,
                         maxSubwordSize: 15),
                     new EdgeNGramTokenFilter(generateSimpleName(i++), minGram: 1, maxGram: 2, side: EdgeNGramTokenFilterSide.Front),
-                    new LengthTokenFilter(generateSimpleName(i++), max: int.MaxValue),
+                    new LengthTokenFilter(generateSimpleName(i++), max: 300),
                     new LimitTokenFilter(generateSimpleName(i++), maxTokenCount: 1),
                     new NGramTokenFilter(generateSimpleName(i++), minGram: 1, maxGram: 2),
                     new PatternCaptureTokenFilter(generateSimpleName(i++), patterns: new[] { "[a-z]*" }, preserveOriginal: true),

@@ -80,8 +80,7 @@ namespace Microsoft.Azure.Search.Tests.Utilities
                     new SearchService()
                     {
                         Location = Location,
-                        Sku = new Sku() { Name = SkuName.Free },
-                        ReplicaCount = 1    //***FIXME: Workaround until RP doesn't require properties
+                        Sku = new Sku() { Name = SkuName.Free }
                     };
 
                 client.Services.CreateOrUpdate(ResourceGroupName, searchServiceName, service);
