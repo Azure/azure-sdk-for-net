@@ -435,6 +435,7 @@ namespace Microsoft.Rest.Azure
             pollingState.Request = responseWithResource.Request;
 
             var statusCode = responseWithResource.Response.StatusCode;
+            var resource = responseWithResource.Body;
             if (statusCode == HttpStatusCode.Accepted)
             {
                 pollingState.Status = AzureAsyncOperation.InProgressStatus;
@@ -443,7 +444,16 @@ namespace Microsoft.Rest.Azure
                      (statusCode == HttpStatusCode.Created && method == HttpMethod.Put) ||
                      (statusCode == HttpStatusCode.NoContent && (method == HttpMethod.Delete || method == HttpMethod.Post)))
             {
-                pollingState.Status = AzureAsyncOperation.SuccessStatus;
+                if (resource != null &&
+                    resource["properties"] != null &&
+                    resource["properties"]["provisioningState"] != null)
+                {
+                    pollingState.Status = (string)resource["properties"]["provisioningState"];
+                }
+                else
+                {
+                    pollingState.Status = AzureAsyncOperation.SuccessStatus;
+                }
 
                 pollingState.Error = new CloudError()
                 {

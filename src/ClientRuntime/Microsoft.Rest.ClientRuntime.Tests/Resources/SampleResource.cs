@@ -47,7 +47,7 @@ namespace Microsoft.Rest.Azure
         /// Optional. Gets or sets the size of the resource.
         /// </summary>
         [JsonProperty("properties.size")]
-        public string Size { get; set; }
+        public int? Size { get; set; }
 
         /// <summary>
         /// Gets the key of the child resource.
