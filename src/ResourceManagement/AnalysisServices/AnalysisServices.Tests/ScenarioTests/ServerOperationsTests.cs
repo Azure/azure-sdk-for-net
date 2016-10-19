@@ -70,13 +70,6 @@ namespace AnalysisServices.Tests.ScenarioTests
                 // wait for provisioning state to be Succeeded
                 // we will wait a maximum of 15 minutes for this to happen and then report failures
                 int timeToWaitInMinutes = 15;
-                int minutesWaited = 0;
-                while (resultGet.ProvisioningState != "Succeeded" && resultGet.ProvisioningState != "Failed" && minutesWaited <= timeToWaitInMinutes)
-                {
-                    TestUtilities.Wait(60000); // Wait for one minute and then go again.
-                    minutesWaited++;
-                    resultGet = client.Servers.GetDetails(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
-                }
 
                 // Confirm that the server creation did succeed
                 Assert.True(resultGet.ProvisioningState == "Succeeded");
@@ -122,12 +115,6 @@ namespace AnalysisServices.Tests.ScenarioTests
                                     analysisServicesServer);
 
                 resultGet = client.Servers.GetDetails(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
-                while (resultGet.ProvisioningState != "Succeeded" && resultGet.ProvisioningState != "Failed" && minutesWaited <= timeToWaitInMinutes)
-                {
-                    TestUtilities.Wait(60000); // Wait for one minute and then go again.
-                    minutesWaited++;
-                    resultGet = client.Servers.GetDetails(AnalysisServicesTestUtilities.DefaultResourceGroup, secondServer);
-                }
 
                 var listResponse = client.Servers.List();
 
