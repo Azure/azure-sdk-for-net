@@ -4,7 +4,6 @@
 using System.Collections.Generic;
 using Microsoft.Rest.Serialization;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using Xunit;
 using Microsoft.Rest.Azure;
 
@@ -14,7 +13,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
     public class JsonTransformationConverterTest
     {
         [Fact]
-        public void TestResourceSerialization()
+        public void TestResourceDeserializationException()
         {
             var sampleJson = @"{
   ""Location"": ""EastUS"",
@@ -22,7 +21,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
     ""tag1"": ""value1""
   },
   ""properties"": {
-    ""size"": ""3"",
+    ""size"": ""String that should throw"",
     ""child1"": {
       ""@child.key"": ""key""
     },
@@ -37,7 +36,77 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
 }";
             var sampleResource = new SampleResource()
             {
-                Size = "3",
+                Size = 3,
+                ChildKey = "key",
+                Child = new SampleResourceChild1()
+                {
+                    ChildName1 = "name1"
+                },
+                Location = "EastUS",
+                Plan = "testPlan",
+            };
+            sampleResource.Tags = new Dictionary<string, string>();
+            sampleResource.Tags["tag1"] = "value1";
+
+            var deserializeSettings = new JsonSerializerSettings()
+            {
+                Formatting = Formatting.Indented,
+                NullValueHandling = NullValueHandling.Ignore,
+                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+                ContractResolver = new ReadOnlyJsonContractResolver()
+            };
+            deserializeSettings.Converters.Add(new TransformationJsonConverter());
+            deserializeSettings.Converters.Add(new PolymorphicDeserializeJsonConverter<SampleResourceChild>("dType"));
+            var serializeSettings = new JsonSerializerSettings()
+            {
+                Formatting = Formatting.Indented,
+                NullValueHandling = NullValueHandling.Ignore,
+                ReferenceLoopHandling = ReferenceLoopHandling.Serialize,
+                ContractResolver = new ReadOnlyJsonContractResolver()
+            };
+            serializeSettings.Converters.Add(new TransformationJsonConverter());
+            serializeSettings.Converters.Add(new PolymorphicSerializeJsonConverter<SampleResourceChild>("dType"));
+            bool exceptionThrown = false;
+
+            try
+            {
+                JsonConvert.DeserializeObject<SampleResource>(sampleJson, deserializeSettings);
+            }
+            catch(JsonException ex)
+            {
+                Assert.True(ex.Message.Contains("String that should throw"));
+                Assert.True(ex.Message.Contains("Could not convert string to integer"));
+                exceptionThrown = true;
+            }
+
+            Assert.True(exceptionThrown, "JsonConverter should throw if the payload is non-serializable.");
+        }
+
+        [Fact]
+        public void TestResourceSerialization()
+        {
+            var sampleJson = @"{
+  ""Location"": ""EastUS"",
+  ""tags"": {
+    ""tag1"": ""value1""
+  },
+  ""properties"": {
+    ""size"": 3,
+    ""child1"": {
+      ""@child.key"": ""key""
+    },
+    ""child"": {
+      ""dType"": ""SampleResourceChild1"",
+      ""properties"": {
+        ""name1"": ""name1""
+      }
+    }
+  },
+  ""plan"": ""testPlan""
+}";
+            var sampleResource = new SampleResource()
+            {
+                Size = 3,
                 ChildKey = "key",
                 Child = new SampleResourceChild1()
                 {
@@ -74,7 +143,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
             Assert.Equal(sampleJson, jsonoverProcessed);
 
             string json = JsonConvert.SerializeObject(sampleResource, serializeSettings);
-            Assert.Equal(sampleJson, json);         
+            Assert.Equal(sampleJson, json);
         }
 
         [Fact]
@@ -82,7 +151,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
         {
             var sampleResource = new SampleResource()
             {
-                Size = "3",
+                Size = 3,
                 Child = new SampleResourceChild1(),
                 Location = "EastUS"
             };
@@ -106,7 +175,7 @@ namespace Microsoft.Rest.ClientRuntime.Azure.Test
     ""tag1"": ""value1""
   },
   ""properties"": {
-    ""size"": ""3"",
+    ""size"": 3,
     ""child"": {
       ""dType"": ""SampleResourceChild1""
     }
