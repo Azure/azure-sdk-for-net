@@ -292,54 +292,6 @@ namespace Microsoft.Azure.Management.Analysis
             }
 
             /// <summary>
-            /// Updates the current state of the specified Analysis Services server
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Azure Resource group which a given Analysis Services server is
-            /// part of.
-            /// </param>
-            /// <param name='serverName'>
-            /// Name of the Analysis Services server
-            /// </param>
-            /// <param name='serverUpdateParameters'>
-            /// Request object for updating the server
-            /// </param>
-            public static AnalysisServicesServer BeginUpdate(this IServersOperations operations, string resourceGroupName, string serverName, AnalysisServicesServerUpdateParameters serverUpdateParameters)
-            {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IServersOperations)s).BeginUpdateAsync(resourceGroupName, serverName, serverUpdateParameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates the current state of the specified Analysis Services server
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// Name of the Azure Resource group which a given Analysis Services server is
-            /// part of.
-            /// </param>
-            /// <param name='serverName'>
-            /// Name of the Analysis Services server
-            /// </param>
-            /// <param name='serverUpdateParameters'>
-            /// Request object for updating the server
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async System.Threading.Tasks.Task<AnalysisServicesServer> BeginUpdateAsync(this IServersOperations operations, string resourceGroupName, string serverName, AnalysisServicesServerUpdateParameters serverUpdateParameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
-            {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, serverName, serverUpdateParameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Supends the specified Analysis Services server instance
             /// </summary>
             /// <param name='operations'>
