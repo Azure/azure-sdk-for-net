@@ -16,6 +16,7 @@ namespace Microsoft.Azure.Messaging
 
         public Task SendAsync(IEnumerable<BrokeredMessage> brokeredMessages)
         {
+            MessageSender.ValidateMessages(brokeredMessages);
             return this.OnSendAsync(brokeredMessages);
         }
 

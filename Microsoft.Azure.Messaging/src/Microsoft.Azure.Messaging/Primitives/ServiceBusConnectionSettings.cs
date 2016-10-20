@@ -179,10 +179,10 @@ namespace Microsoft.Azure.Messaging
             return connectionStringBuilder.ToString();
         }
 
-        internal QueueClient CreateQueueClient()
+        internal QueueClient CreateQueueClient(ReceiveMode mode)
         {
             // In the future to support other protocols add that logic here.
-            return new AmqpQueueClient(this.Clone());
+            return new AmqpQueueClient(this.Clone(), mode);
         }
 
         void ParseConnectionString(string connectionString)

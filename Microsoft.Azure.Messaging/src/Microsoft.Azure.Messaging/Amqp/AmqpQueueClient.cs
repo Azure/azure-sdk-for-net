@@ -17,8 +17,8 @@ namespace Microsoft.Azure.Messaging.Amqp
     {
         const string CbsSaslMechanismName = "MSSBCBS";
 
-        public AmqpQueueClient(ServiceBusConnectionSettings connectionSettings)
-            : base(connectionSettings)
+        public AmqpQueueClient(ServiceBusConnectionSettings connectionSettings, ReceiveMode mode)
+            : base(connectionSettings, mode)
         {
             this.ContainerId = Guid.NewGuid().ToString("N");
             this.AmqpVersion = new Version(1, 0, 0, 0);

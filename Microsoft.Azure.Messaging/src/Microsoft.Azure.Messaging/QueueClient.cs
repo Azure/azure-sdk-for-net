@@ -16,16 +16,19 @@ namespace Microsoft.Azure.Messaging
         MessageSender innerSender;
         MessageReceiver innerReceiver;
 
-        internal QueueClient(ServiceBusConnectionSettings connectionSettings)
+        internal QueueClient(ServiceBusConnectionSettings connectionSettings, ReceiveMode mode)
             : base($"{nameof(QueueClient)}{ClientEntity.GetNextId()}({connectionSettings.EntityPath})")
         {
             this.ConnectionSettings = connectionSettings;
             this.QueueName = connectionSettings.EntityPath;
+            this.Mode = mode;
         }
 
         public string QueueName { get; }
 
         public ServiceBusConnectionSettings ConnectionSettings { get; }
+
+        public ReceiveMode Mode { get; private set; }
 
         protected object ThisLock { get; } = new object();
 
@@ -69,16 +72,48 @@ namespace Microsoft.Azure.Messaging
 
         public static QueueClient Create(string connectionString)
         {
+            return Create(connectionString, ReceiveMode.PeekLock);
+        }
+
+        public static QueueClient Create(string connectionString, ReceiveMode mode)
+        {
             if (string.IsNullOrWhiteSpace(connectionString))
             {
                 throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(connectionString));
             }
 
             var connectionSettings = new ServiceBusConnectionSettings(connectionString);
-            return Create(connectionSettings);
+            return Create(connectionSettings, mode);
+        }
+
+        public static QueueClient Create(string connectionString, string path)
+        {
+            return Create(connectionString, path, ReceiveMode.PeekLock);
+        }
+
+        public static QueueClient Create(string connectionString, string path, ReceiveMode mode)
+        {
+            if (string.IsNullOrWhiteSpace(connectionString))
+            {
+                throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(connectionString));
+            }
+
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                throw Fx.Exception.ArgumentNullOrWhiteSpace(nameof(path));
+            }
+
+            var connectionSettings = new ServiceBusConnectionSettings(connectionString) {EntityPath = path};
+
+            return Create(connectionSettings, mode);
         }
 
         public static QueueClient Create(ServiceBusConnectionSettings connectionSettings)
+        {
+            return Create(connectionSettings, ReceiveMode.PeekLock);
+        }
+
+        public static QueueClient Create(ServiceBusConnectionSettings connectionSettings, ReceiveMode mode)
         {
             if (connectionSettings == null)
             {
@@ -90,7 +125,7 @@ namespace Microsoft.Azure.Messaging
             }
 
             QueueClient QueueClient;
-            QueueClient = connectionSettings.CreateQueueClient();
+            QueueClient = connectionSettings.CreateQueueClient(mode);
             return QueueClient;
         }
 
@@ -107,18 +142,11 @@ namespace Microsoft.Azure.Messaging
         /// <returns>A Task that completes when the send operations is done.</returns>
         public Task SendAsync(BrokeredMessage brokeredMessage)
         {
-            if (brokeredMessage == null)
-            {
-                throw Fx.Exception.ArgumentNull(nameof(brokeredMessage));
-            }
-
             return this.SendAsync(new[] { brokeredMessage });
         }
 
         public async Task SendAsync(IEnumerable<BrokeredMessage> brokeredMessages)
         {
-            int count = MessageSender.ValidateMessages(brokeredMessages);
-
             try
             {
                 await this.InnerSender.SendAsync(brokeredMessages);
@@ -139,6 +167,78 @@ namespace Microsoft.Azure.Messaging
             catch(Exception)
             {
                 //TODO: Log Receive Exception
+                throw;
+            }
+        }
+
+        public Task CompleteAsync(Guid lockToken)
+        {
+            return this.CompleteAsync(new Guid[] {lockToken});
+        }
+
+        public async Task CompleteAsync(IEnumerable<Guid> lockTokens)
+        {
+            try
+            {
+                await this.InnerReceiver.CompleteAsync(lockTokens);
+            }
+            catch (Exception)
+            {
+                //TODO: Log Complete Exception
+                throw;
+            }
+        }
+
+        public Task AbandonAsync(Guid lockToken)
+        {
+            return this.AbandonAsync(new Guid[] { lockToken });
+        }
+
+        public async Task AbandonAsync(IEnumerable<Guid> lockTokens)
+        {
+            try
+            {
+                await this.InnerReceiver.AbandonAsync(lockTokens);
+            }
+            catch (Exception)
+            {
+                //TODO: Log Complete Exception
+                throw;
+            }
+        }
+
+        public Task DeferAsync(Guid lockToken)
+        {
+            return this.DeferAsync(new Guid[] { lockToken });
+        }
+
+        public async Task DeferAsync(IEnumerable<Guid> lockTokens)
+        {
+            try
+            {
+                await this.InnerReceiver.DeferAsync(lockTokens);
+            }
+            catch (Exception)
+            {
+                //TODO: Log Complete Exception
+                throw;
+            }
+        }
+
+        public Task DeadLetterAsync(Guid lockToken)
+        {
+            return this.DeadLetterAsync(new Guid[] { lockToken });
+        }
+
+        public async Task DeadLetterAsync(IEnumerable<Guid> lockTokens)
+        {
+            try
+            {
+                await this.InnerReceiver.DeadLetterAsync(lockTokens);
+            }
+            catch (Exception)
+            {
+                //TODO: Log Complete Exception
                 throw;
             }
         }

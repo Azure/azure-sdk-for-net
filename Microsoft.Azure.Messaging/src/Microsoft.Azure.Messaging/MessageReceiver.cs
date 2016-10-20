@@ -3,6 +3,7 @@
 
 namespace Microsoft.Azure.Messaging
 {
+    using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
@@ -18,6 +19,34 @@ namespace Microsoft.Azure.Messaging
             return this.OnReceiveAsync(maxMessageCount);
         }
 
+        public Task CompleteAsync(IEnumerable<Guid> lockTokens)
+        {
+            return this.OnCompleteAsync(lockTokens);
+        }
+
+        public Task AbandonAsync(IEnumerable<Guid> lockTokens)
+        {
+            return this.OnAbandonAsync(lockTokens);
+        }
+
+        public Task DeferAsync(IEnumerable<Guid> lockTokens)
+        {
+            return this.OnDeferAsync(lockTokens);
+        }
+
+        public Task DeadLetterAsync(IEnumerable<Guid> lockTokens)
+        {
+            return this.OnDeadLetterAsync(lockTokens);
+        }
+
         protected abstract Task<IList<BrokeredMessage>> OnReceiveAsync(int maxMessageCount);
+
+        protected abstract Task OnCompleteAsync(IEnumerable<Guid> lockTokens);
+
+        protected abstract Task OnAbandonAsync(IEnumerable<Guid> lockTokens);
+
+        protected abstract Task OnDeferAsync(IEnumerable<Guid> lockTokens);
+
+        protected abstract Task OnDeadLetterAsync(IEnumerable<Guid> lockTokens);
     }
 }
