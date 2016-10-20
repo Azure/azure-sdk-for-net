@@ -53,12 +53,12 @@ namespace AnalysisServices.Tests.ScenarioTests
                     Console.WriteLine(ex.ToString());
                 }
 
-                Assert.Equal(resultCreate.ProvisioningState, "Succeeded");
+                Assert.Equal(resultCreate.ProvisioningState, "Active");
 
-                // get the account and ensure that all the values are properly set.
+                // get the server and ensure that all the values are properly set.
                 var resultGet = client.Servers.GetDetails(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
 
-                // validate the account creation process
+                // validate the server creation process
                 Assert.Equal(AnalysisServicesTestUtilities.DefaultLocation, resultGet.Location);
                 Assert.Equal(AnalysisServicesTestUtilities.DefaultServerName, resultGet.Name);
                 Assert.NotEmpty(resultGet.ServerFullName);
@@ -67,19 +67,8 @@ namespace AnalysisServices.Tests.ScenarioTests
                 Assert.Equal(resultGet.AsAdministrators.Members.Count, 2);
                 Assert.Equal("Microsoft.AnalysisServices/servers", resultGet.Type);
 
-                // wait for provisioning state to be Succeeded
-                // we will wait a maximum of 15 minutes for this to happen and then report failures
-                int timeToWaitInMinutes = 15;
-                int minutesWaited = 0;
-                while (resultGet.ProvisioningState != "Succeeded" && resultGet.ProvisioningState != "Failed" && minutesWaited <= timeToWaitInMinutes)
-                {
-                    TestUtilities.Wait(60000); // Wait for one minute and then go again.
-                    minutesWaited++;
-                    resultGet = client.Servers.GetDetails(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
-                }
-
                 // Confirm that the server creation did succeed
-                Assert.True(resultGet.ProvisioningState == "Succeeded");
+                Assert.True(resultGet.ProvisioningState == "Active");
 
                 // Update the server and confirm the updates make it in.
                 Dictionary<string, string> updatedTags = new Dictionary<string, string>
@@ -88,7 +77,7 @@ namespace AnalysisServices.Tests.ScenarioTests
                     };
 
                 var updatedAdministrators = AnalysisServicesTestUtilities.DefaultAdministrators;
-                updatedAdministrators.Add("aztest2@stabletest.ccsctp.net");
+                updatedAdministrators.Add("aztest2@aspaastestloop1.ccsctp.net");
                 AnalysisServicesServerUpdateParameters updateParameters = new AnalysisServicesServerUpdateParameters()
                     {
                         Sku = resultGet.Sku,
@@ -102,19 +91,19 @@ namespace AnalysisServices.Tests.ScenarioTests
                                 updateParameters
                                 );
 
-                Assert.Equal("Succeeded", resultUpdate.ProvisioningState);
+                Assert.Equal("Active", resultUpdate.ProvisioningState);
 
-                // get the account and ensure that all the values are properly set.
+                // get the server and ensure that all the values are properly set.
                 resultGet = client.Servers.GetDetails(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
 
-                // validate the account creation process
+                // validate the server creation process
                 Assert.Equal(AnalysisServicesTestUtilities.DefaultLocation, resultGet.Location);
                 Assert.Equal(AnalysisServicesTestUtilities.DefaultServerName, resultGet.Name);
                 Assert.Equal(resultGet.Tags.Count, 1);
                 Assert.True(resultGet.Tags.ContainsKey("updated1"));
                 Assert.Equal(resultGet.AsAdministrators.Members.Count, 3);
 
-                // Create another account and ensure that list account returns both
+                // Create another server and ensure that list account returns both
                 var secondServer = AnalysisServicesTestUtilities.DefaultServerName + '2';
                 resultCreate =  client.Servers.Create(
                                     AnalysisServicesTestUtilities.DefaultResourceGroup,
@@ -122,12 +111,6 @@ namespace AnalysisServices.Tests.ScenarioTests
                                     analysisServicesServer);
 
                 resultGet = client.Servers.GetDetails(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
-                while (resultGet.ProvisioningState != "Succeeded" && resultGet.ProvisioningState != "Failed" && minutesWaited <= timeToWaitInMinutes)
-                {
-                    TestUtilities.Wait(60000); // Wait for one minute and then go again.
-                    minutesWaited++;
-                    resultGet = client.Servers.GetDetails(AnalysisServicesTestUtilities.DefaultResourceGroup, secondServer);
-                }
 
                 var listResponse = client.Servers.List();
 
@@ -140,18 +123,22 @@ namespace AnalysisServices.Tests.ScenarioTests
                 // Assert that there are at least two servers in the list
                 Assert.True(listResponse.Count() >= 2);
 
-                // TBD test that the server exists
+                // Suspend the server and confirm that it is deleted.
+                client.Servers.Suspend(AnalysisServicesTestUtilities.DefaultResourceGroup, secondServer);
 
-                // Delete the account and confirm that it is deleted.
+                // Suspend the server and confirm that it is deleted.
+                client.Servers.Resume(AnalysisServicesTestUtilities.DefaultResourceGroup, secondServer);
+
+                // Delete the server and confirm that it is deleted.
                 client.Servers.Delete(AnalysisServicesTestUtilities.DefaultResourceGroup, secondServer);
 
-                // delete the account again and make sure it continues to result in a succesful code.
+                // delete the server again and make sure it continues to result in a succesful code.
                 client.Servers.Delete(AnalysisServicesTestUtilities.DefaultResourceGroup, secondServer);
 
-                // delete the account with its old name, which should also succeed.
+                // delete the server with its old name, which should also succeed.
                 client.Servers.Delete(AnalysisServicesTestUtilities.DefaultResourceGroup, AnalysisServicesTestUtilities.DefaultServerName);
 
-                // test that the account is gone
+                // test that the server is gone
                 // now list by resource group:
                 listResponse = client.Servers.ListByResourceGroup(AnalysisServicesTestUtilities.DefaultResourceGroup);
 

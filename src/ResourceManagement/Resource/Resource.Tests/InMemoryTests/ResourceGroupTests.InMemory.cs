@@ -113,7 +113,7 @@ namespace ResourceGroups.Tests
             Assert.Empty(handler.Request);
 
             // Validate response
-            Assert.True(result.Value);
+            Assert.True(result);
         }
 
         [Fact]
@@ -129,7 +129,7 @@ namespace ResourceGroups.Tests
             Assert.Empty(handler.Request);
 
             // Validate response
-            Assert.False(result.Value);
+            Assert.False(result);
         }
 
         [Fact()]

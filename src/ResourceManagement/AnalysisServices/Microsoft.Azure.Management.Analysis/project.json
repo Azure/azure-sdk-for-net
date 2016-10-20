@@ -1,5 +1,5 @@
 {
-  "version": "1.0.0.0",
+  "version": "1.0.0-preview",
   "title": "Microsoft Azure Analysis Services Management Library",
   "description": "Provides management capabilities for Azure Analysis Services accounts.",
   "authors": [ "Microsoft" ],
@@ -10,7 +10,7 @@
     "tags": [ "Microsoft Azure resource management", "asazure", "REST HTTP client", "azureofficial", "windowsazureofficial" ],
     "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
     "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
-    "requireLicenseAcceptance":  true,
+    "requireLicenseAcceptance":  true
   },
 
   "buildOptions": {
