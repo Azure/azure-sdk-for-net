@@ -21,11 +21,11 @@ namespace Microsoft.Azure.Management.Search.Tests
                 SearchService service1 = CreateFreeService(searchMgmt);
                 SearchService service2 = CreateFreeService(searchMgmt);
 
-                SearchServiceListResult servicesListResult = searchMgmt.Services.List(Data.ResourceGroupName);
-                Assert.NotNull(servicesListResult);
-                Assert.Equal(2, servicesListResult.Services.Count);
-                Assert.Contains(service1.Name, servicesListResult.Services.Select(s => s.Name));
-                Assert.Contains(service2.Name, servicesListResult.Services.Select(s => s.Name));
+                var services = searchMgmt.Services.ListByResourceGroup(Data.ResourceGroupName);
+                Assert.NotNull(services);
+                Assert.Equal(2, services.Count());
+                Assert.Contains(service1.Name, services.Select(s => s.Name));
+                Assert.Contains(service2.Name, services.Select(s => s.Name));
             });
         }
 
@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Search.Tests
 
                 searchMgmt.Services.Delete(Data.ResourceGroupName, service.Name);
 
-                Assert.Empty(searchMgmt.Services.List(Data.ResourceGroupName).Services);
+                Assert.Empty(searchMgmt.Services.ListByResourceGroup(Data.ResourceGroupName));
             });
         }
 

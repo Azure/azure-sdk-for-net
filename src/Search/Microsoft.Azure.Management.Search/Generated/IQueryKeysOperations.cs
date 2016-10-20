@@ -17,18 +17,24 @@ namespace Microsoft.Azure.Management.Search
     public partial interface IQueryKeysOperations
     {
         /// <summary>
-        /// Generates a new query key for the Search service. You can create
-        /// up to 50 query keys per service.
+        /// Generates a new query key for the specified Search service. You
+        /// can create up to 50 query keys per service.
         /// <see href="https://msdn.microsoft.com/library/azure/dn832690.aspx" />
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the current subscription.
+        /// You can obtain this value from the Azure Resource Manager API or
+        /// the portal.
         /// </param>
-        /// <param name='serviceName'>
-        /// The name of the Search service for which to list query keys.
+        /// <param name='searchServiceName'>
+        /// The name of the Azure Search service associated with the specified
+        /// resource group.
         /// </param>
         /// <param name='name'>
         /// The name of the new query API key.
+        /// </param>
+        /// <param name='searchManagementRequestOptions'>
+        /// Additional parameters for the operation
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -45,7 +51,7 @@ namespace Microsoft.Azure.Management.Search
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<QueryKey>> CreateWithHttpMessagesAsync(string resourceGroupName, string serviceName, string name, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<QueryKey>> CreateWithHttpMessagesAsync(string resourceGroupName, string searchServiceName, string name, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Returns the list of query API keys for the given Azure Search
         /// service.
@@ -53,9 +59,15 @@ namespace Microsoft.Azure.Management.Search
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the current subscription.
+        /// You can obtain this value from the Azure Resource Manager API or
+        /// the portal.
         /// </param>
-        /// <param name='serviceName'>
-        /// The name of the Search service for which to list query keys.
+        /// <param name='searchServiceName'>
+        /// The name of the Azure Search service associated with the specified
+        /// resource group.
+        /// </param>
+        /// <param name='searchManagementRequestOptions'>
+        /// Additional parameters for the operation
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -72,7 +84,7 @@ namespace Microsoft.Azure.Management.Search
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<ListQueryKeysResult>> ListWithHttpMessagesAsync(string resourceGroupName, string serviceName, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<System.Collections.Generic.IEnumerable<QueryKey>>> ListBySearchServiceWithHttpMessagesAsync(string resourceGroupName, string searchServiceName, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Deletes the specified query key. Unlike admin keys, query keys are
         /// not regenerated. The process for regenerating a query key is to
@@ -81,12 +93,19 @@ namespace Microsoft.Azure.Management.Search
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group within the current subscription.
+        /// You can obtain this value from the Azure Resource Manager API or
+        /// the portal.
         /// </param>
-        /// <param name='serviceName'>
-        /// The name of the Search service for which to list query keys.
+        /// <param name='searchServiceName'>
+        /// The name of the Azure Search service associated with the specified
+        /// resource group.
         /// </param>
         /// <param name='key'>
-        /// The query key to be deleted.
+        /// The query key to be deleted. Query keys are identified by value,
+        /// not by name.
+        /// </param>
+        /// <param name='searchManagementRequestOptions'>
+        /// Additional parameters for the operation
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -100,6 +119,6 @@ namespace Microsoft.Azure.Management.Search
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string serviceName, string key, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string searchServiceName, string key, SearchManagementRequestOptions searchManagementRequestOptions = default(SearchManagementRequestOptions), System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
 }

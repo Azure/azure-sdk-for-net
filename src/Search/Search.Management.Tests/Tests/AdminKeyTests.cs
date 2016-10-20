@@ -11,7 +11,7 @@ namespace Microsoft.Azure.Management.Search.Tests
     public sealed class AdminKeyTests : SearchTestBase<SearchServiceFixture>
     {
         [Fact]
-        public void CanListAdminKeys()
+        public void CanGetAdminKeys()
         {
             Run(() =>
             {
@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.Search.Tests
 
                 // List admin keys
                 AdminKeyResult adminKeyResult =
-                    searchMgmt.AdminKeys.List(Data.ResourceGroupName, Data.SearchServiceName);
+                    searchMgmt.AdminKeys.Get(Data.ResourceGroupName, Data.SearchServiceName);
 
                 Assert.NotNull(adminKeyResult);
                 Assert.NotNull(adminKeyResult.PrimaryKey);
@@ -37,7 +37,7 @@ namespace Microsoft.Azure.Management.Search.Tests
                 SearchManagementClient searchMgmt = GetSearchManagementClient();
 
                 AdminKeyResult originalAdminKeys =
-                    searchMgmt.AdminKeys.List(Data.ResourceGroupName, Data.SearchServiceName);
+                    searchMgmt.AdminKeys.Get(Data.ResourceGroupName, Data.SearchServiceName);
 
                 AdminKeyResult keysWithNewPrimary =
                     searchMgmt.AdminKeys.Regenerate(Data.ResourceGroupName, Data.SearchServiceName, AdminKeyKind.Primary);

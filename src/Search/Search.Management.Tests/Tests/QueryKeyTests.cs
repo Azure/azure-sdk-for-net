@@ -18,12 +18,12 @@ namespace Microsoft.Azure.Management.Search.Tests
             {
                 SearchManagementClient searchMgmt = GetSearchManagementClient();
 
-                ListQueryKeysResult queryKeyResult =
-                    searchMgmt.QueryKeys.List(Data.ResourceGroupName, Data.SearchServiceName);
+                var queryKeys =
+                    searchMgmt.QueryKeys.ListBySearchService(Data.ResourceGroupName, Data.SearchServiceName);
 
-                Assert.NotNull(queryKeyResult);
+                Assert.NotNull(queryKeys);
 
-                QueryKey onlyKey = queryKeyResult.QueryKeys.Single();
+                QueryKey onlyKey = queryKeys.Single();
 
                 AssertIsValidKey(onlyKey);
                 AssertIsDefaultKey(onlyKey);
@@ -37,28 +37,27 @@ namespace Microsoft.Azure.Management.Search.Tests
             {
                 SearchManagementClient searchMgmt = GetSearchManagementClient();
 
-                ListQueryKeysResult queryKeyResult =
-                    searchMgmt.QueryKeys.List(Data.ResourceGroupName, Data.SearchServiceName);
+                var queryKeys = searchMgmt.QueryKeys.ListBySearchService(Data.ResourceGroupName, Data.SearchServiceName);
 
-                AssertIsDefaultKey(queryKeyResult.QueryKeys.Single());
+                AssertIsDefaultKey(queryKeys.Single());
 
                 QueryKey newKey = searchMgmt.QueryKeys.Create(Data.ResourceGroupName, Data.SearchServiceName, "my key");
 
                 AssertIsValidKey(newKey, "my key");
 
-                queryKeyResult = searchMgmt.QueryKeys.List(Data.ResourceGroupName, Data.SearchServiceName);
+                queryKeys = searchMgmt.QueryKeys.ListBySearchService(Data.ResourceGroupName, Data.SearchServiceName);
 
-                Assert.Equal(2, queryKeyResult.QueryKeys.Count);
-                AssertIsDefaultKey(queryKeyResult.QueryKeys[0]);
+                Assert.Equal(2, queryKeys.Count());
+                AssertIsDefaultKey(queryKeys.First());
 
-                Assert.Equal(newKey.Name, queryKeyResult.QueryKeys[1].Name);
-                Assert.Equal(newKey.Key, queryKeyResult.QueryKeys[1].Key);
+                Assert.Equal(newKey.Name, queryKeys.ElementAt(1).Name);
+                Assert.Equal(newKey.Key, queryKeys.ElementAt(1).Key);
 
                 searchMgmt.QueryKeys.Delete(Data.ResourceGroupName, Data.SearchServiceName, newKey.Key);
 
-                queryKeyResult = searchMgmt.QueryKeys.List(Data.ResourceGroupName, Data.SearchServiceName);
+                queryKeys = searchMgmt.QueryKeys.ListBySearchService(Data.ResourceGroupName, Data.SearchServiceName);
 
-                AssertIsDefaultKey(queryKeyResult.QueryKeys.Single());
+                AssertIsDefaultKey(queryKeys.Single());
             });
         }
 

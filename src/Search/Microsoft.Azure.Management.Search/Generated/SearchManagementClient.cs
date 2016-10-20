@@ -39,14 +39,13 @@ namespace Microsoft.Azure.Management.Search
         public Microsoft.Rest.ServiceClientCredentials Credentials { get; private set; }
 
         /// <summary>
-        /// Gets subscription credentials which uniquely identify the Microsoft Azure
-        /// subscription. The subscription ID forms part of the URI for every service
-        /// call.
+        /// The unique identifier for a Microsoft Azure subscription. You can obtain
+        /// this value from the Azure Resource Manager API or the portal.
         /// </summary>
         public string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client Api Version.
+        /// The API version to use for each request. The current version is 2015-08-19.
         /// </summary>
         public string ApiVersion { get; private set; }
 
