@@ -1,4 +1,8 @@
-﻿using Microsoft.Azure.Management.Redis;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
+
+using Microsoft.Azure.Management.Redis;
 using Microsoft.Azure.Management.Redis.Models;
 using System;
 using System.Collections.Generic;
@@ -14,7 +18,7 @@ using Microsoft.Azure;
 using Microsoft.Rest.Azure;
 using Microsoft.Rest;
 
-namespace AzureRedisCache.Tests
+namespace AzureRedisCache.Tests.InMemoryTests
 {
     public class DeleteTests
     {
