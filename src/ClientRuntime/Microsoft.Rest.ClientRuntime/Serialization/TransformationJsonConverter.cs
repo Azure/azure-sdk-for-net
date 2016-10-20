@@ -51,59 +51,52 @@ namespace Microsoft.Rest.Serialization
                 throw new ArgumentNullException("serializer");
             }
 
-            try
+            JObject jsonObject = JObject.Load(reader);
+
+            // Update type if there is a polymorphism
+            var polymorphicDeserializer = serializer.Converters
+                .FirstOrDefault(c =>
+                    c.GetType().GetTypeInfo().IsGenericType &&
+                    c.GetType().GetGenericTypeDefinition() == typeof(PolymorphicDeserializeJsonConverter<>) &&
+                    c.CanConvert(objectType)) as PolymorphicJsonConverter;
+            if (polymorphicDeserializer != null)
             {
-                JObject jsonObject = JObject.Load(reader);
+                objectType = PolymorphicJsonConverter.GetDerivedType(objectType,
+                    (string) jsonObject[polymorphicDeserializer.Discriminator]) ?? objectType;
+            }
 
-                // Update type if there is a polymorphism
-                var polymorphicDeserializer = serializer.Converters
-                    .FirstOrDefault(c =>
-                        c.GetType().GetTypeInfo().IsGenericType &&
-                        c.GetType().GetGenericTypeDefinition() == typeof(PolymorphicDeserializeJsonConverter<>) &&
-                        c.CanConvert(objectType)) as PolymorphicJsonConverter;
-                if (polymorphicDeserializer != null)
+            // Initialize appropriate type instance
+            var resource = Activator.CreateInstance(objectType);
+
+            // For each property in resource - populate property
+            var contract = (JsonObjectContract)serializer.ContractResolver.ResolveContract(objectType);
+            foreach (JsonProperty property in contract.Properties)
+            {
+                JToken propertyValueToken;
+                string[] parentPath;
+                string propertyName = property.GetPropertyName(out parentPath);
+
+                if (parentPath.Length > 0)
                 {
-                    objectType = PolymorphicJsonConverter.GetDerivedType(objectType,
-                        (string) jsonObject[polymorphicDeserializer.Discriminator]) ?? objectType;
-                }
-
-                // Initialize appropriate type instance
-                var resource = Activator.CreateInstance(objectType);
-
-                // For each property in resource - populate property
-                var contract = (JsonObjectContract)serializer.ContractResolver.ResolveContract(objectType);
-                foreach (JsonProperty property in contract.Properties)
-                {
-                    JToken propertyValueToken;
-                    string[] parentPath;
-                    string propertyName = property.GetPropertyName(out parentPath);
-
-                    if (parentPath.Length > 0)
+                    string jsonPath = string.Concat(parentPath.Select(p => $"['{p}']"));
+                    propertyValueToken = jsonObject.SelectToken(jsonPath, false);
+                    if (propertyValueToken != null)
                     {
-                        string jsonPath = string.Concat(parentPath.Select(p => $"['{p}']"));
-                        propertyValueToken = jsonObject.SelectToken(jsonPath, false);
-                        if (propertyValueToken != null)
-                        {
-                            propertyValueToken = propertyValueToken[propertyName];
-                        }
-                    }
-                    else
-                    {
-                        propertyValueToken = jsonObject[propertyName];
-                    }                  
-
-                    if (propertyValueToken != null && property.Writable)
-                    {
-                        var propertyValue = propertyValueToken.ToObject(property.PropertyType, serializer);
-                        property.ValueProvider.SetValue(resource, propertyValue);
+                        propertyValueToken = propertyValueToken[propertyName];
                     }
                 }
-                return resource;
+                else
+                {
+                    propertyValueToken = jsonObject[propertyName];
+                }                  
+
+                if (propertyValueToken != null && property.Writable)
+                {
+                    var propertyValue = propertyValueToken.ToObject(property.PropertyType, serializer);
+                    property.ValueProvider.SetValue(resource, propertyValue);
+                }
             }
-            catch (JsonException)
-            {
-                return null;
-            }
+            return resource;
         }
 
         /// <summary>

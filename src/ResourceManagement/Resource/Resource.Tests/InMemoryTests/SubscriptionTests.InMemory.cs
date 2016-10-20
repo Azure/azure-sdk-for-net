@@ -139,7 +139,7 @@ namespace ResourceGroups.Tests
             Assert.Equal("/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f", listSubscriptionsResult.FirstOrDefault().Id);
             Assert.Equal("38b598fc-e57a-423f-b2e7-dc0ddb631f1f", listSubscriptionsResult.FirstOrDefault().SubscriptionId);
             Assert.Equal("Visual Studio Ultimate with MSDN", listSubscriptionsResult.FirstOrDefault().DisplayName);
-            Assert.Equal("Disabled", listSubscriptionsResult.FirstOrDefault().State);
+            Assert.Equal("Disabled", listSubscriptionsResult.FirstOrDefault().State.ToString());
             Assert.NotNull(listSubscriptionsResult.FirstOrDefault().SubscriptionPolicies);
             Assert.Equal("Public_2014-09-01", listSubscriptionsResult.FirstOrDefault().SubscriptionPolicies.LocationPlacementId);
             Assert.Equal("MSDN_2014-09-01", listSubscriptionsResult.FirstOrDefault().SubscriptionPolicies.QuotaId);
@@ -181,7 +181,7 @@ namespace ResourceGroups.Tests
             Assert.Equal("/subscriptions/38b598fc-e57a-423f-b2e7-dc0ddb631f1f", getSubscriptionResult.Id);
             Assert.Equal("38b598fc-e57a-423f-b2e7-dc0ddb631f1f", getSubscriptionResult.SubscriptionId);
             Assert.Equal("Visual Studio Ultimate with MSDN", getSubscriptionResult.DisplayName);
-            Assert.Equal("Disabled", getSubscriptionResult.State);
+            Assert.Equal("Disabled", getSubscriptionResult.State.ToString());
             Assert.NotNull(getSubscriptionResult.SubscriptionPolicies);
             Assert.Equal("Public_2014-09-01", getSubscriptionResult.SubscriptionPolicies.LocationPlacementId);
             Assert.Equal("MSDN_2014-09-01", getSubscriptionResult.SubscriptionPolicies.QuotaId);

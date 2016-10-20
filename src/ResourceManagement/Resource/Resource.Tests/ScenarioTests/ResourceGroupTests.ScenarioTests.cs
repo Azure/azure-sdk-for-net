@@ -113,13 +113,13 @@ namespace ResourceGroups.Tests
                 client.SetRetryPolicy(new RetryPolicy<HttpStatusCodeErrorDetectionStrategy>(1));
 
                 var checkExistenceFirst = client.ResourceGroups.CheckExistence(groupName);
-                Assert.False(checkExistenceFirst.Value);
+                Assert.False(checkExistenceFirst);
 
                 client.ResourceGroups.CreateOrUpdate(groupName, new ResourceGroup { Location = DefaultLocation });
 
                 var checkExistenceSecond = client.ResourceGroups.CheckExistence(groupName);
 
-                Assert.True(checkExistenceSecond.Value);
+                Assert.True(checkExistenceSecond);
             }
         }
 
