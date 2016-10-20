@@ -23,7 +23,8 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <summary>
         /// Initializes a new instance of the GeoFilter class.
         /// </summary>
-        /// <param name="relativePath">Relative path apply geo filter.</param>
+        /// <param name="relativePath">Relative path applicable to geo
+        /// filter.</param>
         /// <param name="action">Action of the geo filter.</param>
         /// <param name="countryCodes">Country codes of the geo filter.</param>
         public GeoFilter(string relativePath, string action, System.Collections.Generic.IList<string> countryCodes)
@@ -34,7 +35,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         }
 
         /// <summary>
-        /// Gets or sets relative path apply geo filter.
+        /// Gets or sets relative path applicable to geo filter.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "relativePath")]
         public string RelativePath { get; set; }

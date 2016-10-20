@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -93,7 +93,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -122,7 +122,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -148,7 +148,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -180,7 +180,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -206,7 +206,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -238,7 +238,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -261,7 +261,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -290,7 +290,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -313,7 +313,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.

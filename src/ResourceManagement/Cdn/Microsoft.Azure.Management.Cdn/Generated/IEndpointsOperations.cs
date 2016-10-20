@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Lists existing CDN endpoints within a profile.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Gets an existing CDN endpoint with the specified parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -73,7 +73,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Creates a new CDN endpoint with the specified parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -81,7 +81,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='endpointName'>
         /// Name of the endpoint within the CDN profile.
         /// </param>
-        /// <param name='endpointProperties'>
+        /// <param name='endpoint'>
         /// Endpoint properties
         /// </param>
         /// <param name='customHeaders'>
@@ -99,12 +99,12 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Endpoint>> CreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, Endpoint endpointProperties, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Endpoint>> CreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, Endpoint endpoint, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Creates a new CDN endpoint with the specified parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -112,7 +112,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='endpointName'>
         /// Name of the endpoint within the CDN profile.
         /// </param>
-        /// <param name='endpointProperties'>
+        /// <param name='endpoint'>
         /// Endpoint properties
         /// </param>
         /// <param name='customHeaders'>
@@ -130,7 +130,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Endpoint>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, Endpoint endpointProperties, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Endpoint>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, Endpoint endpoint, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Updates an existing CDN endpoint with the specified parameters.
         /// Only tags and OriginHostHeader can be updated after creating an
@@ -138,7 +138,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// update custom domains, use the Update Custom Domain operation.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -146,8 +146,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='endpointName'>
         /// Name of the endpoint within the CDN profile.
         /// </param>
-        /// <param name='endpointProperties'>
-        /// Endpoint properties
+        /// <param name='endpointUpdateProperties'>
+        /// Endpoint update properties
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -164,7 +164,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Endpoint>> UpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, EndpointUpdateParameters endpointProperties, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Endpoint>> UpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, EndpointUpdateParameters endpointUpdateProperties, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Updates an existing CDN endpoint with the specified parameters.
         /// Only tags and OriginHostHeader can be updated after creating an
@@ -172,7 +172,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// update custom domains, use the Update Custom Domain operation.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -180,8 +180,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='endpointName'>
         /// Name of the endpoint within the CDN profile.
         /// </param>
-        /// <param name='endpointProperties'>
-        /// Endpoint properties
+        /// <param name='endpointUpdateProperties'>
+        /// Endpoint update properties
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -198,12 +198,12 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Endpoint>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, EndpointUpdateParameters endpointProperties, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Endpoint>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, EndpointUpdateParameters endpointUpdateProperties, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Deletes an existing CDN endpoint with the specified parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -228,7 +228,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Deletes an existing CDN endpoint with the specified parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -253,7 +253,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Starts an existing stopped CDN endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -281,7 +281,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Starts an existing stopped CDN endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -309,7 +309,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Stops an existing running CDN endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -337,7 +337,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Stops an existing running CDN endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -365,7 +365,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Forcibly purges CDN endpoint content.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -394,7 +394,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Forcibly purges CDN endpoint content.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -423,7 +423,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Forcibly pre-loads CDN endpoint content.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -451,7 +451,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Forcibly pre-loads CDN endpoint content.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -480,7 +480,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// CNAME in DNS.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.

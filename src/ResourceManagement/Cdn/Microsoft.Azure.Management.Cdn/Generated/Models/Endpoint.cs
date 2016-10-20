@@ -36,8 +36,6 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
-        /// <param name="hostName">The host name of the endpoint
-        /// {endpointName}.{DNSZone}</param>
         /// <param name="originHostHeader">The host header the CDN provider
         /// will send along with content requests to origins. The default
         /// value is the host name of the origin.</param>
@@ -45,15 +43,15 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <param name="contentTypesToCompress">List of content types on
         /// which compression will be applied. The value for the elements
         /// should be a valid MIME type.</param>
-        /// <param name="isCompressionEnabled">Indicates whether the
+        /// <param name="isCompressionEnabled">Indicates whether content
         /// compression is enabled. Default value is false. If compression is
-        /// enabled, the content transferred from cdn endpoint to end user
-        /// will be compressed. The requested content must be larger than 1
-        /// byte and smaller than 1 MB.</param>
+        /// enabled, the content transferred from the CDN endpoint to the end
+        /// user will be compressed. The requested content must be larger
+        /// than 1 byte and smaller than 1 MB.</param>
         /// <param name="isHttpAllowed">Indicates whether HTTP traffic is
         /// allowed on the endpoint. Default value is true. At least one
         /// protocol (HTTP or HTTPS) must be allowed.</param>
-        /// <param name="isHttpsAllowed">Indicates whether https traffic is
+        /// <param name="isHttpsAllowed">Indicates whether HTTPS traffic is
         /// allowed on the endpoint. Default value is true. At least one
         /// protocol (HTTP or HTTPS) must be allowed.</param>
         /// <param name="queryStringCachingBehavior">Defines the query string
@@ -61,15 +59,16 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// 'BypassCaching', 'UseQueryString', 'NotSet'</param>
         /// <param name="geoFilters">The list of geo filters for the CDN
         /// endpoint.</param>
+        /// <param name="hostName">The host name of the endpoint
+        /// {endpointName}.{DNSZone}</param>
         /// <param name="resourceState">Resource status of the endpoint.
         /// Possible values include: 'Creating', 'Deleting', 'Running',
         /// 'Starting', 'Stopped', 'Stopping'</param>
         /// <param name="provisioningState">Provisioning status of the
         /// endpoint.</param>
-        public Endpoint(string location, System.Collections.Generic.IList<DeepCreatedOrigin> origins, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string hostName = default(string), string originHostHeader = default(string), string originPath = default(string), System.Collections.Generic.IList<string> contentTypesToCompress = default(System.Collections.Generic.IList<string>), bool? isCompressionEnabled = default(bool?), bool? isHttpAllowed = default(bool?), bool? isHttpsAllowed = default(bool?), QueryStringCachingBehavior? queryStringCachingBehavior = default(QueryStringCachingBehavior?), System.Collections.Generic.IList<GeoFilter> geoFilters = default(System.Collections.Generic.IList<GeoFilter>), string resourceState = default(string), string provisioningState = default(string))
+        public Endpoint(string location, System.Collections.Generic.IList<DeepCreatedOrigin> origins, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string originHostHeader = default(string), string originPath = default(string), System.Collections.Generic.IList<string> contentTypesToCompress = default(System.Collections.Generic.IList<string>), bool? isCompressionEnabled = default(bool?), bool? isHttpAllowed = default(bool?), bool? isHttpsAllowed = default(bool?), QueryStringCachingBehavior? queryStringCachingBehavior = default(QueryStringCachingBehavior?), System.Collections.Generic.IList<GeoFilter> geoFilters = default(System.Collections.Generic.IList<GeoFilter>), string hostName = default(string), string resourceState = default(string), string provisioningState = default(string))
             : base(location, id, name, type, tags)
         {
-            HostName = hostName;
             OriginHostHeader = originHostHeader;
             OriginPath = originPath;
             ContentTypesToCompress = contentTypesToCompress;
@@ -77,17 +76,12 @@ namespace Microsoft.Azure.Management.Cdn.Models
             IsHttpAllowed = isHttpAllowed;
             IsHttpsAllowed = isHttpsAllowed;
             QueryStringCachingBehavior = queryStringCachingBehavior;
-            Origins = origins;
             GeoFilters = geoFilters;
+            HostName = hostName;
+            Origins = origins;
             ResourceState = resourceState;
             ProvisioningState = provisioningState;
         }
-
-        /// <summary>
-        /// Gets the host name of the endpoint {endpointName}.{DNSZone}
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.hostName")]
-        public string HostName { get; private set; }
 
         /// <summary>
         /// Gets or sets the host header the CDN provider will send along with
@@ -111,11 +105,11 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public System.Collections.Generic.IList<string> ContentTypesToCompress { get; set; }
 
         /// <summary>
-        /// Gets or sets indicates whether the compression is enabled. Default
-        /// value is false. If compression is enabled, the content
-        /// transferred from cdn endpoint to end user will be compressed. The
-        /// requested content must be larger than 1 byte and smaller than 1
-        /// MB.
+        /// Gets or sets indicates whether content compression is enabled.
+        /// Default value is false. If compression is enabled, the content
+        /// transferred from the CDN endpoint to the end user will be
+        /// compressed. The requested content must be larger than 1 byte and
+        /// smaller than 1 MB.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.isCompressionEnabled")]
         public bool? IsCompressionEnabled { get; set; }
@@ -129,7 +123,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public bool? IsHttpAllowed { get; set; }
 
         /// <summary>
-        /// Gets or sets indicates whether https traffic is allowed on the
+        /// Gets or sets indicates whether HTTPS traffic is allowed on the
         /// endpoint. Default value is true. At least one protocol (HTTP or
         /// HTTPS) must be allowed.
         /// </summary>
@@ -145,18 +139,24 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public QueryStringCachingBehavior? QueryStringCachingBehavior { get; set; }
 
         /// <summary>
+        /// Gets or sets the list of geo filters for the CDN endpoint.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.geoFilters")]
+        public System.Collections.Generic.IList<GeoFilter> GeoFilters { get; set; }
+
+        /// <summary>
+        /// Gets the host name of the endpoint {endpointName}.{DNSZone}
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.hostName")]
+        public string HostName { get; private set; }
+
+        /// <summary>
         /// Gets or sets the set of origins for the CDN endpoint. When
         /// multiple origins exist, the first origin will be used as primary
         /// and rest will be used as failover options.
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.origins")]
         public System.Collections.Generic.IList<DeepCreatedOrigin> Origins { get; set; }
-
-        /// <summary>
-        /// Gets or sets the list of geo filters for the CDN endpoint.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.geoFilters")]
-        public System.Collections.Generic.IList<GeoFilter> GeoFilters { get; set; }
 
         /// <summary>
         /// Gets resource status of the endpoint. Possible values include:
@@ -185,9 +185,9 @@ namespace Microsoft.Azure.Management.Cdn.Models
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Origins");
             }
-            if (this.Origins != null)
+            if (this.GeoFilters != null)
             {
-                foreach (var element in this.Origins)
+                foreach (var element in this.GeoFilters)
                 {
                     if (element != null)
                     {
@@ -195,9 +195,9 @@ namespace Microsoft.Azure.Management.Cdn.Models
                     }
                 }
             }
-            if (this.GeoFilters != null)
+            if (this.Origins != null)
             {
-                foreach (var element1 in this.GeoFilters)
+                foreach (var element1 in this.Origins)
                 {
                     if (element1 != null)
                     {

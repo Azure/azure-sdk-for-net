@@ -39,7 +39,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Lists the CDN profiles within a resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -61,7 +61,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Gets a CDN profile with the specified parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -86,12 +86,12 @@ namespace Microsoft.Azure.Management.Cdn
         /// Creates a new CDN profile with the specified parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
         /// </param>
-        /// <param name='profileProperties'>
+        /// <param name='profile'>
         /// Profile properties needed for creation.
         /// </param>
         /// <param name='customHeaders'>
@@ -109,17 +109,17 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Profile>> CreateWithHttpMessagesAsync(string resourceGroupName, string profileName, Profile profileProperties, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Profile>> CreateWithHttpMessagesAsync(string resourceGroupName, string profileName, Profile profile, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Creates a new CDN profile with the specified parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
         /// </param>
-        /// <param name='profileProperties'>
+        /// <param name='profile'>
         /// Profile properties needed for creation.
         /// </param>
         /// <param name='customHeaders'>
@@ -137,12 +137,12 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Profile>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string profileName, Profile profileProperties, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Profile>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string profileName, Profile profile, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Updates an existing CDN profile with the specified parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -170,7 +170,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Updates an existing CDN profile with the specified parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -200,7 +200,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// subresources including endpoints, origins and custom domains.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -224,7 +224,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// subresources including endpoints, origins and custom domains.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -249,7 +249,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Alerts. The SSO URI changes approximately every 10 minutes.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.

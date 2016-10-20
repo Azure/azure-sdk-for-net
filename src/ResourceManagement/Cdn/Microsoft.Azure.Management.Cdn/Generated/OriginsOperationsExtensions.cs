@@ -24,7 +24,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -44,7 +44,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -94,7 +94,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -124,7 +124,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -136,12 +136,12 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the origin, an arbitrary value but it needs to be unique under
             /// endpoint
             /// </param>
-            /// <param name='originProperties'>
+            /// <param name='origin'>
             /// Origin properties
             /// </param>
-            public static Origin Create(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, Origin originProperties)
+            public static Origin Create(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, Origin origin)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IOriginsOperations)s).CreateAsync(resourceGroupName, profileName, endpointName, originName, originProperties), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IOriginsOperations)s).CreateAsync(resourceGroupName, profileName, endpointName, originName, origin), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -151,7 +151,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -163,15 +163,15 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the origin, an arbitrary value but it needs to be unique under
             /// endpoint
             /// </param>
-            /// <param name='originProperties'>
+            /// <param name='origin'>
             /// Origin properties
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<Origin> CreateAsync(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, Origin originProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<Origin> CreateAsync(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, Origin origin, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, originName, originProperties, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, originName, origin, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -184,7 +184,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -196,12 +196,12 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the origin, an arbitrary value but it needs to be unique under
             /// endpoint
             /// </param>
-            /// <param name='originProperties'>
+            /// <param name='origin'>
             /// Origin properties
             /// </param>
-            public static Origin BeginCreate(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, Origin originProperties)
+            public static Origin BeginCreate(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, Origin origin)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IOriginsOperations)s).BeginCreateAsync(resourceGroupName, profileName, endpointName, originName, originProperties), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IOriginsOperations)s).BeginCreateAsync(resourceGroupName, profileName, endpointName, originName, origin), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -211,7 +211,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -223,15 +223,15 @@ namespace Microsoft.Azure.Management.Cdn
             /// Name of the origin, an arbitrary value but it needs to be unique under
             /// endpoint
             /// </param>
-            /// <param name='originProperties'>
+            /// <param name='origin'>
             /// Origin properties
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<Origin> BeginCreateAsync(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, Origin originProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<Origin> BeginCreateAsync(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, Origin origin, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, originName, originProperties, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, originName, origin, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -244,7 +244,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -255,12 +255,12 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='originName'>
             /// Name of the origin. Must be unique within endpoint.
             /// </param>
-            /// <param name='originProperties'>
+            /// <param name='originUpdateProperties'>
             /// Origin properties
             /// </param>
-            public static Origin Update(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, OriginUpdateParameters originProperties)
+            public static Origin Update(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, OriginUpdateParameters originUpdateProperties)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IOriginsOperations)s).UpdateAsync(resourceGroupName, profileName, endpointName, originName, originProperties), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IOriginsOperations)s).UpdateAsync(resourceGroupName, profileName, endpointName, originName, originUpdateProperties), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -270,7 +270,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -281,15 +281,15 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='originName'>
             /// Name of the origin. Must be unique within endpoint.
             /// </param>
-            /// <param name='originProperties'>
+            /// <param name='originUpdateProperties'>
             /// Origin properties
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<Origin> UpdateAsync(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, OriginUpdateParameters originProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<Origin> UpdateAsync(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, OriginUpdateParameters originUpdateProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, originName, originProperties, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, originName, originUpdateProperties, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -302,7 +302,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -313,12 +313,12 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='originName'>
             /// Name of the origin. Must be unique within endpoint.
             /// </param>
-            /// <param name='originProperties'>
+            /// <param name='originUpdateProperties'>
             /// Origin properties
             /// </param>
-            public static Origin BeginUpdate(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, OriginUpdateParameters originProperties)
+            public static Origin BeginUpdate(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, OriginUpdateParameters originUpdateProperties)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IOriginsOperations)s).BeginUpdateAsync(resourceGroupName, profileName, endpointName, originName, originProperties), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IOriginsOperations)s).BeginUpdateAsync(resourceGroupName, profileName, endpointName, originName, originUpdateProperties), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -328,7 +328,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -339,15 +339,15 @@ namespace Microsoft.Azure.Management.Cdn
             /// <param name='originName'>
             /// Name of the origin. Must be unique within endpoint.
             /// </param>
-            /// <param name='originProperties'>
+            /// <param name='originUpdateProperties'>
             /// Origin properties
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<Origin> BeginUpdateAsync(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, OriginUpdateParameters originProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<Origin> BeginUpdateAsync(this IOriginsOperations operations, string resourceGroupName, string profileName, string endpointName, string originName, OriginUpdateParameters originUpdateProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, originName, originProperties, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, profileName, endpointName, originName, originUpdateProperties, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -360,7 +360,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -383,7 +383,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -412,7 +412,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -435,7 +435,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.

@@ -46,7 +46,9 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// <param name="queryStringCachingBehavior">Defines the query string
         /// caching behavior. Possible values include: 'IgnoreQueryString',
         /// 'BypassCaching', 'UseQueryString', 'NotSet'</param>
-        public EndpointUpdateParameters(System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string originHostHeader = default(string), string originPath = default(string), System.Collections.Generic.IList<string> contentTypesToCompress = default(System.Collections.Generic.IList<string>), bool? isCompressionEnabled = default(bool?), bool? isHttpAllowed = default(bool?), bool? isHttpsAllowed = default(bool?), QueryStringCachingBehavior? queryStringCachingBehavior = default(QueryStringCachingBehavior?))
+        /// <param name="geoFilters">The list of geo filters for the CDN
+        /// endpoint.</param>
+        public EndpointUpdateParameters(System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string originHostHeader = default(string), string originPath = default(string), System.Collections.Generic.IList<string> contentTypesToCompress = default(System.Collections.Generic.IList<string>), bool? isCompressionEnabled = default(bool?), bool? isHttpAllowed = default(bool?), bool? isHttpsAllowed = default(bool?), QueryStringCachingBehavior? queryStringCachingBehavior = default(QueryStringCachingBehavior?), System.Collections.Generic.IList<GeoFilter> geoFilters = default(System.Collections.Generic.IList<GeoFilter>))
         {
             Tags = tags;
             OriginHostHeader = originHostHeader;
@@ -56,6 +58,7 @@ namespace Microsoft.Azure.Management.Cdn.Models
             IsHttpAllowed = isHttpAllowed;
             IsHttpsAllowed = isHttpsAllowed;
             QueryStringCachingBehavior = queryStringCachingBehavior;
+            GeoFilters = geoFilters;
         }
 
         /// <summary>
@@ -118,6 +121,12 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "properties.queryStringCachingBehavior")]
         public QueryStringCachingBehavior? QueryStringCachingBehavior { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of geo filters for the CDN endpoint.
+        /// </summary>
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.geoFilters")]
+        public System.Collections.Generic.IList<GeoFilter> GeoFilters { get; set; }
 
     }
 }

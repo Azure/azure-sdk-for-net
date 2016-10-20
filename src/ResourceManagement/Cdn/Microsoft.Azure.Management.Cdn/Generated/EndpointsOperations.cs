@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Lists existing CDN endpoints within a profile.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -73,6 +73,21 @@ namespace Microsoft.Azure.Management.Cdn
             if (resourceGroupName == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
             }
             if (profileName == null)
             {
@@ -231,7 +246,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Gets an existing CDN endpoint with the specified parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -262,6 +277,21 @@ namespace Microsoft.Azure.Management.Cdn
             if (resourceGroupName == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
             }
             if (profileName == null)
             {
@@ -426,7 +456,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Creates a new CDN endpoint with the specified parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -434,7 +464,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='endpointName'>
         /// Name of the endpoint within the CDN profile.
         /// </param>
-        /// <param name='endpointProperties'>
+        /// <param name='endpoint'>
         /// Endpoint properties
         /// </param>
         /// <param name='customHeaders'>
@@ -443,11 +473,11 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Endpoint>> CreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, Endpoint endpointProperties, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Endpoint>> CreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, Endpoint endpoint, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Send Request
             Microsoft.Rest.Azure.AzureOperationResponse<Endpoint> _response = await BeginCreateWithHttpMessagesAsync(
-                resourceGroupName, profileName, endpointName, endpointProperties, customHeaders, cancellationToken);
+                resourceGroupName, profileName, endpointName, endpoint, customHeaders, cancellationToken);
             return await this.Client.GetPutOrPatchOperationResultAsync(_response,
                 customHeaders,
                 cancellationToken);
@@ -457,7 +487,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Creates a new CDN endpoint with the specified parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -465,7 +495,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='endpointName'>
         /// Name of the endpoint within the CDN profile.
         /// </param>
-        /// <param name='endpointProperties'>
+        /// <param name='endpoint'>
         /// Endpoint properties
         /// </param>
         /// <param name='customHeaders'>
@@ -486,11 +516,26 @@ namespace Microsoft.Azure.Management.Cdn
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Endpoint>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, Endpoint endpointProperties, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Endpoint>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, Endpoint endpoint, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (resourceGroupName == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
             }
             if (profileName == null)
             {
@@ -500,13 +545,13 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "endpointName");
             }
-            if (endpointProperties == null)
+            if (endpoint == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "endpointProperties");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "endpoint");
             }
-            if (endpointProperties != null)
+            if (endpoint != null)
             {
-                endpointProperties.Validate();
+                endpoint.Validate();
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -526,7 +571,7 @@ namespace Microsoft.Azure.Management.Cdn
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("profileName", profileName);
                 tracingParameters.Add("endpointName", endpointName);
-                tracingParameters.Add("endpointProperties", endpointProperties);
+                tracingParameters.Add("endpoint", endpoint);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "BeginCreate", tracingParameters);
             }
@@ -578,9 +623,9 @@ namespace Microsoft.Azure.Management.Cdn
 
             // Serialize Request
             string _requestContent = null;
-            if(endpointProperties != null)
+            if(endpoint != null)
             {
-                _requestContent = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(endpointProperties, this.Client.SerializationSettings);
+                _requestContent = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(endpoint, this.Client.SerializationSettings);
                 _httpRequest.Content = new System.Net.Http.StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -709,7 +754,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// the Update Custom Domain operation.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -717,8 +762,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='endpointName'>
         /// Name of the endpoint within the CDN profile.
         /// </param>
-        /// <param name='endpointProperties'>
-        /// Endpoint properties
+        /// <param name='endpointUpdateProperties'>
+        /// Endpoint update properties
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -726,11 +771,11 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Endpoint>> UpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, EndpointUpdateParameters endpointProperties, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Endpoint>> UpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, EndpointUpdateParameters endpointUpdateProperties, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             // Send Request
             Microsoft.Rest.Azure.AzureOperationResponse<Endpoint> _response = await BeginUpdateWithHttpMessagesAsync(
-                resourceGroupName, profileName, endpointName, endpointProperties, customHeaders, cancellationToken);
+                resourceGroupName, profileName, endpointName, endpointUpdateProperties, customHeaders, cancellationToken);
             return await this.Client.GetPutOrPatchOperationResultAsync(_response,
                 customHeaders,
                 cancellationToken);
@@ -743,7 +788,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// the Update Custom Domain operation.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -751,8 +796,8 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='endpointName'>
         /// Name of the endpoint within the CDN profile.
         /// </param>
-        /// <param name='endpointProperties'>
-        /// Endpoint properties
+        /// <param name='endpointUpdateProperties'>
+        /// Endpoint update properties
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -772,11 +817,26 @@ namespace Microsoft.Azure.Management.Cdn
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Endpoint>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, EndpointUpdateParameters endpointProperties, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+        public async System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Endpoint>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, EndpointUpdateParameters endpointUpdateProperties, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
         {
             if (resourceGroupName == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
             }
             if (profileName == null)
             {
@@ -786,9 +846,9 @@ namespace Microsoft.Azure.Management.Cdn
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "endpointName");
             }
-            if (endpointProperties == null)
+            if (endpointUpdateProperties == null)
             {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "endpointProperties");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "endpointUpdateProperties");
             }
             if (this.Client.SubscriptionId == null)
             {
@@ -808,7 +868,7 @@ namespace Microsoft.Azure.Management.Cdn
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("profileName", profileName);
                 tracingParameters.Add("endpointName", endpointName);
-                tracingParameters.Add("endpointProperties", endpointProperties);
+                tracingParameters.Add("endpointUpdateProperties", endpointUpdateProperties);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 Microsoft.Rest.ServiceClientTracing.Enter(_invocationId, this, "BeginUpdate", tracingParameters);
             }
@@ -860,9 +920,9 @@ namespace Microsoft.Azure.Management.Cdn
 
             // Serialize Request
             string _requestContent = null;
-            if(endpointProperties != null)
+            if(endpointUpdateProperties != null)
             {
-                _requestContent = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(endpointProperties, this.Client.SerializationSettings);
+                _requestContent = Microsoft.Rest.Serialization.SafeJsonConvert.SerializeObject(endpointUpdateProperties, this.Client.SerializationSettings);
                 _httpRequest.Content = new System.Net.Http.StringContent(_requestContent, System.Text.Encoding.UTF8);
                 _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
@@ -970,7 +1030,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Deletes an existing CDN endpoint with the specified parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -996,7 +1056,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Deletes an existing CDN endpoint with the specified parameters.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -1024,6 +1084,21 @@ namespace Microsoft.Azure.Management.Cdn
             if (resourceGroupName == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
             }
             if (profileName == null)
             {
@@ -1170,7 +1245,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Starts an existing stopped CDN endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -1196,7 +1271,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Starts an existing stopped CDN endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -1227,6 +1302,21 @@ namespace Microsoft.Azure.Management.Cdn
             if (resourceGroupName == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
             }
             if (profileName == null)
             {
@@ -1391,7 +1481,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Stops an existing running CDN endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -1417,7 +1507,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Stops an existing running CDN endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -1448,6 +1538,21 @@ namespace Microsoft.Azure.Management.Cdn
             if (resourceGroupName == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
             }
             if (profileName == null)
             {
@@ -1612,7 +1717,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Forcibly purges CDN endpoint content.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -1642,7 +1747,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Forcibly purges CDN endpoint content.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -1674,6 +1779,21 @@ namespace Microsoft.Azure.Management.Cdn
             if (resourceGroupName == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
             }
             if (profileName == null)
             {
@@ -1836,7 +1956,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Forcibly pre-loads CDN endpoint content.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -1865,7 +1985,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Forcibly pre-loads CDN endpoint content.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -1896,6 +2016,21 @@ namespace Microsoft.Azure.Management.Cdn
             if (resourceGroupName == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
             }
             if (profileName == null)
             {
@@ -2059,7 +2194,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// in DNS.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -2093,6 +2228,21 @@ namespace Microsoft.Azure.Management.Cdn
             if (resourceGroupName == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
             }
             if (profileName == null)
             {

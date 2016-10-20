@@ -45,7 +45,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Lists the existing CDN custom domains within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -76,6 +76,21 @@ namespace Microsoft.Azure.Management.Cdn
             if (resourceGroupName == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
             }
             if (profileName == null)
             {
@@ -240,7 +255,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Gets an existing CDN custom domain within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -274,6 +289,21 @@ namespace Microsoft.Azure.Management.Cdn
             if (resourceGroupName == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
             }
             if (profileName == null)
             {
@@ -444,7 +474,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Creates a new CDN custom domain within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -478,7 +508,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Creates a new CDN custom domain within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -515,6 +545,21 @@ namespace Microsoft.Azure.Management.Cdn
             if (resourceGroupName == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
             }
             if (profileName == null)
             {
@@ -737,7 +782,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Deletes an existing CDN custom domain within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -766,7 +811,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Deletes an existing CDN custom domain within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -800,6 +845,21 @@ namespace Microsoft.Azure.Management.Cdn
             if (resourceGroupName == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "resourceGroupName");
+            }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+                if (!System.Text.RegularExpressions.Regex.IsMatch(resourceGroupName, "^[-\\w\\._\\(\\)]+$"))
+                {
+                    throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.Pattern, "resourceGroupName", "^[-\\w\\._\\(\\)]+$");
+                }
             }
             if (profileName == null)
             {

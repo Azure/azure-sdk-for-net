@@ -52,7 +52,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             public static Microsoft.Rest.Azure.IPage<Profile> ListByResourceGroup(this IProfilesOperations operations, string resourceGroupName)
             {
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -86,7 +86,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -126,17 +126,17 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='profileProperties'>
+            /// <param name='profile'>
             /// Profile properties needed for creation.
             /// </param>
-            public static Profile Create(this IProfilesOperations operations, string resourceGroupName, string profileName, Profile profileProperties)
+            public static Profile Create(this IProfilesOperations operations, string resourceGroupName, string profileName, Profile profile)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IProfilesOperations)s).CreateAsync(resourceGroupName, profileName, profileProperties), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IProfilesOperations)s).CreateAsync(resourceGroupName, profileName, profile), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -146,20 +146,20 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='profileProperties'>
+            /// <param name='profile'>
             /// Profile properties needed for creation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<Profile> CreateAsync(this IProfilesOperations operations, string resourceGroupName, string profileName, Profile profileProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<Profile> CreateAsync(this IProfilesOperations operations, string resourceGroupName, string profileName, Profile profile, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, profileName, profileProperties, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, profileName, profile, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -172,17 +172,17 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='profileProperties'>
+            /// <param name='profile'>
             /// Profile properties needed for creation.
             /// </param>
-            public static Profile BeginCreate(this IProfilesOperations operations, string resourceGroupName, string profileName, Profile profileProperties)
+            public static Profile BeginCreate(this IProfilesOperations operations, string resourceGroupName, string profileName, Profile profile)
             {
-                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IProfilesOperations)s).BeginCreateAsync(resourceGroupName, profileName, profileProperties), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IProfilesOperations)s).BeginCreateAsync(resourceGroupName, profileName, profile), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -192,20 +192,20 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
             /// </param>
-            /// <param name='profileProperties'>
+            /// <param name='profile'>
             /// Profile properties needed for creation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async System.Threading.Tasks.Task<Profile> BeginCreateAsync(this IProfilesOperations operations, string resourceGroupName, string profileName, Profile profileProperties, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            public static async System.Threading.Tasks.Task<Profile> BeginCreateAsync(this IProfilesOperations operations, string resourceGroupName, string profileName, Profile profile, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, profileName, profileProperties, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, profileName, profile, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -218,7 +218,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -238,7 +238,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -264,7 +264,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -284,7 +284,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -312,7 +312,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -331,7 +331,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -353,7 +353,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -372,7 +372,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -395,7 +395,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.
@@ -415,7 +415,7 @@ namespace Microsoft.Azure.Management.Cdn
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// Name of the resource group within the Azure subscription.
+            /// Name of the Resource group within the Azure subscription.
             /// </param>
             /// <param name='profileName'>
             /// Name of the CDN profile within the resource group.

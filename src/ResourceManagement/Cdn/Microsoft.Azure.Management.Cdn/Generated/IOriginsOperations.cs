@@ -20,7 +20,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Lists the existing CDN origins within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -48,7 +48,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Gets an existing CDN origin within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -80,7 +80,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Creates a new CDN origin within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -92,7 +92,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the origin, an arbitrary value but it needs to be unique
         /// under endpoint
         /// </param>
-        /// <param name='originProperties'>
+        /// <param name='origin'>
         /// Origin properties
         /// </param>
         /// <param name='customHeaders'>
@@ -110,12 +110,12 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Origin>> CreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string originName, Origin originProperties, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Origin>> CreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string originName, Origin origin, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Creates a new CDN origin within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Name of the origin, an arbitrary value but it needs to be unique
         /// under endpoint
         /// </param>
-        /// <param name='originProperties'>
+        /// <param name='origin'>
         /// Origin properties
         /// </param>
         /// <param name='customHeaders'>
@@ -145,12 +145,12 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Origin>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string originName, Origin originProperties, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Origin>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string originName, Origin origin, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Updates an existing CDN origin within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -161,7 +161,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='originName'>
         /// Name of the origin. Must be unique within endpoint.
         /// </param>
-        /// <param name='originProperties'>
+        /// <param name='originUpdateProperties'>
         /// Origin properties
         /// </param>
         /// <param name='customHeaders'>
@@ -179,12 +179,12 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Origin>> UpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string originName, OriginUpdateParameters originProperties, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Origin>> UpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string originName, OriginUpdateParameters originUpdateProperties, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Updates an existing CDN origin within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -195,7 +195,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// <param name='originName'>
         /// Name of the origin. Must be unique within endpoint.
         /// </param>
-        /// <param name='originProperties'>
+        /// <param name='originUpdateProperties'>
         /// Origin properties
         /// </param>
         /// <param name='customHeaders'>
@@ -213,12 +213,12 @@ namespace Microsoft.Azure.Management.Cdn
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Origin>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string originName, OriginUpdateParameters originProperties, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
+        System.Threading.Tasks.Task<Microsoft.Rest.Azure.AzureOperationResponse<Origin>> BeginUpdateWithHttpMessagesAsync(string resourceGroupName, string profileName, string endpointName, string originName, OriginUpdateParameters originUpdateProperties, System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<string>> customHeaders = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
         /// <summary>
         /// Deletes an existing CDN origin within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
@@ -249,7 +249,7 @@ namespace Microsoft.Azure.Management.Cdn
         /// Deletes an existing CDN origin within an endpoint.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// Name of the resource group within the Azure subscription.
+        /// Name of the Resource group within the Azure subscription.
         /// </param>
         /// <param name='profileName'>
         /// Name of the CDN profile within the resource group.
