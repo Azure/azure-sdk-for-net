@@ -460,11 +460,11 @@ namespace Microsoft.Azure.KeyVault.WebKey
         /// Converts a WebKey of type RSA or RSAHSM to a RSA object
         /// </summary>
         /// <param name="includePrivateParameters">Determines whether private key material, if available, is included</param>
-        /// <returns>An initialized RSACryptoServiceProvider instance</returns>
-        public RSACryptoServiceProvider ToRSA(bool includePrivateParameters = false)
+        /// <returns>An initialized RSA instance</returns>
+        public RSA ToRSA(bool includePrivateParameters = false)
         {
             var rsaParameters = ToRSAParameters(includePrivateParameters);
-            var rsaProvider = new RSACryptoServiceProvider();
+            var rsaProvider   = RSA.Create();
 
             rsaProvider.ImportParameters(rsaParameters);
 

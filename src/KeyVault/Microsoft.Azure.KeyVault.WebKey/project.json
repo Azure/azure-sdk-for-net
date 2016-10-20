@@ -1,5 +1,5 @@
 {
-  "version": "2.0.1-preview",
+  "version": "2.0.2-preview",
   "title": "Microsoft Azure Key Vault WebKey",
   "description": "Microsoft Azure Key Vault WebKey Class Library",
   "authors": [ "Microsoft" ],
@@ -18,30 +18,31 @@
     "keyFile": "../../../tools/MSSharedLibKey.snk"
   },
   "dependencies": {
-    "Newtonsoft.Json": "6.0.8"
+    "Newtonsoft.Json": "9.0.1"
   },
   "frameworks": {
+    "net45": {
+      "buildOptions": {
+        "debugType": "full",
+        "define": [ "NET45" ]
+      },
+      "frameworkAssemblies": {
+      },
+      "dependencies": {
+      }
+    },
     "netstandard1.5": {
-      "buildOptions": { "define": [ "PORTABLE" ] },
-      "imports": [ "dnxcore50" ],
+      "buildOptions": {
+        "debugType": "portable",
+        "define": [ "NETSTANDARD", "NETSTANDARD15" ]
+      },
       "dependencies": {
         "Microsoft.NETCore.Platforms": "1.0.1",
         "System.Collections": "4.0.11",
         "System.Runtime": "4.1.0",
-        "Microsoft.CSharp": "4.0.1",
+        "System.Security.Cryptography.Algorithms": "4.2.0",
         "System.Collections.Concurrent": "4.0.12",
-        "System.Runtime.Serialization.Primitives": "4.1.1",
-        "System.Security.Cryptography.Csp": "4.0.0",
-        "System.Linq": "4.1.0",
-        "System.Runtime.Extensions": "4.1.0"
-      }
-    },
-    "net45": {
-      "frameworkAssemblies": {
-        "System": { "type": "build" },
-        "System.Security": { "type": "default" }
-      },
-      "dependencies": {
+        "System.Linq": "4.1.0"
       }
     }
   },

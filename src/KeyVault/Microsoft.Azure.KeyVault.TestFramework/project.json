@@ -1,5 +1,5 @@
 {
-  "version": "2.0.0-preview",
+  "version": "2.0.2-preview",
   "title": "Microsoft Azure Key Vault Test Framework",
   "description": "Microsoft Azure Key Vault Test Framework",
   "authors": [ "Microsoft" ],
@@ -13,21 +13,36 @@
   "dependencies": {
     "Microsoft.Rest.ClientRuntime": "[2.3.2, 3.0)",
     "Microsoft.Rest.ClientRuntime.Azure": "[3.3.1, 4.0)",
-    "Microsoft.Azure.KeyVault": "2.0.2-preview",
-    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "[1.3.5-preview,2.0.0)",
     "Microsoft.Azure.Graph.RBAC": "2.2.2-preview",
+    "Microsoft.Azure.KeyVault": "[2.0.3-preview, 3.0)",
     "Microsoft.Azure.Management.ResourceManager": "1.1.4-preview",
+    "Microsoft.Rest.ClientRuntime.Azure.TestFramework": "[1.3.5-preview, 2.0.0)",
     "Microsoft.Extensions.Configuration": "1.0.0",
-    "Microsoft.Extensions.Configuration.Json": "1.0.0"
+    "Microsoft.Extensions.Configuration.Json": "1.0.0",
   },
 
   "frameworks": {
     "netstandard1.5": {
-      "buildOptions": { "define": [ "PORTABLE" ] },
-      "imports": [ "dnxcore50" ],
+      "buildOptions": {
+        "debugType": "portable",
+        "define": [ "NETSTANDARD", "NETSTANDARD15" ]
+      },
       "dependencies": {
-        "System.Security.Cryptography.X509Certificates": "4.1.0"
-      }
+      },
+      "frameworkAssemblies": {
+      },
+      "imports": [ "portable-net45+win8" ]
+    },
+    "net451": {
+      "buildOptions": {
+        "debugType": "portable",
+        "define": [ "NET45", "NET451" ]
+      },
+      "dependencies": {
+      },
+      "frameworkAssemblies": {
+      },
+      "imports": [ ]
     }
   }
 }
