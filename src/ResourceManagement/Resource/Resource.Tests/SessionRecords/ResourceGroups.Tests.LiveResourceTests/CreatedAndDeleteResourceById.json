@@ -1,7 +1,7 @@
 {
   "Entries": [
     {
-      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourcegroups/csmrg7687?api-version=2016-07-01",
+      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourcegroups/csmrg7687?api-version=2016-09-01",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"location\": \"WestUS\"\r\n}",
       "RequestHeaders": {
@@ -61,7 +61,6 @@
     },
     {
       "RequestUri": "//subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourceGroups/csmrg7687/providers/Microsoft.Web/sites/csmr6939?api-version=2014-04-01",
-      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzg5ZWM0ZDFkLWRjYzctNGEzZi1hNzAxLTBhNWQwNzRjODUwNS9yZXNvdXJjZUdyb3Vwcy9jc21yZzc2ODcvcHJvdmlkZXJzL01pY3Jvc29mdC5XZWIvc2l0ZXMvY3NtcjY5Mzk/YXBpLXZlcnNpb249MjAxNC0wNC0wMQ==",
       "RequestMethod": "PUT",
       "RequestBody": "{\r\n  \"properties\": {\r\n    \"name\": \"csmr6939\",\r\n    \"siteMode\": \"Limited\",\r\n    \"computeMode\": \"Shared\",\r\n    \"sku\": \"Free\",\r\n    \"workerSize\": 0\r\n  },\r\n  \"location\": \"WestUS\"\r\n}",
       "RequestHeaders": {
@@ -132,7 +131,7 @@
       "StatusCode": 200
     },
     {
-      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourceGroups/csmrg7687/resources?api-version=2016-07-01",
+      "RequestUri": "/subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourceGroups/csmrg7687/resources?api-version=2016-09-01",
       "RequestMethod": "GET",
       "RequestBody": "",
       "RequestHeaders": {
@@ -186,7 +185,6 @@
     },
     {
       "RequestUri": "//subscriptions/89ec4d1d-dcc7-4a3f-a701-0a5d074c8505/resourceGroups/csmrg7687/providers/Microsoft.Web/sites/csmr6939?api-version=2014-04-01",
-      "EncodedRequestUri": "Ly9zdWJzY3JpcHRpb25zLzg5ZWM0ZDFkLWRjYzctNGEzZi1hNzAxLTBhNWQwNzRjODUwNS9yZXNvdXJjZUdyb3Vwcy9jc21yZzc2ODcvcHJvdmlkZXJzL01pY3Jvc29mdC5XZWIvc2l0ZXMvY3NtcjY5Mzk/YXBpLXZlcnNpb249MjAxNC0wNC0wMQ==",
       "RequestMethod": "DELETE",
       "RequestBody": "",
       "RequestHeaders": {

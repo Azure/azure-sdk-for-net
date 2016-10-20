@@ -10,12 +10,20 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
 {
 
     /// <summary>
-    /// Defines values for ResourceIdentityType.
+    /// Defines values for SubscriptionState.
     /// </summary>
     [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
-    public enum ResourceIdentityType
+    public enum SubscriptionState
     {
-        [System.Runtime.Serialization.EnumMember(Value = "SystemAssigned")]
-        SystemAssigned
+        [System.Runtime.Serialization.EnumMember(Value = "Enabled")]
+        Enabled,
+        [System.Runtime.Serialization.EnumMember(Value = "Warned")]
+        Warned,
+        [System.Runtime.Serialization.EnumMember(Value = "PastDue")]
+        PastDue,
+        [System.Runtime.Serialization.EnumMember(Value = "Disabled")]
+        Disabled,
+        [System.Runtime.Serialization.EnumMember(Value = "Deleted")]
+        Deleted
     }
 }

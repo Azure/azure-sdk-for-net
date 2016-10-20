@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Subscription policies.
@@ -29,10 +23,15 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the SubscriptionPolicies class.
         /// </summary>
-        /// <param name="locationPlacementId">The subscription location placement Id.</param>
+        /// <param name="locationPlacementId">The subscription location
+        /// placement Id. The Id indicates which regions are visible for a
+        /// subscription. For example, a subscription with a location
+        /// placement Id of Public_2014-09-01 has access to Azure public
+        /// regions.</param>
         /// <param name="quotaId">The subscription quota Id.</param>
-        /// <param name="spendingLimit">The subscription spending limit. Possible values include: 'On', 'Off', 'CurrentPeriodOff'</param>
-        public SubscriptionPolicies(string locationPlacementId = default(string), string quotaId = default(string), string spendingLimit = default(string))
+        /// <param name="spendingLimit">The subscription spending limit.
+        /// Possible values include: 'On', 'Off', 'CurrentPeriodOff'</param>
+        public SubscriptionPolicies(string locationPlacementId = default(string), string quotaId = default(string), spendingLimit? spendingLimit = default(spendingLimit?))
         {
             LocationPlacementId = locationPlacementId;
             QuotaId = quotaId;
@@ -40,23 +39,26 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets the subscription location placement Id.
+        /// Gets the subscription location placement Id. The Id indicates
+        /// which regions are visible for a subscription. For example, a
+        /// subscription with a location placement Id of Public_2014-09-01
+        /// has access to Azure public regions.
         /// </summary>
-        [JsonProperty(PropertyName = "locationPlacementId")]
-        public string LocationPlacementId { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "locationPlacementId")]
+        public string LocationPlacementId { get; private set; }
 
         /// <summary>
-        /// Gets or sets the subscription quota Id.
+        /// Gets the subscription quota Id.
         /// </summary>
-        [JsonProperty(PropertyName = "quotaId")]
-        public string QuotaId { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "quotaId")]
+        public string QuotaId { get; private set; }
 
         /// <summary>
-        /// Gets or sets the subscription spending limit. Possible values
-        /// include: 'On', 'Off', 'CurrentPeriodOff'
+        /// Gets the subscription spending limit. Possible values include:
+        /// 'On', 'Off', 'CurrentPeriodOff'
         /// </summary>
-        [JsonProperty(PropertyName = "spendingLimit")]
-        public string SpendingLimit { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "spendingLimit")]
+        public spendingLimit? SpendingLimit { get; private set; }
 
     }
 }
