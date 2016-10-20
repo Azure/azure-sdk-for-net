@@ -27,5 +27,7 @@ using System.Runtime.InteropServices;
 
 [assembly: ComVisible(false)]
 
+#if !CODESIGN
 [assembly: InternalsVisibleTo("Microsoft.Azure.Batch.Conventions.Files.Tests")]
 [assembly: InternalsVisibleTo("Microsoft.Azure.Batch.Conventions.Files.IntegrationTests")]
+#endif
