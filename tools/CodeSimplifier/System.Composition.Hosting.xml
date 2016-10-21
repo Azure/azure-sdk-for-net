@@ -1,0 +1,518 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>System.Composition.Hosting</name>
+    </assembly>
+    <members>
+        <member name="T:System.Composition.Hosting.CompositionHost">
+            <summary>
+            Assembles a lightweight composition container from configured
+            providers.
+            </summary>
+        </member>
+        <member name="M:System.Composition.Hosting.CompositionHost.CreateCompositionHost(System.Composition.Hosting.Core.ExportDescriptorProvider[])">
+            <summary>
+            Create the composition host.
+            </summary>
+            <returns>The container as an <see cref="T:System.Composition.Hosting.CompositionHost"/>.</returns>
+        </member>
+        <member name="M:System.Composition.Hosting.CompositionHost.CreateCompositionHost(System.Collections.Generic.IEnumerable{System.Composition.Hosting.Core.ExportDescriptorProvider})">
+            <summary>
+            Create the composition host.
+            </summary>
+            <returns>The container as an <see cref="T:System.Composition.Hosting.CompositionHost"/>.</returns>
+        </member>
+        <member name="M:System.Composition.Hosting.CompositionHost.TryGetExport(System.Composition.Hosting.Core.CompositionContract,System.Object@)">
+            <summary>
+            Retrieve the single <paramref name="contract"/> instance from the
+            <see cref="T:System.Composition.CompositionContext"/>.
+            </summary>
+            <param name="contract">The contract to retrieve.</param>
+            <returns>An instance of the export.</returns>
+            <param name="export">The export if available, otherwise, null.</param>
+            <exception cref="T:System.Composition.Hosting.CompositionFailedException"/>
+        </member>
+        <member name="M:System.Composition.Hosting.CompositionHost.Dispose">
+            <summary>
+            Release the host and any globally-shared parts.
+            </summary>
+        </member>
+        <member name="T:System.Composition.Hosting.Core.CompositeActivator">
+            <summary>
+            The delegate signature that allows instances of parts and exports to be accessed during
+            a composition operation.
+            </summary>
+            <param name="context">The context in which the part or export is being accessed.</param>
+            <param name="operation">The operation within which the activation is occuring.</param>
+            <returns>The activated part or export.</returns>
+        </member>
+        <member name="T:System.Composition.Hosting.Core.CompositionOperation">
+            <summary>
+            Represents a single logical graph-building operation.
+            </summary>
+            <remarks>Instances of this class are not safe for access by multiple threads.</remarks>
+        </member>
+        <member name="M:System.Composition.Hosting.Core.CompositionOperation.Run(System.Composition.Hosting.Core.LifetimeContext,System.Composition.Hosting.Core.CompositeActivator)">
+            <summary>
+            Execute a new composition operation starting within the specified lifetime
+            context, for the specified activator.
+            </summary>
+            <param name="outermostLifetimeContext">Context in which to begin the operation (the operation can flow
+            to the parents of the context if requried).</param>
+            <param name="compositionRootActivator">Activator that will drive the operation.</param>
+            <returns>The composed object graph.</returns>
+        </member>
+        <member name="M:System.Composition.Hosting.Core.CompositionOperation.AddNonPrerequisiteAction(System.Action)">
+            <summary>
+            Called during the activation process to specify an action that can run after all
+            prerequesite part dependencies have been satisfied.
+            </summary>
+            <param name="action">Action to run.</param>
+        </member>
+        <member name="M:System.Composition.Hosting.Core.CompositionOperation.AddPostCompositionAction(System.Action)">
+            <summary>
+            Called during the activation process to specify an action that must run only after
+            all composition has completed. See OnImportsSatisfiedAttribute.
+            </summary>
+            <param name="action">Action to run.</param>
+        </member>
+        <member name="M:System.Composition.Hosting.Core.CompositionOperation.Dispose">
+            <summary>
+            Release locks held during the operation.
+            </summary>
+        </member>
+        <member name="T:System.Composition.Hosting.Core.ExportDescriptor">
+            <summary>
+            Describes an export of a part known to the composition engine. This is the only runtime
+            overhead that is maintained per-part; all other part-specific information must be discarded once
+            its export descriptors have been retrieved.
+            </summary>
+        </member>
+        <member name="M:System.Composition.Hosting.Core.ExportDescriptor.Create(System.Composition.Hosting.Core.CompositeActivator,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Construct an <see cref="T:System.Composition.Hosting.Core.ExportDescriptor"/>.
+            </summary>
+            <param name="activator">The activator used to retrieve instances of the export.</param>
+            <param name="metadata">The Export Metadata associated with the export.</param>
+            <returns>The export descriptor.</returns>
+        </member>
+        <member name="P:System.Composition.Hosting.Core.ExportDescriptor.Activator">
+            <summary>
+            The activator used to retrieve instances of the export.
+            </summary>
+        </member>
+        <member name="P:System.Composition.Hosting.Core.ExportDescriptor.Metadata">
+            <summary>
+            The Export Metadata associated with the export.
+            </summary>
+        </member>
+        <member name="T:System.Composition.Hosting.Core.CompositionDependency">
+            <summary>
+            Describes a dependency that a part must have in order to fulfill an
+            <see cref="T:System.Composition.Hosting.Core.ExportDescriptorPromise"/>. Used by the composition engine during
+            initialization to determine whether the composition can be made, and if not,
+            what error to provide.
+            </summary>
+        </member>
+        <member name="M:System.Composition.Hosting.Core.CompositionDependency.Satisfied(System.Composition.Hosting.Core.CompositionContract,System.Composition.Hosting.Core.ExportDescriptorPromise,System.Boolean,System.Object)">
+            <summary>
+            Construct a dependency on the specified target.
+            </summary>
+            <param name="target">The export descriptor promise from another part
+            that this part is dependent on.</param>
+            <param name="isPrerequisite">True if the dependency is a prerequisite
+            that must be satisfied before any exports can be retrieved from the dependent
+            part; otherwise, false.</param>
+            <param name="site">A marker used to identify the individual dependency among
+            those on the dependent part.</param>
+            <param name="contract">The contract required by the dependency.</param>
+        </member>
+        <member name="M:System.Composition.Hosting.Core.CompositionDependency.Missing(System.Composition.Hosting.Core.CompositionContract,System.Object)">
+            <summary>
+            Construct a placeholder for a missing dependency. Note that this is different
+            from an optional dependency - a missing dependency is an error.
+            </summary>
+            <param name="site">A marker used to identify the individual dependency among
+            those on the dependent part.</param>
+            <param name="contract">The contract required by the dependency.</param>
+        </member>
+        <member name="M:System.Composition.Hosting.Core.CompositionDependency.Oversupplied(System.Composition.Hosting.Core.CompositionContract,System.Collections.Generic.IEnumerable{System.Composition.Hosting.Core.ExportDescriptorPromise},System.Object)">
+            <summary>
+            Construct a placeholder for an "exactly one" dependency that cannot be
+            configured because multiple target implementations exist.
+            </summary>
+            <param name="site">A marker used to identify the individual dependency among
+            those on the dependent part.</param>
+            <param name="targets">The targets found when expecting only one.</param>
+            <param name="contract">The contract required by the dependency.</param>
+        </member>
+        <member name="M:System.Composition.Hosting.Core.CompositionDependency.ToString">
+            <summary>
+            Creates a human-readable explanation of the dependency.
+            </summary>
+            <returns>The dependency represented as a string.</returns>
+        </member>
+        <member name="P:System.Composition.Hosting.Core.CompositionDependency.Target">
+            <summary>
+            The export descriptor promise from another part
+            that this part is dependent on.
+            </summary>
+        </member>
+        <member name="P:System.Composition.Hosting.Core.CompositionDependency.IsPrerequisite">
+            <summary>
+            True if the dependency is a prerequisite
+            that must be satisfied before any exports can be retrieved from the dependent
+            part; otherwise, false.
+            </summary>
+        </member>
+        <member name="P:System.Composition.Hosting.Core.CompositionDependency.Site">
+            <summary>
+            A marker used to identify the individual dependency among
+            those on the dependent part.
+            </summary>
+        </member>
+        <member name="P:System.Composition.Hosting.Core.CompositionDependency.Contract">
+            <summary>
+            The contract required by the dependency.
+            </summary>
+        </member>
+        <member name="T:System.Composition.Hosting.Core.DependencyAccessor">
+            <summary>
+            Allows <see cref="T:System.Composition.Hosting.Core.ExportDescriptorProvider"/>s to locate the dependencies they require.
+            </summary>
+        </member>
+        <member name="M:System.Composition.Hosting.Core.DependencyAccessor.GetPromises(System.Composition.Hosting.Core.CompositionContract)">
+            <summary>
+            Get all definitions for a specified <see cref="T:System.Composition.Hosting.Core.CompositionContract"/>.
+            </summary>
+            <param name="exportKey">The export key the definitions must supply.</param>
+            <returns>The available promises for that export key.</returns>
+        </member>
+        <member name="M:System.Composition.Hosting.Core.DependencyAccessor.ResolveDependencies(System.Object,System.Composition.Hosting.Core.CompositionContract,System.Boolean)">
+            <summary>
+            Resolve dependencies on all implementations of a contract.
+            </summary>
+            <param name="site">A tag describing the dependency site.</param>
+            <param name="contract">The contract required by the site.</param>
+            <param name="isPrerequisite">True if the dependency must be satisifed before corresponding exports can be retrieved; otherwise, false.</param>
+            <returns>Dependencies for all implementations of the contact.</returns>
+        </member>
+        <member name="M:System.Composition.Hosting.Core.DependencyAccessor.ResolveRequiredDependency(System.Object,System.Composition.Hosting.Core.CompositionContract,System.Boolean)">
+            <summary>
+            Resolve a required dependency on exactly one implemenation of a contract.
+            </summary>
+            <param name="site">A tag describing the dependency site.</param>
+            <param name="contract">The contract required by the site.</param>
+            <param name="isPrerequisite">True if the dependency must be satisifed before corresponding exports can be retrieved; otherwise, false.</param>
+            <returns>The dependency.</returns>
+        </member>
+        <member name="M:System.Composition.Hosting.Core.DependencyAccessor.TryResolveOptionalDependency(System.Object,System.Composition.Hosting.Core.CompositionContract,System.Boolean,System.Composition.Hosting.Core.CompositionDependency@)">
+            <summary>
+            Resolve an optional dependency on exactly one implemenation of a contract.
+            </summary>
+            <param name="site">A tag describing the dependency site.</param>
+            <param name="contract">The contract required by the site.</param>
+            <param name="isPrerequisite">True if the dependency must be satisifed before corresponding exports can be retrieved; otherwise, false.</param>
+            <param name="dependency">The dependency, or null.</param>
+            <returns>True if the dependency could be resolved; otherwise, false.</returns>
+        </member>
+        <member name="T:System.Composition.Hosting.Core.ExportDescriptorPromise">
+            <summary>
+            Represents an export descriptor that an available part can provide.
+            </summary>
+            <remarks>This type is central to the cycle-checking, adaptation and 
+            compilation features of the container.</remarks>
+        </member>
+        <member name="M:System.Composition.Hosting.Core.ExportDescriptorPromise.#ctor(System.Composition.Hosting.Core.CompositionContract,System.String,System.Boolean,System.Func{System.Collections.Generic.IEnumerable{System.Composition.Hosting.Core.CompositionDependency}},System.Func{System.Collections.Generic.IEnumerable{System.Composition.Hosting.Core.CompositionDependency},System.Composition.Hosting.Core.ExportDescriptor})">
+            <summary>
+            Create a promise for an export descriptor.
+            </summary>
+            <param name="origin">A description of where the export is being provided from (e.g. the part type).
+            Used to provide friendly errors.</param>
+            <param name="isShared">True if the export is shared within some context, otherwise false. Used in cycle
+            checking.</param>
+            <param name="dependencies">A function providing dependencies required in order to fulfill the promise.</param>
+            <param name="getDescriptor">A function providing the promise.</param>
+            <param name="contract">The contract fulfilled by this promise.</param>
+            <seealso cref="T:System.Composition.Hosting.Core.ExportDescriptorProvider"/>.
+        </member>
+        <member name="M:System.Composition.Hosting.Core.ExportDescriptorPromise.GetDescriptor">
+            <summary>
+            Retrieve the promised export descriptor.
+            </summary>
+            <returns>The export descriptor.</returns>
+        </member>
+        <member name="M:System.Composition.Hosting.Core.ExportDescriptorPromise.ToString">
+            <summary>
+            Describes the promise.
+            </summary>
+            <returns>A description of the promise.</returns>
+        </member>
+        <member name="P:System.Composition.Hosting.Core.ExportDescriptorPromise.Origin">
+            <summary>
+            A description of where the export is being provided from (e.g. the part type).
+            Used to provide friendly errors.
+            </summary>
+        </member>
+        <member name="P:System.Composition.Hosting.Core.ExportDescriptorPromise.IsShared">
+            <summary>
+            True if the export is shared within some context, otherwise false. Used in cycle
+            checking.
+            </summary>
+        </member>
+        <member name="P:System.Composition.Hosting.Core.ExportDescriptorPromise.Dependencies">
+            <summary>
+            The dependencies required in order to fulfill the promise.
+            </summary>
+        </member>
+        <member name="P:System.Composition.Hosting.Core.ExportDescriptorPromise.Contract">
+            <summary>
+            The contract fulfilled by this promise.
+            </summary>
+        </member>
+        <member name="T:System.Composition.Hosting.Core.ExportDescriptorProvider">
+            <summary>
+            A contributor to the composition.
+            </summary>
+            <remarks>Instances of this class are not required to be safe for concurrent access by
+            multiple threads.</remarks>
+        </member>
+        <member name="F:System.Composition.Hosting.Core.ExportDescriptorProvider.NoExportDescriptors">
+            <summary>
+            Constant value provided so that subclasses can avoid creating additional duplicate values.
+            </summary>
+        </member>
+        <member name="F:System.Composition.Hosting.Core.ExportDescriptorProvider.NoMetadata">
+            <summary>
+            Constant value provided so that subclasses can avoid creating additional duplicate values.
+            </summary>
+        </member>
+        <member name="F:System.Composition.Hosting.Core.ExportDescriptorProvider.NoDependencies">
+            <summary>
+            Constant value provided so that subclasses can avoid creating additional duplicate values.
+            </summary>
+        </member>
+        <member name="M:System.Composition.Hosting.Core.ExportDescriptorProvider.GetExportDescriptors(System.Composition.Hosting.Core.CompositionContract,System.Composition.Hosting.Core.DependencyAccessor)">
+            <summary>
+            Promise export descriptors for the specified export key.
+            </summary>
+            <param name="contract">The export key required by another component.</param>
+            <param name="descriptorAccessor">Accesses the other export descriptors present in the composition.</param>
+            <returns>Promises for new export descriptors.</returns>
+            <remarks>
+            A provider will only be queried once for each unique export key.
+            The descriptor accessor can only be queried immediately if the descriptor being promised is an adapter, such as
+            <see cref="T:System.Lazy`1"/>; otherwise, dependencies should only be queried within execution of the function provided
+            to the <see cref="T:System.Composition.Hosting.Core.ExportDescriptorPromise"/>. The actual descriptors provided should not close over or reference any
+            aspect of the dependency/promise structure, as this should be able to be GC'ed.
+            </remarks>
+        </member>
+        <member name="T:System.Composition.Hosting.Core.LifetimeContext">
+            <summary>
+            Represents a node in the lifetime tree. A <see cref="T:System.Composition.Hosting.Core.LifetimeContext"/> is the unit of
+            sharing for shared parts, controls the disposal of bound parts, and can be used to retrieve
+            instances either as part of an existing <see cref="T:System.Composition.Hosting.Core.CompositionOperation"/> or as the basis of a new
+            composition operation. An individual lifetime context can be marked to contain parts that are
+            constrained by particular sharing boundaries.
+            </summary>
+            <remarks>
+            Contains two pieces of _independently protected_ shared state. Shared part instances is
+            lock-free-readable and does not result in issues if added to during disposal. It is protected
+            by being locked itself. Activation logic is unavoidably called under this lock.
+            Bound part instances is always protected, by locking [this], and should never be written to
+            after disposal and so is set to null under a lock in Dispose(). If it were allowed it would result in
+            diposable parts not being released. Dispose methods on parts are called outside the lock.
+            </remarks>
+            <seealso cref="T:System.Composition.Export`1"/>
+        </member>
+        <member name="M:System.Composition.Hosting.Core.LifetimeContext.AllocateSharingId">
+            <summary>
+            Generates an identifier that can be used to locate shared part instances.
+            </summary>
+            <returns>A new unique identifier.</returns>
+        </member>
+        <member name="M:System.Composition.Hosting.Core.LifetimeContext.FindContextWithin(System.String)">
+            <summary>
+            Find the broadest lifetime context within all of the specified sharing boundaries.
+            </summary>
+            <param name="sharingBoundary">The sharing boundary to find a lifetime context within.</param>
+            <returns>The broadest lifetime context within all of the specified sharing boundaries.</returns>
+            <remarks>Currently, the root cannot be a boundary.</remarks>
+        </member>
+        <member name="M:System.Composition.Hosting.Core.LifetimeContext.Dispose">
+            <summary>
+            Release the lifetime context and any disposable part instances
+            that are bound to it.
+            </summary>
+        </member>
+        <member name="M:System.Composition.Hosting.Core.LifetimeContext.AddBoundInstance(System.IDisposable)">
+            <summary>
+            Bind the lifetime of a disposable part to the current
+            lifetime context.
+            </summary>
+            <param name="instance">The disposable part to bind.</param>
+        </member>
+        <member name="M:System.Composition.Hosting.Core.LifetimeContext.GetOrCreate(System.Int32,System.Composition.Hosting.Core.CompositionOperation,System.Composition.Hosting.Core.CompositeActivator)">
+            <summary>
+            Either retrieve an existing part instance with the specified sharing id, or
+            create and share a new part instance using <paramref name="creator"/> within
+            <paramref name="operation"/>.
+            </summary>
+            <param name="sharingId">Sharing id for the part in question.</param>
+            <param name="operation">Operation in which to activate a new part instance if necessary.</param>
+            <param name="creator">Activator that can activate a new part instance if necessary.</param>
+            <returns>The part instance corresponding to <paramref name="sharingId"/> within this lifetime context.</returns>
+            <remarks>This method is lock-free if the part instance already exists. If the part instance must be created,
+            a lock will be taken that will serialize other writes via this method (concurrent reads will continue to
+            be safe and lock-free). It is important that the composition, and thus lock acquisition, is strictly
+            leaf-to-root in the lifetime tree.</remarks>
+        </member>
+        <member name="M:System.Composition.Hosting.Core.LifetimeContext.TryGetExport(System.Composition.Hosting.Core.CompositionContract,System.Object@)">
+            <summary>
+            Retrieve the single <paramref name="contract"/> instance from the
+            <see cref="T:System.Composition.CompositionContext"/>.
+            </summary>
+            <param name="contract">The contract to retrieve.</param>
+            <returns>An instance of the export.</returns>
+            <param name="export">The export if available, otherwise, null.</param>
+            <exception cref="T:System.Composition.Hosting.CompositionFailedException"/>
+        </member>
+        <member name="M:System.Composition.Hosting.Core.LifetimeContext.ToString">
+            <summary>
+            Describes this lifetime context.
+            </summary>
+            <returns>A string description.</returns>
+        </member>
+        <member name="T:System.Composition.Hosting.Providers.Constants">
+            <summary>
+            Metadata keys used to tie programming model entities into their back-end hosting implementations.
+            </summary>
+        </member>
+        <member name="F:System.Composition.Hosting.Providers.Constants.SharingBoundaryImportMetadataConstraintName">
+            <summary>
+            The sharing boundary implemented by an import.
+            </summary>
+        </member>
+        <member name="F:System.Composition.Hosting.Providers.Constants.ImportManyImportMetadataConstraintName">
+            <summary>
+            Marks an import as "many".
+            </summary>
+        </member>
+        <member name="T:System.Composition.Hosting.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:System.Composition.Hosting.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:System.Composition.Hosting.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:System.Composition.Hosting.Properties.Resources.CardinalityMismatch_TooManyExports">
+            <summary>
+              Looks up a localized string similar to &quot;Only one export for the contract &apos;{0}&apos; is allowed, multiple implementations were found.&quot;.
+            </summary>
+        </member>
+        <member name="P:System.Composition.Hosting.Properties.Resources.Component_NotCreatableOutsideSharingBoundary">
+            <summary>
+              Looks up a localized string similar to The component (unknown) cannot be created outside the {0} sharing boundary..
+            </summary>
+        </member>
+        <member name="P:System.Composition.Hosting.Properties.Resources.CompositionOperation_SharingLockRequired">
+            <summary>
+              Looks up a localized string similar to Sharing lock is required.
+            </summary>
+        </member>
+        <member name="P:System.Composition.Hosting.Properties.Resources.Dependency_ExportNotFound">
+            <summary>
+              Looks up a localized string similar to No export was found for the contract &apos;{0}&apos;.
+            </summary>
+        </member>
+        <member name="P:System.Composition.Hosting.Properties.Resources.Dependency_QuoteParameter">
+            <summary>
+              Looks up a localized string similar to &apos;{0}&apos;.
+            </summary>
+        </member>
+        <member name="P:System.Composition.Hosting.Properties.Resources.Dependency_TooManyExports">
+            <summary>
+              Looks up a localized string similar to Only one export for the contract &apos;{0}&apos; is allowed, but the following parts: {1} export it..
+            </summary>
+        </member>
+        <member name="P:System.Composition.Hosting.Properties.Resources.Dependency_ToStringFormat">
+            <summary>
+              Looks up a localized string similar to &apos;{0}&apos; on contract &apos;{1}&apos; supplied by {2}.
+            </summary>
+        </member>
+        <member name="P:System.Composition.Hosting.Properties.Resources.Diagnostic_InternalExceptionMessage">
+            <summary>
+              Looks up a localized string similar to Internal error occurred. Additional information: &apos;{0}&apos;..
+            </summary>
+        </member>
+        <member name="P:System.Composition.Hosting.Properties.Resources.Diagnostic_ThrowingException">
+            <summary>
+              Looks up a localized string similar to Exception Thrown: {0}\r\n.
+            </summary>
+        </member>
+        <member name="P:System.Composition.Hosting.Properties.Resources.ExportDescriptor_DependencyErrorContract">
+            <summary>
+              Looks up a localized string similar to  -&gt; required by initial request for contract &apos;{0}&apos;.
+            </summary>
+        </member>
+        <member name="P:System.Composition.Hosting.Properties.Resources.ExportDescriptor_DependencyErrorLine">
+            <summary>
+              Looks up a localized string similar to  -&gt; required by import &apos;{0}&apos; of part &apos;{1}&apos;.
+            </summary>
+        </member>
+        <member name="P:System.Composition.Hosting.Properties.Resources.ExportDescriptor_ToStringFormat">
+            <summary>
+              Looks up a localized string similar to {0} supplied by {1}.
+            </summary>
+        </member>
+        <member name="P:System.Composition.Hosting.Properties.Resources.ExportDescriptor_UnsupportedCycle">
+            <summary>
+              Looks up a localized string similar to Detected an unsupported cycle for part &apos;{0}&apos;. To construct a valid cycle, at least one part in the cycle must be shared, and at least one import in the cycle must be non-prerequisite (e.g. a property)..
+            </summary>
+        </member>
+        <member name="P:System.Composition.Hosting.Properties.Resources.ExportDescriptorNull">
+            <summary>
+              Looks up a localized string similar to Export descriptor fulfillment function returned null..
+            </summary>
+        </member>
+        <member name="P:System.Composition.Hosting.Properties.Resources.Formatter_ListSeparatorWithSpace">
+            <summary>
+              Looks up a localized string similar to , .
+            </summary>
+        </member>
+        <member name="P:System.Composition.Hosting.Properties.Resources.Formatter_None">
+            <summary>
+              Looks up a localized string similar to &lt;none&gt;.
+            </summary>
+        </member>
+        <member name="P:System.Composition.Hosting.Properties.Resources.Keyword_MetadataViewProvider">
+            <summary>
+              Looks up a localized string similar to Metadata View Provider.
+            </summary>
+        </member>
+        <member name="P:System.Composition.Hosting.Properties.Resources.MetadataViewProvider_InvalidViewImplementation">
+            <summary>
+              Looks up a localized string similar to The type &apos;{0}&apos; cannot be used as a metadata view. A metadata view must be a concrete class with a parameterless or dictionary constructor..
+            </summary>
+        </member>
+        <member name="P:System.Composition.Hosting.Properties.Resources.MetadataViewProvider_MissingMetadata">
+            <summary>
+              Looks up a localized string similar to Export metadata for &apos;{0}&apos; is missing and no default value was supplied..
+            </summary>
+        </member>
+        <member name="P:System.Composition.Hosting.Properties.Resources.NotImplemented_MetadataCycles">
+            <summary>
+              Looks up a localized string similar to Metadata value circularity not possible, use lazy initialization..
+            </summary>
+        </member>
+    </members>
+</doc>

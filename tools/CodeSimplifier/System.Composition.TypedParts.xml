@@ -1,0 +1,284 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>System.Composition.TypedParts</name>
+    </assembly>
+    <members>
+        <member name="T:System.Composition.Hosting.ContainerConfiguration">
+            <summary>
+            Configures and constructs a lightweight container.
+            </summary>
+        </member>
+        <member name="M:System.Composition.Hosting.ContainerConfiguration.CreateContainer">
+            <summary>
+            Create the container. The value returned from this method provides
+            the exports in the container, as well as a means to dispose the container.
+            </summary>
+            <returns>The container.</returns>
+        </member>
+        <member name="M:System.Composition.Hosting.ContainerConfiguration.WithProvider(System.Composition.Hosting.Core.ExportDescriptorProvider)">
+            <summary>
+            Add an export descriptor provider to the container.
+            </summary>
+            <param name="exportDescriptorProvider">An export descriptor provider.</param>
+            <returns>A configuration object allowing configuration to continue.</returns>
+        </member>
+        <member name="M:System.Composition.Hosting.ContainerConfiguration.WithDefaultConventions(System.Composition.Convention.AttributedModelProvider)">
+            <summary>
+            Add conventions defined using a <see cref="T:System.Composition.Convention.AttributedModelProvider"/> to the container.
+            These will be used as the default conventions; types and assemblies added with a
+            specific convention will use their own.
+            </summary>
+            <param name="conventions"></param>
+            <returns>A configuration object allowing configuration to continue.</returns>
+        </member>
+        <member name="M:System.Composition.Hosting.ContainerConfiguration.WithPart(System.Type)">
+            <summary>
+            Add a part type to the container. If the part type does not have any exports it
+            will be ignored.
+            </summary>
+            <param name="partType">The part type.</param>
+            <returns>A configuration object allowing configuration to continue.</returns>
+        </member>
+        <member name="M:System.Composition.Hosting.ContainerConfiguration.WithPart(System.Type,System.Composition.Convention.AttributedModelProvider)">
+            <summary>
+            Add a part type to the container. If the part type does not have any exports it
+            will be ignored.
+            </summary>
+            <param name="partType">The part type.</param>
+            <param name="conventions">Conventions represented by a <see cref="T:System.Composition.Convention.AttributedModelProvider"/>, or null.</param>
+            <returns>A configuration object allowing configuration to continue.</returns>
+        </member>
+        <member name="M:System.Composition.Hosting.ContainerConfiguration.WithPart``1">
+            <summary>
+            Add a part type to the container. If the part type does not have any exports it
+            will be ignored.
+            </summary>
+            <typeparam name="TPart">The part type.</typeparam>
+            <returns>A configuration object allowing configuration to continue.</returns>
+        </member>
+        <member name="M:System.Composition.Hosting.ContainerConfiguration.WithPart``1(System.Composition.Convention.AttributedModelProvider)">
+            <summary>
+            Add a part type to the container. If the part type does not have any exports it
+            will be ignored.
+            </summary>
+            <typeparam name="TPart">The part type.</typeparam>
+            <param name="conventions">Conventions represented by a <see cref="T:System.Composition.Convention.AttributedModelProvider"/>, or null.</param>
+            <returns>A configuration object allowing configuration to continue.</returns>
+        </member>
+        <member name="M:System.Composition.Hosting.ContainerConfiguration.WithParts(System.Type[])">
+            <summary>
+            Add part types to the container. If a part type does not have any exports it
+            will be ignored.
+            </summary>
+            <param name="partTypes">The part types.</param>
+            <returns>A configuration object allowing configuration to continue.</returns>
+        </member>
+        <member name="M:System.Composition.Hosting.ContainerConfiguration.WithParts(System.Collections.Generic.IEnumerable{System.Type})">
+            <summary>
+            Add part types to the container. If a part type does not have any exports it
+            will be ignored.
+            </summary>
+            <param name="partTypes">The part types.</param>
+            <returns>A configuration object allowing configuration to continue.</returns>
+        </member>
+        <member name="M:System.Composition.Hosting.ContainerConfiguration.WithParts(System.Collections.Generic.IEnumerable{System.Type},System.Composition.Convention.AttributedModelProvider)">
+            <summary>
+            Add part types to the container. If a part type does not have any exports it
+            will be ignored.
+            </summary>
+            <param name="partTypes">The part types.</param>
+            <param name="conventions">Conventions represented by a <see cref="T:System.Composition.Convention.AttributedModelProvider"/>, or null.</param>
+            <returns>A configuration object allowing configuration to continue.</returns>
+        </member>
+        <member name="M:System.Composition.Hosting.ContainerConfiguration.WithAssembly(System.Reflection.Assembly)">
+            <summary>
+            Add part types from an assembly to the container. If a part type does not have any exports it
+            will be ignored.
+            </summary>
+            <param name="assembly">The assembly from which to add part types.</param>
+            <returns>A configuration object allowing configuration to continue.</returns>
+        </member>
+        <member name="M:System.Composition.Hosting.ContainerConfiguration.WithAssembly(System.Reflection.Assembly,System.Composition.Convention.AttributedModelProvider)">
+            <summary>
+            Add part types from an assembly to the container. If a part type does not have any exports it
+            will be ignored.
+            </summary>
+            <param name="assembly">The assembly from which to add part types.</param>
+            <param name="conventions">Conventions represented by a <see cref="T:System.Composition.Convention.AttributedModelProvider"/>, or null.</param>
+            <returns>A configuration object allowing configuration to continue.</returns>
+        </member>
+        <member name="M:System.Composition.Hosting.ContainerConfiguration.WithAssemblies(System.Collections.Generic.IEnumerable{System.Reflection.Assembly})">
+            <summary>
+            Add part types from a list of assemblies to the container. If a part type does not have any exports it
+            will be ignored.
+            </summary>
+            <param name="assemblies">Assemblies containing part types.</param>
+            <returns>A configuration object allowing configuration to continue.</returns>
+        </member>
+        <member name="M:System.Composition.Hosting.ContainerConfiguration.WithAssemblies(System.Collections.Generic.IEnumerable{System.Reflection.Assembly},System.Composition.Convention.AttributedModelProvider)">
+            <summary>
+            Add part types from a list of assemblies to the container. If a part type does not have any exports it
+            will be ignored.
+            </summary>
+            <param name="assemblies">Assemblies containing part types.</param>
+            <param name="conventions">Conventions represented by a <see cref="T:System.Composition.Convention.AttributedModelProvider"/>, or null.</param>
+            <returns>A configuration object allowing configuration to continue.</returns>
+        </member>
+        <member name="T:System.Composition.CompositionContextExtensions">
+            <summary>
+            Adds methods to <see cref="T:System.Composition.CompositionContext"/> that are specific to the
+            typed part model.
+            </summary>
+        </member>
+        <member name="M:System.Composition.CompositionContextExtensions.SatisfyImports(System.Composition.CompositionContext,System.Object)">
+            <summary>
+            Set public properties decorated with the <see cref="T:System.Composition.ImportAttribute"/>.
+            </summary>
+            <remarks>Uses reflection, is slow - caching would help here.</remarks>
+            <param name="objectWithLooseImports">An object with decorated with import attributes.</param>
+            <param name="compositionContext">Export provider that will supply imported values.</param>
+        </member>
+        <member name="M:System.Composition.CompositionContextExtensions.SatisfyImports(System.Composition.CompositionContext,System.Object,System.Composition.Convention.AttributedModelProvider)">
+            <summary>
+            Set public properties decorated with the <see cref="T:System.Composition.ImportAttribute"/>.
+            </summary>
+            <remarks>Uses reflection, is slow - caching would help here.</remarks>
+            <param name="conventions">Conventions to apply when satisfying loose imports.</param>
+            <param name="objectWithLooseImports">An object with decorated with import attributes.</param>
+            <param name="compositionContext">Export provider that will supply imported values.</param>
+        </member>
+        <member name="T:System.Composition.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:System.Composition.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:System.Composition.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:System.Composition.Properties.Resources.CompositionContextExtensions_MissingDependency">
+            <summary>
+              Looks up a localized string similar to Missing dependency &apos;{0}&apos; on &apos;{1}&apos;..
+            </summary>
+        </member>
+        <member name="P:System.Composition.Properties.Resources.ContainerConfiguration_DefaultConventionSet">
+            <summary>
+              Looks up a localized string similar to The default conventions for the container configuration have already been set..
+            </summary>
+        </member>
+        <member name="P:System.Composition.Properties.Resources.ContractHelpers_TooManyImports">
+            <summary>
+              Looks up a localized string similar to Multiple imports have been configured for &apos;{0}&apos;. At most one import can be applied to a single site..
+            </summary>
+        </member>
+        <member name="P:System.Composition.Properties.Resources.DiscoveredPart_MultipleImportingConstructorsFound">
+            <summary>
+              Looks up a localized string similar to Multiple importing constructors were found on type &apos;{0}&apos;..
+            </summary>
+        </member>
+        <member name="P:System.Composition.Properties.Resources.DiscoveredPart_NoImportingConstructorsFound">
+            <summary>
+              Looks up a localized string similar to No importing constructor was found on type &apos;{0}&apos;..
+            </summary>
+        </member>
+        <member name="P:System.Composition.Properties.Resources.OnImportsSatisfiedFeature_AttributeError">
+            <summary>
+              Looks up a localized string similar to The method {0}.{1} has the OnImportsSatisfied attribute applied, but is not a public or internal parameterless instance method returning void..
+            </summary>
+        </member>
+        <member name="P:System.Composition.Properties.Resources.TypeInspector_ArgumentMissmatch">
+            <summary>
+              Looks up a localized string similar to Exported contract &apos;{0}&apos; of open generic part &apos;{1}&apos; does not match the generic arguments of the class..
+            </summary>
+        </member>
+        <member name="P:System.Composition.Properties.Resources.TypeInspector_ContractNotAssignable">
+            <summary>
+              Looks up a localized string similar to Exported contract type &apos;{0}&apos; is not assignable from part &apos;{1}&apos;..
+            </summary>
+        </member>
+        <member name="P:System.Composition.Properties.Resources.TypeInspector_ExportedContractTypeNotAssignable">
+            <summary>
+              Looks up a localized string similar to Exported contract type &apos;{0}&apos; is not assignable from property &apos;{1}&apos; of part &apos;{2}&apos;..
+            </summary>
+        </member>
+        <member name="P:System.Composition.Properties.Resources.TypeInspector_ExportNotCompatible">
+            <summary>
+              Looks up a localized string similar to The open generic export &apos;{0}&apos; on part &apos;{1}&apos; is not compatible with the contract &apos;{2}&apos;..
+            </summary>
+        </member>
+        <member name="P:System.Composition.Properties.Resources.TypeInspector_NoExportNonGenericContract">
+            <summary>
+              Looks up a localized string similar to Open generic part &apos;{0}&apos; cannot export non-generic contract &apos;{1}&apos;..
+            </summary>
+        </member>
+        <member name="T:System.Composition.TypedParts.ActivationFeatures.ActivationFeature">
+            <summary>
+            Allows modification of the activators generated for typed parts.
+            </summary>
+        </member>
+        <member name="F:System.Composition.TypedParts.ActivationFeatures.ActivationFeature.NoDependencies">
+            <summary>
+            A constant shared for subclass use.
+            </summary>
+        </member>
+        <member name="M:System.Composition.TypedParts.ActivationFeatures.ActivationFeature.RewriteActivator(System.Reflection.TypeInfo,System.Composition.Hosting.Core.CompositeActivator,System.Collections.Generic.IDictionary{System.String,System.Object},System.Collections.Generic.IEnumerable{System.Composition.Hosting.Core.CompositionDependency})">
+            <summary>
+            Participate in the activator creation process.
+            </summary>
+            <param name="partType">The part type being activated.</param>
+            <param name="activator">The activator body so far.</param>
+            <param name="partMetadata">Metadata associated with the part being activated.</param>
+            <param name="dependencies">Dependencies returned by a previous call to <see cref="M:System.Composition.TypedParts.ActivationFeatures.ActivationFeature.GetDependencies(System.Reflection.TypeInfo,System.Composition.Hosting.Core.DependencyAccessor)"/>.</param>
+            <returns>A new activator body, or the one already provided.</returns>
+        </member>
+        <member name="M:System.Composition.TypedParts.ActivationFeatures.ActivationFeature.GetDependencies(System.Reflection.TypeInfo,System.Composition.Hosting.Core.DependencyAccessor)">
+            <summary>
+            Describe the dependencies required by this activation feature.
+            </summary>
+            <param name="partType">The part type being activated.</param>
+            <param name="definitionAccessor">The definition accessor.</param>
+            <returns>Dependencies.</returns>
+        </member>
+        <member name="T:System.Composition.TypedParts.ActivationFeatures.DisposalFeature">
+            <summary>
+            Modifies the activator so that disposable instances are bound to the appropriate scope.
+            </summary>
+        </member>
+        <member name="T:System.Composition.TypedParts.ActivationFeatures.LifetimeFeature">
+            <summary>
+            Modifies the activators of parts so that they a) get associated with the correct
+            scope, and b) obtain their dependencies from the correct scope.
+            </summary>
+        </member>
+        <member name="T:System.Composition.TypedParts.ActivationFeatures.OnImportsSatisfiedFeature">
+            <summary>
+            Modifies activators of parts that have <see cref="T:System.Composition.OnImportsSatisfiedAttribute"/> so that
+            their [OnImportsSatisfied] method is correctly called.
+            </summary>
+        </member>
+        <member name="T:System.Composition.TypedParts.ActivationFeatures.PropertyImportSite">
+            <summary>
+            Represents a part property that is configured as an import.
+            </summary>
+        </member>
+        <member name="T:System.Composition.TypedParts.ActivationFeatures.PropertyInjectionFeature">
+            <summary>
+            Modifies activators of parts with property imports so that the properties
+            are set appropriately.
+            </summary>
+        </member>
+        <member name="T:System.Composition.Convention.AttributedModelProviderExtensions">
+            <summary>
+            Helper extension methods for retrieving attributes from objects implementing IAttributedModelConvention
+            </summary>
+        </member>
+    </members>
+</doc>
