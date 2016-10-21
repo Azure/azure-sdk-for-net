@@ -21,7 +21,7 @@ namespace Microsoft.Azure.Management.ServerManagement
         /// <param name="status">gateway status <see cref="GatewayStatus"/> contains settings for encryption</param>
         /// <param name="source">source <see cref="string"/> to encrypt</param>
         /// <returns>base 64 encoded string after encryption</returns>
-        public static string EncryptUsingGatwewaySettings(GatewayStatus status, string source)
+        public static string EncryptUsingGatewaySettings(GatewayStatus status, string source)
         {
             if (string.IsNullOrEmpty(source)) return source;
             if (status == null) throw new ArgumentNullException(nameof(status), "gateway status not set");
@@ -46,7 +46,7 @@ namespace Microsoft.Azure.Management.ServerManagement
                 var bytes = rsa.Encrypt(Encoding.UTF8.GetBytes(source), true);
                 result = System.Convert.ToBase64String(bytes);
             }
-#else
+#elif PORTABLE
             using (var rsa = RSA.Create())
             {
                 rsa.ImportParameters(
