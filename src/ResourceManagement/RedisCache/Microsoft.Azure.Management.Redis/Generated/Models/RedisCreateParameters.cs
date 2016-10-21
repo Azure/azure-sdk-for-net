@@ -11,18 +11,18 @@ namespace Microsoft.Azure.Management.Redis.Models
     using System.Linq;
 
     /// <summary>
-    /// A single redis item in List or Get Operation.
+    /// Parameters supplied to the Create Redis operation.
     /// </summary>
     [Microsoft.Rest.Serialization.JsonTransformation]
-    public partial class RedisResource : Resource
+    public partial class RedisCreateParameters : Resource
     {
         /// <summary>
-        /// Initializes a new instance of the RedisResource class.
+        /// Initializes a new instance of the RedisCreateParameters class.
         /// </summary>
-        public RedisResource() { }
+        public RedisCreateParameters() { }
 
         /// <summary>
-        /// Initializes a new instance of the RedisResource class.
+        /// Initializes a new instance of the RedisCreateParameters class.
         /// </summary>
         /// <param name="location">Resource location</param>
         /// <param name="sku">What sku of redis cache to deploy.</param>
@@ -30,12 +30,6 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
-        /// <param name="redisVersion">Redis Version.</param>
-        /// <param name="provisioningState">Redis instance provisioning
-        /// status</param>
-        /// <param name="hostName">Redis host name</param>
-        /// <param name="port">Redis non-ssl port</param>
-        /// <param name="sslPort">Redis ssl port</param>
         /// <param name="redisConfiguration">All Redis Settings. Few possible
         /// keys:
         /// rdb-backup-enabled,rdb-storage-connection-string,rdb-backup-frequency,maxmemory-delta,maxmemory-policy,notify-keyspace-events,maxmemory-samples,slowlog-log-slower-than,slowlog-max-len,list-max-ziplist-entries,list-max-ziplist-value,hash-max-ziplist-entries,hash-max-ziplist-value,set-max-intset-entries,zset-max-ziplist-entries,zset-max-ziplist-value
@@ -50,14 +44,9 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// /subscriptions/{subid}/resourceGroups/{resourceGroupName}/Microsoft.{Network|ClassicNetwork}/VirtualNetworks/vnet1/subnets/subnet1</param>
         /// <param name="staticIP">Required when deploying a redis cache
         /// inside an existing Azure Virtual Network.</param>
-        public RedisResource(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string redisVersion = default(string), string provisioningState = default(string), string hostName = default(string), int? port = default(int?), int? sslPort = default(int?), System.Collections.Generic.IDictionary<string, string> redisConfiguration = default(System.Collections.Generic.IDictionary<string, string>), bool? enableNonSslPort = default(bool?), System.Collections.Generic.IDictionary<string, string> tenantSettings = default(System.Collections.Generic.IDictionary<string, string>), int? shardCount = default(int?), string subnetId = default(string), string staticIP = default(string))
+        public RedisCreateParameters(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), System.Collections.Generic.IDictionary<string, string> redisConfiguration = default(System.Collections.Generic.IDictionary<string, string>), bool? enableNonSslPort = default(bool?), System.Collections.Generic.IDictionary<string, string> tenantSettings = default(System.Collections.Generic.IDictionary<string, string>), int? shardCount = default(int?), string subnetId = default(string), string staticIP = default(string))
             : base(location, id, name, type, tags)
         {
-            RedisVersion = redisVersion;
-            ProvisioningState = provisioningState;
-            HostName = hostName;
-            Port = port;
-            SslPort = sslPort;
             RedisConfiguration = redisConfiguration;
             EnableNonSslPort = enableNonSslPort;
             TenantSettings = tenantSettings;
@@ -66,36 +55,6 @@ namespace Microsoft.Azure.Management.Redis.Models
             StaticIP = staticIP;
             Sku = sku;
         }
-
-        /// <summary>
-        /// Gets redis Version.
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.redisVersion")]
-        public string RedisVersion { get; private set; }
-
-        /// <summary>
-        /// Gets redis instance provisioning status
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; private set; }
-
-        /// <summary>
-        /// Gets redis host name
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.hostName")]
-        public string HostName { get; private set; }
-
-        /// <summary>
-        /// Gets redis non-ssl port
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.port")]
-        public int? Port { get; private set; }
-
-        /// <summary>
-        /// Gets redis ssl port
-        /// </summary>
-        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.sslPort")]
-        public int? SslPort { get; private set; }
 
         /// <summary>
         /// Gets or sets all Redis Settings. Few possible keys:
