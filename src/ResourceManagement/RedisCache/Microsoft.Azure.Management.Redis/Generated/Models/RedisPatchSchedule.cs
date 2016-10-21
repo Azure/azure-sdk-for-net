@@ -8,31 +8,29 @@
 
 namespace Microsoft.Azure.Management.Redis.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Response to put/get patch schedules for redis cache.
     /// </summary>
-    [JsonTransformation]
-    public partial class RedisPatchSchedulesResponse
+    [Microsoft.Rest.Serialization.JsonTransformation]
+    public partial class RedisPatchSchedule
     {
         /// <summary>
-        /// Initializes a new instance of the RedisPatchSchedulesResponse
-        /// class.
+        /// Initializes a new instance of the RedisPatchSchedule class.
         /// </summary>
-        public RedisPatchSchedulesResponse() { }
+        public RedisPatchSchedule() { }
 
         /// <summary>
-        /// Initializes a new instance of the RedisPatchSchedulesResponse
-        /// class.
+        /// Initializes a new instance of the RedisPatchSchedule class.
         /// </summary>
-        public RedisPatchSchedulesResponse(IList<ScheduleEntry> scheduleEntries, string id = default(string), string name = default(string), string type = default(string), string location = default(string))
+        /// <param name="scheduleEntries">List of patch schedules for redis
+        /// cache.</param>
+        /// <param name="id">Resource Id</param>
+        /// <param name="name">Resource name</param>
+        /// <param name="type">Resource type</param>
+        /// <param name="location">Resource location</param>
+        public RedisPatchSchedule(System.Collections.Generic.IList<ScheduleEntry> scheduleEntries, string id = default(string), string name = default(string), string type = default(string), string location = default(string))
         {
             Id = id;
             Name = name;
@@ -44,41 +42,44 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// <summary>
         /// Gets resource Id
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
         public string Id { get; private set; }
 
         /// <summary>
         /// Gets resource name
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
         public string Name { get; private set; }
 
         /// <summary>
         /// Gets resource type
         /// </summary>
-        [JsonProperty(PropertyName = "type")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "type")]
         public string Type { get; private set; }
 
         /// <summary>
-        /// Gets or sets resource location
+        /// Gets resource location
         /// </summary>
-        [JsonProperty(PropertyName = "location")]
-        public string Location { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "location")]
+        public string Location { get; private set; }
 
         /// <summary>
         /// Gets or sets list of patch schedules for redis cache.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.scheduleEntries")]
-        public IList<ScheduleEntry> ScheduleEntries { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "properties.scheduleEntries")]
+        public System.Collections.Generic.IList<ScheduleEntry> ScheduleEntries { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public virtual void Validate()
         {
             if (ScheduleEntries == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "ScheduleEntries");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "ScheduleEntries");
             }
             if (this.ScheduleEntries != null)
             {

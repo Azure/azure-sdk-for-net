@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.Redis.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Specifies which redis node(s) to reboot.
@@ -29,6 +23,11 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// <summary>
         /// Initializes a new instance of the RedisRebootParameters class.
         /// </summary>
+        /// <param name="rebootType">Which redis node(s) to reboot. Depending
+        /// on this value data loss is possible. Possible values include:
+        /// 'PrimaryNode', 'SecondaryNode', 'AllNodes'</param>
+        /// <param name="shardId">In case of cluster cache, this specifies
+        /// shard id which should be rebooted.</param>
         public RedisRebootParameters(string rebootType, int? shardId = default(int?))
         {
             RebootType = rebootType;
@@ -40,24 +39,27 @@ namespace Microsoft.Azure.Management.Redis.Models
         /// value data loss is possible. Possible values include:
         /// 'PrimaryNode', 'SecondaryNode', 'AllNodes'
         /// </summary>
-        [JsonProperty(PropertyName = "rebootType")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "rebootType")]
         public string RebootType { get; set; }
 
         /// <summary>
         /// Gets or sets in case of cluster cache, this specifies shard id
         /// which should be rebooted.
         /// </summary>
-        [JsonProperty(PropertyName = "shardId")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "shardId")]
         public int? ShardId { get; set; }
 
         /// <summary>
-        /// Validate the object. Throws ValidationException if validation fails.
+        /// Validate the object.
         /// </summary>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
         public virtual void Validate()
         {
             if (RebootType == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "RebootType");
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "RebootType");
             }
         }
     }

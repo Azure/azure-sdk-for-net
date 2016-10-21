@@ -1,4 +1,8 @@
-﻿using Microsoft.Azure.Management.Redis;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
+
+using Microsoft.Azure.Management.Redis;
 using Microsoft.Azure.Management.Redis.Models;
 using Microsoft.Rest;
 using Microsoft.Rest.Azure;
@@ -10,7 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace AzureRedisCache.Tests
+namespace AzureRedisCache.Tests.InMemoryTests
 {
     public class ListKeysTests
     {
@@ -24,7 +28,7 @@ namespace AzureRedisCache.Tests
             ");
             string requestIdHeader = "0d33aff8-8a4e-4565-b893-a10e52260de0";
             RedisManagementClient client = Utility.GetRedisManagementClient(responseString, requestIdHeader, HttpStatusCode.OK);
-            RedisListKeysResult response = client.Redis.ListKeys(resourceGroupName: "resource-group", name: "cachename");
+            var response = client.Redis.ListKeys(resourceGroupName: "resource-group", name: "cachename");
 
             Assert.Equal("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa=", response.PrimaryKey);
             Assert.Equal("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb=", response.SecondaryKey);
@@ -60,7 +64,7 @@ namespace AzureRedisCache.Tests
         {
             string responseString = (@"{}");
             RedisManagementClient client = Utility.GetRedisManagementClient(responseString, null, HttpStatusCode.OK);
-            RedisListKeysResult response = client.Redis.ListKeys(resourceGroupName: "resource-group", name: "cachename");
+            var response = client.Redis.ListKeys(resourceGroupName: "resource-group", name: "cachename");
             Assert.Null(response.PrimaryKey);
             Assert.Null(response.SecondaryKey);
         }

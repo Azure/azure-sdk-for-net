@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Subscription information.
@@ -29,14 +23,21 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the Subscription class.
         /// </summary>
-        /// <param name="id">The ID of the resource (/subscriptions/SubscriptionId).</param>
+        /// <param name="id">The fully qualified Id. For example,
+        /// /subscriptions/00000000-0000-0000-0000-000000000000.</param>
         /// <param name="subscriptionId">The subscription Id.</param>
         /// <param name="tenantId">The tenant Id.</param>
         /// <param name="displayName">The subscription display name.</param>
-        /// <param name="state">The subscription state.</param>
-        /// <param name="subscriptionPolicies">The subscription policies.</param>
-        /// <param name="authorizationSource">The authorization source of the request. Valid values are one or more combinations of Legacy, RoleBased, Bypassed, Direct and Management. For example, 'Legacy, RoleBased'.</param>
-        public Subscription(string id = default(string), string subscriptionId = default(string), string tenantId = default(string), string displayName = default(string), string state = default(string), SubscriptionPolicies subscriptionPolicies = default(SubscriptionPolicies), string authorizationSource = default(string))
+        /// <param name="state">The subscription state. Possible values
+        /// include: 'Enabled', 'Warned', 'PastDue', 'Disabled',
+        /// 'Deleted'</param>
+        /// <param name="subscriptionPolicies">The subscription
+        /// policies.</param>
+        /// <param name="authorizationSource">The authorization source of the
+        /// request. Valid values are one or more combinations of Legacy,
+        /// RoleBased, Bypassed, Direct and Management. For example, 'Legacy,
+        /// RoleBased'.</param>
+        public Subscription(string id = default(string), string subscriptionId = default(string), string tenantId = default(string), string displayName = default(string), SubscriptionState? state = default(SubscriptionState?), SubscriptionPolicies subscriptionPolicies = default(SubscriptionPolicies), string authorizationSource = default(string))
         {
             Id = id;
             SubscriptionId = subscriptionId;
@@ -48,40 +49,41 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets the ID of the resource
-        /// (/subscriptions/SubscriptionId).
+        /// Gets the fully qualified Id. For example,
+        /// /subscriptions/00000000-0000-0000-0000-000000000000.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
 
         /// <summary>
-        /// Gets or sets the subscription Id.
+        /// Gets the subscription Id.
         /// </summary>
-        [JsonProperty(PropertyName = "subscriptionId")]
-        public string SubscriptionId { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "subscriptionId")]
+        public string SubscriptionId { get; private set; }
 
         /// <summary>
-        /// Gets or sets the tenant Id.
+        /// Gets the tenant Id.
         /// </summary>
-        [JsonProperty(PropertyName = "tenantId")]
-        public string TenantId { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "tenantId")]
+        public string TenantId { get; private set; }
 
         /// <summary>
-        /// Gets or sets the subscription display name.
+        /// Gets the subscription display name.
         /// </summary>
-        [JsonProperty(PropertyName = "displayName")]
-        public string DisplayName { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "displayName")]
+        public string DisplayName { get; private set; }
 
         /// <summary>
-        /// Gets or sets the subscription state.
+        /// Gets the subscription state. Possible values include: 'Enabled',
+        /// 'Warned', 'PastDue', 'Disabled', 'Deleted'
         /// </summary>
-        [JsonProperty(PropertyName = "state")]
-        public string State { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "state")]
+        public SubscriptionState? State { get; private set; }
 
         /// <summary>
         /// Gets or sets the subscription policies.
         /// </summary>
-        [JsonProperty(PropertyName = "subscriptionPolicies")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "subscriptionPolicies")]
         public SubscriptionPolicies SubscriptionPolicies { get; set; }
 
         /// <summary>
@@ -89,7 +91,7 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// are one or more combinations of Legacy, RoleBased, Bypassed,
         /// Direct and Management. For example, 'Legacy, RoleBased'.
         /// </summary>
-        [JsonProperty(PropertyName = "authorizationSource")]
+        [Newtonsoft.Json.JsonProperty(PropertyName = "authorizationSource")]
         public string AuthorizationSource { get; set; }
 
     }

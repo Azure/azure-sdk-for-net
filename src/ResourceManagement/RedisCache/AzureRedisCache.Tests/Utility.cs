@@ -1,4 +1,8 @@
-﻿using Microsoft.Azure;
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License. See License.txt in the project root for
+// license information.
+
+using Microsoft.Azure;
 using Microsoft.Azure.Management.Redis;
 using Microsoft.Rest;
 using System;
@@ -27,6 +31,7 @@ namespace AzureRedisCache.Tests
             var token = new TokenCredentials(Guid.NewGuid().ToString(), "abc123");
             RedisManagementClient client = new RedisManagementClient(token, new DummyResponseDelegatingHandler(httpResponse));
             client.SubscriptionId = "a559b6fd-3a84-40bb-a450-b0db5ed37dfe";
+            client.LongRunningOperationRetryTimeout = 0;
             return client;
         }
 

@@ -101,19 +101,24 @@
       <Private>True</Private>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="CloudJobExtensionsTests.cs" />
-    <Compile Include="CloudTaskExtensionsTests.cs" />
-    <Compile Include="IntegrationTest.cs" />
-    <Compile Include="JobIdFixture.cs" />
-    <Compile Include="JobOutputStorageTests.cs" />
-    <Compile Include="StorageConfiguration.cs" />
-    <Compile Include="TaskOutputStorageTests.cs" />
-    <Compile Include="Utilities\BlobUtils.cs" />
-    <Compile Include="Utilities\FakeBatchServiceClient.cs" />
-    <Compile Include="Utilities\RandomChars.cs" />
-    <Compile Include="Xunit\XunitInfrastructure.cs" />
-  </ItemGroup>
+  <Choose>
+    <!-- Conditionally disable building these tests when signing is enabled, because FsCheck is unsigned and so the test assembly cannot be signed -->
+    <When Condition="'$(CodeSign)' != 'true'">
+      <ItemGroup>
+        <Compile Include="CloudJobExtensionsTests.cs" />
+        <Compile Include="CloudTaskExtensionsTests.cs" />
+        <Compile Include="IntegrationTest.cs" />
+        <Compile Include="JobIdFixture.cs" />
+        <Compile Include="JobOutputStorageTests.cs" />
+        <Compile Include="StorageConfiguration.cs" />
+        <Compile Include="TaskOutputStorageTests.cs" />
+        <Compile Include="Utilities\BlobUtils.cs" />
+        <Compile Include="Utilities\FakeBatchServiceClient.cs" />
+        <Compile Include="Utilities\RandomChars.cs" />
+        <Compile Include="Xunit\XunitInfrastructure.cs" />
+      </ItemGroup>
+    </When>
+  </Choose>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>

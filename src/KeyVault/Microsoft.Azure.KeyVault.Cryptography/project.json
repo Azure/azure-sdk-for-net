@@ -1,5 +1,5 @@
 {
-  "version": "2.0.1-preview",
+  "version": "2.0.2-preview",
   "title": "Microsoft Azure Key Vault Cryptography",
   "description": "Microsoft Azure Key Vault Cryptography Class Library",
   "authors": [ "Microsoft" ],
@@ -19,31 +19,31 @@
   },
 
   "dependencies": {
-    "Microsoft.Azure.KeyVault.Core": "2.0.0-preview"
+    "Microsoft.Azure.KeyVault.Core": "[2.0.2-preview, 3.0)"
   },
 
   "frameworks": {
     "net45": {
+      "buildOptions": {
+        "define": [ "NET45" ],
+        "debugType": "portable"
+      },
       "frameworkAssemblies": {
-        "System": { "type": "build" },
-        "System.Collections": { "type": "build" },
-        "System.Diagnostics.Tools": { "type": "build" },
-        "System.Linq.Expressions": { "type": "build" },
-        "System.Security": { "type": "default" },
-        "System.Threading.Tasks": { "type": "build" }
+        "System.Diagnostics.Tools": "4.0.0.0"
       }
     },
     "netstandard1.5": {
-      "buildOptions": { "define": [ "PORTABLE" ] },
-      "imports": [ "dnxcore50" ],
+      "buildOptions": {
+        "define": [ "NETSTANDARD", "NETSTANDARD15" ],
+        "debugType": "portable"
+      },
       "dependencies": {
-        "System.Security.Cryptography.Primitives": "4.0.0",
-        "System.Security.Cryptography.Algorithms": "4.2.0",
-        "System.Security.Cryptography.Csp": "4.0.0",
         "System.Diagnostics.Tools": "4.0.1",
-        "System.Globalization": "4.0.11",
         "System.Linq": "4.1.0",
-        "System.Runtime.Extensions": "4.1.0"
+        "System.Globalization": "4.0.11",
+        "System.Runtime.Extensions": "4.1.0",
+        "System.Security.Cryptography.Primitives": "4.0.0",
+        "System.Security.Cryptography.Algorithms": "4.2.0"
       }
     }
   }

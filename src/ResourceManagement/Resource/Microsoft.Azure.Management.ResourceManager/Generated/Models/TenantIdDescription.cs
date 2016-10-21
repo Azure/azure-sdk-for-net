@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Tenant Id information.
@@ -29,8 +23,10 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the TenantIdDescription class.
         /// </summary>
-        /// <param name="id">The Id.</param>
-        /// <param name="tenantId">The tenantId.</param>
+        /// <param name="id">The fully qualified Id. For example,
+        /// /tenants/00000000-0000-0000-0000-000000000000.</param>
+        /// <param name="tenantId">The tenantId. For example,
+        /// 00000000-0000-0000-0000-000000000000.</param>
         public TenantIdDescription(string id = default(string), string tenantId = default(string))
         {
             Id = id;
@@ -38,16 +34,18 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets the Id.
+        /// Gets the fully qualified Id. For example,
+        /// /tenants/00000000-0000-0000-0000-000000000000.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
 
         /// <summary>
-        /// Gets or sets the tenantId.
+        /// Gets the tenantId. For example,
+        /// 00000000-0000-0000-0000-000000000000.
         /// </summary>
-        [JsonProperty(PropertyName = "tenantId")]
-        public string TenantId { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "tenantId")]
+        public string TenantId { get; private set; }
 
     }
 }
