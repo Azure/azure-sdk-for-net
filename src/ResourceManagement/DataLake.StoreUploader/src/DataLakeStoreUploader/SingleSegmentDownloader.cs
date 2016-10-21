@@ -32,7 +32,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
 
         internal const decimal BufferLength = 32 * 1024 * 1024; // 32MB
         private const int MaximumBackoffWaitSeconds = 32;
-        internal const int MaxBufferDownloadAttemptCount = 4;
+        internal const int MaxBufferDownloadAttemptCount = 8;
 
         private readonly IFrontEndAdapter _frontEnd;
         private readonly IProgress<SegmentUploadProgress> _progressTracker;
@@ -175,13 +175,13 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 {
                     _token.ThrowIfCancellationRequested();
                     int attemptCount = 0;
+                    int partialDataAttempts = 0;
                     bool downloadCompleted = false;
                     long dataReceived = 0;
                     bool modifyLengthAndOffset = false;
                     while (!downloadCompleted && attemptCount < MaxBufferDownloadAttemptCount)
                     {
                         _token.ThrowIfCancellationRequested();
-                        attemptCount++;
                         try
                         {
                             long lengthToDownload = (long)BufferLength;
@@ -217,6 +217,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                             // we need to validate how many bytes have actually been copied to the read stream
                             if (lengthReturned < lengthToDownload)
                             {
+                                partialDataAttempts++;
                                 lengthRemaining -= lengthReturned;
                                 curOffset += lengthReturned;
                                 localOffset += lengthReturned;
@@ -227,7 +228,12 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                                 // we will wait before the next iteration, since something went wrong and we did not receive enough data.
                                 // this could be a throttling issue or an issue with the service itself. Either way, waiting should help
                                 // reduce the liklihood of additional failures.
-                                WaitForRetry(attemptCount, this.UseBackOffRetryStrategy, _token);
+                                if(partialDataAttempts >= MaxBufferDownloadAttemptCount)
+                                {
+                                    throw new UploadFailedException(string.Format("Failed to retrieve the requested data after {0} attempts for file {1}. This usually indicates repeateded server-side throttling due to exceeding account bandwidth.", MaxBufferDownloadAttemptCount, _segmentMetadata.Path));
+                                }
+
+                                WaitForRetry(partialDataAttempts, this.UseBackOffRetryStrategy, _token);
                             }
                             else
                             {
@@ -240,6 +246,10 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                         }
                         catch (Exception ex)
                         {
+                            // update counts and reset for internal attempts
+                            attemptCount++;
+                            partialDataAttempts = 0;
+
                             //if we tried more than the number of times we were allowed to, give up and throw the exception
                             if (attemptCount >= MaxBufferDownloadAttemptCount)
                             {
@@ -260,7 +270,7 @@ namespace Microsoft.Azure.Management.DataLake.StoreUploader
                 // full validation of the segment.
                 if(outputStream.Position - _segmentMetadata.Offset != _segmentMetadata.Length)
                 {
-                    throw new UploadFailedException(string.Format("Post-download stream segment verification failed: target stream has a length of {0}, expected {1}. This usually indicates repeateded server-side throttling due to exceeding account bandwidth.", outputStream.Position - _segmentMetadata.Offset, _segmentMetadata.Length));
+                    throw new UploadFailedException(string.Format("Post-download stream segment verification failed for file {2}: target stream has a length of {0}, expected {1}. This usually indicates repeateded server-side throttling due to exceeding account bandwidth.", outputStream.Position - _segmentMetadata.Offset, _segmentMetadata.Length, _segmentMetadata.Path));
                 }
             }
         }
