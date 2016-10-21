@@ -27,8 +27,8 @@ namespace Microsoft.Azure.Management.Analysis.Models
         /// provisioned. Possible values include: 'S1', 'S2', 'S4',
         /// 'D1'</param>
         /// <param name="tier">Name of the tier to which the Sku applies.
-        /// Possible values include: 'Developer', 'Standard'</param>
-        public ResourceSku(string name, string tier)
+        /// Possible values include: 'Development', 'Standard'</param>
+        public ResourceSku(string name, string tier = default(string))
         {
             Name = name;
             Tier = tier;
@@ -43,7 +43,7 @@ namespace Microsoft.Azure.Management.Analysis.Models
 
         /// <summary>
         /// Gets or sets name of the tier to which the Sku applies. Possible
-        /// values include: 'Developer', 'Standard'
+        /// values include: 'Development', 'Standard'
         /// </summary>
         [Newtonsoft.Json.JsonProperty(PropertyName = "tier")]
         public string Tier { get; set; }
@@ -59,10 +59,6 @@ namespace Microsoft.Azure.Management.Analysis.Models
             if (Name == null)
             {
                 throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Name");
-            }
-            if (Tier == null)
-            {
-                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Tier");
             }
         }
     }
