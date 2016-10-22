@@ -76,6 +76,7 @@
   ],
   "Names": {},
   "Variables": {
-    "SubscriptionId": "a01fbab8-1714-4f94-8b67-40d7827a5efd"
+    "SubscriptionId": "a01fbab8-1714-4f94-8b67-40d7827a5efd",
+    "SMT_GATEWAY_2": "rameshr12"
   }
 }

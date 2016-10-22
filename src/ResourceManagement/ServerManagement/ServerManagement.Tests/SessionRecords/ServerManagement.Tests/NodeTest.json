@@ -1690,6 +1690,7 @@
     "SMT_NODE_NAME": "RAMESHR12",
     "SMT_TEST_LOCATION": "centralus",
     "SMT_SESSION_ID": "80b6d83e-dbcf-43cd-8e60-43b5e5d742ac",
-    "SMT_NODE_USERNAME": "rsmtuser"
+    "SMT_NODE_USERNAME": "rsmtuser",
+    "SMT_GATEWAY_2": "rameshr12"
   }
 }
