@@ -14,7 +14,7 @@ namespace Microsoft.Azure.Management.Analysis.Models
     /// </summary>
     public static class SkuTier
     {
-        public const string Developer = "Developer";
+        public const string Development = "Development";
         public const string Standard = "Standard";
     }
 }
