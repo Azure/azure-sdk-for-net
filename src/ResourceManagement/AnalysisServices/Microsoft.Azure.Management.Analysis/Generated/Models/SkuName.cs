@@ -17,5 +17,6 @@ namespace Microsoft.Azure.Management.Analysis.Models
         public const string S1 = "S1";
         public const string S2 = "S2";
         public const string S4 = "S4";
+        public const string D1 = "D1";
     }
 }
