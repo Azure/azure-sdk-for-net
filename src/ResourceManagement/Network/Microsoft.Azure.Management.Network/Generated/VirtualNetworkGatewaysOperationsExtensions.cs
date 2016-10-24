@@ -293,10 +293,10 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the virtual network gateway.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the Begin Reset Virtual Network Gateway operation
-            /// through Network resource provider.
+            /// Vip parameter supplied to the Begin Active-Active Reset Virtual Network
+            /// Gateway operation through Network resource provider.
             /// </param>
-            public static VirtualNetworkGateway Reset(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGateway parameters)
+            public static VirtualNetworkGateway Reset(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, string parameters)
             {
                 return Task.Factory.StartNew(s => ((IVirtualNetworkGatewaysOperations)s).ResetAsync(resourceGroupName, virtualNetworkGatewayName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -316,13 +316,13 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the virtual network gateway.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the Begin Reset Virtual Network Gateway operation
-            /// through Network resource provider.
+            /// Vip parameter supplied to the Begin Active-Active Reset Virtual Network
+            /// Gateway operation through Network resource provider.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualNetworkGateway> ResetAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGateway parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualNetworkGateway> ResetAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, string parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ResetWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -345,10 +345,10 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the virtual network gateway.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the Begin Reset Virtual Network Gateway operation
-            /// through Network resource provider.
+            /// Vip parameter supplied to the Begin Active-Active Reset Virtual Network
+            /// Gateway operation through Network resource provider.
             /// </param>
-            public static VirtualNetworkGateway BeginReset(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGateway parameters)
+            public static VirtualNetworkGateway BeginReset(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, string parameters)
             {
                 return Task.Factory.StartNew(s => ((IVirtualNetworkGatewaysOperations)s).BeginResetAsync(resourceGroupName, virtualNetworkGatewayName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
@@ -368,13 +368,13 @@ namespace Microsoft.Azure.Management.Network
             /// The name of the virtual network gateway.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the Begin Reset Virtual Network Gateway operation
-            /// through Network resource provider.
+            /// Vip parameter supplied to the Begin Active-Active Reset Virtual Network
+            /// Gateway operation through Network resource provider.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<VirtualNetworkGateway> BeginResetAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGateway parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<VirtualNetworkGateway> BeginResetAsync(this IVirtualNetworkGatewaysOperations operations, string resourceGroupName, string virtualNetworkGatewayName, string parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginResetWithHttpMessagesAsync(resourceGroupName, virtualNetworkGatewayName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {

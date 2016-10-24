@@ -144,8 +144,8 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the virtual network gateway.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Begin Reset Virtual Network Gateway
-        /// operation through Network resource provider.
+        /// Vip parameter supplied to the Begin Active-Active Reset Virtual
+        /// Network Gateway operation through Network resource provider.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -153,7 +153,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<VirtualNetworkGateway>> ResetWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGateway parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VirtualNetworkGateway>> ResetWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkGatewayName, string parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The Reset VirtualNetworkGateway operation resets the primary of
         /// the virtual network gateway in the specified resource group
@@ -166,8 +166,8 @@ namespace Microsoft.Azure.Management.Network
         /// The name of the virtual network gateway.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to the Begin Reset Virtual Network Gateway
-        /// operation through Network resource provider.
+        /// Vip parameter supplied to the Begin Active-Active Reset Virtual
+        /// Network Gateway operation through Network resource provider.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -175,7 +175,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<VirtualNetworkGateway>> BeginResetWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkGatewayName, VirtualNetworkGateway parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<VirtualNetworkGateway>> BeginResetWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkGatewayName, string parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// The Generatevpnclientpackage operation generates Vpn client
         /// package for P2S client of the virtual network gateway in the
