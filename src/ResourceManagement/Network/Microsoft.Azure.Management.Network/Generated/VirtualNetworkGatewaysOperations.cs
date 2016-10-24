@@ -839,7 +839,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='virtualNetworkGatewayName'>
         /// The name of the virtual network gateway.
         /// </param>
-        /// <param name='parameters'>
+        /// <param name='gatewayVip'>
         /// Vip parameter supplied to the Begin Active-Active Reset Virtual Network
         /// Gateway operation through Network resource provider.
         /// </param>
@@ -849,11 +849,11 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        public async Task<AzureOperationResponse<VirtualNetworkGateway>> ResetWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkGatewayName, string parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VirtualNetworkGateway>> ResetWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkGatewayName, string gatewayVip = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Send request
             AzureOperationResponse<VirtualNetworkGateway> _response = await BeginResetWithHttpMessagesAsync(
-                resourceGroupName, virtualNetworkGatewayName, parameters, customHeaders, cancellationToken);
+                resourceGroupName, virtualNetworkGatewayName, gatewayVip, customHeaders, cancellationToken);
             return await this.Client.GetPostOrDeleteOperationResultAsync(_response, customHeaders, cancellationToken);
         }
 
@@ -868,7 +868,7 @@ namespace Microsoft.Azure.Management.Network
         /// <param name='virtualNetworkGatewayName'>
         /// The name of the virtual network gateway.
         /// </param>
-        /// <param name='parameters'>
+        /// <param name='gatewayVip'>
         /// Vip parameter supplied to the Begin Active-Active Reset Virtual Network
         /// Gateway operation through Network resource provider.
         /// </param>
@@ -881,7 +881,7 @@ namespace Microsoft.Azure.Management.Network
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<VirtualNetworkGateway>> BeginResetWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkGatewayName, string parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<VirtualNetworkGateway>> BeginResetWithHttpMessagesAsync(string resourceGroupName, string virtualNetworkGatewayName, string gatewayVip = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -890,10 +890,6 @@ namespace Microsoft.Azure.Management.Network
             if (virtualNetworkGatewayName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "virtualNetworkGatewayName");
-            }
-            if (parameters == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "parameters");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -912,7 +908,7 @@ namespace Microsoft.Azure.Management.Network
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("virtualNetworkGatewayName", virtualNetworkGatewayName);
-                tracingParameters.Add("parameters", parameters);
+                tracingParameters.Add("gatewayVip", gatewayVip);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "BeginReset", tracingParameters);
             }
@@ -921,9 +917,12 @@ namespace Microsoft.Azure.Management.Network
             var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworkGateways/{virtualNetworkGatewayName}/reset").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{virtualNetworkGatewayName}", Uri.EscapeDataString(virtualNetworkGatewayName));
-            _url = _url.Replace("{parameters}", Uri.EscapeDataString(parameters));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
+            if (gatewayVip != null)
+            {
+                _queryParameters.Add(string.Format("gatewayVip={0}", Uri.EscapeDataString(gatewayVip)));
+            }
             if (this.Client.ApiVersion != null)
             {
                 _queryParameters.Add(string.Format("api-version={0}", Uri.EscapeDataString(this.Client.ApiVersion)));
