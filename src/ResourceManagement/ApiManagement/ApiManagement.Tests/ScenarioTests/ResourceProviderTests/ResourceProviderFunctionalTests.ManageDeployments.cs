@@ -128,6 +128,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                 Assert.NotNull(getResponse.Value.Properties.VirtualNetworkConfiguration.SubnetResourceId);
                 Assert.Equal(SubnetResourceId, getResponse.Value.Properties.VirtualNetworkConfiguration.SubnetResourceId);
                 Assert.Equal(VirtualNetworkType.External, getResponse.Value.Properties.VpnType);
+                Assert.NotNull(getResponse.Value.Properties.VirtualNetworkConfiguration.VnetId);
+                Assert.Null(getResponse.Value.Properties.VirtualNetworkConfiguration.SubnetName);
             }
         }
 
@@ -171,6 +173,8 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                 Assert.NotNull(getResponse.Value.Properties.VirtualNetworkConfiguration.SubnetResourceId);
                 Assert.Equal(SubnetResourceId, getResponse.Value.Properties.VirtualNetworkConfiguration.SubnetResourceId);
                 Assert.Equal(VirtualNetworkType.Internal, getResponse.Value.Properties.VpnType);
+                Assert.NotNull(getResponse.Value.Properties.VirtualNetworkConfiguration.VnetId);
+                Assert.Null(getResponse.Value.Properties.VirtualNetworkConfiguration.SubnetName);
             }
         }
     }

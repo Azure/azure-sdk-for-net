@@ -107,6 +107,8 @@ namespace Microsoft.Azure.Management.HDInsight
                 }
             };
 
+            createParamsExtended.Properties.ClusterDefinition.ComponentVersion = new Dictionary<string, string>(clusterCreateParameters.ComponentVersion);
+
             var configurations = GetConfigurations(clusterName, clusterCreateParameters);
 
             if (clusterCreateParameters.HiveMetastore != null)
@@ -149,13 +151,16 @@ namespace Microsoft.Azure.Management.HDInsight
             var serializedConfig = JsonConvert.SerializeObject(configurations);
             createParamsExtended.Properties.ClusterDefinition.Configurations = serializedConfig;
 
+            if (clusterCreateParameters.SecurityProfile != null)
+            {
+                createParamsExtended.Properties.SecurityProfile = clusterCreateParameters.SecurityProfile;
+            }
+
             var roles = GetRoleCollection(clusterCreateParameters);
 
             createParamsExtended.Properties.ComputeProfile = new ComputeProfile();
             foreach (var role in roles)
             {
-                role.SecurityProfile = clusterCreateParameters.SecurityProfile;
-
                 createParamsExtended.Properties.ComputeProfile.Roles.Add(role);
             }
 

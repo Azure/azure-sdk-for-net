@@ -9,11 +9,13 @@
   <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
   <ItemGroup>
     <Compile Include="Helpers\DataSourceUndoHandler.cs" />
+    <Compile Include="Helpers\LinkedServiceUndoHandler.cs" />
     <Compile Include="Helpers\StorageInsightUndoHandler.cs" />
     <Compile Include="Helpers\TestHelper.cs" />
     <Compile Include="Helpers\UndoContextDiscoveryExtensions.cs" />
     <Compile Include="Helpers\WorkspaceUndoHandler.cs" />
     <Compile Include="OperationTests\BasicDelegatingHandler.cs" />
+    <Compile Include="OperationTests\LinkedServiceOperationsTest.cs" />
     <Compile Include="OperationTests\SearchOperationsTest.cs" />
     <Compile Include="OperationTests\DataSourceOperationsTest.cs" />
     <Compile Include="OperationTests\StorageInsightOperationsTest.cs" />
@@ -42,6 +44,12 @@
     </None>
     <None Include="SessionRecords\OperationalInsights.Tests.OperationTests.DataSourceOperationsTest\DataSourceListWithPaging.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\OperationalInsights.Tests.OperationTests.LinkedServiceOperationsTest\CanCreateUpdateDeleteLinkedService.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\OperationalInsights.Tests.OperationTests.LinkedServiceOperationsTest\LinkedServiceCreateFailsWithoutWorkspace.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\OperationalInsights.Tests.OperationTests.SearchOperationsTest\CanCreateOrUpdateAndDeleteSavedSearches.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
