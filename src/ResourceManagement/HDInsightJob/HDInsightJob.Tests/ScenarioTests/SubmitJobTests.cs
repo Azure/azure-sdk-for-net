@@ -693,9 +693,10 @@ namespace HDInsightJob.Tests
 
         private IStorageAccess GetStorageAccessObject(bool IsWindowsCluster = false)
         {
-            return new AzureStorageAccess(IsWindowsCluster ? TestUtils.WinStorageAccountName : TestUtils.StorageAccountName,
-                                    IsWindowsCluster ? TestUtils.WinStorageAccountKey : TestUtils.StorageAccountKey,
-                                    IsWindowsCluster ? TestUtils.WinDefaultContainer : TestUtils.DefaultContainer);
+                return new AzureStorageAccess(IsWindowsCluster ? TestUtils.WinStorageAccountName : TestUtils.StorageAccountName,
+                                        IsWindowsCluster ? TestUtils.WinStorageAccountKey : TestUtils.StorageAccountKey,
+                                        IsWindowsCluster ? TestUtils.WinDefaultContainer : TestUtils.DefaultContainer, TestUtils.storageAccountSuffix);
+           
         }
     }
 }
