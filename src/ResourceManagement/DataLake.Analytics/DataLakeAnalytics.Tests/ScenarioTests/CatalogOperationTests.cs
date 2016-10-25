@@ -168,7 +168,7 @@ namespace DataLakeAnalytics.Tests
         {
             using (var context = MockContext.Start(this.GetType().FullName))
             {
-                commonData = new CommonTestFixture(context);
+                commonData = new CommonTestFixture(context, isDogfood: true);
                 commonData.HostUrl =
                     commonData.DataLakeAnalyticsManagementHelper.TryCreateDataLakeAnalyticsAccount(commonData.ResourceGroupName,
                         commonData.Location, commonData.DataLakeStoreAccountName, commonData.SecondDataLakeAnalyticsAccountName);
@@ -226,14 +226,14 @@ namespace DataLakeAnalytics.Tests
                         commonData.DatabaseName);
                     Assert.True(credListResponse.Count() >= 1);
                     // look for the credential we created
-                    Assert.True(credListResponse.Any(cred => cred.Name.Equals(commonData.CredentialName)));
+                    Assert.True(credListResponse.Any(cred => cred.Name.Equals(commonData.SecretName)));
 
 
                     // Get the specific credential as well
                     var credGetResponse = clientToUse.Catalog.GetCredential(
                         commonData.SecondDataLakeAnalyticsAccountName,
-                        commonData.DatabaseName, commonData.CredentialName);
-                    Assert.Equal(commonData.CredentialName, credGetResponse.Name);
+                        commonData.DatabaseName, commonData.SecretName);
+                    Assert.Equal(commonData.SecretName, credGetResponse.Name);
 
                     // Delete the credential
                     clientToUse.Catalog.DeleteCredential(
@@ -257,7 +257,7 @@ namespace DataLakeAnalytics.Tests
             // NOTE: This is deprecated and will be removed in a future release
             using (var context = MockContext.Start(this.GetType().FullName))
             {
-                commonData = new CommonTestFixture(context);
+                commonData = new CommonTestFixture(context, isDogfood: true);
                 commonData.HostUrl =
                     commonData.DataLakeAnalyticsManagementHelper.TryCreateDataLakeAnalyticsAccount(commonData.ResourceGroupName,
                         commonData.Location, commonData.DataLakeStoreAccountName, commonData.SecondDataLakeAnalyticsAccountName);
