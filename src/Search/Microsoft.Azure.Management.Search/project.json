@@ -1,7 +1,7 @@
 {
-  "version": "0.9.0-preview",
+  "version": "1.0.0-rc",
   "title": "Microsoft Azure Search Management Library",
-  "description": "Makes it easy to manage Azure Search services from a .NET application.",
+  "description": "Makes it easy to manage Azure Search services and API keys from a .NET application.",
   "authors": [ "Microsoft" ],
 
   "packOptions": {
@@ -11,7 +11,7 @@
     "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
     "tags": [ "Microsoft Azure Search", "Microsoft Azure Search Management", "REST HTTP client", "search", "azureofficial", "windowsazureofficial" ],
     "requireLicenseAcceptance":  true,
-    "releaseNotes": "This is a preview release of the Azure Search Management SDK for .NET, based on version 2015-02-28 of the Azure Search Management REST API."
+    "releaseNotes": "This is the Azure Search Management SDK for .NET, based on version 2015-08-19 of the Azure Search Management REST API. It includes support for programmatically provisioning and managing Search services and API keys. It supports all available SKUs, including the new S3 and S3 High-Density SKUs."
   },
 
   "buildOptions": {
