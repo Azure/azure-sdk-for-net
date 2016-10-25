@@ -19,17 +19,17 @@ namespace Microsoft.Azure.Management.Network.Models
     /// <summary>
     /// VirtualNetworkGatewayConnection properties
     /// </summary>
-    public partial class TunnelConnectionStatus
+    public partial class TunnelConnectionHealth
     {
         /// <summary>
-        /// Initializes a new instance of the TunnelConnectionStatus class.
+        /// Initializes a new instance of the TunnelConnectionHealth class.
         /// </summary>
-        public TunnelConnectionStatus() { }
+        public TunnelConnectionHealth() { }
 
         /// <summary>
-        /// Initializes a new instance of the TunnelConnectionStatus class.
+        /// Initializes a new instance of the TunnelConnectionHealth class.
         /// </summary>
-        public TunnelConnectionStatus(string tunnel = default(string), string connectionStatus = default(string), long? egressBytesTransferred = default(long?), long? ingressBytesTransferred = default(long?), DateTime? lastConnectionEstablishedUtcTime = default(DateTime?))
+        public TunnelConnectionHealth(string tunnel = default(string), string connectionStatus = default(string), long? egressBytesTransferred = default(long?), long? ingressBytesTransferred = default(long?), DateTime? lastConnectionEstablishedUtcTime = default(DateTime?))
         {
             Tunnel = tunnel;
             ConnectionStatus = connectionStatus;
