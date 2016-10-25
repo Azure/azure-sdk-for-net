@@ -8,15 +8,9 @@
 
 namespace Microsoft.Azure.Management.ResourceManager
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure.OData;
-    using Microsoft.Rest.Azure;
-    using Models;
+   using Microsoft.Rest.Azure;
+   using Models;
 
     /// <summary>
     /// Extension methods for ResourcesOperations.
@@ -38,7 +32,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </param>
             public static void MoveResources(this IResourcesOperations operations, string sourceResourceGroupName, ResourcesMoveInfo parameters)
             {
-                Task.Factory.StartNew(s => ((IResourcesOperations)s).MoveResourcesAsync(sourceResourceGroupName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IResourcesOperations)s).MoveResourcesAsync(sourceResourceGroupName, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -57,51 +51,12 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task MoveResourcesAsync(this IResourcesOperations operations, string sourceResourceGroupName, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task MoveResourcesAsync(this IResourcesOperations operations, string sourceResourceGroupName, ResourcesMoveInfo parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.MoveResourcesWithHttpMessagesAsync(sourceResourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
-            /// Move resources from one resource group to another. The resources being
-            /// moved should all be in the same resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='sourceResourceGroupName'>
-            /// Source resource group name.
-            /// </param>
-            /// <param name='parameters'>
-            /// move resources' parameters.
-            /// </param>
-            public static void BeginMoveResources(this IResourcesOperations operations, string sourceResourceGroupName, ResourcesMoveInfo parameters)
-            {
-                Task.Factory.StartNew(s => ((IResourcesOperations)s).BeginMoveResourcesAsync(sourceResourceGroupName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Move resources from one resource group to another. The resources being
-            /// moved should all be in the same resource group.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='sourceResourceGroupName'>
-            /// Source resource group name.
-            /// </param>
-            /// <param name='parameters'>
-            /// move resources' parameters.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task BeginMoveResourcesAsync(this IResourcesOperations operations, string sourceResourceGroupName, ResourcesMoveInfo parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                await operations.BeginMoveResourcesWithHttpMessagesAsync(sourceResourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <summary>
             /// Get all of the resources under a subscription.
             /// </summary>
             /// <param name='operations'>
@@ -110,9 +65,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='odataQuery'>
             /// OData parameters to apply to the operation.
             /// </param>
-            public static IPage<GenericResource> List(this IResourcesOperations operations, ODataQuery<GenericResourceFilter> odataQuery = default(ODataQuery<GenericResourceFilter>))
+            public static Microsoft.Rest.Azure.IPage<GenericResource> List(this IResourcesOperations operations, Microsoft.Rest.Azure.OData.ODataQuery<GenericResourceFilter> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<GenericResourceFilter>))
             {
-                return Task.Factory.StartNew(s => ((IResourcesOperations)s).ListAsync(odataQuery), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IResourcesOperations)s).ListAsync(odataQuery), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -127,7 +82,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<GenericResource>> ListAsync(this IResourcesOperations operations, ODataQuery<GenericResourceFilter> odataQuery = default(ODataQuery<GenericResourceFilter>), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<GenericResource>> ListAsync(this IResourcesOperations operations, Microsoft.Rest.Azure.OData.ODataQuery<GenericResourceFilter> odataQuery = default(Microsoft.Rest.Azure.OData.ODataQuery<GenericResourceFilter>), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(odataQuery, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -161,7 +116,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </param>
             public static bool CheckExistence(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion)
             {
-                return Task.Factory.StartNew(s => ((IResourcesOperations)s).CheckExistenceAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IResourcesOperations)s).CheckExistenceAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -191,7 +146,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<bool> CheckExistenceAsync(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<bool> CheckExistenceAsync(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.CheckExistenceWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -225,7 +180,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </param>
             public static void Delete(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion)
             {
-                Task.Factory.StartNew(s => ((IResourcesOperations)s).DeleteAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IResourcesOperations)s).DeleteAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -255,7 +210,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task DeleteAsync(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.DeleteWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, null, cancellationToken).ConfigureAwait(false);
             }
@@ -289,7 +244,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </param>
             public static GenericResource CreateOrUpdate(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, GenericResource parameters)
             {
-                return Task.Factory.StartNew(s => ((IResourcesOperations)s).CreateOrUpdateAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IResourcesOperations)s).CreateOrUpdateAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -322,7 +277,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<GenericResource> CreateOrUpdateAsync(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, GenericResource parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<GenericResource> CreateOrUpdateAsync(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, GenericResource parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -356,7 +311,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </param>
             public static GenericResource Get(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion)
             {
-                return Task.Factory.StartNew(s => ((IResourcesOperations)s).GetAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IResourcesOperations)s).GetAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -386,7 +341,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<GenericResource> GetAsync(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<GenericResource> GetAsync(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -410,7 +365,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </param>
             public static bool CheckExistenceById(this IResourcesOperations operations, string resourceId, string apiVersion)
             {
-                return Task.Factory.StartNew(s => ((IResourcesOperations)s).CheckExistenceByIdAsync(resourceId, apiVersion), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IResourcesOperations)s).CheckExistenceByIdAsync(resourceId, apiVersion), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -430,7 +385,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<bool> CheckExistenceByIdAsync(this IResourcesOperations operations, string resourceId, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<bool> CheckExistenceByIdAsync(this IResourcesOperations operations, string resourceId, string apiVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.CheckExistenceByIdWithHttpMessagesAsync(resourceId, apiVersion, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -454,7 +409,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </param>
             public static void DeleteById(this IResourcesOperations operations, string resourceId, string apiVersion)
             {
-                Task.Factory.StartNew(s => ((IResourcesOperations)s).DeleteByIdAsync(resourceId, apiVersion), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IResourcesOperations)s).DeleteByIdAsync(resourceId, apiVersion), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -474,7 +429,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteByIdAsync(this IResourcesOperations operations, string resourceId, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task DeleteByIdAsync(this IResourcesOperations operations, string resourceId, string apiVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.DeleteByIdWithHttpMessagesAsync(resourceId, apiVersion, null, cancellationToken).ConfigureAwait(false);
             }
@@ -498,7 +453,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </param>
             public static GenericResource CreateOrUpdateById(this IResourcesOperations operations, string resourceId, string apiVersion, GenericResource parameters)
             {
-                return Task.Factory.StartNew(s => ((IResourcesOperations)s).CreateOrUpdateByIdAsync(resourceId, apiVersion, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IResourcesOperations)s).CreateOrUpdateByIdAsync(resourceId, apiVersion, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -521,7 +476,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<GenericResource> CreateOrUpdateByIdAsync(this IResourcesOperations operations, string resourceId, string apiVersion, GenericResource parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<GenericResource> CreateOrUpdateByIdAsync(this IResourcesOperations operations, string resourceId, string apiVersion, GenericResource parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateByIdWithHttpMessagesAsync(resourceId, apiVersion, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -545,7 +500,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// </param>
             public static GenericResource GetById(this IResourcesOperations operations, string resourceId, string apiVersion)
             {
-                return Task.Factory.StartNew(s => ((IResourcesOperations)s).GetByIdAsync(resourceId, apiVersion), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IResourcesOperations)s).GetByIdAsync(resourceId, apiVersion), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -565,9 +520,270 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<GenericResource> GetByIdAsync(this IResourcesOperations operations, string resourceId, string apiVersion, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<GenericResource> GetByIdAsync(this IResourcesOperations operations, string resourceId, string apiVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetByIdWithHttpMessagesAsync(resourceId, apiVersion, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Move resources from one resource group to another. The resources being
+            /// moved should all be in the same resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='sourceResourceGroupName'>
+            /// Source resource group name.
+            /// </param>
+            /// <param name='parameters'>
+            /// move resources' parameters.
+            /// </param>
+            public static void BeginMoveResources(this IResourcesOperations operations, string sourceResourceGroupName, ResourcesMoveInfo parameters)
+            {
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IResourcesOperations)s).BeginMoveResourcesAsync(sourceResourceGroupName, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Move resources from one resource group to another. The resources being
+            /// moved should all be in the same resource group.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='sourceResourceGroupName'>
+            /// Source resource group name.
+            /// </param>
+            /// <param name='parameters'>
+            /// move resources' parameters.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task BeginMoveResourcesAsync(this IResourcesOperations operations, string sourceResourceGroupName, ResourcesMoveInfo parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                await operations.BeginMoveResourcesWithHttpMessagesAsync(sourceResourceGroupName, parameters, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Deletes a resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='resourceProviderNamespace'>
+            /// Resource identity.
+            /// </param>
+            /// <param name='parentResourcePath'>
+            /// Resource identity.
+            /// </param>
+            /// <param name='resourceType'>
+            /// Resource identity.
+            /// </param>
+            /// <param name='resourceName'>
+            /// Resource identity.
+            /// </param>
+            /// <param name='apiVersion'>
+            /// Api version to use.
+            /// </param>
+            public static void BeginDelete(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion)
+            {
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IResourcesOperations)s).BeginDeleteAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='resourceProviderNamespace'>
+            /// Resource identity.
+            /// </param>
+            /// <param name='parentResourcePath'>
+            /// Resource identity.
+            /// </param>
+            /// <param name='resourceType'>
+            /// Resource identity.
+            /// </param>
+            /// <param name='resourceName'>
+            /// Resource identity.
+            /// </param>
+            /// <param name='apiVersion'>
+            /// Api version to use.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task BeginDeleteAsync(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Create a resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='resourceProviderNamespace'>
+            /// Resource identity.
+            /// </param>
+            /// <param name='parentResourcePath'>
+            /// Resource identity.
+            /// </param>
+            /// <param name='resourceType'>
+            /// Resource identity.
+            /// </param>
+            /// <param name='resourceName'>
+            /// Resource identity.
+            /// </param>
+            /// <param name='apiVersion'>
+            /// Api version to use.
+            /// </param>
+            /// <param name='parameters'>
+            /// Create or update resource parameters.
+            /// </param>
+            public static GenericResource BeginCreateOrUpdate(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, GenericResource parameters)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IResourcesOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create a resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group. The name is case insensitive.
+            /// </param>
+            /// <param name='resourceProviderNamespace'>
+            /// Resource identity.
+            /// </param>
+            /// <param name='parentResourcePath'>
+            /// Resource identity.
+            /// </param>
+            /// <param name='resourceType'>
+            /// Resource identity.
+            /// </param>
+            /// <param name='resourceName'>
+            /// Resource identity.
+            /// </param>
+            /// <param name='apiVersion'>
+            /// Api version to use.
+            /// </param>
+            /// <param name='parameters'>
+            /// Create or update resource parameters.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<GenericResource> BeginCreateOrUpdateAsync(this IResourcesOperations operations, string resourceGroupName, string resourceProviderNamespace, string parentResourcePath, string resourceType, string resourceName, string apiVersion, GenericResource parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, resourceProviderNamespace, parentResourcePath, resourceType, resourceName, apiVersion, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Deletes a resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceId'>
+            /// The fully qualified Id of the resource, including the resource name and
+            /// resource type. For example,
+            /// /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite
+            /// </param>
+            /// <param name='apiVersion'>
+            /// Api version to use.
+            /// </param>
+            public static void BeginDeleteById(this IResourcesOperations operations, string resourceId, string apiVersion)
+            {
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IResourcesOperations)s).BeginDeleteByIdAsync(resourceId, apiVersion), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceId'>
+            /// The fully qualified Id of the resource, including the resource name and
+            /// resource type. For example,
+            /// /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite
+            /// </param>
+            /// <param name='apiVersion'>
+            /// Api version to use.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task BeginDeleteByIdAsync(this IResourcesOperations operations, string resourceId, string apiVersion, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                await operations.BeginDeleteByIdWithHttpMessagesAsync(resourceId, apiVersion, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Create a resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceId'>
+            /// The fully qualified Id of the resource, including the resource name and
+            /// resource type. For example,
+            /// /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite
+            /// </param>
+            /// <param name='apiVersion'>
+            /// Api version to use.
+            /// </param>
+            /// <param name='parameters'>
+            /// Create or update resource parameters.
+            /// </param>
+            public static GenericResource BeginCreateOrUpdateById(this IResourcesOperations operations, string resourceId, string apiVersion, GenericResource parameters)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IResourcesOperations)s).BeginCreateOrUpdateByIdAsync(resourceId, apiVersion, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create a resource.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceId'>
+            /// The fully qualified Id of the resource, including the resource name and
+            /// resource type. For example,
+            /// /subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myGroup/Microsoft.Web/sites/mySite
+            /// </param>
+            /// <param name='apiVersion'>
+            /// Api version to use.
+            /// </param>
+            /// <param name='parameters'>
+            /// Create or update resource parameters.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<GenericResource> BeginCreateOrUpdateByIdAsync(this IResourcesOperations operations, string resourceId, string apiVersion, GenericResource parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateOrUpdateByIdWithHttpMessagesAsync(resourceId, apiVersion, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -582,9 +798,9 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<GenericResource> ListNext(this IResourcesOperations operations, string nextPageLink)
+            public static Microsoft.Rest.Azure.IPage<GenericResource> ListNext(this IResourcesOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IResourcesOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IResourcesOperations)s).ListNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -599,7 +815,7 @@ namespace Microsoft.Azure.Management.ResourceManager
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<GenericResource>> ListNextAsync(this IResourcesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<GenericResource>> ListNextAsync(this IResourcesOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

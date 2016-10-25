@@ -8,12 +8,6 @@
 
 namespace Microsoft.Azure.Management.Redis
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Net.Http;
-    using System.Threading;
-    using System.Threading.Tasks;
-    using Newtonsoft.Json;
     using Microsoft.Rest;
     using Microsoft.Rest.Azure;
     using Models;
@@ -21,27 +15,27 @@ namespace Microsoft.Azure.Management.Redis
     /// <summary>
     /// REST API for Azure Redis Cache Service
     /// </summary>
-    public partial interface IRedisManagementClient : IDisposable
+    public partial interface IRedisManagementClient : System.IDisposable
     {
         /// <summary>
         /// The base URI of the service.
         /// </summary>
-        Uri BaseUri { get; set; }
+        System.Uri BaseUri { get; set; }
 
         /// <summary>
         /// Gets or sets json serialization settings.
         /// </summary>
-        JsonSerializerSettings SerializationSettings { get; }
+        Newtonsoft.Json.JsonSerializerSettings SerializationSettings { get; }
 
         /// <summary>
         /// Gets or sets json deserialization settings.
         /// </summary>
-        JsonSerializerSettings DeserializationSettings { get; }
+        Newtonsoft.Json.JsonSerializerSettings DeserializationSettings { get; }
 
         /// <summary>
-        /// Gets Azure subscription credentials.
+        /// Credentials needed for the client to connect to Azure.
         /// </summary>
-        ServiceClientCredentials Credentials { get; }
+        Microsoft.Rest.ServiceClientCredentials Credentials { get; }
 
         /// <summary>
         /// Gets subscription credentials which uniquely identify Microsoft

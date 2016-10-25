@@ -9,7 +9,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Microsoft.Azure.KeyVault.WebKey
 {
-    public class Base64UrlJsonConverter : JsonConverter
+    internal class Base64UrlJsonConverter : JsonConverter
     {
         /// <summary>
         /// Converts a byte array to a Base64Url encoded string

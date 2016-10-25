@@ -12,7 +12,7 @@ using Microsoft.Azure.KeyVault.Core;
 using Microsoft.Azure.KeyVault.Cryptography;
 using Microsoft.Azure.KeyVault.Cryptography.Algorithms;
 
-#if PORTABLE
+#if NETSTANDARD
 using TaskException = System.Threading.Tasks.Task;
 #endif
 

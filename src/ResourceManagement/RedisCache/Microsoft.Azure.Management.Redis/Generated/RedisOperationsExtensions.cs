@@ -8,14 +8,9 @@
 
 namespace Microsoft.Azure.Management.Redis
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Threading;
     using System.Threading.Tasks;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Azure;
-    using Models;
+   using Microsoft.Rest.Azure;
+   using Models;
 
     /// <summary>
     /// Extension methods for RedisOperations.
@@ -23,8 +18,8 @@ namespace Microsoft.Azure.Management.Redis
     public static partial class RedisOperationsExtensions
     {
             /// <summary>
-            /// Create a redis cache, or replace (overwrite/recreate, with potential
-            /// downtime) an existing cache
+            /// Create or replace (overwrite/recreate, with potential downtime) an
+            /// existing redis cache
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -36,16 +31,16 @@ namespace Microsoft.Azure.Management.Redis
             /// The name of the redis cache.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the CreateOrUpdate redis operation.
+            /// Parameters supplied to the Create redis operation.
             /// </param>
-            public static RedisResourceWithAccessKey CreateOrUpdate(this IRedisOperations operations, string resourceGroupName, string name, RedisCreateOrUpdateParameters parameters)
+            public static RedisResource Create(this IRedisOperations operations, string resourceGroupName, string name, RedisCreateParameters parameters)
             {
-                return Task.Factory.StartNew(s => ((IRedisOperations)s).CreateOrUpdateAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRedisOperations)s).CreateAsync(resourceGroupName, name, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Create a redis cache, or replace (overwrite/recreate, with potential
-            /// downtime) an existing cache
+            /// Create or replace (overwrite/recreate, with potential downtime) an
+            /// existing redis cache
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -57,14 +52,154 @@ namespace Microsoft.Azure.Management.Redis
             /// The name of the redis cache.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to the CreateOrUpdate redis operation.
+            /// Parameters supplied to the Create redis operation.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RedisResourceWithAccessKey> CreateOrUpdateAsync(this IRedisOperations operations, string resourceGroupName, string name, RedisCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<RedisResource> CreateAsync(this IRedisOperations operations, string resourceGroupName, string name, RedisCreateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Create or replace (overwrite/recreate, with potential downtime) an
+            /// existing redis cache
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the redis cache.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the Create redis operation.
+            /// </param>
+            public static RedisResource BeginCreate(this IRedisOperations operations, string resourceGroupName, string name, RedisCreateParameters parameters)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRedisOperations)s).BeginCreateAsync(resourceGroupName, name, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Create or replace (overwrite/recreate, with potential downtime) an
+            /// existing redis cache
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the redis cache.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the Create redis operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<RedisResource> BeginCreateAsync(this IRedisOperations operations, string resourceGroupName, string name, RedisCreateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Update an existing Redis cache
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the redis cache.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the Update redis operation.
+            /// </param>
+            public static RedisResource Update(this IRedisOperations operations, string resourceGroupName, string name, RedisUpdateParameters parameters)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRedisOperations)s).UpdateAsync(resourceGroupName, name, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update an existing Redis cache
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the redis cache.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the Update redis operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<RedisResource> UpdateAsync(this IRedisOperations operations, string resourceGroupName, string name, RedisUpdateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.UpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Update an existing Redis cache
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the redis cache.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the Update redis operation.
+            /// </param>
+            public static RedisResource BeginUpdate(this IRedisOperations operations, string resourceGroupName, string name, RedisUpdateParameters parameters)
+            {
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRedisOperations)s).BeginUpdateAsync(resourceGroupName, name, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Update an existing Redis cache
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the redis cache.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to the Update redis operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task<RedisResource> BeginUpdateAsync(this IRedisOperations operations, string resourceGroupName, string name, RedisUpdateParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                using (var _result = await operations.BeginUpdateWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -84,7 +219,7 @@ namespace Microsoft.Azure.Management.Redis
             /// </param>
             public static void Delete(this IRedisOperations operations, string resourceGroupName, string name)
             {
-                Task.Factory.StartNew(s => ((IRedisOperations)s).DeleteAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IRedisOperations)s).DeleteAsync(resourceGroupName, name), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -102,9 +237,46 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task DeleteAsync(this IRedisOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task DeleteAsync(this IRedisOperations operations, string resourceGroupName, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.DeleteWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Deletes a redis cache. This operation takes a while to complete.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the redis cache.
+            /// </param>
+            public static void BeginDelete(this IRedisOperations operations, string resourceGroupName, string name)
+            {
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IRedisOperations)s).BeginDeleteAsync(resourceGroupName, name), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Deletes a redis cache. This operation takes a while to complete.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the redis cache.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task BeginDeleteAsync(this IRedisOperations operations, string resourceGroupName, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                await operations.BeginDeleteWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -121,7 +293,7 @@ namespace Microsoft.Azure.Management.Redis
             /// </param>
             public static RedisResource Get(this IRedisOperations operations, string resourceGroupName, string name)
             {
-                return Task.Factory.StartNew(s => ((IRedisOperations)s).GetAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRedisOperations)s).GetAsync(resourceGroupName, name), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -139,7 +311,7 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RedisResource> GetAsync(this IRedisOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<RedisResource> GetAsync(this IRedisOperations operations, string resourceGroupName, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -156,9 +328,9 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            public static IPage<RedisResource> ListByResourceGroup(this IRedisOperations operations, string resourceGroupName)
+            public static Microsoft.Rest.Azure.IPage<RedisResource> ListByResourceGroup(this IRedisOperations operations, string resourceGroupName)
             {
-                return Task.Factory.StartNew(s => ((IRedisOperations)s).ListByResourceGroupAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRedisOperations)s).ListByResourceGroupAsync(resourceGroupName), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -173,7 +345,7 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RedisResource>> ListByResourceGroupAsync(this IRedisOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<RedisResource>> ListByResourceGroupAsync(this IRedisOperations operations, string resourceGroupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -187,9 +359,9 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<RedisResource> List(this IRedisOperations operations)
+            public static Microsoft.Rest.Azure.IPage<RedisResource> List(this IRedisOperations operations)
             {
-                return Task.Factory.StartNew(s => ((IRedisOperations)s).ListAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRedisOperations)s).ListAsync(), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -201,7 +373,7 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RedisResource>> ListAsync(this IRedisOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<RedisResource>> ListAsync(this IRedisOperations operations, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -222,9 +394,9 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='name'>
             /// The name of the redis cache.
             /// </param>
-            public static RedisListKeysResult ListKeys(this IRedisOperations operations, string resourceGroupName, string name)
+            public static RedisAccessKeys ListKeys(this IRedisOperations operations, string resourceGroupName, string name)
             {
-                return Task.Factory.StartNew(s => ((IRedisOperations)s).ListKeysAsync(resourceGroupName, name), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRedisOperations)s).ListKeysAsync(resourceGroupName, name), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -243,7 +415,7 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RedisListKeysResult> ListKeysAsync(this IRedisOperations operations, string resourceGroupName, string name, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<RedisAccessKeys> ListKeysAsync(this IRedisOperations operations, string resourceGroupName, string name, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListKeysWithHttpMessagesAsync(resourceGroupName, name, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -267,9 +439,9 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='parameters'>
             /// Specifies which key to reset.
             /// </param>
-            public static RedisListKeysResult RegenerateKey(this IRedisOperations operations, string resourceGroupName, string name, RedisRegenerateKeyParameters parameters)
+            public static RedisAccessKeys RegenerateKey(this IRedisOperations operations, string resourceGroupName, string name, RedisRegenerateKeyParameters parameters)
             {
-                return Task.Factory.StartNew(s => ((IRedisOperations)s).RegenerateKeyAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRedisOperations)s).RegenerateKeyAsync(resourceGroupName, name, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -291,7 +463,7 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<RedisListKeysResult> RegenerateKeyAsync(this IRedisOperations operations, string resourceGroupName, string name, RedisRegenerateKeyParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task<RedisAccessKeys> RegenerateKeyAsync(this IRedisOperations operations, string resourceGroupName, string name, RedisRegenerateKeyParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.RegenerateKeyWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -317,7 +489,7 @@ namespace Microsoft.Azure.Management.Redis
             /// </param>
             public static void ForceReboot(this IRedisOperations operations, string resourceGroupName, string name, RedisRebootParameters parameters)
             {
-                Task.Factory.StartNew(s => ((IRedisOperations)s).ForceRebootAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IRedisOperations)s).ForceRebootAsync(resourceGroupName, name, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -339,7 +511,7 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ForceRebootAsync(this IRedisOperations operations, string resourceGroupName, string name, RedisRebootParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task ForceRebootAsync(this IRedisOperations operations, string resourceGroupName, string name, RedisRebootParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 await operations.ForceRebootWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
             }
@@ -359,9 +531,9 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='parameters'>
             /// Parameters for redis import operation.
             /// </param>
-            public static void Import(this IRedisOperations operations, string resourceGroupName, string name, ImportRDBParameters parameters)
+            public static void ImportData(this IRedisOperations operations, string resourceGroupName, string name, ImportRDBParameters parameters)
             {
-                Task.Factory.StartNew(s => ((IRedisOperations)s).ImportAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IRedisOperations)s).ImportDataAsync(resourceGroupName, name, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -382,9 +554,9 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task ImportAsync(this IRedisOperations operations, string resourceGroupName, string name, ImportRDBParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task ImportDataAsync(this IRedisOperations operations, string resourceGroupName, string name, ImportRDBParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                await operations.ImportWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
+                await operations.ImportDataWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -402,9 +574,9 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='parameters'>
             /// Parameters for redis import operation.
             /// </param>
-            public static void BeginImport(this IRedisOperations operations, string resourceGroupName, string name, ImportRDBParameters parameters)
+            public static void BeginImportData(this IRedisOperations operations, string resourceGroupName, string name, ImportRDBParameters parameters)
             {
-                Task.Factory.StartNew(s => ((IRedisOperations)s).BeginImportAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IRedisOperations)s).BeginImportDataAsync(resourceGroupName, name, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -425,9 +597,9 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginImportAsync(this IRedisOperations operations, string resourceGroupName, string name, ImportRDBParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task BeginImportDataAsync(this IRedisOperations operations, string resourceGroupName, string name, ImportRDBParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                await operations.BeginImportWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
+                await operations.BeginImportDataWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -445,52 +617,9 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='parameters'>
             /// Parameters for redis export operation.
             /// </param>
-            public static void Export(this IRedisOperations operations, string resourceGroupName, string name, ExportRDBParameters parameters)
+            public static void ExportData(this IRedisOperations operations, string resourceGroupName, string name, ExportRDBParameters parameters)
             {
-                Task.Factory.StartNew(s => ((IRedisOperations)s).ExportAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Import data into redis cache.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the redis cache.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters for redis export operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task ExportAsync(this IRedisOperations operations, string resourceGroupName, string name, ExportRDBParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                await operations.ExportWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
-            }
-
-            /// <summary>
-            /// Import data into redis cache.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='name'>
-            /// The name of the redis cache.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters for redis export operation.
-            /// </param>
-            public static void BeginExport(this IRedisOperations operations, string resourceGroupName, string name, ExportRDBParameters parameters)
-            {
-                Task.Factory.StartNew(s => ((IRedisOperations)s).BeginExportAsync(resourceGroupName, name, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IRedisOperations)s).ExportDataAsync(resourceGroupName, name, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -511,9 +640,52 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task BeginExportAsync(this IRedisOperations operations, string resourceGroupName, string name, ExportRDBParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async System.Threading.Tasks.Task ExportDataAsync(this IRedisOperations operations, string resourceGroupName, string name, ExportRDBParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
-                await operations.BeginExportWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
+                await operations.ExportDataWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
+            }
+
+            /// <summary>
+            /// Import data into redis cache.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the redis cache.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters for redis export operation.
+            /// </param>
+            public static void BeginExportData(this IRedisOperations operations, string resourceGroupName, string name, ExportRDBParameters parameters)
+            {
+                System.Threading.Tasks.Task.Factory.StartNew(s => ((IRedisOperations)s).BeginExportDataAsync(resourceGroupName, name, parameters), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None,  System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Import data into redis cache.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='name'>
+            /// The name of the redis cache.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters for redis export operation.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async System.Threading.Tasks.Task BeginExportDataAsync(this IRedisOperations operations, string resourceGroupName, string name, ExportRDBParameters parameters, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
+            {
+                await operations.BeginExportDataWithHttpMessagesAsync(resourceGroupName, name, parameters, null, cancellationToken).ConfigureAwait(false);
             }
 
             /// <summary>
@@ -525,9 +697,9 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<RedisResource> ListByResourceGroupNext(this IRedisOperations operations, string nextPageLink)
+            public static Microsoft.Rest.Azure.IPage<RedisResource> ListByResourceGroupNext(this IRedisOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IRedisOperations)s).ListByResourceGroupNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRedisOperations)s).ListByResourceGroupNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -542,7 +714,7 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RedisResource>> ListByResourceGroupNextAsync(this IRedisOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<RedisResource>> ListByResourceGroupNextAsync(this IRedisOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -559,9 +731,9 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<RedisResource> ListNext(this IRedisOperations operations, string nextPageLink)
+            public static Microsoft.Rest.Azure.IPage<RedisResource> ListNext(this IRedisOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IRedisOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return System.Threading.Tasks.Task.Factory.StartNew(s => ((IRedisOperations)s).ListNextAsync(nextPageLink), operations, System.Threading.CancellationToken.None, System.Threading.Tasks.TaskCreationOptions.None, System.Threading.Tasks.TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -576,7 +748,7 @@ namespace Microsoft.Azure.Management.Redis
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<RedisResource>> ListNextAsync(this IRedisOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Microsoft.Rest.Azure.IPage<RedisResource>> ListNextAsync(this IRedisOperations operations, string nextPageLink, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken))
             {
                 using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {

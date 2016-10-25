@@ -19,20 +19,20 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
 
         public override ICryptoTransform CreateEncryptor( AsymmetricAlgorithm key )
         {
-            RSACryptoServiceProvider csp = key as RSACryptoServiceProvider;
+            RSA csp = key as RSA;
 
             if ( csp == null )
-                throw new ArgumentException( "key must be an instance of RSACryptoServiceProvider", "key" );
+                throw new ArgumentException( "key must be an instance of RSA", "key" );
 
             return new Rsa15Encryptor( csp );
         }
 
         public override ICryptoTransform CreateDecryptor( AsymmetricAlgorithm key )
         {
-            RSACryptoServiceProvider csp = key as RSACryptoServiceProvider;
+            RSA csp = key as RSA;
 
             if ( csp == null )
-                throw new ArgumentException( "key must be an instance of RSACryptoServiceProvider", "key" );
+                throw new ArgumentException( "key must be an instance of RSA", "key" );
 
             return new Rsa15Decryptor( csp );
         }
@@ -46,9 +46,9 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
         /// </remarks>
         class Rsa15Decryptor : ICryptoTransform
         {
-            private readonly RSACryptoServiceProvider _csp;
+            private readonly RSA _csp;
 
-            internal Rsa15Decryptor( RSACryptoServiceProvider csp )
+            internal Rsa15Decryptor( RSA csp )
             {
                 _csp = csp;
             }
@@ -82,7 +82,18 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
             {
                 byte[] block = inputBuffer.Skip( inputOffset ).Take( inputCount ).ToArray();
 
-                return _csp.Decrypt( block, false );
+#if NET45
+                if ( _csp is RSACryptoServiceProvider )
+                {
+                    return ( ( RSACryptoServiceProvider )_csp ).Decrypt( block, false );
+                }
+
+                throw new CryptographicException( string.Format( "{0} is not supported", _csp.GetType().FullName ) );
+#elif NETSTANDARD
+                return _csp.Decrypt( block, RSAEncryptionPadding.Pkcs1 );
+#else
+                #error Unknown Framework
+#endif
             }
 
             public void Dispose()
@@ -100,9 +111,9 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
         /// </remarks>
         class Rsa15Encryptor : ICryptoTransform
         {
-            private readonly RSACryptoServiceProvider _csp;
+            private readonly RSA _csp;
 
-            internal Rsa15Encryptor( RSACryptoServiceProvider csp )
+            internal Rsa15Encryptor( RSA csp )
             {
                 _csp = csp;
             }
@@ -136,7 +147,18 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
             {
                 byte[] block = inputBuffer.Skip( inputOffset ).Take( inputCount ).ToArray();
 
-                return _csp.Encrypt( block , false );
+#if NET45
+                if ( _csp is RSACryptoServiceProvider )
+                {
+                    return ( ( RSACryptoServiceProvider )_csp ).Encrypt( block, false );
+                }
+
+                throw new CryptographicException( string.Format( "{0} is not supported", _csp.GetType().FullName ) );
+#elif NETSTANDARD
+                return _csp.Encrypt( block, RSAEncryptionPadding.Pkcs1 );
+#else
+                #error Unknown Framework
+#endif
             }
 
             public void Dispose()

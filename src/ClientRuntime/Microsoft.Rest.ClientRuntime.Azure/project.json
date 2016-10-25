@@ -1,0 +1,83 @@
+{
+  "version": "3.3.3",
+  "copyright": "Copyright (c) Microsoft Corporation",
+  "title": "Client Runtime for Microsoft Azure Libraries",
+  "description": "Provides common error handling, tracing, and HTTP/REST-based pipeline manipulation. \nSupported Platforms:\n  -   Portable Class Libraries\n  -   .NET Framework 4.5\n  -   Windows 8\n  -   Windows Phone 8.1\n  -   DotNet Core",
+  "authors": [ "Microsoft" ],
+
+  "packOptions": {
+    "summary": "Client infrastructure for Azure client libraries.",
+    "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
+    "projectUrl": "https://github.com/Azure/AutoRest",
+    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+    "tags": [ "Microsoft Azure AutoRest ClientRuntime REST azureofficial" ],
+    "requireLicenseAcceptance":  true
+  },
+
+  "buildOptions": {
+    "delaySign": true,
+    "publicSign": false,
+    "keyFile": "../../../tools/MSSharedLibKey.snk"
+  },
+
+  "dependencies": {
+    "Microsoft.Rest.ClientRuntime": "[2.3.3,3.0)"
+  },
+  
+  "frameworks": {
+    "net45": {
+      "frameworkAssemblies": {
+        "mscorlib": "",
+        "System": "",
+        "System.Net": "",
+        "System.Net.Http": "",
+        "System.Net.Http.WebRequest": "",
+        "System.Xml": ""
+      }
+    },
+    "netstandard1.1": {
+      "buildOptions": { "define": [ "PORTABLE" ] },
+      "imports": ["dnxcore50", "portable-net45+win8"],
+      "dependencies": {
+        "Microsoft.NETCore.Platforms": "1.0.1",
+        "System.Collections": "4.0.11",
+        "System.Diagnostics.Debug": "4.0.11",
+        "System.Diagnostics.Tools": "4.0.1",
+        "System.Diagnostics.Tracing": "4.1.0",
+        "System.Globalization": "4.0.11",
+        "System.Linq": "4.1.0",
+        "System.Net.Http": "4.1.0",
+        "System.Net.Primitives": "4.0.11",
+        "System.ObjectModel": "4.0.12",
+        "System.Reflection.Extensions": "4.0.1",
+        "System.Resources.ResourceManager": "4.0.1",
+        "System.Runtime.Extensions": "4.1.0",
+        "System.Text.RegularExpressions": "4.1.0",
+        "System.Threading": "4.0.11",
+        "System.Xml.ReaderWriter": "4.0.11"
+      }
+    },
+    "netstandard1.5": {
+      "buildOptions": { "define": [ "PORTABLE" ] },
+      "imports": ["dnxcore50"],
+      "dependencies": {
+        "Microsoft.NETCore.Platforms": "1.0.1",
+        "System.Collections": "4.0.11",
+        "System.Diagnostics.Debug": "4.0.11",
+        "System.Diagnostics.Tools": "4.0.1",
+        "System.Diagnostics.Tracing": "4.1.0",
+        "System.Globalization": "4.0.11",
+        "System.Linq": "4.1.0",
+        "System.Net.Http": "4.1.0",
+        "System.Net.Primitives": "4.0.11",
+        "System.ObjectModel": "4.0.12",
+        "System.Reflection.Extensions": "4.0.1",
+        "System.Resources.ResourceManager": "4.0.1",
+        "System.Runtime.Extensions": "4.1.0",
+        "System.Text.RegularExpressions": "4.1.0",
+        "System.Threading": "4.0.11",
+        "System.Xml.ReaderWriter": "4.0.11"
+      }
+    }
+  }
+}
