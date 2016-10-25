@@ -28,18 +28,18 @@ namespace Microsoft.Azure.Management.Cdn.Models
         /// Initializes a new instance of the Profile class.
         /// </summary>
         /// <param name="location">Resource location</param>
+        /// <param name="sku">The SKU (pricing tier) of the CDN
+        /// profile.</param>
         /// <param name="id">Resource ID</param>
         /// <param name="name">Resource name</param>
         /// <param name="type">Resource type</param>
         /// <param name="tags">Resource tags</param>
-        /// <param name="sku">The SKU (pricing tier) of the CDN
-        /// profile.</param>
         /// <param name="resourceState">Resource status of the profile.
         /// Possible values include: 'Creating', 'Active', 'Deleting',
         /// 'Disabled'</param>
         /// <param name="provisioningState">Provisioning status of the
         /// profile.</param>
-        public Profile(string location, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), Sku sku = default(Sku), string resourceState = default(string), string provisioningState = default(string))
+        public Profile(string location, Sku sku, string id = default(string), string name = default(string), string type = default(string), System.Collections.Generic.IDictionary<string, string> tags = default(System.Collections.Generic.IDictionary<string, string>), string resourceState = default(string), string provisioningState = default(string))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
@@ -75,6 +75,10 @@ namespace Microsoft.Azure.Management.Cdn.Models
         public override void Validate()
         {
             base.Validate();
+            if (Sku == null)
+            {
+                throw new Microsoft.Rest.ValidationException(Microsoft.Rest.ValidationRules.CannotBeNull, "Sku");
+            }
         }
     }
 }
