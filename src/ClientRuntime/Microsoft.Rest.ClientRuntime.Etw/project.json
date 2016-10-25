@@ -1,0 +1,34 @@
+{
+  "version": "2.1.1-preview",
+  "title": "ETW Logger for Microsoft AutoRest Generated Clients",
+  "description": "Enables tracing of event messages for AutoRest generated client libraries events via ETW (Event Tracing for Windows). ETW events can be captured by subscribing to the \"Microsoft.Rest\" event source.",
+  "copyright": "Copyright (c) Microsoft Corporation",
+  "authors": [ "Microsoft" ],
+
+  "packOptions": {
+    "summary": "Provides ETW tracing of \"Microsoft.Rest\" Client Library events.",
+    "iconUrl": "https://cdn.rawgit.com/Azure/AutoRest/7c1576dfb56974176223545cfac5762d168ded5f/Documentation/images/autorest-small-flat.png",
+    "projectUrl": "https://github.com/Azure/AutoRest",
+    "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
+    "tags": [ "Microsoft AutoRest ClientRuntime REST ETW" ],
+    "requireLicenseAcceptance":  true,
+  },
+
+  "buildOptions": {
+    "delaySign": true,
+    "publicSign": false,
+    "keyFile": "../../../tools/MSSharedLibKey.snk"
+  },
+
+  "dependencies": {
+    "Microsoft.Rest.ClientRuntime": "[2.3.3,3.0)"
+  },
+
+  "frameworks": {
+    "net45": {
+      "frameworkAssemblies": {
+        "System": ""
+      }
+    }
+  }
+}

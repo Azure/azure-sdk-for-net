@@ -27,12 +27,10 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
         [Fact]
         public void KeyVaultWebKeyTestRoundtripRsaPublic()
         {
-            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
+            RSA rsa = RSA.Create();
 
-            var keyOriginal = new JsonWebKey(rsa.ExportParameters(true));
-            var keyString = keyOriginal.ToString();
-
-            var keyRecovered = JsonConvert.DeserializeObject<JsonWebKey>(keyString);
+            var keyOriginal  = new JsonWebKey(rsa.ExportParameters(true));
+            var keyRecovered = JsonConvert.DeserializeObject<JsonWebKey>(keyOriginal.ToString());
 
             Assert.Equal(keyOriginal, keyRecovered);
         }
@@ -40,12 +38,10 @@ namespace Microsoft.Azure.KeyVault.WebKey.Tests
         [Fact]
         public void KeyVaultWebKeyTestRoundtripRsaPrivate()
         {
-            RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
+            RSA rsa = RSA.Create();
 
-            var keyOriginal = new JsonWebKey(rsa.ExportParameters(true));
-            var keyString = keyOriginal.ToString();
-
-            var keyRecovered = JsonConvert.DeserializeObject<JsonWebKey>(keyString);
+            var keyOriginal  = new JsonWebKey(rsa.ExportParameters(true));
+            var keyRecovered = JsonConvert.DeserializeObject<JsonWebKey>(keyOriginal.ToString());
 
             Assert.Equal(keyOriginal, keyRecovered);
         }

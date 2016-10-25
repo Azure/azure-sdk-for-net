@@ -472,8 +472,8 @@ namespace ServerManagement.Tests
                     // Create a session for this node.
                     WriteLine("Creating Session");
 
-                    var username =  Utility.EncryptUsingGatwewaySettings(gateway.Instances[0], NodeUserName);
-                    var password =  Utility.EncryptUsingGatwewaySettings(gateway.Instances[0], NodePassword);
+                    var username =  Utility.EncryptUsingGatewaySettings(gateway.Instances[0], NodeUserName);
+                    var password =  Utility.EncryptUsingGatewaySettings(gateway.Instances[0], NodePassword);
 
                     var session = await client.Session.CreateAsync(ResourceGroup, node.Name, SessionIdTwo, username, password, RetentionPeriod.Session, CredentialDataFormat.RsaEncrypted);
                     Assert.NotNull(session);
@@ -500,6 +500,64 @@ namespace ServerManagement.Tests
 
                     // regardless, always clear the nodes out.
                     RemoveAllNodes(client).Wait();
+                }
+            }
+        }
+
+        /// <summary>
+        /// query gateway using 'download' option; verify that the installerDownload and minimumVersion are set and valid
+        /// </summary>
+        /// <returns></returns>
+        [Fact]
+        public async Task GatewayExpandOptions()
+        {
+            // ensure known state before starting.
+            await EnsurePrerequisites();
+
+            using (var context = MockContext.Start("ServerManagement.Tests"))
+            {
+                var client = GetServerManagementClient(context);
+                GatewayResource gateway = null;
+
+                if (!ForceResetGatewayProfile)
+                {
+                    try
+                    {
+                        gateway = await client.Gateway.GetAsync(ResourceGroup, GatewayTwo, GatewayExpandOption.Download);
+
+                        // make sure the gateway service is running.
+                        StartGateway();
+                    }
+                    catch
+                    {
+                        // if it's not there, we'll create it anyway.
+                    }
+                }
+
+                try
+                {
+                    if (gateway == null)
+                    {
+                        // create gateway
+                        await CreateAndConfigureGateway(client, GatewayTwo);
+
+                        // get gateway status
+                        gateway = await client.Gateway.GetAsync(ResourceGroup, GatewayTwo, GatewayExpandOption.Download);
+                    }
+
+                    Assert.NotNull(gateway);
+                    Assert.True(!string.IsNullOrEmpty(gateway.InstallerDownload));
+                    Assert.True(!string.IsNullOrEmpty(gateway.MinimumVersion));
+
+                    Assert.True(Uri.IsWellFormedUriString(gateway.InstallerDownload, UriKind.Absolute));
+                }
+                finally
+                {
+                    // remove gateway that we've created 
+                    if (ForceResetGatewayProfile)
+                    {
+                        RemoveGateway(client, GatewayTwo).Wait();
+                    }
                 }
             }
         }

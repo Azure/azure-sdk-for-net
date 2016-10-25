@@ -32,17 +32,17 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
 
         class Rs256SignatureTransform : ISignatureTransform
         {
-            private RSACryptoServiceProvider _key;
+            private RSA _key;
 
             public Rs256SignatureTransform( AsymmetricAlgorithm key )
             {
                 if ( key == null )
                     throw new ArgumentNullException( "key" );
 
-                if ( !( key is RSACryptoServiceProvider ) )
-                    throw new ArgumentException( string.Format( "key must be of type {0}", typeof( RSACryptoServiceProvider ).AssemblyQualifiedName ), "key" );
+                if ( !( key is RSA ) )
+                    throw new ArgumentException( string.Format( "key must be of type {0}", typeof( RSA ).AssemblyQualifiedName ), "key" );
 
-                _key = key as RSACryptoServiceProvider;
+                _key = key as RSA;
             }
 
             public byte[] Sign( byte[] digest )
@@ -53,7 +53,18 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
                 if ( digest.Length != 32 )
                     throw new ArgumentOutOfRangeException( "digest", "The digest must be 32 bytes for SHA-256" );
 
-                return _key.SignHash( digest, OID_OIWSEC_SHA256 );
+#if NET45
+                if ( _key is RSACryptoServiceProvider )
+                {
+                    return ((RSACryptoServiceProvider)_key).SignHash( digest, OID_OIWSEC_SHA256 );
+                }
+
+                throw new CryptographicException( string.Format( "{0} is not supported", _key.GetType().FullName ) );
+#elif NETSTANDARD
+                return _key.SignHash( digest, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1 );
+#else
+                #error Unknown Framework
+#endif
             }
 
             public bool Verify( byte[] digest, byte[] signature )
@@ -67,7 +78,19 @@ namespace Microsoft.Azure.KeyVault.Cryptography.Algorithms
                 if ( signature == null || signature.Length == 0 )
                     throw new ArgumentNullException( "signature" );
 
-                return _key.VerifyHash( digest, OID_OIWSEC_SHA256, signature );
+
+#if NET45
+                if ( _key is RSACryptoServiceProvider )
+                {
+                    return ((RSACryptoServiceProvider)_key).VerifyHash( digest, OID_OIWSEC_SHA256, signature );
+                }
+
+                throw new CryptographicException( string.Format( "{0} is not supported", _key.GetType().FullName ) );
+#elif NETSTANDARD
+                return _key.VerifyHash( digest, signature, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1 );
+#else
+                #error Unknown Framework
+#endif
             }
         }
     }

@@ -1,9 +1,10 @@
 {
-  "version": "2.0.1-preview",
+  "version": "2.0.2-*",
   "description": "Microsoft.Azure.KeyVault.Tests Class Library",
   "authors": [ "Microsoft Corporation" ],
 
   "buildOptions": {
+    "copyToOutput": "appsettings.json",
     "delaySign": true,
     "publicSign": false,
     "keyFile": "../../../tools/MSSharedLibKey.snk",
@@ -11,25 +12,30 @@
   },
 
   "testRunner": "xunit",
+
+  "dependencies": {
+    "dotnet-test-xunit": "2.2.0-preview2-build1029",
+    "Microsoft.Azure.KeyVault": "[2.0.3-preview, 3.0)",
+    "Microsoft.Azure.KeyVault.TestFramework": "[2.0.2-preview, 3.0)",
+    "xunit": "2.2.0-beta2-build3300"
+  },
+
   "frameworks": {
     "netcoreapp1.0": {
-      "imports": [ "dnxcore50", "portable-net451+win8" ],
+      "buildOptions": {
+        "debugType": "portable",
+        "define": [ "NETSTANDARD", "NETCOREAPP10" ]
+      },
       "dependencies": {
         "Microsoft.NETCore.App": {
           "type": "platform",
           "version": "1.0.0"
         },
-        "System.Security.Cryptography.Cng": "4.2.0",
-        "System.Security.Cryptography.Csp": "4.0.0",
-        "System.Security.Cryptography.X509Certificates": "4.1.0",
-        "System.Diagnostics.Tracing": "4.1.0"
-      }
+        "Microsoft.IdentityModel.Clients.ActiveDirectory": "3.13.5"
+      },
+      "frameworkAssemblies": {
+      },
+      "imports": [ "portable-net45+win8" ]
     }
-  },
-  "dependencies": {
-    "Microsoft.Azure.KeyVault": "2.0.2-preview",
-    "Microsoft.Azure.KeyVault.TestFramework": "2.0.0-preview",
-    "dotnet-test-xunit": "2.2.0-preview2-build1029",
-    "xunit": "2.2.0-beta2-build3300"
   }
 }

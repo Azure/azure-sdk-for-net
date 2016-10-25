@@ -8,13 +8,7 @@
 
 namespace Microsoft.Azure.Management.ResourceManager.Models
 {
-    using System;
     using System.Linq;
-    using System.Collections.Generic;
-    using Newtonsoft.Json;
-    using Microsoft.Rest;
-    using Microsoft.Rest.Serialization;
-    using Microsoft.Rest.Azure;
 
     /// <summary>
     /// Location information.
@@ -29,7 +23,9 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         /// <summary>
         /// Initializes a new instance of the Location class.
         /// </summary>
-        /// <param name="id">The ID of the resource (/subscriptions/SubscriptionId).</param>
+        /// <param name="id">The fully qualified Id of the location. For
+        /// example,
+        /// /subscriptions/00000000-0000-0000-0000-000000000000/locations/westus.</param>
         /// <param name="subscriptionId">The subscription Id.</param>
         /// <param name="name">The location name.</param>
         /// <param name="displayName">The display name of the location.</param>
@@ -46,41 +42,41 @@ namespace Microsoft.Azure.Management.ResourceManager.Models
         }
 
         /// <summary>
-        /// Gets or sets the ID of the resource
-        /// (/subscriptions/SubscriptionId).
+        /// Gets the fully qualified Id of the location. For example,
+        /// /subscriptions/00000000-0000-0000-0000-000000000000/locations/westus.
         /// </summary>
-        [JsonProperty(PropertyName = "id")]
-        public string Id { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "id")]
+        public string Id { get; private set; }
 
         /// <summary>
-        /// Gets or sets the subscription Id.
+        /// Gets the subscription Id.
         /// </summary>
-        [JsonProperty(PropertyName = "subscriptionId")]
-        public string SubscriptionId { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "subscriptionId")]
+        public string SubscriptionId { get; private set; }
 
         /// <summary>
-        /// Gets or sets the location name.
+        /// Gets the location name.
         /// </summary>
-        [JsonProperty(PropertyName = "name")]
-        public string Name { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "name")]
+        public string Name { get; private set; }
 
         /// <summary>
-        /// Gets or sets the display name of the location.
+        /// Gets the display name of the location.
         /// </summary>
-        [JsonProperty(PropertyName = "displayName")]
-        public string DisplayName { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "displayName")]
+        public string DisplayName { get; private set; }
 
         /// <summary>
-        /// Gets or sets the latitude of the location.
+        /// Gets the latitude of the location.
         /// </summary>
-        [JsonProperty(PropertyName = "latitude")]
-        public string Latitude { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "latitude")]
+        public string Latitude { get; private set; }
 
         /// <summary>
-        /// Gets or sets the longitude of the location.
+        /// Gets the longitude of the location.
         /// </summary>
-        [JsonProperty(PropertyName = "longitude")]
-        public string Longitude { get; set; }
+        [Newtonsoft.Json.JsonProperty(PropertyName = "longitude")]
+        public string Longitude { get; private set; }
 
     }
 }
