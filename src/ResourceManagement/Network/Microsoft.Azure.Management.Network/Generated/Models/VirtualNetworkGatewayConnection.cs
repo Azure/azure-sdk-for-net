@@ -104,7 +104,7 @@ namespace Microsoft.Azure.Management.Network.Models
         /// <summary>
         /// Collection of all tunnels' connection health status.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.TunnelConnectionStatus")]
+        [JsonProperty(PropertyName = "properties.tunnelConnectionStatus")]
         public IList<TunnelConnectionHealth> TunnelConnectionStatus { get; set; }
 
         /// <summary>
