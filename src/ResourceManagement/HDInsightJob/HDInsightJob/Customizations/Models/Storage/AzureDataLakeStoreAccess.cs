@@ -22,33 +22,36 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
 {
     public class AzureDataLakeStoreAccess : IStorageAccess
     {
-        // Data lake store account name
+        // Data Lake Store account name
         private string AccountName;
 
-        // Default storage root of the cluster in data lake store.
-        private string DefaultStorageRoot;
+        // Default storage root path for the cluster in Data Lake Store.
+        private string DefaultStorageRootPath;
 
-        // Data lake store management client.
+        // Data Lake Store management client.
         private DataLakeStoreFileSystemManagementClient ManagementClient;
 
         /// <summary>
-        /// Initializes a new instance of the DataLakeStorage class.
+        /// Initializes a new instance of the AzureDataLakeStoreAccess class.
         /// </summary>
         /// <param name='client'>
-        /// Required. The data lake store management client to access Data lake store.
+        /// Required. The Data Lake Store management client.
         /// </param>
         /// <param name='storageAccountName'>
-        /// Required. The storage account name.
+        /// Required. The Data Lake Store storage account name.
         /// </param>
-        public AzureDataLakeStoreAccess(DataLakeStoreFileSystemManagementClient client, string storageAccountName, string defaultStorageRoot)
+        /// <param name='defaultStorageRootPath'>
+        /// Required. The default storage root path in Data Lake Store for the cluster.
+        /// </param>
+        public AzureDataLakeStoreAccess(DataLakeStoreFileSystemManagementClient client, string storageAccountName, string defaultStorageRootPath)
         {
             this.AccountName = storageAccountName;
             this.ManagementClient = client;
-            this.DefaultStorageRoot = defaultStorageRoot;
+            this.DefaultStorageRootPath = defaultStorageRootPath;
         }
 
         /// <summary>
-        /// Gets the file content from data lake store file path.
+        /// Gets the file content from Data Lake Store file path.
         /// </summary>
         /// <param name='filePath'>
         /// Required. File path to download the content of the file.
@@ -58,9 +61,9 @@ namespace Microsoft.Azure.Management.HDInsight.Job.Models
         /// </returns>
         public Stream GetFileContent(string filePath)
         {
-            // The file path needs to be prefixed with this.DefaultStorageRoot to get the actual path of the file.
-            return this.ManagementClient.FileSystem.Open(this.AccountName, 
-                this.DefaultStorageRoot + (!this.DefaultStorageRoot.EndsWith("/") ? "/" : string.Empty) + filePath);
+            // The file path needs to be prefixed with DefaultStorageRootPath to get the actual path of the file in the cluster.
+            return this.ManagementClient.FileSystem.Open(this.AccountName,
+                this.DefaultStorageRootPath + (!this.DefaultStorageRootPath.EndsWith("/") ? "/" : string.Empty) + filePath);
         }
     }
 }

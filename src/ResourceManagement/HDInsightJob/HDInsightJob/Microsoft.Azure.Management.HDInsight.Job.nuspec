@@ -4,9 +4,11 @@
     <id>Microsoft.Azure.Management.HDInsight.Job</id>
     <title>Microsoft Azure HDInsight Job Management Library</title>
     <releaseNotes><![CDATA[
-3.0.0
+3.0.0-preview
 
-   * Added support for azure data lake store as default file system.
+   * This package now has a dependency on the .NET 4.5 framework.
+   * Added support for Azure Data Lake Store as default file system. 
+   * The methods “GetJobOutput”(+Async) and “GetJobErrorLogsAsync”(+Async) now accept an AzureDataLakeStoreAccess object for clusters with Azure Data Lake Store as default file system.
    
 2.0.3
 
@@ -89,13 +91,11 @@ The methods “GetJobOutput”(+Async) and “GetJobErrorLogsAsync”(+Async) no
       <group targetFramework="net45">
         <reference file="Microsoft.Azure.Management.HDInsight.Job.dll" />
       </group>
-      <group targetFramework="portable">
-        <reference file="Microsoft.Azure.Management.HDInsight.Job.dll" />
-      </group>
     </references>
     <dependencies>
       <dependency id="Microsoft.Azure.Common" version="[2.1.0,3.0)" />
       <dependency id="WindowsAzure.Storage" version="[6.0.0,7.0)" />
+      <dependency id="Microsoft.Azure.Management.DataLake.Store" version="0.12.4-preview" />
     </dependencies>
   </metadata>
   <files>

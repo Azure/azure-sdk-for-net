@@ -60,7 +60,7 @@
     <Scope Condition=" '$(Scope)' == '' ">All</Scope>
     <FxTargetList>portable;net40;net45</FxTargetList>
     <FxTargetList Condition=" '$(Scope)' == 'authentication' ">net45</FxTargetList>
-    <FxTargetList Condition=" '$(Scope)' == 'ResourceManagement\HDInsightJob' ">portable;net45</FxTargetList>
+    <FxTargetList Condition=" '$(Scope)' == 'ResourceManagement\HDInsightJob' ">net45</FxTargetList>
   </PropertyGroup>
 
   <ItemGroup>
