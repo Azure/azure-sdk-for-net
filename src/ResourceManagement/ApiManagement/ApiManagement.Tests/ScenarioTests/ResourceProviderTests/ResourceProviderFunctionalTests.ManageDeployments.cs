@@ -24,6 +24,12 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
 
     public partial class ResourceProviderFunctionalTests
     {
+        /// <summary>
+        /// Common Test Subnet Resource
+        /// </summary>
+        const string SubnetResourceId =
+                    "/subscriptions/20010222-2b48-4245-a95c-090db6312d5f/resourceGroups/Default-Networking/providers/Microsoft.Network/virtualNetworks/apim-hydra-vnet2/subnets/default";
+
         [Fact]
         public void ManageDeployments()
         {
@@ -35,27 +41,6 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
 
                 var apiManagementClient = GetServiceClient<ApiManagementClient>(new CSMTestEnvironmentFactory());
 
-                // update from Developer to Standard and Update Capacity from 1 to 2
-                var response = apiManagementClient.ResourceProvider.ManageDeployments(
-                    ResourceGroupName,
-                    ApiManagementServiceName,
-                    new ApiServiceManageDeploymentsParameters
-                    {
-                        SkuType = SkuType.Standard,
-                        Location = Location,
-                        SkuUnitCount = 2
-                    });
-
-                Assert.NotNull(response);
-                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
-
-                var getResponse = apiManagementClient.ResourceProvider.Get(ResourceGroupName, ApiManagementServiceName);
-                Assert.NotNull(getResponse);
-                Assert.Equal(HttpStatusCode.OK, getResponse.StatusCode);
-                Assert.NotNull(getResponse.Value);
-                Assert.Equal(SkuType.Standard, getResponse.Value.Properties.SkuProperties.SkuType);
-                Assert.Equal(2, getResponse.Value.Properties.SkuProperties.Capacity);
-
                 // update from Standard to Premium and add one more region
                 var location = this.ManagmentClient.GetLocations().FirstOrDefault(l => !string.Equals(l, Location, StringComparison.OrdinalIgnoreCase));
                 if (location == null)
@@ -66,7 +51,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                 // renew access token
                 apiManagementClient.RefreshAccessToken();
 
-                response = apiManagementClient.ResourceProvider.ManageDeployments(
+                var response = apiManagementClient.ResourceProvider.ManageDeployments(
                     ResourceGroupName,
                     ApiManagementServiceName,
                     new ApiServiceManageDeploymentsParameters
@@ -74,6 +59,7 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                         SkuType = SkuType.Premium,
                         Location = Location,
                         SkuUnitCount = 2,
+                        VpnType = VirtualNetworkType.None,
                         AdditionalRegions = new[]
                         {
                             new AdditionalRegion
@@ -88,16 +74,107 @@ namespace Microsoft.Azure.Management.ApiManagement.Tests.ScenarioTests.ResourceP
                 Assert.NotNull(response);
                 Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
-                getResponse = apiManagementClient.ResourceProvider.Get(ResourceGroupName, ApiManagementServiceName);
+                var getResponse = apiManagementClient.ResourceProvider.Get(ResourceGroupName, ApiManagementServiceName);
                 Assert.NotNull(getResponse);
                 Assert.Equal(HttpStatusCode.OK, getResponse.StatusCode);
                 Assert.NotNull(getResponse.Value);
-                Assert.Equal(SkuType.Premium, getResponse.Value.Properties.SkuProperties.SkuType);
-                Assert.Equal(2, getResponse.Value.Properties.SkuProperties.Capacity);
+                Assert.Equal(SkuType.Premium, getResponse.Value.SkuProperties.SkuType);
+                Assert.Equal(2, getResponse.Value.SkuProperties.Capacity);
                 Assert.NotNull(getResponse.Value.Properties.AdditionalRegions);
                 Assert.Equal(1, getResponse.Value.Properties.AdditionalRegions.Count);
                 Assert.Equal(SkuType.Premium, getResponse.Value.Properties.AdditionalRegions[0].SkuType);
                 Assert.Equal(2, getResponse.Value.Properties.AdditionalRegions[0].SkuUnitCount);
+                Assert.Equal(VirtualNetworkType.None, getResponse.Value.Properties.VpnType);
+            }
+        }
+        
+        [Fact]
+        public void ManageDeployments_SetupExternalVpnConfiguration()
+        {
+            using (var context = UndoContext.Current)
+            {
+                context.Start("ResourceProviderFunctionalTests", "ManageDeployments_SetupExternalVpnConfiguration");
+
+                TryCreateApiService();
+
+                var apiManagementClient = GetServiceClient<ApiManagementClient>(new CSMTestEnvironmentFactory());
+                
+                // Join the Developer Service to a Vnet having External VIP
+                var response = apiManagementClient.ResourceProvider.ManageDeployments(
+                    ResourceGroupName,
+                    ApiManagementServiceName,
+                    new ApiServiceManageDeploymentsParameters
+                    {
+                        SkuType = SkuType.Developer,
+                        Location = Location,
+                        SkuUnitCount = 1,
+                        VirtualNetworkConfiguration = new VirtualNetworkConfiguration()
+                        {
+                            Location = Location,
+                            SubnetResourceId = SubnetResourceId
+                        },
+                        VpnType = VirtualNetworkType.External
+                    });
+
+                Assert.NotNull(response);
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+                var getResponse = apiManagementClient.ResourceProvider.Get(ResourceGroupName, ApiManagementServiceName);
+                Assert.NotNull(getResponse);
+                Assert.Equal(HttpStatusCode.OK, getResponse.StatusCode);
+                Assert.NotNull(getResponse.Value);
+                Assert.Equal(SkuType.Developer, getResponse.Value.SkuProperties.SkuType);
+                Assert.Equal(1, getResponse.Value.SkuProperties.Capacity);
+                Assert.NotNull(getResponse.Value.Properties.VirtualNetworkConfiguration.SubnetResourceId);
+                Assert.Equal(SubnetResourceId, getResponse.Value.Properties.VirtualNetworkConfiguration.SubnetResourceId);
+                Assert.Equal(VirtualNetworkType.External, getResponse.Value.Properties.VpnType);
+                Assert.NotNull(getResponse.Value.Properties.VirtualNetworkConfiguration.VnetId);
+                Assert.Null(getResponse.Value.Properties.VirtualNetworkConfiguration.SubnetName);
+            }
+        }
+
+        [Fact]
+        public void ManageDeployments_SetupInternalVpnConfiguration()
+        {
+            using (var context = UndoContext.Current)
+            {
+                context.Start("ResourceProviderFunctionalTests", "ManageDeployments_SetupInternalVpnConfiguration");
+
+                TryCreateApiService();
+
+                var apiManagementClient = GetServiceClient<ApiManagementClient>(new CSMTestEnvironmentFactory());
+                
+                // switch from External to Internal Vpn
+                var response = apiManagementClient.ResourceProvider.ManageDeployments(
+                    ResourceGroupName,
+                    ApiManagementServiceName,
+                    new ApiServiceManageDeploymentsParameters
+                    {
+                        SkuType = SkuType.Developer,
+                        Location = Location,
+                        SkuUnitCount = 1,
+                        VirtualNetworkConfiguration = new VirtualNetworkConfiguration()
+                        {
+                            Location = Location,
+                            SubnetResourceId = SubnetResourceId
+                        },
+                        VpnType = VirtualNetworkType.Internal
+                    });
+
+                Assert.NotNull(response);
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+                var getResponse = apiManagementClient.ResourceProvider.Get(ResourceGroupName, ApiManagementServiceName);
+                Assert.NotNull(getResponse);
+                Assert.Equal(HttpStatusCode.OK, getResponse.StatusCode);
+                Assert.NotNull(getResponse.Value);
+                Assert.Equal(SkuType.Developer, getResponse.Value.SkuProperties.SkuType);
+                Assert.Equal(1, getResponse.Value.SkuProperties.Capacity);
+                Assert.NotNull(getResponse.Value.Properties.VirtualNetworkConfiguration.SubnetResourceId);
+                Assert.Equal(SubnetResourceId, getResponse.Value.Properties.VirtualNetworkConfiguration.SubnetResourceId);
+                Assert.Equal(VirtualNetworkType.Internal, getResponse.Value.Properties.VpnType);
+                Assert.NotNull(getResponse.Value.Properties.VirtualNetworkConfiguration.VnetId);
+                Assert.Null(getResponse.Value.Properties.VirtualNetworkConfiguration.SubnetName);
             }
         }
     }

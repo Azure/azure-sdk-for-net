@@ -33,7 +33,7 @@ namespace Microsoft.Azure.Management.Sql.Models
         private string _securityEnabledAccess;
         
         /// <summary>
-        /// Optional. Gets or sets whether block direct access is applied.
+        /// Optional. Sets whether block direct access is applied.
         /// </summary>
         public string SecurityEnabledAccess
         {

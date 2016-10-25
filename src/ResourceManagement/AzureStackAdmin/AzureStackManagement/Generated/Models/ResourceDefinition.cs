@@ -26,14 +26,14 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Resource Definition
     /// </summary>
     public partial class ResourceDefinition : ResourceBase
     {
         private string _properties;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Properties of the resource
         /// </summary>
         public string Properties
         {

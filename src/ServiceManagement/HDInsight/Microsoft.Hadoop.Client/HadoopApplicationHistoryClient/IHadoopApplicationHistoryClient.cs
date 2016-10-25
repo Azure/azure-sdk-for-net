@@ -21,7 +21,9 @@ namespace Microsoft.Hadoop.Client
     /// <summary>
     /// Represents a Hadoop Application History Client.
     /// </summary>
+#pragma warning disable 618
     internal interface IHadoopApplicationHistoryClient : IHadoopClientBase
+#pragma warning restore 618
     {
         /// <summary>
         /// Lists completed applications.

@@ -39,8 +39,8 @@ namespace Microsoft.Azure.Management.Sql
 {
     /// <summary>
     /// Represents all the operations for operating on Azure SQL Server
-    /// disaster recovery configurations.  Contains operations to: Create,
-    /// Retrieve, Update, and Delete.
+    /// disaster recovery configurations. Contains operations to: Create,
+    /// Retrieve, Update, Failover, and Delete.
     /// </summary>
     internal partial class ServerDisasterRecoveryConfigurationOperations : IServiceOperations<SqlManagementClient>, IServerDisasterRecoveryConfigurationOperations
     {

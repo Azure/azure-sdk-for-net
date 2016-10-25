@@ -209,6 +209,18 @@ namespace Microsoft.Azure.Management.Sql
                     propertiesValue["emailAccountAdmins"] = parameters.Properties.EmailAccountAdmins;
                 }
                 
+                if (parameters.Properties.StorageEndpoint != null)
+                {
+                    propertiesValue["storageEndpoint"] = parameters.Properties.StorageEndpoint;
+                }
+                
+                if (parameters.Properties.StorageAccountAccessKey != null)
+                {
+                    propertiesValue["storageAccountAccessKey"] = parameters.Properties.StorageAccountAccessKey;
+                }
+                
+                propertiesValue["retentionDays"] = parameters.Properties.RetentionDays;
+                
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
                 httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
@@ -244,6 +256,217 @@ namespace Microsoft.Azure.Management.Sql
                     // Deserialize Response
                     result = new AzureOperationResponse();
                     result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Creates or updates an Azure SQL Server security alert policy.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server on which the
+        /// database is hosted.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. The required parameters for creating or updating a Azure
+        /// SQL Database security alert policy.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response to Azure Sql Server security alert policy create or update
+        /// operation.
+        /// </returns>
+        public async Task<ServerSecurityAlertPolicyCreateOrUpdateResponse> CreateOrUpdateServerSecurityAlertPolicyAsync(string resourceGroupName, string serverName, ServerSecurityAlertPolicyCreateOrUpdateParameters parameters, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException("serverName");
+            }
+            if (parameters == null)
+            {
+                throw new ArgumentNullException("parameters");
+            }
+            if (parameters.Properties == null)
+            {
+                throw new ArgumentNullException("parameters.Properties");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("serverName", serverName);
+                tracingParameters.Add("parameters", parameters);
+                TracingAdapter.Enter(invocationId, this, "CreateOrUpdateServerSecurityAlertPolicyAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Sql";
+            url = url + "/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/securityAlertPolicies/Default";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-05-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Put;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Serialize Request
+                string requestContent = null;
+                JToken requestDoc = null;
+                
+                JObject serverSecurityAlertPolicyCreateOrUpdateParametersValue = new JObject();
+                requestDoc = serverSecurityAlertPolicyCreateOrUpdateParametersValue;
+                
+                JObject propertiesValue = new JObject();
+                serverSecurityAlertPolicyCreateOrUpdateParametersValue["properties"] = propertiesValue;
+                
+                if (parameters.Properties.State != null)
+                {
+                    propertiesValue["state"] = parameters.Properties.State;
+                }
+                
+                if (parameters.Properties.DisabledAlerts != null)
+                {
+                    propertiesValue["disabledAlerts"] = parameters.Properties.DisabledAlerts;
+                }
+                
+                if (parameters.Properties.EmailAddresses != null)
+                {
+                    propertiesValue["emailAddresses"] = parameters.Properties.EmailAddresses;
+                }
+                
+                if (parameters.Properties.EmailAccountAdmins != null)
+                {
+                    propertiesValue["emailAccountAdmins"] = parameters.Properties.EmailAccountAdmins;
+                }
+                
+                if (parameters.Properties.StorageEndpoint != null)
+                {
+                    propertiesValue["storageEndpoint"] = parameters.Properties.StorageEndpoint;
+                }
+                
+                if (parameters.Properties.StorageAccountAccessKey != null)
+                {
+                    propertiesValue["storageAccountAccessKey"] = parameters.Properties.StorageAccountAccessKey;
+                }
+                
+                propertiesValue["retentionDays"] = parameters.Properties.RetentionDays;
+                
+                requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
+                httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
+                httpRequest.Content.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK && statusCode != HttpStatusCode.Accepted)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, requestContent, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    ServerSecurityAlertPolicyCreateOrUpdateResponse result = null;
+                    // Deserialize Response
+                    result = new ServerSecurityAlertPolicyCreateOrUpdateResponse();
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("Location"))
+                    {
+                        result.OperationStatusLink = httpResponse.Headers.GetValues("Location").FirstOrDefault();
+                    }
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
@@ -449,6 +672,483 @@ namespace Microsoft.Azure.Management.Sql
                                 {
                                     string emailAccountAdminsInstance = ((string)emailAccountAdminsValue);
                                     propertiesInstance.EmailAccountAdmins = emailAccountAdminsInstance;
+                                }
+                                
+                                JToken storageEndpointValue = propertiesValue["storageEndpoint"];
+                                if (storageEndpointValue != null && storageEndpointValue.Type != JTokenType.Null)
+                                {
+                                    string storageEndpointInstance = ((string)storageEndpointValue);
+                                    propertiesInstance.StorageEndpoint = storageEndpointInstance;
+                                }
+                                
+                                JToken storageAccountAccessKeyValue = propertiesValue["storageAccountAccessKey"];
+                                if (storageAccountAccessKeyValue != null && storageAccountAccessKeyValue.Type != JTokenType.Null)
+                                {
+                                    string storageAccountAccessKeyInstance = ((string)storageAccountAccessKeyValue);
+                                    propertiesInstance.StorageAccountAccessKey = storageAccountAccessKeyInstance;
+                                }
+                                
+                                JToken retentionDaysValue = propertiesValue["retentionDays"];
+                                if (retentionDaysValue != null && retentionDaysValue.Type != JTokenType.Null)
+                                {
+                                    int retentionDaysInstance = ((int)retentionDaysValue);
+                                    propertiesInstance.RetentionDays = retentionDaysInstance;
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                securityAlertPolicyInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                securityAlertPolicyInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                securityAlertPolicyInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                securityAlertPolicyInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    securityAlertPolicyInstance.Tags.Add(tagsKey, tagsValue);
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Gets the status of an Azure Sql Server security alert policy create
+        /// or update operation.
+        /// </summary>
+        /// <param name='operationStatusLink'>
+        /// Required. Server blob auditing status link returned by the
+        /// CreateOrUpdate operation
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Response for long running Azure Sql server threat detection create
+        /// or update operations.
+        /// </returns>
+        public async Task<ServerSecurityAlertPolicyOperationResponse> GetOperationStatusAsync(string operationStatusLink, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (operationStatusLink == null)
+            {
+                throw new ArgumentNullException("operationStatusLink");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("operationStatusLink", operationStatusLink);
+                TracingAdapter.Enter(invocationId, this, "GetOperationStatusAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + operationStatusLink;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    ServerSecurityAlertPolicyOperationResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ServerSecurityAlertPolicyOperationResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            ServerSecurityAlertPolicyOperationResult operationResultInstance = new ServerSecurityAlertPolicyOperationResult();
+                            result.OperationResult = operationResultInstance;
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                ServerSecurityAlertPolicyOperationResultProperties propertiesInstance = new ServerSecurityAlertPolicyOperationResultProperties();
+                                operationResultInstance.Properties = propertiesInstance;
+                                
+                                JToken stateValue = propertiesValue["state"];
+                                if (stateValue != null && stateValue.Type != JTokenType.Null)
+                                {
+                                    OperationStatus stateInstance = ((OperationStatus)Enum.Parse(typeof(OperationStatus), ((string)stateValue), true));
+                                    propertiesInstance.State = stateInstance;
+                                }
+                                
+                                JToken startTimeValue = propertiesValue["startTime"];
+                                if (startTimeValue != null && startTimeValue.Type != JTokenType.Null)
+                                {
+                                    string startTimeInstance = ((string)startTimeValue);
+                                    propertiesInstance.StartTime = startTimeInstance;
+                                }
+                                
+                                JToken operationIdValue = propertiesValue["operationId"];
+                                if (operationIdValue != null && operationIdValue.Type != JTokenType.Null)
+                                {
+                                    string operationIdInstance = ((string)operationIdValue);
+                                    propertiesInstance.OperationId = operationIdInstance;
+                                }
+                            }
+                            
+                            JToken idValue = responseDoc["id"];
+                            if (idValue != null && idValue.Type != JTokenType.Null)
+                            {
+                                string idInstance = ((string)idValue);
+                                operationResultInstance.Id = idInstance;
+                            }
+                            
+                            JToken nameValue = responseDoc["name"];
+                            if (nameValue != null && nameValue.Type != JTokenType.Null)
+                            {
+                                string nameInstance = ((string)nameValue);
+                                operationResultInstance.Name = nameInstance;
+                            }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                string typeInstance = ((string)typeValue);
+                                operationResultInstance.Type = typeInstance;
+                            }
+                            
+                            JToken locationValue = responseDoc["location"];
+                            if (locationValue != null && locationValue.Type != JTokenType.Null)
+                            {
+                                string locationInstance = ((string)locationValue);
+                                operationResultInstance.Location = locationInstance;
+                            }
+                            
+                            JToken tagsSequenceElement = ((JToken)responseDoc["tags"]);
+                            if (tagsSequenceElement != null && tagsSequenceElement.Type != JTokenType.Null)
+                            {
+                                foreach (JProperty property in tagsSequenceElement)
+                                {
+                                    string tagsKey = ((string)property.Name);
+                                    string tagsValue = ((string)property.Value);
+                                    operationResultInstance.Tags.Add(tagsKey, tagsValue);
+                                }
+                            }
+                        }
+                        
+                    }
+                    result.StatusCode = statusCode;
+                    if (httpResponse.Headers.Contains("x-ms-request-id"))
+                    {
+                        result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
+                    }
+                    
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.Exit(invocationId, result);
+                    }
+                    return result;
+                }
+                finally
+                {
+                    if (httpResponse != null)
+                    {
+                        httpResponse.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (httpRequest != null)
+                {
+                    httpRequest.Dispose();
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Returns an Azure SQL Database security alert policy.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// Required. The name of the Resource Group to which the server
+        /// belongs.
+        /// </param>
+        /// <param name='serverName'>
+        /// Required. The name of the Azure SQL Database Server on which the
+        /// database is hosted.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// Cancellation token.
+        /// </param>
+        /// <returns>
+        /// Represents the response to a get server security alert policy
+        /// request.
+        /// </returns>
+        public async Task<ServerSecurityAlertPolicyGetResponse> GetServerSecurityAlertPolicyAsync(string resourceGroupName, string serverName, CancellationToken cancellationToken)
+        {
+            // Validate
+            if (resourceGroupName == null)
+            {
+                throw new ArgumentNullException("resourceGroupName");
+            }
+            if (serverName == null)
+            {
+                throw new ArgumentNullException("serverName");
+            }
+            
+            // Tracing
+            bool shouldTrace = TracingAdapter.IsEnabled;
+            string invocationId = null;
+            if (shouldTrace)
+            {
+                invocationId = TracingAdapter.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("resourceGroupName", resourceGroupName);
+                tracingParameters.Add("serverName", serverName);
+                TracingAdapter.Enter(invocationId, this, "GetServerSecurityAlertPolicyAsync", tracingParameters);
+            }
+            
+            // Construct URL
+            string url = "";
+            url = url + "/subscriptions/";
+            if (this.Client.Credentials.SubscriptionId != null)
+            {
+                url = url + Uri.EscapeDataString(this.Client.Credentials.SubscriptionId);
+            }
+            url = url + "/resourceGroups/";
+            url = url + Uri.EscapeDataString(resourceGroupName);
+            url = url + "/providers/";
+            url = url + "Microsoft.Sql";
+            url = url + "/servers/";
+            url = url + Uri.EscapeDataString(serverName);
+            url = url + "/securityAlertPolicies/Default";
+            List<string> queryParameters = new List<string>();
+            queryParameters.Add("api-version=2015-05-01-preview");
+            if (queryParameters.Count > 0)
+            {
+                url = url + "?" + string.Join("&", queryParameters);
+            }
+            string baseUrl = this.Client.BaseUri.AbsoluteUri;
+            // Trim '/' character from the end of baseUrl and beginning of url.
+            if (baseUrl[baseUrl.Length - 1] == '/')
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            if (url[0] == '/')
+            {
+                url = url.Substring(1);
+            }
+            url = baseUrl + "/" + url;
+            url = url.Replace(" ", "%20");
+            
+            // Create HTTP transport objects
+            HttpRequestMessage httpRequest = null;
+            try
+            {
+                httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Get;
+                httpRequest.RequestUri = new Uri(url);
+                
+                // Set Headers
+                
+                // Set Credentials
+                cancellationToken.ThrowIfCancellationRequested();
+                await this.Client.Credentials.ProcessHttpRequestAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                
+                // Send Request
+                HttpResponseMessage httpResponse = null;
+                try
+                {
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.SendRequest(invocationId, httpRequest);
+                    }
+                    cancellationToken.ThrowIfCancellationRequested();
+                    httpResponse = await this.Client.HttpClient.SendAsync(httpRequest, cancellationToken).ConfigureAwait(false);
+                    if (shouldTrace)
+                    {
+                        TracingAdapter.ReceiveResponse(invocationId, httpResponse);
+                    }
+                    HttpStatusCode statusCode = httpResponse.StatusCode;
+                    if (statusCode != HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        CloudException ex = CloudException.Create(httpRequest, null, httpResponse, await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false));
+                        if (shouldTrace)
+                        {
+                            TracingAdapter.Error(invocationId, ex);
+                        }
+                        throw ex;
+                    }
+                    
+                    // Create Result
+                    ServerSecurityAlertPolicyGetResponse result = null;
+                    // Deserialize Response
+                    if (statusCode == HttpStatusCode.OK)
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+                        string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                        result = new ServerSecurityAlertPolicyGetResponse();
+                        JToken responseDoc = null;
+                        if (string.IsNullOrEmpty(responseContent) == false)
+                        {
+                            responseDoc = JToken.Parse(responseContent);
+                        }
+                        
+                        if (responseDoc != null && responseDoc.Type != JTokenType.Null)
+                        {
+                            ServerSecurityAlertPolicy securityAlertPolicyInstance = new ServerSecurityAlertPolicy();
+                            result.SecurityAlertPolicy = securityAlertPolicyInstance;
+                            
+                            JToken propertiesValue = responseDoc["properties"];
+                            if (propertiesValue != null && propertiesValue.Type != JTokenType.Null)
+                            {
+                                ServerSecurityAlertPolicyProperties propertiesInstance = new ServerSecurityAlertPolicyProperties();
+                                securityAlertPolicyInstance.Properties = propertiesInstance;
+                                
+                                JToken stateValue = propertiesValue["state"];
+                                if (stateValue != null && stateValue.Type != JTokenType.Null)
+                                {
+                                    string stateInstance = ((string)stateValue);
+                                    propertiesInstance.State = stateInstance;
+                                }
+                                
+                                JToken disabledAlertsValue = propertiesValue["disabledAlerts"];
+                                if (disabledAlertsValue != null && disabledAlertsValue.Type != JTokenType.Null)
+                                {
+                                    string disabledAlertsInstance = ((string)disabledAlertsValue);
+                                    propertiesInstance.DisabledAlerts = disabledAlertsInstance;
+                                }
+                                
+                                JToken emailAddressesValue = propertiesValue["emailAddresses"];
+                                if (emailAddressesValue != null && emailAddressesValue.Type != JTokenType.Null)
+                                {
+                                    string emailAddressesInstance = ((string)emailAddressesValue);
+                                    propertiesInstance.EmailAddresses = emailAddressesInstance;
+                                }
+                                
+                                JToken emailAccountAdminsValue = propertiesValue["emailAccountAdmins"];
+                                if (emailAccountAdminsValue != null && emailAccountAdminsValue.Type != JTokenType.Null)
+                                {
+                                    string emailAccountAdminsInstance = ((string)emailAccountAdminsValue);
+                                    propertiesInstance.EmailAccountAdmins = emailAccountAdminsInstance;
+                                }
+                                
+                                JToken storageEndpointValue = propertiesValue["storageEndpoint"];
+                                if (storageEndpointValue != null && storageEndpointValue.Type != JTokenType.Null)
+                                {
+                                    string storageEndpointInstance = ((string)storageEndpointValue);
+                                    propertiesInstance.StorageEndpoint = storageEndpointInstance;
+                                }
+                                
+                                JToken storageAccountAccessKeyValue = propertiesValue["storageAccountAccessKey"];
+                                if (storageAccountAccessKeyValue != null && storageAccountAccessKeyValue.Type != JTokenType.Null)
+                                {
+                                    string storageAccountAccessKeyInstance = ((string)storageAccountAccessKeyValue);
+                                    propertiesInstance.StorageAccountAccessKey = storageAccountAccessKeyInstance;
+                                }
+                                
+                                JToken retentionDaysValue = propertiesValue["retentionDays"];
+                                if (retentionDaysValue != null && retentionDaysValue.Type != JTokenType.Null)
+                                {
+                                    int retentionDaysInstance = ((int)retentionDaysValue);
+                                    propertiesInstance.RetentionDays = retentionDaysInstance;
                                 }
                             }
                             

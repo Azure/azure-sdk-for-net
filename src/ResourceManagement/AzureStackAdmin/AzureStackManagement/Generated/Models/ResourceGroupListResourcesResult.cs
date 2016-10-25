@@ -29,14 +29,14 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Result of resources list operation
     /// </summary>
     public partial class ResourceGroupListResourcesResult : AzureOperationResponse
     {
         private IList<ResourceDefinition> _resources;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Lists the resources under the resource group
         /// </summary>
         public IList<ResourceDefinition> Resources
         {

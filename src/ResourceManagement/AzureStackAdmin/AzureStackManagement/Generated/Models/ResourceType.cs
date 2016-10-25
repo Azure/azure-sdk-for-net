@@ -28,14 +28,25 @@ using Microsoft.AzureStack.Management.Models;
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// The resource type definition.
     /// </summary>
     public partial class ResourceType
     {
+        private IList<string> _allowedUnauthorizedActions;
+        
+        /// <summary>
+        /// Optional. Gets or sets the allowed unauthorized actions.
+        /// </summary>
+        public IList<string> AllowedUnauthorizedActions
+        {
+            get { return this._allowedUnauthorizedActions; }
+            set { this._allowedUnauthorizedActions = value; }
+        }
+        
         private IList<ResourceProviderEndpoint> _endpoints;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the resource provider endpoints.
         /// </summary>
         public IList<ResourceProviderEndpoint> Endpoints
         {
@@ -43,32 +54,33 @@ namespace Microsoft.AzureStack.Management.Models
             set { this._endpoints = value; }
         }
         
-        private bool _isHostBasedRouting;
+        private MarketplaceType _marketplaceType;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the resource type behavior in the
+        /// marketplace.
         /// </summary>
-        public bool IsHostBasedRouting
+        public MarketplaceType MarketplaceType
         {
-            get { return this._isHostBasedRouting; }
-            set { this._isHostBasedRouting = value; }
+            get { return this._marketplaceType; }
+            set { this._marketplaceType = value; }
         }
         
-        private bool _isProxyOnly;
+        private IList<string> _meteredResourceIds;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the metered resource ids.
         /// </summary>
-        public bool IsProxyOnly
+        public IList<string> MeteredResourceIds
         {
-            get { return this._isProxyOnly; }
-            set { this._isProxyOnly = value; }
+            get { return this._meteredResourceIds; }
+            set { this._meteredResourceIds = value; }
         }
         
         private string _name;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the resource type name.
         /// </summary>
         public string Name
         {
@@ -79,7 +91,7 @@ namespace Microsoft.AzureStack.Management.Models
         private ResourceDeletionPolicy _resourceDeletionPolicy;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the resource deletion policy.
         /// </summary>
         public ResourceDeletionPolicy ResourceDeletionPolicy
         {
@@ -87,15 +99,15 @@ namespace Microsoft.AzureStack.Management.Models
             set { this._resourceDeletionPolicy = value; }
         }
         
-        private ResourceGroupDeletionPolicy _resourceGroupDeletionPolicy;
+        private RoutingType _routingType;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Optional. Gets or sets the routing type of the resource
         /// </summary>
-        public ResourceGroupDeletionPolicy ResourceGroupDeletionPolicy
+        public RoutingType RoutingType
         {
-            get { return this._resourceGroupDeletionPolicy; }
-            set { this._resourceGroupDeletionPolicy = value; }
+            get { return this._routingType; }
+            set { this._routingType = value; }
         }
         
         /// <summary>
@@ -103,7 +115,9 @@ namespace Microsoft.AzureStack.Management.Models
         /// </summary>
         public ResourceType()
         {
+            this.AllowedUnauthorizedActions = new LazyList<string>();
             this.Endpoints = new LazyList<ResourceProviderEndpoint>();
+            this.MeteredResourceIds = new LazyList<string>();
         }
     }
 }

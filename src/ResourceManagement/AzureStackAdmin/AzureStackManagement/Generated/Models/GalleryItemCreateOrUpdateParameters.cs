@@ -21,23 +21,25 @@
 
 using System;
 using System.Linq;
+using Microsoft.AzureStack.Management.Models;
 
 namespace Microsoft.AzureStack.Management.Models
 {
     /// <summary>
-    /// Your documentation here.
+    /// Gallery item Upload parameters.
     /// </summary>
     public partial class GalleryItemCreateOrUpdateParameters
     {
-        private string _manifest;
+        private GalleryItemUriPayload _galleryItemUri;
         
         /// <summary>
-        /// Optional. Your documentation here.
+        /// Required. Gallery item Uri referenced to a public storage from
+        /// where the gallery item package will be uploaded.
         /// </summary>
-        public string Manifest
+        public GalleryItemUriPayload GalleryItemUri
         {
-            get { return this._manifest; }
-            set { this._manifest = value; }
+            get { return this._galleryItemUri; }
+            set { this._galleryItemUri = value; }
         }
         
         /// <summary>
@@ -46,6 +48,20 @@ namespace Microsoft.AzureStack.Management.Models
         /// </summary>
         public GalleryItemCreateOrUpdateParameters()
         {
+        }
+        
+        /// <summary>
+        /// Initializes a new instance of the
+        /// GalleryItemCreateOrUpdateParameters class with required arguments.
+        /// </summary>
+        public GalleryItemCreateOrUpdateParameters(GalleryItemUriPayload galleryItemUri)
+            : this()
+        {
+            if (galleryItemUri == null)
+            {
+                throw new ArgumentNullException("galleryItemUri");
+            }
+            this.GalleryItemUri = galleryItemUri;
         }
     }
 }

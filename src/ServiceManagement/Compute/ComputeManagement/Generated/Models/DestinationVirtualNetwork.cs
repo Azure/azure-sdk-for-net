@@ -29,8 +29,6 @@ namespace Microsoft.WindowsAzure.Management.Compute.Models
     /// </summary>
     public static partial class DestinationVirtualNetwork
     {
-        public const string Default = "Default";
-        
         public const string New = "New";
         
         public const string Existing = "Existing";

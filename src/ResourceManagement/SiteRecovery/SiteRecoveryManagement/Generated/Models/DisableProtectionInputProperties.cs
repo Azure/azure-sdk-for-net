@@ -30,6 +30,18 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// </summary>
     public partial class DisableProtectionInputProperties
     {
+        private string _disableProtectionReason;
+        
+        /// <summary>
+        /// Optional. Disable protection reasons. It can have
+        /// NotSpecified/CompleteMigration
+        /// </summary>
+        public string DisableProtectionReason
+        {
+            get { return this._disableProtectionReason; }
+            set { this._disableProtectionReason = value; }
+        }
+        
         private DisableProtectionProviderSpecificInput _providerSettings;
         
         /// <summary>

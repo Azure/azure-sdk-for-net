@@ -11,6 +11,7 @@
     <Compile Include="Helpers\RecordedDelegationHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScenarioTests\AlertsTests.cs" />
+    <Compile Include="ScenarioTests\Constants.cs" />
     <Compile Include="ScenarioTests\DeletionTests.cs" />
     <Compile Include="ScenarioTests\EndtoEnd\SingleVM\EndToEndTests.cs" />
     <Compile Include="ScenarioTests\EndtoEnd\Helpers.cs" />
@@ -73,6 +74,12 @@
     <None Include="SessionRecords\SiteRecovery.Tests.GetTests\GetStorageClassificationAndPairingsUnderVault.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="SessionRecords\SiteRecovery.Tests.PairingTests\A2ACreatePolicy.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SiteRecovery.Tests.PairingTests\A2ADeletePolicy.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\SiteRecovery.Tests.PairingTests\CreateHyperVAzureProfile.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -83,6 +90,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\SiteRecovery.Tests.ScenarioTests.RecoveryPlanTests\RecoveryPlan_ValidateNames.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SiteRecovery.Tests.SiteTests\A2ACreateSite.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\SiteRecovery.Tests.SiteTests\A2ADeleteSite.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="SessionRecords\SiteRecovery.Tests.SiteTests\CreateSite.json">

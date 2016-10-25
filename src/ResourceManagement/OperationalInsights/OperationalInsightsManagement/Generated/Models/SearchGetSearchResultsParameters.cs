@@ -77,12 +77,12 @@ namespace Microsoft.Azure.Management.OperationalInsights.Models
             set { this._start = value; }
         }
         
-        private int _top;
+        private long _top;
         
         /// <summary>
         /// Optional. Gets or sets the number to get from the top.
         /// </summary>
-        public int Top
+        public long Top
         {
             get { return this._top; }
             set { this._top = value; }

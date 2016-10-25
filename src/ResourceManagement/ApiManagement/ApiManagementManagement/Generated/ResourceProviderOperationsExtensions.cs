@@ -265,66 +265,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
         
         /// <summary>
-        /// Begin to manage (CUD) VPN configuration of an Api Management
-        /// service.To determine whether the operation has finished processing
-        /// the request, call GetLongRunningOperationStatus.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.ApiManagement.IResourceProviderOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
-        /// </param>
-        /// <param name='name'>
-        /// Required. The name of the Api Management service.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. Parameters supplied to the ManageVirtualNetworks
-        /// operation.
-        /// </param>
-        /// <returns>
-        /// The response of the CreateOrUpdate Api Management service long
-        /// running operation.
-        /// </returns>
-        public static ApiServiceLongRunningOperationResponse BeginManagingVirtualNetworks(this IResourceProviderOperations operations, string resourceGroupName, string name, ApiServiceManageVirtualNetworksParameters parameters)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IResourceProviderOperations)s).BeginManagingVirtualNetworksAsync(resourceGroupName, name, parameters);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Begin to manage (CUD) VPN configuration of an Api Management
-        /// service.To determine whether the operation has finished processing
-        /// the request, call GetLongRunningOperationStatus.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.ApiManagement.IResourceProviderOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
-        /// </param>
-        /// <param name='name'>
-        /// Required. The name of the Api Management service.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. Parameters supplied to the ManageVirtualNetworks
-        /// operation.
-        /// </param>
-        /// <returns>
-        /// The response of the CreateOrUpdate Api Management service long
-        /// running operation.
-        /// </returns>
-        public static Task<ApiServiceLongRunningOperationResponse> BeginManagingVirtualNetworksAsync(this IResourceProviderOperations operations, string resourceGroupName, string name, ApiServiceManageVirtualNetworksParameters parameters)
-        {
-            return operations.BeginManagingVirtualNetworksAsync(resourceGroupName, name, parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
         /// Begin restore from backup operation of an Api Management service.To
         /// determine whether the operation has finished processing the
         /// request, call GetLongRunningOperationStatus.
@@ -505,17 +445,17 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Microsoft.Azure.Management.ApiManagement.IResourceProviderOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the CheckServiceNameAvailability
+        /// Required. Parameters supplied to the CheckNameAvailability
         /// operation.
         /// </param>
         /// <returns>
-        /// Response of the CheckServiceNameAvailability operation.
+        /// Response of the CheckNameAvailability operation.
         /// </returns>
-        public static ApiServiceCheckNameAvailabilityResponse CheckServiceNameAvailability(this IResourceProviderOperations operations, ApiServiceCheckNameAvailabilityParameters parameters)
+        public static ApiServiceNameAvailabilityResponse CheckNameAvailability(this IResourceProviderOperations operations, ApiServiceCheckNameAvailabilityParameters parameters)
         {
             return Task.Factory.StartNew((object s) => 
             {
-                return ((IResourceProviderOperations)s).CheckServiceNameAvailabilityAsync(parameters);
+                return ((IResourceProviderOperations)s).CheckNameAvailabilityAsync(parameters);
             }
             , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
         }
@@ -529,15 +469,15 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// Microsoft.Azure.Management.ApiManagement.IResourceProviderOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Parameters supplied to the CheckServiceNameAvailability
+        /// Required. Parameters supplied to the CheckNameAvailability
         /// operation.
         /// </param>
         /// <returns>
-        /// Response of the CheckServiceNameAvailability operation.
+        /// Response of the CheckNameAvailability operation.
         /// </returns>
-        public static Task<ApiServiceCheckNameAvailabilityResponse> CheckServiceNameAvailabilityAsync(this IResourceProviderOperations operations, ApiServiceCheckNameAvailabilityParameters parameters)
+        public static Task<ApiServiceNameAvailabilityResponse> CheckNameAvailabilityAsync(this IResourceProviderOperations operations, ApiServiceCheckNameAvailabilityParameters parameters)
         {
-            return operations.CheckServiceNameAvailabilityAsync(parameters, CancellationToken.None);
+            return operations.CheckNameAvailabilityAsync(parameters, CancellationToken.None);
         }
         
         /// <summary>
@@ -930,62 +870,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         public static Task<ApiServiceLongRunningOperationResponse> ManageDeploymentsAsync(this IResourceProviderOperations operations, string resourceGroupName, string name, ApiServiceManageDeploymentsParameters parameters)
         {
             return operations.ManageDeploymentsAsync(resourceGroupName, name, parameters, CancellationToken.None);
-        }
-        
-        /// <summary>
-        /// Manage (CUD) VPN configuration of an Api Management service.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.ApiManagement.IResourceProviderOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
-        /// </param>
-        /// <param name='name'>
-        /// Required. The name of the Api Management service.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. Parameters supplied to the ManageVirtualNetworks
-        /// operation.
-        /// </param>
-        /// <returns>
-        /// The response of the CreateOrUpdate Api Management service long
-        /// running operation.
-        /// </returns>
-        public static ApiServiceLongRunningOperationResponse ManageVirtualNetworks(this IResourceProviderOperations operations, string resourceGroupName, string name, ApiServiceManageVirtualNetworksParameters parameters)
-        {
-            return Task.Factory.StartNew((object s) => 
-            {
-                return ((IResourceProviderOperations)s).ManageVirtualNetworksAsync(resourceGroupName, name, parameters);
-            }
-            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-        }
-        
-        /// <summary>
-        /// Manage (CUD) VPN configuration of an Api Management service.
-        /// </summary>
-        /// <param name='operations'>
-        /// Reference to the
-        /// Microsoft.Azure.Management.ApiManagement.IResourceProviderOperations.
-        /// </param>
-        /// <param name='resourceGroupName'>
-        /// Required. The name of the resource group.
-        /// </param>
-        /// <param name='name'>
-        /// Required. The name of the Api Management service.
-        /// </param>
-        /// <param name='parameters'>
-        /// Required. Parameters supplied to the ManageVirtualNetworks
-        /// operation.
-        /// </param>
-        /// <returns>
-        /// The response of the CreateOrUpdate Api Management service long
-        /// running operation.
-        /// </returns>
-        public static Task<ApiServiceLongRunningOperationResponse> ManageVirtualNetworksAsync(this IResourceProviderOperations operations, string resourceGroupName, string name, ApiServiceManageVirtualNetworksParameters parameters)
-        {
-            return operations.ManageVirtualNetworksAsync(resourceGroupName, name, parameters, CancellationToken.None);
         }
         
         /// <summary>

@@ -39,20 +39,25 @@ namespace HDInsight.Tests.Helpers
             return TestBase.GetServiceClient<ResourceManagementClient>(new CSMTestEnvironmentFactory()).WithHandler(handler);
         }
 
-        public static string CreateResourceGroup(ResourceManagementClient resourcesClient)
+        public static string CreateResourceGroup(ResourceManagementClient resourcesClient, string location = "")
         {
             const string testPrefix = "hdi";
             var rgname = TestUtilities.GenerateName(testPrefix);
-            return CreateResourceGroup(resourcesClient, rgname);
+            return CreateResourceGroup(resourcesClient, rgname, location);
         }
 
-        public static string CreateResourceGroup(ResourceManagementClient resourcesClient, string rgname)
+        public static string CreateResourceGroup(ResourceManagementClient resourcesClient, string rgname, string location = "")
         {
+            if (string.IsNullOrEmpty(location))
+            {
+                location = DefaultLocation;
+            }
+
             var resourceGroup = resourcesClient.ResourceGroups.CreateOrUpdate(
                 rgname,
                 new ResourceGroup
                 {
-                    Location = DefaultLocation
+                    Location = location
                 });
 
             return rgname;

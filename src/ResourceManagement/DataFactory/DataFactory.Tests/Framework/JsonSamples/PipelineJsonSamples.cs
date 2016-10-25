@@ -317,8 +317,23 @@ namespace DataFactory.Tests.Framework.JsonSamples
                         writeBatchSize: 1000000,
                         writeBatchTimeout: ""01:00:00"",
                         sqlWriterCleanupScript: ""Script"",
-                        sliceIdentifierColumnName: ""SliceID""
+                        sliceIdentifierColumnName: ""SliceID"",
+                        allowPolyBase: true,
+                        polyBaseSettings:
+                        {
+                            rejectType: ""percentage"",
+                            rejectValue: 10,
+                            rejectSampleValue: 100,
+                            useTypeDefault: true
+                        }
                     },
+                    enableStaging: true,
+                    stagingSettings: 
+                    {
+                        linkedServiceName: ""MyStagingBlob"",
+                        path: ""stagingcontainer/path"",
+                        enableCompression: true
+                    }
                 },
                 inputs: 
                 [ 
@@ -560,6 +575,59 @@ namespace DataFactory.Tests.Framework.JsonSamples
                 [ 
                     {
                         name: ""csvBlob""
+                    }
+                ],
+                outputs: 
+                [ 
+                    {
+                        name: ""sasCopyBlob""
+                    }
+                ],
+                linkedServiceName: ""mlLinkedService"",
+                policy:
+                {
+                    concurrency: 3,
+                    executionPriorityOrder: ""NewestFirst"",
+                    retry: 3,
+                        timeout: ""00:00:05"",
+                        delay: ""00:00:01""
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
+        public const string AzureMLPipelineWithWebServiceInputs = @"
+{
+    name: ""My machine learning pipeline WebServiceInputs"",
+    properties: 
+    {
+        description : ""ML pipeline description"",
+        hubName : ""someHub"",
+        activities:
+        [
+            {
+                name: ""MLActivity"",
+                description: ""Test activity description"", 
+                type: ""AzureMLBatchExecution"",
+                typeProperties: {
+                    webServiceInputs: {
+                        ""webServiceInput1"": ""csvBlob1"",
+                        ""webServiceInput2"": ""csvBlob2""
+                    },
+                    webServiceOutputs: {
+                        ""webServiceOutput1"": ""sasCopyBlob""
+                    }
+                },
+                inputs: 
+                [ 
+                    {
+                        name: ""csvBlob1""
+                    },
+                    {   
+                        name: ""csvBLob2""
                     }
                 ],
                 outputs: 
@@ -1374,6 +1442,130 @@ namespace DataFactory.Tests.Framework.JsonSamples
                     executionPriorityOrder: ""NewestFirst"",
                     retry: 2,
                     timeout: ""01:00:00""
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
+        public const string CopyBlobToAzureDataLakeWithPerformanceParams = @"
+{
+    name: ""MyPipelineName"",
+    properties:
+    {
+        description : ""Copy from Blob to AzureDataLake with performance parameters"",
+        activities:
+        [
+            {
+                type: ""Copy"",
+                name: ""MyActivityName"",
+                typeProperties:
+                {
+                    source:
+                    {
+                        type: ""BlobSource"",
+                    },
+                     sink:
+                    {
+                        type: ""AzureDataLakeStoreSink"",
+                        writeBatchSize: 1000000,
+                        writeBatchTimeout: ""01:00:00"",
+                    },
+                    ""parallelCopies"": 5,
+                    ""cloudDataMovementUnits"": 4
+                },
+                inputs:
+                [ 
+                    {
+                        name: ""RawBlob""
+                    }
+                ],
+                outputs:
+                [ 
+                    {
+                        name: ""AdlOut""
+                    }
+                ],
+                linkedServiceName: ""MyLinkedServiceName""
+            }
+        ]
+    }
+}
+";
+        [JsonSample]
+        public const string CopyCassandraToBlob = @"{
+    ""name"": ""Pipeline"",
+    ""properties"": {
+        ""hubName"": ""hdis-jsontest-hub"",
+        ""activities"": [
+            {
+                ""name"": ""blob-table"",
+                ""type"": ""Copy"",
+                ""inputs"": [
+                    {
+                        ""name"": ""Table-Blob""
+                    }
+                ],
+                ""outputs"": [
+                    {
+                        ""name"": ""Table-AzureTable""
+                    }
+                ],
+                ""policy"": {
+                    ""concurrency"": 1
+                },
+                ""typeProperties"": {
+                    ""source"": {
+                        ""type"": ""CassandraSource"",
+                        ""query"":""select * from table"",
+                        ""consistencyLevel"":""TWO"",
+                    },
+                    ""sink"": {
+                        ""type"": ""AzureTableSink"",
+                        ""writeBatchSize"": 1000000,
+                        ""azureTableDefaultPartitionKeyValue"": ""defaultParitionKey""
+                    },
+                }
+            }
+        ]
+    }
+}
+";
+
+        [JsonSample]
+        public const string MongoDbActivityPipeline = @"{
+    ""name"": ""Pipeline"",
+    ""properties"": {
+        ""hubName"": ""hdis-jsontest-hub"",
+        ""activities"": [
+            {
+                ""name"": ""blob-table"",
+                ""type"": ""Copy"",
+                ""inputs"": [
+                    {
+                        ""name"": ""Table-MongoDb""
+                    }
+                ],
+                ""outputs"": [
+                    {
+                        ""name"": ""Table-AzureTable""
+                    }
+                ],
+                ""policy"": {
+                    ""concurrency"": 1
+                },
+                ""typeProperties"": {
+                    ""source"": {
+                        ""type"": ""MongoDbSource"",
+                        ""query"":""fake query""
+                    },
+                    ""sink"": {
+                        ""type"": ""AzureTableSink"",
+                        ""writeBatchSize"": 1000000,
+                        ""azureTableDefaultPartitionKeyValue"": ""defaultParitionKey""
+                    },
                 }
             }
         ]

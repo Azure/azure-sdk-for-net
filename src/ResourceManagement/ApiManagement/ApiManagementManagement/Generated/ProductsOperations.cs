@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "/products/";
             url = url + Uri.EscapeDataString(pid);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -359,7 +359,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "/products/";
             url = url + Uri.EscapeDataString(pid);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             queryParameters.Add("deleteSubscriptions=" + Uri.EscapeDataString(deleteSubscriptions.ToString().ToLower()));
             if (queryParameters.Count > 0)
             {
@@ -515,7 +515,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "/products/";
             url = url + Uri.EscapeDataString(pid);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -741,7 +741,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + Uri.EscapeDataString(serviceName);
             url = url + "/products";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             List<string> odataFilter = new List<string>();
             if (query != null && query.Filter != null)
             {
@@ -1237,7 +1237,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "/products/";
             url = url + Uri.EscapeDataString(pid);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

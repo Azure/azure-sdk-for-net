@@ -126,29 +126,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         Task<ApiServiceLongRunningOperationResponse> BeginManagingDeploymentsAsync(string resourceGroupName, string name, ApiServiceManageDeploymentsParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
-        /// Begin to manage (CUD) VPN configuration of an Api Management
-        /// service.To determine whether the operation has finished processing
-        /// the request, call GetLongRunningOperationStatus.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='name'>
-        /// The name of the Api Management service.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the ManageVirtualNetworks operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response of the CreateOrUpdate Api Management service long
-        /// running operation.
-        /// </returns>
-        Task<ApiServiceLongRunningOperationResponse> BeginManagingVirtualNetworksAsync(string resourceGroupName, string name, ApiServiceManageVirtualNetworksParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
         /// Begin restore from backup operation of an Api Management service.To
         /// determine whether the operation has finished processing the
         /// request, call GetLongRunningOperationStatus.
@@ -221,15 +198,15 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// service.
         /// </summary>
         /// <param name='parameters'>
-        /// Parameters supplied to the CheckServiceNameAvailability operation.
+        /// Parameters supplied to the CheckNameAvailability operation.
         /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
         /// <returns>
-        /// Response of the CheckServiceNameAvailability operation.
+        /// Response of the CheckNameAvailability operation.
         /// </returns>
-        Task<ApiServiceCheckNameAvailabilityResponse> CheckServiceNameAvailabilityAsync(ApiServiceCheckNameAvailabilityParameters parameters, CancellationToken cancellationToken);
+        Task<ApiServiceNameAvailabilityResponse> CheckNameAvailabilityAsync(ApiServiceCheckNameAvailabilityParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Creates new or updates existing Api Management service
@@ -377,27 +354,6 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// running operation.
         /// </returns>
         Task<ApiServiceLongRunningOperationResponse> ManageDeploymentsAsync(string resourceGroupName, string name, ApiServiceManageDeploymentsParameters parameters, CancellationToken cancellationToken);
-        
-        /// <summary>
-        /// Manage (CUD) VPN configuration of an Api Management service.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='name'>
-        /// The name of the Api Management service.
-        /// </param>
-        /// <param name='parameters'>
-        /// Parameters supplied to the ManageVirtualNetworks operation.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// Cancellation token.
-        /// </param>
-        /// <returns>
-        /// The response of the CreateOrUpdate Api Management service long
-        /// running operation.
-        /// </returns>
-        Task<ApiServiceLongRunningOperationResponse> ManageVirtualNetworksAsync(string resourceGroupName, string name, ApiServiceManageVirtualNetworksParameters parameters, CancellationToken cancellationToken);
         
         /// <summary>
         /// Restore an Api Management service from backup.

@@ -4402,6 +4402,60 @@ namespace Microsoft.WindowsAzure.Management.Compute
         }
         
         /// <summary>
+        /// The Validate Deployment Operation validates your deployment for
+        /// IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. Name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. Name of the deployment to be migrated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Deployment Network resource parameters for migration.
+        /// </param>
+        /// <returns>
+        /// The Validate Deployment Migration operation response.
+        /// </returns>
+        public static XrpMigrationValidateDeploymentResponse ValidateMigration(this IDeploymentOperations operations, string serviceName, string deploymentName, PrepareDeploymentMigrationParameters parameters)
+        {
+            return Task.Factory.StartNew((object s) => 
+            {
+                return ((IDeploymentOperations)s).ValidateMigrationAsync(serviceName, deploymentName, parameters);
+            }
+            , operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+        }
+        
+        /// <summary>
+        /// The Validate Deployment Operation validates your deployment for
+        /// IaaS Classic to ARM migration.
+        /// </summary>
+        /// <param name='operations'>
+        /// Reference to the
+        /// Microsoft.WindowsAzure.Management.Compute.IDeploymentOperations.
+        /// </param>
+        /// <param name='serviceName'>
+        /// Required. Name of the cloud service.
+        /// </param>
+        /// <param name='deploymentName'>
+        /// Required. Name of the deployment to be migrated.
+        /// </param>
+        /// <param name='parameters'>
+        /// Required. Deployment Network resource parameters for migration.
+        /// </param>
+        /// <returns>
+        /// The Validate Deployment Migration operation response.
+        /// </returns>
+        public static Task<XrpMigrationValidateDeploymentResponse> ValidateMigrationAsync(this IDeploymentOperations operations, string serviceName, string deploymentName, PrepareDeploymentMigrationParameters parameters)
+        {
+            return operations.ValidateMigrationAsync(serviceName, deploymentName, parameters, CancellationToken.None);
+        }
+        
+        /// <summary>
         /// The Walk Upgrade Domain By Deployment Name operation specifies an
         /// update domain in which a role instance must be updated. For more
         /// information about updating role instances, see Update an Azure

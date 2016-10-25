@@ -10,6 +10,16 @@
    * Added support for Azure Data Lake Store as default file system. 
    * The methods “GetJobOutput”(+Async) and “GetJobErrorLogsAsync”(+Async) now accept an AzureDataLakeStoreAccess object for clusters with Azure Data Lake Store as default file system.
    
+2.0.4
+
+  * Added support for new environments. 
+    
+    The following API has changed
+    public AzureStorageAccess(string storageAccountName, string storageAccountKey, string defaultStorageContainer, string storageAccountSuffix = null)
+    Users can optionally specify the storage account URI suffix, for example : "core.chinacloudapi.cn"
+    
+    users can now use the GetJobOutput() and GetJobErrorLogs() APIs for the new environments
+
 2.0.3
 
   * Added new API WaitForJobCompletion(string jobId, TimeSpan duration, TimeSpan waitInterval) to wait for completion of a job.

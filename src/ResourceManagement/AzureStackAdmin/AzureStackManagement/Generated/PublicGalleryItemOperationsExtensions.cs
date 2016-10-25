@@ -31,16 +31,14 @@ namespace Microsoft.AzureStack.Management
     public static partial class PublicGalleryItemOperationsExtensions
     {
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Public gallery items list.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IPublicGalleryItemOperations.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Public gallery items list result.
         /// </returns>
         public static PublicGalleryItemListResult ListAll(this IPublicGalleryItemOperations operations)
         {
@@ -52,16 +50,14 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Your documentation here.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Public gallery items list.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IPublicGalleryItemOperations.
         /// </param>
         /// <returns>
-        /// Your documentation here.
+        /// Public gallery items list result.
         /// </returns>
         public static Task<PublicGalleryItemListResult> ListAllAsync(this IPublicGalleryItemOperations operations)
         {

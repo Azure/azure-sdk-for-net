@@ -32,16 +32,14 @@ namespace Microsoft.AzureStack.Management
     public static partial class ManagedLocationOperationsExtensions
     {
         /// <summary>
-        /// Create / Update the location.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Create / Update the location.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IManagedLocationOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Your documentation here.
+        /// Required. Location properties
         /// </param>
         /// <returns>
         /// The location update result.
@@ -56,16 +54,14 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Create / Update the location.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Create / Update the location.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IManagedLocationOperations.
         /// </param>
         /// <param name='parameters'>
-        /// Required. Your documentation here.
+        /// Required. Location properties
         /// </param>
         /// <returns>
         /// The location update result.
@@ -76,9 +72,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Delete a location.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Delete a location.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -101,9 +95,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Delete a location.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Delete a location.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -122,9 +114,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Get the location.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Get the location.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -146,9 +136,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Get the location.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Get the location.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -166,9 +154,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Get locations under subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Get locations under subscription.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -187,9 +173,7 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Get locations under subscription.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Get locations under subscription.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
@@ -204,18 +188,14 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Get locations with the next link.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets locations with the next link.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IManagedLocationOperations.
         /// </param>
         /// <param name='nextLink'>
-        /// Required. The next link.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Required. The url to get the next set of results.
         /// </param>
         /// <returns>
         /// The location list result.
@@ -230,18 +210,14 @@ namespace Microsoft.AzureStack.Management
         }
         
         /// <summary>
-        /// Get locations with the next link.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Gets locations with the next link.
         /// </summary>
         /// <param name='operations'>
         /// Reference to the
         /// Microsoft.AzureStack.Management.IManagedLocationOperations.
         /// </param>
         /// <param name='nextLink'>
-        /// Required. The next link.  (see
-        /// http://msdn.microsoft.com/en-us/library/windowsazure/XXXXX.aspx
-        /// for more information)
+        /// Required. The url to get the next set of results.
         /// </param>
         /// <returns>
         /// The location list result.

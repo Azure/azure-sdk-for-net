@@ -1,10 +1,4 @@
-﻿//
-//  <copyright file="Constants.cs" company="Microsoft">
-//    Copyright (C) Microsoft. All rights reserved.
-//  </copyright>
-//
-
-// ----------------------------------------------------------------------------------
+﻿// ----------------------------------------------------------------------------------
 //
 // Copyright Microsoft Corporation
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +12,9 @@
 // limitations under the License.
 // ----------------------------------------------------------------------------------
 
-namespace Microsoft.AzureStack.Management.StorageAdmin.Tests
+using System;
+
+namespace Microsoft.AzureStack.AzureConsistentStorage.Tests
 {
     internal class Constants
     {
@@ -43,12 +39,15 @@ namespace Microsoft.AzureStack.Management.StorageAdmin.Tests
         public const string SingleInstanceName = "default";
         public const string ShareName = "||localhost|abc";
         public const string ShareAName = "||localhost|smb1";
-        public const string FaultId = "AF71E845-2463-4610-8626-13465EFA150E";
+        public readonly static Guid FaultId = Guid.Parse("AF71E845-2463-4610-8626-13465EFA150E");
         public const string NodeId = "defaultNode";
         public const string BaseUri = "http://management.azure.com";
         public const string TokenString = "abc123";
         public const string RoleInstanceId = "woss-node-1";
         public const string TableMasterRole = "tablemaster";
         public const string ListSummary = "summary=true";
+        public const string AcquisitionId = "D6AE96E1-62B1-4F43-91F6-680E3990D76D";
+        public const string LocationName = "redmond";
+        public const string QuotaName = "SRP_DefaultQuota";
     }
 }

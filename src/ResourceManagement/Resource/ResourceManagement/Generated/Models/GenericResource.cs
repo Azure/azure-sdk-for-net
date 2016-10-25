@@ -70,19 +70,5 @@ namespace Microsoft.Azure.Management.Resources.Models
         public GenericResource()
         {
         }
-        
-        /// <summary>
-        /// Initializes a new instance of the GenericResource class with
-        /// required arguments.
-        /// </summary>
-        public GenericResource(string location)
-            : this()
-        {
-            if (location == null)
-            {
-                throw new ArgumentNullException("location");
-            }
-            this.Location = location;
-        }
     }
 }

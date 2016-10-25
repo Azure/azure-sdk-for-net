@@ -43,6 +43,18 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._azureVMDiskDetails = value; }
         }
         
+        private string _enableRDPOnTargetOption;
+        
+        /// <summary>
+        /// Optional. Gets or sets the option to enable RDP on target vm after
+        /// failover.Value can be Never, OnlyOnTestFailover or Always.
+        /// </summary>
+        public string EnableRDPOnTargetOption
+        {
+            get { return this._enableRDPOnTargetOption; }
+            set { this._enableRDPOnTargetOption = value; }
+        }
+        
         private string _encryption;
         
         /// <summary>
@@ -74,6 +86,18 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         {
             get { return this._lastReplicatedTime; }
             set { this._lastReplicatedTime = value; }
+        }
+        
+        private string _licenseType;
+        
+        /// <summary>
+        /// Optional. Gets or sets License Type of the VM to be used for HUB
+        /// https://azure.microsoft.com/en-in/pricing/hybrid-use-benefit/.
+        /// </summary>
+        public string LicenseType
+        {
+            get { return this._licenseType; }
+            set { this._licenseType = value; }
         }
         
         private OSDetails _oSDetails;
@@ -173,6 +197,28 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         {
             get { return this._vMNics; }
             set { this._vMNics = value; }
+        }
+        
+        private string _vmProtectionState;
+        
+        /// <summary>
+        /// Optional. Gets or sets the protection status for the VM.
+        /// </summary>
+        public string VmProtectionState
+        {
+            get { return this._vmProtectionState; }
+            set { this._vmProtectionState = value; }
+        }
+        
+        private string _vmProtectionStateDescription;
+        
+        /// <summary>
+        /// Optional. Gets or sets the protection state description for the VM.
+        /// </summary>
+        public string VmProtectionStateDescription
+        {
+            get { return this._vmProtectionStateDescription; }
+            set { this._vmProtectionStateDescription = value; }
         }
         
         /// <summary>

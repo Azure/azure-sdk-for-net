@@ -178,6 +178,16 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         public Principal Principal { get; set; }
 
         /// <summary>
+        /// Gets or sets the security profile to be used for creating secure clusters.
+        /// </summary>
+        public SecurityProfile SecurityProfile { get; set; }
+
+        /// <summary>
+        /// Gets or sets the component versions for each service in this HDInsight cluster.
+        /// </summary>
+        public Dictionary<string, string> ComponentVersion { get; set; }
+        
+        /// <summary>
         /// Initializes a new instance of the ClusterCreateParameters class.
         /// </summary>
         public ClusterCreateParameters()
@@ -185,6 +195,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
             this.AdditionalStorageAccounts = new Dictionary<string, string>();
             this.Configurations = new Dictionary<string, Dictionary<string, string>>();
             this.ScriptActions =  new Dictionary<ClusterNodeType, List<ScriptAction>>();
+            this.ComponentVersion = new Dictionary<string, string>();
 
             //set defaults
             this.Version = "default";

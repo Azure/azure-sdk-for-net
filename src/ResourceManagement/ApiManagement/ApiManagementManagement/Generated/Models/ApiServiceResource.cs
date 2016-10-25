@@ -88,6 +88,17 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             set { this._properties = value; }
         }
         
+        private ApiServiceSkuProperties _skuProperties;
+        
+        /// <summary>
+        /// Optional. Gets or sets sku properties of the Api Management service.
+        /// </summary>
+        public ApiServiceSkuProperties SkuProperties
+        {
+            get { return this._skuProperties; }
+            set { this._skuProperties = value; }
+        }
+        
         private IDictionary<string, string> _tags;
         
         /// <summary>

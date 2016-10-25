@@ -25,13 +25,21 @@ namespace HDInsight.Tests.Helpers
         private const string DefaultContainer = "";
         private const string StorageAccountName = "";
         private const string StorageAccountKey = "";
-        private const string SshKey = "";
+		private const string SshKey = "";
         private const string SshUser = "";
         private const string SshPassword = "";
         private const string HttpUser = "";
         private const string HttpPassword = "";
         private const string RdpUser = "";
         private const string RdpPassword = "";
+        private const string VirtualNetworkId = "";
+        private const string SubnetName = "";
+        private const string DomainUserName = "";
+        private const string DomainUserPassword = "";
+        private const string OrganizationalUnitDN = "";
+        private static readonly List<string> ClusterUsersGroupDNs = new List<string> {""};
+        private static readonly List<string> LdapsUrls = new List<string> { "" };
+        private static readonly string[] DomainNameParts = new string[2] { "", "" };
 
         public static ClusterCreateParametersExtended GetIaasClusterSpec()
         {
@@ -138,7 +146,7 @@ namespace HDInsight.Tests.Helpers
         {
             var cluster = new ClusterCreateParametersExtended
             {
-                Location = "East US",
+                Location = "West US",
                 Properties = new ClusterCreateProperties
                 {
                     ClusterDefinition = new ClusterDefinition
@@ -225,7 +233,7 @@ namespace HDInsight.Tests.Helpers
                 UserName = HttpUser,
                 Password = HttpPassword,
                 DefaultStorageContainer = DefaultContainer,
-                Location =  "East US"
+                Location =  "West US"
             };
             var actions = new List<ScriptAction>();
             var action = new ScriptAction("action", new Uri("https://uri.com"), "params");
@@ -249,7 +257,7 @@ namespace HDInsight.Tests.Helpers
                 UserName = HttpUser,
                 Password = HttpPassword,
                 DefaultStorageContainer = DefaultContainer,
-                Location = "East US",
+                Location = "West US",
                 SshUserName = SshUser,
                 SshPassword = SshPassword,
                 Version = "3.2"
@@ -270,13 +278,43 @@ namespace HDInsight.Tests.Helpers
                 UserName = HttpUser,
                 Password = HttpPassword,
                 DefaultStorageContainer = DefaultContainer,
-                Location = "East US",
+                Location = "West US",
                 SshUserName = SshUser,
                 SshPassword = SshPassword,
                 Version = "3.2",
                 HeadNodeSize = "ExtraLarge",
                 ZookeeperNodeSize = "Large",
             };
+            return clusterparams;
+        }
+
+        public static ClusterCreateParameters GetAdJoinedCreateParametersIaas()
+        {
+            var clusterparams = GetCustomCreateParametersIaas();
+            clusterparams.Version = "3.5";
+            clusterparams.Location = "East US 2";
+            clusterparams.VirtualNetworkId = VirtualNetworkId;
+            clusterparams.SubnetName = SubnetName;
+            clusterparams.SecurityProfile = new SecurityProfile
+            {
+                DirectoryType = DirectoryType.ActiveDirectory,
+                Domain = string.Format("{0}.{1}", DomainNameParts[0], DomainNameParts[1]),
+                DomainUserPassword = DomainUserPassword,
+                DomainUsername = DomainUserName,
+                LdapsUrls = LdapsUrls,
+                OrganizationalUnitDN = OrganizationalUnitDN,
+                ClusterUsersGroupDNs = ClusterUsersGroupDNs
+            };
+            
+            return clusterparams;
+        }
+
+        public static ClusterCreateParameters GetCustomCreateParametersSparkIaas()
+        {
+            var clusterparams = GetCustomCreateParametersIaas();
+            clusterparams.Version = "3.5";
+            clusterparams.ClusterType = "Spark";
+            clusterparams.ComponentVersion.Add("Spark", "2.0");
             return clusterparams;
         }
 

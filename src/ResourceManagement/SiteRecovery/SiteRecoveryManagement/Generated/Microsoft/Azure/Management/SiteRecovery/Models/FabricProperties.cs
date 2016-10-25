@@ -30,6 +30,17 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
     /// </summary>
     public partial class FabricProperties
     {
+        private string _bcdrState;
+        
+        /// <summary>
+        /// Optional. BCDR state of the fabric.
+        /// </summary>
+        public string BcdrState
+        {
+            get { return this._bcdrState; }
+            set { this._bcdrState = value; }
+        }
+        
         private FabricSpecificDetails _customDetails;
         
         /// <summary>

@@ -12,10 +12,8 @@
 // limitations under the License.
 //
 
+using System.Linq;
 using Microsoft.Azure;
-using Microsoft.Azure.Test;
-using Microsoft.Data.Edm.Csdl;
-using Network.Tests.Networks.TestOperations;
 
 namespace Network.Tests.Networks
 {
@@ -28,6 +26,23 @@ namespace Network.Tests.Networks
     {
         [Fact]
         [Trait("Feature", "Networks")]
+        public void ValidateVNetForMigration()
+        {
+            using (NetworkTestClient networkTestClient = new NetworkTestClient())
+            {
+                string virtualNetworkName = "foo";
+                var response = networkTestClient.ValidateVnetMigration(virtualNetworkName);
+                Assert.NotNull(response);
+                Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+                Assert.NotNull(response.ValidationMessages);
+                Assert.Equal(1, response.ValidationMessages.Count);
+                Assert.Equal("The virtual network foo does not exist.", response.ValidationMessages[0].Message);
+            }
+        }
+
+        [Fact]
+        [Trait("Feature", "Networks")]
         public void MigrateSimpleVNetConfiguration()
         {
             using (NetworkTestClient networkTestClient = new NetworkTestClient())
@@ -37,6 +52,12 @@ namespace Network.Tests.Networks
 
                 osResp = networkTestClient.PrepareVnetMigration(NetworkTestConstants.VirtualNetworkSiteName);
                 Assert.Equal(OperationStatus.Succeeded, osResp.Status);
+
+                NetworkListResponse response = networkTestClient.ListNetworkConfigurations();
+                // BUG: Return "2" instead of "Prepared"
+                // Re-record after the bug is fixed in Server.
+                Assert.NotNull(response.VirtualNetworkSites.First().MigrationState);
+                //Assert.Equal(IaasClassicToArmMigrationState.Prepared, response.VirtualNetworkSites.First().MigrationState);
 
                 osResp = networkTestClient.CommitVnetMigration(NetworkTestConstants.VirtualNetworkSiteName);
                 Assert.Equal(OperationStatus.Succeeded, osResp.Status);
@@ -54,6 +75,12 @@ namespace Network.Tests.Networks
 
                 osResp = networkTestClient.PrepareVnetMigration(NetworkTestConstants.VirtualNetworkSiteName);
                 Assert.Equal(OperationStatus.Succeeded, osResp.Status);
+
+                NetworkListResponse response = networkTestClient.ListNetworkConfigurations();
+                // BUG: Return "2" instead of "Prepared"
+                // Re-record after the bug is fixed in Server.
+                Assert.NotNull(response.VirtualNetworkSites.First().MigrationState);
+                //Assert.Equal(IaasClassicToArmMigrationState.Prepared, response.VirtualNetworkSites.First().MigrationState);
 
                 osResp = networkTestClient.AbortVnetMigration(NetworkTestConstants.VirtualNetworkSiteName);
                 Assert.Equal(OperationStatus.Succeeded, osResp.Status);

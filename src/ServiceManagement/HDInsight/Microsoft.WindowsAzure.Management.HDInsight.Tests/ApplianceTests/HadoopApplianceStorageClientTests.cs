@@ -67,6 +67,7 @@ namespace Microsoft.WindowsAzure.Management.HDInsight.Tests.ApplianceTests
             {
                 Server = new Uri("https://testserver"),
                 UserName = "Administrator",
+                // [SuppressMessage("Microsoft.Security", "CS002:SecretInNextLine")]
                 Password = "Passw0rd1"
             };
         }

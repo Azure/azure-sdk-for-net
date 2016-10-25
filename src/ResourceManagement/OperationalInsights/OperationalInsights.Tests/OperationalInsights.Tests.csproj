@@ -8,12 +8,16 @@
   <Import Project="..\..\..\..\tools\Library.Settings.targets" />
   <Import Project="$(LibraryToolsFolder)\Test.Dependencies.target" />
   <ItemGroup>
+    <Compile Include="Helpers\DataSourceUndoHandler.cs" />
+    <Compile Include="Helpers\LinkedServiceUndoHandler.cs" />
     <Compile Include="Helpers\StorageInsightUndoHandler.cs" />
     <Compile Include="Helpers\TestHelper.cs" />
     <Compile Include="Helpers\UndoContextDiscoveryExtensions.cs" />
     <Compile Include="Helpers\WorkspaceUndoHandler.cs" />
     <Compile Include="OperationTests\BasicDelegatingHandler.cs" />
+    <Compile Include="OperationTests\LinkedServiceOperationsTest.cs" />
     <Compile Include="OperationTests\SearchOperationsTest.cs" />
+    <Compile Include="OperationTests\DataSourceOperationsTest.cs" />
     <Compile Include="OperationTests\StorageInsightOperationsTest.cs" />
     <Compile Include="OperationTests\WorkspaceOperationsTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -32,6 +36,21 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="SessionRecords\OperationalInsights.Tests.OperationTests.DataSourceOperationsTest\CanCreateUpdateDeleteDataSource.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\OperationalInsights.Tests.OperationTests.DataSourceOperationsTest\DataSourceCreateFailsWithoutWorkspace.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\OperationalInsights.Tests.OperationTests.DataSourceOperationsTest\DataSourceListWithPaging.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\OperationalInsights.Tests.OperationTests.LinkedServiceOperationsTest\CanCreateUpdateDeleteLinkedService.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="SessionRecords\OperationalInsights.Tests.OperationTests.LinkedServiceOperationsTest\LinkedServiceCreateFailsWithoutWorkspace.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="SessionRecords\OperationalInsights.Tests.OperationTests.SearchOperationsTest\CanCreateOrUpdateAndDeleteSavedSearches.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -60,4 +79,5 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
+  <ItemGroup />
 </Project>

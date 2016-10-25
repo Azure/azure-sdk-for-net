@@ -89,6 +89,17 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             set { this._virtualNetworkConfiguration = value; }
         }
         
+        private VirtualNetworkType _vpnType;
+        
+        /// <summary>
+        /// Optional. Gets or sets vpn type.
+        /// </summary>
+        public VirtualNetworkType VpnType
+        {
+            get { return this._vpnType; }
+            set { this._vpnType = value; }
+        }
+        
         /// <summary>
         /// Initializes a new instance of the
         /// ApiServiceManageDeploymentsParameters class.

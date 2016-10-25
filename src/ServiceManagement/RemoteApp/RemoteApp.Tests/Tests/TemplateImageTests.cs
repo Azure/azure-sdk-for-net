@@ -225,5 +225,46 @@ namespace RemoteApp.Tests
                 }
             }
         }
+
+
+        /// <summary>
+        /// Testing of exporting a gold image
+        /// </summary>
+        [Fact]
+        public void CanExportGoldImage()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                HttpRecorderMode mode = HttpMockServer.GetCurrentMode();
+                RemoteAppManagementClient remoteAppManagementClient = GetRemoteAppManagementClient();
+                string collectionName = "collectionname";
+                string accountKey = "accountkey";
+                string accountName = "accountname";
+                string containerName = "containername";
+                OperationResultWithTrackingId result = remoteAppManagementClient.TemplateImages.Migrate(collectionName, accountName, accountKey, containerName, true);
+                Assert.NotNull(result);
+            }
+        }
+
+        /// <summary>
+        /// Testing of exporting a upd
+        /// </summary>
+        [Fact]
+        public void CanExportUserDisk()
+        {
+            using (UndoContext context = UndoContext.Current)
+            {
+                context.Start();
+                HttpRecorderMode mode = HttpMockServer.GetCurrentMode();
+                RemoteAppManagementClient remoteAppManagementClient = GetRemoteAppManagementClient();
+                string collectionName = "collectionname";
+                string accountKey = "accountkey";
+                string accountName = "accountname";
+                string containerName = "containername";
+                OperationResultWithTrackingId result = remoteAppManagementClient.UserDisks.Migrate(collectionName, accountName, accountKey, containerName, true);
+                Assert.NotNull(result);
+            }
+        }
     }
 }

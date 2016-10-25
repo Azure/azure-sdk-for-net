@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "/apis/";
             url = url + Uri.EscapeDataString(aid);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -294,7 +294,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + Uri.EscapeDataString(pid);
             url = url + "/apis";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             List<string> odataFilter = new List<string>();
             if (query != null && query.Filter != null)
             {
@@ -487,6 +487,13 @@ namespace Microsoft.Azure.Management.ApiManagement
                                             string queryInstance = ((string)queryValue);
                                             subscriptionKeyParameterNamesInstance.Query = queryInstance;
                                         }
+                                    }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        ApiTypeContract typeInstance = ((ApiTypeContract)Enum.Parse(typeof(ApiTypeContract), ((string)typeValue), true));
+                                        apiContractInstance.Type = typeInstance;
                                     }
                                 }
                             }
@@ -732,6 +739,13 @@ namespace Microsoft.Azure.Management.ApiManagement
                                             subscriptionKeyParameterNamesInstance.Query = queryInstance;
                                         }
                                     }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        ApiTypeContract typeInstance = ((ApiTypeContract)Enum.Parse(typeof(ApiTypeContract), ((string)typeValue), true));
+                                        apiContractInstance.Type = typeInstance;
+                                    }
                                 }
                             }
                             
@@ -854,7 +868,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "/apis/";
             url = url + Uri.EscapeDataString(aid);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);

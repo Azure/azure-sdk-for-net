@@ -13,6 +13,8 @@
 //  limitations under the License.
 //
 
+using System;
+using System.Configuration;
 using Microsoft.Azure;
 using Xunit;
 namespace Microsoft.WindowsAzure.Configuration.Test
@@ -27,6 +29,38 @@ namespace Microsoft.WindowsAzure.Configuration.Test
             string actual = CloudConfigurationManager.GetSetting(key);
 
             Assert.Null(actual);
+        }
+
+        [Fact]
+        public void TestGetSettingWithNullParamThrowsArgumentNullException()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                string actual = CloudConfigurationManager.GetSetting(null);
+            });
+        }
+
+        [Fact]
+        public void TestGetSettingWithEmptyStringThrowsArgumentException()
+        {
+            Assert.Throws<ArgumentException>(() =>
+            {
+                string actual = CloudConfigurationManager.GetSetting("");
+            });
+        }
+
+        [Fact]
+        public void TestGetSettingOverloadThatRequiresGettingSettingFromServiceRuntimeWithNonExistingSettingThrowsException()
+        {
+            Assert.Throws<SettingsPropertyNotFoundException>(() =>
+                {
+                    string actual = CloudConfigurationManager
+                        .GetSetting(
+                            name: "notExistingSettingName",
+                            outputResultsToTrace: true,
+                            throwIfNotFoundInRuntime: true);
+                }
+            );           
         }
     }
 }

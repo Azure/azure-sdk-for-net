@@ -379,7 +379,8 @@ namespace DataFactory.Tests.Framework.JsonSamples
         type: ""OnPremisesOdbc"",
         typeProperties: {
             connectionString: ""driver={SQL Server};server=myserver;database=mydb;"",
-            credential: ""uid=myuid;pwd=mypassword"",
+
+            credential: ""uid=myuid;pwd=PLACEHOLDER"",
             username: ""microsoft"",
             password: ""fakepassword"",
             gatewayName: ""MSourceDemoGateway"",
@@ -435,8 +436,101 @@ namespace DataFactory.Tests.Framework.JsonSamples
             url: ""http://myhost.com/"",
             authenticationType: ""Basic"",
             username: ""microsoft"",
-            password: ""fakepassword"",
-            apiKey: ""mykey""            
+            password: ""fakepassword""   
+        }
+    }
+}";
+        [JsonSample]
+        public const string OnPremisesCassandraLinkedService = @"
+{
+    name: ""LinkedService-OnPremisesCassandra"",
+    properties:
+    {
+        type: ""OnPremisesCassandra"",
+        description: ""test description"",
+        typeProperties:
+        {
+            authenticationType: ""Basic"",
+            host : ""http://localhost/webhdfs/v1/"", 
+            port : 1234,
+            username: ""admin"",
+            password : ""fakepassword"",
+            gatewayName : ""fakegateway"",
+            encryptedCredential : ""fake credential""
+        }
+    }
+}";
+        [JsonSample]
+        public const string SalesforceLinkedService = @"
+{
+    name: ""SalesforceLinkedService"",
+    properties:
+    {
+        type: ""Salesforce"",
+        description: ""test description"",
+        typeProperties:
+        {
+            userName: ""admin"",
+            password : ""fakepassword"",
+            securityToken: ""fakeToken""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string MongoDbLinkedService = @"
+{
+    name: ""OnPremisesMongoDbLinkedService"",
+    properties:
+    {
+        type: ""OnPremisesMongoDb"",
+        description: ""test description"",
+        typeProperties:
+        {
+            authenticationType: ""Basic"",
+            server : ""fakeserver.com"", 
+            port : 666,
+            username: ""fakeuser"",
+            password : ""fakepwd"",
+            authSource : ""fackadmindb"",
+            databaseName : ""fakedb"",
+            gatewayName : ""fakegw"",
+            encryptedCredential : ""fakecred""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string AmazonRedshiftLinkedService = @"
+{
+    name: ""AmazonRedshiftLinkedService"",
+    properties:
+    {
+        type: ""AmazonRedshift"",
+        description: ""test description"",
+        typeProperties:
+        {
+            server : ""http://localhost/fakeredshiftserver.com"", 
+            port : 5439,
+            username: ""rsadmin"",
+            password : ""fakepassword"",
+            database : ""fakedatabase""
+        }
+    }
+}";
+
+        [JsonSample]
+        public const string AwsAccessKeyLinkedService = @"
+{
+    name: ""AwsAccessKeyLinkedService"",
+    properties:
+    {
+        type: ""AwsAccessKey"",
+        description: ""test description"",
+        typeProperties:
+        {
+            accessKeyId : ""fakeaccess"",
+            secretAccessKey : ""fakesecret""
         }
     }
 }";

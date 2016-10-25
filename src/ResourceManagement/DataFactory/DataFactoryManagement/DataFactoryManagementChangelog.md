@@ -1,4 +1,77 @@
-﻿For additional details on features, see the full [Azure Data Factory Release Notes](https://azure.microsoft.com/en-us/documentation/articles/data-factory-release-notes). 
+For additional details on features, see the full [Azure Data Factory Release Notes](https://azure.microsoft.com/en-us/documentation/articles/data-factory-release-notes). 
+
+## Version 4.11.0
+_Release date: 2016.09.13_ 
+
+### Feature Additions
+
+* The following linked service types have been added: 
+    * OnPremisesMongoDbLinkedService, AmazonRedshiftLinkedService, AwsAccessKeyLinkedService
+* The following dataset types have been added: 
+    * MongoDbCollectionDataset, AmazonS3Dataset
+* The following copy source types have been added: 	
+    * MongoDbSource
+
+## Version 4.10.0
+_Release date: 2016.09.09_ 
+
+### Feature Additions
+
+* The following optional properties have been added to TextFormat:
+    * SkipLineCount
+    * FirstRowAsHeader 
+    * TreatEmptyAsNull
+* The following linked service types have been added: 
+    * OnPremisesCassandraLinkedService, SalesforceLinkedService
+* The following dataset types have been added: 
+    * OnPremisesCassandraTableDataset
+* The following copy source types have been added: 	
+    * CassandraSource
+* Add WebServiceInputs property to AzureMLBatchExecutionActivity
+    * Enable passing multiple web service inputs to an Azure Machine Learning experiment
+
+## Version 4.9.1
+_Release date: 2016.07.05_ 
+
+### Bug fix
+
+* Deprecate WebApi-based authentication for WebLinkedService.
+
+## Version 4.9.0
+_Release date: 2016.06.10_ 
+
+### Feature Additions
+
+* Add EnableStaging and StagingSettings properties to CopyActivity
+    * Enable copy via interim staging.
+
+### Bug fix
+
+* Introduce an overload of ActivityWindowOperationExtensions.List() which takes an ActivityWindowsByActivityListParameters instance. 
+* Mark WriteBatchSize and WriteBatchTimeout as optional in CopySink.
+
+## Version 4.8.0
+_Release date: 2016.05.25_
+
+### Feature Additions
+* The following optional properties have been added to Copy activity type to enable tuning of copy performance: 
+    * ParallelCopies
+    * CloudDataMovementUnits
+
+## Version 4.7.0
+_Release date: 2016.05.20_
+
+### Feature Additions
+* Added new StorageFormat type OrcFormat type to copy files in optimized row columnar (ORC) format.
+* Add AllowPolyBase and PolyBaseSettings properties to SqlDWSink.
+    * Enables the use of PolyBase to copy data into SQL Data Warehouse.
+
+## Version 4.6.1
+_Release date: 2016.04.26_
+
+### Bug Fixes
+* Fixes HTTP request for listing activity windows.
+    * Removes the resource group name and the data factory name from the request payload.
 
 ## Version 4.6.0
 _Release date: 2016.04.14_ 

@@ -149,17 +149,6 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
             set { this._publisherName = value; }
         }
         
-        private ApiServiceSkuProperties _skuProperties;
-        
-        /// <summary>
-        /// Optional. Gets or sets sku properties of the Api Management service.
-        /// </summary>
-        public ApiServiceSkuProperties SkuProperties
-        {
-            get { return this._skuProperties; }
-            set { this._skuProperties = value; }
-        }
-        
         private IList<string> _staticIPs;
         
         /// <summary>
@@ -196,6 +185,18 @@ namespace Microsoft.Azure.Management.ApiManagement.Models
         {
             get { return this._virtualNetworkConfiguration; }
             set { this._virtualNetworkConfiguration = value; }
+        }
+        
+        private VirtualNetworkType _vpnType;
+        
+        /// <summary>
+        /// Optional. Gets or sets virtual private network type of the Api
+        /// Management service.
+        /// </summary>
+        public VirtualNetworkType VpnType
+        {
+            get { return this._vpnType; }
+            set { this._vpnType = value; }
         }
         
         /// <summary>

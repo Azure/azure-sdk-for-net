@@ -54,15 +54,15 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
             set { this._diskExclusionInput = value; }
         }
         
-        private IList<string> _disksToExclude;
+        private IList<string> _disksToInclude;
         
         /// <summary>
-        /// Optional. The disk exclusion list.
+        /// Optional. The disk inclusion list.
         /// </summary>
-        public IList<string> DisksToExclude
+        public IList<string> DisksToInclude
         {
-            get { return this._disksToExclude; }
-            set { this._disksToExclude = value; }
+            get { return this._disksToInclude; }
+            set { this._disksToInclude = value; }
         }
         
         private string _masterTargetId;
@@ -125,7 +125,7 @@ namespace Microsoft.Azure.Management.SiteRecovery.Models
         /// </summary>
         public InMageReprotectInput()
         {
-            this.DisksToExclude = new LazyList<string>();
+            this.DisksToInclude = new LazyList<string>();
         }
     }
 }

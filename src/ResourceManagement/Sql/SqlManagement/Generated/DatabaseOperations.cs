@@ -239,6 +239,11 @@ namespace Microsoft.Azure.Management.Sql
                     propertiesValue["restorePointInTime"] = parameters.Properties.RestorePointInTime.Value;
                 }
                 
+                if (parameters.Properties.RecoveryServicesRecoveryPointResourceId != null)
+                {
+                    propertiesValue["recoveryServicesRecoveryPointResourceId"] = parameters.Properties.RecoveryServicesRecoveryPointResourceId;
+                }
+                
                 databaseCreateOrUpdateParametersValue["location"] = parameters.Location;
                 
                 if (parameters.Tags != null)
@@ -4474,11 +4479,11 @@ namespace Microsoft.Azure.Management.Sql
                     {
                         result.RequestId = httpResponse.Headers.GetValues("x-ms-request-id").FirstOrDefault();
                     }
-                    if (statusCode == HttpStatusCode.OK)
+                    if (statusCode == HttpStatusCode.Created)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }
-                    if (statusCode == HttpStatusCode.Created)
+                    if (statusCode == HttpStatusCode.OK)
                     {
                         result.Status = OperationStatus.Succeeded;
                     }

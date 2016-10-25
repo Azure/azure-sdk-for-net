@@ -20,7 +20,9 @@
 // code is regenerated.
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Hyak.Common;
 
 namespace Microsoft.Azure.Management.HDInsight.Models
 {
@@ -48,6 +50,18 @@ namespace Microsoft.Azure.Management.HDInsight.Models
             set { this._clusterType = value; }
         }
         
+        private IDictionary<string, string> _componentVersion;
+        
+        /// <summary>
+        /// Optional. Gets or sets the versions of different services in the
+        /// cluster.
+        /// </summary>
+        public IDictionary<string, string> ComponentVersion
+        {
+            get { return this._componentVersion; }
+            set { this._componentVersion = value; }
+        }
+        
         private string _configurations;
         
         /// <summary>
@@ -64,6 +78,7 @@ namespace Microsoft.Azure.Management.HDInsight.Models
         /// </summary>
         public ClusterDefinition()
         {
+            this.ComponentVersion = new LazyDictionary<string, string>();
         }
     }
 }

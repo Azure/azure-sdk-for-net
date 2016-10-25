@@ -44,6 +44,8 @@ namespace HDInsightJob.Tests
         public static string WinClusterName = "";
         public static string WinUserName = "";
         public static string WinPassword = "";
+        //set storage account suffix appropriately for different environments, for example:core.chinacloudapi.cn
+        public static string storageAccountSuffix = "";
 
         public static string WinStorageAccountName = "";
         public static string WinStorageAccountKey = "";

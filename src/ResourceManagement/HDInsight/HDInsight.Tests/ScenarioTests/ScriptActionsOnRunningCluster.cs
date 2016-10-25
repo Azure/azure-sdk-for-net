@@ -176,48 +176,6 @@ namespace HDInsight.Tests
             }
         }
 
-        [Fact]
-        public void TestRunningScriptActionsOnDisabledSub()
-        {
-           var handler = new RecordedDelegatingHandler { StatusCodeToReturn = HttpStatusCode.OK };
-
-           using (var context = UndoContext.Current)
-           {
-               context.Start();
-
-               var client = HDInsightManagementTestUtilities.GetHDInsightManagementClient(handler);
-               var resourceManagementClient = HDInsightManagementTestUtilities.GetResourceManagementClient(handler);
-
-               var resourceGroup = HDInsightManagementTestUtilities.CreateResourceGroup(resourceManagementClient);
-
-               // need to use static name , so tests work in playback mode
-               var dnsName = "hdiscriptactionffc11783-ae94-4189-9b05-513a9f5783f4";
-
-               string scriptName = "script" + Guid.NewGuid().ToString().Substring(0, 10);
-
-               var clusterCreateParams = CreateClusterToValidateScriptActions(resourceGroup, dnsName, client);
-
-               var executeScriptActionParamsPersisted = GetExecuteScriptActionParams(true, scriptName, InstallGiraph);
-
-               try
-               {
-                   var response = client.Clusters.ExecuteScriptActions(resourceGroup, dnsName, executeScriptActionParamsPersisted);
-
-                   Assert.True(false, "Failed to reject script actions request for a disabled sub");
-               }
-               catch (Hyak.Common.CloudException ex)
-               {
-                   Assert.Equal(HttpStatusCode.BadRequest, ex.Response.StatusCode);
-
-                   Assert.True(ex.Message.Contains("Script actions on running cluster is not supported for this subscription"));
-               }
-               finally
-               {
-                   client.Clusters.Delete(resourceGroup, dnsName);
-               }
-           }
-        }
-
         private void ValidateHistoryDetail(RuntimeScriptActionDetail runtimeScriptActionDetail, bool includeDebugInfo, string scriptName)
         {
             Assert.Equal(2, runtimeScriptActionDetail.Roles.Count);

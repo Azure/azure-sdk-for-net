@@ -174,7 +174,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "/apis/";
             url = url + Uri.EscapeDataString(aid);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -280,6 +280,8 @@ namespace Microsoft.Azure.Management.ApiManagement
                         subscriptionKeyParameterNamesValue["query"] = parameters.ApiContract.SubscriptionKeyParameterNames.Query;
                     }
                 }
+                
+                apiCreateOrUpdateParametersValue["type"] = parameters.ApiContract.Type.ToString();
                 
                 requestContent = requestDoc.ToString(Newtonsoft.Json.Formatting.Indented);
                 httpRequest.Content = new StringContent(requestContent, Encoding.UTF8);
@@ -416,7 +418,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "/apis/";
             url = url + Uri.EscapeDataString(aid);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -509,7 +511,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         }
         
         /// <summary>
-        /// Exporst API to one of the supported formats.
+        /// Exports API to one of the supported formats.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// Required. The name of the resource group.
@@ -580,7 +582,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "/apis/";
             url = url + Uri.EscapeDataString(aid);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -648,7 +650,6 @@ namespace Microsoft.Azure.Management.ApiManagement
                         string responseContent = await httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                         result = new ApiExportResponse();
                         result.Content = Encoding.UTF8.GetBytes(responseContent);
-                        
                     }
                     result.StatusCode = statusCode;
                     if (httpResponse.Headers.Contains("x-ms-request-id"))
@@ -742,7 +743,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "/apis/";
             url = url + Uri.EscapeDataString(aid);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
@@ -912,6 +913,13 @@ namespace Microsoft.Azure.Management.ApiManagement
                                     subscriptionKeyParameterNamesInstance.Query = queryInstance;
                                 }
                             }
+                            
+                            JToken typeValue = responseDoc["type"];
+                            if (typeValue != null && typeValue.Type != JTokenType.Null)
+                            {
+                                ApiTypeContract typeInstance = ((ApiTypeContract)Enum.Parse(typeof(ApiTypeContract), ((string)typeValue), true));
+                                valueInstance.Type = typeInstance;
+                            }
                         }
                         
                     }
@@ -969,6 +977,12 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// <param name='path'>
         /// Optional. Path in case importing document does not support path.
         /// </param>
+        /// <param name='wsdlServiceName'>
+        /// Optional. Local name of WSDL Service to be imported.
+        /// </param>
+        /// <param name='wsdlEndpointName'>
+        /// Optional. Local name of WSDL Endpoint (port) to be imported.
+        /// </param>
         /// <param name='cancellationToken'>
         /// Cancellation token.
         /// </param>
@@ -976,7 +990,7 @@ namespace Microsoft.Azure.Management.ApiManagement
         /// A standard service response including an HTTP status code and
         /// request ID.
         /// </returns>
-        public async Task<AzureOperationResponse> ImportAsync(string resourceGroupName, string serviceName, string aid, string contentType, Stream content, string path, CancellationToken cancellationToken)
+        public async Task<AzureOperationResponse> ImportAsync(string resourceGroupName, string serviceName, string aid, string contentType, Stream content, string path, string wsdlServiceName, string wsdlEndpointName, CancellationToken cancellationToken)
         {
             // Validate
             if (resourceGroupName == null)
@@ -1013,6 +1027,8 @@ namespace Microsoft.Azure.Management.ApiManagement
                 tracingParameters.Add("contentType", contentType);
                 tracingParameters.Add("content", content);
                 tracingParameters.Add("path", path);
+                tracingParameters.Add("wsdlServiceName", wsdlServiceName);
+                tracingParameters.Add("wsdlEndpointName", wsdlEndpointName);
                 TracingAdapter.Enter(invocationId, this, "ImportAsync", tracingParameters);
             }
             
@@ -1032,10 +1048,18 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "/apis/";
             url = url + Uri.EscapeDataString(aid);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             if (path != null)
             {
                 queryParameters.Add("path=" + Uri.EscapeDataString(path));
+            }
+            if (wsdlServiceName != null)
+            {
+                queryParameters.Add("wsdlServiceName=" + Uri.EscapeDataString(wsdlServiceName));
+            }
+            if (wsdlEndpointName != null)
+            {
+                queryParameters.Add("wsdlEndpointName=" + Uri.EscapeDataString(wsdlEndpointName));
             }
             if (queryParameters.Count > 0)
             {
@@ -1191,7 +1215,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + Uri.EscapeDataString(serviceName);
             url = url + "/apis";
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             List<string> odataFilter = new List<string>();
             if (query != null && query.Filter != null)
             {
@@ -1384,6 +1408,13 @@ namespace Microsoft.Azure.Management.ApiManagement
                                             string queryInstance = ((string)queryValue);
                                             subscriptionKeyParameterNamesInstance.Query = queryInstance;
                                         }
+                                    }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        ApiTypeContract typeInstance = ((ApiTypeContract)Enum.Parse(typeof(ApiTypeContract), ((string)typeValue), true));
+                                        apiContractInstance.Type = typeInstance;
                                     }
                                 }
                             }
@@ -1629,6 +1660,13 @@ namespace Microsoft.Azure.Management.ApiManagement
                                             subscriptionKeyParameterNamesInstance.Query = queryInstance;
                                         }
                                     }
+                                    
+                                    JToken typeValue = valueValue["type"];
+                                    if (typeValue != null && typeValue.Type != JTokenType.Null)
+                                    {
+                                        ApiTypeContract typeInstance = ((ApiTypeContract)Enum.Parse(typeof(ApiTypeContract), ((string)typeValue), true));
+                                        apiContractInstance.Type = typeInstance;
+                                    }
                                 }
                             }
                             
@@ -1761,7 +1799,7 @@ namespace Microsoft.Azure.Management.ApiManagement
             url = url + "/apis/";
             url = url + Uri.EscapeDataString(aid);
             List<string> queryParameters = new List<string>();
-            queryParameters.Add("api-version=2014-02-14");
+            queryParameters.Add("api-version=2016-07-07");
             if (queryParameters.Count > 0)
             {
                 url = url + "?" + string.Join("&", queryParameters);
